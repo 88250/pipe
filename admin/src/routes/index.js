@@ -1,16 +1,23 @@
-import DefaultLayout from '../layouts'
-import admin from './Admin'
+import Login from 'login'
 
-/*  Note: Instead of using JSX, we recommend using react-router
-    PlainRoute objects to build route definitions.   */
+const routes = [
+  { path: '/login',
+    component: Login
+  },
+  { path: '/admin',
+    component: Index,
+    routes: [
+      { path: '/admin/comments',
+        component: Bus
+      },
+      { path: '/admin/settings',
+        component: Cart
+      }
+    ]
+  }
+]
 
-export const createRoutes = (store) => ({
-  path        : '/',
-  component   : DefaultLayout,
-  indexRoute  : admin,
-  childRoutes : [
-   // CounterRoute(store)
-  ]
-})
+export default routes
 
-export default createRoutes
+
+

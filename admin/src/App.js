@@ -3,7 +3,7 @@ import {
   Route,
   Link
 } from 'react-router-dom'
-import Navigation from './routes/Tools'
+import Navigation from './routes/settings'
 
 class App extends Component {
   render() {
