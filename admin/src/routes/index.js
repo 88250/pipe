@@ -1,8 +1,8 @@
-import Login from './login'
-import Admin from './admin/index'
-import Comments from './admin/comments'
-import Settings from './admin/settings'
-import Users from './admin/settings/users'
+import Login from '../containers/login'
+import Admin from '../containers/admin/index'
+import Comments from '../containers/admin/comments'
+import Settings from '../containers/admin/settings'
+import Users from '../containers/admin/settings/users'
 
 const routes = [
   { path: '/login',
@@ -10,15 +10,17 @@ const routes = [
   },
   { path: '/admin',
     component: Admin,
-  },
-  { path: '/admin/comments',
-    component: Comments
-  },
-  { path: '/admin/settings',
-    component: Settings,
     routes: [
-      { path: '/admin/settings/users',
-        component: Users
+      { path: '/admin/comments',
+        component: Comments
+      },
+      { path: '/admin/settings',
+        component: Settings,
+        routes: [
+          { path: '/admin/settings/users',
+            component: Users
+          }
+        ]
       }
     ]
   }

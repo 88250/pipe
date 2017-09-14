@@ -1,8 +1,8 @@
 import React from 'react'
 
-export const Users = () => (
+const Users = () => (
   <div>
-    <h4>Admin Users</h4>
+    <h4>Admin Users </h4>
   </div>
 )
 
