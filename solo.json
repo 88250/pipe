@@ -1,0 +1,14 @@
+{
+    "IP": "${ip}",
+    "Port": "5897",
+    "Context": "",
+    "Server": "{IP}:{Port}",
+    "StaticServer": "",
+    "LogLevel": "debug",
+    "Channel": "ws://{IP}:{Port}",
+    "HTTPSessionMaxAge": 86400,
+    "StaticResourceVersion": "${time}",
+    "RuntimeMode": "dev",
+    "WD": "${pwd}",
+    "Locale": "en_US"
+}
