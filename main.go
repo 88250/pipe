@@ -6,22 +6,13 @@ import (
 	"os"
 	"os/signal"
 
-	log "github.com/sirupsen/logrus"
-
+	"github.com/b3log/solo.go/controller"
+	"github.com/b3log/solo.go/service"
 	"github.com/gin-gonic/gin"
-	"github.com/jinzhu/gorm"
+	log "github.com/sirupsen/logrus"
 )
 
-const TABLE_PREFIX = "b3_solo_go_"
-
-type User struct {
-	gorm.Model
-	Name string `sql:"type:VARCHAR(16) CHARACTER SET utf8 COLLATE utf8_general_ci"`
-}
-
 func main() {
-	//gin.DisableConsoleColor()
-
 	f, err := os.Create("solo.log")
 	if nil != err {
 		panic(err)
@@ -31,15 +22,12 @@ func main() {
 	log.SetOutput(io.MultiWriter(f, os.Stdout))
 	log.SetLevel(log.DebugLevel)
 
-	gin.SetMode(gin.DebugMode)
+	gin.SetMode(gin.ReleaseMode)
 	gin.DefaultWriter = io.MultiWriter(os.Stdout)
 
-	router := gin.Default()
-	//app.Use(favicon.New("./favicon.ico"))
+	service.ConnectDB()
 
-	router.GET("/ping", func(c *gin.Context) {
-		c.String(200, "pong")
-	})
+	router := controller.MapRoutes()
 
 	server := &http.Server{
 		Addr:    ":8080",
@@ -58,8 +46,10 @@ func main() {
 		}
 	}()
 
+	log.Info("Solo is running [http://localhost:8080]")
+
 	server.ListenAndServe()
 
-	db.Close()
+	service.DisconnectDB()
 	log.Println("Solo exited")
 }
