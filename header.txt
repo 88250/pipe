@@ -1,5 +1,5 @@
 Solo.go - A small but beautiful golang blogging system, Solo's golang version.
-Copyright (C) {{.Year}},  {{.Owner}}
+Copyright (C) {{.Year}}, {{.Owner}}
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
