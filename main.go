@@ -21,6 +21,7 @@ import (
 	"net/http"
 	"os"
 	"os/signal"
+	"syscall"
 
 	"github.com/b3log/solo.go/controller"
 	"github.com/b3log/solo.go/service"
@@ -50,17 +51,7 @@ func main() {
 		Handler: router,
 	}
 
-	quit := make(chan os.Signal)
-	signal.Notify(quit, os.Interrupt)
-
-	go func() {
-		<-quit
-		log.Println("Exiting Solo ...")
-
-		if err := server.Close(); nil != err {
-			log.Fatal("Server Close:", err)
-		}
-	}()
+	handleSignal(server)
 
 	log.Info("Solo is running [http://localhost:8080]")
 
@@ -68,4 +59,37 @@ func main() {
 
 	service.DisconnectDB()
 	log.Println("Solo exited")
+}
+
+// Configuration (solo.json).
+type conf struct {
+	IP                    string // server ip, ${ip}
+	Port                  string // server port
+	Context               string // server context
+	Server                string // server host and port ({IP}:{Port})
+	StaticServer          string // static resources server scheme, host and port (http://{IP}:{Port})
+	StaticResourceVersion string // version of static resources
+	LogLevel              string // logging level: debug/info/warn/error
+	HTTPSessionMaxAge     int    // HTTP session max age (in seciond)
+	RuntimeMode           string // runtime mode (dev/prod)
+	WD                    string // current working direcitory, ${pwd}
+	Locale                string // default locale
+}
+
+// handleSignal handles system signal for graceful shutdown.
+func handleSignal(server *http.Server) {
+	c := make(chan os.Signal)
+	signal.Notify(c, syscall.SIGINT, syscall.SIGQUIT, syscall.SIGTERM)
+
+	go func() {
+		s := <-c
+		log.Infof("Got signal [%s], exiting Solo now", s)
+		if err := server.Close(); nil != err {
+			log.Fatal("Server Close:", err)
+			os.Exit(-1)
+		}
+
+		log.Info("Solo exited")
+		os.Exit(0)
+	}()
 }
