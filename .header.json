@@ -1,0 +1,13 @@
+{
+    "Dir": ".",
+    "Template": "header.txt",
+    "Includes": [
+        "**.go"
+    ],
+    "Excludes": [],
+    "UseDefaultExcludes": true,
+    "Properties": {
+        "Year": "2017",
+        "Owner": "b3log.org & hacpai.com"
+    }
+}
