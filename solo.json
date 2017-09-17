@@ -4,10 +4,9 @@
     "Context": "",
     "Server": "{IP}:{Port}",
     "StaticServer": "",
+	"StaticResourceVersion": "${time}",
     "LogLevel": "debug",
-    "Channel": "ws://{IP}:{Port}",
     "HTTPSessionMaxAge": 86400,
-    "StaticResourceVersion": "${time}",
     "RuntimeMode": "dev",
     "WD": "${pwd}",
     "Locale": "en_US"
