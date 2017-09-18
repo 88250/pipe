@@ -1,5 +1,6 @@
 <template>
   <div>
+    <solo-header/>
     <side/>
     <nuxt/>
   </div>
@@ -7,9 +8,12 @@
 
 <script>
   import Side from '~/components/Side'
+  import SoloHeader from '~/components/Header'
+
   export default {
     components: {
-      Side
+      Side,
+      SoloHeader
     }
   }
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <nav>
+  <nav class="side">
     <ul>
       <li><nuxt-link to="/">首页</nuxt-link></li>
       <li><nuxt-link to="/post">发布文章</nuxt-link></li>
@@ -31,3 +31,10 @@
     </ul>
   </nav>
 </template>
+
+<style lang="sass">
+  .side
+    width: 240px
+
+
+</style>
