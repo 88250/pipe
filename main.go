@@ -24,8 +24,10 @@ import (
 	"net/http"
 	"os"
 	"os/signal"
+	"strconv"
 	"strings"
 	"syscall"
+	"time"
 
 	"github.com/b3log/solo.go/controller"
 	"github.com/b3log/solo.go/service"
@@ -40,7 +42,7 @@ var Conf *conf
 func init() {
 	confPath := flag.String("conf", "solo.json", "path of solo.json")
 	confLogPath := flag.String("log_path", "solo.log", "path of log file")
-	confIP := flag.String("ip", "", "this will override Solo.IP if specified")
+	confHost := flag.String("host", "", "this will override Solo.Host if specified")
 	confPort := flag.String("port", "", "this will override Solo.Port if specified")
 	confContext := flag.String("context", "", "this will override Solo.Context if specified")
 	confServer := flag.String("server", "", "this will override Solo.Server if specified")
@@ -53,7 +55,7 @@ func init() {
 	args := map[string]interface{}{}
 	args["confPath"] = *confPath
 	args["confLogPath"] = *confLogPath
-	args["confIP"] = *confIP
+	args["confHost"] = *confHost
 	args["confPort"] = *confPort
 	args["confContext"] = *confContext
 	args["confServer"] = *confServer
@@ -79,20 +81,20 @@ func main() {
 
 	router := controller.MapRoutes()
 	server := &http.Server{
-		Addr:    ":8080",
+		Addr:    Conf.Server,
 		Handler: router,
 	}
 
 	handleSignal(server)
 
-	log.Info("Solo is running [http://localhost:8080]")
+	log.Infof("Solo is running [%s]", Conf.Server)
 
 	server.ListenAndServe()
 }
 
 // Configuration (solo.json).
 type conf struct {
-	IP                    string // server ip, ${ip}
+	Host                  string // server host
 	Port                  string // server port
 	Context               string // server context
 	Server                string // server host and port ({IP}:{Port})
@@ -125,8 +127,8 @@ func initConf(args *map[string]interface{}) {
 		log.SetLevel(getLogLevel(confLogLevel))
 	}
 
-	if confIP := confs["confIP"].(string); "" != confIP {
-		Conf.IP = confIP
+	if confHost := confs["confHost"].(string); "" != confHost {
+		Conf.Host = confHost
 	}
 
 	if confPort := confs["confPort"].(string); "" != confPort {
@@ -137,14 +139,21 @@ func initConf(args *map[string]interface{}) {
 		Conf.Context = confContext
 	}
 
+	Conf.Server = strings.Replace(Conf.Server, "{Host}", Conf.Host, 1)
+	Conf.Server = strings.Replace(Conf.Server, "{Port}", Conf.Port, 1)
 	if confServer := confs["confServer"].(string); "" != confServer {
 		Conf.Server = confServer
 	}
 
+	Conf.StaticServer = strings.Replace(Conf.StaticServer, "{Host}", Conf.Host, 1)
+	Conf.StaticServer = strings.Replace(Conf.StaticServer, "{Port}", Conf.Port, 1)
 	if confStaticServer := confs["confStaticServer"].(string); "" != confStaticServer {
 		Conf.StaticServer = confStaticServer
 	}
 
+	time := strconv.FormatInt(time.Now().UnixNano(), 10)
+	log.Debugf("${time} [%s]", time)
+	Conf.StaticResourceVersion = strings.Replace(Conf.StaticResourceVersion, "${time}", time, 1)
 	if confStaticResourceVer := confs["confStaticResourceVer"].(string); "" != confStaticResourceVer {
 		Conf.StaticResourceVersion = confStaticResourceVer
 	}

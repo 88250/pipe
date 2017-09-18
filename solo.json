@@ -1,8 +1,8 @@
 {
-    "IP": "${ip}",
+    "Host": "localhost",
     "Port": "5897",
     "Context": "",
-    "Server": "{IP}:{Port}",
+    "Server": "{Host}:{Port}",
     "StaticServer": "",
 	"StaticResourceVersion": "${time}",
     "LogLevel": "debug",
