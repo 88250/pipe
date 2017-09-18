@@ -1,0 +1,33 @@
+<template>
+  <nav>
+    <ul>
+      <li><nuxt-link to="/">首页</nuxt-link></li>
+      <li><nuxt-link to="/post">发布文章</nuxt-link></li>
+      <li>皮肤</li>
+      <li>管理</li>
+      <li>
+        <ul>
+          <li>文章管理</li>
+          <li>评论管理</li>
+          <li>分类管理</li>
+          <li>导航管理</li>
+          <li>链接管理</li>
+          <li>用户管理</li>
+          <li>插件管理</li>
+          <li>其他</li>
+        </ul>
+      </li>
+      <li>设置</li>
+      <li>
+        <ul>
+          <li>基本信息</li>
+          <li>签名档</li>
+          <li>参数</li>
+          <li>七牛</li>
+          <li>B3log</li>
+        </ul>
+      </li>
+      <li>关于</li>
+    </ul>
+  </nav>
+</template>
