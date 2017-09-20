@@ -1,3 +1,19 @@
 {
-  "name": "Vanessa"
+  "home": "Admin Index",
+  "postArticle": "Post",
+  "skinList": "Skins",
+  "manage": "Manage",
+  "articleList": "Articles",
+  "commentList": "Comments",
+  "categoryList": "Category",
+  "navigationList": "Navigation",
+  "linkList": "Links",
+  "pluginList": "Plugins",
+  "others": "Others",
+  "setting": "Setting",
+  "configuration": "Configuration",
+  "signs": "Signs",
+  "parameters": "Parameters",
+  "qiniu": "Qiniu",
+  "about": "About"
 }

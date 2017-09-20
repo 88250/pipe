@@ -4,6 +4,7 @@
   "author": "Vanessa <lly219@gmail.com>",
   "private": true,
   "scripts": {
+    "mock": "apimocker --config ./mock/mock.json",
     "dev": "nuxt",
     "build": "nuxt build",
     "start": "nuxt start",
@@ -17,6 +18,7 @@
     "vue-i18n": "^7.2.0"
   },
   "devDependencies": {
+    "apimocker": "^0.5.1",
     "babel-eslint": "^7.2.3",
     "eslint": "^4.3.0",
     "eslint-config-standard": "^10.2.1",

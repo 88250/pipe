@@ -1,3 +1,19 @@
 {
-  "name": "李丽媛"
+  "home": "后台首页",
+  "postArticle": "发布文章",
+  "skinList": "皮肤",
+  "manage": "管理",
+  "articleList": "文章管理",
+  "commentList": "评论管理",
+  "categoryList": "分类管理",
+  "navigationList": "导航管理",
+  "linkList": "链接管理",
+  "pluginList": "插件管理",
+  "others": "其他",
+  "setting": "设置",
+  "configuration": "基本配置",
+  "signs": "签名档",
+  "param": "参数",
+  "qiniu": "七牛",
+  "about": "关于"
 }

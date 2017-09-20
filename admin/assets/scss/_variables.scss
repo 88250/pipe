@@ -1,38 +1,17 @@
-/*
- * Symphony - A modern community (forum/SNS/blog) platform written in Java.
- * Copyright (C) 2012-2017,  b3log.org & hacpai.com
- *
- * 本文件属于 Sym 商业版的一部分，请仔细阅读项目根文件夹的 LICENSE 并严格遵守相关约定
- */
-/**
- * variables.
- *
- * @author <a href="http://vanessa.b3log.org">Liyuan Li</a>
- * @version 1.6.0.0, Aug 18, 2017
- */
-
 /**
 z-index rule
-footer 40~59
-article-toc 79
-article-editor-preview 81
-add article tag tip 82
-header 83
-heatBar 84
-go-top 110
-img-preview 111
-article-editor 120~121
-editor-fullscreen 122
-editor-hints 123
-editor-toolbar-emoji 124
-dialog 200~209
+header 10
 */
 
 // Table of Contents
 // Colors
+$white: #fff !default;
 $blue: #1976d2 !default;
+$blue-lighter: #eef5f9 !default;
+$border-color: rgba(120, 130, 140, 0.13) !default;
+$text-color: #67757c !default;
+
 $blue-light: #dbedff !default;
-$blue-lighter: #f1f7fe !default;
 $red: #d23f31 !default;
 $red-light: #ffdce0 !default;
 $green: #569e3d !default;
@@ -40,7 +19,6 @@ $fade-white: rgba(255, 255, 255, .87)!default;
 $fade: rgba(0, 0, 0, .38)!default;
 $gray: rgba(0, 0, 0, .54) !default;
 $black: #3b3e43 !default;
-$black-text: rgba(0, 0, 0, .87) !default;
 $black-light: #616161 !default;
 
 // Fonts

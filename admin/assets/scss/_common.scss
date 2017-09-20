@@ -16,14 +16,13 @@ html {
     -webkit-text-size-adjust: 100%;
     -ms-text-size-adjust: 100%;
     height: 100%;
-    background-color: $theme-primary;
 }
 
 body {
     margin: 0;
     font-family: $font-family-base;
     font-size: 14px;
-    color: $black-text;
+    color: $text-color;
     background-color: #fff;
     -webkit-font-smoothing: antialiased;
 }
@@ -470,7 +469,7 @@ blockquote {
     pre > code {
         padding: 0.5em;
         border-radius: 0;
-        color: $black-text;
+        color: $text-color;
         background-color: rgba(0, 0, 0, 0.04);
         background-size: 20px 20px;
         border-radius: 5px;
@@ -608,7 +607,7 @@ blockquote {
 }
 
 .ft-a-title:hover {
-    color: $black-text;
+    color: $text-color;
 }
 
 .ft-center {
@@ -726,7 +725,7 @@ svg.avatar {
 button,
 .btn {
     cursor: pointer;
-    color: $black-text;
+    color: $text-color;
     border-radius: 3px;
     padding: 6px 12px;
     background-color: rgba(0, 0, 0, .02);

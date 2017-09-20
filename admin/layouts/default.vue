@@ -2,21 +2,34 @@
   <div>
     <solo-header/>
     <side/>
-    <nuxt/>
+    <div class="main">
+        <nuxt class="content"/>
+        <solo-footer/>
+    </div>
   </div>
 </template>
 
 <script>
   import Side from '~/components/Side'
   import SoloHeader from '~/components/Header'
+  import SoloFooter from '~/components/Footer'
 
   export default {
     components: {
       Side,
-      SoloHeader
+      SoloHeader,
+      SoloFooter
     }
   }
 </script>
 
-<style>
+<style lang="sass">
+  @import "~assets/scss/_variables.scss"
+  .main
+    padding-top: 60px
+    margin-left: 240px
+
+  .content
+    background-color: $blue-lighter
+    min-height: 360px
 </style>

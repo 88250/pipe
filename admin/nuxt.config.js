@@ -5,11 +5,11 @@ module.exports = {
   ** Headers of the page
   */
   head: {
-    title: 'solo-go-admin',
+    title: 'Solo',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: 'The admin of solo.go' }
+      { name: 'robots', content: 'none' },
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
@@ -20,14 +20,14 @@ module.exports = {
   */
   loading: { color: '#1976d2' },
   css: [
-    '@/assets/scss/main.scss'
+    '~/assets/scss/main.scss'
   ],
-  plugins: ['~/plugins/i18n.js'],
+  plugins: ['~/plugins/i18n.js', '~/plugins/icon.js'],
   /*
   ** Build configuration
   */
   build: {
-    vendor: ['vue-i18n'],
+    vendor: ['vue-i18n', '~/assets/symbol.js'],
     publicPath: env.publicPath,
     extractCSS: true,
     /*
