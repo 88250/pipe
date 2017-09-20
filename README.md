@@ -61,7 +61,7 @@ can't load package: package github.com/b3log/solo.go: read d:\gogogo\src\github.
 go build -o solo
 ```
 
-## 技术
+## 技术栈
 
 ### 皮肤
 
@@ -79,6 +79,22 @@ TBD
 
 * Web 层使用 [Gin](https://github.com/gin-gonic/gin) 框架
 * 持久层使用 [GORM](https://github.com/jinzhu/gorm) ORM 库
+
+## 作者
+
+Solo.go 的主要作者是 [Daniel](https://github.com/88250) 与 [Vanessa](https://github.com/Vanessa219)，所有贡献者可以在[这里](https://github.com/b3log/symphony/graphs/contributors)看到。
+
+我们非常期待你加入到这个项目中，无论是使用反馈还是代码补丁，都是对 Solo.go 一份满满的爱 :heart:
+
+## 社区
+
+* 到 Solo.go 官方[讨论区](https://hacpai.com/tag/Solo.go)发帖（推荐做法）
+* 来一发 [issue](https://github.com/b3log/solo.go/issues/new)
+* 加入 Solo.go 开发支持 Q 群 242561391
+
+## 开源协议
+
+Solo.go 使用 GPLv3 作为开源授权协议，请尽量遵循，即使是在中国。
 
 ## 鸣谢
 
