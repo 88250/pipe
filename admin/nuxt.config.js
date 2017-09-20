@@ -22,7 +22,11 @@ module.exports = {
   css: [
     '~/assets/scss/main.scss'
   ],
-  plugins: ['~/plugins/i18n.js', '~/plugins/icon.js'],
+  plugins: [
+    { src: '~/plugins/i18n.js', ssr: false },
+    { src: '~/plugins/icon.js', ssr: false },
+    { src: '~/plugins/nuxt-client-init.js', ssr: false }
+  ],
   mode: 'spa',
   generate: {
     dir: env.routerBase
@@ -40,7 +44,7 @@ module.exports = {
     /*
     ** Run ESLint on save
     */
-    extend (config, ctx) {
+    extend(config, ctx) {
       if (ctx.dev && ctx.isClient) {
         config.module.rules.push({
           enforce: 'pre',

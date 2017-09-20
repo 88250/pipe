@@ -8,6 +8,8 @@
   export default {
     head: {
       title: '首页'
+    },
+    mounted () {
     }
   }
 </script>

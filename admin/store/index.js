@@ -15,10 +15,11 @@ export const mutations = {
 }
 
 export const actions = {
-  async nuxtServerInit ({ commit }, { req }) {
+  async nuxtClientInit ({ commit }, { app, req }) {
     try {
       const responseData = await axios.get('http://localhost:8888/base')
       commit('setBaseInfo', responseData.data)
+      app.i18n.locale = responseData.data.lang
     } catch (e) {
       console.error(e)
     }
