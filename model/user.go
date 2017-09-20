@@ -21,5 +21,10 @@ import "github.com/jinzhu/gorm"
 // User model.
 type User struct {
 	gorm.Model
-	Name string `sql:"type:VARCHAR(16) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci"`
+
+	Name      string `gorm:"size:32"`
+	Email     string `gorm:"size:64"`
+	Password  string `gorm:"size:64"`
+	Role      string `gorm:"size:16"`
+	AvatarURL string `gorm:"size:255"`
 }
