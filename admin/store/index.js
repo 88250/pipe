@@ -1,26 +1,26 @@
 import axios from 'axios'
 
 export const state = () => ({
-  locale: 'zh',
+  locale: 'en',
   userName: 'solo',
   version: '1.0.0'
 })
 
 export const mutations = {
   setBaseInfo (state, data) {
-    state.locale = data.locale
-    state.userName = data.userName
+    state.locale = data.lang
+    state.userName = data.name
     state.version = data.version
   }
 }
 
 export const actions = {
-  async getBaseInfo ({ commit }) {
+  async nuxtServerInit ({ commit }, { req }) {
     try {
       const responseData = await axios.get('http://localhost:8888/base')
-      commit('setBaseInfo', responseData)
+      commit('setBaseInfo', responseData.data)
     } catch (e) {
-      throw e
+      console.error(e)
     }
   }
 }

@@ -23,6 +23,13 @@ module.exports = {
     '~/assets/scss/main.scss'
   ],
   plugins: ['~/plugins/i18n.js', '~/plugins/icon.js'],
+  mode: 'spa',
+  generate: {
+    dir: env.routerBase
+  },
+  router: {
+    base: `/${env.routerBase}`
+  },
   /*
   ** Build configuration
   */
