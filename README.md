@@ -82,7 +82,7 @@ TBD
 
 ## 作者
 
-Solo.go 的主要作者是 [Daniel](https://github.com/88250) 与 [Vanessa](https://github.com/Vanessa219)，所有贡献者可以在[这里](https://github.com/b3log/symphony/graphs/contributors)看到。
+Solo.go 的主要作者是 [Daniel](https://github.com/88250) 与 [Vanessa](https://github.com/Vanessa219)，所有贡献者可以在[这里](https://github.com/b3log/solo.go/graphs/contributors)看到。
 
 我们非常期待你加入到这个项目中，无论是使用反馈还是代码补丁，都是对 Solo.go 一份满满的爱 :heart:
 
