@@ -22,13 +22,16 @@ import (
 )
 
 func TestMarkdown(t *testing.T) {
-	html := Markdown(`
+	mdText := `
 1. first item
 2. second item
-`)
+`
+	html := Markdown(mdText)
 
 	shouldContains := "<li>second item</li>"
 	if !strings.Contains(html, shouldContains) {
 		t.Error("Should contain [" + shouldContains + "]")
 	}
+
+	html = Markdown(mdText)
 }

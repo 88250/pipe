@@ -17,13 +17,31 @@
 package util
 
 import (
+	"crypto/md5"
+
+	"github.com/bluele/gcache"
 	"github.com/microcosm-cc/bluemonday"
 	"github.com/russross/blackfriday"
 )
 
-func Markdown(mdText string) string {
-	unsafe := blackfriday.MarkdownCommon([]byte(mdText))
-	ret := bluemonday.UGCPolicy().SanitizeBytes(unsafe)
+var markdownCache = gcache.New(1024).LRU().Build()
 
-	return string(ret)
+func Markdown(mdText string) string {
+	mdTextBytes := []byte(mdText)
+
+	digest := md5.New()
+	digest.Write(mdTextBytes)
+	key := string(digest.Sum(nil))
+
+	ret, err := markdownCache.Get(key)
+	if nil == err {
+		return ret.(string)
+	}
+
+	unsafe := blackfriday.MarkdownCommon(mdTextBytes)
+	ret = string(bluemonday.UGCPolicy().SanitizeBytes(unsafe))
+
+	markdownCache.Set(key, ret)
+
+	return ret.(string)
 }

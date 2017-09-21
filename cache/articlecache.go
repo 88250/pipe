@@ -19,16 +19,17 @@ package cache
 
 import (
 	"github.com/b3log/solo.go/model"
+	"github.com/bluele/gcache"
 )
 
 var ArticleCache = &articleCache{
-	idHolder: map[uint]*model.Article{},
+	idHolder: gcache.New(1024).LRU().Build(),
 }
 
 type articleCache struct {
-	idHolder map[uint]*model.Article
+	idHolder gcache.Cache
 }
 
 func (cache *articleCache) Put(article *model.Article) {
-	cache.idHolder[article.ID] = article
+	cache.idHolder.Set(article.ID, article)
 }

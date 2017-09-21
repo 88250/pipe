@@ -18,16 +18,17 @@ package cache
 
 import (
 	"github.com/b3log/solo.go/model"
+	"github.com/bluele/gcache"
 )
 
 var CommentCache = &commentCache{
-	idHolder: map[uint]*model.Comment{},
+	idHolder: gcache.New(1024).LRU().Build(),
 }
 
 type commentCache struct {
-	idHolder map[uint]*model.Comment
+	idHolder gcache.Cache
 }
 
 func (cache *commentCache) Put(comment *model.Comment) {
-	cache.idHolder[comment.ID] = comment
+	cache.idHolder.Set(comment.ID, comment)
 }
