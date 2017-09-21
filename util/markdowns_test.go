@@ -15,3 +15,20 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 package util
+
+import (
+	"strings"
+	"testing"
+)
+
+func TestMarkdown(t *testing.T) {
+	html := Markdown(`
+1. first item
+2. second item
+`)
+
+	shouldContains := "<li>second item</li>"
+	if !strings.Contains(html, shouldContains) {
+		t.Error("Should contain [" + shouldContains + "]")
+	}
+}
