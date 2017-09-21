@@ -40,9 +40,14 @@ func ConnectDB() {
 		return
 	}
 
-	db.DropTableIfExists(&model.User{})
+	tables := []interface{}{
+		&model.User{}, &model.Article{}, &model.Comment{}, &model.Link{}, &model.Page{}, &model.Tag{},
+		&model.Category{}, &model.Setting{},
+	}
+
+	db.DropTableIfExists(tables...)
 	db.Set("gorm:table_options", "ENGINE=InnoDB CHARSET=utf8")
-	db.AutoMigrate(&model.User{})
+	db.AutoMigrate(tables...)
 }
 
 func DisconnectDB() {
