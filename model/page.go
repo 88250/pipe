@@ -18,6 +18,12 @@ package model
 
 import "github.com/jinzhu/gorm"
 
+// Page types.
+const (
+	PageTypePage = iota
+	PageTypeLink
+)
+
 // Page (customized navigation) model.
 type Page struct {
 	gorm.Model
@@ -27,7 +33,7 @@ type Page struct {
 	Permalink   string `gorm:"size:255"`
 	Icon        string `gorm:"size:255"`
 	Number      int    // for sorting
-	Type        int    // 1: page, 2: link
+	Type        int    // 0: page, 1: link
 	Commentable bool
 	ViewCount   int
 }
