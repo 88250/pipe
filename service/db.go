@@ -42,7 +42,7 @@ func ConnectDB() {
 
 	tables := []interface{}{
 		&model.User{}, &model.Article{}, &model.Comment{}, &model.Link{}, &model.Page{}, &model.Tag{},
-		&model.Category{}, &model.Setting{},
+		&model.Category{}, &model.Setting{}, &model.Correlation{},
 	}
 
 	db.DropTableIfExists(tables...)

@@ -18,15 +18,13 @@ package model
 
 import "github.com/jinzhu/gorm"
 
-// Comment model.
-type Comment struct {
+// Correlation model.
+//   category_id - tag_id
+//   article_id - tag_id
+type Correlation struct {
 	gorm.Model
 
-	OnID                      uint   // ID of article or page
-	OnType                    int    `gorm:"size:8"` // 1: article, 2: page
-	AuthorName                string `gorm:"size:32"`
-	AuthorAvatarURL           string `gorm:"size:255"`
-	Content                   string `gorm:"type:text"`
-	OriginalCommentID         uint   // ID of replied comment
-	OriginalCommentAuthorName string `gorm:"size:32"`
+	ID1  uint
+	ID2  uint
+	Type int `gorm:"size:16"` // 1: category-tag, 2: article-tag
 }

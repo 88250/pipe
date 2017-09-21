@@ -27,7 +27,7 @@ type Page struct {
 	Permalink   string `gorm:"size:255"`
 	Icon        string `gorm:"size:255"`
 	Number      int    // for sorting
-	Type        string // "page" or "link"
+	Type        int    // 1: page, 2: link
 	Commentable bool
 	ViewCount   int
 }
