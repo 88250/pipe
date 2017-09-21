@@ -18,6 +18,12 @@ package model
 
 import "github.com/jinzhu/gorm"
 
+// Setting names.
+const (
+	SettingBlogTitle = iota
+	SettingBlogSubtitle
+)
+
 // Setting model.
 type Setting struct {
 	gorm.Model
@@ -25,4 +31,6 @@ type Setting struct {
 	Category string `gorm:"size:32"`
 	Name     string `gorm:"size:32"`
 	Value    string `gorm:"type:text"`
+
+	TenantID uint
 }

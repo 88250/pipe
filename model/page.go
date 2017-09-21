@@ -36,4 +36,6 @@ type Page struct {
 	Type        int    // 0: page, 1: link
 	Commentable bool
 	ViewCount   int
+
+	TenantID uint
 }

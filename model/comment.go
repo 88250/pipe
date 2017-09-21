@@ -35,4 +35,6 @@ type Comment struct {
 	Content                   string `gorm:"type:text"`
 	OriginalCommentID         uint   // ID of replied comment
 	OriginalCommentAuthorName string `gorm:"size:32"`
+
+	TenantID uint
 }

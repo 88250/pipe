@@ -27,4 +27,6 @@ type User struct {
 	Password  string `gorm:"size:64"`
 	Role      string `gorm:"size:16"`
 	AvatarURL string `gorm:"size:255"`
+
+	TenantID uint
 }

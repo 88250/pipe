@@ -14,6 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+// Package model defines entity structures and ORM.
 package model
 
 import "github.com/jinzhu/gorm"
@@ -33,4 +34,6 @@ type Article struct {
 	Commentable bool
 	Password    string `gorm:"size:16"`
 	ViewCount   int
+
+	TenantID uint
 }

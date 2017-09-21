@@ -23,4 +23,6 @@ type Tag struct {
 	gorm.Model
 
 	Title string `gorm:"size:128"`
+
+	TenantID uint
 }
