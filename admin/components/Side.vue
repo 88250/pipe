@@ -35,9 +35,6 @@
               <nuxt-link to="/users/management">{{ $t('userList') }}</nuxt-link>
             </li>
             <li>
-              <nuxt-link to="/plugins/management">{{ $t('pluginList') }}</nuxt-link>
-            </li>
-            <li>
               <nuxt-link to="/others/management">{{ $t('others') }}</nuxt-link>
             </li>
           </ul>
