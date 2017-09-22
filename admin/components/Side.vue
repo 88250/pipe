@@ -148,6 +148,7 @@
         color: #607d8b
         border-left: 3px solid transparent
         width: 100%
+        box-sizing: border-box
 
         &:hover
           color: $blue
