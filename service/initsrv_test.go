@@ -14,31 +14,15 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-// Package model defines entity structures and ORM.
-package model
+package service
 
-import "github.com/jinzhu/gorm"
-
-const (
-	ArticleStatusPublished = iota
-	ArticleStatusDraft
+import (
+	"testing"
 )
 
-// Article model.
-type Article struct {
-	gorm.Model
+func TestInitBlog(t *testing.T) {
+	ConnectDB()
 
-	AuthorID    uint
-	Title       string `gorm:"size:128"`
-	Abstract    string `gorm:"type:text"`
-	Tags        string `gorm:"size:128"`
-	Content     string `gorm:"type:text"`
-	Permalink   string `gorm:"size:255"`
-	Status      int
-	Topped      bool
-	Commentable bool
-	Password    string `gorm:"size:16"`
-	ViewCount   int
+	Init.InitBlog()
 
-	TenantID uint
 }

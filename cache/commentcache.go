@@ -21,7 +21,7 @@ import (
 	"github.com/bluele/gcache"
 )
 
-var CommentCache = &commentCache{
+var Comment = &commentCache{
 	idHolder: gcache.New(1024).LRU().Build(),
 }
 

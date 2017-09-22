@@ -18,10 +18,49 @@ package model
 
 import "github.com/jinzhu/gorm"
 
-// Setting names.
+// Setting names of category "preference".
 const (
-	SettingBlogTitle = iota
-	SettingBlogSubtitle
+	SettingCategoryPreference = "preference"
+
+	SettingNamePreferenceArticleListPageSize        = "articleListPageSize"
+	SettingNamePreferenceArticleListWindowSize      = "articleListWindowSize"
+	SettingNamePreferenceArticleListStyle           = "articleListStyle"
+	SettingNamePreferenceBlogSubtitle               = "blogSubtitle"
+	SettingNamePreferenceBlogTitle                  = "blogTitle"
+	SettingNamePreferenceCommentable                = "commentable"
+	SettingNamePreferenceExternalArticleListSize    = "externalRelevantArticleListSize"
+	SettingNamePreferenceFeedOutputSize             = "feedOutputSize"
+	SettingNamePreferenceFeedOutputMode             = "feedOutputMode"
+	SettingNamePreferenceFooter                     = "footer"
+	SettingNamePreferenceHeader                     = "header"
+	SettingNamePreferenceLocale                     = "locale"
+	SettingNamePreferenceMetaDes                    = "metaDes"
+	SettingNamePreferenceMetaKey                    = "metaKey"
+	SettingNamePreferenceMostCommentArticleListSize = "mostCommentArticleListSize"
+	SettingNamePreferenceMostUseTagListSize         = "mostUseTagListSize"
+	SettingNamePreferenceMostViewArticleListSize    = "mostViewArticleListSize"
+	SettingNamePreferenceNoticeBoard                = "noticeBoard"
+	SettingNamePreferenceQiniuAK                    = "qiniuAK"
+	SettingNamePreferenceQiniuBucket                = "qiniuBucket"
+	SettingNamePreferenceQiniuDomain                = "qiniuDomain"
+	SettingNamePreferenceQiniuSK                    = "qiniuSK"
+	SettingNamePreferenceRandomArticleListSize      = "randomArticleListSize"
+	SettingNamePreferenceRecentCommentListSize      = "recentCommentListSize"
+	SettingNamePreferenceRelevantArticleListSize    = "relevantArticleListSize"
+	SettingNamePreferenceSign                       = "sign"
+	SettingNamePreferenceSkin                       = "skin"
+	SettingNamePreferenceTimezone                   = "timezone"
+	SettingNamePreferenceVer                        = "version"
+)
+
+// Setting values of category "preference".
+const (
+	SettingPreferenceArticleListStyleValueTitle         = "title"
+	SettingPreferenceArticleListStyleValueTitleAbstract = "titleAbstract"
+	SettingPreferenceArticleListStyleValueTitleContent  = "titleContent"
+
+	SettingPreferenceFeedOutputModeValueAbstract = "abstract"
+	SettingPreferenceFeedOutputModeValueFull     = "full"
 )
 
 // Setting model.

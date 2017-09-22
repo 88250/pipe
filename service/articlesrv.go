@@ -14,31 +14,25 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-// Package model defines entity structures and ORM.
-package model
+package service
 
-import "github.com/jinzhu/gorm"
+import "github.com/b3log/solo.go/model"
 
-const (
-	ArticleStatusPublished = iota
-	ArticleStatusDraft
-)
+var Article = &articleService{}
 
-// Article model.
-type Article struct {
-	gorm.Model
+type articleService struct {
+}
 
-	AuthorID    uint
-	Title       string `gorm:"size:128"`
-	Abstract    string `gorm:"type:text"`
-	Tags        string `gorm:"size:128"`
-	Content     string `gorm:"type:text"`
-	Permalink   string `gorm:"size:255"`
-	Status      int
-	Topped      bool
-	Commentable bool
-	Password    string `gorm:"size:16"`
-	ViewCount   int
+func (srv *articleService) AddArticle(article *model.Article) error {
+	tx := db.Begin()
 
-	TenantID uint
+	if err := tx.Create(article).Error; nil != err {
+		tx.Rollback()
+
+		return err
+	}
+
+	tx.Commit()
+
+	return nil
 }
