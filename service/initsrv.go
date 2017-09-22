@@ -16,23 +16,36 @@
 
 package service
 
-import "github.com/b3log/solo.go/model"
+import (
+	"github.com/b3log/solo.go/model"
+	"github.com/jinzhu/gorm"
+)
 
-var Article = &articleService{}
+var Init = &initService{}
 
-type articleService struct {
+type initService struct {
 }
 
-func (srv *articleService) AddArticle(article *model.Article) error {
+func (srv *initService) InitBlog() {
 	tx := db.Begin()
 
-	if err := tx.Create(article).Error; nil != err {
+	if nil != initPreference(tx) {
 		tx.Rollback()
-
-		return err
 	}
 
 	tx.Commit()
+}
+
+func initPreference(tx *gorm.DB) error {
+	articleListPageSize := &model.Setting{
+		Category: model.SettingCategoryPreference,
+		Name:     model.SettingNamePreferenceArticleListPageSize,
+		Value:    "20",
+	}
+
+	if err := tx.Create(articleListPageSize).Error; nil != err {
+		return err
+	}
 
 	return nil
 }

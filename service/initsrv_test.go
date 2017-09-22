@@ -16,23 +16,13 @@
 
 package service
 
-import "github.com/b3log/solo.go/model"
+import (
+	"testing"
+)
 
-var Article = &articleService{}
+func TestInitBlog(t *testing.T) {
+	ConnectDB()
 
-type articleService struct {
-}
+	Init.InitBlog()
 
-func (srv *articleService) AddArticle(article *model.Article) error {
-	tx := db.Begin()
-
-	if err := tx.Create(article).Error; nil != err {
-		tx.Rollback()
-
-		return err
-	}
-
-	tx.Commit()
-
-	return nil
 }

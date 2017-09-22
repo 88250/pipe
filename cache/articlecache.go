@@ -22,7 +22,7 @@ import (
 	"github.com/bluele/gcache"
 )
 
-var ArticleCache = &articleCache{
+var Article = &articleCache{
 	idHolder: gcache.New(1024).LRU().Build(),
 }
 
