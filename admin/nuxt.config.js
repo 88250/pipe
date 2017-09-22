@@ -20,7 +20,6 @@ module.exports = {
   */
   loading: { color: '#1976d2' },
   css: [
-    '~/assets/vuetify.css',
     '~/assets/scss/main.scss'
   ],
   plugins: [
