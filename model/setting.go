@@ -14,23 +14,23 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-package controller
+package model
 
-import (
-	"net/http"
+import "github.com/jinzhu/gorm"
 
-	"github.com/b3log/solo.go/util"
-	"github.com/gin-gonic/gin"
+// Setting names.
+const (
+	SettingBlogTitle = iota
+	SettingBlogSubtitle
 )
 
-func pingHandler(c *gin.Context) {
-	c.String(http.StatusOK, "pong")
-}
+// Setting model.
+type Setting struct {
+	gorm.Model
 
-func statusHandler(c *gin.Context) {
-	result := util.NewResult()
-	data := map[string]interface{}{}
-	data["articleCount"] = 1
+	Category string `gorm:"size:32"`
+	Name     string `gorm:"size:32"`
+	Value    string `gorm:"type:text"`
 
-	c.JSON(http.StatusOK, result)
+	TenantID uint
 }

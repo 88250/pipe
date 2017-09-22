@@ -14,23 +14,34 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-package controller
+package util
 
 import (
-	"net/http"
+	"crypto/md5"
 
-	"github.com/b3log/solo.go/util"
-	"github.com/gin-gonic/gin"
+	"github.com/bluele/gcache"
+	"github.com/microcosm-cc/bluemonday"
+	"github.com/russross/blackfriday"
 )
 
-func pingHandler(c *gin.Context) {
-	c.String(http.StatusOK, "pong")
-}
+var markdownCache = gcache.New(1024).LRU().Build()
 
-func statusHandler(c *gin.Context) {
-	result := util.NewResult()
-	data := map[string]interface{}{}
-	data["articleCount"] = 1
+func Markdown(mdText string) string {
+	mdTextBytes := []byte(mdText)
 
-	c.JSON(http.StatusOK, result)
+	digest := md5.New()
+	digest.Write(mdTextBytes)
+	key := string(digest.Sum(nil))
+
+	ret, err := markdownCache.Get(key)
+	if nil == err {
+		return ret.(string)
+	}
+
+	unsafe := blackfriday.MarkdownCommon(mdTextBytes)
+	ret = string(bluemonday.UGCPolicy().SanitizeBytes(unsafe))
+
+	markdownCache.Set(key, ret)
+
+	return ret.(string)
 }

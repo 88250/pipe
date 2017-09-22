@@ -14,23 +14,22 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-package controller
+// Package cache includes caches.
+package cache
 
 import (
-	"net/http"
-
-	"github.com/b3log/solo.go/util"
-	"github.com/gin-gonic/gin"
+	"github.com/b3log/solo.go/model"
+	"github.com/bluele/gcache"
 )
 
-func pingHandler(c *gin.Context) {
-	c.String(http.StatusOK, "pong")
+var ArticleCache = &articleCache{
+	idHolder: gcache.New(1024).LRU().Build(),
 }
 
-func statusHandler(c *gin.Context) {
-	result := util.NewResult()
-	data := map[string]interface{}{}
-	data["articleCount"] = 1
+type articleCache struct {
+	idHolder gcache.Cache
+}
 
-	c.JSON(http.StatusOK, result)
+func (cache *articleCache) Put(article *model.Article) {
+	cache.idHolder.Set(article.ID, article)
 }

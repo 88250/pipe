@@ -14,23 +14,27 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-package controller
+package model
 
-import (
-	"net/http"
+import "github.com/jinzhu/gorm"
 
-	"github.com/b3log/solo.go/util"
-	"github.com/gin-gonic/gin"
+// Comment on types.
+const (
+	CommentOnTypeArticle = iota
+	CommentOnTypePage
 )
 
-func pingHandler(c *gin.Context) {
-	c.String(http.StatusOK, "pong")
-}
+// Comment model.
+type Comment struct {
+	gorm.Model
 
-func statusHandler(c *gin.Context) {
-	result := util.NewResult()
-	data := map[string]interface{}{}
-	data["articleCount"] = 1
+	OnID                      uint   // ID of article or page
+	OnType                    int    `gorm:"size:8"` // 0: article, 1: page
+	AuthorName                string `gorm:"size:32"`
+	AuthorAvatarURL           string `gorm:"size:255"`
+	Content                   string `gorm:"type:text"`
+	OriginalCommentID         uint   // ID of replied comment
+	OriginalCommentAuthorName string `gorm:"size:32"`
 
-	c.JSON(http.StatusOK, result)
+	TenantID uint
 }

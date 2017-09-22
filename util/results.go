@@ -1,4 +1,4 @@
-// Solo.go - A small but beautiful golang blogging system, Solo's golang version.
+// Solo.go - A small and beautiful golang blogging system, Solo's golang version.
 // Copyright (C) 2017, b3log.org
 //
 // This program is free software: you can redistribute it and/or modify
@@ -19,16 +19,16 @@ package util
 // Result.
 type Result struct {
 	Succ bool        `json:"succ"` // successful or not
-	Code string      `json:"code"` // return code
+	Code int         `json:"code"` // return code
 	Msg  string      `json:"msg"`  // message
 	Data interface{} `json:"data"` // data object
 }
 
-// NewResult creates a result with Succ=true, Code="0", Msg="", Data=nil.
+// NewResult creates a result with Succ=true, Code=0, Msg="", Data=nil.
 func NewResult() *Result {
 	return &Result{
 		Succ: true,
-		Code: "0",
+		Code: 0,
 		Msg:  "",
 		Data: nil,
 	}

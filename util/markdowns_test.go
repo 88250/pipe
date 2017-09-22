@@ -14,23 +14,24 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-package controller
+package util
 
 import (
-	"net/http"
-
-	"github.com/b3log/solo.go/util"
-	"github.com/gin-gonic/gin"
+	"strings"
+	"testing"
 )
 
-func pingHandler(c *gin.Context) {
-	c.String(http.StatusOK, "pong")
-}
+func TestMarkdown(t *testing.T) {
+	mdText := `
+1. first item
+2. second item
+`
+	html := Markdown(mdText)
 
-func statusHandler(c *gin.Context) {
-	result := util.NewResult()
-	data := map[string]interface{}{}
-	data["articleCount"] = 1
+	shouldContains := "<li>second item</li>"
+	if !strings.Contains(html, shouldContains) {
+		t.Error("Should contain [" + shouldContains + "]")
+	}
 
-	c.JSON(http.StatusOK, result)
+	html = Markdown(mdText)
 }

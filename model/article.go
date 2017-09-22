@@ -14,23 +14,26 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-package controller
+// Package model defines entity structures and ORM.
+package model
 
-import (
-	"net/http"
+import "github.com/jinzhu/gorm"
 
-	"github.com/b3log/solo.go/util"
-	"github.com/gin-gonic/gin"
-)
+// Article model.
+type Article struct {
+	gorm.Model
 
-func pingHandler(c *gin.Context) {
-	c.String(http.StatusOK, "pong")
-}
+	AuthorID    uint
+	Title       string `gorm:"size:128"`
+	Abstract    string `gorm:"type:text"`
+	Tags        string `gorm:"size:128"`
+	Content     string `gorm:"type:text"`
+	Permalink   string `gorm:"size:255"`
+	Status      int
+	Topped      bool
+	Commentable bool
+	Password    string `gorm:"size:16"`
+	ViewCount   int
 
-func statusHandler(c *gin.Context) {
-	result := util.NewResult()
-	data := map[string]interface{}{}
-	data["articleCount"] = 1
-
-	c.JSON(http.StatusOK, result)
+	TenantID uint
 }

@@ -4,7 +4,7 @@
     "Context": "",
     "Server": "{Host}:{Port}",
     "StaticServer": "",
-	"StaticResourceVersion": "${time}",
+    "StaticResourceVersion": "${time}",
     "LogLevel": "debug",
     "HTTPSessionMaxAge": 86400,
     "RuntimeMode": "dev",

@@ -14,23 +14,25 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-package controller
+package model
 
-import (
-	"net/http"
+import "github.com/jinzhu/gorm"
 
-	"github.com/b3log/solo.go/util"
-	"github.com/gin-gonic/gin"
+// Correlation types.
+const (
+	CorrelationCategoryTag = iota
+	CorrelationArticleTag
 )
 
-func pingHandler(c *gin.Context) {
-	c.String(http.StatusOK, "pong")
-}
+// Correlation model.
+//   category_id - tag_id
+//   article_id - tag_id
+type Correlation struct {
+	gorm.Model
 
-func statusHandler(c *gin.Context) {
-	result := util.NewResult()
-	data := map[string]interface{}{}
-	data["articleCount"] = 1
+	ID1  uint
+	ID2  uint
+	Type int `gorm:"size:16"` // 0: category-tag, 1: article-tag
 
-	c.JSON(http.StatusOK, result)
+	TenantID uint
 }

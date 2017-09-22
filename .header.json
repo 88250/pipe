@@ -4,7 +4,9 @@
     "Includes": [
         "**.go"
     ],
-    "Excludes": [],
+    "Excludes": [
+        "vendor/**"
+    ],
     "UseDefaultExcludes": true,
     "Properties": {
         "Year": "2017",

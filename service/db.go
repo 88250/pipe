@@ -1,4 +1,4 @@
-// Solo.go - A small but beautiful golang blogging system, Solo's golang version.
+// Solo.go - A small and beautiful golang blogging system, Solo's golang version.
 // Copyright (C) 2017, b3log.org
 //
 // This program is free software: you can redistribute it and/or modify
@@ -40,9 +40,14 @@ func ConnectDB() {
 		return
 	}
 
-	db.DropTableIfExists(&model.User{})
+	tables := []interface{}{
+		&model.User{}, &model.Article{}, &model.Comment{}, &model.Link{}, &model.Page{}, &model.Tag{},
+		&model.Category{}, &model.Setting{}, &model.Correlation{},
+	}
+
+	db.DropTableIfExists(tables...)
 	db.Set("gorm:table_options", "ENGINE=InnoDB CHARSET=utf8")
-	db.AutoMigrate(&model.User{})
+	db.AutoMigrate(tables...)
 }
 
 func DisconnectDB() {

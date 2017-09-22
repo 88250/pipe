@@ -3,6 +3,12 @@
 	"ignore": "test",
 	"package": [
 		{
+			"checksumSHA1": "zhU/kwuwuLTsuB3LcBwr/M5RoII=",
+			"path": "github.com/bluele/gcache",
+			"revision": "6748215c018ea9d23fd269d499a3553c94d3ddf9",
+			"revisionTime": "2017-09-06T03:03:44Z"
+		},
+		{
 			"checksumSHA1": "BhMowD2DIKSd9qq8Pzh7Y3mh2/w=",
 			"path": "github.com/gin-contrib/sse",
 			"revision": "22d885f9ecc78bf4ee5d72b937e4bbcdc58e8cae",
@@ -63,6 +69,18 @@
 			"revisionTime": "2017-03-22T23:44:13Z"
 		},
 		{
+			"checksumSHA1": "X9TdMAuo7FEU3hduorXhS0FBlP4=",
+			"path": "github.com/microcosm-cc/bluemonday",
+			"revision": "68fecaef60268522d2ac3f0123cec9d3bcab7b6e",
+			"revisionTime": "2017-08-30T06:24:24Z"
+		},
+		{
+			"checksumSHA1": "QpZvwREsmeW2kljffZbv7QVVfhk=",
+			"path": "github.com/russross/blackfriday",
+			"revision": "4048872b16cc0fc2c5fd9eacf0ed2c2fedaa0c8c",
+			"revisionTime": "2017-07-28T17:53:26Z"
+		},
+		{
 			"checksumSHA1": "9jFFVttlMr6qQ7e+IrcT20XmFQY=",
 			"path": "github.com/sirupsen/logrus",
 			"revision": "61e43dc76f7ee59a82bdf3d71033dc12bea4c77d",
@@ -73,6 +91,18 @@
 			"path": "github.com/ugorji/go/codec",
 			"revision": "8c0409fcbb70099c748d71f714529204975f6c3f",
 			"revisionTime": "2017-08-26T15:59:43Z"
+		},
+		{
+			"checksumSHA1": "vqc3a+oTUGX8PmD0TS+qQ7gmN8I=",
+			"path": "golang.org/x/net/html",
+			"revision": "a6577fac2d73be281a500b310739095313165611",
+			"revisionTime": "2017-03-08T20:54:49Z"
+		},
+		{
+			"checksumSHA1": "00eQaGynDYrv3tL+C7l9xH0IDZg=",
+			"path": "golang.org/x/net/html/atom",
+			"revision": "a6577fac2d73be281a500b310739095313165611",
+			"revisionTime": "2017-03-08T20:54:49Z"
 		},
 		{
 			"checksumSHA1": "Tkb1hBdBWeO7SGjixS2Hm48F6+s=",
