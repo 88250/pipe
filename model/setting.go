@@ -53,6 +53,16 @@ const (
 	SettingNamePreferenceVer                        = "version"
 )
 
+// Setting values of category "preference".
+const (
+	SettingPreferenceArticleListStyleValueTitle         = "title"
+	SettingPreferenceArticleListStyleValueTitleAbstract = "titleAbstract"
+	SettingPreferenceArticleListStyleValueTitleContent  = "titleContent"
+
+	SettingPreferenceFeedOutputModeValueAbstract = "abstract"
+	SettingPreferenceFeedOutputModeValueFull     = "full"
+)
+
 // Setting model.
 type Setting struct {
 	gorm.Model

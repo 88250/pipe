@@ -37,13 +37,178 @@ func (srv *initService) InitBlog() {
 }
 
 func initPreference(tx *gorm.DB) error {
-	articleListPageSize := &model.Setting{
+	if err := tx.Create(&model.Setting{
 		Category: model.SettingCategoryPreference,
 		Name:     model.SettingNamePreferenceArticleListPageSize,
-		Value:    "20",
+		Value:    "20"}).Error; nil != err {
+		return err
 	}
-
-	if err := tx.Create(articleListPageSize).Error; nil != err {
+	if err := tx.Create(&model.Setting{
+		Category: model.SettingCategoryPreference,
+		Name:     model.SettingNamePreferenceArticleListWindowSize,
+		Value:    "20"}).Error; nil != err {
+		return err
+	}
+	if err := tx.Create(&model.Setting{
+		Category: model.SettingCategoryPreference,
+		Name:     model.SettingNamePreferenceArticleListStyle,
+		Value:    model.SettingPreferenceArticleListStyleValueTitleAbstract}).Error; nil != err {
+		return err
+	}
+	if err := tx.Create(&model.Setting{
+		Category: model.SettingCategoryPreference,
+		Name:     model.SettingNamePreferenceBlogSubtitle,
+		Value:    "golang 开源博客"}).Error; nil != err {
+		return err
+	}
+	if err := tx.Create(&model.Setting{
+		Category: model.SettingCategoryPreference,
+		Name:     model.SettingNamePreferenceBlogTitle,
+		Value:    "Solo.go 示例"}).Error; nil != err {
+		return err
+	}
+	if err := tx.Create(&model.Setting{
+		Category: model.SettingCategoryPreference,
+		Name:     model.SettingNamePreferenceCommentable,
+		Value:    "true"}).Error; nil != err {
+		return err
+	}
+	if err := tx.Create(&model.Setting{
+		Category: model.SettingCategoryPreference,
+		Name:     model.SettingNamePreferenceExternalArticleListSize,
+		Value:    "7"}).Error; nil != err {
+		return err
+	}
+	if err := tx.Create(&model.Setting{
+		Category: model.SettingCategoryPreference,
+		Name:     model.SettingNamePreferenceFeedOutputSize,
+		Value:    "20"}).Error; nil != err {
+		return err
+	}
+	if err := tx.Create(&model.Setting{
+		Category: model.SettingCategoryPreference,
+		Name:     model.SettingNamePreferenceFeedOutputMode,
+		Value:    model.SettingPreferenceFeedOutputModeValueAbstract}).Error; nil != err {
+		return err
+	}
+	if err := tx.Create(&model.Setting{
+		Category: model.SettingCategoryPreference,
+		Name:     model.SettingNamePreferenceFooter,
+		Value:    "<!-- 这里可用于放置备案信息等，支持脚本 -->"}).Error; nil != err {
+		return err
+	}
+	if err := tx.Create(&model.Setting{
+		Category: model.SettingCategoryPreference,
+		Name:     model.SettingNamePreferenceHeader,
+		Value:    "<!-- 这里可用于插入第三方统计等，支持脚本 -->"}).Error; nil != err {
+		return err
+	}
+	if err := tx.Create(&model.Setting{
+		Category: model.SettingCategoryPreference,
+		Name:     model.SettingNamePreferenceLocale,
+		Value:    "zh_CN"}).Error; nil != err {
+		return err
+	}
+	if err := tx.Create(&model.Setting{
+		Category: model.SettingCategoryPreference,
+		Name:     model.SettingNamePreferenceMetaDes,
+		Value:    "小而美的 golang 博客系统"}).Error; nil != err {
+		return err
+	}
+	if err := tx.Create(&model.Setting{
+		Category: model.SettingCategoryPreference,
+		Name:     model.SettingNamePreferenceMetaKey,
+		Value:    "Solo.go,golang,博客,开源"}).Error; nil != err {
+		return err
+	}
+	if err := tx.Create(&model.Setting{
+		Category: model.SettingCategoryPreference,
+		Name:     model.SettingNamePreferenceMostCommentArticleListSize,
+		Value:    "7"}).Error; nil != err {
+		return err
+	}
+	if err := tx.Create(&model.Setting{
+		Category: model.SettingCategoryPreference,
+		Name:     model.SettingNamePreferenceMostUseTagListSize,
+		Value:    "15"}).Error; nil != err {
+		return err
+	}
+	if err := tx.Create(&model.Setting{
+		Category: model.SettingCategoryPreference,
+		Name:     model.SettingNamePreferenceMostViewArticleListSize,
+		Value:    "7"}).Error; nil != err {
+		return err
+	}
+	if err := tx.Create(&model.Setting{
+		Category: model.SettingCategoryPreference,
+		Name:     model.SettingNamePreferenceNoticeBoard,
+		Value:    "<!-- 公告栏，支持脚本 -->"}).Error; nil != err {
+		return err
+	}
+	if err := tx.Create(&model.Setting{
+		Category: model.SettingCategoryPreference,
+		Name:     model.SettingNamePreferenceQiniuAK,
+		Value:    ""}).Error; nil != err {
+		return err
+	}
+	if err := tx.Create(&model.Setting{
+		Category: model.SettingCategoryPreference,
+		Name:     model.SettingNamePreferenceQiniuBucket,
+		Value:    ""}).Error; nil != err {
+		return err
+	}
+	if err := tx.Create(&model.Setting{
+		Category: model.SettingCategoryPreference,
+		Name:     model.SettingNamePreferenceQiniuDomain,
+		Value:    ""}).Error; nil != err {
+		return err
+	}
+	if err := tx.Create(&model.Setting{
+		Category: model.SettingCategoryPreference,
+		Name:     model.SettingNamePreferenceQiniuSK,
+		Value:    ""}).Error; nil != err {
+		return err
+	}
+	if err := tx.Create(&model.Setting{
+		Category: model.SettingCategoryPreference,
+		Name:     model.SettingNamePreferenceRandomArticleListSize,
+		Value:    "7"}).Error; nil != err {
+		return err
+	}
+	if err := tx.Create(&model.Setting{
+		Category: model.SettingCategoryPreference,
+		Name:     model.SettingNamePreferenceRecentCommentListSize,
+		Value:    "7"}).Error; nil != err {
+		return err
+	}
+	if err := tx.Create(&model.Setting{
+		Category: model.SettingCategoryPreference,
+		Name:     model.SettingNamePreferenceRelevantArticleListSize,
+		Value:    "7"}).Error; nil != err {
+		return err
+	}
+	if err := tx.Create(&model.Setting{
+		Category: model.SettingCategoryPreference,
+		Name:     model.SettingNamePreferenceSign,
+		Value:    "默认的签名档"}).Error; nil != err {
+		return err
+	}
+	if err := tx.Create(&model.Setting{
+		Category: model.SettingCategoryPreference,
+		Name:     model.SettingNamePreferenceSkin,
+		Value:    "classic"}).Error; nil != err {
+		return err
+	}
+	if err := tx.Create(&model.Setting{
+		Category: model.SettingCategoryPreference,
+		Name:     model.SettingNamePreferenceTimezone,
+		Value:    "Asia/Shanghai"}).Error; nil != err {
+		return err
+	}
+	if err := tx.Create(&model.Setting{
+		Category: model.SettingCategoryPreference,
+		Name:     model.SettingNamePreferenceVer,
+		Value:    "1.0.0"}).Error; nil != err {
 		return err
 	}
 
