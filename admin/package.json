@@ -15,7 +15,8 @@
   "dependencies": {
     "axios": "^0.16.2",
     "nuxt": "^1.0.0-rc11",
-    "vue-i18n": "^7.2.0"
+    "vue-i18n": "^7.2.0",
+    "vuetify": "^0.15.7"
   },
   "devDependencies": {
     "apimocker": "^0.5.1",

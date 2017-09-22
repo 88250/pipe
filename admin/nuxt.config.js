@@ -12,7 +12,7 @@ module.exports = {
       { name: 'robots', content: 'none' },
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
     ]
   },
   /*
@@ -20,11 +20,13 @@ module.exports = {
   */
   loading: { color: '#1976d2' },
   css: [
+    '~/assets/vuetify.css',
     '~/assets/scss/main.scss'
   ],
   plugins: [
     { src: '~/plugins/i18n.js', ssr: false },
     { src: '~/plugins/icon.js', ssr: false },
+    { src: '~/plugins/vuetify.js', ssr: false },
     { src: '~/plugins/nuxt-client-init.js', ssr: false }
   ],
   mode: 'spa',
@@ -38,13 +40,13 @@ module.exports = {
   ** Build configuration
   */
   build: {
-    vendor: ['vue-i18n', '~/assets/symbol.js'],
+    vendor: ['vue-i18n', '~/assets/symbol.js', 'axios', 'vuetify'],
     publicPath: env.publicPath,
     extractCSS: true,
     /*
     ** Run ESLint on save
     */
-    extend(config, ctx) {
+    extend (config, ctx) {
       if (ctx.dev && ctx.isClient) {
         config.module.rules.push({
           enforce: 'pre',

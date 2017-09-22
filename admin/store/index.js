@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 export const state = () => ({
-  locale: 'en',
+  locale: 'zh_CN',
   userName: 'solo',
   version: '1.0.0'
 })

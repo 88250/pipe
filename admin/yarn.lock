@@ -5903,6 +5903,10 @@ vue@~2.4.2:
   version "2.4.4"
   resolved "http://registry.npm.taobao.org/vue/download/vue-2.4.4.tgz#ea9550b96a71465fd2b8b17b61673b3561861789"
 
+vuetify@^0.15.7:
+  version "0.15.7"
+  resolved "http://registry.npm.taobao.org/vuetify/download/vuetify-0.15.7.tgz#a712d646485d22dfd8b7ab2e70fb378582beb9d7"
+
 vuex@^2.4.0:
   version "2.4.0"
   resolved "http://registry.npm.taobao.org/vuex/download/vuex-2.4.0.tgz#e1d0430646282b40007fdd06ec6ae88a9f5a1e14"
