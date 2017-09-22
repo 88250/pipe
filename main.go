@@ -185,7 +185,7 @@ func getLogLevel(level string) log.Level {
 	level = strings.ToLower(level)
 
 	switch level {
-	case "debug":
+	case "trace", "debug":
 		return log.DebugLevel
 	case "info":
 		return log.InfoLevel
