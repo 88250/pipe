@@ -17,7 +17,10 @@
 package service
 
 import (
+	"path/filepath"
+
 	"github.com/b3log/solo.go/model"
+	"github.com/b3log/solo.go/util"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/sqlite"
 	log "github.com/sirupsen/logrus"
@@ -32,8 +35,14 @@ func ConnectDB() {
 		return tablePrefix + defaultTableName
 	}
 
-	var err error
-	db, err = gorm.Open("sqlite3", "solo.go.db")
+	userHome, err := util.UserHome()
+	if nil != err {
+		log.Fatal("can't get user home: " + err.Error())
+	}
+
+	log.Debugf("user home [%s]", userHome)
+
+	db, err = gorm.Open("sqlite3", filepath.Join(userHome, "solo.go.db"))
 	if nil != err {
 		log.Error(err)
 
@@ -46,7 +55,7 @@ func ConnectDB() {
 	}
 
 	db.DropTableIfExists(tables...)
-	db.Set("gorm:table_options", "ENGINE=InnoDB CHARSET=utf8")
+	//db.Set("gorm:table_options", "ENGINE=InnoDB CHARSET=utf8")
 	db.AutoMigrate(tables...)
 }
 
