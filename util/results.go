@@ -18,13 +18,12 @@ package util
 
 // Result.
 type Result struct {
-	Succ bool        `json:"succ"` // successful or not
-	Code int         `json:"code"` // return code
+	Code int         `json:"code"` // return code, 0 for succ
 	Msg  string      `json:"msg"`  // message
 	Data interface{} `json:"data"` // data object
 }
 
-// NewResult creates a result with Succ=true, Code=0, Msg="", Data=nil.
+// NewResult creates a result with Code=0, Msg="", Data=nil.
 func NewResult() *Result {
 	return &Result{
 		Succ: true,

@@ -65,7 +65,7 @@ func init() {
 
 	f, err := os.Create(*confLogPath)
 	if nil != err {
-		log.Fatal("Creates log file [" + *confLogPath + "] failed: " + err.Error())
+		log.Fatal("creates log file [" + *confLogPath + "] failed: " + err.Error())
 	}
 	log.SetOutput(io.MultiWriter(f, os.Stdout))
 
@@ -87,7 +87,7 @@ func main() {
 
 	handleSignal(server)
 
-	log.Infof("Solo is running [%s]", Conf.Server)
+	log.Infof("Solo.go is running [%s]", Conf.Server)
 
 	server.ListenAndServe()
 }
@@ -158,7 +158,7 @@ func initConf(args *map[string]interface{}) {
 		Conf.StaticResourceVersion = confStaticResourceVer
 	}
 
-	log.Debugf("Conf [%+v]", Conf)
+	log.Debugf("configurations [%+v]", Conf)
 }
 
 // handleSignal handles system signal for graceful shutdown.
@@ -168,7 +168,7 @@ func handleSignal(server *http.Server) {
 
 	go func() {
 		s := <-c
-		log.Infof("Got signal [%s], exiting Solo now", s)
+		log.Infof("got signal [%s], exiting Solo.go now", s)
 		if err := server.Close(); nil != err {
 			log.Error("server close failed: ", err)
 		}

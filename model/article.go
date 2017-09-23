@@ -19,6 +19,7 @@ package model
 
 import "github.com/jinzhu/gorm"
 
+// Article statuses.
 const (
 	ArticleStatusPublished = iota
 	ArticleStatusDraft
