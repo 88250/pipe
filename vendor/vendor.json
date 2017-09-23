@@ -39,20 +39,20 @@
 			"revisionTime": "2017-09-11T14:33:19Z"
 		},
 		{
-			"checksumSHA1": "QD6LqgLz2JMxXqns8TaxtK9AuHs=",
-			"path": "github.com/go-sql-driver/mysql",
-			"revision": "2e00b5cd70399450106cec6431c2e2ce3cae5034",
-			"revisionTime": "2016-12-24T12:10:19Z"
-		},
-		{
-			"checksumSHA1": "kBeNcaKk56FguvPSUCEaH6AxpRc=",
+			"checksumSHA1": "cRxfZM32wP1Ry67s3jLRoYxAz/E=",
 			"path": "github.com/golang/protobuf/proto",
-			"revision": "8ee79997227bf9b34611aee7946ae64735e6fd93",
-			"revisionTime": "2016-11-17T03:31:26Z"
+			"revision": "11b8df160996e00fd4b55cbaafb3d84ec6d50fa8",
+			"revisionTime": "2017-09-14T23:13:19Z"
 		},
 		{
 			"checksumSHA1": "LKJvPs+N7WDpaHGzzgnYTp0rCn4=",
 			"path": "github.com/jinzhu/gorm",
+			"revision": "b1885a643b4977c9089d77eb07c0fd96591f94b8",
+			"revisionTime": "2017-09-04T14:39:19Z"
+		},
+		{
+			"checksumSHA1": "YBNroGKEItNe0bENTEKbx71DyGQ=",
+			"path": "github.com/jinzhu/gorm/dialects/sqlite",
 			"revision": "b1885a643b4977c9089d77eb07c0fd96591f94b8",
 			"revisionTime": "2017-09-04T14:39:19Z"
 		},
@@ -69,6 +69,12 @@
 			"revisionTime": "2017-03-22T23:44:13Z"
 		},
 		{
+			"checksumSHA1": "1GP1Eea1wRP/WhUl9t1YBATPc2c=",
+			"path": "github.com/mattn/go-sqlite3",
+			"revision": "05548ff55570cdb9ac72ff4a25a3b5e77a6fb7e5",
+			"revisionTime": "2017-09-01T08:40:05Z"
+		},
+		{
 			"checksumSHA1": "X9TdMAuo7FEU3hduorXhS0FBlP4=",
 			"path": "github.com/microcosm-cc/bluemonday",
 			"revision": "68fecaef60268522d2ac3f0123cec9d3bcab7b6e",
@@ -81,16 +87,27 @@
 			"revisionTime": "2017-07-28T17:53:26Z"
 		},
 		{
-			"checksumSHA1": "9jFFVttlMr6qQ7e+IrcT20XmFQY=",
+			"checksumSHA1": "t5W90J4d7vhrs6+LDp0BalvCZEU=",
 			"path": "github.com/sirupsen/logrus",
-			"revision": "61e43dc76f7ee59a82bdf3d71033dc12bea4c77d",
-			"revisionTime": "2017-01-13T01:19:11Z"
+			"revision": "89742aefa4b206dcf400792f3bd35b542998eb3b",
+			"revisionTime": "2017-08-22T13:27:46Z"
 		},
 		{
 			"checksumSHA1": "G9ZGa1NLkstgPd9EylK9Hq+wqrE=",
 			"path": "github.com/ugorji/go/codec",
 			"revision": "8c0409fcbb70099c748d71f714529204975f6c3f",
 			"revisionTime": "2017-08-26T15:59:43Z"
+		},
+		{
+			"checksumSHA1": "nqWNlnMmVpt628zzvyo6Yv2CX5Q=",
+			"path": "golang.org/x/crypto/ssh/terminal",
+			"revision": ""
+		},
+		{
+			"checksumSHA1": "Y+HGqEkYM15ir+J93MEaHdyFy0c=",
+			"path": "golang.org/x/net/context",
+			"revision": "a6577fac2d73be281a500b310739095313165611",
+			"revisionTime": "2017-03-08T20:54:49Z"
 		},
 		{
 			"checksumSHA1": "vqc3a+oTUGX8PmD0TS+qQ7gmN8I=",
@@ -105,10 +122,14 @@
 			"revisionTime": "2017-03-08T20:54:49Z"
 		},
 		{
-			"checksumSHA1": "Tkb1hBdBWeO7SGjixS2Hm48F6+s=",
+			"checksumSHA1": "XIt75royO77B3XRYyViU7tng2xM=",
 			"path": "golang.org/x/sys/unix",
-			"revision": "0b25a408a50076fbbcae6b7ac0ea5fbb0b085e79",
-			"revisionTime": "2017-06-08T11:43:49Z"
+			"revision": ""
+		},
+		{
+			"checksumSHA1": "pBPFzDGt3AVSRffB7ffiUnruFUk=",
+			"path": "golang.org/x/sys/windows",
+			"revision": ""
 		},
 		{
 			"checksumSHA1": "q190bL03wQok3wVwYmMub2XhOiU=",
@@ -117,10 +138,10 @@
 			"revisionTime": "2017-07-30T05:02:35Z"
 		},
 		{
-			"checksumSHA1": "QpWY2ygzClg3Bw+GHjD7yXlcTxw=",
+			"checksumSHA1": "aUDnhyGTHeiMERx4L4jx/zLsvSQ=",
 			"path": "gopkg.in/yaml.v2",
-			"revision": "4c78c975fe7c825c6d1466c42be594d1d6f3aba6",
-			"revisionTime": "2017-01-25T14:37:19Z"
+			"revision": "eb3733d160e74a9c7e442f435eb3bea458e1d19f",
+			"revisionTime": "2017-08-12T16:00:11Z"
 		}
 	],
 	"rootPath": "github.com/b3log/solo.go"

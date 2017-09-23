@@ -18,8 +18,8 @@ package service
 
 import (
 	"github.com/b3log/solo.go/model"
-	_ "github.com/go-sql-driver/mysql"
 	"github.com/jinzhu/gorm"
+	_ "github.com/jinzhu/gorm/dialects/sqlite"
 	log "github.com/sirupsen/logrus"
 )
 
@@ -33,7 +33,7 @@ func ConnectDB() {
 	}
 
 	var err error
-	db, err = gorm.Open("mysql", "root:@tcp(localhost:3306)/solo.go?charset=utf8&parseTime=true&loc=Local")
+	db, err = gorm.Open("sqlite3", "solo.go.db")
 	if nil != err {
 		log.Error(err)
 
