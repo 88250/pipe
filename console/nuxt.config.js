@@ -29,12 +29,6 @@ module.exports = {
     { src: '~/plugins/nuxt-client-init.js', ssr: false }
   ],
   mode: 'spa',
-  generate: {
-    dir: env.routerBase
-  },
-  router: {
-    base: `/${env.routerBase}`
-  },
   /*
   ** Build configuration
   */
@@ -42,6 +36,7 @@ module.exports = {
     vendor: ['vue-i18n', '~/assets/symbol.js', 'axios', 'vuetify'],
     publicPath: env.publicPath,
     extractCSS: true,
+    ssr: false,
     /*
     ** Run ESLint on save
     */

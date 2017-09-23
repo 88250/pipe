@@ -1,18 +1,15 @@
 <template>
-  <div class="module">
-    社区推荐
+  <div>
+    login
   </div>
 </template>
 
 <script>
   export default {
     head: {
-      title: '首页'
+      title: '登录'
     },
     mounted () {
     }
   }
 </script>
-
-<style>
-</style>

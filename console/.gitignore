@@ -8,6 +8,6 @@ npm-debug.log
 .nuxt
 
 # Nuxt generate
-/admin
+/dist
 
 README.md
