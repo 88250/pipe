@@ -15,6 +15,7 @@
   import SoloFooter from '~/components/Footer'
 
   export default {
+    middleware: 'authenticated',
     components: {
       Side,
       SoloHeader,
