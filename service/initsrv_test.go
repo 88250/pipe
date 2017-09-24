@@ -18,11 +18,19 @@ package service
 
 import (
 	"testing"
+
+	"github.com/b3log/solo.go/model"
 )
 
 func TestInitBlog(t *testing.T) {
 	ConnectDB()
 
-	Init.InitBlog()
+	platformAdmin := &model.User{
+		Name:     "sa",
+		Email:    "solo.go@b3log.org",
+		Password: "saadmin",
+	}
+
+	Init.InitPlatform(platformAdmin)
 
 }

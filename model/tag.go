@@ -24,5 +24,5 @@ type Tag struct {
 
 	Title string `gorm:"size:128"`
 
-	TenantID uint
+	BlogID uint
 }

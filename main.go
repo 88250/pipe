@@ -35,6 +35,8 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
+var Version = "1.0.0"
+
 // Solo configuration.
 var Conf *conf
 
@@ -87,7 +89,7 @@ func main() {
 
 	handleSignal(server)
 
-	log.Infof("Solo.go is running [%s]", Conf.Server)
+	log.Infof("Solo.go (v%s) is running [%s]", Version, Conf.Server)
 
 	server.ListenAndServe()
 }

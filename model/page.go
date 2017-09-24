@@ -37,5 +37,5 @@ type Page struct {
 	Commentable bool
 	ViewCount   int
 
-	TenantID uint
+	BlogID uint
 }
