@@ -3,12 +3,13 @@ import VueI18n from 'vue-i18n'
 
 Vue.use(VueI18n)
 
-export default ({ app, isClient, store }) => {
+export default ({ app, store }) => {
+  let messages = {}
+  messages[store.state.locale] = require(`../../i18n/${store.state.locale}.json`)
+  messages['zh_CN'] = require('../../i18n/zh_CN.json')
   app.i18n = new VueI18n({
     locale: store.state.locale,
-    messages: {
-      'en_US': require('../../i18n/en_US.json'),
-      'zh_CN': require('../../i18n/zh_CN.json')
-    }
+    fallbackLocale: 'en_US',
+    messages
   })
 }
