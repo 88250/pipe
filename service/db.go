@@ -50,7 +50,7 @@ func ConnectDB() {
 	}
 
 	tables := []interface{}{
-		&model.User{}, &model.Article{}, &model.Comment{}, &model.Link{}, &model.Page{}, &model.Tag{},
+		&model.User{}, &model.Article{}, &model.Comment{}, &model.Page{}, &model.Tag{},
 		&model.Category{}, &model.Setting{}, &model.Correlation{},
 	}
 
@@ -61,6 +61,6 @@ func ConnectDB() {
 
 func DisconnectDB() {
 	if err := db.Close(); nil != err {
-		log.Error("Disconnect from MySQL failed: " + err.Error())
+		log.Error("Disconnect from database failed: " + err.Error())
 	}
 }

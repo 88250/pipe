@@ -26,7 +26,6 @@ type Result struct {
 // NewResult creates a result with Code=0, Msg="", Data=nil.
 func NewResult() *Result {
 	return &Result{
-		Succ: true,
 		Code: 0,
 		Msg:  "",
 		Data: nil,
