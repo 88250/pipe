@@ -71,5 +71,5 @@ type Setting struct {
 	Name     string `gorm:"size:32"`
 	Value    string `gorm:"type:text"`
 
-	TenantID uint
+	BlogID uint
 }

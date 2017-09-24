@@ -36,5 +36,5 @@ type Comment struct {
 	OriginalCommentID         uint   // ID of replied comment
 	OriginalCommentAuthorName string `gorm:"size:32"`
 
-	TenantID uint
+	BlogID uint
 }

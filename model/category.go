@@ -27,5 +27,5 @@ type Category struct {
 	Description string `gorm:"size:255"`
 	Number      int    // for sorting
 
-	TenantID uint
+	BlogID uint
 }

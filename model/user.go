@@ -28,5 +28,5 @@ type User struct {
 	Role      string `gorm:"size:16"`
 	AvatarURL string `gorm:"size:255"`
 
-	TenantID uint
+	BlogID uint
 }

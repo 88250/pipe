@@ -34,5 +34,5 @@ type Correlation struct {
 	ID2  uint
 	Type int `gorm:"size:16"` // 0: category-tag, 1: article-tag
 
-	TenantID uint
+	BlogID uint
 }

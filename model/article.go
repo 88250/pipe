@@ -41,5 +41,5 @@ type Article struct {
 	Password    string `gorm:"size:16"`
 	ViewCount   int
 
-	TenantID uint
+	BlogID uint
 }
