@@ -1,6 +1,6 @@
 <template>
   <aside class="side">
-    <nav>{{ $t('configuration') }}
+    <nav>
       <v-list>
         <v-list-group v-for="item in items" :value="item.active" :key="item.title">
           <v-list-tile ripple slot="item">
@@ -26,93 +26,101 @@
 </template>
 
 <script>
-  export default {
-    data () {
-      console.log(this.$store.state.locale)
-      return {
+  const items = function (app, locale) {
+    return [
+      {
+        title: app.$t('home', locale),
+        icon: 'home',
+        link: '/admin/'
+      },
+      {
+        title: app.$t('postArticle', locale),
+        icon: 'add',
+        link: '/admin/articles/post'
+      },
+      {
+        title: app.$t('skinList', locale),
+        icon: 'skin',
+        link: '/admin/skins'
+      },
+      {
+        title: app.$t('manage', locale),
+        icon: 'manage',
+        active: true,
         items: [
           {
-            title: this.$t('home', 'en_US'),
-            icon: 'home',
-            link: '/admin/'
+            title: app.$t('articleList', locale),
+            link: '/admin/articles/management'
           },
           {
-            title: this.$t('postArticle', 'zh_CN'),
-            icon: 'add',
-            link: '/admin/articles/post'
+            title: app.$t('commentList', locale),
+            link: '/admin/comments/management'
           },
           {
-            title: this.$t('skinList', this.$store.state.locale),
-            icon: 'skin',
-            link: '/admin/skins'
+            title: app.$t('categoryList', locale),
+            link: '/admin/categories/management'
           },
           {
-            title: this.$t('manage', this.$store.state.locale),
-            icon: 'manage',
-            active: true,
-            items: [
-              {
-                title: this.$t('articleList', this.$store.state.locale),
-                link: '/admin/articles/management'
-              },
-              {
-                title: this.$t('commentList', this.$store.state.locale),
-                link: '/admin/comments/management'
-              },
-              {
-                title: this.$t('categoryList', this.$store.state.locale),
-                link: '/admin/categories/management'
-              },
-              {
-                title: this.$t('navigationList', this.$store.state.locale),
-                link: '/admin/navigation/management'
-              },
-              {
-                title: this.$t('linkList', this.$store.state.locale),
-                link: '/admin/links/management'
-              },
-              {
-                title: this.$t('userList', this.$store.state.locale),
-                link: '/admin/users/management'
-              },
-              {
-                title: this.$t('others', this.$store.state.locale),
-                link: '/admin/others/management'
-              }
-            ]
+            title: app.$t('navigationList', locale),
+            link: '/admin/navigation/management'
           },
           {
-            title: this.$t('setting', this.$store.state.locale),
-            icon: 'setting',
-            items: [
-              {
-                title: this.$t('configuration', this.$store.state.locale),
-                link: '/admin/configurations/setting'
-              },
-              {
-                title: this.$t('signs', this.$store.state.locale),
-                link: '/admin/signs/setting'
-              },
-              {
-                title: this.$t('parameters', this.$store.state.locale),
-                link: '/admin/parameters/setting'
-              },
-              {
-                title: this.$t('upload', this.$store.state.locale),
-                link: '/admin/upload/setting'
-              },
-              {
-                title: 'B3log',
-                link: '/admin/b3log/setting'
-              }
-            ]
+            title: app.$t('linkList', locale),
+            link: '/admin/links/management'
           },
           {
-            title: this.$t('about', this.$store.state.locale),
-            icon: 'info',
-            link: '/admin/about'
+            title: app.$t('userList', locale),
+            link: '/admin/users/management'
+          },
+          {
+            title: app.$t('others', locale),
+            link: '/admin/others/management'
           }
         ]
+      },
+      {
+        title: app.$t('setting', locale),
+        icon: 'setting',
+        items: [
+          {
+            title: app.$t('configuration', locale),
+            link: '/admin/configurations/setting'
+          },
+          {
+            title: app.$t('signs', locale),
+            link: '/admin/signs/setting'
+          },
+          {
+            title: app.$t('parameters', locale),
+            link: '/admin/parameters/setting'
+          },
+          {
+            title: app.$t('upload', locale),
+            link: '/admin/upload/setting'
+          },
+          {
+            title: 'B3log',
+            link: '/admin/b3log/setting'
+          }
+        ]
+      },
+      {
+        title: app.$t('about', locale),
+        icon: 'info',
+        link: '/admin/about'
+      }
+    ]
+  }
+
+  export default {
+    watch: {
+      '$store.state.locale': function (val) {
+        this.$set(this, 'items', items(this, val))
+      }
+    },
+    data () {
+      return {
+        items: items(this, this.$store.state.locale)
       }
     }
   }

@@ -9,9 +9,8 @@
     layout: 'admin',
     methods: {
       changeLang () {
-        const locale = this.$i18n.locale === 'en_US' ? 'zh_CN' : 'en_US'
-        this.$store.commit('setBaseInfo', { lang: locale })
-        this.$i18n.locale = locale
+        const locale = this.$store.state.locale === 'en_US' ? 'zh_CN' : 'en_US'
+        this.$store.dispatch('setLocaleMessage', locale)
       }
     }
   }

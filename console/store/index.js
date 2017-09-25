@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 export const state = () => ({
-  locale: 'en_US',
+  locale: 'zh_CN',
   userName: 'solo',
   version: '1.0.0'
 })
@@ -11,6 +11,9 @@ export const mutations = {
     state.locale = data.lang
     state.userName = data.name
     state.version = data.version
+  },
+  setLocale (state, locale) {
+    state.locale = locale
   }
 }
 
@@ -18,16 +21,24 @@ export const actions = {
   async nuxtClientInit ({ commit }, { app }) {
     try {
       const responseData = await axios.get('http://localhost:8888/base')
+      if (app.i18n.messages[responseData.data.lang]) {
+        app.i18n.locale = responseData.data.lang
+      } else {
+        const message = require(`../../i18n/${responseData.data.lang}.json`)
+        app.i18n.setLocaleMessage(responseData.data.lang, message)
+      }
       commit('setBaseInfo', responseData.data)
-      // app.i18n.messages['zh_CN'] = { home: '1231 ' }
-      // app.i18n.locale = responseData.data.lang
-      // app.i18n.setLocaleMessage('zh_CN', { home: '111' })
-      console.log(222)
     } catch (e) {
       console.error(e)
     }
   },
-  changeLocale ({ commit }, { $i18n }) {
-    $i18n.locale = 'en_US'
+  setLocaleMessage ({ commit }, locale) {
+    if (this.app.i18n.messages[locale]) {
+      this.app.i18n.locale = locale
+    } else {
+      const message = require(`../../i18n/${locale}.json`)
+      this.app.i18n.setLocaleMessage(locale, message)
+    }
+    commit('setLocale', locale)
   }
 }
