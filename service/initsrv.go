@@ -27,24 +27,32 @@ var Init = &initService{}
 type initService struct {
 }
 
-func (srv *initService) InitPlatform(sa *model.User) {
+func (srv *initService) InitPlatform(sa *model.User) error {
 	blogID := uint(1)
 
 	log.Debug("Initializing platform")
 	tx := db.Begin()
 
-	if nil != initPreference(tx, blogID) {
+	if err := initPreference(tx, blogID); nil != err {
 		tx.Rollback()
+
+		return err
 	}
-	if nil != initAdmin(tx, sa, blogID) {
+	if err := initAdmin(tx, sa, blogID); nil != err {
 		tx.Rollback()
+
+		return err
 	}
-	if nil != helloWorld(tx, sa, blogID) {
+	if err := helloWorld(tx, sa, blogID); nil != err {
 		tx.Rollback()
+
+		return err
 	}
 
 	tx.Commit()
-	log.Debugf("Initialized blog [id=%s]", blogID)
+	log.Debugf("Initialized blog [id=%d]", blogID)
+
+	return nil
 }
 
 func initAdmin(tx *gorm.DB, admin *model.User, blogID uint) error {
@@ -87,6 +95,17 @@ Solo.go 博客系统是一个开源项目，如果你觉得它很赞，请到[�
 		BlogID:      blogID,
 	}
 	if err := tx.Create(article).Error; nil != err {
+		return err
+	}
+
+	comment := &model.Comment{
+		OnID:            article.ID,
+		OnType:          model.CommentOnTypeArticle,
+		AuthorName:      "Daniel",
+		AuthorAvatarURL: "https://img.hacpai.com/avatar/1353745196354_1500432853138.png?imageView2/1/w/80/h/80/interlace/0/q/100",
+		Content:         "写博客需要坚持，相信积累后必然会有收获，我们一起努力加油 :smile:",
+	}
+	if err := tx.Create(comment).Error; nil != err {
 		return err
 	}
 

@@ -27,6 +27,8 @@ func MapRoutes() *gin.Engine {
 	//ret.Use(favicon.New("./favicon.ico"))
 	ret.Use(gin.Recovery())
 
+	ret.POST("/init", initHandler)
+
 	status := ret.Group("/status")
 	{
 		status.GET("", statusHandler)

@@ -19,20 +19,44 @@ package controller
 import (
 	"net/http"
 
+	"github.com/b3log/solo.go/model"
+	"github.com/b3log/solo.go/service"
 	"github.com/b3log/solo.go/util"
 	"github.com/gin-gonic/gin"
+	log "github.com/sirupsen/logrus"
 )
 
-func pingHandler(c *gin.Context) {
-	c.String(http.StatusOK, "pong")
+type initRequest struct {
+	name     string `json:"name" binding:"required"`
+	email    string `json:"email" binding:"required"`
+	password string `json:"password" binding:"required"`
 }
 
-func statusHandler(c *gin.Context) {
+func initHandler(c *gin.Context) {
 	result := util.NewResult()
-	data := map[string]interface{}{}
-	result.Data = &data
 
-	data["articleCount"] = 1
+	reqData := &initRequest{}
+	if err := c.BindJSON(&reqData); nil != err {
+		log.Error("parses init request failed: " + err.Error())
+
+		result.Code = -1
+		result.Msg = "parses init request fialed"
+
+		return
+	}
+
+	platformAdmin := &model.User{
+		Name:     reqData.name,
+		Email:    reqData.email,
+		Password: reqData.password,
+	}
+
+	if err := service.Init.InitPlatform(platformAdmin); nil != err {
+		result.Code = -1
+		result.Msg = err.Error()
+
+		return
+	}
 
 	c.JSON(http.StatusOK, result)
 }

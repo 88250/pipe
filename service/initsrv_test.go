@@ -20,9 +20,18 @@ import (
 	"testing"
 
 	"github.com/b3log/solo.go/model"
+	"github.com/b3log/solo.go/util"
 )
 
 func TestInitBlog(t *testing.T) {
+	home, err := util.UserHome()
+	if nil != err {
+		t.Fatal(err)
+	}
+
+	util.Conf = &util.Configuration{}
+	util.Conf.DataFilePath = home + "/solo.go.test.db"
+
 	ConnectDB()
 
 	platformAdmin := &model.User{

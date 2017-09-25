@@ -5,9 +5,10 @@
     "Server": "{Host}:{Port}",
     "StaticServer": "",
     "StaticResourceVersion": "${time}",
+    "LogFilePath": "${home}/solo.go.log",
     "LogLevel": "debug",
     "HTTPSessionMaxAge": 86400,
     "RuntimeMode": "dev",
     "WD": "${pwd}",
-    "Locale": "en_US"
+    "DataFilePath": "${home}/solo.go.db"
 }
