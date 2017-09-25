@@ -2,15 +2,15 @@
 
 ## 简介
 
-小而美的 golang 博客系统，[Solo](https://github.com/b3log/solo) 的 golang 版。
+小而美的 golang 博客平台，[Solo](https://github.com/b3log/solo) 的 golang 版。
 
-你以前没有用过 Solo 也没关系，只需要相信这是史上最好的 golang 博客系统！
+你以前没有用过 Solo 也没关系，只需要相信这是史上最好的博客平台！
 
 ### 动机
 
 * 很受欢迎的 [Solo](https://github.com/b3log/solo) 已经证明了 Java 实现博客系统的可能性，但无法解决由 Java 带来的问题
+* 市面上缺乏支持多独立博客的平台级系统
 * 在博客这个轮子上充分发挥 golang 的优势，易部署、性能好、跨平台、省资源
-* 支持多租户的架构，从而实现多独立博客的平台
 * 争取击败所有已知的博客系统，包括各种静态博客系统
 
 ### 案例
