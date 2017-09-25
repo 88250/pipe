@@ -11,6 +11,12 @@
         "get"
       ],
       "mockFile": "base.json"
+    },
+    "init": {
+      "verbs": [
+        "post"
+      ],
+      "mockFile": "success.json"
     }
   }
 }
