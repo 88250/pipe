@@ -16,5 +16,6 @@
   "parameters": "Parameters",
   "qiniu": "Qiniu",
   "upload": "Upload",
-  "about": "About"
+  "about": "About",
+  "init": "Initialization"
 }

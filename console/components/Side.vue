@@ -26,7 +26,7 @@
 </template>
 
 <script>
-  const items = function (app, locale) {
+  const genNavData = function (app, locale) {
     return [
       {
         title: app.$t('home', locale),
@@ -115,12 +115,12 @@
   export default {
     watch: {
       '$store.state.locale': function (val) {
-        this.$set(this, 'items', items(this, val))
+        this.$set(this, 'items', genNavData(this, val))
       }
     },
     data () {
       return {
-        items: items(this, this.$store.state.locale)
+        items: genNavData(this, this.$store.state.locale)
       }
     }
   }
