@@ -17,8 +17,6 @@
 package service
 
 import (
-	"path/filepath"
-
 	"github.com/b3log/solo.go/model"
 	"github.com/b3log/solo.go/util"
 	"github.com/jinzhu/gorm"
@@ -35,14 +33,7 @@ func ConnectDB() {
 		return tablePrefix + defaultTableName
 	}
 
-	userHome, err := util.UserHome()
-	if nil != err {
-		log.Fatal("can't get user home: " + err.Error())
-	}
-
-	log.Debugf("user home [%s]", userHome)
-
-	db, err = gorm.Open("sqlite3", filepath.Join(userHome, "solo.go.db"))
+	db, err := gorm.Open("sqlite3", util.Conf.DataFilePath)
 	if nil != err {
 		log.Error(err)
 

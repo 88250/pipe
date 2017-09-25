@@ -50,7 +50,7 @@ func (srv *initService) InitPlatform(sa *model.User) error {
 	}
 
 	tx.Commit()
-	log.Debugf("Initialized blog [id=%s]", blogID)
+	log.Debugf("Initialized blog [id=%d]", blogID)
 
 	return nil
 }
