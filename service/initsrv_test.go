@@ -24,7 +24,13 @@ import (
 )
 
 func TestInitBlog(t *testing.T) {
-	util.InitConf()
+	home, err := util.UserHome()
+	if nil != err {
+		t.Fatal(err)
+	}
+
+	util.Conf = &util.Configuration{}
+	util.Conf.DataFilePath = home + "/solo.go.test.db"
 
 	ConnectDB()
 

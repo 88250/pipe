@@ -14,10 +14,10 @@ import (
 )
 
 // Solo configuration.
-var Conf *conf
+var Conf *Configuration
 
 // Configuration (solo.json).
-type conf struct {
+type Configuration struct {
 	Host                  string // server host
 	Port                  string // server port
 	Context               string // server context
@@ -52,7 +52,7 @@ func InitConf() {
 		log.Fatal("loads configuration file [" + *confPath + "] failed: " + err.Error())
 	}
 
-	Conf = &conf{}
+	Conf = &Configuration{}
 	if err = json.Unmarshal(bytes, Conf); nil != err {
 		log.Fatal("parses [solo.json] failed: ", err)
 	}
