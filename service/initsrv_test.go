@@ -20,9 +20,12 @@ import (
 	"testing"
 
 	"github.com/b3log/solo.go/model"
+	"github.com/b3log/solo.go/util"
 )
 
 func TestInitBlog(t *testing.T) {
+	util.InitConf()
+
 	ConnectDB()
 
 	platformAdmin := &model.User{

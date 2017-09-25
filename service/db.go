@@ -35,9 +35,7 @@ func ConnectDB() {
 
 	db, err := gorm.Open("sqlite3", util.Conf.DataFilePath)
 	if nil != err {
-		log.Error(err)
-
-		return
+		log.Fatal("opens database failed: " + err.Error())
 	}
 
 	tables := []interface{}{
@@ -46,7 +44,6 @@ func ConnectDB() {
 	}
 
 	db.DropTableIfExists(tables...)
-	//db.Set("gorm:table_options", "ENGINE=InnoDB CHARSET=utf8")
 	db.AutoMigrate(tables...)
 }
 

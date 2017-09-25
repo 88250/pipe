@@ -2,6 +2,7 @@ package util
 
 import (
 	"encoding/json"
+	"flag"
 	"io"
 	"io/ioutil"
 	"os"
@@ -32,12 +33,23 @@ type conf struct {
 }
 
 // InitConf initializes the conf. Args will override configuration file.
-func InitConf(args *map[string]interface{}) {
-	confs := *args
-	confPath := confs["confPath"].(string)
-	bytes, err := ioutil.ReadFile(confPath)
+func InitConf() {
+	confPath := flag.String("conf", "solo.json", "path of solo.json")
+	confHost := flag.String("host", "", "this will override Solo.Host if specified")
+	confPort := flag.String("port", "", "this will override Solo.Port if specified")
+	confContext := flag.String("context", "", "this will override Solo.Context if specified")
+	confServer := flag.String("server", "", "this will override Solo.Server if specified")
+	confStaticServer := flag.String("static_server", "", "this will override Solo.StaticServer if specified")
+	confStaticResourceVer := flag.String("static_resource_ver", "", "this will override Solo.StaticResourceVersion if specified")
+	confLogFilePath := flag.String("log_file_path", "", "this will override Solo.LogFilePath if specified")
+	confLogLevel := flag.String("log_level", "", "this will override Solo.LogLevel if specified")
+	confDataFilePath := flag.String("data_file_path", "", "this will override Solo.DataFilePath if specified")
+
+	flag.Parse()
+
+	bytes, err := ioutil.ReadFile(*confPath)
 	if nil != err {
-		log.Fatal("loads configuration file [" + confPath + "] failed: " + err.Error())
+		log.Fatal("loads configuration file [" + *confPath + "] failed: " + err.Error())
 	}
 
 	Conf = &conf{}
@@ -50,8 +62,8 @@ func InitConf(args *map[string]interface{}) {
 		log.Fatal("can't find user home directory: " + err.Error())
 	}
 	Conf.LogFilePath = strings.Replace(Conf.LogFilePath, "${home}", home, 1)
-	if confLogFilePath := confs["confLogFilePath"].(string); "" != confLogFilePath {
-		Conf.LogFilePath = confLogFilePath
+	if "" != *confLogFilePath {
+		Conf.LogFilePath = *confLogFilePath
 	}
 	f, err := os.OpenFile(Conf.LogFilePath, os.O_CREATE|os.O_APPEND, 0644)
 	if nil != err {
@@ -60,46 +72,46 @@ func InitConf(args *map[string]interface{}) {
 	log.SetOutput(io.MultiWriter(f, os.Stdout))
 
 	log.SetLevel(getLogLevel(Conf.LogLevel))
-	if confLogLevel := confs["confLogLevel"].(string); "" != confLogLevel {
-		Conf.LogLevel = confLogLevel
-		log.SetLevel(getLogLevel(confLogLevel))
+	if "" != *confLogLevel {
+		Conf.LogLevel = *confLogLevel
+		log.SetLevel(getLogLevel(*confLogLevel))
 	}
 	log.Debugf("${home} [%s]", home)
 
-	if confHost := confs["confHost"].(string); "" != confHost {
-		Conf.Host = confHost
+	if "" != *confHost {
+		Conf.Host = *confHost
 	}
 
-	if confPort := confs["confPort"].(string); "" != confPort {
-		Conf.Port = confPort
+	if "" != *confPort {
+		Conf.Port = *confPort
 	}
 
-	if confContext := confs["confContext"].(string); "" != confContext {
-		Conf.Context = confContext
+	if "" != *confContext {
+		Conf.Context = *confContext
 	}
 
 	Conf.Server = strings.Replace(Conf.Server, "{Host}", Conf.Host, 1)
 	Conf.Server = strings.Replace(Conf.Server, "{Port}", Conf.Port, 1)
-	if confServer := confs["confServer"].(string); "" != confServer {
-		Conf.Server = confServer
+	if "" != *confServer {
+		Conf.Server = *confServer
 	}
 
 	Conf.StaticServer = strings.Replace(Conf.StaticServer, "{Host}", Conf.Host, 1)
 	Conf.StaticServer = strings.Replace(Conf.StaticServer, "{Port}", Conf.Port, 1)
-	if confStaticServer := confs["confStaticServer"].(string); "" != confStaticServer {
-		Conf.StaticServer = confStaticServer
+	if "" != *confStaticServer {
+		Conf.StaticServer = *confStaticServer
 	}
 
 	time := strconv.FormatInt(time.Now().UnixNano(), 10)
 	log.Debugf("${time} [%s]", time)
 	Conf.StaticResourceVersion = strings.Replace(Conf.StaticResourceVersion, "${time}", time, 1)
-	if confStaticResourceVer := confs["confStaticResourceVer"].(string); "" != confStaticResourceVer {
-		Conf.StaticResourceVersion = confStaticResourceVer
+	if "" != *confStaticResourceVer {
+		Conf.StaticResourceVersion = *confStaticResourceVer
 	}
 
 	Conf.DataFilePath = strings.Replace(Conf.DataFilePath, "${home}", home, 1)
-	if confDataFilePath := confs["confDataFilePath"].(string); "" != confDataFilePath {
-		Conf.DataFilePath = confDataFilePath
+	if "" != *confDataFilePath {
+		Conf.DataFilePath = *confDataFilePath
 	}
 
 	log.Debugf("configurations [%+v]", Conf)

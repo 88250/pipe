@@ -17,7 +17,6 @@
 package main
 
 import (
-	"flag"
 	"io"
 	"net/http"
 	"os"
@@ -35,37 +34,10 @@ var Version = "1.0.0"
 
 // The only one init function in Solo.
 func init() {
-	confPath := flag.String("conf", "solo.json", "path of solo.json")
-
-	confHost := flag.String("host", "", "this will override Solo.Host if specified")
-	confPort := flag.String("port", "", "this will override Solo.Port if specified")
-	confContext := flag.String("context", "", "this will override Solo.Context if specified")
-	confServer := flag.String("server", "", "this will override Solo.Server if specified")
-	confStaticServer := flag.String("static_server", "", "this will override Solo.StaticServer if specified")
-	confStaticResourceVer := flag.String("static_resource_ver", "", "this will override Solo.StaticResourceVersion if specified")
-	confLogFilePath := flag.String("log_file_path", "", "this will override Solo.LogFilePath if specified")
-	confLogLevel := flag.String("log_level", "", "this will override Solo.LogLevel if specified")
-	confDataFilePath := flag.String("data_file_path", "", "this will override Solo.DataFilePath if specified")
-
-	flag.Parse()
-
-	args := map[string]interface{}{}
-	args["confPath"] = *confPath
-
-	args["confHost"] = *confHost
-	args["confPort"] = *confPort
-	args["confContext"] = *confContext
-	args["confServer"] = *confServer
-	args["confStaticServer"] = *confStaticServer
-	args["confStaticResourceVer"] = *confStaticResourceVer
-	args["confLogFilePath"] = *confLogFilePath
-	args["confLogLevel"] = *confLogLevel
-	args["confDataFilePath"] = *confDataFilePath
-
 	gin.SetMode(gin.ReleaseMode)
 	gin.DefaultWriter = io.MultiWriter(os.Stdout)
 
-	util.InitConf(&args)
+	util.InitConf()
 }
 
 // Entry point.
