@@ -1,18 +1,22 @@
 <template>
-  <div class="module">
+  <div class="default-content">
     welcome
   </div>
 </template>
 
 <script>
   export default {
-    head: {
-      title: '首页'
+    head () {
+      return {
+        title: `${this.$store.state.userName}`
+      }
     },
     mounted () {
     }
   }
 </script>
 
-<style>
+<style lang="sass">
+  .default-content
+    margin-top: 60px
 </style>

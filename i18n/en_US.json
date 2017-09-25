@@ -1,5 +1,6 @@
 {
   "home": "Admin Index",
+  "index": "Index",
   "postArticle": "Post",
   "skinList": "Skins",
   "manage": "Manage",
@@ -17,5 +18,8 @@
   "qiniu": "Qiniu",
   "upload": "Upload",
   "about": "About",
-  "init": "Initialization"
+  "init": "Initialization",
+  "login": "Login",
+  "hacpai": "HacPai",
+  "reportIssue": "Report issue"
 }

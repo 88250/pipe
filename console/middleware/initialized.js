@@ -1,5 +1,11 @@
 export default function ({ redirect, store, route }) {
-  if (!store.state.isInit && route.path.indexOf('/init') === -1) {
-    return redirect('/init')
+  if (!store.state.isInit) {
+    if (route.path.indexOf('/init') === -1) {
+      return redirect('/init')
+    }
+  } else {
+    if (route.path.indexOf('/init') > -1) {
+      return redirect('/')
+    }
   }
 }

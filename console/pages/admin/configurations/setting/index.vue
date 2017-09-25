@@ -9,7 +9,7 @@
     layout: 'admin',
     head () {
       return {
-        title: `${this.$store.state.userName} - ${this.$t('init', this.$store.state.locale)}`
+        title: `${this.$store.state.userName} - ${this.$t('configuration', this.$store.state.locale)}`
       }
     },
     methods: {

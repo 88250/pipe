@@ -1,5 +1,5 @@
 <template>
-  <div class="application application--light">
+  <div class="init">
     <v-stepper v-model="e1">
       <v-stepper-header>
         <v-stepper-step step="1">Name of step 1</v-stepper-step>
@@ -9,7 +9,21 @@
         <v-stepper-step step="3">Name of step 3</v-stepper-step>
       </v-stepper-header>
       <v-stepper-content step="1">
-        <v-card class="grey lighten-1 mb-5" height="200px">1</v-card>
+        <v-form v-model="valid" class="init__form">
+          <v-text-field
+            label="Name"
+            v-model="name"
+            :rules="nameRules"
+            :counter="10"
+            required
+          ></v-text-field>
+          <v-text-field
+            label="E-mail"
+            v-model="email"
+            :rules="emailRules"
+            required
+          ></v-text-field>
+        </v-form>
         <v-btn primary @click.native="e1 = 2">Continue</v-btn>
         <v-btn flat>Cancel</v-btn>
       </v-stepper-content>
@@ -31,15 +45,33 @@
   export default {
     data () {
       return {
-        e1: 0
+        e1: 0,
+        valid: false,
+        name: '',
+        nameRules: [
+          (v) => !!v || 'Name is required',
+          (v) => v.length <= 10 || 'Name must be less than 10 characters'
+        ],
+        email: '',
+        emailRules: [
+          (v) => !!v || 'E-mail is required'
+        ]
       }
     },
     head () {
       return {
-        title: `${this.$store.state.userName} - ${this.$t('init', 'zh_CN')}`
+        title: `${this.$store.state.userName} - ${this.$t('init', this.$store.state.locale)}`
       }
     },
     mounted () {
     }
   }
 </script>
+
+<style lang="sass">
+  @import '~assets/scss/_variables'
+  .init
+    &__form
+      width: 600px
+      margin: 0 auto
+</style>

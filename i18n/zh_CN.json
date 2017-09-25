@@ -1,5 +1,6 @@
 {
   "home": "后台首页",
+  "index": "首页",
   "postArticle": "发布文章",
   "skinList": "皮肤",
   "manage": "管理",
@@ -17,5 +18,8 @@
   "qiniu": "七牛",
   "upload": "上传",
   "about": "关于",
-  "init": "初始化"
+  "init": "初始化",
+  "login": "登录",
+  "hacpai": "黑客派",
+  "reportIssue": "上报错误"
 }

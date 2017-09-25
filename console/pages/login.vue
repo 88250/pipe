@@ -6,8 +6,10 @@
 
 <script>
   export default {
-    head: {
-      title: '登录'
+    head () {
+      return {
+        title: `${this.$store.state.userName} - ${this.$t('login', this.$store.state.locale)}`
+      }
     },
     mounted () {
     }

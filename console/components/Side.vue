@@ -127,7 +127,7 @@
 </script>
 
 <style lang="sass">
-  @import "~assets/scss/_variables.scss"
+  @import '~assets/scss/_variables.scss'
 
   .side
     width: 240px

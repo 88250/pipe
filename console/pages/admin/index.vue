@@ -7,8 +7,10 @@
 <script>
   export default {
     layout: 'admin',
-    head: {
-      title: '首页'
+    head () {
+      return {
+        title: `${this.$store.state.userName} - ${this.$t('home', this.$store.state.locale)}`
+      }
     },
     mounted () {
     }
