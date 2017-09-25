@@ -17,20 +17,42 @@
 package service
 
 import (
+	"sync"
+
 	"github.com/b3log/solo.go/model"
 	"github.com/jinzhu/gorm"
 	log "github.com/sirupsen/logrus"
 )
 
-var Init = &initService{}
+var Init = &initService{
+	mutex: &sync.Mutex{},
+}
 
 type initService struct {
+	mutex  *sync.Mutex
+	inited bool
 }
 
 func (srv *initService) InitPlatform(sa *model.User) error {
+	if srv.inited {
+		return nil
+	}
+
+	srv.mutex.Lock()
+	defer srv.mutex.Unlock()
+
 	blogID := uint(1)
 
+	saCount := 0
+	db.Model(&model.User{}).Where(&model.User{BlogID: blogID}).Count(&saCount)
+	if 0 < saCount {
+		srv.inited = true
+
+		return nil
+	}
+
 	log.Debug("Initializing platform")
+
 	tx := db.Begin()
 
 	if err := initPreference(tx, blogID); nil != err {

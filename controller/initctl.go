@@ -23,32 +23,31 @@ import (
 	"github.com/b3log/solo.go/service"
 	"github.com/b3log/solo.go/util"
 	"github.com/gin-gonic/gin"
-	log "github.com/sirupsen/logrus"
+	//	log "github.com/sirupsen/logrus"
 )
 
 type initRequest struct {
-	name     string `json:"name" binding:"required"`
-	email    string `json:"email" binding:"required"`
-	password string `json:"password" binding:"required"`
+	Name     string `json:"name" binding:"required"`
+	Email    string `json:"email" binding:"required"`
+	Password string `json:"password" binding:"required"`
 }
 
 func initHandler(c *gin.Context) {
 	result := util.NewResult()
+	defer c.JSON(http.StatusOK, result)
 
 	reqData := &initRequest{}
-	if err := c.BindJSON(&reqData); nil != err {
-		log.Error("parses init request failed: " + err.Error())
-
+	if err := c.BindJSON(reqData); nil != err {
 		result.Code = -1
-		result.Msg = "parses init request fialed"
+		result.Msg = "parses init request failed"
 
 		return
 	}
 
 	platformAdmin := &model.User{
-		Name:     reqData.name,
-		Email:    reqData.email,
-		Password: reqData.password,
+		Name:     reqData.Name,
+		Email:    reqData.Email,
+		Password: reqData.Password,
 	}
 
 	if err := service.Init.InitPlatform(platformAdmin); nil != err {
@@ -57,6 +56,4 @@ func initHandler(c *gin.Context) {
 
 		return
 	}
-
-	c.JSON(http.StatusOK, result)
 }

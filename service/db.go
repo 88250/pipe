@@ -33,7 +33,8 @@ func ConnectDB() {
 		return tablePrefix + defaultTableName
 	}
 
-	db, err := gorm.Open("sqlite3", util.Conf.DataFilePath)
+	var err error
+	db, err = gorm.Open("sqlite3", util.Conf.DataFilePath)
 	if nil != err {
 		log.Fatalf("opens database file [%s] failed: "+err.Error(), util.Conf.DataFilePath)
 	}
