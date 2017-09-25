@@ -3,7 +3,8 @@ import axios from 'axios'
 export const state = () => ({
   locale: 'zh_CN',
   userName: 'solo',
-  version: '1.0.0'
+  version: '1.0.0',
+  isInit: true
 })
 
 export const mutations = {
@@ -11,6 +12,7 @@ export const mutations = {
     state.locale = data.lang
     state.userName = data.name
     state.version = data.version
+    state.isInit = data.isInit
   },
   setLocale (state, locale) {
     state.locale = locale

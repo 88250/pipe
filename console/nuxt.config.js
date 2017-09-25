@@ -50,5 +50,8 @@ module.exports = {
         })
       }
     }
+  },
+  router: {
+    middleware: 'initialized'
   }
 }
