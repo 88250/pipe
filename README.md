@@ -78,7 +78,7 @@ Solo.go 的主要作者是 [Daniel](https://github.com/88250) 与 [Vanessa](http
 
 * 到 Solo.go 官方[讨论区](https://hacpai.com/tag/Solo.go)发帖（推荐做法）
 * 来一发 [issue](https://github.com/b3log/solo.go/issues/new)
-* 加入 Solo.go 开发支持 Q 群 242561391
+* 加入 Solo.go 社区 Q 群 242561391
 
 ## 开源协议
 
