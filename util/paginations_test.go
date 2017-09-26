@@ -21,7 +21,7 @@ import (
 )
 
 func TestPaginate(t *testing.T) {
-	pageNumbs := Paginate(1, 15, 99, 20)
+	pageNumbs := paginate(1, 15, 99, 20)
 	expected := []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20}
 	for i, val := range pageNumbs {
 		if val != expected[i] {
@@ -29,7 +29,7 @@ func TestPaginate(t *testing.T) {
 		}
 	}
 
-	pageNumbs = Paginate(50, 15, 99, 20)
+	pageNumbs = paginate(50, 15, 99, 20)
 	expected = []int{41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60}
 	for i, val := range pageNumbs {
 		if val != expected[i] {
