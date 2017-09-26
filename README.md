@@ -33,7 +33,7 @@ TBD
 
 ## 文档
 
-TBD
+数据浏览可以使用 SQLite 的图形化工具 [SQLiteBrowser](http://sqlitebrowser.org)。Solo.go 有内存缓存，**切勿直接修改数据库**。
 
 ## 构建
 

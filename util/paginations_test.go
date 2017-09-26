@@ -14,30 +14,26 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-package service
+package util
 
 import (
 	"testing"
-
-	"github.com/b3log/solo.go/model"
 )
 
-func TestAddArticle(t *testing.T) {
-	ConnectDB()
-
-	article := &model.Article{AuthorID: 1,
-		Title:       "Test 文章",
-		Abstract:    "Test 摘要",
-		Tags:        "Tag1, 标签2",
-		Content:     "正文部分",
-		Permalink:   "/test1",
-		Status:      model.ArticleStatusPublished,
-		Topped:      false,
-		Commentable: true,
-		Password:    "",
-		ViewCount:   0,
+func TestPaginate(t *testing.T) {
+	pageNumbs := Paginate(1, 15, 99, 20)
+	expected := []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20}
+	for i, val := range pageNumbs {
+		if val != expected[i] {
+			t.Errorf("exptected is [%d] at index [%d], actual is [%d]", expected[i], i, val)
+		}
 	}
 
-	Article.AddArticle(article)
-
+	pageNumbs = Paginate(50, 15, 99, 20)
+	expected = []int{41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60}
+	for i, val := range pageNumbs {
+		if val != expected[i] {
+			t.Errorf("exptected is [%d] at index [%d], actual is [%d]", expected[i], i, val)
+		}
+	}
 }

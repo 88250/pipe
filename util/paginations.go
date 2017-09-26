@@ -14,30 +14,27 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-package service
+package util
 
-import (
-	"testing"
+func Paginate(currentPageNum, pageSize, pageCount, windowsSize int) []int {
+	ret := []int{}
 
-	"github.com/b3log/solo.go/model"
-)
-
-func TestAddArticle(t *testing.T) {
-	ConnectDB()
-
-	article := &model.Article{AuthorID: 1,
-		Title:       "Test 文章",
-		Abstract:    "Test 摘要",
-		Tags:        "Tag1, 标签2",
-		Content:     "正文部分",
-		Permalink:   "/test1",
-		Status:      model.ArticleStatusPublished,
-		Topped:      false,
-		Commentable: true,
-		Password:    "",
-		ViewCount:   0,
+	if pageCount < windowsSize {
+		for i := 0; i < pageCount; i++ {
+			ret = append(ret, i+1)
+		}
+	} else {
+		first := currentPageNum + 1 - windowsSize/2
+		if first < 1 {
+			first = 1
+		}
+		if first+windowsSize > pageCount {
+			first = pageCount - windowsSize + 1
+		}
+		for i := 0; i < windowsSize; i++ {
+			ret = append(ret, first+i)
+		}
 	}
 
-	Article.AddArticle(article)
-
+	return ret
 }

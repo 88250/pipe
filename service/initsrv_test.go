@@ -17,22 +17,42 @@
 package service
 
 import (
+	"log"
+	"os"
 	"testing"
 
 	"github.com/b3log/solo.go/model"
 	"github.com/b3log/solo.go/util"
 )
 
-func TestInitBlog(t *testing.T) {
+func TestMain(m *testing.M) {
+	setup()
+	code := m.Run()
+	teardown()
+	os.Exit(code)
+}
+
+func setup() {
 	home, err := util.UserHome()
 	if nil != err {
-		t.Fatal(err)
+		log.Fatal(err)
 	}
 
 	util.Conf = &util.Configuration{}
 	util.Conf.DataFilePath = home + "/solo.go.test.db"
 
 	ConnectDB()
+
+	log.Println("setup tests")
+}
+
+func teardown() {
+	DisconnectDB()
+
+	log.Println("teardown tests")
+}
+
+func TestInitBlog(t *testing.T) {
 
 	platformAdmin := &model.User{
 		Name:     "sa",
