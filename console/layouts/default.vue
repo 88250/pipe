@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div class="default">
     <solo-header/>
-    <nuxt class="content"/>
+    <nuxt class="default__content"/>
     <solo-footer/>
   </div>
 </template>
@@ -19,6 +19,7 @@
 </script>
 
 <style lang="sass">
-  .content
-    margin-top: 60px
+  .default
+    &__content
+      margin-top: 60px
 </style>

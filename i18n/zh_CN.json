@@ -21,5 +21,13 @@
   "init": "初始化",
   "login": "登录",
   "hacpai": "黑客派",
-  "reportIssue": "上报错误"
+  "reportIssue": "上报错误",
+  "title": "标题",
+  "titleIsRequired": "标题不能为空",
+  "titleRule": "标题不能超过10个字",
+  "tags": "标签",
+  "links": "链接",
+  "visitPassword": "访问密码",
+  "allowComment": "允许评论",
+  "useSign": "启用签名档"
 }

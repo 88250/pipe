@@ -21,5 +21,9 @@
   "init": "Initialization",
   "login": "Login",
   "hacpai": "HacPai",
-  "reportIssue": "Report issue"
+  "reportIssue": "Report issue",
+  "title": "Title",
+  "titleIsRequired": "Title is required",
+  "titleRule": "Title must be less than 10 characters",
+  "tags": "Tag"
 }

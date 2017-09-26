@@ -1,16 +1,3 @@
-/*
- * Symphony - A modern community (forum/SNS/blog) platform written in Java.
- * Copyright (C) 2012-2017,  b3log.org & hacpai.com
- *
- * 本文件属于 Sym 商业版的一部分，请仔细阅读项目根文件夹的 LICENSE 并严格遵守相关约定
- */
-/**
- * Common style for mobile and web.
- *
- * @author <a href="http://vanessa.b3log.org">Liyuan Li</ta>
- * @version 1.3.1.0, Sep 4, 2017
- */
-
 /* start reset */
 html {
     -webkit-text-size-adjust: 100%;
@@ -510,14 +497,6 @@ blockquote {
     min-width: 1px;
 }
 
-.fn-pointer {
-    cursor: pointer;
-}
-
-.fn-sub {
-    vertical-align: sub;
-}
-
 .fn-clear:before,
 .fn-clear:after {
     display: table;
@@ -543,103 +522,6 @@ blockquote {
 .fn-hidden {
     visibility: hidden;
 }
-
-.fn-oh {
-    overflow: hidden;
-}
-
-.fn-ellipsis {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    word-wrap: normal;
-}
-
-.fn-hr5 {
-    display: block;
-    height: 5px;
-}
-
-.fn-content {
-    padding: 15px;
-}
-
-.fn-inline {
-    display: inline-block;
-}
-
-.fn-text-top {
-    vertical-align: text-top;
-}
-
-.ft-13 {
-    font-size: 13px;
-}
-
-.ft-smaller {
-    font-size: 12px;
-    line-height: 16px;
-}
-
-.ft-gray {
-    color: $gray;
-}
-
-.ft-fade {
-    color: $fade;
-}
-
-.ft-red {
-    color: $theme-accent;
-}
-
-.ft-blue {
-    color: $blue;
-}
-
-.ft-green {
-    color: $green;
-}
-
-.ft-a-title {
-    color: $theme-secondary;
-    text-decoration: none;
-}
-
-.ft-a-title:hover {
-    color: $text-color;
-}
-
-.ft-center {
-    text-align: center;
-}
-
-.ft-nowrap {
-    white-space: nowrap;
-}
-
-.count {
-    text-decoration: none;
-    padding: 2px 5px;
-    font-size: 12px;
-    font-weight: 600;
-    line-height: 1;
-    color: $theme-secondary;
-    background-color: #eee;
-    border-radius: 20px;
-    display: inline-block;
-}
-
-.count:hover {
-    text-decoration: none;
-}
-
-.sub-head {
-    padding: 15px;
-    border-bottom: 1px solid #eee;
-    line-height: 18px;
-    font-size: 18px;
-}
 /* end function */
 
 /* start avatar */
@@ -652,148 +534,15 @@ svg.avatar {
 }
 /* end avatar */
 
-/* start form */
-.form {
-    position: relative;
-}
+// card
+.card {
+  background-color: #fff;
+  margin-bottom: 30px;
+  box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.05);
+  border-radius: 4px;
 
-.form table {
-    width: 100%;
-}
+  &__body {
+    padding: 1.25rem;
 
-.form input[type=text],
-.form input[type=datetime],
-.form input[type=datetime-local],
-.form input[type=password],
-.form input[type=number],
-.form select,
-.form textarea {
-    border: 1px solid #d1d5da;
-    background-color: #FAFAFA;
-    border-radius: 3px;
-    box-shadow: inset 0 1px 2px rgba(27,31,35,0.075);
-    padding: 7px 8px;
-    width: 100%;
-    line-height: 17px;
-    box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
+  }
 }
-
-.form input[type=text]:focus,
-.form input[type=datetime]:focus,
-.form input[type=datetime-local]:focus,
-.form input[type=password]:focus,
-.form input[type=number]:focus,
-.form select:focus,
-.form textarea:focus {
-    background-color: #FFF;
-    box-shadow: inset 0 1px 2px rgba(27,31,35,0.075), 0 0 0 0.2em #dbedff;
-    border: 1px solid $blue;
-}
-
-.form label {
-    color: $theme-secondary;
-    font-size: 15px;
-    margin: 10px 0 5px;
-    float: left;
-}
-
-.form label > a {
-    font-weight: normal;
-}
-
-.form label input[type=checkbox],
-.form label input[type=radio] {
-    vertical-align: text-top;
-    height: 20px;
-    width: 20px;
-}
-
-.form input[type=file] {
-    width: 1px;
-    opacity: 0.001;
-    height: 16px;
-    overflow: hidden;
-}
-
-.form select {
-    height: 33px;
-    padding-top: 5px;
-}
-
-button,
-.btn {
-    cursor: pointer;
-    color: $text-color;
-    border-radius: 3px;
-    padding: 6px 12px;
-    background-color: rgba(0, 0, 0, .02);
-    border: 1px solid #D5D5D5;
-    border-bottom-color: #E1E1E1;
-    box-sizing: border-box;
-    line-height: 19px;
-    white-space: nowrap;
-}
-
-button:disabled,
-.btn:disabled {
-    opacity: 0.3;
-}
-
-button:hover,
-.btn:hover {
-    text-decoration: none;
-    border-color: $fade;
-    background-color: #eee;
-}
-
-button:active,
-.btn:active {
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25) inset;
-}
-
-button.green,
-.btn.green {
-    color: #fff;
-    background-color: #60b044;
-    border-color: $green;
-}
-
-button.green:hover,
-.btn.green:hover {
-    background-color: $green;
-}
-
-button.red,
-.btn.red {
-    color: $theme-accent;
-}
-
-button.red:hover,
-.btn.red:hover,
-.btn.red-hover {
-    color: #FFF;
-    border-color: $red;
-    background-color: $theme-accent;
-}
-
-button.small,
-.btn.small {
-    padding: 0 5px;
-    font-size: 12px;
-    font-weight: normal;
-    display: inline-block;
-    line-height: 19px;
-    height: 20px;
-    text-shadow: initial;
-}
-
-button.mid,
-.btn.mid {
-    padding: 3px 8px;
-    font-size: 13px;
-    line-height: 20px;
-    height: 28px;
-}
-/* end form */

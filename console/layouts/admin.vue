@@ -3,8 +3,10 @@
     <solo-header/>
     <side/>
     <div class="main">
-        <nuxt class="content"/>
-        <solo-footer/>
+      <div class="content">
+        <nuxt/>
+      </div>
+      <solo-footer/>
     </div>
   </div>
 </template>
@@ -33,4 +35,5 @@
   .content
     background-color: $blue-lighter
     min-height: 360px
+    padding: 30px
 </style>
