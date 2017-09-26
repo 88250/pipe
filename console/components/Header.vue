@@ -1,6 +1,6 @@
 <template>
   <header class="header fn-flex">
-    <div class="header__logo" v-if="$route.path.indexOf('admin') > -1">
+    <div class="header__logo" v-if="from === 'admin'">
       <img src="~static/images/logo.png"/>
       Solo
     </div>
@@ -12,7 +12,7 @@
 
 <script>
   export default {
-    props: ['isLogin']
+    props: ['from']
   }
 </script>
 

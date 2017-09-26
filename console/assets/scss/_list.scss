@@ -1,0 +1,40 @@
+.card {
+  .list {
+    list-style: none;
+
+    li {
+      border-bottom: 1px solid rgba(120, 130, 140, 0.13);
+      padding: 15px;
+
+      &:hover {
+        background-color: rgba(0, 0, 0, 0.02);
+      }
+    }
+
+    &__title a {
+      line-height: 18px;
+      font-size: 16px;
+      font-weight: 400;
+      color: $text-title;
+      margin-bottom: 8px;
+      display: block;
+
+      &:hover {
+        text-decoration: none;
+        color: $text-color;
+      }
+    }
+
+    &__meta {
+      line-height: 20px;
+    }
+
+    .btn {
+      margin-left: 15px;
+    }
+  }
+
+  .pagination {
+    margin: 15px 0;
+  }
+}

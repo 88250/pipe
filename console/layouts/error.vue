@@ -1,6 +1,6 @@
 <template>
   <div class="error">
-    <solo-header/>
+    <solo-header from="error"/>
     <div class="error__content fn-clear">
       <div v-if="error.statusCode === 404">
         <h1>404</h1>

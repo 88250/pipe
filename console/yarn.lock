@@ -3415,7 +3415,7 @@ math-expression-evaluator@^1.2.14:
 
 mavon-editor@^2.2.6:
   version "2.2.6"
-  resolved "http://registry.npm.taobao.org/mavon-editor/download/mavon-editor-2.2.6.tgz#079796db4f66b0a3eea06122ace46715f363e33f"
+  resolved "https://registry.yarnpkg.com/mavon-editor/-/mavon-editor-2.2.6.tgz#079796db4f66b0a3eea06122ace46715f363e33f"
   dependencies:
     highlight.js "^9.11.0"
     highlight.js-async-webpack "^1.0.4"

@@ -1,6 +1,6 @@
 <template>
   <div class="default">
-    <solo-header/>
+    <solo-header from="default"/>
     <nuxt class="default__content"/>
     <solo-footer/>
   </div>

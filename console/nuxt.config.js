@@ -24,7 +24,7 @@ module.exports = {
   ],
   plugins: [
     { src: '~/plugins/i18n.js', ssr: false },
-    { src: '~/plugins/icon.js', ssr: false },
+    { src: '~/plugins/init.js', ssr: false },
     { src: '~/plugins/vuetify.js', ssr: false },
     { src: '~/plugins/nuxt-client-init.js', ssr: false }
   ],

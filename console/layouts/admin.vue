@@ -1,6 +1,6 @@
 <template>
   <div>
-    <solo-header/>
+    <solo-header from="admin"/>
     <side/>
     <div class="main">
       <div class="content">
