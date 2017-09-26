@@ -18,6 +18,7 @@
 package controller
 
 import (
+	"github.com/b3log/solo.go/util"
 	"github.com/gin-gonic/gin"
 )
 
@@ -26,6 +27,8 @@ func MapRoutes() *gin.Engine {
 	ret := gin.New()
 	//ret.Use(favicon.New("./favicon.ico"))
 	ret.Use(gin.Recovery())
+
+	ret.Any("/hp/*apis", util.HacPaiAPI())
 
 	ret.POST("/init", initHandler)
 
