@@ -38,6 +38,6 @@ func TestAddArticle(t *testing.T) {
 		ViewCount:   0,
 	}
 
-	ArticleService.AddArticle(article)
+	Article.AddArticle(article)
 
 }
