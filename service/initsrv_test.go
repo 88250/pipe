@@ -60,6 +60,6 @@ func TestInitBlog(t *testing.T) {
 		Password: "saadmin",
 	}
 
-	Init.InitPlatform(platformAdmin)
+	Init.InitPlatform(platformAdmin, "b3key")
 
 }

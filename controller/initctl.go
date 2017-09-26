@@ -30,6 +30,7 @@ type initRequest struct {
 	Name     string `json:"name" binding:"required"`
 	Email    string `json:"email" binding:"required"`
 	Password string `json:"password" binding:"required"`
+	B3Key    string `json:"b3key" binding:"required"`
 }
 
 func initHandler(c *gin.Context) {
@@ -50,7 +51,7 @@ func initHandler(c *gin.Context) {
 		Password: reqData.Password,
 	}
 
-	if err := service.Init.InitPlatform(platformAdmin); nil != err {
+	if err := service.Init.InitPlatform(platformAdmin, reqData.B3Key); nil != err {
 		result.Code = -1
 		result.Msg = err.Error()
 
