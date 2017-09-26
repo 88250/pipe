@@ -16,7 +16,18 @@
 
 package service
 
-import "github.com/b3log/solo.go/model"
+import (
+	"math"
+
+	"github.com/b3log/solo.go/model"
+	"github.com/b3log/solo.go/util"
+)
+
+// Article pagination arguments of admin console.
+const (
+	adminConsoleArticleListPageSize    = 15
+	adminConsoleArticleListWindowsSize = 20
+)
 
 var Article = &articleService{}
 
@@ -35,4 +46,19 @@ func (srv *articleService) AddArticle(article *model.Article) error {
 	tx.Commit()
 
 	return nil
+}
+
+func (src *articleService) GetAdminConsoleArticles(page int) (ret []*model.Article, pagination *util.Pagination) {
+	offset := (page - 1) * adminConsoleArticleListPageSize
+
+	count := 0
+	db.Model(model.Article{}).Select("title, tags, view_count, comment_count").Where(model.Article{Status: model.ArticleStatusPublished}).
+		Order("ID desc").Count(&count).
+		Offset(offset).Limit(adminConsoleArticleListPageSize).
+		Find(&ret)
+
+	pageCount := int(math.Ceil(float64(count) / adminConsoleArticleListPageSize))
+	pagination = util.NewPagination(page, adminConsoleArticleListPageSize, pageCount, adminConsoleArticleListWindowsSize, count)
+
+	return
 }

@@ -103,18 +103,17 @@ func helloWorld(tx *gorm.DB, admin *model.User, blogID uint) error {
 Solo.go 博客系统是一个开源项目，如果你觉得它很赞，请到[项目首页](https://github.com/b3log/solo.go)给颗星鼓励一下 :heart:`
 
 	article := &model.Article{
-		AuthorID:    admin.ID,
-		Title:       "世界，你好！",
-		Abstract:    content,
-		Tags:        "Solo.go",
-		Content:     content,
-		Permalink:   "/hello-world",
-		Status:      model.ArticleStatusPublished,
-		Topped:      false,
-		Commentable: true,
-		Password:    "",
-		ViewCount:   0,
-		BlogID:      blogID,
+		AuthorID:     admin.ID,
+		Title:        "世界，你好！",
+		Abstract:     content,
+		Tags:         "Solo.go",
+		Content:      content,
+		Permalink:    "/hello-world",
+		Status:       model.ArticleStatusPublished,
+		Topped:       false,
+		Commentable:  true,
+		BlogID:       blogID,
+		CommentCount: 1,
 	}
 	if err := tx.Create(article).Error; nil != err {
 		return err

@@ -29,17 +29,18 @@ const (
 type Article struct {
 	gorm.Model
 
-	AuthorID    uint
-	Title       string `gorm:"size:128"`
-	Abstract    string `gorm:"type:text"`
-	Tags        string `gorm:"size:128"`
-	Content     string `gorm:"type:text"`
-	Permalink   string `gorm:"size:255"`
-	Status      int
-	Topped      bool
-	Commentable bool
-	Password    string `gorm:"size:16"`
-	ViewCount   int
+	AuthorID     uint
+	Title        string `gorm:"size:128"`
+	Abstract     string `gorm:"type:text"`
+	Tags         string `gorm:"size:128"`
+	Content      string `gorm:"type:text"`
+	Permalink    string `gorm:"size:255"`
+	Status       int
+	Topped       bool
+	Commentable  bool
+	Password     string `gorm:"size:16"`
+	ViewCount    int
+	CommentCount int
 
 	BlogID uint
 }

@@ -17,27 +17,44 @@
 package service
 
 import (
+	"strconv"
 	"testing"
 
 	"github.com/b3log/solo.go/model"
 )
 
+const (
+	articleRecordSize = 100
+)
+
 func TestAddArticle(t *testing.T) {
 	ConnectDB()
 
-	article := &model.Article{AuthorID: 1,
-		Title:       "Test 文章",
-		Abstract:    "Test 摘要",
-		Tags:        "Tag1, 标签2",
-		Content:     "正文部分",
-		Permalink:   "/test1",
-		Status:      model.ArticleStatusPublished,
-		Topped:      false,
-		Commentable: true,
-		Password:    "",
-		ViewCount:   0,
+	for i := 0; i < articleRecordSize; i++ {
+		article := &model.Article{AuthorID: 1,
+			Title:       "Test 文章" + strconv.Itoa(i),
+			Abstract:    "Test 摘要",
+			Tags:        "Tag1, 标签2",
+			Content:     "正文部分",
+			Permalink:   "/test" + strconv.Itoa(i),
+			Status:      model.ArticleStatusPublished,
+			Topped:      false,
+			Commentable: true,
+		}
+
+		Article.AddArticle(article)
+		//time.Sleep(500 * time.Millisecond)
+	}
+}
+
+func TestGetAdminConsoleArticles(t *testing.T) {
+	articles, pagination := Article.GetAdminConsoleArticles(1)
+
+	if adminConsoleArticleListPageSize != len(articles) {
+		t.Errorf("expected is [%d], actual is [%d]", adminConsoleArticleListPageSize, len(articles))
 	}
 
-	Article.AddArticle(article)
-
+	if articleRecordSize != pagination.RecordCount {
+		t.Errorf("expected is [%d], actual is [%d]", articleRecordSize, pagination.RecordCount)
+	}
 }

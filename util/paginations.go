@@ -16,22 +16,38 @@
 
 package util
 
-func Paginate(currentPageNum, pageSize, pageCount, windowsSize int) []int {
+type Pagination struct {
+	CurrentPageNum, PageSize, PageCount, WindowSize, RecordCount int
+	PageNumbs                                                    []int
+}
+
+func NewPagination(currentPageNum, pageSize, pageCount, windowSize, recordCount int) *Pagination {
+	return &Pagination{
+		CurrentPageNum: currentPageNum,
+		PageSize:       pageSize,
+		PageCount:      pageCount,
+		WindowSize:     windowSize,
+		RecordCount:    recordCount,
+		PageNumbs:      paginate(currentPageNum, pageSize, pageCount, windowSize),
+	}
+}
+
+func paginate(currentPageNum, pageSize, pageCount, windowSize int) []int {
 	ret := []int{}
 
-	if pageCount < windowsSize {
+	if pageCount < windowSize {
 		for i := 0; i < pageCount; i++ {
 			ret = append(ret, i+1)
 		}
 	} else {
-		first := currentPageNum + 1 - windowsSize/2
+		first := currentPageNum + 1 - windowSize/2
 		if first < 1 {
 			first = 1
 		}
-		if first+windowsSize > pageCount {
-			first = pageCount - windowsSize + 1
+		if first+windowSize > pageCount {
+			first = pageCount - windowSize + 1
 		}
-		for i := 0; i < windowsSize; i++ {
+		for i := 0; i < windowSize; i++ {
 			ret = append(ret, first+i)
 		}
 	}
