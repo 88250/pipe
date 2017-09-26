@@ -22,7 +22,7 @@ export const mutations = {
 export const actions = {
   async nuxtClientInit ({ commit }, { app }) {
     try {
-      const responseData = await axios.get('http://localhost:8888/base')
+      const responseData = await axios.get('/mock/base')
       if (app.i18n.messages[responseData.data.lang]) {
         app.i18n.locale = responseData.data.lang
       } else {

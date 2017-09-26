@@ -24,7 +24,7 @@
             required
           ></v-text-field>
         </v-form>
-        <v-btn primary @click.native="e1 = 2">Continue</v-btn>
+        <v-btn primary @click.native="checkHP">Continue</v-btn>
         <v-btn flat>Cancel</v-btn>
       </v-stepper-content>
       <v-stepper-content step="2">
@@ -63,7 +63,16 @@
         title: `${this.$store.state.userName} - ${this.$t('init', this.$store.state.locale)}`
       }
     },
-    mounted () {
+    methods: {
+      async checkHP () {
+        const resultData = await this.axios.post('/hp/apis/check-account', {
+          userName: 'solo',
+          userEmail: 'b3log.solo@gmail.com',
+          userB3Key: 'sss'
+        })
+
+        console.log(resultData)
+      }
     }
   }
 </script>

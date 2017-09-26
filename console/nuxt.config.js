@@ -1,6 +1,7 @@
 const env = require(`./config/env.json`)
 
 module.exports = {
+  env,
   /*
   ** Headers of the page
   */
@@ -23,9 +24,9 @@ module.exports = {
     '~/assets/scss/main.scss'
   ],
   plugins: [
+    { src: '~/plugins/axios.js', ssr: false },
     { src: '~/plugins/i18n.js', ssr: false },
     { src: '~/plugins/init.js', ssr: false },
-    { src: '~/plugins/vuetify.js', ssr: false },
     { src: '~/plugins/nuxt-client-init.js', ssr: false }
   ],
   mode: 'spa',
@@ -53,5 +54,22 @@ module.exports = {
   },
   router: {
     middleware: 'initialized'
+  },
+  modules: ['@nuxtjs/proxy'],
+  proxy: {
+    '/api': {
+      target: env.serverBaseURL,
+      changeOrigin: true,
+      pathRewrite: {
+        '^/api/': ''
+      }
+    },
+    '/mock': {
+      target: env.mockBaseURL,
+      changeOrigin: true,
+      pathRewrite: {
+        '^/mock/': ''
+      }
+    }
   }
 }
