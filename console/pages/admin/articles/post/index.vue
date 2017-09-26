@@ -10,7 +10,7 @@
           required
         ></v-text-field>
 
-        <mavon-editor v-model="value"/>
+        <mavon-editor v-model="content"/>
 
         <v-text-field
           :label="$t('tags', $store.state.locale)"
@@ -20,7 +20,7 @@
           required
         ></v-text-field>
 
-        <textarea>abstract</textarea>
+        <mavon-editor v-model="abstract"/>
 
         <v-text-field
           :label="$t('links', $store.state.locale)"
@@ -49,13 +49,16 @@
 
 <script>
   import mavonEditor from 'mavon-editor'
-  import Vue from 'vue'
-
-  Vue.use(mavonEditor)
+  import 'mavon-editor/dist/css/index.css'
 
   export default {
+    components: {
+      mavonEditor
+    },
     data () {
       return {
+        content: '',
+        abstract: '',
         title: '',
         titleRules: [
           (v) => !!v || this.$t('titleIsRequired', this.$store.state.locale),
