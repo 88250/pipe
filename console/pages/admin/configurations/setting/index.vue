@@ -6,7 +6,6 @@
 
 <script>
   export default {
-    layout: 'admin',
     head () {
       return {
         title: `${this.$store.state.userName} - ${this.$t('configuration', this.$store.state.locale)}`
