@@ -7,7 +7,8 @@
     "StaticResourceVersion": "${time}",
     "LogFilePath": "${home}/solo.go.log",
     "LogLevel": "debug",
-    "HTTPSessionMaxAge": 86400,
+    "SessionSecret": "BEYOND",
+    "SessionMaxAge": 86400,
     "RuntimeMode": "dev",
     "WD": "${pwd}",
     "DataFilePath": "${home}/solo.go.db"

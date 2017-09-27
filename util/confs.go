@@ -42,7 +42,8 @@ type Configuration struct {
 	StaticResourceVersion string // version of static resources
 	LogFilePath           string // log file path
 	LogLevel              string // logging level: debug/info/warn/error/fatal
-	HTTPSessionMaxAge     int    // HTTP session max age (in seciond)
+	SessionSecret         string // HTTP session secret
+	SessionMaxAge         int    // HTTP session max age (in seciond)
 	RuntimeMode           string // runtime mode (dev/prod)
 	WD                    string // current working direcitory, ${pwd}
 	DataFilePath          string // database file path
