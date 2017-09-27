@@ -9,6 +9,42 @@
 			"revisionTime": "2017-09-06T03:03:44Z"
 		},
 		{
+			"checksumSHA1": "SZyo8pcL9sjxyP/FwWzO7Zht54w=",
+			"path": "github.com/boj/redistore",
+			"revision": "4562487a4bee9a7c272b72bfaeda4917d0a47ab9",
+			"revisionTime": "2017-04-19T03:05:11Z"
+		},
+		{
+			"checksumSHA1": "AEa6HfIPxMUVEGyNpPswRgFZVF4=",
+			"path": "github.com/bradfitz/gomemcache/memcache",
+			"revision": "1952afaa557dc08e8e0d89eafab110fb501c1a2b",
+			"revisionTime": "2017-02-08T21:30:04Z"
+		},
+		{
+			"checksumSHA1": "qZJ+aK8WYMDJa+bxhI8SqBC/rAE=",
+			"path": "github.com/bradleypeabody/gorilla-sessions-memcache",
+			"revision": "75ee37df8664a47cd5d9eb84d41e1f2b08086893",
+			"revisionTime": "2017-05-03T20:53:33Z"
+		},
+		{
+			"checksumSHA1": "6X3O3mfvOyiwV2iAb5GjxARs08c=",
+			"path": "github.com/garyburd/redigo/internal",
+			"revision": "e3f9a558354b9c5fc3f992b9e8076dd751038b9b",
+			"revisionTime": "2017-09-23T00:03:02Z"
+		},
+		{
+			"checksumSHA1": "6SnhtXNfW3hzXR6NiJJyoW5dgEo=",
+			"path": "github.com/garyburd/redigo/redis",
+			"revision": "e3f9a558354b9c5fc3f992b9e8076dd751038b9b",
+			"revisionTime": "2017-09-23T00:03:02Z"
+		},
+		{
+			"checksumSHA1": "iByQWxuHkpxVM9eidNXzSpWyACg=",
+			"path": "github.com/gin-contrib/sessions",
+			"revision": "cccdeef56346e7037ca92de250c2b55ef5e7ffe3",
+			"revisionTime": "2017-09-17T02:14:46Z"
+		},
+		{
 			"checksumSHA1": "BhMowD2DIKSd9qq8Pzh7Y3mh2/w=",
 			"path": "github.com/gin-contrib/sse",
 			"revision": "22d885f9ecc78bf4ee5d72b937e4bbcdc58e8cae",
@@ -45,6 +81,24 @@
 			"revisionTime": "2017-09-14T23:13:19Z"
 		},
 		{
+			"checksumSHA1": "rk/QFSfmdW9TPNUWU6p5FUBIL3U=",
+			"path": "github.com/gorilla/context",
+			"revision": "215affda49addc4c8ef7e2534915df2c8c35c6cd",
+			"revisionTime": "2014-12-17T16:02:51Z"
+		},
+		{
+			"checksumSHA1": "h+XyrpEalNAO8hzMdYwYeYMpP6Y=",
+			"path": "github.com/gorilla/securecookie",
+			"revision": "8e98dd730fc43f1383f19615db6f2e702c9738e8",
+			"revisionTime": "2015-03-27T15:58:05Z"
+		},
+		{
+			"checksumSHA1": "lTK2wUc2cNL4G2ZGkYQa+RsB4l8=",
+			"path": "github.com/gorilla/sessions",
+			"revision": "f61c3ec2cf65d69e7efedfd4d060fe128882c951",
+			"revisionTime": "2015-04-17T17:47:05Z"
+		},
+		{
 			"checksumSHA1": "LKJvPs+N7WDpaHGzzgnYTp0rCn4=",
 			"path": "github.com/jinzhu/gorm",
 			"revision": "b1885a643b4977c9089d77eb07c0fd96591f94b8",
@@ -61,6 +115,12 @@
 			"path": "github.com/jinzhu/inflection",
 			"revision": "1c35d901db3da928c72a72d8458480cc9ade058f",
 			"revisionTime": "2017-01-02T12:52:26Z"
+		},
+		{
+			"checksumSHA1": "/Q5KGOoR0chE5R6XRjeciyrTJ0Y=",
+			"path": "github.com/kidstuff/mongostore",
+			"revision": "256d65ac5b0e35e7c5ebb3f175c0bed1e5c2b253",
+			"revisionTime": "2015-10-02T15:23:36Z"
 		},
 		{
 			"checksumSHA1": "rCNfFpeYqd2Tpi5qOFX8ckaQcMU=",
@@ -136,6 +196,36 @@
 			"path": "gopkg.in/go-playground/validator.v8",
 			"revision": "5f1438d3fca68893a817e4a66806cea46a9e4ebf",
 			"revisionTime": "2017-07-30T05:02:35Z"
+		},
+		{
+			"checksumSHA1": "YFQU7VULoTU4TwPz3V97b2exyxE=",
+			"path": "gopkg.in/mgo.v2",
+			"revision": "3f83fa5005286a7fe593b055f0d7771a7dce4655",
+			"revisionTime": "2016-08-18T02:01:20Z"
+		},
+		{
+			"checksumSHA1": "Kpt9VvtG+deoQ+p34F2CeTofTik=",
+			"path": "gopkg.in/mgo.v2/bson",
+			"revision": "3f83fa5005286a7fe593b055f0d7771a7dce4655",
+			"revisionTime": "2016-08-18T02:01:20Z"
+		},
+		{
+			"checksumSHA1": "9tMleZvl/yjpkj7oO3pOfZc+MJw=",
+			"path": "gopkg.in/mgo.v2/internal/json",
+			"revision": "3f83fa5005286a7fe593b055f0d7771a7dce4655",
+			"revisionTime": "2016-08-18T02:01:20Z"
+		},
+		{
+			"checksumSHA1": "WnXjUmdgl3mTwwqYBxbO974iCe8=",
+			"path": "gopkg.in/mgo.v2/internal/sasl",
+			"revision": "3f83fa5005286a7fe593b055f0d7771a7dce4655",
+			"revisionTime": "2016-08-18T02:01:20Z"
+		},
+		{
+			"checksumSHA1": "CrciG7woshiINwZxPsxisgDGL3Y=",
+			"path": "gopkg.in/mgo.v2/internal/scram",
+			"revision": "3f83fa5005286a7fe593b055f0d7771a7dce4655",
+			"revisionTime": "2016-08-18T02:01:20Z"
 		},
 		{
 			"checksumSHA1": "aUDnhyGTHeiMERx4L4jx/zLsvSQ=",

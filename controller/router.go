@@ -20,6 +20,7 @@ package controller
 import (
 	"github.com/b3log/solo.go/controller/console"
 	"github.com/b3log/solo.go/util"
+	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
 )
 
@@ -28,6 +29,19 @@ func MapRoutes() *gin.Engine {
 	ret := gin.New()
 	//ret.Use(favicon.New("./favicon.ico"))
 	ret.Use(gin.Recovery())
+
+	store := sessions.NewCookieStore([]byte(util.Conf.SessionSecret))
+	cookiePath := "/"
+	if "" != util.Conf.Context {
+		cookiePath = util.Conf.Context
+	}
+	store.Options(sessions.Options{
+		Path:     cookiePath,
+		MaxAge:   util.Conf.SessionMaxAge,
+		Secure:   true,
+		HttpOnly: true,
+	})
+	ret.Use(sessions.Sessions("sologo_sessions", store))
 
 	ret.Any("/hp/*apis", util.HacPaiAPI())
 
