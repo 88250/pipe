@@ -5,10 +5,11 @@
     "Content-Type",
     "*"
   ],
+  "allowedDomains": ["localhost"],
   "webServices": {
     "base": {
       "verbs": [
-        "get"
+        "get", "post"
       ],
       "mockFile": "base.json"
     },
