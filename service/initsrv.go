@@ -33,7 +33,7 @@ type initService struct {
 	inited bool
 }
 
-func (srv *initService) InitPlatform(sa *model.User, b3Key string) error {
+func (srv *initService) InitPlatform(sa *model.User) error {
 	if srv.inited {
 		return nil
 	}
@@ -55,7 +55,7 @@ func (srv *initService) InitPlatform(sa *model.User, b3Key string) error {
 
 	tx := db.Begin()
 
-	if err := initPreference(tx, b3Key, blogID); nil != err {
+	if err := initPreference(tx, blogID); nil != err {
 		tx.Rollback()
 
 		return err
@@ -133,7 +133,7 @@ Solo.go 博客系统是一个开源项目，如果你觉得它很赞，请到[�
 	return nil
 }
 
-func initPreference(tx *gorm.DB, b3Key string, blogID uint) error {
+func initPreference(tx *gorm.DB, blogID uint) error {
 	if err := tx.Create(&model.Setting{
 		Category: model.SettingCategoryPreference,
 		Name:     model.SettingNamePreferenceArticleListPageSize,
@@ -152,13 +152,6 @@ func initPreference(tx *gorm.DB, b3Key string, blogID uint) error {
 		Category: model.SettingCategoryPreference,
 		Name:     model.SettingNamePreferenceArticleListStyle,
 		Value:    model.SettingPreferenceArticleListStyleValueTitleAbstract,
-		BlogID:   blogID}).Error; nil != err {
-		return err
-	}
-	if err := tx.Create(&model.Setting{
-		Category: model.SettingCategoryPreference,
-		Name:     model.SettingNamePreferenceB3Key,
-		Value:    b3Key,
 		BlogID:   blogID}).Error; nil != err {
 		return err
 	}

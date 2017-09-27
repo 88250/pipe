@@ -38,6 +38,7 @@ func MapRoutes() *gin.Engine {
 	status.GET("/ping", pingCtl)
 
 	adminConsole := ret.Group("/console")
+	adminConsole.POST("/articles", console.AddArticleCtl)
 	adminConsole.GET("/articles", console.GetArticlesCtl)
 	adminConsole.GET("/articles/:id", console.GetArticleCtl)
 	adminConsole.DELETE("/articles/:id", console.RemoveArticleCtl)

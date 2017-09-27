@@ -24,16 +24,16 @@ import (
 	"github.com/jinzhu/gorm"
 )
 
+var Article = &articleService{}
+
+type articleService struct {
+}
+
 // Article pagination arguments of admin console.
 const (
 	adminConsoleArticleListPageSize    = 15
 	adminConsoleArticleListWindowsSize = 20
 )
-
-var Article = &articleService{}
-
-type articleService struct {
-}
 
 func (srv *articleService) AddArticle(article *model.Article) error {
 	tx := db.Begin()

@@ -28,6 +28,24 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
+func AddArticleCtl(c *gin.Context) {
+	result := util.NewResult()
+	defer c.JSON(http.StatusOK, result)
+
+	article := &model.Article{}
+	if err := c.BindJSON(article); nil != err {
+		result.Code = -1
+		result.Msg = "parses add article request failed"
+
+		return
+	}
+
+	if err := service.Article.AddArticle(article); nil != err {
+		log.Error("add article failed: " + err.Error())
+		result.Code = -1
+	}
+}
+
 func GetArticleCtl(c *gin.Context) {
 	result := util.NewResult()
 	defer c.JSON(http.StatusOK, result)

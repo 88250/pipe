@@ -49,9 +49,10 @@ func initCtl(c *gin.Context) {
 		Name:     reqData.Name,
 		Email:    reqData.Email,
 		Password: reqData.Password,
+		B3Key:    reqData.B3Key,
 	}
 
-	if err := service.Init.InitPlatform(platformAdmin, reqData.B3Key); nil != err {
+	if err := service.Init.InitPlatform(platformAdmin); nil != err {
 		result.Code = -1
 		result.Msg = err.Error()
 

@@ -25,7 +25,6 @@ const (
 	SettingNamePreferenceArticleListPageSize        = "articleListPageSize"
 	SettingNamePreferenceArticleListWindowSize      = "articleListWindowSize"
 	SettingNamePreferenceArticleListStyle           = "articleListStyle"
-	SettingNamePreferenceB3Key                      = "b3Key"
 	SettingNamePreferenceBlogSubtitle               = "blogSubtitle"
 	SettingNamePreferenceBlogTitle                  = "blogTitle"
 	SettingNamePreferenceCommentable                = "commentable"
