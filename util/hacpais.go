@@ -18,7 +18,6 @@ package util
 
 import (
 	"crypto/tls"
-	"log"
 	"net"
 	"net/http"
 	"net/http/httputil"
@@ -69,7 +68,6 @@ func dialTLS(network, addr string) (net.Conn, error) {
 	cert := cs.PeerCertificates[0]
 
 	cert.VerifyHostname(host)
-	log.Println(cert.Subject)
 
 	return tlsConn, nil
 }

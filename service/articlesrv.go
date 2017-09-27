@@ -49,8 +49,11 @@ func (srv *articleService) AddArticle(article *model.Article) error {
 }
 
 func (src *articleService) GetAdminConsoleArticles(page int) (ret []*model.Article, pagination *util.Pagination) {
-	offset := (page - 1) * adminConsoleArticleListPageSize
+	if 1 > page {
+		page = 1
+	}
 
+	offset := (page - 1) * adminConsoleArticleListPageSize
 	count := 0
 	db.Model(model.Article{}).Select("title, tags, view_count, comment_count").Where(model.Article{Status: model.ArticleStatusPublished}).
 		Order("ID desc").Count(&count).
