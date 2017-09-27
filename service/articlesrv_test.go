@@ -47,8 +47,8 @@ func TestAddArticle(t *testing.T) {
 	}
 }
 
-func TestGetAdminConsoleArticles(t *testing.T) {
-	articles, pagination := Article.GetAdminConsoleArticles(1)
+func TestGetConsoleArticles(t *testing.T) {
+	articles, pagination := Article.GetConsoleArticles(1)
 
 	if adminConsoleArticleListPageSize != len(articles) {
 		t.Errorf("expected is [%d], actual is [%d]", adminConsoleArticleListPageSize, len(articles))
@@ -56,5 +56,18 @@ func TestGetAdminConsoleArticles(t *testing.T) {
 
 	if articleRecordSize != pagination.RecordCount {
 		t.Errorf("expected is [%d], actual is [%d]", articleRecordSize, pagination.RecordCount)
+	}
+}
+
+func TestGetConsoleArticle(t *testing.T) {
+	article := Article.GetConsoleArticle(1)
+	if nil == article {
+		t.Errorf("article is nil")
+
+		return
+	}
+
+	if 1 != article.ID {
+		t.Errorf("id is not [1]")
 	}
 }

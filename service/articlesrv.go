@@ -48,7 +48,7 @@ func (srv *articleService) AddArticle(article *model.Article) error {
 	return nil
 }
 
-func (src *articleService) GetAdminConsoleArticles(page int) (ret []*model.Article, pagination *util.Pagination) {
+func (srv *articleService) GetConsoleArticles(page int) (ret []*model.Article, pagination *util.Pagination) {
 	if 1 > page {
 		page = 1
 	}
@@ -64,4 +64,11 @@ func (src *articleService) GetAdminConsoleArticles(page int) (ret []*model.Artic
 	pagination = util.NewPagination(page, adminConsoleArticleListPageSize, pageCount, adminConsoleArticleListWindowsSize, count)
 
 	return
+}
+
+func (srv *articleService) GetConsoleArticle(id uint) *model.Article {
+	ret := &model.Article{}
+	db.First(ret, id)
+
+	return ret
 }

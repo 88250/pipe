@@ -39,6 +39,7 @@ func MapRoutes() *gin.Engine {
 
 	adminConsole := ret.Group("/console")
 	adminConsole.GET("/articles", console.GetArticlesCtl)
+	adminConsole.GET("/articles/:id", console.GetArticleCtl)
 
 	return ret
 }

@@ -18,6 +18,7 @@ package console
 
 import (
 	"net/http"
+	"strconv"
 
 	"github.com/b3log/solo.go/service"
 	"github.com/b3log/solo.go/util"
@@ -26,14 +27,25 @@ import (
 )
 
 func GetArticleCtl(c *gin.Context) {
+	result := util.NewResult()
+	defer c.JSON(http.StatusOK, result)
 
+	idArg := c.Param("id")
+	id, err := strconv.Atoi(idArg)
+	if nil != err {
+		result.Code = -1
+
+		return
+	}
+
+	result.Data = service.Article.GetConsoleArticle(uint(id))
 }
 
 func GetArticlesCtl(c *gin.Context) {
 	result := util.NewResult()
 	defer c.JSON(http.StatusOK, result)
 
-	articles, pagination := service.Article.GetAdminConsoleArticles(c.GetInt("p"))
+	articles, pagination := service.Article.GetConsoleArticles(c.GetInt("p"))
 
 	data := map[string]interface{}{}
 	data["articles"] = articles
