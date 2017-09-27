@@ -57,8 +57,9 @@ func TestInitPlatform(t *testing.T) {
 		Name:     "sa",
 		Email:    "solo.go@b3log.org",
 		Password: "saadmin",
+		B3Key:    "b3key",
 	}
 
-	Init.InitPlatform(platformAdmin, "b3key")
+	Init.InitPlatform(platformAdmin)
 
 }

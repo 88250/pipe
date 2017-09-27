@@ -35,6 +35,7 @@ type User struct {
 	Password  string `gorm:"size:64"`
 	Role      int
 	AvatarURL string `gorm:"size:255"`
+	B3Key     string `gorm:"size:32"`
 
 	BlogID uint
 }
