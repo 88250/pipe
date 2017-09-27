@@ -23,11 +23,11 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func pingHandler(c *gin.Context) {
+func pingCtl(c *gin.Context) {
 	c.String(http.StatusOK, "pong")
 }
 
-func statusHandler(c *gin.Context) {
+func statusCtl(c *gin.Context) {
 	result := util.NewResult()
 	data := map[string]interface{}{}
 	result.Data = &data

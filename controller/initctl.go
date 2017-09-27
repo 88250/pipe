@@ -33,7 +33,7 @@ type initRequest struct {
 	B3Key    string `json:"b3key" binding:"required"`
 }
 
-func initHandler(c *gin.Context) {
+func initCtl(c *gin.Context) {
 	result := util.NewResult()
 	defer c.JSON(http.StatusOK, result)
 

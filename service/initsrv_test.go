@@ -52,8 +52,7 @@ func teardown() {
 	log.Println("teardown tests")
 }
 
-func TestInitBlog(t *testing.T) {
-
+func TestInitPlatform(t *testing.T) {
 	platformAdmin := &model.User{
 		Name:     "sa",
 		Email:    "solo.go@b3log.org",
