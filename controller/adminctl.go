@@ -14,26 +14,25 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-package util
+package controller
 
 import (
-	"testing"
+	"net/http"
+
+	"github.com/b3log/solo.go/service"
+	"github.com/b3log/solo.go/util"
+	"github.com/gin-gonic/gin"
+	//	log "github.com/sirupsen/logrus"
 )
 
-func TestPaginate(t *testing.T) {
-	pageNums := paginate(1, 15, 99, 20)
-	expected := []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20}
-	for i, val := range pageNums {
-		if val != expected[i] {
-			t.Errorf("exptected is [%d] at index [%d], actual is [%d]", expected[i], i, val)
-		}
-	}
+func adminGetArticlesHandler(c *gin.Context) {
+	result := util.NewResult()
+	defer c.JSON(http.StatusOK, result)
 
-	pageNums = paginate(50, 15, 99, 20)
-	expected = []int{41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60}
-	for i, val := range pageNums {
-		if val != expected[i] {
-			t.Errorf("exptected is [%d] at index [%d], actual is [%d]", expected[i], i, val)
-		}
-	}
+	articles, pagination := service.Article.GetAdminConsoleArticles(c.GetInt("p"))
+
+	data := map[string]interface{}{}
+	data["articles"] = articles
+	data["pagination"] = pagination
+	result.Data = data
 }

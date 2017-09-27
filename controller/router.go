@@ -33,10 +33,11 @@ func MapRoutes() *gin.Engine {
 	ret.POST("/init", initHandler)
 
 	status := ret.Group("/status")
-	{
-		status.GET("", statusHandler)
-		status.GET("/ping", pingHandler)
-	}
+	status.GET("", statusHandler)
+	status.GET("/ping", pingHandler)
+
+	adminConsole := ret.Group("/admin")
+	adminConsole.GET("/articles", adminGetArticlesHandler)
 
 	return ret
 }

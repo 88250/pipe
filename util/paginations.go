@@ -18,7 +18,7 @@ package util
 
 type Pagination struct {
 	CurrentPageNum, PageSize, PageCount, WindowSize, RecordCount int
-	PageNumbs                                                    []int
+	PageNums                                                     []int
 }
 
 func NewPagination(currentPageNum, pageSize, pageCount, windowSize, recordCount int) *Pagination {
@@ -28,7 +28,7 @@ func NewPagination(currentPageNum, pageSize, pageCount, windowSize, recordCount 
 		PageCount:      pageCount,
 		WindowSize:     windowSize,
 		RecordCount:    recordCount,
-		PageNumbs:      paginate(currentPageNum, pageSize, pageCount, windowSize),
+		PageNums:       paginate(currentPageNum, pageSize, pageCount, windowSize),
 	}
 }
 
