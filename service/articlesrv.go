@@ -21,6 +21,7 @@ import (
 
 	"github.com/b3log/solo.go/model"
 	"github.com/b3log/solo.go/util"
+	"github.com/jinzhu/gorm"
 )
 
 // Article pagination arguments of admin console.
@@ -48,7 +49,7 @@ func (srv *articleService) AddArticle(article *model.Article) error {
 	return nil
 }
 
-func (srv *articleService) GetConsoleArticles(page int) (ret []*model.Article, pagination *util.Pagination) {
+func (srv *articleService) ConsoleGetArticles(page int) (ret []*model.Article, pagination *util.Pagination) {
 	if 1 > page {
 		page = 1
 	}
@@ -66,9 +67,19 @@ func (srv *articleService) GetConsoleArticles(page int) (ret []*model.Article, p
 	return
 }
 
-func (srv *articleService) GetConsoleArticle(id uint) *model.Article {
+func (srv *articleService) ConsoleGetArticle(id uint) *model.Article {
 	ret := &model.Article{}
-	db.First(ret, id)
+	if nil != db.First(ret, id).Error {
+		return nil
+	}
 
 	return ret
+}
+
+func (srv *articleService) RemoveArticle(id uint) error {
+	article := &model.Article{
+		Model: gorm.Model{ID: id},
+	}
+
+	return db.Delete(article).Error
 }

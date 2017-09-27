@@ -23,7 +23,7 @@ import (
 	"github.com/b3log/solo.go/service"
 	"github.com/b3log/solo.go/util"
 	"github.com/gin-gonic/gin"
-	//	log "github.com/sirupsen/logrus"
+	log "github.com/sirupsen/logrus"
 )
 
 func GetArticleCtl(c *gin.Context) {
@@ -38,17 +38,42 @@ func GetArticleCtl(c *gin.Context) {
 		return
 	}
 
-	result.Data = service.Article.GetConsoleArticle(uint(id))
+	data := service.Article.ConsoleGetArticle(uint(id))
+	if nil == data {
+		result.Code = -1
+
+		return
+	}
+
+	result.Data = data
 }
 
 func GetArticlesCtl(c *gin.Context) {
 	result := util.NewResult()
 	defer c.JSON(http.StatusOK, result)
 
-	articles, pagination := service.Article.GetConsoleArticles(c.GetInt("p"))
+	articles, pagination := service.Article.ConsoleGetArticles(c.GetInt("p"))
 
 	data := map[string]interface{}{}
 	data["articles"] = articles
 	data["pagination"] = pagination
 	result.Data = data
+}
+
+func RemoveArticleCtl(c *gin.Context) {
+	result := util.NewResult()
+	defer c.JSON(http.StatusOK, result)
+
+	idArg := c.Param("id")
+	id, err := strconv.Atoi(idArg)
+	if nil != err {
+		result.Code = -1
+
+		return
+	}
+
+	if err := service.Article.RemoveArticle(uint(id)); nil != err {
+		log.Error("remove article failed: " + err.Error())
+		result.Code = -1
+	}
 }

@@ -40,6 +40,7 @@ func MapRoutes() *gin.Engine {
 	adminConsole := ret.Group("/console")
 	adminConsole.GET("/articles", console.GetArticlesCtl)
 	adminConsole.GET("/articles/:id", console.GetArticleCtl)
+	adminConsole.DELETE("/articles/:id", console.RemoveArticleCtl)
 
 	return ret
 }
