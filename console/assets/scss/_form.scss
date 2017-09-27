@@ -108,6 +108,11 @@ label.checkbox {
   &--small {
     font-size: .8125rem;
     padding: .2rem .4rem;
+
+    .icon {
+      float: right;
+      margin: 0px 0 0 5px;
+    }
   }
 
   &--space {

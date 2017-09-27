@@ -1,35 +1,43 @@
 {
-  "code": 1,
-  "msg": "222",
+  "code": 0,
+  "msg": "",
   "data": {
+    "userCount": 1,
     "articles": [
       {
-        "ID": 0,
-        "CreatedAt": "0001-01-01T00:00:00Z",
-        "UpdatedAt": "0001-01-01T00:00:00Z",
-        "DeletedAt": null,
-        "AuthorID": 0,
-        "Title": "世界，你好！",
-        "Abstract": "",
-        "Tags": "Solo.go",
-        "Content": "",
-        "Permalink": "",
-        "Status": 0,
-        "Topped": false,
-        "Commentable": false,
-        "Password": "",
-        "ViewCount": 0,
-        "CommentCount": 1,
-        "BlogID": 0
+        "id": 0,
+        "createdAt": "2017-05-32",
+        "title": "世界，你好！",
+        "tags": [{
+          "title": "Solo.go",
+          "permalink": "/xxx/xxx/xxx"
+        }],
+        "permalink": "/xxx/xxx/xxx",
+        "topped": false,
+        "viewCount": 0,
+        "commentCount": 1
+      },
+      {
+        "id": 0,
+        "createdAt": "2017-05-32",
+        "title": "世界，你好222！",
+        "tags": [{
+          "title": "Solo.go",
+          "permalink": "/xxx/xxx/xxx"
+        }],
+        "permalink": "/xxx/xxx/xxx",
+        "topped": false,
+        "viewCount": 0,
+        "commentCount": 1
       }
     ],
     "pagination": {
-      "CurrentPageNum": 1,
-      "PageSize": 15,
-      "PageCount": 1,
-      "WindowSize": 20,
-      "RecordCount": 1,
-      "PageNumbs": [
+      "currentPageNum": 16,
+      "pageSize": 15,
+      "pageCount": 100,
+      "windowSize": 20,
+      "recordCount": 1,
+      "pageNums": [
         1
       ]
     }

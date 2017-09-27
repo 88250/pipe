@@ -49,5 +49,7 @@
   "delete": "删除",
   "edit": "编辑",
   "top": "置顶",
-  "requestError": "请求错误"
+  "requestError": "请求错误",
+  "comment": "评论",
+  "view": "浏览"
 }

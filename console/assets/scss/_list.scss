@@ -1,17 +1,15 @@
-.card {
-  .list {
-    list-style: none;
+.card > .list {
+  list-style: none;
 
-    li {
-      border-bottom: 1px solid rgba(120, 130, 140, 0.13);
-      padding: 15px;
+  & > li {
+    border-bottom: 1px solid rgba(120, 130, 140, 0.13);
+    padding: 15px;
 
-      &:hover {
-        background-color: rgba(0, 0, 0, 0.02);
-      }
+    &:hover {
+      background-color: $list-hover;
     }
 
-    &__title a {
+    .list__title a {
       line-height: 18px;
       font-size: 16px;
       font-weight: 400;
@@ -25,12 +23,12 @@
       }
     }
 
-    &__meta {
+    .list__meta {
       line-height: 20px;
     }
   }
+}
 
-  .pagination {
-    margin: 30px 10px;
-  }
+.card .pagination {
+  margin: 30px 10px;
 }

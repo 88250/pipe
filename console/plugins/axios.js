@@ -11,14 +11,16 @@ export default (ctx) => {
 
   customAxios.interceptors.request.use((config) => {
     if (config.method === 'get') {
-      console.log(config, 111)
-      config.url += `?${(new Date()).getTime()}`
+      let char = '?'
+      if (config.url.split('?').length > 1) {
+        char = '&'
+      }
+      config.url += `${char}${(new Date()).getTime()}`
     }
     return config
   })
 
   customAxios.interceptors.response.use((response) => {
-    console.log(response)
     if (response.config.method === 'get') {
       // get use snack tip
       if (response.data.code === 0) {

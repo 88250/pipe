@@ -388,6 +388,114 @@
   }
 }
 
+// menu
+.menu {
+  display: inline-block;
+  position: relative;
+  vertical-align: middle;
+}
+.menu--disabled {
+  cursor: not-allowed;
+}
+.menu--disabled .menu__activator,
+.menu--disabled .menu__activator > * {
+  cursor: not-allowed;
+  pointer-events: none;
+}
+.menu__activator {
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  cursor: pointer;
+  position: relative;
+}
+.menu__activator input[readonly] {
+  cursor: pointer;
+}
+.menu__activator .toolbar__side-icon {
+  margin: 0;
+}
+.menu__content {
+  position: absolute;
+  max-width: 80%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  transition: 0.3s cubic-bezier(0.25, 0.8, 0.5, 1);
+  box-shadow: $shadow-hover;
+
+  .list  {
+    background: #fff;
+    color: $text-color;
+    list-style-type: none;
+    padding: 8px 0;
+    font-size: 16px;
+    border-radius: 4px;
+
+    .list__tile__title {
+      line-height: 40px;
+      padding: 0 15px;
+      cursor: pointer;
+      transition: .3s cubic-bezier(.25,.8,.5,1);
+
+      &:hover {
+        background-color: $list-hover;
+      }
+    }
+  }
+}
+.menu__content--active {
+  pointer-events: none;
+}
+.menu__content--dropdown {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  border-top: 1px solid rgba(0,0,0,0.12);
+}
+.menu-transition-enter .list__tile {
+  min-width: 0;
+  -webkit-transition-delay: 0.4s;
+  transition-delay: 0.4s;
+  opacity: 0;
+  -webkit-transform: translateY(-15px);
+  transform: translateY(-15px);
+  pointer-events: none;
+}
+.menu-transition-enter-to .list__tile {
+  pointer-events: auto;
+  opacity: 1;
+}
+.menu-transition-enter-to .list__tile--active {
+  -webkit-transform: none !important;
+  transform: none !important;
+}
+.menu-transition-leave-to {
+  -webkit-transform: translateY(-10px);
+  transform: translateY(-10px);
+}
+.menu-transition-leave-active,
+.menu-transition-leave-to {
+  pointer-events: none;
+}
+.menu-transition-enter,
+.menu-transition-leave-to {
+  opacity: 0;
+}
+.menu-transition-enter-to,
+.menu-transition-leave {
+  opacity: 1;
+}
+.menu-transition-enter-active,
+.menu-transition-leave-active {
+  -webkit-transition: all 0.5s cubic-bezier(0.25, 0.8, 0.5, 1);
+  transition: all 0.5s cubic-bezier(0.25, 0.8, 0.5, 1);
+}
+.menu-transition-enter.menu__content--auto .list__tile--active {
+  opacity: 1;
+  -webkit-transform: none !important;
+  transform: none !important;
+  pointer-events: auto;
+}
+
 // transition
 .slide-y-transition-enter-active,
 .slide-y-transition-leave-active {
