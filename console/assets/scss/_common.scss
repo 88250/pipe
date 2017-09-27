@@ -382,6 +382,45 @@ blockquote {
 
   &__body {
     padding: 1.25rem;
+  }
 
+  &--dark {
+    background-color: $black-bg;
+    color: #fff;
+  }
+
+  &--info {
+    background-color: $blue;
+    color: #fff;
+  }
+
+  &--danger {
+    background-color: $red;
+    color: #fff;
+  }
+}
+
+// alert
+.alert {
+  border-width: 4px 0 0;
+  border-style: solid;
+  border-color: rgba(0,0,0,.12);
+  color: #fff;
+  display: flex;
+  font-size: 14px;
+  margin: 4px auto;
+  padding: 16px;
+  transition: .3s cubic-bezier(.25,.8,.5,1);
+  line-height: 20px;
+
+  .icon {
+    color: rgba(0,0,0,.3);
+    margin: 0px 10px;
+    height: 20px;
+    width: 20px;
+  }
+
+  &--danger {
+    background-color: $red;
   }
 }

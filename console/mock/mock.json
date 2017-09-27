@@ -17,13 +17,13 @@
       "verbs": [
         "post"
       ],
-      "mockFile": "success.json"
+      "mockFile": "error.json"
     },
     "hp/apis/check-account": {
       "verbs": [
         "post"
       ],
-      "mockFile": "success.json"
+      "mockFile": "error.json"
     }
   }
 }
