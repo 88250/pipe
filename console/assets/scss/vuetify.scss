@@ -390,20 +390,21 @@
   }
 
   &__content {
-    background-color: inherit;
-    padding: 14px 24px;
-    border-radius: 2px;
+    border-top: 4px solid rgba(0,0,0,.12);
+    color: #fff;
+    display: flex;
+    font-size: 14px;
+    padding: 16px;
+    transition: .3s cubic-bezier(.25,.8,.5,1);
+    line-height: 20px;
     pointer-events: auto;
     max-width: 568px;
     min-width: 288px;
     align-items: center;
-    color: #fff;
-    display: flex;
-    font-size: 14px;
     justify-content: space-between;
-    transition: 0.4s cubic-bezier(0.25, 0.8, 0.5, 1);
     box-shadow: $shadow;
     background-color: $red;
+    line-height: 24px;
 
     .btn {
       font-size: .8125rem;
@@ -418,6 +419,7 @@
 
       &:after {
         content: 'X';
+        font-weight: 600;
       }
 
       &__content {

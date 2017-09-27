@@ -402,9 +402,7 @@ blockquote {
 
 // alert
 .alert {
-  border-width: 4px 0 0;
-  border-style: solid;
-  border-color: rgba(0,0,0,.12);
+  border-top: 4px solid rgba(0,0,0,.12);
   color: #fff;
   display: flex;
   font-size: 14px;

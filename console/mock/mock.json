@@ -29,7 +29,7 @@
       "verbs": [
         "post"
       ],
-      "mockFile": "error.json"
+      "mockFile": "success.json"
     }
   }
 }

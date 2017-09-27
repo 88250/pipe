@@ -21,7 +21,7 @@ module.exports = {
   */
   loading: { color: '#1976d2' },
   css: [
-    '~/assets/scss/main.scss'
+    '~assets/scss/main.scss'
   ],
   plugins: [
     { src: '~/plugins/axios.js', ssr: false },

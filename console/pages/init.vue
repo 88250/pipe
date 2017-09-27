@@ -118,6 +118,7 @@
 
 <script>
   export default {
+    layout: 'console',
     data () {
       return {
         step: 1,

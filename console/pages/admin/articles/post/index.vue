@@ -66,7 +66,6 @@
         isComment: false
       }
     },
-    layout: 'admin',
     head () {
       return {
         title: `${this.$store.state.userName} - ${this.$t('postArticle', this.$store.state.locale)}`

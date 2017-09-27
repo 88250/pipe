@@ -36,7 +36,6 @@
 
 <script>
   export default {
-    layout: 'admin',
     data () {
       return {
         page: 1,
@@ -56,7 +55,6 @@
     },
     mounted () {
       this.getList()
-      alert(1)
     }
   }
 </script>
