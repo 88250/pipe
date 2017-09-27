@@ -20,9 +20,11 @@ import (
 	"net/http"
 	"strconv"
 
+	"github.com/b3log/solo.go/model"
 	"github.com/b3log/solo.go/service"
 	"github.com/b3log/solo.go/util"
 	"github.com/gin-gonic/gin"
+	"github.com/jinzhu/gorm"
 	log "github.com/sirupsen/logrus"
 )
 
@@ -74,6 +76,32 @@ func RemoveArticleCtl(c *gin.Context) {
 
 	if err := service.Article.RemoveArticle(uint(id)); nil != err {
 		log.Error("remove article failed: " + err.Error())
+		result.Code = -1
+	}
+}
+
+func UpdateArticleCtl(c *gin.Context) {
+	result := util.NewResult()
+	defer c.JSON(http.StatusOK, result)
+
+	idArg := c.Param("id")
+	id, err := strconv.Atoi(idArg)
+	if nil != err {
+		result.Code = -1
+
+		return
+	}
+
+	article := &model.Article{Model: gorm.Model{ID: uint(id)}}
+	if err := c.BindJSON(article); nil != err {
+		result.Code = -1
+		result.Msg = "parses update article request failed"
+
+		return
+	}
+
+	if err := service.Article.UpdateArticle(article); nil != err {
+		log.Error("update article failed: " + err.Error())
 		result.Code = -1
 	}
 }

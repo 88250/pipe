@@ -72,6 +72,22 @@ func TestGetConsoleArticle(t *testing.T) {
 	}
 }
 
+func TestUpdateArticle(t *testing.T) {
+	updatedTitle := "Updated title"
+	article := Article.ConsoleGetArticle(1)
+	article.Title = updatedTitle
+	if err := Article.UpdateArticle(article); nil != err {
+		t.Errorf("update article failed: " + err.Error())
+
+		return
+	}
+
+	article = Article.ConsoleGetArticle(1)
+	if updatedTitle != article.Title {
+		t.Errorf("expected is [%s], actual is [%s]", updatedTitle, article.Title)
+	}
+}
+
 func TestRemoveArticle(t *testing.T) {
 	if err := Article.RemoveArticle(1); nil != err {
 		t.Error(err)

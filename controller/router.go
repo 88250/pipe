@@ -41,6 +41,7 @@ func MapRoutes() *gin.Engine {
 	adminConsole.GET("/articles", console.GetArticlesCtl)
 	adminConsole.GET("/articles/:id", console.GetArticleCtl)
 	adminConsole.DELETE("/articles/:id", console.RemoveArticleCtl)
+	adminConsole.PUT("/articles/:id", console.UpdateArticleCtl)
 
 	return ret
 }

@@ -83,3 +83,7 @@ func (srv *articleService) RemoveArticle(id uint) error {
 
 	return db.Delete(article).Error
 }
+
+func (srv *articleService) UpdateArticle(article *model.Article) error {
+	return db.Model(&model.Article{}).Updates(article).Error
+}
