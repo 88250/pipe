@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-package controller
+package console
 
 import (
 	"net/http"
@@ -25,7 +25,11 @@ import (
 	//	log "github.com/sirupsen/logrus"
 )
 
-func adminGetArticlesHandler(c *gin.Context) {
+func GetArticleCtl(c *gin.Context) {
+
+}
+
+func GetArticlesCtl(c *gin.Context) {
 	result := util.NewResult()
 	defer c.JSON(http.StatusOK, result)
 

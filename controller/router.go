@@ -18,6 +18,7 @@
 package controller
 
 import (
+	"github.com/b3log/solo.go/controller/console"
 	"github.com/b3log/solo.go/util"
 	"github.com/gin-gonic/gin"
 )
@@ -30,14 +31,14 @@ func MapRoutes() *gin.Engine {
 
 	ret.Any("/hp/*apis", util.HacPaiAPI())
 
-	ret.POST("/init", initHandler)
+	ret.POST("/init", initCtl)
 
 	status := ret.Group("/status")
-	status.GET("", statusHandler)
-	status.GET("/ping", pingHandler)
+	status.GET("", statusCtl)
+	status.GET("/ping", pingCtl)
 
-	adminConsole := ret.Group("/admin")
-	adminConsole.GET("/articles", adminGetArticlesHandler)
+	adminConsole := ret.Group("/console")
+	adminConsole.GET("/articles", console.GetArticlesCtl)
 
 	return ret
 }
