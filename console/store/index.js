@@ -4,7 +4,9 @@ export const state = () => ({
   locale: 'zh_CN',
   userName: 'solo',
   version: '1.0.0',
-  isInit: true
+  isInit: true,
+  snackMsg: '',
+  snackBar: false
 })
 
 export const mutations = {
@@ -16,6 +18,10 @@ export const mutations = {
   },
   setLocale (state, locale) {
     state.locale = locale
+  },
+  setSnackBar (state, data) {
+    state.snackBar = data.snackBar
+    state.snackMsg = data.snackMsg
   }
 }
 

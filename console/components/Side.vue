@@ -26,95 +26,93 @@
 </template>
 
 <script>
-  const genNavData = function (app, locale) {
-    return [
-      {
-        title: app.$t('home', locale),
-        icon: 'home',
-        link: '/admin/'
-      },
-      {
-        title: app.$t('postArticle', locale),
-        icon: 'add',
-        link: '/admin/articles/post'
-      },
-      {
-        title: app.$t('skinList', locale),
-        icon: 'skin',
-        link: '/admin/skins'
-      },
-      {
-        title: app.$t('manage', locale),
-        icon: 'manage',
-        active: true,
-        items: [
-          {
-            title: app.$t('articleList', locale),
-            link: '/admin/articles/management'
-          },
-          {
-            title: app.$t('commentList', locale),
-            link: '/admin/comments/management'
-          },
-          {
-            title: app.$t('categoryList', locale),
-            link: '/admin/categories/management'
-          },
-          {
-            title: app.$t('navigationList', locale),
-            link: '/admin/navigation/management'
-          },
-          {
-            title: app.$t('linkList', locale),
-            link: '/admin/links/management'
-          },
-          {
-            title: app.$t('userList', locale),
-            link: '/admin/users/management'
-          },
-          {
-            title: app.$t('others', locale),
-            link: '/admin/others/management'
-          }
-        ]
-      },
-      {
-        title: app.$t('setting', locale),
-        icon: 'setting',
-        items: [
-          {
-            title: app.$t('configuration', locale),
-            link: '/admin/configurations/setting'
-          },
-          {
-            title: app.$t('signs', locale),
-            link: '/admin/signs/setting'
-          },
-          {
-            title: app.$t('parameters', locale),
-            link: '/admin/parameters/setting'
-          },
-          {
-            title: app.$t('upload', locale),
-            link: '/admin/upload/setting'
-          },
-          {
-            title: 'B3log',
-            link: '/admin/b3log/setting'
-          }
-        ]
-      },
-      {
-        title: app.$t('about', locale),
-        icon: 'info',
-        link: '/admin/about'
-      }
-    ]
-  }
+  const genNavData = (app, locale) => [
+    {
+      title: app.$t('home', locale),
+      icon: 'home',
+      link: '/admin/'
+    },
+    {
+      title: app.$t('postArticle', locale),
+      icon: 'add',
+      link: '/admin/articles/post'
+    },
+    {
+      title: app.$t('skinList', locale),
+      icon: 'skin',
+      link: '/admin/skins'
+    },
+    {
+      title: app.$t('manage', locale),
+      icon: 'manage',
+      active: true,
+      items: [
+        {
+          title: app.$t('articleList', locale),
+          link: '/admin/articles/management'
+        },
+        {
+          title: app.$t('commentList', locale),
+          link: '/admin/comments/management'
+        },
+        {
+          title: app.$t('categoryList', locale),
+          link: '/admin/categories/management'
+        },
+        {
+          title: app.$t('navigationList', locale),
+          link: '/admin/navigation/management'
+        },
+        {
+          title: app.$t('linkList', locale),
+          link: '/admin/links/management'
+        },
+        {
+          title: app.$t('userList', locale),
+          link: '/admin/users/management'
+        },
+        {
+          title: app.$t('others', locale),
+          link: '/admin/others/management'
+        }
+      ]
+    },
+    {
+      title: app.$t('setting', locale),
+      icon: 'setting',
+      items: [
+        {
+          title: app.$t('configuration', locale),
+          link: '/admin/configurations/setting'
+        },
+        {
+          title: app.$t('signs', locale),
+          link: '/admin/signs/setting'
+        },
+        {
+          title: app.$t('parameters', locale),
+          link: '/admin/parameters/setting'
+        },
+        {
+          title: app.$t('upload', locale),
+          link: '/admin/upload/setting'
+        },
+        {
+          title: 'B3log',
+          link: '/admin/b3log/setting'
+        }
+      ]
+    },
+    {
+      title: app.$t('about', locale),
+      icon: 'info',
+      link: '/admin/about'
+    }
+  ]
 
   export default {
     watch: {
-      '$store.state.locale': function (val) {
+      '$store.state.locale': (val) => {
         this.$set(this, 'items', genNavData(this, val))
       }
     },

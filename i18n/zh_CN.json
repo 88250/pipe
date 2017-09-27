@@ -45,5 +45,9 @@
   "hacpaiEmail": "黑客派邮箱",
   "hacpaiAccount": "黑客派账号",
   "nickName": "昵称",
-  "password": "密码"
+  "password": "密码",
+  "delete": "删除",
+  "edit": "编辑",
+  "top": "置顶",
+  "requestError": "请求错误"
 }

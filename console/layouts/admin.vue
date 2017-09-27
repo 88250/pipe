@@ -8,6 +8,13 @@
       </div>
       <solo-footer/>
     </div>
+    <v-snackbar
+      :top="true"
+      v-model="snack"
+    >
+      {{ $store.state.snackMsg }}
+      <v-btn dark flat @click.native="snackbar = false">Close</v-btn>
+    </v-snackbar>
   </div>
 </template>
 
@@ -17,6 +24,16 @@
   import SoloFooter from '~/components/Footer'
 
   export default {
+    data () {
+      return {
+        snack: false
+      }
+    },
+    watch: {
+      '$store.state.snackBar': (val) => {
+        this.$set(this, 'snack', val)
+      }
+    },
     middleware: 'authenticated',
     components: {
       Side,

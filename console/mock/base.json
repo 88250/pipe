@@ -1,6 +1,10 @@
 {
-  "name": "Vanessa",
-  "version": "1.0.0",
-  "lang": "zh_CN",
-  "isInit": true
+  "code": 0,
+  "msg": "",
+  "data": {
+    "name": "Vanessa",
+    "version": "1.0.0",
+    "lang": "zh_CN",
+    "isInit": true
+  }
 }

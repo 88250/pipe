@@ -16,9 +16,9 @@
           </div>
         </div>
        <div>
-         <button class="btn btn--info">Edit</button>
-         <button class="btn btn--danger">Delete</button>
-         <button class="btn btn--success">Top</button>
+         <button class="btn btn--info btn--small">{{ $t('edit', $store.state.locale)}}</button>
+         <button class="btn btn--danger btn--space btn--small">{{ $t('delete', $store.state.locale)}}</button>
+         <button class="btn btn--success btn--space btn--small">{{ $t('top', $store.state.locale)}}</button>
        </div>
       </li>
     </ul>
@@ -47,6 +47,16 @@
       return {
         title: `${this.$store.state.userName} - ${this.$t('articleList', this.$store.state.locale)}`
       }
+    },
+    methods: {
+      getList () {
+        this.axios('/console/articles')
+        // this.$set(this, 'list', responseData.articles)
+      }
+    },
+    mounted () {
+      this.getList()
+      alert(1)
     }
   }
 </script>

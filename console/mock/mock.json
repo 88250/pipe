@@ -9,9 +9,15 @@
   "webServices": {
     "base": {
       "verbs": [
-        "get", "post"
+        "get"
       ],
       "mockFile": "base.json"
+    },
+    "console/articles": {
+      "verbs": [
+        "get"
+      ],
+      "mockFile": "articleList.json"
     },
     "init": {
       "verbs": [
