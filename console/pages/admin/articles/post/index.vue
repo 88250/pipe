@@ -57,8 +57,8 @@
         abstract: '',
         title: '',
         titleRules: [
-          (v) => !!v || this.$t('titleIsRequired', this.$store.state.locale),
-          (v) => v.length <= 10 || this.$t('titleRule', this.$store.state.locale)
+          (v) => !!v || this.$t('required', this.$store.state.locale),
+          (v) => v.length <= 32 || this.$t('validateRule2', this.$store.state.locale)
         ],
         links: '',
         password: '',

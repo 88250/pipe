@@ -15,11 +15,11 @@
             <time>2017-10-23</time>
           </div>
         </div>
-       <div>
-         <button class="btn btn--info btn--small">{{ $t('edit', $store.state.locale)}}</button>
-         <button class="btn btn--danger btn--space btn--small">{{ $t('delete', $store.state.locale)}}</button>
-         <button class="btn btn--success btn--space btn--small">{{ $t('top', $store.state.locale)}}</button>
-       </div>
+        <div>
+          <button class="btn btn--info btn--small">{{ $t('edit', $store.state.locale)}}</button>
+          <button class="btn btn--danger btn--space btn--small">{{ $t('delete', $store.state.locale)}}</button>
+          <button class="btn btn--success btn--space btn--small">{{ $t('top', $store.state.locale)}}</button>
+        </div>
       </li>
     </ul>
     <v-pagination
@@ -39,7 +39,7 @@
     data () {
       return {
         page: 1,
-        list: [1, 2, 3, 4]
+        list: []
       }
     },
     head () {
@@ -47,14 +47,11 @@
         title: `${this.$store.state.userName} - ${this.$t('articleList', this.$store.state.locale)}`
       }
     },
-    methods: {
-      getList () {
-        this.axios('/console/articles')
-        // this.$set(this, 'list', responseData.articles)
+    async mounted () {
+      const responseData = await this.axios('/console/articles')
+      if (responseData) {
+        this.$set(this, 'list', responseData.articles)
       }
-    },
-    mounted () {
-      this.getList()
     }
   }
 </script>

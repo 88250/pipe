@@ -112,7 +112,7 @@
 
   export default {
     watch: {
-      '$store.state.locale': (val) => {
+      '$store.state.locale': function (val) {
         this.$set(this, 'items', genNavData(this, val))
       }
     },

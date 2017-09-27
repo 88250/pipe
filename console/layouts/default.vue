@@ -11,11 +11,9 @@
     <v-snackbar
       :top="true"
       v-model="snack"
-      :timeout="6000000"
-      :error="true"
-    >111
+    >
       {{ $store.state.snackMsg }}
-      <v-btn dark flat @click.native="snackbar = false">Close</v-btn>
+      <span @click="snack = false"><icon icon="close"/></span>
     </v-snackbar>
   </div>
 </template>
@@ -28,12 +26,20 @@
   export default {
     data () {
       return {
-        snack: true
+        snack: false
       }
     },
     watch: {
-      '$store.state.snackBar': (val) => {
+      '$store.state.snackBar': function (val) {
         this.$set(this, 'snack', val)
+      },
+      snack: function (val) {
+        if (val === false) {
+          this.$store.commit('setSnackBar', {
+            snackBar: false,
+            snackMsg: ''
+          })
+        }
       }
     },
     middleware: 'authenticated',

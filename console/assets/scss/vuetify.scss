@@ -46,35 +46,6 @@
   transition: 0.3s cubic-bezier(0.25, 0.8, 0.5, 1);
 }
 
-// tab transition
-.tab-transition-enter {
-  transform: translate(100%, 0);
-}
-
-.tab-transition-enter-to {
-  transform: translate(0, 0);
-}
-
-.tab-transition-leave,
-.tab-transition-leave-active {
-  position: absolute;
-}
-
-.tab-transition-leave-to {
-  position: absolute;
-  transform: translate(-100%, 0);
-}
-
-.tab-reverse-transition-enter {
-  transform: translate(-100%, 0);
-}
-
-.tab-reverse-transition-leave,
-.tab-reverse-transition-leave-to {
-  position: absolute;
-  transform: translate(100%, 0);
-}
-
 // stepper
 .stepper {
   overflow: hidden;
@@ -394,9 +365,8 @@
     color: #fff;
     display: flex;
     font-size: 14px;
-    padding: 16px;
+    padding: 17px 15px 18px;
     transition: .3s cubic-bezier(.25,.8,.5,1);
-    line-height: 20px;
     pointer-events: auto;
     max-width: 568px;
     min-width: 288px;
@@ -404,27 +374,64 @@
     justify-content: space-between;
     box-shadow: $shadow;
     background-color: $red;
-    line-height: 24px;
 
-    .btn {
-      font-size: .8125rem;
-      padding: .2rem .4rem;
-      background-color: transparent;
-      box-shadow: 0 0 0 0;
-      border: 0;
+    .icon {
+      height: 18px;
+      width: 18px;
+      border-radius: 8px;
+      cursor: pointer;
 
       &:hover {
-        background-color: #ff6666;
-      }
-
-      &:after {
-        content: 'X';
-        font-weight: 600;
-      }
-
-      &__content {
-        display: none;
+        box-shadow: $shadow-hover;
       }
     }
   }
+}
+
+// transition
+.slide-y-transition-enter-active,
+.slide-y-transition-leave-active {
+  transition: 0.3s cubic-bezier(0.25, 0.8, 0.5, 1);
+}
+.slide-y-transition-enter,
+.slide-y-transition-leave-to {
+  opacity: 0;
+  transform: translateY(-15px);
+}
+.slide-y-reverse-transition-enter-active,
+.slide-y-reverse-transition-leave-active {
+  transition: 0.3s cubic-bezier(0.25, 0.8, 0.5, 1);
+}
+.slide-y-reverse-transition-enter,
+.slide-y-reverse-transition-leave-to {
+  opacity: 0;
+  transform: translateY(15px);
+}
+
+.tab-transition-enter {
+  transform: translate(100%, 0);
+}
+
+.tab-transition-enter-to {
+  transform: translate(0, 0);
+}
+
+.tab-transition-leave,
+.tab-transition-leave-active {
+  position: absolute;
+}
+
+.tab-transition-leave-to {
+  position: absolute;
+  transform: translate(-100%, 0);
+}
+
+.tab-reverse-transition-enter {
+  transform: translate(-100%, 0);
+}
+
+.tab-reverse-transition-leave,
+.tab-reverse-transition-leave-to {
+  position: absolute;
+  transform: translate(100%, 0);
 }
