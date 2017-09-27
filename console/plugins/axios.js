@@ -2,7 +2,7 @@ import axios from 'axios'
 import VueAxios from 'vue-axios'
 import Vue from 'vue'
 
-export default ({ app: { router }, store }) => {
+export default () => {
   const customAxios = axios.create({
     baseURL: process.env.clientBaseURL
   })
@@ -14,4 +14,6 @@ export default ({ app: { router }, store }) => {
   }, function (error) {
     return Promise.reject(error)
   })
+
+  return customAxios
 }

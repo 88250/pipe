@@ -1,4 +1,4 @@
-import axios from 'axios'
+import vueAxios from '~/plugins/axios'
 
 export const state = () => ({
   locale: 'zh_CN',
@@ -22,14 +22,14 @@ export const mutations = {
 export const actions = {
   async nuxtClientInit ({ commit }, { app }) {
     try {
-      const responseData = await axios.get('/mock/base')
-      if (app.i18n.messages[responseData.data.lang]) {
-        app.i18n.locale = responseData.data.lang
+      const responseData = await vueAxios().get('/base')
+      if (app.i18n.messages[responseData.lang]) {
+        app.i18n.locale = responseData.lang
       } else {
-        const message = require(`../../i18n/${responseData.data.lang}.json`)
-        app.i18n.setLocaleMessage(responseData.data.lang, message)
+        const message = require(`../../i18n/${responseData.lang}.json`)
+        app.i18n.setLocaleMessage(responseData.lang, message)
       }
-      commit('setBaseInfo', responseData.data)
+      commit('setBaseInfo', responseData)
     } catch (e) {
       console.error(e)
     }
