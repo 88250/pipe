@@ -5,10 +5,11 @@
     "Content-Type",
     "*"
   ],
+  "allowedDomains": ["localhost"],
   "webServices": {
     "base": {
       "verbs": [
-        "get"
+        "get", "post"
       ],
       "mockFile": "base.json"
     },
@@ -16,7 +17,13 @@
       "verbs": [
         "post"
       ],
-      "mockFile": "success.json"
+      "mockFile": "error.json"
+    },
+    "hp/apis/check-account": {
+      "verbs": [
+        "post"
+      ],
+      "mockFile": "error.json"
     }
   }
 }
