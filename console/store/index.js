@@ -15,7 +15,7 @@ export const mutations = {
     state.locale = data.lang
     state.name = data.name
     state.version = data.version
-    state.isInit = data.isInit
+    state.isInit = data.inited
   },
   setLocale (state, locale) {
     state.locale = locale

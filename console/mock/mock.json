@@ -15,6 +15,18 @@
       ],
       "mockFile": "base.json"
     },
+    "init": {
+      "verbs": [
+        "post"
+      ],
+      "mockFile": "error.json"
+    },
+    "login": {
+      "verbs": [
+        "post"
+      ],
+      "mockFile": "success.json"
+    },
     "console/tags": {
       "verbs": [
         "get"
@@ -58,18 +70,6 @@
           "mockFile": "article.json"
         }
       }
-    },
-    "init": {
-      "verbs": [
-        "post"
-      ],
-      "mockFile": "error.json"
-    },
-    "login": {
-      "verbs": [
-        "post"
-      ],
-      "mockFile": "success.json"
     },
     "hp/apis/check-account": {
       "verbs": [
