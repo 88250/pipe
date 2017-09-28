@@ -55,8 +55,8 @@ func (srv *articleService) ConsoleGetArticles(page int) (ret []*model.Article, p
 
 	offset := (page - 1) * adminConsoleArticleListPageSize
 	count := 0
-	db.Model(model.Article{}).Select("id, title, tags, view_count, comment_count").Where(model.Article{Status: model.ArticleStatusPublished}).
-		Order("ID desc").Count(&count).
+	db.Model(model.Article{}).Select("id, created_at, title, tags, topped, view_count, comment_count").Where(model.Article{Status: model.ArticleStatusPublished}).
+		Order("topped DESC, id DESC").Count(&count).
 		Offset(offset).Limit(adminConsoleArticleListPageSize).
 		Find(&ret)
 
