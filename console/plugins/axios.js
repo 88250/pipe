@@ -21,8 +21,8 @@ export default (ctx) => {
   })
 
   customAxios.interceptors.response.use((response) => {
-    if (response.config.method === 'get') {
-      // get use snack tip
+    if (response.config.method === 'get' || response.config.method === 'delete') {
+      // get and delete use snack tip
       if (response.data.code === 0) {
         return response.data.data
       } else {

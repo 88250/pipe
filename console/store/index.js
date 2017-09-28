@@ -6,7 +6,8 @@ export const state = () => ({
   version: '1.0.0',
   isInit: true,
   snackMsg: '',
-  snackBar: false
+  snackBar: false,
+  snackModify: 'error'
 })
 
 export const mutations = {
@@ -22,6 +23,11 @@ export const mutations = {
   setSnackBar (state, data) {
     state.snackBar = data.snackBar
     state.snackMsg = data.snackMsg
+    if (data.snackModify) {
+      state.snackModify = data.snackModify
+    } else {
+      state.snackModify = 'error'
+    }
   }
 }
 

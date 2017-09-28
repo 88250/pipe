@@ -19,6 +19,12 @@
       ],
       "mockFile": "articleList.json"
     },
+    "console/articles/:id" : {
+      "verbs": [
+        "delete", "put"
+      ],
+      "mockFile": "success.json"
+    },
     "init": {
       "verbs": [
         "post"

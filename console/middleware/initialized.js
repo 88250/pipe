@@ -3,9 +3,5 @@ export default function ({ redirect, store, route }) {
     if (route.path.indexOf('/init') === -1) {
       return redirect('/init')
     }
-  } else {
-    if (route.path.indexOf('/init') > -1) {
-      return redirect('/')
-    }
   }
 }

@@ -45,7 +45,7 @@
     {
       title: app.$t('manage', locale),
       icon: 'manage',
-      active: true,
+      active: app.$route.path.indexOf('management') > -1,
       items: [
         {
           title: app.$t('articleList', locale),
@@ -80,6 +80,7 @@
     {
       title: app.$t('setting', locale),
       icon: 'setting',
+      active: app.$route.path.indexOf('setting') > -1,
       items: [
         {
           title: app.$t('configuration', locale),

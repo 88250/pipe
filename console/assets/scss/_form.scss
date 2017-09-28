@@ -142,8 +142,8 @@ label.checkbox {
   }
 
   &--success {
-    background-color: #00bcd4;
-    border: 1px solid #00bcd4;
+    background-color: $success;
+    border: 1px solid $success;
 
     &:active,
     &:focus {

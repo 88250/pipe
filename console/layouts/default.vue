@@ -11,6 +11,8 @@
     <v-snackbar
       :top="true"
       v-model="snack"
+      :timeout="$store.state.snackModify === 'error' ? 6000 : 3000"
+      :success="$store.state.snackModify === 'success'"
     >
       {{ $store.state.snackMsg }}
       <span @click="snack = false"><icon icon="close"/></span>

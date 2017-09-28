@@ -72,7 +72,7 @@
     },
     methods: {
       async getList (currentPage) {
-        const responseData = await this.axios(`/console/articles?p=${currentPage}`)
+        const responseData = await this.axios.get(`/console/articles?p=${currentPage}`)
         if (responseData) {
           this.$set(this, 'list', responseData.articles)
           this.$set(this, 'currentPageNum', responseData.pagination.currentPageNum)
@@ -83,11 +83,32 @@
       edit (id) {
         console.log('edit', id)
       },
-      remove (id) {
-        console.log('delete', id)
+      async remove (id) {
+        const responseData = await this.axios.delete(`/console/articles/${id}`)
+        if (responseData === null) {
+          this.$store.commit('setSnackBar', {
+            snackBar: true,
+            snackMsg: this.$t('deleteSuccess', this.$store.state.locale),
+            snackModify: 'success'
+          })
+          this.getList(1)
+        }
       },
-      top (id) {
-        console.log('top', id)
+      async top (id) {
+        const responseData = await this.axios.put(`/console/articles/${id}`)
+        if (responseData.code === 0) {
+          this.$store.commit('setSnackBar', {
+            snackBar: true,
+            snackMsg: this.$t('topSuccess', this.$store.state.locale),
+            snackModify: 'success'
+          })
+          this.getList(1)
+        } else {
+          this.$store.commit('setSnackBar', {
+            snackBar: true,
+            snackMsg: responseData.msg
+          })
+        }
       }
     },
     mounted () {
