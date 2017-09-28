@@ -1,6 +1,6 @@
 <template>
   <div class="card">
-    <div class="card__body">
+    <div class="card__body fn-clear">
       <v-form>
         <v-text-field
           :label="$t('title', $store.state.locale)"
@@ -14,7 +14,7 @@
 
         <v-text-field
           :label="$t('tags', $store.state.locale)"
-          v-model="title"
+          v-model="tags"
           :rules="titleRules"
           :counter="10"
           required
@@ -24,25 +24,23 @@
 
         <v-text-field
           :label="$t('links', $store.state.locale)"
-          v-model="links"
+          v-model="permalink"
         ></v-text-field>
 
         <v-text-field
-          type="password"
           :label="$t('visitPassword', $store.state.locale)"
           v-model="password"
         ></v-text-field>
 
         <label class="checkbox">
-          <input type="checkbox" disabled checked/><span class="checkbox__icon"></span>
+          <input type="checkbox" :checked="commentable" @click="commentable = !commentable"/><span class="checkbox__icon"></span>
           {{ $t('allowComment', $store.state.locale) }}
-        </label><br>
-
-        <label class="checkbox">
-          <input type="checkbox"/><span class="checkbox__icon"></span>
-          {{ $t('useSign', $store.state.locale) }}
         </label>
       </v-form>
+      <div class="fn-right">
+        <button @click="edit" class="btn btn--info" v-if="$route.query.id">{{ $t('edit', $store.state.locale) }}</button>
+        <button @click="publish" class="btn btn--info" v-else>{{ $t('publish', $store.state.locale) }}</button>
+      </div>
     </div>
   </div>
 </template>
@@ -60,10 +58,12 @@
           (v) => !!v || this.$t('required', this.$store.state.locale),
           (v) => v.length <= 32 || this.$t('validateRule2', this.$store.state.locale)
         ],
-        links: '',
+        permalink: '',
         password: '',
         isUseSign: false,
-        isComment: false
+        isComment: false,
+        tags: '',
+        commentable: false
       }
     },
     head () {
@@ -71,7 +71,39 @@
         title: `${this.$store.state.userName} - ${this.$t('postArticle', this.$store.state.locale)}`
       }
     },
-    mounted () {
+    methods: {
+      async edit () {
+        const responseData = this.axios.put(`/console/articles/${this.$route.query.id}`, {
+          title: this.title,
+          abstract: this.abstract,
+          content: this.content,
+          permalink: this.permalink,
+          password: this.password,
+          tags: this.tags,
+          commentable: this.commentable
+        })
+        if (responseData.code === 0) {
+          this.$router.push('/admin/articles/management')
+        } else {
+        }
+      },
+      publish () {
+      }
+    },
+    async mounted () {
+      const id = this.$route.query.id
+      if (id) {
+        const responseData = await this.axios.get(`/console/articles/${id}`)
+        if (responseData) {
+          this.$set(this, 'title', responseData.title)
+          this.$set(this, 'abstract', responseData.abstract)
+          this.$set(this, 'content', responseData.content)
+          this.$set(this, 'permalink', responseData.permalink)
+          this.$set(this, 'password', responseData.password)
+          this.$set(this, 'tags', responseData.tags)
+          this.$set(this, 'commentable', responseData.commentable)
+        }
+      }
     }
   }
 </script>

@@ -13,7 +13,7 @@ export const state = () => ({
 export const mutations = {
   setBaseInfo (state, data) {
     state.locale = data.lang
-    state.userName = data.name
+    state.name = data.name
     state.version = data.version
     state.isInit = data.isInit
   },

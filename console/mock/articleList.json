@@ -2,7 +2,7 @@
   "code": 0,
   "msg": "",
   "data": {
-    "userCount": 1,
+    "userCount": 2,
     "articles": [
       {
         "id": 0,
@@ -15,7 +15,11 @@
         "permalink": "/xxx/xxx/xxx",
         "topped": false,
         "viewCount": 0,
-        "commentCount": 1
+        "commentCount": 1,
+        "author": {
+          "name": "Vanessa",
+          "avatarURL": "https://img.hacpai.com/avatar/1476336494155_1476358182494.jpeg?imageView2/1/w/80/h/80/interlace/0/q/100"
+        }
       },
       {
         "id": 0,
@@ -28,7 +32,11 @@
         "permalink": "/xxx/xxx/xxx",
         "topped": false,
         "viewCount": 0,
-        "commentCount": 1
+        "commentCount": 1,
+        "author": {
+          "name": "Daniel",
+          "avatarURL": "https://img.hacpai.com/avatar/1479719556412_1479827406034.png?imageView2/1/w/80/h/80/interlace/0/q/100"
+        }
       }
     ],
     "pagination": {

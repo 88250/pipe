@@ -2,6 +2,10 @@
   <div class="card fn-clear" data-app="true">
     <ul class="list">
       <li v-for="item in list" :key="item.id" class="fn-flex">
+        <div v-if="userCount > 1">
+          <div class="avatar avatar--mid avatar--space"
+               :style="`background-image: url(${item.author.avatarURL})`"></div>
+        </div>
         <div class="fn-flex-1">
           <div class="list__title">
             <nuxt-link :to="item.permalink">{{ item.title }}</nuxt-link>
@@ -13,32 +17,34 @@
             <time>{{ item.createdAt }}</time>
           </div>
         </div>
-        <div>
-          <v-menu
-            :nudge-bottom="40"
-            :nudge-right="24"
-            :nudge-width="100"
-            :open-on-hover="true">
-            <v-toolbar-title slot="activator">
-              <button class="btn btn--info" @click="edit(item.id)">
-                {{ $t('edit', $store.state.locale) }}
-                <icon icon="chevron-down"/>
-              </button>
-            </v-toolbar-title>
-            <v-list>
-              <v-list-tile>
-                <v-list-tile-title>
-                  <div @click="edit(item.id)">{{ $t('edit', $store.state.locale) }}</div>
-                </v-list-tile-title>
-                <v-list-tile-title>
-                  <div @click="remove(item.id)">{{ $t('delete', $store.state.locale) }}</div>
-                </v-list-tile-title>
-                <v-list-tile-title>
-                  <div @click="top(item.id)">{{ $t('top', $store.state.locale) }}</div>
-                </v-list-tile-title>
-              </v-list-tile>
-            </v-list>
-          </v-menu>
+        <v-menu
+          v-if="$store.state.name === item.author.name"
+          :nudge-bottom="38"
+          :nudge-right="24"
+          :nudge-width="100"
+          :open-on-hover="true">
+          <v-toolbar-title slot="activator">
+            <nuxt-link class="btn btn--info" :to="`/admin/articles/post?id=${item.id}`">
+              {{ $t('edit', $store.state.locale) }}
+              <icon icon="chevron-down"/>
+            </nuxt-link>
+          </v-toolbar-title>
+          <v-list>
+            <v-list-tile>
+              <v-list-tile-title>
+                <nuxt-link :to="`/admin/articles/post?id=${item.id}`">{{ $t('edit', $store.state.locale) }}</nuxt-link>
+              </v-list-tile-title>
+              <v-list-tile-title>
+                <div @click="remove(item.id)">{{ $t('delete', $store.state.locale) }}</div>
+              </v-list-tile-title>
+              <v-list-tile-title>
+                <div @click="top(item.id)">{{ $t('top', $store.state.locale) }}</div>
+              </v-list-tile-title>
+            </v-list-tile>
+          </v-list>
+        </v-menu>
+        <div v-if="userCount > 1 && $store.state.name !== item.author.name">
+          {{ item.author.name }}
         </div>
       </li>
     </ul>
@@ -62,7 +68,8 @@
         currentPageNum: 1,
         pageCount: 1,
         windowSize: 1,
-        list: []
+        list: [],
+        userCount: 1
       }
     },
     head () {
@@ -74,14 +81,12 @@
       async getList (currentPage) {
         const responseData = await this.axios.get(`/console/articles?p=${currentPage}`)
         if (responseData) {
+          this.$set(this, 'userCount', responseData.userCount)
           this.$set(this, 'list', responseData.articles)
           this.$set(this, 'currentPageNum', responseData.pagination.currentPageNum)
           this.$set(this, 'pageCount', responseData.pagination.pageCount)
           this.$set(this, 'windowSize', responseData.pagination.windowSize)
         }
-      },
-      edit (id) {
-        console.log('edit', id)
       },
       async remove (id) {
         const responseData = await this.axios.delete(`/console/articles/${id}`)

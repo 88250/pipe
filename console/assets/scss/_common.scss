@@ -422,3 +422,22 @@ blockquote {
     background-color: $red;
   }
 }
+
+
+// avatar
+.avatar {
+  border-radius: 50%;
+  background-color: $list-hover;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+
+  &--mid {
+    height: 46px;
+    width: 46px;
+  }
+
+  &--space {
+    margin-right: 15px;
+  }
+}

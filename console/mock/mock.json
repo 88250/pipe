@@ -5,7 +5,9 @@
     "Content-Type",
     "*"
   ],
-  "allowedDomains": ["localhost"],
+  "allowedDomains": [
+    "localhost"
+  ],
   "webServices": {
     "base": {
       "verbs": [
@@ -19,11 +21,27 @@
       ],
       "mockFile": "articleList.json"
     },
-    "console/articles/:id" : {
+    "console/articles/:id": {
       "verbs": [
-        "delete", "put"
+        "delete",
+        "put",
+        "get",
+        "post"
       ],
-      "mockFile": "success.json"
+      "responses": {
+        "delete": {
+          "mockFile": "success.json"
+        },
+        "put": {
+          "mockFile": "success.json"
+        },
+        "post": {
+          "mockFile": "error.json"
+        },
+        "get": {
+          "mockFile": "article.json"
+        }
+      }
     },
     "init": {
       "verbs": [

@@ -429,19 +429,22 @@
 
   .list  {
     background: #fff;
-    color: $text-color;
     list-style-type: none;
     padding: 8px 0;
     font-size: 16px;
     border-radius: 4px;
 
-    .list__tile__title {
+    .list__tile__title a,
+    .list__tile__title div {
       line-height: 40px;
       padding: 0 15px;
       cursor: pointer;
       transition: .3s cubic-bezier(.25,.8,.5,1);
+      display: block;
+      color: $text-color;
 
       &:hover {
+        text-decoration: none;
         background-color: $list-hover;
       }
     }
