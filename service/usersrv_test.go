@@ -14,13 +14,19 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-package model
+package service
 
-// Tag model.
-type Tag struct {
-	Model
+import "testing"
 
-	Title string `gorm:"size:128" json:"title"`
+func TestGetUser(t *testing.T) {
+	user := User.GetUser(uint(1))
+	if nil == user {
+		t.Errorf("user is nil")
 
-	BlogID uint `json:"blogID"`
+		return
+	}
+
+	if 1 != user.ID {
+		t.Errorf("id is not [1]")
+	}
 }

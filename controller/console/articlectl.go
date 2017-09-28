@@ -1,4 +1,4 @@
-// Solo.go - A small and beautiful golang blogging system, Solo's golang version.
+// Solo.go - A small and beautiful blogging platform written in golang.
 // Copyright (C) 2017, b3log.org
 //
 // This program is free software: you can redistribute it and/or modify
@@ -19,6 +19,7 @@ package console
 import (
 	"net/http"
 	"strconv"
+	"strings"
 
 	"github.com/b3log/solo.go/model"
 	"github.com/b3log/solo.go/service"
@@ -67,11 +68,59 @@ func GetArticleCtl(c *gin.Context) {
 	result.Data = data
 }
 
+type ConsoleArticle struct {
+	ID           uint            `json:"id"`
+	Author       Author          `json:"author"`
+	CreatedAt    string          `json:"createdAt"`
+	Title        string          `gorm:"size:128" json:"title"`
+	Tags         []*TagPermalink `json:"tags"`
+	Permalink    string          `json:"permalink"`
+	Topped       bool            `json:"topped"`
+	ViewCount    int             `json:"viewCount"`
+	CommentCount int             `json:"commentCount"`
+}
+
+type TagPermalink struct {
+	Title     string `json:"title"`
+	Permalink string `json:"permalink"`
+}
+
+type Author struct {
+	Name      string `json:"name"`
+	AvatarURL string `json:"avatarURL"`
+}
+
 func GetArticlesCtl(c *gin.Context) {
 	result := util.NewResult()
 	defer c.JSON(http.StatusOK, result)
 
-	articles, pagination := service.Article.ConsoleGetArticles(c.GetInt("p"))
+	articleModels, pagination := service.Article.ConsoleGetArticles(c.GetInt("p"))
+
+	articles := []ConsoleArticle{}
+	for _, articleModel := range articleModels {
+		tagPermalinks := []*TagPermalink{}
+		tagStrs := strings.Split(articleModel.Tags, ",")
+		for _, tagStr := range tagStrs {
+			tagPermalink := &TagPermalink{
+				Title:     tagStr,
+				Permalink: "context/" + tagStr,
+			}
+			tagPermalinks = append(tagPermalinks, tagPermalink)
+		}
+
+		article := ConsoleArticle{
+			ID:           articleModel.ID,
+			CreatedAt:    articleModel.CreatedAt.Format("2006-01-02"),
+			Title:        articleModel.Title,
+			Tags:         tagPermalinks,
+			Permalink:    articleModel.Permalink,
+			Topped:       articleModel.Topped,
+			ViewCount:    articleModel.ViewCount,
+			CommentCount: articleModel.CommentCount,
+		}
+
+		articles = append(articles, article)
+	}
 
 	data := map[string]interface{}{}
 	data["articles"] = articles
