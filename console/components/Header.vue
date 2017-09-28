@@ -5,6 +5,7 @@
       Solo
     </div>
     <div class="header__nav fn-flex-1">
+      <nuxt-link to="/admin">{{ $t('manage', $store.state.locale) }}</nuxt-link>
       <nuxt-link :to="`/login?goto=${$route.path.indexOf('/login') > -1 ? '/' : $route.fullPath}`">{{ $t('login', $store.state.locale) }}</nuxt-link>
     </div>
   </header>

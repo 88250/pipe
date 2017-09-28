@@ -29,14 +29,16 @@
       const responseTagsData = await this.axios.get(`/console/tags`)
       if (responseTagsData) {
         let tags = ''
-        responseTagsData.tags.map((v) => {
-          tags += `${v.title},`
+        responseTagsData.map((v, i) => {
+          if (i < 11) {
+            tags += `${v.title},`
+          }
         })
         this.$set(this, 'tags', tags.substr(0, tags.length - 1))
       }
-      const responseData = await this.axios.get(`/hp/apis/articles?tags=${this.tags}`)
+      const responseData = await this.axios.get(`/hp/apis/articles?tags=${this.tags}&format=json`)
       if (responseData) {
-        this.$set(this, 'list', responseData.articles)
+        this.$set(this, 'list', responseData)
       }
     }
   }
