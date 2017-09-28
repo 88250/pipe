@@ -15,6 +15,12 @@
       ],
       "mockFile": "base.json"
     },
+    "console/tags": {
+      "verbs": [
+        "get"
+      ],
+      "mockFile": "tagList.json"
+    },
     "console/articles": {
       "verbs": [
         "get",
@@ -64,6 +70,12 @@
         "post"
       ],
       "mockFile": "success.json"
+    },
+    "hp/apis/articles": {
+      "verbs": [
+        "get"
+      ],
+      "mockFile": "hacpaiArticleList.json"
     }
   }
 }

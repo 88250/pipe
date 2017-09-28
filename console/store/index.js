@@ -35,13 +35,15 @@ export const actions = {
   async nuxtClientInit ({ commit }, { app }) {
     try {
       const responseData = await vueAxios().get('/base')
-      if (app.i18n.messages[responseData.lang]) {
-        app.i18n.locale = responseData.lang
-      } else {
-        const message = require(`../../i18n/${responseData.lang}.json`)
-        app.i18n.setLocaleMessage(responseData.lang, message)
+      if (responseData) {
+        if (app.i18n.messages[responseData.lang]) {
+          app.i18n.locale = responseData.lang
+        } else {
+          const message = require(`../../i18n/${responseData.lang}.json`)
+          app.i18n.setLocaleMessage(responseData.lang, message)
+        }
+        commit('setBaseInfo', responseData)
       }
-      commit('setBaseInfo', responseData)
     } catch (e) {
       console.error(e)
     }
