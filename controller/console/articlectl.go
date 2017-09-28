@@ -97,7 +97,7 @@ func GetArticlesCtl(c *gin.Context) {
 
 	articleModels, pagination := service.Article.ConsoleGetArticles(c.GetInt("p"))
 
-	articles := []ConsoleArticle{}
+	articles := []*ConsoleArticle{}
 	for _, articleModel := range articleModels {
 		tagPermalinks := []*TagPermalink{}
 		tagStrs := strings.Split(articleModel.Tags, ",")
@@ -121,7 +121,7 @@ func GetArticlesCtl(c *gin.Context) {
 			AvatarURL: authorModel.AvatarURL,
 		}
 
-		article := ConsoleArticle{
+		article := &ConsoleArticle{
 			ID:           articleModel.ID,
 			Author:       author,
 			CreatedAt:    articleModel.CreatedAt.Format("2006-01-02"),

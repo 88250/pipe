@@ -30,7 +30,7 @@ type tagService struct {
 	mutex *sync.Mutex
 }
 
-func (srv *tagService) ConsoleGetTagsForWriteArticle() (ret []*model.Tag) {
+func (srv *tagService) ConsoleGetTags() (ret []*model.Tag) {
 	db.Where(model.Tag{}).Order("article_count DESC, id DESC").Find(&ret)
 
 	return

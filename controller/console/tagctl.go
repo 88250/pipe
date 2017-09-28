@@ -18,61 +18,26 @@ package console
 
 import (
 	"net/http"
-	"strings"
 
 	"github.com/b3log/solo.go/service"
 	"github.com/b3log/wide/util"
 	"github.com/gin-gonic/gin"
-	"github.com/prometheus/common/log"
 )
 
 func GetTagsCtl(c *gin.Context) {
 	result := util.NewResult()
 	defer c.JSON(http.StatusOK, result)
 
-	articleModels, pagination := service.Article.ConsoleGetArticles(c.GetInt("p"))
-
-	articles := []ConsoleArticle{}
-	for _, articleModel := range articleModels {
-		tagPermalinks := []*TagPermalink{}
-		tagStrs := strings.Split(articleModel.Tags, ",")
-		for _, tagStr := range tagStrs {
-			tagPermalink := &TagPermalink{
-				Title:     tagStr,
-				Permalink: "context/" + tagStr,
-			}
-			tagPermalinks = append(tagPermalinks, tagPermalink)
+	tags := []*TagPermalink{}
+	tagModels := service.Tag.ConsoleGetTags()
+	for _, tagModel := range tagModels {
+		tag := &TagPermalink{
+			Title:     tagModel.Title,
+			Permalink: "context/" + tagModel.Title,
 		}
 
-		authorModel := service.User.GetUser(articleModel.AuthorID)
-		if nil == authorModel {
-			log.Errorf("not found author of article [id=%d, authorID=%d]", articleModel.ID, articleModel.AuthorID)
-
-			continue
-		}
-
-		author := &Author{
-			Name:      authorModel.Name,
-			AvatarURL: authorModel.AvatarURL,
-		}
-
-		article := ConsoleArticle{
-			ID:           articleModel.ID,
-			Author:       author,
-			CreatedAt:    articleModel.CreatedAt.Format("2006-01-02"),
-			Title:        articleModel.Title,
-			Tags:         tagPermalinks,
-			Permalink:    articleModel.Permalink,
-			Topped:       articleModel.Topped,
-			ViewCount:    articleModel.ViewCount,
-			CommentCount: articleModel.CommentCount,
-		}
-
-		articles = append(articles, article)
+		tags = append(tags, tag)
 	}
 
-	data := map[string]interface{}{}
-	data["articles"] = articles
-	data["pagination"] = pagination
-	result.Data = data
+	result.Data = tags
 }

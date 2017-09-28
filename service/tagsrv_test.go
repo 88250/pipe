@@ -18,8 +18,8 @@ package service
 
 import "testing"
 
-func TestConsoleGetTagsForWriteArticle(t *testing.T) {
-	tags := Tag.ConsoleGetTagsForWriteArticle()
+func TestConsoleGetTags(t *testing.T) {
+	tags := Tag.ConsoleGetTags()
 	if nil == tags {
 		t.Errorf("tags is nil")
 	}
