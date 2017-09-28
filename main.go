@@ -31,8 +31,6 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
-var Version = "1.0.0"
-
 // The only one init function in Solo.
 func init() {
 	gin.SetMode(gin.ReleaseMode)
@@ -54,7 +52,7 @@ func main() {
 
 	handleSignal(server)
 
-	log.Infof("Solo.go (v%s) is running [%s]", Version, util.Conf.Server)
+	log.Infof("Solo.go (v%s) is running [%s]", util.Version, util.Conf.Server)
 
 	server.ListenAndServe()
 }

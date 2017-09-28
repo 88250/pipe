@@ -14,7 +14,6 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-// Package controller includes controllers.
 package controller
 
 import (
@@ -51,7 +50,7 @@ func MapRoutes() *gin.Engine {
 	ret.POST("/logout", logoutCtl)
 
 	statusGroup := ret.Group("/status")
-	statusGroup.GET("", statusCtl)
+	statusGroup.GET("", GetPlatformStatusCtl)
 	statusGroup.GET("/ping", pingCtl)
 
 	consoleGroup := ret.Group("/console")

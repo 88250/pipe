@@ -17,9 +17,11 @@
 package service
 
 import (
+	"errors"
 	"sync"
 
 	"github.com/b3log/solo.go/model"
+	"github.com/b3log/solo.go/util"
 	"github.com/jinzhu/gorm"
 	log "github.com/sirupsen/logrus"
 )
@@ -31,6 +33,38 @@ var Init = &initService{
 type initService struct {
 	mutex  *sync.Mutex
 	inited bool
+}
+
+type PlatformStatus struct {
+	Version string `json:"version"`
+	Locale  string `json:"locale"`
+	Inited  bool   `json:"inited"`
+}
+
+func (srv *initService) Inited() (platformStatus *PlatformStatus, err error) {
+	platformStatus = &PlatformStatus{
+		Version: util.Version,
+		Locale:  "zh_CN",
+	}
+
+	localeSetting := &model.Setting{}
+	if err = db.Where("name = ? AND value IS NOT NULL AND blog_id = ?", "locale", uint(1)).
+		Find(localeSetting).Error; nil != err {
+		if gorm.ErrRecordNotFound == err {
+			err = nil
+			return
+		}
+
+		msg := "checks platform init status failed: " + err.Error()
+		log.Error(msg)
+
+		return platformStatus, errors.New(msg)
+	}
+
+	srv.inited, platformStatus.Inited = true, true
+	platformStatus.Locale = localeSetting.Value
+
+	return
 }
 
 func (srv *initService) InitPlatform(sa *model.User) error {

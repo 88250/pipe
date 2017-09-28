@@ -19,6 +19,7 @@ package controller
 import (
 	"net/http"
 
+	"github.com/b3log/solo.go/service"
 	"github.com/b3log/solo.go/util"
 	"github.com/gin-gonic/gin"
 )
@@ -27,12 +28,17 @@ func pingCtl(c *gin.Context) {
 	c.String(http.StatusOK, "pong")
 }
 
-func statusCtl(c *gin.Context) {
+func GetPlatformStatusCtl(c *gin.Context) {
 	result := util.NewResult()
-	data := map[string]interface{}{}
-	result.Data = &data
+	defer c.JSON(http.StatusOK, result)
 
-	data["articleCount"] = 1
+	platformStatus, err := service.Init.Inited()
+	if nil != err {
+		result.Code = -1
+		result.Msg = err.Error()
 
-	c.JSON(http.StatusOK, result)
+		return
+	}
+
+	result.Data = platformStatus
 }
