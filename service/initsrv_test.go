@@ -25,6 +25,11 @@ import (
 	"github.com/b3log/solo.go/util"
 )
 
+const (
+	testPlatformAdminName  = "Daniel"
+	testPlatformAdminEmail = "solo.go@b3log.org"
+)
+
 func TestMain(m *testing.M) {
 	setup()
 	code := m.Run()
@@ -54,8 +59,8 @@ func teardown() {
 
 func TestInitPlatform(t *testing.T) {
 	platformAdmin := &model.User{
-		Name:     "sa",
-		Email:    "solo.go@b3log.org",
+		Name:     testPlatformAdminName,
+		Email:    testPlatformAdminEmail,
 		Password: "saadmin",
 		B3Key:    "b3key",
 	}
