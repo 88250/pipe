@@ -9,7 +9,7 @@
     "localhost"
   ],
   "webServices": {
-    "base": {
+    "status": {
       "verbs": [
         "get"
       ],
