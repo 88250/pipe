@@ -16,8 +16,6 @@
 
 package model
 
-import "github.com/jinzhu/gorm"
-
 // User roles.
 const (
 	UserRolePlatformAdmin = iota
@@ -27,15 +25,15 @@ const (
 
 // User model.
 type User struct {
-	gorm.Model
+	Model
 
-	Name      string `gorm:"size:32"`
-	Nickname  string `gorm:"size:32"`
-	Email     string `gorm:"size:64"`
-	Password  string `gorm:"size:64"`
-	Role      int
-	AvatarURL string `gorm:"size:255"`
-	B3Key     string `gorm:"size:32"`
+	Name      string `gorm:"size:32" json:"name"`
+	Nickname  string `gorm:"size:32" json:"nickname"`
+	Email     string `gorm:"size:64" json:"email"`
+	Password  string `gorm:"size:64" json:"password"`
+	Role      int    `json:"role"`
+	AvatarURL string `gorm:"size:255" json:"avatarURL"`
+	B3Key     string `gorm:"size:32" json:"b3Key"`
 
-	BlogID uint
+	BlogID uint `json:"blogID"`
 }

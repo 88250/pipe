@@ -16,13 +16,11 @@
 
 package model
 
-import "github.com/jinzhu/gorm"
-
 // Tag model.
 type Tag struct {
-	gorm.Model
+	Model
 
-	Title string `gorm:"size:128"`
+	Title string `gorm:"size:128" json:"title"`
 
-	BlogID uint
+	BlogID uint `json:"blogID"`
 }

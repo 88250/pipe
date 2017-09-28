@@ -16,8 +16,6 @@
 
 package model
 
-import "github.com/jinzhu/gorm"
-
 // Setting names of category "preference".
 const (
 	SettingCategoryPreference = "preference"
@@ -65,11 +63,11 @@ const (
 
 // Setting model.
 type Setting struct {
-	gorm.Model
+	Model
 
-	Category string `gorm:"size:32"`
-	Name     string `gorm:"size:32"`
-	Value    string `gorm:"type:text"`
+	Category string `gorm:"size:32" json:"category"`
+	Name     string `gorm:"size:32" json:"name"`
+	Value    string `gorm:"type:text" json:"value"`
 
-	BlogID uint
+	BlogID uint `json:"blogID"`
 }

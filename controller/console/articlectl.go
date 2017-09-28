@@ -24,7 +24,6 @@ import (
 	"github.com/b3log/solo.go/service"
 	"github.com/b3log/solo.go/util"
 	"github.com/gin-gonic/gin"
-	"github.com/jinzhu/gorm"
 	log "github.com/sirupsen/logrus"
 )
 
@@ -110,7 +109,7 @@ func UpdateArticleCtl(c *gin.Context) {
 		return
 	}
 
-	article := &model.Article{Model: gorm.Model{ID: uint(id)}}
+	article := &model.Article{Model: model.Model{ID: uint(id)}}
 	if err := c.BindJSON(article); nil != err {
 		result.Code = -1
 		result.Msg = "parses update article request failed"

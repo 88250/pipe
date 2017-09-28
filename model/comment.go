@@ -16,8 +16,6 @@
 
 package model
 
-import "github.com/jinzhu/gorm"
-
 // Comment on types.
 const (
 	CommentOnTypeArticle = iota
@@ -26,15 +24,15 @@ const (
 
 // Comment model.
 type Comment struct {
-	gorm.Model
+	Model
 
-	OnID                      uint   // ID of article or page
-	OnType                    int    `gorm:"size:8"` // 0: article, 1: page
-	AuthorName                string `gorm:"size:32"`
-	AuthorAvatarURL           string `gorm:"size:255"`
-	Content                   string `gorm:"type:text"`
-	OriginalCommentID         uint   // ID of replied comment
-	OriginalCommentAuthorName string `gorm:"size:32"`
+	OnID                      uint   `json:"onID"`                 // ID of article or page
+	OnType                    int    `gorm:"size:8" json:"onType"` // 0: article, 1: page
+	AuthorName                string `gorm:"size:32" json:"authorName"`
+	AuthorAvatarURL           string `gorm:"size:255" json:"authorAvatarURL"`
+	Content                   string `gorm:"type:text" json:"content"`
+	OriginalCommentID         uint   `json:"originalCommentID"` // ID of replied comment
+	OriginalCommentAuthorName string `gorm:"size:32" json:"originalCommentAuthorName"`
 
-	BlogID uint
+	BlogID uint `json:"blogID"`
 }

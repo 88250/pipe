@@ -17,8 +17,6 @@
 // Package model defines entity structures and ORM.
 package model
 
-import "github.com/jinzhu/gorm"
-
 // Article statuses.
 const (
 	ArticleStatusPublished = iota
@@ -27,20 +25,20 @@ const (
 
 // Article model.
 type Article struct {
-	gorm.Model
+	Model
 
-	AuthorID     uint
-	Title        string `gorm:"size:128"`
-	Abstract     string `gorm:"type:text"`
-	Tags         string `gorm:"size:128"`
-	Content      string `gorm:"type:text"`
-	Permalink    string `gorm:"size:255"`
-	Status       int
-	Topped       bool
-	Commentable  bool
-	Password     string `gorm:"size:16"`
-	ViewCount    int
-	CommentCount int
+	AuthorID     uint   `json:"authorID"`
+	Title        string `gorm:"size:128" json:"title"`
+	Abstract     string `gorm:"type:text" json:"abstract"`
+	Tags         string `gorm:"size:128" json:"tags"`
+	Content      string `gorm:"type:text" json:"content"`
+	Permalink    string `gorm:"size:255" json:"permalink"`
+	Status       int    `json:"status"`
+	Topped       bool   `json:"topped"`
+	Commentable  bool   `json:"commentable"`
+	Password     string `gorm:"size:16" json:"password"`
+	ViewCount    int    `json:"viewCount"`
+	CommentCount int    `json:"commentCount"`
 
-	BlogID uint
+	BlogID uint `json:"blogID"`
 }

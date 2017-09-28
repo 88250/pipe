@@ -16,8 +16,6 @@
 
 package model
 
-import "github.com/jinzhu/gorm"
-
 // Correlation types.
 const (
 	CorrelationCategoryTag = iota
@@ -28,11 +26,11 @@ const (
 //   category_id - tag_id
 //   article_id - tag_id
 type Correlation struct {
-	gorm.Model
+	Model
 
-	ID1  uint
-	ID2  uint
-	Type int `gorm:"size:16"` // 0: category-tag, 1: article-tag
+	ID1  uint `json:"id1"`
+	ID2  uint `json:"id2"`
+	Type int  `gorm:"size:16" json:"type"` // 0: category-tag, 1: article-tag
 
-	BlogID uint
+	BlogID uint `json:"blogID"`
 }

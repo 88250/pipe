@@ -16,16 +16,14 @@
 
 package model
 
-import "github.com/jinzhu/gorm"
-
 // Category model.
 type Category struct {
-	gorm.Model
+	Model
 
-	Title       string `gorm:"size:128"`
-	Permalink   string `gorm:"size:255"`
-	Description string `gorm:"size:255"`
-	Number      int    // for sorting
+	Title       string `gorm:"size:128" json:"title"`
+	Permalink   string `gorm:"size:255" json:"permalink"`
+	Description string `gorm:"size:255" json:"description"`
+	Number      int    `json:"number"` // for sorting
 
-	BlogID uint
+	BlogID uint `json:"blogID"`
 }

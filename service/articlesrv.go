@@ -21,7 +21,6 @@ import (
 
 	"github.com/b3log/solo.go/model"
 	"github.com/b3log/solo.go/util"
-	"github.com/jinzhu/gorm"
 )
 
 var Article = &articleService{}
@@ -78,7 +77,7 @@ func (srv *articleService) ConsoleGetArticle(id uint) *model.Article {
 
 func (srv *articleService) RemoveArticle(id uint) error {
 	article := &model.Article{
-		Model: gorm.Model{ID: id},
+		Model: model.Model{ID: id},
 	}
 
 	return db.Delete(article).Error

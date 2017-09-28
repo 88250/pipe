@@ -17,8 +17,12 @@
 package util
 
 type Pagination struct {
-	CurrentPageNum, PageSize, PageCount, WindowSize, RecordCount int
-	PageNums                                                     []int
+	CurrentPageNum int   `json:"currentPageNum"`
+	PageSize       int   `json:"pageSize"`
+	PageCount      int   `json:"pageCount"`
+	WindowSize     int   `json:"windowSize"`
+	RecordCount    int   `json:"recordCount"`
+	PageNums       []int `json:"pageNums"`
 }
 
 func NewPagination(currentPageNum, pageSize, pageCount, windowSize, recordCount int) *Pagination {

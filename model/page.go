@@ -16,8 +16,6 @@
 
 package model
 
-import "github.com/jinzhu/gorm"
-
 // Page types.
 const (
 	PageTypePage = iota
@@ -26,16 +24,17 @@ const (
 
 // Page (customized navigation) model.
 type Page struct {
-	gorm.Model
+	Model
 
-	Title       string `gorm:"size:128"`
-	Content     string `gorm:"type:text"`
-	Permalink   string `gorm:"size:255"`
-	Icon        string `gorm:"size:255"`
-	Number      int    // for sorting
-	Type        int    // 0: page, 1: link
-	Commentable bool
-	ViewCount   int
+	Title        string `gorm:"size:128" json:"title"`
+	Content      string `gorm:"type:text" json:"content"`
+	Permalink    string `gorm:"size:255" json:"permalink"`
+	IconURL      string `gorm:"size:255" json:"iconURL"`
+	Number       int    `json:"number"` // for sorting
+	Type         int    `json:"type"`   // 0: page, 1: link
+	Commentable  bool   `json:"commentable"`
+	ViewCount    int    `json:"viewCount"`
+	CommentCount int    `json:"commentCount"`
 
 	BlogID uint
 }
