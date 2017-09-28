@@ -19,6 +19,9 @@ export const mutations = {
   setLocale (state, locale) {
     state.locale = locale
   },
+  setIsInit (state, isInit) {
+    state.isInit = isInit
+  },
   setSnackBar (state, data) {
     state.snackBar = data.snackBar
     state.snackMsg = data.snackMsg

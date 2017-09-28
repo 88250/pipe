@@ -18,6 +18,7 @@
             :counter="16"
             required
             type="password"
+            @keyup.enter="login"
           ></v-text-field>
           <div class="alert alert--danger" v-show="error">
             <icon icon="danger"/>

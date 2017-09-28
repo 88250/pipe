@@ -59,6 +59,7 @@
             v-model="userB3Key"
             :rules="userB3KeyRules"
             :counter="32"
+            @keyup.enter="checkHP"
           ></v-text-field>
           <div class="alert alert--danger" v-show="postError">
             <icon icon="danger"/>
@@ -66,19 +67,27 @@
           </div>
         </v-form>
         <div class="fn-right">
-          <button class="btn btn--margin-t30 btn--info" @click="step = 1">{{ $t('preStep', $store.state.locale) }}</button>
-          <button class="btn btn--margin-t30 btn--success btn--space" @click="checkHP">{{ $t('confirm', $store.state.locale) }}</button>
+          <button class="btn btn--info" @click="step = 1">{{ $t('preStep', $store.state.locale) }}</button>
+          <button class="btn btn--success btn--space" @click="checkHP">{{ $t('confirm', $store.state.locale) }}</button>
         </div>
       </v-stepper-content>
 
       <v-stepper-content step="3" class="fn-clear">
         <v-form class="init__center" ref="initForm">
           <v-text-field
-            :label="$t('nickName', $store.state.locale)"
-            v-model="name"
-            :counter="16"
-            :rules="userNameRules"
-            required
+            :label="$t('hacpaiEmail', $store.state.locale)"
+            v-model="userEmail"
+            :readonly="true"
+          ></v-text-field>
+          <v-text-field
+            :label="$t('hacpaiAccount', $store.state.locale)"
+            v-model="userName"
+            :readonly="true"
+          ></v-text-field>
+          <v-text-field
+            label="B3log Key"
+            v-model="userB3Key"
+            :readonly="true"
           ></v-text-field>
           <v-text-field
             :label="$t('password', $store.state.locale)"
@@ -87,6 +96,7 @@
             :counter="16"
             required
             type="password"
+            @keyup.enter="init"
           ></v-text-field>
           <div class="alert alert--danger" v-show="postInitError">
             <icon icon="danger"/>
@@ -94,8 +104,8 @@
           </div>
         </v-form>
         <div class="fn-right">
-          <button class="btn btn--margin-t30 btn--info" @click="step = 2">{{ $t('preStep', $store.state.locale) }}</button>
-          <button class="btn btn--margin-t30 btn--success btn--space" @click="init">{{ $t('confirm', $store.state.locale) }}</button>
+          <button class="btn btn--info" @click="step = 2">{{ $t('preStep', $store.state.locale) }}</button>
+          <button class="btn btn--success btn--space" @click="init">{{ $t('confirm', $store.state.locale) }}</button>
         </div>
       </v-stepper-content>
 
@@ -141,7 +151,6 @@
         postError: false,
         postInitError: false,
         postInitErrorMsg: '',
-        name: '',
         password: ''
       }
     },
@@ -172,7 +181,7 @@
           return
         }
         const responseData = await this.axios.post('/init', {
-          name: this.name,
+          name: this.userName,
           email: this.userEmail,
           passwordHashed: md5(this.password),
           b3key: this.userB3Key
@@ -181,6 +190,7 @@
           this.$set(this, 'step', 4)
           this.$set(this, 'postInitError', false)
           this.$set(this, 'postInitErrorMsg', '')
+          this.$store.commit('setIsInit', true)
         } else {
           this.$set(this, 'postInitError', true)
           this.$set(this, 'postInitErrorMsg', responseData.msg)
@@ -195,8 +205,8 @@
   .init
     &__center
       width: 630px
-      margin: 50px auto
-      height: 300px
+      margin: 14px auto
+      height: 380px
 
     &__card
       &-welcome.card.card--danger
@@ -205,7 +215,7 @@
         display: block
         width: 280px
         color: #fff
-        margin-top: 98px
+        margin-top: 138px
         &:hover
           text-decoration: none
           opacity: .9
@@ -221,4 +231,5 @@
         h2
           line-height: 32px
           margin-bottom: 10px
+          color: #fff
 </style>
