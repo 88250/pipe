@@ -24,7 +24,6 @@ import (
 
 	"github.com/b3log/solo.go/model"
 	"github.com/b3log/solo.go/util"
-	log "github.com/sirupsen/logrus"
 )
 
 var Article = &articleService{
@@ -46,13 +45,11 @@ func (srv *articleService) AddArticle(article *model.Article) error {
 	defer srv.mutex.Unlock()
 
 	tx := db.Begin()
-
 	if err := tx.Create(article).Error; nil != err {
 		tx.Rollback()
 
 		return err
 	}
-
 	tx.Commit()
 
 	return nil
@@ -105,5 +102,13 @@ func (srv *articleService) UpdateArticle(article *model.Article) error {
 		return errors.New(fmt.Sprintf("not found article [id=%d] to update", article.ID))
 	}
 
-	return db.Model(&model.Article{}).Updates(article).Error
+	tx := db.Begin()
+	if err := db.Model(&model.Article{}).Updates(article).Error; nil != err {
+		tx.Rollback()
+
+		return err
+	}
+	tx.Commit()
+
+	return nil
 }
