@@ -70,7 +70,7 @@ func GetArticleCtl(c *gin.Context) {
 
 type ConsoleArticle struct {
 	ID           uint            `json:"id"`
-	Author       Author          `json:"author"`
+	Author       *Author         `json:"author"`
 	CreatedAt    string          `json:"createdAt"`
 	Title        string          `gorm:"size:128" json:"title"`
 	Tags         []*TagPermalink `json:"tags"`
@@ -108,8 +108,21 @@ func GetArticlesCtl(c *gin.Context) {
 			tagPermalinks = append(tagPermalinks, tagPermalink)
 		}
 
+		authorModel := service.User.GetUser(articleModel.AuthorID)
+		if nil == authorModel {
+			log.Errorf("not found author of article [id=%d, authorID=%d]", articleModel.ID, articleModel.AuthorID)
+
+			continue
+		}
+
+		author := &Author{
+			Name:      authorModel.Name,
+			AvatarURL: authorModel.AvatarURL,
+		}
+
 		article := ConsoleArticle{
 			ID:           articleModel.ID,
+			Author:       author,
 			CreatedAt:    articleModel.CreatedAt.Format("2006-01-02"),
 			Title:        articleModel.Title,
 			Tags:         tagPermalinks,
