@@ -77,7 +77,7 @@
     },
     head () {
       return {
-        title: `${this.$store.state.userName} - ${this.$t('postArticle', this.$store.state.locale)}`
+        title: `${this.$store.state.userName} - ${this.$t(this.$route.query.id ? 'editArticle' : 'postArticle', this.$store.state.locale)}`
       }
     },
     methods: {

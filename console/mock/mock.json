@@ -21,6 +21,12 @@
       ],
       "mockFile": "tagList.json"
     },
+    "console/version/latest": {
+      "verbs": [
+        "get"
+      ],
+      "mockFile": "latestVersion.json"
+    },
     "console/articles": {
       "verbs": [
         "get",

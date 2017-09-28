@@ -48,6 +48,7 @@
   "password": "密码",
   "delete": "删除",
   "edit": "编辑",
+  "editArticle": "编辑文章",
   "top": "置顶",
   "requestError": "请求错误",
   "comment": "评论",
