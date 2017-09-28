@@ -60,6 +60,11 @@ func (srv *initService) InitPlatform(sa *model.User) error {
 
 		return err
 	}
+	if err := initStatistic(tx, blogID); nil != err {
+		tx.Rollback()
+
+		return err
+	}
 	if err := initAdmin(tx, sa, blogID); nil != err {
 		tx.Rollback()
 
@@ -80,10 +85,10 @@ func (srv *initService) InitPlatform(sa *model.User) error {
 func initAdmin(tx *gorm.DB, admin *model.User, blogID uint) error {
 	if 1 == blogID {
 		admin.Role = model.UserRolePlatformAdmin
+		admin.ArticleCount, admin.PublishedArticleCount = 1, 1 // article "Hello, World!"
 	} else {
 		admin.Role = model.UserRoleBlogAdmin
 	}
-
 	admin.BlogID = blogID
 
 	if err := tx.Create(admin).Error; nil != err {
@@ -334,6 +339,39 @@ func initPreference(tx *gorm.DB, blogID uint) error {
 		Category: model.SettingCategoryPreference,
 		Name:     model.SettingNamePreferenceVer,
 		Value:    "1.0.0",
+		BlogID:   blogID}).Error; nil != err {
+		return err
+	}
+
+	return nil
+}
+
+func initStatistic(tx *gorm.DB, blogID uint) error {
+	if err := tx.Create(&model.Setting{
+		Category: model.SettingCategoryStatistic,
+		Name:     model.SettingNameStatisticArticleCount,
+		Value:    "1", // article "Hello, World!"
+		BlogID:   blogID}).Error; nil != err {
+		return err
+	}
+	if err := tx.Create(&model.Setting{
+		Category: model.SettingCategoryStatistic,
+		Name:     model.SettingNameStatisticPublishedArticleCount,
+		Value:    "1", // article "Hello, World!"
+		BlogID:   blogID}).Error; nil != err {
+		return err
+	}
+	if err := tx.Create(&model.Setting{
+		Category: model.SettingCategoryStatistic,
+		Name:     model.SettingNameStatisticCommentCount,
+		Value:    "1", // comment of article "Hello, World!"
+		BlogID:   blogID}).Error; nil != err {
+		return err
+	}
+	if err := tx.Create(&model.Setting{
+		Category: model.SettingCategoryStatistic,
+		Name:     model.SettingNameStatisticViewCount,
+		Value:    "0",
 		BlogID:   blogID}).Error; nil != err {
 		return err
 	}

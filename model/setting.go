@@ -51,6 +51,16 @@ const (
 	SettingNamePreferenceVer                        = "version"
 )
 
+// Setting names of category "statistic"
+const (
+	SettingCategoryStatistic = "statistic"
+
+	SettingNameStatisticArticleCount          = "articleCount"
+	SettingNameStatisticPublishedArticleCount = "publishedArticleCount"
+	SettingNameStatisticCommentCount          = "commentCount"
+	SettingNameStatisticViewCount             = "viewCount"
+)
+
 // Setting values of category "preference".
 const (
 	SettingPreferenceArticleListStyleValueTitle         = "title"
