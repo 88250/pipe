@@ -3,7 +3,7 @@
   "msg": "",
   "data": {
     "version": "1.0.0",
-    "lang": "zh_CN",
+    "locale": "zh_CN",
     "inited": true
   }
 }

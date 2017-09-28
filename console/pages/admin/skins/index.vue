@@ -1,12 +1,22 @@
 <template>
   <div class="admin__skins">
-    <div class="card" v-for="item in list" :key="item.previewURL">
+    <div class="card"
+         v-for="item in list"
+         :key="item.previewURL"
+         :class="{ 'skin--current': item.id === currentId }">
       <div class="skin__img-wrap">
         <img :src="item.previewURL"/>
         <div class="skin__overlay">
           <div>
-            <a class="btn btn--info" href="javascript:void(0)"><icon icon="setting"/></a>
-            <nuxt-link class="btn btn--info btn--space" :to="item.previewURL"><icon icon="info"/></nuxt-link>
+            <button
+              v-show="item.id !== currentId"
+              class="btn btn--info"
+              @click="setup(item.id)">{{ $t('setup', $store.state.locale) }}
+            </button>
+            <a
+              class="btn btn--danger btn--space"
+              target="_blank"
+              :href="item.thumbnailURL">{{ $t('preview', $store.state.locale) }}</a>
           </div>
         </div>
       </div>
@@ -19,7 +29,8 @@
   export default {
     data () {
       return {
-        list: []
+        list: [],
+        currentId: ''
       }
     },
     head () {
@@ -27,10 +38,30 @@
         title: `${this.$store.state.userName} - ${this.$t('about', this.$store.state.locale)}`
       }
     },
+    methods: {
+      async setup (id) {
+        const responseData = await this.axios.put(`/console/skins/${id}`)
+        if (responseData.code === 0) {
+          this.$store.commit('setSnackBar', {
+            snackBar: true,
+            snackMsg: this.$t('setupSuccess', this.$store.state.locale),
+            snackModify: 'success'
+          })
+
+          this.$set(this, 'currentId', id)
+        } else {
+          this.$store.commit('setSnackBar', {
+            snackBar: true,
+            snackMsg: responseData.msg
+          })
+        }
+      }
+    },
     async mounted () {
       const responseData = await this.axios.get('/console/skins')
       if (responseData) {
         this.$set(this, 'list', responseData.skins)
+        this.$set(this, 'currentId', responseData.currentId)
       }
     }
   }
@@ -45,13 +76,18 @@
       margin: 0 30px 30px 0
       align-content: flex-start
 
+      &.skin--current
+        background-color: $blue
+
+        h3
+          color: #fff
+
       .skin__img-wrap
         overflow: hidden
         height: 250px
         width: 360px
         margin-bottom: 15px
         position: relative
-
         &:hover
           .skin__overlay
             opacity: 1
@@ -74,15 +110,6 @@
           transform: translateY(-50%) translateZ(0)
           position: absolute
           text-align: center
-
-        a
-          border: 1px solid #fff
-          background-color: transparent
-
-        .icon
-          cursor: pointer
-          height: 20px
-          width: 20px
       img
         height: 250px
         width: 360px

@@ -2,7 +2,7 @@ import vueAxios from '~/plugins/axios'
 
 export const state = () => ({
   locale: 'zh_CN',
-  userName: 'solo',
+  userName: 'solo.go',
   version: '1.0.0',
   isInit: true,
   snackMsg: '',
@@ -12,8 +12,7 @@ export const state = () => ({
 
 export const mutations = {
   setBaseInfo (state, data) {
-    state.locale = data.lang
-    state.name = data.name
+    state.locale = data.locale
     state.version = data.version
     state.isInit = data.inited
   },
@@ -36,11 +35,11 @@ export const actions = {
     try {
       const responseData = await vueAxios().get('/base')
       if (responseData) {
-        if (app.i18n.messages[responseData.lang]) {
-          app.i18n.locale = responseData.lang
+        if (app.i18n.messages[responseData.locale]) {
+          app.i18n.locale = responseData.locale
         } else {
-          const message = require(`../../i18n/${responseData.lang}.json`)
-          app.i18n.setLocaleMessage(responseData.lang, message)
+          const message = require(`../../i18n/${responseData.locale}.json`)
+          app.i18n.setLocaleMessage(responseData.locale, message)
         }
         commit('setBaseInfo', responseData)
       }
