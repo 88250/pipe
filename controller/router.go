@@ -27,7 +27,7 @@ import (
 // MapRoutes returns a gin engine and binds controllers with request URLs.
 func MapRoutes() *gin.Engine {
 	ret := gin.New()
-	//ret.Use(favicon.New("./favicon.ico"))
+	// TODO: D, ret.Use(favicon.New("./favicon.ico"))
 	ret.Use(gin.Recovery())
 
 	store := sessions.NewCookieStore([]byte(util.Conf.SessionSecret))
@@ -41,11 +41,14 @@ func MapRoutes() *gin.Engine {
 		Secure:   true,
 		HttpOnly: true,
 	})
-	ret.Use(sessions.Sessions("sologo_sessions", store))
+	ret.Use(sessions.Sessions("solo.go", store))
 
 	ret.Any("/hp/*apis", util.HacPaiAPI())
 
 	ret.POST("/init", initCtl)
+
+	ret.POST("/login", loginCtl)
+	ret.POST("/logout", logoutCtl)
 
 	status := ret.Group("/status")
 	status.GET("", statusCtl)

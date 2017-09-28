@@ -14,6 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+// Package controller is the "controller" layer.
 package controller
 
 import (
@@ -27,10 +28,10 @@ import (
 )
 
 type initRequest struct {
-	Name     string `json:"name" binding:"required"`
-	Email    string `json:"email" binding:"required"`
-	Password string `json:"password" binding:"required"`
-	B3Key    string `json:"b3key" binding:"required"`
+	Name           string `json:"name" binding:"required"`
+	Email          string `json:"email" binding:"required"`
+	PasswordHashed string `json:"passwordHashed" binding:"required"`
+	B3Key          string `json:"b3key" binding:"required"`
 }
 
 func initCtl(c *gin.Context) {
@@ -48,7 +49,7 @@ func initCtl(c *gin.Context) {
 	platformAdmin := &model.User{
 		Name:     reqData.Name,
 		Email:    reqData.Email,
-		Password: reqData.Password,
+		Password: reqData.PasswordHashed,
 		B3Key:    reqData.B3Key,
 	}
 

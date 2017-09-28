@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-// Package model defines entity structures and ORM.
+// Package model is the "model" layer which defines entity structures with ORM.
 package model
 
 // Article statuses.

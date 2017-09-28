@@ -38,3 +38,12 @@ func (srv *userService) GetUser(id uint) *model.User {
 
 	return ret
 }
+
+func (srv *userService) GetUserByNameOrEmail(nameOrEmail string) *model.User {
+	ret := &model.User{}
+	if nil != db.Where("name = ? OR email = ?", nameOrEmail, nameOrEmail).Find(ret).Error {
+		return nil
+	}
+
+	return ret
+}
