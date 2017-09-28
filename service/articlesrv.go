@@ -17,15 +17,22 @@
 package service
 
 import (
+	"errors"
+	"fmt"
 	"math"
+	"sync"
 
 	"github.com/b3log/solo.go/model"
 	"github.com/b3log/solo.go/util"
+	log "github.com/sirupsen/logrus"
 )
 
-var Article = &articleService{}
+var Article = &articleService{
+	mutex: &sync.Mutex{},
+}
 
 type articleService struct {
+	mutex *sync.Mutex
 }
 
 // Article pagination arguments of admin console.
@@ -35,6 +42,9 @@ const (
 )
 
 func (srv *articleService) AddArticle(article *model.Article) error {
+	srv.mutex.Lock()
+	defer srv.mutex.Unlock()
+
 	tx := db.Begin()
 
 	if err := tx.Create(article).Error; nil != err {
@@ -76,6 +86,9 @@ func (srv *articleService) ConsoleGetArticle(id uint) *model.Article {
 }
 
 func (srv *articleService) RemoveArticle(id uint) error {
+	srv.mutex.Lock()
+	defer srv.mutex.Unlock()
+
 	article := &model.Article{
 		Model: model.Model{ID: id},
 	}
@@ -84,5 +97,13 @@ func (srv *articleService) RemoveArticle(id uint) error {
 }
 
 func (srv *articleService) UpdateArticle(article *model.Article) error {
+	srv.mutex.Lock()
+	defer srv.mutex.Unlock()
+
+	count := 0
+	if db.Model(model.Article{}).First(article).Count(&count); 1 > count {
+		return errors.New(fmt.Sprintf("not found article [id=%d] to update", article.ID))
+	}
+
 	return db.Model(&model.Article{}).Updates(article).Error
 }
