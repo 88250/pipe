@@ -14,15 +14,24 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-package model
+package service
 
-// Tag model.
-type Tag struct {
-	Model
+import (
+	"sync"
 
-	Title                 string `gorm:"size:128" json:"title"`
-	ArticleCount          int    `json:"articleCount"`          // including drafts and published articles
-	PublishedArticleCount int    `json:"publishedArticleCount"` // just including published articles
+	"github.com/b3log/solo.go/model"
+)
 
-	BlogID uint `json:"blogID"`
+var Tag = &tagService{
+	mutex: &sync.Mutex{},
+}
+
+type tagService struct {
+	mutex *sync.Mutex
+}
+
+func (srv *tagService) ConsoleGetTags() (ret []*model.Tag) {
+	db.Where(model.Tag{}).Order("article_count DESC, id DESC").Find(&ret)
+
+	return
 }

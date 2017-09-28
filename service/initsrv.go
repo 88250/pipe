@@ -60,7 +60,12 @@ func (srv *initService) InitPlatform(sa *model.User) error {
 
 		return err
 	}
-	if err := initAdmin(tx, sa, blogID); nil != err {
+	if err := initStatistic(tx, blogID); nil != err {
+		tx.Rollback()
+
+		return err
+	}
+	if err := initPlatformAdmin(tx, sa, blogID); nil != err {
 		tx.Rollback()
 
 		return err
@@ -77,13 +82,9 @@ func (srv *initService) InitPlatform(sa *model.User) error {
 	return nil
 }
 
-func initAdmin(tx *gorm.DB, admin *model.User, blogID uint) error {
-	if 1 == blogID {
-		admin.Role = model.UserRolePlatformAdmin
-	} else {
-		admin.Role = model.UserRoleBlogAdmin
-	}
-
+func initPlatformAdmin(tx *gorm.DB, admin *model.User, blogID uint) error {
+	admin.Role = model.UserRolePlatformAdmin
+	admin.ArticleCount, admin.PublishedArticleCount = 1, 1 // article "Hello, World!"
 	admin.BlogID = blogID
 
 	if err := tx.Create(admin).Error; nil != err {
@@ -116,6 +117,16 @@ Solo.go 博客系统是一个开源项目，如果你觉得它很赞，请到[�
 		CommentCount: 1,
 	}
 	if err := tx.Create(article).Error; nil != err {
+		return err
+	}
+
+	tag := &model.Tag{
+		Title:                 "Solo.go",
+		ArticleCount:          1,
+		PublishedArticleCount: 1,
+		BlogID:                blogID,
+	}
+	if err := tx.Create(tag).Error; nil != err {
 		return err
 	}
 
@@ -334,6 +345,39 @@ func initPreference(tx *gorm.DB, blogID uint) error {
 		Category: model.SettingCategoryPreference,
 		Name:     model.SettingNamePreferenceVer,
 		Value:    "1.0.0",
+		BlogID:   blogID}).Error; nil != err {
+		return err
+	}
+
+	return nil
+}
+
+func initStatistic(tx *gorm.DB, blogID uint) error {
+	if err := tx.Create(&model.Setting{
+		Category: model.SettingCategoryStatistic,
+		Name:     model.SettingNameStatisticArticleCount,
+		Value:    "1", // article "Hello, World!"
+		BlogID:   blogID}).Error; nil != err {
+		return err
+	}
+	if err := tx.Create(&model.Setting{
+		Category: model.SettingCategoryStatistic,
+		Name:     model.SettingNameStatisticPublishedArticleCount,
+		Value:    "1", // article "Hello, World!"
+		BlogID:   blogID}).Error; nil != err {
+		return err
+	}
+	if err := tx.Create(&model.Setting{
+		Category: model.SettingCategoryStatistic,
+		Name:     model.SettingNameStatisticCommentCount,
+		Value:    "1", // comment of article "Hello, World!"
+		BlogID:   blogID}).Error; nil != err {
+		return err
+	}
+	if err := tx.Create(&model.Setting{
+		Category: model.SettingCategoryStatistic,
+		Name:     model.SettingNameStatisticViewCount,
+		Value:    "0",
 		BlogID:   blogID}).Error; nil != err {
 		return err
 	}

@@ -14,15 +14,13 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-package model
+package service
 
-// Tag model.
-type Tag struct {
-	Model
+import "testing"
 
-	Title                 string `gorm:"size:128" json:"title"`
-	ArticleCount          int    `json:"articleCount"`          // including drafts and published articles
-	PublishedArticleCount int    `json:"publishedArticleCount"` // just including published articles
-
-	BlogID uint `json:"blogID"`
+func TestConsoleGetTags(t *testing.T) {
+	tags := Tag.ConsoleGetTags()
+	if nil == tags {
+		t.Errorf("tags is nil")
+	}
 }

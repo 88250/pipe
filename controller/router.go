@@ -50,16 +50,17 @@ func MapRoutes() *gin.Engine {
 	ret.POST("/login", loginCtl)
 	ret.POST("/logout", logoutCtl)
 
-	status := ret.Group("/status")
-	status.GET("", statusCtl)
-	status.GET("/ping", pingCtl)
+	statusGroup := ret.Group("/status")
+	statusGroup.GET("", statusCtl)
+	statusGroup.GET("/ping", pingCtl)
 
-	adminConsole := ret.Group("/console")
-	adminConsole.POST("/articles", console.AddArticleCtl)
-	adminConsole.GET("/articles", console.GetArticlesCtl)
-	adminConsole.GET("/articles/:id", console.GetArticleCtl)
-	adminConsole.DELETE("/articles/:id", console.RemoveArticleCtl)
-	adminConsole.PUT("/articles/:id", console.UpdateArticleCtl)
+	consoleGroup := ret.Group("/console")
+	consoleGroup.POST("/articles", console.AddArticleCtl)
+	consoleGroup.GET("/articles", console.GetArticlesCtl)
+	consoleGroup.GET("/articles/:id", console.GetArticleCtl)
+	consoleGroup.DELETE("/articles/:id", console.RemoveArticleCtl)
+	consoleGroup.PUT("/articles/:id", console.UpdateArticleCtl)
+	consoleGroup.GET("/tags", console.GetTagsCtl)
 
 	return ret
 }

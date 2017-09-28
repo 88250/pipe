@@ -14,15 +14,25 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-package model
+package console
 
-// Tag model.
-type Tag struct {
-	Model
+import (
+	"net/http"
 
-	Title                 string `gorm:"size:128" json:"title"`
-	ArticleCount          int    `json:"articleCount"`          // including drafts and published articles
-	PublishedArticleCount int    `json:"publishedArticleCount"` // just including published articles
+	"github.com/b3log/solo.go/service"
+	"github.com/b3log/wide/util"
+	"github.com/gin-gonic/gin"
+)
 
-	BlogID uint `json:"blogID"`
+func GetTagsCtl(c *gin.Context) {
+	result := util.NewResult()
+	defer c.JSON(http.StatusOK, result)
+
+	tags := []*TagPermalink{}
+	tagModels := service.Tag.ConsoleGetTags()
+	for _, tagModel := range tagModels {
+		tags = append(tags, &TagPermalink{Title: tagModel.Title})
+	}
+
+	result.Data = tags
 }
