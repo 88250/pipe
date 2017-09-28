@@ -27,7 +27,6 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
-// Locale.
 type locale struct {
 	Name     string
 	Langs    map[string]interface{}
@@ -48,30 +47,28 @@ func Load() {
 	}
 
 	for _, name := range names {
-		if !strings.HasSuffix(name, ".json") {
+		if !isLetter(rune(name[0])) || !strings.HasSuffix(name, ".json") {
 			continue
 		}
 
 		loc := name[:strings.LastIndex(name, ".")]
 		load(loc)
 	}
+
+	log.Debugf("loaded [%d] language configuration files", len(Locales))
 }
 
 func load(localeStr string) {
 	bytes, err := ioutil.ReadFile("i18n/" + localeStr + ".json")
 	if nil != err {
-		log.Error(err)
-
-		os.Exit(-1)
+		log.Fatal("reads i18n configurations fialed: " + err.Error())
 	}
 
 	l := locale{Name: localeStr}
 
 	err = json.Unmarshal(bytes, &l.Langs)
 	if nil != err {
-		log.Error(err)
-
-		os.Exit(-1)
+		log.Fatal("parses i18n configurations failed: " + err.Error())
 	}
 
 	Locales[localeStr] = l
@@ -98,4 +95,8 @@ func GetLocalesNames() []string {
 	sort.Strings(ret)
 
 	return ret
+}
+
+func isLetter(r rune) bool {
+	return 'a' <= r && 'z' >= r || 'A' <= r && 'Z' >= r
 }
