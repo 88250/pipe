@@ -26,7 +26,7 @@ import (
 )
 
 const (
-	testPlatformAdminName  = "Daniel"
+	testPlatformAdminName  = "sologo"
 	testPlatformAdminEmail = "solo.go@b3log.org"
 )
 
@@ -61,8 +61,8 @@ func TestInitPlatform(t *testing.T) {
 	platformAdmin := &model.User{
 		Name:     testPlatformAdminName,
 		Email:    testPlatformAdminEmail,
-		Password: "saadmin",
-		B3Key:    "b3key",
+		Password: "c4ca4238a0b923820dcc509a6f75849b",
+		B3Key:    "beyond",
 		Locale:   "zh_CN",
 	}
 
