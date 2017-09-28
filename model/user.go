@@ -34,6 +34,7 @@ type User struct {
 	Role      int    `json:"role"`
 	AvatarURL string `gorm:"size:255" json:"avatarURL"`
 	B3Key     string `gorm:"size:32" json:"b3Key"`
+	Locale    string `gorm:"size:32 json:"locale"`
 
 	BlogID uint `json:"blogID"`
 }

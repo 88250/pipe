@@ -63,6 +63,7 @@ func TestInitPlatform(t *testing.T) {
 		Email:    testPlatformAdminEmail,
 		Password: "saadmin",
 		B3Key:    "b3key",
+		Locale:   "zh_CN",
 	}
 
 	Init.InitPlatform(platformAdmin)
