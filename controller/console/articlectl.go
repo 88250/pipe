@@ -83,7 +83,7 @@ type ConsoleArticle struct {
 
 type TagPermalink struct {
 	Title     string `json:"title"`
-	Permalink string `json:"permalink"`
+	Permalink string `json:"permalink,omitempty"`
 }
 
 type Author struct {

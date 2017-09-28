@@ -65,7 +65,7 @@ func (srv *initService) InitPlatform(sa *model.User) error {
 
 		return err
 	}
-	if err := initAdmin(tx, sa, blogID); nil != err {
+	if err := initPlatformAdmin(tx, sa, blogID); nil != err {
 		tx.Rollback()
 
 		return err
@@ -82,13 +82,9 @@ func (srv *initService) InitPlatform(sa *model.User) error {
 	return nil
 }
 
-func initAdmin(tx *gorm.DB, admin *model.User, blogID uint) error {
-	if 1 == blogID {
-		admin.Role = model.UserRolePlatformAdmin
-		admin.ArticleCount, admin.PublishedArticleCount = 1, 1 // article "Hello, World!"
-	} else {
-		admin.Role = model.UserRoleBlogAdmin
-	}
+func initPlatformAdmin(tx *gorm.DB, admin *model.User, blogID uint) error {
+	admin.Role = model.UserRolePlatformAdmin
+	admin.ArticleCount, admin.PublishedArticleCount = 1, 1 // article "Hello, World!"
 	admin.BlogID = blogID
 
 	if err := tx.Create(admin).Error; nil != err {
@@ -121,6 +117,16 @@ Solo.go 博客系统是一个开源项目，如果你觉得它很赞，请到[�
 		CommentCount: 1,
 	}
 	if err := tx.Create(article).Error; nil != err {
+		return err
+	}
+
+	tag := &model.Tag{
+		Title:                 "Solo.go",
+		ArticleCount:          1,
+		PublishedArticleCount: 1,
+		BlogID:                blogID,
+	}
+	if err := tx.Create(tag).Error; nil != err {
 		return err
 	}
 

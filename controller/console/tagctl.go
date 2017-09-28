@@ -31,12 +31,7 @@ func GetTagsCtl(c *gin.Context) {
 	tags := []*TagPermalink{}
 	tagModels := service.Tag.ConsoleGetTags()
 	for _, tagModel := range tagModels {
-		tag := &TagPermalink{
-			Title:     tagModel.Title,
-			Permalink: "context/" + tagModel.Title,
-		}
-
-		tags = append(tags, tag)
+		tags = append(tags, &TagPermalink{Title: tagModel.Title})
 	}
 
 	result.Data = tags
