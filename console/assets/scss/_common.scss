@@ -42,6 +42,21 @@ p {
   margin: 0;
 }
 
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: $text-title;
+  font-weight: 400;
+}
+
+h3 {
+  line-height: 30px;
+  font-size: 21px;
+}
+
 article,
 aside,
 details,

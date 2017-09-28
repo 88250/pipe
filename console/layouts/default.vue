@@ -54,13 +54,13 @@
 </script>
 
 <style lang="sass">
-  @import "~assets/scss/_variables.scss"
+  @import '~assets/scss/_variables'
   .main
     padding-top: 60px
     margin-left: 240px
 
   .content
     background-color: $blue-lighter
-    min-height: 360px
     padding: 30px
+    min-height: 650px
 </style>

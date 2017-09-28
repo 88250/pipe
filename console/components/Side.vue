@@ -97,10 +97,6 @@
         {
           title: app.$t('upload', locale),
           link: '/admin/upload/setting'
-        },
-        {
-          title: 'B3log',
-          link: '/admin/b3log/setting'
         }
       ]
     },
@@ -126,7 +122,7 @@
 </script>
 
 <style lang="sass">
-  @import '~assets/scss/_variables.scss'
+  @import '~assets/scss/_variables'
 
   .side
     width: 240px

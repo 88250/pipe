@@ -42,7 +42,7 @@
 </script>
 
 <style lang="sass">
-  @import '~assets/scss/_variables.scss'
+  @import '~assets/scss/_variables'
   .error
     background-color: $blue-lighter
 

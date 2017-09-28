@@ -7,7 +7,7 @@
 </template>
 
 <style lang="sass">
-  @import '~assets/scss/_variables.scss'
+  @import '~assets/scss/_variables'
 
   .footer
     padding: 17px 15px

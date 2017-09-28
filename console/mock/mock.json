@@ -21,11 +21,11 @@
       ],
       "mockFile": "tagList.json"
     },
-    "console/version/latest": {
+    "console/skins": {
       "verbs": [
         "get"
       ],
-      "mockFile": "latestVersion.json"
+      "mockFile": "skinList.json"
     },
     "console/articles": {
       "verbs": [
@@ -82,6 +82,12 @@
         "get"
       ],
       "mockFile": "hacpaiArticleList.json"
+    },
+    "hp/apis/check-version": {
+      "verbs": [
+        "get"
+      ],
+      "mockFile": "latestVersion.json"
     }
   }
 }

@@ -143,6 +143,3 @@
     }
   }
 </script>
-
-<style>
-</style>

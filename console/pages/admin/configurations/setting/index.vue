@@ -19,6 +19,3 @@
     }
   }
 </script>
-
-<style>
-</style>
