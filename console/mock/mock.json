@@ -17,25 +17,29 @@
     },
     "console/articles": {
       "verbs": [
-        "get"
+        "get",
+        "post"
       ],
-      "mockFile": "articleList.json"
+      "responses": {
+        "post": {
+          "mockFile": "success.json"
+        },
+        "get": {
+          "mockFile": "articleList.json"
+        }
+      }
     },
     "console/articles/:id": {
       "verbs": [
         "delete",
         "put",
-        "get",
-        "post"
+        "get"
       ],
       "responses": {
         "delete": {
           "mockFile": "success.json"
         },
         "put": {
-          "mockFile": "success.json"
-        },
-        "post": {
           "mockFile": "error.json"
         },
         "get": {
@@ -48,6 +52,12 @@
         "post"
       ],
       "mockFile": "error.json"
+    },
+    "login": {
+      "verbs": [
+        "post"
+      ],
+      "mockFile": "success.json"
     },
     "hp/apis/check-account": {
       "verbs": [

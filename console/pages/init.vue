@@ -66,8 +66,8 @@
           </div>
         </v-form>
         <div class="fn-right">
-          <button class="btn btn--info" @click="step = 1">{{ $t('preStep', $store.state.locale) }}</button>
-          <button class="btn btn--success btn--space" @click="checkHP">{{ $t('confirm', $store.state.locale) }}</button>
+          <button class="btn btn--margin-t30 btn--info" @click="step = 1">{{ $t('preStep', $store.state.locale) }}</button>
+          <button class="btn btn--margin-t30 btn--success btn--space" @click="checkHP">{{ $t('confirm', $store.state.locale) }}</button>
         </div>
       </v-stepper-content>
 
@@ -94,8 +94,8 @@
           </div>
         </v-form>
         <div class="fn-right">
-          <button class="btn btn--info" @click="step = 2">{{ $t('preStep', $store.state.locale) }}</button>
-          <button class="btn btn--success btn--space" @click="init">{{ $t('confirm', $store.state.locale) }}</button>
+          <button class="btn btn--margin-t30 btn--info" @click="step = 2">{{ $t('preStep', $store.state.locale) }}</button>
+          <button class="btn btn--margin-t30 btn--success btn--space" @click="init">{{ $t('confirm', $store.state.locale) }}</button>
         </div>
       </v-stepper-content>
 
@@ -173,7 +173,7 @@
         const responseData = await this.axios.post('/init', {
           name: this.name,
           email: this.userEmail,
-          password: this.password,
+          passwordHashed: this.password,
           b3key: this.userB3Key
         })
         if (responseData.code === 0) {

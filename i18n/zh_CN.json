@@ -54,5 +54,6 @@
   "view": "浏览",
   "deleteSuccess": "删除成功",
   "topSuccess": "置顶成功",
-  "publish": "发布"
+  "publish": "发布",
+  "accountOrEmail": "账号／邮箱"
 }

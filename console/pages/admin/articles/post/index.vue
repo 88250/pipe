@@ -1,7 +1,7 @@
 <template>
   <div class="card">
     <div class="card__body fn-clear">
-      <v-form>
+      <v-form ref="form">
         <v-text-field
           :label="$t('title', $store.state.locale)"
           v-model="title"
@@ -33,13 +33,22 @@
         ></v-text-field>
 
         <label class="checkbox">
-          <input type="checkbox" :checked="commentable" @click="commentable = !commentable"/><span class="checkbox__icon"></span>
+          <input type="checkbox" :checked="commentable" @click="commentable = !commentable"/><span
+          class="checkbox__icon"></span>
           {{ $t('allowComment', $store.state.locale) }}
         </label>
       </v-form>
+      <div class="alert alert--danger" v-show="error">
+        <icon icon="danger"/>
+        <span>{{ errorMsg }}</span>
+      </div>
       <div class="fn-right">
-        <button @click="edit" class="btn btn--info" v-if="$route.query.id">{{ $t('edit', $store.state.locale) }}</button>
-        <button @click="publish" class="btn btn--info" v-else>{{ $t('publish', $store.state.locale) }}</button>
+        <button @click="edit" class="btn btn--info btn--margin-t30" v-if="$route.query.id">
+          {{ $t('edit', $store.state.locale) }}
+        </button>
+        <button @click="publish" class="btn btn--info btn--margin-t30" v-else>{{ $t('publish', $store.state.locale)
+          }}
+        </button>
       </div>
     </div>
   </div>
@@ -51,6 +60,8 @@
   export default {
     data () {
       return {
+        error: false,
+        errorMsg: '',
         content: '',
         abstract: '',
         title: '',
@@ -60,8 +71,6 @@
         ],
         permalink: '',
         password: '',
-        isUseSign: false,
-        isComment: false,
         tags: '',
         commentable: false
       }
@@ -73,7 +82,10 @@
     },
     methods: {
       async edit () {
-        const responseData = this.axios.put(`/console/articles/${this.$route.query.id}`, {
+        if (!this.$refs.form.validate()) {
+          return
+        }
+        const responseData = await this.axios.put(`/console/articles/${this.$route.query.id}`, {
           title: this.title,
           abstract: this.abstract,
           content: this.content,
@@ -83,11 +95,35 @@
           commentable: this.commentable
         })
         if (responseData.code === 0) {
+          this.$set(this, 'error', false)
+          this.$set(this, 'errorMsg', '')
           this.$router.push('/admin/articles/management')
         } else {
+          this.$set(this, 'error', true)
+          this.$set(this, 'errorMsg', responseData.msg)
         }
       },
-      publish () {
+      async publish () {
+        if (!this.$refs.form.validate()) {
+          return
+        }
+        const responseData = await this.axios.post(`/console/articles/`, {
+          title: this.title,
+          abstract: this.abstract,
+          content: this.content,
+          permalink: this.permalink,
+          password: this.password,
+          tags: this.tags,
+          commentable: this.commentable
+        })
+        if (responseData.code === 0) {
+          this.$set(this, 'error', false)
+          this.$set(this, 'errorMsg', '')
+          this.$router.push('/admin/articles/management')
+        } else {
+          this.$set(this, 'error', true)
+          this.$set(this, 'errorMsg', responseData.msg)
+        }
       }
     },
     async mounted () {

@@ -5,7 +5,7 @@
       Solo
     </div>
     <div class="header__nav fn-flex-1">
-      user logout
+      <nuxt-link :to="`/login?goto=${$route.path.indexOf('/login') > -1 ? '/' : $route.fullPath}`">{{ $t('login', $store.state.locale) }}</nuxt-link>
     </div>
   </header>
 </template>
@@ -32,4 +32,6 @@
 
     &__nav
       background-color: $blue
+      a
+        color: #fff
 </style>
