@@ -117,6 +117,7 @@
 </template>
 
 <script>
+  import md5 from 'blueimp-md5'
   export default {
     layout: 'console',
     data () {
@@ -173,7 +174,7 @@
         const responseData = await this.axios.post('/init', {
           name: this.name,
           email: this.userEmail,
-          passwordHashed: this.password,
+          passwordHashed: md5(this.password),
           b3key: this.userB3Key
         })
         if (responseData.code === 0) {

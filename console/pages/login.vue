@@ -33,6 +33,7 @@
 </template>
 
 <script>
+  import md5 from 'blueimp-md5'
   export default {
     layout: 'console',
     head () {
@@ -59,7 +60,7 @@
         }
         const responseData = await this.axios.post('/login', {
           nameOrEmail: this.name,
-          passwordHashed: this.password
+          passwordHashed: md5(this.password)
         })
         if (responseData.code === 0) {
           this.$set(this, 'error', false)

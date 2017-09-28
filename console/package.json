@@ -15,6 +15,7 @@
   "dependencies": {
     "@nuxtjs/proxy": "^1.1.2",
     "axios": "^0.16.2",
+    "blueimp-md5": "^2.10.0",
     "mavon-editor": "^2.2.6",
     "nuxt": "^1.0.0-rc11",
     "vue-axios": "^2.0.2",
