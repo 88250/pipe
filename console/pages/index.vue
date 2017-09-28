@@ -6,6 +6,7 @@
 
 <script>
   export default {
+    layout: 'console',
     head () {
       return {
         title: `${this.$store.state.userName}`
