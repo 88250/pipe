@@ -1,4 +1,4 @@
-// Solo.go - A small and beautiful golang blogging system, Solo's golang version.
+// Solo.go - A small and beautiful blogging platform written in golang.
 // Copyright (C) 2017, b3log.org
 //
 // This program is free software: you can redistribute it and/or modify

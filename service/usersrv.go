@@ -14,13 +14,27 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-package model
+package service
 
-// Tag model.
-type Tag struct {
-	Model
+import (
+	"sync"
 
-	Title string `gorm:"size:128" json:"title"`
+	"github.com/b3log/solo.go/model"
+)
 
-	BlogID uint `json:"blogID"`
+var User = &userService{
+	mutex: &sync.Mutex{},
+}
+
+type userService struct {
+	mutex *sync.Mutex
+}
+
+func (srv *userService) GetUser(id uint) *model.User {
+	ret := &model.User{}
+	if nil != db.First(ret, id).Error {
+		return nil
+	}
+
+	return ret
 }

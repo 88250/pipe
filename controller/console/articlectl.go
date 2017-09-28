@@ -1,4 +1,4 @@
-// Solo.go - A small and beautiful golang blogging system, Solo's golang version.
+// Solo.go - A small and beautiful blogging platform written in golang.
 // Copyright (C) 2017, b3log.org
 //
 // This program is free software: you can redistribute it and/or modify
@@ -70,6 +70,7 @@ func GetArticleCtl(c *gin.Context) {
 
 type ConsoleArticle struct {
 	ID           uint            `json:"id"`
+	Author       Author          `json:"author"`
 	CreatedAt    string          `json:"createdAt"`
 	Title        string          `gorm:"size:128" json:"title"`
 	Tags         []*TagPermalink `json:"tags"`
@@ -82,6 +83,11 @@ type ConsoleArticle struct {
 type TagPermalink struct {
 	Title     string `json:"title"`
 	Permalink string `json:"permalink"`
+}
+
+type Author struct {
+	Name      string `json:"name"`
+	AvatarURL string `json:"avatarURL"`
 }
 
 func GetArticlesCtl(c *gin.Context) {

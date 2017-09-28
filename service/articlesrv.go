@@ -1,4 +1,4 @@
-// Solo.go - A small and beautiful golang blogging system, Solo's golang version.
+// Solo.go - A small and beautiful blogging platform written in golang.
 // Copyright (C) 2017, b3log.org
 //
 // This program is free software: you can redistribute it and/or modify
@@ -90,7 +90,15 @@ func (srv *articleService) RemoveArticle(id uint) error {
 		Model: model.Model{ID: id},
 	}
 
-	return db.Delete(article).Error
+	tx := db.Begin()
+	if err := db.Delete(article).Error; nil != err {
+		tx.Rollback()
+
+		return err
+	}
+	tx.Commit()
+
+	return nil
 }
 
 func (srv *articleService) UpdateArticle(article *model.Article) error {
@@ -98,7 +106,7 @@ func (srv *articleService) UpdateArticle(article *model.Article) error {
 	defer srv.mutex.Unlock()
 
 	count := 0
-	if db.Model(model.Article{}).First(article).Count(&count); 1 > count {
+	if db.Model(model.Article{}).Where("id = ?", article.ID).Count(&count); 1 > count {
 		return errors.New(fmt.Sprintf("not found article [id=%d] to update", article.ID))
 	}
 

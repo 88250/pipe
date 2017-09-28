@@ -1,4 +1,4 @@
-// Solo.go - A small and beautiful golang blogging system, Solo's golang version.
+// Solo.go - A small and beautiful blogging platform written in golang.
 // Copyright (C) 2017, b3log.org
 //
 // This program is free software: you can redistribute it and/or modify
@@ -47,7 +47,7 @@ func TestAddArticle(t *testing.T) {
 	}
 }
 
-func TestGetConsoleArticles(t *testing.T) {
+func TestConsoleGetArticles(t *testing.T) {
 	articles, pagination := Article.ConsoleGetArticles(1)
 
 	if adminConsoleArticleListPageSize != len(articles) {
@@ -59,7 +59,7 @@ func TestGetConsoleArticles(t *testing.T) {
 	}
 }
 
-func TestGetConsoleArticle(t *testing.T) {
+func TestConsoleGetArticle(t *testing.T) {
 	article := Article.ConsoleGetArticle(1)
 	if nil == article {
 		t.Errorf("article is nil")
