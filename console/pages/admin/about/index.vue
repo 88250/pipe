@@ -4,7 +4,9 @@
       <div class="fn-flex admin__about">
         <div class="about__side">
           <img src="~/static/images/logo.jpg"/> <br>
-          <nuxt-link class="btn btn--info btn--margin-t30 btn--block" to="http://b3log.org/donate.html">{{ $t('becomeSponsor', $store.state.locale) }}</nuxt-link>
+          <a class="btn btn--info btn--margin-t30 btn--block"
+             target="_blank"
+             href="http://b3log.org/donate.html">{{ $t('becomeSponsor', $store.state.locale) }}</a>
         </div>
         <div class="fn-flex-1 content-reset">
           <h2 v-if="isLatest">
