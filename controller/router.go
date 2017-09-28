@@ -17,6 +17,8 @@
 package controller
 
 import (
+	"net/http"
+
 	"github.com/b3log/solo.go/controller/console"
 	"github.com/b3log/solo.go/util"
 	"github.com/gin-contrib/sessions"
@@ -40,26 +42,29 @@ func MapRoutes() *gin.Engine {
 		Secure:   true,
 		HttpOnly: true,
 	})
-	ret.Use(sessions.Sessions("solo.go", store))
+	ret.Use(sessions.Sessions("sologo", store))
 
-	ret.Any("/hp/*apis", util.HacPaiAPI())
-
-	ret.POST("/init", initCtl)
-
-	ret.POST("/login", loginCtl)
-	ret.POST("/logout", logoutCtl)
-
-	statusGroup := ret.Group("/status")
+	api := ret.Group("/api")
+	api.POST("/init", initCtl)
+	api.POST("/login", loginCtl)
+	api.POST("/logout", logoutCtl)
+	statusGroup := api.Group("/status")
 	statusGroup.GET("", GetPlatformStatusCtl)
 	statusGroup.GET("/ping", pingCtl)
-
-	consoleGroup := ret.Group("/console")
+	consoleGroup := api.Group("/console")
 	consoleGroup.POST("/articles", console.AddArticleCtl)
 	consoleGroup.GET("/articles", console.GetArticlesCtl)
 	consoleGroup.GET("/articles/:id", console.GetArticleCtl)
 	consoleGroup.DELETE("/articles/:id", console.RemoveArticleCtl)
 	consoleGroup.PUT("/articles/:id", console.UpdateArticleCtl)
 	consoleGroup.GET("/tags", console.GetTagsCtl)
+	api.Any("/hp/*apis", util.HacPaiAPI())
+
+	ret.LoadHTMLFiles("console/dist/admin/index.html")
+	ret.GET("/admin", func(c *gin.Context) {
+		c.HTML(http.StatusOK, "index.html", nil)
+	})
+	ret.Static("/assets", "./console/dist")
 
 	return ret
 }

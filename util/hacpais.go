@@ -39,7 +39,7 @@ func HacPaiAPI() gin.HandlerFunc {
 		proxy.Director = func(req *http.Request) {
 			director(req)
 			req.Host = req.URL.Host
-			req.URL.Path = req.URL.Path[len("hp/"):]
+			req.URL.Path = req.URL.Path[len("api/hp/"):]
 		}
 
 		proxy.ServeHTTP(c.Writer, c.Request)
