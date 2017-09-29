@@ -111,7 +111,7 @@ func (srv *initService) InitPlatform(platformAdmin *model.User) error {
 	}
 
 	tx.Commit()
-	log.Debugf("Initialized blog [id=%d]", blogID)
+	log.Debug("Initialized platform")
 
 	return nil
 }
