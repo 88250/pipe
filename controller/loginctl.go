@@ -17,8 +17,10 @@
 package controller
 
 import (
+	"fmt"
 	"net/http"
 
+	"github.com/b3log/solo.go/model"
 	"github.com/b3log/solo.go/service"
 	"github.com/b3log/solo.go/util"
 	"github.com/gin-contrib/sessions"
@@ -57,9 +59,24 @@ func loginCtl(c *gin.Context) {
 		return
 	}
 
-	data := map[string]string{}
+	settings := service.Preference.GetPreferences(user.BlogID, model.SettingNamePreferenceBlogTitle, model.SettingNamePreferencePath)
+	if 1 > len(settings) {
+		result.Code = -1
+		result.Msg = fmt.Sprint("not found blog settings [blogID=%d]", user.BlogID)
+	}
+
+	data := map[string]interface{}{}
 	data["name"] = user.Name
 	data["nickname"] = user.Nickname
+	data["blogTitle"] = settings[model.SettingNamePreferenceBlogTitle].Value
+	data["blogPath"] = settings[model.SettingNamePreferencePath].Value
+	data["role"] = user.Role
+	blogs := service.User.GetUserBlogs(user.ID)
+	if 1 > len(blogs) {
+		result.Code = -1
+		result.Msg = fmt.Sprint("not found blog [userID=%d]", user.ID)
+	}
+	data["blogs"] = blogs
 	result.Data = data
 
 	session := sessions.Default(c)

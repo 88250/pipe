@@ -67,7 +67,7 @@ func (srv *initService) Inited() (platformStatus *PlatformStatus, err error) {
 	return
 }
 
-func (srv *initService) InitPlatform(sa *model.User) error {
+func (srv *initService) InitPlatform(platformAdmin *model.User) error {
 	if srv.inited {
 		return nil
 	}
@@ -89,7 +89,7 @@ func (srv *initService) InitPlatform(sa *model.User) error {
 
 	tx := db.Begin()
 
-	if err := initPreference(tx, blogID); nil != err {
+	if err := initPreference(tx, platformAdmin, blogID); nil != err {
 		tx.Rollback()
 
 		return err
@@ -99,12 +99,12 @@ func (srv *initService) InitPlatform(sa *model.User) error {
 
 		return err
 	}
-	if err := initPlatformAdmin(tx, sa, blogID); nil != err {
+	if err := initPlatformAdmin(tx, platformAdmin, blogID); nil != err {
 		tx.Rollback()
 
 		return err
 	}
-	if err := helloWorld(tx, sa, blogID); nil != err {
+	if err := helloWorld(tx, platformAdmin, blogID); nil != err {
 		tx.Rollback()
 
 		return err
@@ -120,8 +120,17 @@ func initPlatformAdmin(tx *gorm.DB, admin *model.User, blogID uint) error {
 	admin.Role = model.UserRolePlatformAdmin
 	admin.ArticleCount, admin.PublishedArticleCount = 1, 1 // article "Hello, World!"
 	admin.BlogID = blogID
-
 	if err := tx.Create(admin).Error; nil != err {
+		return err
+	}
+
+	blogUser := &model.Correlation{
+		ID1:    blogID,
+		ID2:    admin.ID,
+		Type:   model.CorrelationBlogUser,
+		BlogID: blogID,
+	}
+	if err := tx.Create(blogUser).Error; nil != err {
 		return err
 	}
 
@@ -178,7 +187,7 @@ Solo.go 博客系统是一个开源项目，如果你觉得它很赞，请到[�
 	return nil
 }
 
-func initPreference(tx *gorm.DB, blogID uint) error {
+func initPreference(tx *gorm.DB, blogAdmin *model.User, blogID uint) error {
 	if err := tx.Create(&model.Setting{
 		Category: model.SettingCategoryPreference,
 		Name:     model.SettingNamePreferenceArticleListPageSize,
@@ -203,7 +212,7 @@ func initPreference(tx *gorm.DB, blogID uint) error {
 	if err := tx.Create(&model.Setting{
 		Category: model.SettingCategoryPreference,
 		Name:     model.SettingNamePreferenceBlogSubtitle,
-		Value:    "golang 开源博客",
+		Value:    "小而美的 golang 博客平台",
 		BlogID:   blogID}).Error; nil != err {
 		return err
 	}
@@ -266,7 +275,7 @@ func initPreference(tx *gorm.DB, blogID uint) error {
 	if err := tx.Create(&model.Setting{
 		Category: model.SettingCategoryPreference,
 		Name:     model.SettingNamePreferenceMetaDes,
-		Value:    "小而美的 golang 博客系统",
+		Value:    "小而美的 golang 博客平台",
 		BlogID:   blogID}).Error; nil != err {
 		return err
 	}
@@ -302,6 +311,13 @@ func initPreference(tx *gorm.DB, blogID uint) error {
 		Category: model.SettingCategoryPreference,
 		Name:     model.SettingNamePreferenceNoticeBoard,
 		Value:    "<!-- 支持 HTML、脚本 -->",
+		BlogID:   blogID}).Error; nil != err {
+		return err
+	}
+	if err := tx.Create(&model.Setting{
+		Category: model.SettingCategoryPreference,
+		Name:     model.SettingNamePreferencePath,
+		Value:    "/" + blogAdmin.Name,
 		BlogID:   blogID}).Error; nil != err {
 		return err
 	}
