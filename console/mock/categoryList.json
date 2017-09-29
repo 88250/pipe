@@ -1,0 +1,34 @@
+{
+  "code": 0,
+  "msg": "",
+  "data": {
+    "categories": [
+      {
+        "id": 0,
+        "title": "世界，你好！",
+        "permalink": "lift",
+        "description": "世界，你好！世界，你好！世界，你好！",
+        "number": 1,
+        "tags": "a, b, c"
+      },
+      {
+        "id": 0,
+        "title": "世界，你好！",
+        "permalink": "lift",
+        "description": "世界，你好！世界，你好！世界，你好！",
+        "number": 1,
+        "tags": "a, b, c"
+      }
+    ],
+    "pagination": {
+      "currentPageNum": 16,
+      "pageSize": 15,
+      "pageCount": 100,
+      "windowSize": 20,
+      "recordCount": 1,
+      "pageNums": [
+        1
+      ]
+    }
+  }
+}

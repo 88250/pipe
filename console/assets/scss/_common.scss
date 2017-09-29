@@ -446,10 +446,16 @@ blockquote {
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;
+  display: inline-block;
 
   &--mid {
     height: 46px;
     width: 46px;
+  }
+
+  &--small {
+    height: 20px;
+    width: 20px;
   }
 
   &--space {

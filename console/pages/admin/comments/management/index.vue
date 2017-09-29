@@ -7,6 +7,11 @@
         <div class="fn-flex-1">
           <div class="list__title">
             <nuxt-link :to="item.permalink">{{ item.title }}</nuxt-link>
+            <span class="btn btn--small btn--success admin__comment-author" v-if="userCount > 1">
+              <span class="avatar avatar--small"
+                   :style="`background-image: url(${item.articleAuthor.avatarURL})`"></span>
+              {{ item.articleAuthor.name }}
+            </span>
           </div>
           <div class="content-reset" v-html="item.content"></div>
           <div class="list__meta">
@@ -80,3 +85,8 @@
     }
   }
 </script>
+
+<style lang="sass">
+  .admin__comment-author
+    display: initial
+</style>

@@ -9,17 +9,20 @@
       background-color: $list-hover;
     }
 
-    .list__title a {
+    .list__title {
       line-height: 18px;
       font-size: 16px;
       font-weight: 400;
       color: $text-title;
       margin-bottom: 8px;
-      display: block;
+      display: inline-block;
 
-      &:hover {
-        text-decoration: none;
-        color: $text-color;
+      a {
+        color: $text-title;
+        &:hover {
+          text-decoration: none;
+          color: $text-color;
+        }
       }
     }
 

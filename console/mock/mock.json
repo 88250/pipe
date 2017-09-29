@@ -101,6 +101,38 @@
       ],
       "mockFile": "success.json"
     },
+    "console/categories": {
+      "verbs": [
+        "get",
+        "post"
+      ],
+      "responses": {
+        "post": {
+          "mockFile": "success.json"
+        },
+        "get": {
+          "mockFile": "categoryList.json"
+        }
+      }
+    },
+    "console/categories/:id": {
+      "verbs": [
+        "delete",
+        "put",
+        "get"
+      ],
+      "responses": {
+        "delete": {
+          "mockFile": "success.json"
+        },
+        "put": {
+          "mockFile": "error.json"
+        },
+        "get": {
+          "mockFile": "article.json"
+        }
+      }
+    },
     "hp/apis/check-account": {
       "verbs": [
         "post"
