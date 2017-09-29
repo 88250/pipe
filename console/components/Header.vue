@@ -5,15 +5,37 @@
       Solo
     </div>
     <div class="header__nav fn-flex-1">
-      <nuxt-link to="/admin">{{ $t('manage', $store.state.locale) }}</nuxt-link>
-      <nuxt-link :to="`/login?goto=${$route.path.indexOf('/login') > -1 ? '/' : $route.fullPath}`">{{ $t('login', $store.state.locale) }}</nuxt-link>
+      <div v-if="$store.state.name === ''">
+        <nuxt-link :to="`/login?goto=${$route.path.indexOf('/login') > -1 ? '/' : $route.fullPath}`">
+          {{ $t('login', $store.state.locale) }}
+        </nuxt-link>
+      </div>
+      <div v-else>
+        {{ $store.state.nickname }}
+        <nuxt-link to="/admin">{{ $t('manage', $store.state.locale) }}</nuxt-link>
+        <button class="btn btn--danger btn--space" @click="logout">{{ $t('logout', $store.state.locale) }}</button>
+      </div>
     </div>
   </header>
 </template>
 
 <script>
   export default {
-    props: ['from']
+    props: ['from'],
+    methods: {
+      async logout () {
+        const responseData = await this.axios.post('/logout')
+        if (responseData.code === 0) {
+          this.$store.commit('setUserInfo', null)
+          this.$router.push('/')
+        } else {
+          this.commit('setSnackBar', {
+            snackBar: true,
+            snackMsg: responseData.msg
+          })
+        }
+      }
+    }
   }
 </script>
 

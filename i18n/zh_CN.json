@@ -64,5 +64,6 @@
   "about2": "您的 solo.go 过时了 ;-(，请下载最新版本：",
   "about3": "<p><a href='https://hacpai.com/tag/Solo' target='_blank'>solo.go</a> 是一款开源（<a href='http://www.apache.org/licenses/LICENSE-2.0.html' target='_blank'>Apache License 2.0</a>）的博客程序，双击即可运行。</p><p><a href='http://b3log.org' target='_blank'>B3log</a> 提倡平等、自由、奔放，并正在尝试构建个人博客 + <a href='https://hacpai.com' target='_blank'>论坛</a>的互动体验。如果您有兴趣，<a href='https://hacpai.com/article/1463025124998' target='_blank'>加入我们</a>吧！</p><ul><li><a target='_blank' href='https://hacpai.com/article/1492881378588'>用户指南</a></li><li><a target='_blank' href='https://hacpai.com/article/1493822943172'>开发指南</a></li><li><a target='_blank' href='https://hacpai.com/article/1493814851007'>皮肤开发指南</a></li></ul>",
   "setup": "启用",
-  "preview": "预览"
+  "preview": "预览",
+  "logout": "登出"
 }

@@ -2,7 +2,8 @@ import vueAxios from '~/plugins/axios'
 
 export const state = () => ({
   locale: 'zh_CN',
-  userName: 'solo.go',
+  name: '',
+  nickname: '',
   version: '1.0.0',
   isInit: true,
   snackMsg: '',
@@ -21,6 +22,29 @@ export const mutations = {
   },
   setIsInit (state, isInit) {
     state.isInit = isInit
+  },
+  setUserInfo (state, data) {
+    if (data) {
+      state.name = data.name
+      state.nickname = data.nickname
+      localStorage.setItem('userInfo', JSON.stringify(data))
+    } else {
+      state.name = ''
+      state.nickname = ''
+      localStorage.removeItem('userInfo')
+    }
+  },
+  getUserInfo (state) {
+    const userInfo = localStorage.getItem('userInfo')
+    if (userInfo) {
+      const userInfoJSON = JSON.parse(userInfo)
+      state.name = userInfoJSON.name
+      state.nickname = userInfoJSON.nickname
+      return userInfoJSON
+    } else {
+      state.name = ''
+      state.nickname = ''
+    }
   },
   setSnackBar (state, data) {
     state.snackBar = data.snackBar
