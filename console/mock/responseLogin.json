@@ -10,15 +10,18 @@
     "blogs": [
       {
         "title": "Solo",
-        "id": "0",
-        "path": "/solo",
-        "role": 1
+        "id": "1",
+        "path": "/solo"
       },
       {
         "title": "Wide",
-        "id": "1",
-        "path": "/wide",
-        "role": 2
+        "id": "2",
+        "path": "/wide"
+      },
+      {
+        "title": "Sym",
+        "id": "0",
+        "path": "/sym"
       }
     ]
   }

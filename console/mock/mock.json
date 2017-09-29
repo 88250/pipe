@@ -39,11 +39,11 @@
       ],
       "mockFile": "tagList.json"
     },
-    "console/blog/switch": {
+    "console/blog/switch/:id": {
       "verbs": [
         "post"
       ],
-      "mockFile": "success.json"
+      "mockFile": "responseSwitchBlog.json"
     },
     "console/skins": {
       "verbs": [

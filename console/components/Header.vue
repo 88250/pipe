@@ -14,15 +14,16 @@
       </div>
       <div v-else>
         {{ $store.state.nickname }}
+        {{ $store.state.role }}
         <v-menu
-          v-if="$route.path.indexOf('/admin') > -1"
+          v-if="$route.path.indexOf('/admin') > -1 && $store.state.blogs.length > 1"
           :nudge-bottom="38"
           :nudge-right="24"
           :nudge-width="100">
           <v-toolbar-title slot="activator">
             <button class="btn btn--success">
               {{ $store.state.blogTitle }}
-              <icon v-if="$store.state.blogs.length > 1" icon="chevron-down"/>
+              <icon icon="chevron-down"/>
             </button>
           </v-toolbar-title>
           <v-list>
@@ -50,8 +51,9 @@
         if (item.path === this.$store.state.blogPath) {
           return
         }
-        const responseData = await this.axios.post('/console/blog/switch', item.id)
+        const responseData = await this.axios.post(`/console/blog/switch/${item.id}`)
         if (responseData.code === 0) {
+          item.role = responseData.data
           this.$store.commit('setBlog', item)
           this.$router.go()
         } else {
@@ -86,6 +88,8 @@
     width: 100%
     z-index: 10
     top: 0
+    color: #fff
+    padding-right: 30px
 
     &__logo
       background-color: $white
