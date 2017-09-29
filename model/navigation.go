@@ -16,25 +16,15 @@
 
 package model
 
-// Page types.
-const (
-	PageTypePage = iota
-	PageTypeLink
-)
-
-// Page (customized navigation) model.
-type Page struct {
+// Navigation model.
+type Navigation struct {
 	Model
 
-	Title        string `gorm:"size:128" json:"title"`
-	Content      string `gorm:"type:text" json:"content"`
-	Permalink    string `gorm:"size:255" json:"permalink"`
-	IconURL      string `gorm:"size:255" json:"iconURL"`
-	Number       int    `json:"number"` // for sorting
-	Type         int    `json:"type"`   // 0: page, 1: link
-	Commentable  bool   `json:"commentable"`
-	ViewCount    int    `json:"viewCount"`
-	CommentCount int    `json:"commentCount"`
+	Title      string `gorm:"size:128" json:"title"`
+	Permalink  string `gorm:"size:255" json:"permalink"`
+	IconURL    string `gorm:"size:255" json:"iconURL"`
+	OpenMethod string `gorm:"size:32" json:"openMethod"`
+	Number     int    `json:"number"` // for sorting
 
 	BlogID uint
 }
