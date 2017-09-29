@@ -14,28 +14,17 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-package console
+package model
 
-import (
-	"net/http"
+// Navigation model.
+type Navigation struct {
+	Model
 
-	"github.com/b3log/solo.go/util"
-	"github.com/gin-contrib/sessions"
-	"github.com/gin-gonic/gin"
-)
+	Title      string `gorm:"size:128" json:"title"`
+	Permalink  string `gorm:"size:255" json:"permalink"`
+	IconURL    string `gorm:"size:255" json:"iconURL"`
+	OpenMethod string `gorm:"size:32" json:"openMethod"`
+	Number     int    `json:"number"` // for sorting
 
-func LoginCheck() gin.HandlerFunc {
-	return func(c *gin.Context) {
-		session := sessions.Default(c)
-		if nil == session.Get("id") {
-			result := util.NewResult()
-			result.Code = -2
-			result.Msg = "unauthenticated request"
-			c.AbortWithStatusJSON(http.StatusOK, result)
-
-			return
-		}
-
-		c.Next()
-	}
+	BlogID uint
 }

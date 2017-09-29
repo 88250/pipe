@@ -111,7 +111,7 @@ func (srv *initService) InitPlatform(platformAdmin *model.User) error {
 	}
 
 	tx.Commit()
-	log.Debugf("Initialized blog [id=%d]", blogID)
+	log.Debug("Initialized platform")
 
 	return nil
 }
@@ -170,6 +170,15 @@ Solo.go 博客系统是一个开源项目，如果你觉得它很赞，请到[�
 		BlogID:                blogID,
 	}
 	if err := tx.Create(tag).Error; nil != err {
+		return err
+	}
+
+	articleTagRel := &model.Correlation{
+		ID1:  article.ID,
+		ID2:  tag.ID,
+		Type: model.CorrelationArticleTag,
+	}
+	if err := tx.Create(articleTagRel).Error; nil != err {
 		return err
 	}
 

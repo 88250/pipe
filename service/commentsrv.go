@@ -17,50 +17,38 @@
 package service
 
 import (
-	"log"
-	"os"
-	"testing"
+	"math"
+	"sync"
 
 	"github.com/b3log/solo.go/model"
 	"github.com/b3log/solo.go/util"
 )
 
+var Comment = &commentService{
+	mutex: &sync.Mutex{},
+}
+
+type commentService struct {
+	mutex *sync.Mutex
+}
+
+// Comment pagination arguments of admin console.
 const (
-	testPlatformAdminName  = "sologo"
-	testPlatformAdminEmail = "solo.go@b3log.org"
+	adminConsoleCommentListPageSize    = 15
+	adminConsoleCommentListWindowsSize = 20
 )
 
-func TestMain(m *testing.M) {
-	setup()
-	code := m.Run()
-	teardown()
-	os.Exit(code)
-}
-
-func setup() {
-	home, err := util.UserHome()
-	if nil != err {
-		log.Fatal(err)
+func (srv *commentService) ConsoleGetComments(page int) (ret []*model.Comment, pagination *util.Pagination) {
+	if 1 > page {
+		page = 1
 	}
 
-	util.Conf = &util.Configuration{}
-	util.Conf.DataFilePath = home + "/solo.go.test.db"
+	offset := (page - 1) * adminConsoleCommentListPageSize
+	count := 0
+	db.Model(model.Comment{}).Order("id DESC").Count(&count).Offset(offset).Limit(adminConsoleCommentListPageSize).Find(&ret)
 
-	ConnectDB()
+	pageCount := int(math.Ceil(float64(count) / adminConsoleCommentListPageSize))
+	pagination = util.NewPagination(page, adminConsoleCommentListPageSize, pageCount, adminConsoleCommentListWindowsSize, count)
 
-	Init.InitPlatform(&model.User{
-		Name:     testPlatformAdminName,
-		Email:    testPlatformAdminEmail,
-		Password: "c4ca4238a0b923820dcc509a6f75849b",
-		B3Key:    "beyond",
-		Locale:   "zh_CN",
-	})
-
-	log.Println("setup tests")
-}
-
-func teardown() {
-	DisconnectDB()
-
-	log.Println("teardown tests")
+	return
 }

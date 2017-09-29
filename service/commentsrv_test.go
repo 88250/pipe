@@ -14,27 +14,18 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-package model
+package service
 
-// Page types.
-const (
-	PageTypePage = iota
-	PageTypeLink
+import (
+	"testing"
 )
 
-// Page (customized navigation) model.
-type Page struct {
-	Model
+func TestConsoleGetComments(t *testing.T) {
+	comments, pagination := Comment.ConsoleGetComments(1)
 
-	Title        string `gorm:"size:128" json:"title"`
-	Content      string `gorm:"type:text" json:"content"`
-	Permalink    string `gorm:"size:255" json:"permalink"`
-	IconURL      string `gorm:"size:255" json:"iconURL"`
-	Number       int    `json:"number"` // for sorting
-	Type         int    `json:"type"`   // 0: page, 1: link
-	Commentable  bool   `json:"commentable"`
-	ViewCount    int    `json:"viewCount"`
-	CommentCount int    `json:"commentCount"`
+	if 1 != len(comments) {
+		t.Errorf("expected is [%d], actual is [%d]", 1, len(comments))
+	}
 
-	BlogID uint
+	t.Log(pagination)
 }
