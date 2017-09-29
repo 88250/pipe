@@ -6,7 +6,7 @@
         <v-form class="init__center" ref="form">
           <v-text-field
             :label="$t('accountOrEmail', $store.state.locale)"
-            v-model="name"
+            v-model="accountOrEmail"
             :counter="16"
             :rules="userNameRules"
             required
@@ -44,7 +44,7 @@
     },
     data () {
       return {
-        name: '',
+        accountOrEmail: '',
         password: '',
         userNameRules: [
           (v) => !!v || this.$t('required', this.$store.state.locale),
@@ -60,13 +60,14 @@
           return
         }
         const responseData = await this.axios.post('/login', {
-          nameOrEmail: this.name,
+          nameOrEmail: this.accountOrEmail,
           passwordHashed: md5(this.password)
         })
         if (responseData.code === 0) {
           this.$set(this, 'error', false)
           this.$set(this, 'errorMsg', '')
-          this.$router.push(this.$route.query.goto)
+          this.$store.commit('setUserInfo', responseData.data)
+          this.$router.push(this.$route.query.goto || '/admin')
         } else {
           this.$set(this, 'error', true)
           this.$set(this, 'errorMsg', responseData.msg)

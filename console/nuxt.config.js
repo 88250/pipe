@@ -59,10 +59,7 @@ module.exports = {
   proxy: {
     '/api': {
       target: env.serverBaseURL,
-      changeOrigin: true,
-      pathRewrite: {
-        '^/api/': ''
-      }
+      changeOrigin: true
     },
     '/mock': {
       target: env.mockBaseURL,

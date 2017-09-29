@@ -25,6 +25,12 @@
       "verbs": [
         "post"
       ],
+      "mockFile": "responseLogin.json"
+    },
+    "logout": {
+      "verbs": [
+        "post"
+      ],
       "mockFile": "success.json"
     },
     "console/tags": {
