@@ -40,7 +40,7 @@ func ConnectDB() {
 	}
 
 	tables := []interface{}{
-		&model.User{}, &model.Article{}, &model.Comment{}, &model.Page{}, &model.Tag{},
+		&model.User{}, &model.Article{}, &model.Comment{}, &model.Navigation{}, &model.Tag{},
 		&model.Category{}, &model.Setting{}, &model.Correlation{},
 	}
 
