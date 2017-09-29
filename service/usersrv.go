@@ -49,19 +49,26 @@ func (srv *userService) GetUserByNameOrEmail(nameOrEmail string) *model.User {
 	return ret
 }
 
-type Blog struct {
-	ID    uint   `json:"id"`
-	Title string `json:"title"`
-	Path  string `json:"path"`
+type UserBlog struct {
+	ID       uint   `json:"id"`
+	Title    string `json:"title"`
+	Path     string `json:"path"`
+	UserID   uint   `json:"userId"`
+	UserRole int    `json:"userRole"`
 }
 
-func (srv *userService) GetUserBlogs(userID uint) []*Blog {
+func (srv *userService) GetUserBlogs(userID uint) []*UserBlog {
 	correlations := []*model.Correlation{}
 	if nil != db.Where("id2 = ? AND type = ?", userID, model.CorrelationBlogUser).Find(&correlations).Error {
 		return nil
 	}
 
-	ret := []*Blog{}
+	user := srv.GetUser(userID)
+	if nil == user {
+		return nil
+	}
+
+	ret := []*UserBlog{}
 	for _, rel := range correlations {
 		prefs := Preference.GetPreferences(rel.ID1, model.SettingNamePreferenceBlogTitle, model.SettingNamePreferencePath)
 		if nil == prefs {
@@ -70,10 +77,15 @@ func (srv *userService) GetUserBlogs(userID uint) []*Blog {
 			continue
 		}
 
-		blog := &Blog{
-			ID:    rel.ID1,
-			Title: prefs[model.SettingNamePreferenceBlogTitle].Value,
-			Path:  prefs[model.SettingNamePreferencePath].Value,
+		blog := &UserBlog{
+			ID:       rel.ID1,
+			Title:    prefs[model.SettingNamePreferenceBlogTitle].Value,
+			Path:     prefs[model.SettingNamePreferencePath].Value,
+			UserID:   userID,
+			UserRole: model.UserRoleBlogUser,
+		}
+		if user.BlogID == blog.ID {
+			blog.UserRole = model.UserRoleBlogAdmin
 		}
 
 		ret = append(ret, blog)
