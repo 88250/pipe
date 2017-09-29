@@ -24,12 +24,10 @@ import (
 )
 
 const (
-	articleRecordSize = 100
+	articleRecordSize = 99
 )
 
 func TestAddArticle(t *testing.T) {
-	ConnectDB()
-
 	for i := 0; i < articleRecordSize; i++ {
 		article := &model.Article{AuthorID: 1,
 			Title:       "Test 文章" + strconv.Itoa(i),
@@ -54,8 +52,8 @@ func TestConsoleGetArticles(t *testing.T) {
 		t.Errorf("expected is [%d], actual is [%d]", adminConsoleArticleListPageSize, len(articles))
 	}
 
-	if articleRecordSize != pagination.RecordCount {
-		t.Errorf("expected is [%d], actual is [%d]", articleRecordSize, pagination.RecordCount)
+	if articleRecordSize+1 /* including "Hello,World!" */ != pagination.RecordCount {
+		t.Errorf("expected is [%d], actual is [%d]", articleRecordSize+1, pagination.RecordCount)
 	}
 }
 

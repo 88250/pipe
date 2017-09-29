@@ -173,6 +173,15 @@ Solo.go 博客系统是一个开源项目，如果你觉得它很赞，请到[�
 		return err
 	}
 
+	articleTagRel := &model.Correlation{
+		ID1:  article.ID,
+		ID2:  tag.ID,
+		Type: model.CorrelationArticleTag,
+	}
+	if err := tx.Create(articleTagRel).Error; nil != err {
+		return err
+	}
+
 	comment := &model.Comment{
 		OnID:            article.ID,
 		OnType:          model.CommentOnTypeArticle,

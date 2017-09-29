@@ -17,50 +17,15 @@
 package service
 
 import (
-	"log"
-	"os"
 	"testing"
-
-	"github.com/b3log/solo.go/model"
-	"github.com/b3log/solo.go/util"
 )
 
-const (
-	testPlatformAdminName  = "sologo"
-	testPlatformAdminEmail = "solo.go@b3log.org"
-)
+func TestConsoleGetComments(t *testing.T) {
+	comments, pagination := Comment.ConsoleGetComments(1)
 
-func TestMain(m *testing.M) {
-	setup()
-	code := m.Run()
-	teardown()
-	os.Exit(code)
-}
-
-func setup() {
-	home, err := util.UserHome()
-	if nil != err {
-		log.Fatal(err)
+	if 1 != len(comments) {
+		t.Errorf("expected is [%d], actual is [%d]", 1, len(comments))
 	}
 
-	util.Conf = &util.Configuration{}
-	util.Conf.DataFilePath = home + "/solo.go.test.db"
-
-	ConnectDB()
-
-	Init.InitPlatform(&model.User{
-		Name:     testPlatformAdminName,
-		Email:    testPlatformAdminEmail,
-		Password: "c4ca4238a0b923820dcc509a6f75849b",
-		B3Key:    "beyond",
-		Locale:   "zh_CN",
-	})
-
-	log.Println("setup tests")
-}
-
-func teardown() {
-	DisconnectDB()
-
-	log.Println("teardown tests")
+	t.Log(pagination)
 }
