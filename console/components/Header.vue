@@ -6,16 +6,16 @@
         {{ $store.state.blogTitle }}
       </nuxt-link>
     </div>
-    <div class="header__nav fn-flex-1" data-app="true">
+    <div class="header__nav fn-flex-1">
       <div v-if="$store.state.name === ''">
         <nuxt-link :to="`/login?goto=${$route.path.indexOf('/login') > -1 ? '/' : $route.fullPath}`">
           {{ $t('login', $store.state.locale) }}
         </nuxt-link>
       </div>
       <div v-else>
-        {{ $store.state.nickname }}
-        {{ $store.state.role }}
+        {{ $store.state.nickname }} &nbsp;
         <v-menu
+          z-index="100"
           v-if="$route.path.indexOf('/admin') > -1 && $store.state.blogs.length > 1"
           :nudge-bottom="38"
           :nudge-right="24"
@@ -89,7 +89,6 @@
     z-index: 10
     top: 0
     color: #fff
-    padding-right: 30px
 
     &__logo
       background-color: $white
@@ -97,6 +96,8 @@
 
     &__nav
       background-color: $blue
+      padding: 11px 15px 0 0
+      text-align: right
       a
         color: #fff
 </style>

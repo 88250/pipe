@@ -1,5 +1,5 @@
 <template>
-  <div class="card fn-clear" data-app="true">
+  <div class="card fn-clear">
     <ul class="list">
       <li v-for="item in list" :key="item.id" class="fn-flex">
         <div v-if="userCount > 1">
@@ -15,10 +15,13 @@
             {{ item.commentCount }} {{ $t('comment', $store.state.locale) }} •
             {{ item.viewCount }} {{ $t('view', $store.state.locale) }} •
             <time>{{ item.createdAt }}</time>
+            <span v-if="userCount > 1">
+               • {{ item.author.name }}
+            </span>
           </div>
         </div>
         <v-menu
-          v-if="$store.state.name === item.author.name"
+          v-if="$store.state.name === item.author.name || $store.state.role < 2"
           :nudge-bottom="38"
           :nudge-right="24"
           :nudge-width="100"
@@ -43,9 +46,6 @@
             </v-list-tile>
           </v-list>
         </v-menu>
-        <div v-if="userCount > 1 && $store.state.name !== item.author.name">
-          {{ item.author.name }}
-        </div>
       </li>
     </ul>
     <v-pagination

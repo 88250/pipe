@@ -2,7 +2,11 @@
   <aside class="side">
     <nav>
       <v-list>
-        <v-list-group v-for="item in items" :value="item.active" :key="item.title">
+        <v-list-group
+          v-for="item in items"
+          :value="item.active"
+          :key="item.title"
+          v-if="$store.state.role <= item.role">
           <v-list-tile ripple slot="item">
             <nuxt-link :to="item.link" v-if="!item.items">
               <icon :icon="item.icon"></icon>
@@ -16,7 +20,11 @@
               <icon icon="angle-down"></icon>
             </v-list-tile-action>
           </v-list-tile>
-          <v-list-tile ripple v-for="subItem in item.items" :key="subItem.title">
+          <v-list-tile
+            ripple
+            v-for="subItem in item.items"
+            :key="subItem.title"
+            v-if="$store.state.role <= subItem.role">
             <nuxt-link :to="subItem.link">{{ subItem.title }}</nuxt-link>
           </v-list-tile>
         </v-list-group>
@@ -30,50 +38,66 @@
     {
       title: app.$t('home', locale),
       icon: 'home',
-      link: '/admin/'
+      link: '/admin/',
+      role: 2
     },
     {
       title: app.$t('postArticle', locale),
       icon: 'add',
-      link: '/admin/articles/post'
+      link: '/admin/articles/post',
+      role: 2
     },
     {
       title: app.$t('skinList', locale),
       icon: 'skin',
-      link: '/admin/skins'
+      link: '/admin/skins',
+      role: 1
     },
     {
       title: app.$t('manage', locale),
       icon: 'manage',
       active: app.$route.path.indexOf('management') > -1,
+      role: 2,
       items: [
         {
           title: app.$t('articleList', locale),
-          link: '/admin/articles/management'
+          link: '/admin/articles/management',
+          role: 2
         },
         {
           title: app.$t('commentList', locale),
-          link: '/admin/comments/management'
+          link: '/admin/comments/management',
+          role: 2
         },
         {
           title: app.$t('categoryList', locale),
-          link: '/admin/categories/management'
+          link: '/admin/categories/management',
+          role: 1
         },
         {
           title: app.$t('navigationList', locale),
-          link: '/admin/navigation/management'
+          link: '/admin/navigation/management',
+          role: 1
         },
         {
           title: app.$t('linkList', locale),
-          link: '/admin/links/management'
+          link: '/admin/links/management',
+          role: 1
         },
         {
           title: app.$t('userList', locale),
-          link: '/admin/users/management'
+          link: '/admin/users/management',
+          role: 1
+        },
+        {
+          title: app.$t('blogManage', locale),
+          link: '/admin/blog/management',
+          role: 0
         },
         {
           title: app.$t('others', locale),
-          link: '/admin/others/management'
+          link: '/admin/others/management',
+          role: 1
         }
       ]
     },
@@ -81,29 +105,35 @@
       title: app.$t('setting', locale),
       icon: 'setting',
       active: app.$route.path.indexOf('setting') > -1,
+      role: 1,
       items: [
         {
           title: app.$t('configuration', locale),
-          link: '/admin/configurations/setting'
+          link: '/admin/configurations/setting',
+          role: 1
         },
         {
           title: app.$t('signs', locale),
-          link: '/admin/signs/setting'
+          link: '/admin/signs/setting',
+          role: 1
         },
         {
           title: app.$t('parameters', locale),
-          link: '/admin/parameters/setting'
+          link: '/admin/parameters/setting',
+          role: 1
         },
         {
           title: app.$t('upload', locale),
-          link: '/admin/upload/setting'
+          link: '/admin/upload/setting',
+          role: 1
         }
       ]
     },
     {
       title: app.$t('about', locale),
       icon: 'info',
-      link: '/admin/about'
+      link: '/admin/about',
+      role: 2
     }
   ]
 

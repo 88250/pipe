@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div data-app="true">
     <solo-header from="admin"/>
     <side/>
     <div class="main">

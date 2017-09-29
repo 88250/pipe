@@ -89,6 +89,18 @@
         }
       }
     },
+    "console/comments": {
+      "verbs": [
+        "get"
+      ],
+      "mockFile": "commentList.json"
+    },
+    "console/comments/:id": {
+      "verbs": [
+        "delete"
+      ],
+      "mockFile": "success.json"
+    },
     "hp/apis/check-account": {
       "verbs": [
         "post"
