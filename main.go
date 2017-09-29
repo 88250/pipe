@@ -19,6 +19,7 @@ package main
 import (
 	"io"
 	"net/http"
+	"net/url"
 	"os"
 	"os/signal"
 	"syscall"
@@ -31,7 +32,7 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
-// The only one init function in Solo.
+// The only one init function in Solo.go.
 func init() {
 	gin.SetMode(gin.ReleaseMode)
 	gin.DefaultWriter = io.MultiWriter(os.Stdout)
@@ -44,9 +45,14 @@ func init() {
 func main() {
 	service.ConnectDB()
 
+	serverURL, err := url.ParseRequestURI(util.Conf.Server)
+	if nil != err {
+		log.Fatal("Invalid [Server] configuration item")
+	}
+
 	router := controller.MapRoutes()
 	server := &http.Server{
-		Addr:    util.Conf.Server,
+		Addr:    serverURL.Host,
 		Handler: router,
 	}
 

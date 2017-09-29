@@ -57,6 +57,11 @@ func loginCtl(c *gin.Context) {
 		return
 	}
 
+	data := map[string]string{}
+	data["name"] = user.Name
+	data["nickname"] = user.Nickname
+	result.Data = data
+
 	session := sessions.Default(c)
 	session.Set("id", user.ID)
 	session.Set("name", user.Name)

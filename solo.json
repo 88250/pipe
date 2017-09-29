@@ -1,8 +1,5 @@
 {
-    "Host": "localhost",
-    "Port": "5897",
-    "Context": "",
-    "Server": "{Host}:{Port}",
+    "Server": "http://localhost:5897",
     "StaticServer": "",
     "StaticResourceVersion": "${time}",
     "LogFilePath": "${home}/solo.go.log",
