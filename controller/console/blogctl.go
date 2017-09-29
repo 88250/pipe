@@ -20,7 +20,9 @@ import (
 	"net/http"
 	"strconv"
 
+	"github.com/b3log/solo.go/service"
 	"github.com/b3log/solo.go/util"
+	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
 )
 
@@ -36,6 +38,32 @@ func BlogSwitchCtl(c *gin.Context) {
 		return
 	}
 
-	_ = blogID
+	session := sessions.Default(c)
+	userID := session.Get("id").(uint)
 
+	userBlogs := service.User.GetUserBlogs(userID)
+	if 1 > len(userBlogs) {
+		result.Code = -1
+		result.Msg = "switch blog failed"
+
+		return
+	}
+
+	role := -1
+	for _, userBlog := range userBlogs {
+		if userBlog.ID == uint(blogID) {
+			role = userBlog.UserRole
+
+			break
+		}
+	}
+
+	if -1 == role {
+		result.Code = -1
+		result.Msg = "switch blog failed"
+
+		return
+	}
+
+	result.Data = role
 }
