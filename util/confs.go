@@ -38,11 +38,8 @@ var Conf *Configuration
 
 // Configuration (solo.json).
 type Configuration struct {
-	Host                  string // server host
-	Port                  string // server port
-	Context               string // server context
-	Server                string // server host and port ({IP}:{Port})
-	StaticServer          string // static resources server scheme, host and port (http://{IP}:{Port})
+	Server                string // server scheme, host and port
+	StaticServer          string // static resources server scheme, host and port
 	StaticResourceVersion string // version of static resources
 	LogFilePath           string // log file path
 	LogLevel              string // logging level: debug/info/warn/error/fatal
@@ -56,9 +53,6 @@ type Configuration struct {
 // InitConf initializes the conf. Args will override configuration file.
 func InitConf() {
 	confPath := flag.String("conf", "solo.json", "path of solo.json")
-	confHost := flag.String("host", "", "this will override Solo.Host if specified")
-	confPort := flag.String("port", "", "this will override Solo.Port if specified")
-	confContext := flag.String("context", "", "this will override Solo.Context if specified")
 	confServer := flag.String("server", "", "this will override Solo.Server if specified")
 	confStaticServer := flag.String("static_server", "", "this will override Solo.StaticServer if specified")
 	confStaticResourceVer := flag.String("static_resource_ver", "", "this will override Solo.StaticResourceVersion if specified")
@@ -99,26 +93,10 @@ func InitConf() {
 	}
 	log.Debugf("${home} [%s]", home)
 
-	if "" != *confHost {
-		Conf.Host = *confHost
-	}
-
-	if "" != *confPort {
-		Conf.Port = *confPort
-	}
-
-	if "" != *confContext {
-		Conf.Context = *confContext
-	}
-
-	Conf.Server = strings.Replace(Conf.Server, "{Host}", Conf.Host, 1)
-	Conf.Server = strings.Replace(Conf.Server, "{Port}", Conf.Port, 1)
 	if "" != *confServer {
 		Conf.Server = *confServer
 	}
 
-	Conf.StaticServer = strings.Replace(Conf.StaticServer, "{Host}", Conf.Host, 1)
-	Conf.StaticServer = strings.Replace(Conf.StaticServer, "{Port}", Conf.Port, 1)
 	if "" != *confStaticServer {
 		Conf.StaticServer = *confStaticServer
 	}

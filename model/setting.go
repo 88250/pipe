@@ -38,6 +38,7 @@ const (
 	SettingNamePreferenceMostUseTagListSize         = "mostUseTagListSize"
 	SettingNamePreferenceMostViewArticleListSize    = "mostViewArticleListSize"
 	SettingNamePreferenceNoticeBoard                = "noticeBoard"
+	SettingNamePreferencePath                       = "path"
 	SettingNamePreferenceQiniuAK                    = "qiniuAK"
 	SettingNamePreferenceQiniuBucket                = "qiniuBucket"
 	SettingNamePreferenceQiniuDomain                = "qiniuDomain"

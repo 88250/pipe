@@ -18,6 +18,7 @@ package controller
 
 import (
 	"net/http"
+	"strings"
 
 	"github.com/b3log/solo.go/controller/console"
 	"github.com/b3log/solo.go/util"
@@ -32,14 +33,10 @@ func MapRoutes() *gin.Engine {
 	ret.Use(gin.Recovery())
 
 	store := sessions.NewCookieStore([]byte(util.Conf.SessionSecret))
-	cookiePath := "/"
-	if "" != util.Conf.Context {
-		cookiePath = util.Conf.Context
-	}
 	store.Options(sessions.Options{
-		Path:     cookiePath,
+		Path:     "/",
 		MaxAge:   util.Conf.SessionMaxAge,
-		Secure:   true,
+		Secure:   strings.HasPrefix(util.Conf.Server, "https"),
 		HttpOnly: true,
 	})
 	ret.Use(sessions.Sessions("sologo", store))

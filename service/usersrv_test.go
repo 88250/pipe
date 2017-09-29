@@ -52,3 +52,17 @@ func TestGetUserByNameOrEmail(t *testing.T) {
 		t.Errorf("email is not [%s]", testPlatformAdminEmail)
 	}
 }
+
+func TestGetUserBlogs(t *testing.T) {
+	blogs := User.GetUserBlogs(1)
+	if nil == blogs {
+		t.Errorf("blogs is nil")
+
+		return
+	}
+	if 1 > len(blogs) {
+		t.Errorf("blogs is tempty")
+
+		return
+	}
+}
