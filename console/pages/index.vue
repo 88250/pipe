@@ -9,7 +9,7 @@
     layout: 'console',
     head () {
       return {
-        title: `${this.$store.state.userName}`
+        title: `${this.$store.state.blogTitle}`
       }
     },
     mounted () {

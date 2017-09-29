@@ -39,6 +39,12 @@
       ],
       "mockFile": "tagList.json"
     },
+    "console/blog/switch": {
+      "verbs": [
+        "post"
+      ],
+      "mockFile": "success.json"
+    },
     "console/skins": {
       "verbs": [
         "get"

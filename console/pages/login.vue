@@ -39,7 +39,7 @@
     layout: 'console',
     head () {
       return {
-        title: `${this.$store.state.userName} - ${this.$t('login', this.$store.state.locale)}`
+        title: `${this.$store.state.blogTitle} - ${this.$t('login', this.$store.state.locale)}`
       }
     },
     data () {

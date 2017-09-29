@@ -3,6 +3,23 @@
   "msg": "",
   "data": {
     "name": "Vanessa",
-    "nickname": "Vanessa Li"
+    "nickname": "Vanessa Li",
+    "blogTitle": "Solo",
+    "blogPath": "/solo",
+    "role": 0,
+    "blogs": [
+      {
+        "title": "Solo",
+        "id": "0",
+        "path": "/solo",
+        "role": 1
+      },
+      {
+        "title": "Wide",
+        "id": "1",
+        "path": "/wide",
+        "role": 2
+      }
+    ]
   }
 }

@@ -74,7 +74,7 @@
     },
     head () {
       return {
-        title: `${this.$store.state.userName} - ${this.$t('articleList', this.$store.state.locale)}`
+        title: `${this.$store.state.blogTitle} - ${this.$t('articleList', this.$store.state.locale)}`
       }
     },
     methods: {

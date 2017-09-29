@@ -35,7 +35,7 @@
     },
     head () {
       return {
-        title: `${this.$store.state.userName} - ${this.$t('about', this.$store.state.locale)}`
+        title: `${this.$store.state.blogTitle} - ${this.$t('about', this.$store.state.locale)}`
       }
     },
     async mounted () {

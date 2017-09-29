@@ -2,10 +2,17 @@ import vueAxios from '~/plugins/axios'
 
 export const state = () => ({
   locale: 'zh_CN',
-  name: '',
-  nickname: '',
   version: '1.0.0',
   isInit: true,
+  name: '',
+  nickname: '',
+  blogTitle: '',
+  blogPath: '/',
+  role: -1,
+  blogs: [{
+    title: '',
+    id: ''
+  }],
   snackMsg: '',
   snackBar: false,
   snackModify: 'error'
@@ -27,10 +34,21 @@ export const mutations = {
     if (data) {
       state.name = data.name
       state.nickname = data.nickname
+      state.blogTitle = data.blogTitle
+      state.blogPath = data.blogPath
+      state.role = data.role
+      state.blogs = data.blogs
       localStorage.setItem('userInfo', JSON.stringify(data))
     } else {
       state.name = ''
       state.nickname = ''
+      state.blogTitle = ''
+      state.blogPath = '/'
+      state.role = -1
+      state.blogs = [{
+        title: '',
+        id: ''
+      }]
       localStorage.removeItem('userInfo')
     }
   },
@@ -40,11 +58,41 @@ export const mutations = {
       const userInfoJSON = JSON.parse(userInfo)
       state.name = userInfoJSON.name
       state.nickname = userInfoJSON.nickname
+      state.blogTitle = userInfoJSON.blogTitle
+      state.blogPath = userInfoJSON.blogPath
+      state.role = userInfoJSON.role
+      state.blogs = userInfoJSON.blogs
       return userInfoJSON
     } else {
       state.name = ''
       state.nickname = ''
+      state.blogTitle = ''
+      state.blogPath = '/'
+      state.role = -1
+      state.blogs = [{
+        title: '',
+        id: ''
+      }]
     }
+  },
+  setBlog (state, data) {
+    const userInfo = localStorage.getItem('userInfo')
+    if (!userInfo) {
+      return
+    }
+    const userInfoJSON = JSON.parse(userInfo)
+    if (data) {
+      state.blogTitle = data.title
+      state.blogPath = data.path
+      userInfoJSON.blogPath = data.path
+      userInfoJSON.blogTitle = data.title
+    } else {
+      state.blogTitle = ''
+      state.blogPath = '/'
+      userInfoJSON.blogPath = '/'
+      userInfoJSON.blogTitle = ''
+    }
+    localStorage.setItem('userInfo', JSON.stringify(userInfoJSON))
   },
   setSnackBar (state, data) {
     state.snackBar = data.snackBar

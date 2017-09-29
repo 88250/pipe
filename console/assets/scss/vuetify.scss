@@ -426,13 +426,13 @@
   overflow-x: hidden;
   transition: 0.3s cubic-bezier(0.25, 0.8, 0.5, 1);
   box-shadow: $shadow-hover;
+  border-radius: 4px;
 
   .list  {
     background: #fff;
     list-style-type: none;
     padding: 8px 0;
     font-size: 16px;
-    border-radius: 4px;
 
     .list__tile__title a,
     .list__tile__title div {
