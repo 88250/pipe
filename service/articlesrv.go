@@ -84,15 +84,46 @@ func (srv *articleService) RemoveArticle(id uint) error {
 	srv.mutex.Lock()
 	defer srv.mutex.Unlock()
 
-	article := &model.Article{
-		Model: model.Model{ID: id},
-	}
+	article := &model.Article{}
 
 	tx := db.Begin()
+	if err := db.First(article, id).Error; nil != err {
+		return err
+	}
+	author := &model.User{}
+	if err := db.First(author, article.AuthorID).Error; nil != err {
+		return err
+	}
+	author.ArticleCount = author.ArticleCount - 1
+	if err := db.Model(&model.User{}).Updates(author).Error; nil != err {
+		tx.Rollback()
+
+		return err
+	}
 	if err := db.Delete(article).Error; nil != err {
 		tx.Rollback()
 
 		return err
+	}
+	if err := Statistic.DecArticleCountWithoutTx(author.BlogID); nil != err {
+		tx.Rollback()
+
+		return err
+	}
+	comments := []*model.Comment{}
+	if err := db.Model(&model.Comment{}).Where("on_id = ? AND on_type = ?", id, model.CommentOnTypeArticle).
+		Find(&comments).Error; nil != err {
+		tx.Rollback()
+
+		return err
+	}
+	if 0 < len(comments) {
+		if err := db.Where("on_id = ? AND on_type = ?", id, model.CommentOnTypeArticle).Delete(&model.Comment{}).Error; nil != err {
+			tx.Rollback()
+
+			return err
+		}
+
 	}
 	tx.Commit()
 
@@ -104,7 +135,7 @@ func (srv *articleService) UpdateArticle(article *model.Article) error {
 	defer srv.mutex.Unlock()
 
 	count := 0
-	if db.Model(model.Article{}).Where("id = ?", article.ID).Count(&count); 1 > count {
+	if db.Model(&model.Article{}).Where("id = ?", article.ID).Count(&count); 1 > count {
 		return errors.New(fmt.Sprintf("not found article [id=%d] to update", article.ID))
 	}
 
