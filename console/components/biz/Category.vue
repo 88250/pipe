@@ -56,10 +56,10 @@
         tags: '',
         titleRules: [
           (v) => !!v || this.$t('required', this.$store.state.locale),
-          (v) => v.length <= 32 || this.$t('validateRule', this.$store.state.locale)
+          (v) => v.length <= 32 || this.$t('validateRule2', this.$store.state.locale)
         ],
         descriptionRules: [
-          (v) => v.length <= 32 || this.$t('validateRule', this.$store.state.locale)
+          (v) => v.length <= 32 || this.$t('validateRule2', this.$store.state.locale)
         ]
       }
     },
