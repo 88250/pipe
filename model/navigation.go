@@ -23,8 +23,14 @@ type Navigation struct {
 	Title      string `gorm:"size:128" json:"title"`
 	Permalink  string `gorm:"size:255" json:"permalink"`
 	IconURL    string `gorm:"size:255" json:"iconURL"`
-	OpenMethod string `gorm:"size:32" json:"openMethod"`
+	OpenTarget string `gorm:"size:32" json:"openTarget"`
 	Number     int    `json:"number"` // for sorting
 
 	BlogID uint
 }
+
+// Navigation open targets.
+const (
+	NavigationOpenTargetBlank = "_blank"
+	NavigationOpenTargetSelf  = "_self"
+)

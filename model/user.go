@@ -16,13 +16,6 @@
 
 package model
 
-// User roles.
-const (
-	UserRolePlatformAdmin = iota
-	UserRoleBlogAdmin
-	UserRoleBlogUser
-)
-
 // User model.
 type User struct {
 	Model
@@ -40,3 +33,10 @@ type User struct {
 
 	BlogID uint `json:"blogID"`
 }
+
+// User roles.
+const (
+	UserRolePlatformAdmin = iota
+	UserRoleBlogAdmin
+	UserRoleBlogUser
+)

@@ -16,6 +16,17 @@
 
 package model
 
+// Setting model.
+type Setting struct {
+	Model
+
+	Category string `gorm:"size:32" json:"category"`
+	Name     string `gorm:"size:32" json:"name"`
+	Value    string `gorm:"type:text" json:"value"`
+
+	BlogID uint `json:"blogID"`
+}
+
 // Setting names of category "preference".
 const (
 	SettingCategoryPreference = "preference"
@@ -71,14 +82,3 @@ const (
 	SettingPreferenceFeedOutputModeValueAbstract = "abstract"
 	SettingPreferenceFeedOutputModeValueFull     = "full"
 )
-
-// Setting model.
-type Setting struct {
-	Model
-
-	Category string `gorm:"size:32" json:"category"`
-	Name     string `gorm:"size:32" json:"name"`
-	Value    string `gorm:"type:text" json:"value"`
-
-	BlogID uint `json:"blogID"`
-}

@@ -17,12 +17,6 @@
 // Package model is the "model" layer which defines entity structures with ORM.
 package model
 
-// Article statuses.
-const (
-	ArticleStatusPublished = iota
-	ArticleStatusDraft
-)
-
 // Article model.
 type Article struct {
 	Model
@@ -42,3 +36,9 @@ type Article struct {
 
 	BlogID uint `json:"blogID"`
 }
+
+// Article statuses.
+const (
+	ArticleStatusPublished = iota
+	ArticleStatusDraft
+)

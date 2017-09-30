@@ -84,6 +84,7 @@ func loginCtl(c *gin.Context) {
 		UName: user.Name,
 		URole: user.Role,
 		BID:   user.BlogID,
+		BPath: settings[model.SettingNamePreferencePath].Value,
 	}
 	if err := sessionData.Save(c); nil != err {
 		result.Code = -1

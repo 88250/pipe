@@ -16,12 +16,6 @@
 
 package model
 
-// Comment on types.
-const (
-	CommentOnTypeArticle = iota
-	CommentOnTypePage
-)
-
 // Comment model.
 type Comment struct {
 	Model
@@ -36,3 +30,9 @@ type Comment struct {
 
 	BlogID uint `json:"blogID"`
 }
+
+// Comment on types.
+const (
+	CommentOnTypeArticle = iota
+	CommentOnTypePage
+)

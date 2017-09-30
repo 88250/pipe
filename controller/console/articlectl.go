@@ -95,9 +95,7 @@ func GetArticlesCtl(c *gin.Context) {
 	result := util.NewResult()
 	defer c.JSON(http.StatusOK, result)
 
-	session, _ := c.Get("session")
-	sessionData := session.(*util.SessionData)
-
+	sessionData := util.GetSession(c)
 	articleModels, pagination := service.Article.ConsoleGetArticles(c.GetInt("p"), sessionData.BID)
 
 	articles := []*ConsoleArticle{}
@@ -107,7 +105,7 @@ func GetArticlesCtl(c *gin.Context) {
 		for _, tagStr := range tagStrs {
 			tagPermalink := &TagPermalink{
 				Title:     tagStr,
-				Permalink: "context/" + tagStr,
+				Permalink: sessionData.BPath + "/" + tagStr,
 			}
 			tagPermalinks = append(tagPermalinks, tagPermalink)
 		}
@@ -130,7 +128,7 @@ func GetArticlesCtl(c *gin.Context) {
 			CreatedAt:    articleModel.CreatedAt.Format("2006-01-02"),
 			Title:        articleModel.Title,
 			Tags:         tagPermalinks,
-			Permalink:    articleModel.Permalink,
+			Permalink:    sessionData.BPath + articleModel.Permalink,
 			Topped:       articleModel.Topped,
 			ViewCount:    articleModel.ViewCount,
 			CommentCount: articleModel.CommentCount,
