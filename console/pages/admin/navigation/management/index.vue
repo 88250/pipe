@@ -10,13 +10,13 @@
         <li v-for="item in list" :key="item.id" class="fn-flex">
           <div class="fn-flex-1">
             <div class="list__title">
+              <div class="avatar avatar--small" :style="`background-image: url(${item.iconURL})`"></div>
               <nuxt-link target="_blank" :to="`${$store.state.blogPath}/${item.permalink}`">
                 {{ item.title }}
               </nuxt-link>
-              {{ item.openMethod }}
             </div>
             <div class="list__meta">
-              {{ item.iconURL }}
+              {{ $t('openMethod', $store.state.locale) }} {{ item.openMethod }}
             </div>
           </div>
           <v-menu
