@@ -18,6 +18,7 @@ package console
 
 import (
 	"net/http"
+	"strconv"
 
 	"github.com/b3log/solo.go/service"
 	"github.com/b3log/solo.go/util"
@@ -69,4 +70,23 @@ func GetCommentsCtl(c *gin.Context) {
 	data["comments"] = comments
 	data["pagination"] = pagination
 	result.Data = data
+}
+
+func RemoveCommentCtl(c *gin.Context) {
+	result := util.NewResult()
+	defer c.JSON(http.StatusOK, result)
+
+	idArg := c.Param("id")
+	id, err := strconv.Atoi(idArg)
+	if nil != err {
+		result.Code = -1
+		result.Msg = err.Error()
+
+		return
+	}
+
+	if err := service.Comment.RemoveComment(uint(id)); nil != err {
+		result.Code = -1
+		result.Msg = err.Error()
+	}
 }

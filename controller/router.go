@@ -56,6 +56,7 @@ func MapRoutes() *gin.Engine {
 	consoleGroup.DELETE("/articles/:id", console.RemoveArticleCtl)
 	consoleGroup.PUT("/articles/:id", console.UpdateArticleCtl)
 	consoleGroup.GET("/comments", console.GetCommentsCtl)
+	consoleGroup.DELETE("/comments/:id", console.RemoveCommentCtl)
 	consoleGroup.GET("/navigations", console.GetNavigationsCtl)
 	consoleGroup.GET("navigation/:id", console.GetNavigationCtl)
 	consoleGroup.GET("/tags", console.GetTagsCtl)

@@ -151,13 +151,14 @@ func RemoveArticleCtl(c *gin.Context) {
 	id, err := strconv.Atoi(idArg)
 	if nil != err {
 		result.Code = -1
+		result.Msg = err.Error()
 
 		return
 	}
 
 	if err := service.Article.RemoveArticle(uint(id)); nil != err {
-		log.Error("remove article failed: " + err.Error())
 		result.Code = -1
+		result.Msg = err.Error()
 	}
 }
 
@@ -169,6 +170,7 @@ func UpdateArticleCtl(c *gin.Context) {
 	id, err := strconv.Atoi(idArg)
 	if nil != err {
 		result.Code = -1
+		result.Msg = err.Error()
 
 		return
 	}
@@ -182,7 +184,7 @@ func UpdateArticleCtl(c *gin.Context) {
 	}
 
 	if err := service.Article.UpdateArticle(article); nil != err {
-		log.Error("update article failed: " + err.Error())
 		result.Code = -1
+		result.Msg = err.Error()
 	}
 }
