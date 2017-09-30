@@ -38,14 +38,16 @@ const (
 	adminConsoleCommentListWindowsSize = 20
 )
 
-func (srv *commentService) ConsoleGetComments(page int) (ret []*model.Comment, pagination *util.Pagination) {
+func (srv *commentService) ConsoleGetComments(page int, blogID uint) (ret []*model.Comment, pagination *util.Pagination) {
 	if 1 > page {
 		page = 1
 	}
 
 	offset := (page - 1) * adminConsoleCommentListPageSize
 	count := 0
-	db.Model(model.Comment{}).Order("id DESC").Count(&count).Offset(offset).Limit(adminConsoleCommentListPageSize).Find(&ret)
+	db.Model(model.Comment{}).Order("id DESC").
+		Where(model.Comment{BlogID: blogID}).
+		Count(&count).Offset(offset).Limit(adminConsoleCommentListPageSize).Find(&ret)
 
 	pageCount := int(math.Ceil(float64(count) / adminConsoleCommentListPageSize))
 	pagination = util.NewPagination(page, adminConsoleCommentListPageSize, pageCount, adminConsoleCommentListWindowsSize, count)

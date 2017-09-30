@@ -56,7 +56,7 @@ func (srv *articleService) AddArticle(article *model.Article) error {
 	return nil
 }
 
-func (srv *articleService) ConsoleGetArticles(page int) (ret []*model.Article, pagination *util.Pagination) {
+func (srv *articleService) ConsoleGetArticles(page int, blogID uint) (ret []*model.Article, pagination *util.Pagination) {
 	if 1 > page {
 		page = 1
 	}
@@ -64,7 +64,7 @@ func (srv *articleService) ConsoleGetArticles(page int) (ret []*model.Article, p
 	offset := (page - 1) * adminConsoleArticleListPageSize
 	count := 0
 	db.Model(model.Article{}).Select("id, created_at, author_id, title, tags, topped, view_count, comment_count").
-		Where(model.Article{Status: model.ArticleStatusPublished}).
+		Where(model.Article{Status: model.ArticleStatusPublished, BlogID: blogID}).
 		Order("topped DESC, id DESC").Count(&count).
 		Offset(offset).Limit(adminConsoleArticleListPageSize).
 		Find(&ret)

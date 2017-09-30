@@ -79,11 +79,16 @@ func loginCtl(c *gin.Context) {
 	data["blogs"] = blogs
 	result.Data = data
 
-	session := sessions.Default(c)
-	session.Set("id", user.ID)
-	session.Set("name", user.Name)
-	session.Set("role", user.Role)
-	session.Save()
+	sessionData := &util.SessionData{
+		UID:   user.ID,
+		UName: user.Name,
+		URole: user.Role,
+		BID:   user.BlogID,
+	}
+	if err := sessionData.Save(c); nil != err {
+		result.Code = -1
+		result.Msg = "saves session failed: " + err.Error()
+	}
 }
 
 func logoutCtl(c *gin.Context) {

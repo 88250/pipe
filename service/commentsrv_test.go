@@ -21,11 +21,12 @@ import (
 )
 
 func TestConsoleGetComments(t *testing.T) {
-	comments, pagination := Comment.ConsoleGetComments(1)
+	comments, pagination := Comment.ConsoleGetComments(1, 1)
 
 	if 1 != len(comments) {
 		t.Errorf("expected is [%d], actual is [%d]", 1, len(comments))
 	}
-
-	t.Log(pagination)
+	if 1 != pagination.RecordCount {
+		t.Errorf("expected is [%d], actual is [%d]", 1, pagination.RecordCount)
+	}
 }

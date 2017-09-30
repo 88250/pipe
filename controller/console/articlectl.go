@@ -95,7 +95,10 @@ func GetArticlesCtl(c *gin.Context) {
 	result := util.NewResult()
 	defer c.JSON(http.StatusOK, result)
 
-	articleModels, pagination := service.Article.ConsoleGetArticles(c.GetInt("p"))
+	session, _ := c.Get("session")
+	sessionData := session.(*util.SessionData)
+
+	articleModels, pagination := service.Article.ConsoleGetArticles(c.GetInt("p"), sessionData.BID)
 
 	articles := []*ConsoleArticle{}
 	for _, articleModel := range articleModels {
