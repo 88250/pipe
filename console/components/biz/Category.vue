@@ -37,11 +37,15 @@
     <button class="fn-right btn btn--margin-t30 btn--info btn--space" @click="created">
       {{ $t('confirm', $store.state.locale) }}
     </button>
+    <button class="fn-right btn btn--margin-t30 btn--danger btn--space" @click="$emit('update:show', false)">
+      {{ $t('cancel', $store.state.locale) }}
+    </button>
   </div>
 </template>
 
 <script>
   export default {
+    props: ['id'],
     data () {
       return {
         errorMsg: '',
@@ -64,12 +68,23 @@
         if (!this.$refs.form.validate()) {
           return
         }
-        const responseData = await this.axios.post('/console/categories', {
-          title: this.title,
-          permalink: this.permalink,
-          description: this.description,
-          tags: this.tags
-        })
+        let responseData = {}
+        if (this.id === '') {
+          responseData = await this.axios.post('/console/categories', {
+            title: this.title,
+            permalink: this.permalink,
+            description: this.description,
+            tags: this.tags
+          })
+        } else {
+          responseData = await this.axios.put(`/console/categories/${this.id}`, {
+            title: this.title,
+            permalink: this.permalink,
+            description: this.description,
+            tags: this.tags
+          })
+        }
+
         if (responseData.code === 0) {
           this.$set(this, 'error', false)
           this.$set(this, 'errorMsg', '')
@@ -78,6 +93,18 @@
           this.$set(this, 'error', true)
           this.$set(this, 'errorMsg', responseData.msg)
         }
+      }
+    },
+    async mounted () {
+      if (this.id === '') {
+        return
+      }
+      const responseData = await this.axios.get(`/console/categories/${this.id}`)
+      if (responseData) {
+        this.$set(this, 'title', responseData.title)
+        this.$set(this, 'permalink', responseData.permalink)
+        this.$set(this, 'description', responseData.description)
+        this.$set(this, 'tags', responseData.tags)
       }
     }
   }

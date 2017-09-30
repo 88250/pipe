@@ -68,5 +68,6 @@
   "logout": "登出",
   "blogManage": "博客管理",
   "new": "新建",
-  "description": "描述"
+  "description": "描述",
+  "cancel": "取消"
 }
