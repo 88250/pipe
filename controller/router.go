@@ -55,6 +55,7 @@ func MapRoutes() *gin.Engine {
 	consoleGroup.GET("/articles/:id", console.GetArticleCtl)
 	consoleGroup.DELETE("/articles/:id", console.RemoveArticleCtl)
 	consoleGroup.PUT("/articles/:id", console.UpdateArticleCtl)
+	consoleGroup.GET("/comments", console.GetCommentsCtl)
 	consoleGroup.GET("/tags", console.GetTagsCtl)
 	consoleGroup.POST("/blog/switch/:id", console.BlogSwitchCtl)
 	api.Any("/hp/*apis", util.HacPaiAPI())
