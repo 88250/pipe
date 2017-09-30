@@ -1,10 +1,10 @@
 <template>
   <div>
     <div class="card fn-clear">
-      <category v-if="showForm" @addSuccess="addSuccess"></category>
+      <category v-if="showForm" :show.sync="showForm" @addSuccess="addSuccess" :id="editId"></category>
 
       <div v-show="!showForm" class="card__body fn-clear">
-        <button class="btn btn--success fn-right" @click="showForm = !showForm">{{ $t('new', $store.state.locale) }}</button>
+        <button class="btn btn--success fn-right" @click="netCategory">{{ $t('new', $store.state.locale) }}</button>
       </div>
       <ul class="list">
         <li v-for="item in list" :key="item.id" class="fn-flex">
@@ -66,6 +66,7 @@
     },
     data () {
       return {
+        editId: '',
         showForm: false,
         currentPageNum: 1,
         pageCount: 1,
@@ -103,6 +104,14 @@
       addSuccess () {
         this.getList(1)
         this.$set(this, 'showForm', false)
+      },
+      edit (id) {
+        this.$set(this, 'showForm', true)
+        this.$set(this, 'editId', id)
+      },
+      netCategory () {
+        this.$set(this, 'showForm', true)
+        this.$set(this, 'editId', '')
       }
     },
     mounted () {

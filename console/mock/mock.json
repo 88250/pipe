@@ -129,7 +129,7 @@
           "mockFile": "error.json"
         },
         "get": {
-          "mockFile": "article.json"
+          "mockFile": "category.json"
         }
       }
     },
