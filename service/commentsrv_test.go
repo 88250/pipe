@@ -26,6 +26,7 @@ func TestConsoleGetComments(t *testing.T) {
 	if 1 != len(comments) {
 		t.Errorf("expected is [%d], actual is [%d]", 1, len(comments))
 	}
-
-	t.Log(pagination)
+	if 1 != pagination.RecordCount {
+		t.Errorf("expected is [%d], actual is [%d]", 1, pagination.RecordCount)
+	}
 }

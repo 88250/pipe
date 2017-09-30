@@ -22,7 +22,6 @@ import (
 
 	"github.com/b3log/solo.go/service"
 	"github.com/b3log/solo.go/util"
-	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
 )
 
@@ -38,8 +37,8 @@ func BlogSwitchCtl(c *gin.Context) {
 		return
 	}
 
-	session := sessions.Default(c)
-	userID := session.Get("id").(uint)
+	session := util.GetSession(c)
+	userID := session.UID
 
 	userBlogs := service.User.GetUserBlogs(userID)
 	if 1 > len(userBlogs) {
@@ -66,4 +65,6 @@ func BlogSwitchCtl(c *gin.Context) {
 	}
 
 	result.Data = role
+
+	session.Save(c)
 }

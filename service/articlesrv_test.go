@@ -38,15 +38,15 @@ func TestAddArticle(t *testing.T) {
 			Status:      model.ArticleStatusPublished,
 			Topped:      false,
 			Commentable: true,
+			BlogID:      1,
 		}
 
 		Article.AddArticle(article)
-		//time.Sleep(500 * time.Millisecond)
 	}
 }
 
 func TestConsoleGetArticles(t *testing.T) {
-	articles, pagination := Article.ConsoleGetArticles(1)
+	articles, pagination := Article.ConsoleGetArticles(1, 1)
 
 	if adminConsoleArticleListPageSize != len(articles) {
 		t.Errorf("expected is [%d], actual is [%d]", adminConsoleArticleListPageSize, len(articles))
