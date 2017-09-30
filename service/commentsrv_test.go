@@ -30,3 +30,14 @@ func TestConsoleGetComments(t *testing.T) {
 		t.Errorf("expected is [%d], actual is [%d]", 1, pagination.RecordCount)
 	}
 }
+
+func TestRemoveComment(t *testing.T) {
+	if err := Comment.RemoveComment(1); nil != err {
+		t.Error(err)
+	}
+
+	comments, _ := Comment.ConsoleGetComments(1, 1)
+	if 0 != len(comments) {
+		t.Error("remove comment failed")
+	}
+}

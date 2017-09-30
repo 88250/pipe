@@ -50,3 +50,22 @@ func (srv *commentService) ConsoleGetComments(page int, blogID uint) (ret []*mod
 
 	return
 }
+
+func (srv *commentService) RemoveComment(id uint) error {
+	srv.mutex.Lock()
+	defer srv.mutex.Unlock()
+
+	comment := &model.Comment{
+		Model: model.Model{ID: id},
+	}
+
+	tx := db.Begin()
+	if err := db.Delete(comment).Error; nil != err {
+		tx.Rollback()
+
+		return err
+	}
+	tx.Commit()
+
+	return nil
+}
