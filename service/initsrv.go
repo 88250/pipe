@@ -156,8 +156,8 @@ Solo.go 博客系统是一个开源项目，如果你觉得它很赞，请到[�
 		Status:       model.ArticleStatusPublished,
 		Topped:       false,
 		Commentable:  true,
-		BlogID:       blogID,
 		CommentCount: 1,
+		BlogID:       blogID,
 	}
 	if err := tx.Create(article).Error; nil != err {
 		return err
@@ -174,9 +174,10 @@ Solo.go 博客系统是一个开源项目，如果你觉得它很赞，请到[�
 	}
 
 	articleTagRel := &model.Correlation{
-		ID1:  article.ID,
-		ID2:  tag.ID,
-		Type: model.CorrelationArticleTag,
+		ID1:    article.ID,
+		ID2:    tag.ID,
+		Type:   model.CorrelationArticleTag,
+		BlogID: blogID,
 	}
 	if err := tx.Create(articleTagRel).Error; nil != err {
 		return err
@@ -188,6 +189,7 @@ Solo.go 博客系统是一个开源项目，如果你觉得它很赞，请到[�
 		AuthorName:      "Daniel",
 		AuthorAvatarURL: "https://img.hacpai.com/avatar/1353745196354_1500432853138.png?imageView2/1/w/80/h/80/interlace/0/q/100",
 		Content:         "写博客需要坚持，相信积累后必然会有收获，我们一起努力加油 :smile:",
+		BlogID:          blogID,
 	}
 	if err := tx.Create(comment).Error; nil != err {
 		return err
