@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="card fn-clear">
-      <category v-if="showForm" :show.sync="showForm" @addSuccess="addSuccess" :id="editId"></category>
+      <navigation v-if="showForm" :show.sync="showForm" @addSuccess="addSuccess" :id="editId"></navigation>
 
       <div v-show="!showForm" class="card__body fn-clear">
         <button class="btn btn--success fn-right" @click="edit('')">{{ $t('new', $store.state.locale) }}</button>
@@ -10,12 +10,13 @@
         <li v-for="item in list" :key="item.id" class="fn-flex">
           <div class="fn-flex-1">
             <div class="list__title">
-              <nuxt-link :to="`${$store.state.blogPath}/${item.permalink}`">
+              <nuxt-link target="_blank" :to="`${$store.state.blogPath}/${item.permalink}`">
                 {{ item.title }}
               </nuxt-link>
+              {{ item.openMethod }}
             </div>
             <div class="list__meta">
-              {{ item.description }}
+              {{ item.iconURL }}
             </div>
           </div>
           <v-menu
@@ -58,11 +59,11 @@
 </template>
 
 <script>
-  import Category from '~/components/biz/Category'
+  import Navigation from '~/components/biz/Navigation'
 
   export default {
     components: {
-      Category
+      Navigation
     },
     data () {
       return {
@@ -76,21 +77,21 @@
     },
     head () {
       return {
-        title: `${this.$store.state.blogTitle} - ${this.$t('categoryList', this.$store.state.locale)}`
+        title: `${this.$store.state.blogTitle} - ${this.$t('navigationList', this.$store.state.locale)}`
       }
     },
     methods: {
       async getList (currentPage) {
-        const responseData = await this.axios.get(`/console/categories?p=${currentPage}`)
+        const responseData = await this.axios.get(`/console/navigation?p=${currentPage}`)
         if (responseData) {
-          this.$set(this, 'list', responseData.categories)
+          this.$set(this, 'list', responseData.navigation)
           this.$set(this, 'currentPageNum', responseData.pagination.currentPageNum)
           this.$set(this, 'pageCount', responseData.pagination.pageCount)
           this.$set(this, 'windowSize', responseData.pagination.windowSize)
         }
       },
       async remove (id) {
-        const responseData = await this.axios.delete(`/console/categories/${id}`)
+        const responseData = await this.axios.delete(`/console/navigation/${id}`)
         if (responseData === null) {
           this.$store.commit('setSnackBar', {
             snackBar: true,

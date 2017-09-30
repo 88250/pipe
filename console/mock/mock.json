@@ -133,6 +133,38 @@
         }
       }
     },
+    "console/navigation": {
+      "verbs": [
+        "get",
+        "post"
+      ],
+      "responses": {
+        "post": {
+          "mockFile": "success.json"
+        },
+        "get": {
+          "mockFile": "navigationList.json"
+        }
+      }
+    },
+    "console/navigation/:id": {
+      "verbs": [
+        "delete",
+        "put",
+        "get"
+      ],
+      "responses": {
+        "delete": {
+          "mockFile": "success.json"
+        },
+        "put": {
+          "mockFile": "error.json"
+        },
+        "get": {
+          "mockFile": "navigation.json"
+        }
+      }
+    },
     "hp/apis/check-account": {
       "verbs": [
         "post"
