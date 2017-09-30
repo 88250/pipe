@@ -39,10 +39,6 @@ const (
 )
 
 func (srv *commentService) ConsoleGetComments(page int, blogID uint) (ret []*model.Comment, pagination *util.Pagination) {
-	if 1 > page {
-		page = 1
-	}
-
 	offset := (page - 1) * adminConsoleCommentListPageSize
 	count := 0
 	db.Model(model.Comment{}).Order("id DESC").

@@ -104,6 +104,11 @@ func (srv *initService) InitPlatform(platformAdmin *model.User) error {
 
 		return err
 	}
+	if err := initNavigation(tx, blogID); nil != err {
+		tx.Rollback()
+
+		return err
+	}
 	if err := helloWorld(tx, platformAdmin, blogID); nil != err {
 		tx.Rollback()
 
@@ -131,6 +136,22 @@ func initPlatformAdmin(tx *gorm.DB, admin *model.User, blogID uint) error {
 		BlogID: blogID,
 	}
 	if err := tx.Create(blogUser).Error; nil != err {
+		return err
+	}
+
+	return nil
+}
+
+func initNavigation(tx *gorm.DB, blogID uint) error {
+	navigation := &model.Navigation{
+		Title:      "黑客派",
+		Permalink:  "https://hacpai.com",
+		IconURL:    "",
+		OpenMethod: model.NavigationOpenMethodBlank,
+		Number:     0,
+		BlogID:     blogID,
+	}
+	if err := tx.Create(navigation).Error; nil != err {
 		return err
 	}
 

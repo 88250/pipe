@@ -14,23 +14,32 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-package model
+package service
 
-// Navigation model.
-type Navigation struct {
-	Model
+import (
+	"testing"
+)
 
-	Title      string `gorm:"size:128" json:"title"`
-	Permalink  string `gorm:"size:255" json:"permalink"`
-	IconURL    string `gorm:"size:255" json:"iconURL"`
-	OpenMethod string `gorm:"size:32" json:"openMethod"`
-	Number     int    `json:"number"` // for sorting
+func TestConsoleGetNavigations(t *testing.T) {
+	navigations, pagination := Navigation.ConsoleGetNavigations(1, 1)
 
-	BlogID uint `json:"blogID"`
+	if 1 != len(navigations) {
+		t.Errorf("expected is [%d], actual is [%d]", 1, len(navigations))
+	}
+	if 1 != pagination.RecordCount {
+		t.Errorf("expected is [%d], actual is [%d]", 1, pagination.RecordCount)
+	}
 }
 
-// Navigation open methods.
-const (
-	NavigationOpenMethodBlank = "_blank"
-	NavigationOpenMethodSelf  = "_self"
-)
+func TestConsoleGetNavigation(t *testing.T) {
+	navigation := Navigation.ConsoleGetNavigation(1)
+	if nil == navigation {
+		t.Errorf("navigation is nil")
+
+		return
+	}
+
+	if 1 != navigation.ID {
+		t.Errorf("id is not [1]")
+	}
+}

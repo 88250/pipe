@@ -57,10 +57,6 @@ func (srv *articleService) AddArticle(article *model.Article) error {
 }
 
 func (srv *articleService) ConsoleGetArticles(page int, blogID uint) (ret []*model.Article, pagination *util.Pagination) {
-	if 1 > page {
-		page = 1
-	}
-
 	offset := (page - 1) * adminConsoleArticleListPageSize
 	count := 0
 	db.Model(model.Article{}).Select("id, created_at, author_id, title, tags, permalink, topped, view_count, comment_count").
