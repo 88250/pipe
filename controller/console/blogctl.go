@@ -66,5 +66,7 @@ func BlogSwitchCtl(c *gin.Context) {
 
 	result.Data = role
 
+	session.URole = role
+	session.BID = uint(blogID)
 	session.Save(c)
 }
