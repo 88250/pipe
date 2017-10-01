@@ -58,7 +58,7 @@ const (
 	SettingNamePreferenceRecentCommentListSize      = "recentCommentListSize"
 	SettingNamePreferenceRelevantArticleListSize    = "relevantArticleListSize"
 	SettingNamePreferenceSign                       = "sign"
-	SettingNamePreferenceSkin                       = "skin"
+	SettingNamePreferenceTheme                      = "theme"
 	SettingNamePreferenceTimezone                   = "timezone"
 	SettingNamePreferenceVer                        = "version"
 )

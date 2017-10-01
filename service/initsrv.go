@@ -411,7 +411,7 @@ func initPreference(tx *gorm.DB, blogAdmin *model.User, blogID uint) error {
 	}
 	if err := tx.Create(&model.Setting{
 		Category: model.SettingCategoryPreference,
-		Name:     model.SettingNamePreferenceSkin,
+		Name:     model.SettingNamePreferenceTheme,
 		Value:    "classic",
 		BlogID:   blogID}).Error; nil != err {
 		return err
