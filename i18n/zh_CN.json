@@ -71,5 +71,9 @@
   "description": "描述",
   "cancel": "取消",
   "iconPath": "图标地址",
-  "openMethod": "打开方式"
+  "openMethod": "打开方式",
+  "openMethod1": "在当前窗口/框架打开",
+  "openMethod2": "在新窗口打开 (_blank)",
+  "openMethod3": "在父窗口/框架打开 (_parent)",
+  "openMethod4": "在顶部框架打开（重置所有框架） (_top)"
 }

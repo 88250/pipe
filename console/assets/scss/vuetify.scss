@@ -208,6 +208,13 @@
     }
   }
 
+  &--select {
+    .input-group__selections__comma {
+      font-size: 16px;
+      padding-right: 4px;
+    }
+  }
+
   &--required {
     label:after {
       content: '*';

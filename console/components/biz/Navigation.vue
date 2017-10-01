@@ -21,14 +21,12 @@
         :rules="iconURLRules"
         :counter="32"
       ></v-text-field>
-      <v-text-field
+      <v-select
         :label="$t('openMethod', $store.state.locale)"
+        :items="openMethods"
         v-model="openMethod"
-        :rules="titleRules"
-        :counter="32"
-        required
-        @keyup.enter="created"
-      ></v-text-field>
+        append-icon=""
+      ></v-select>
       <div class="alert alert--danger" v-show="error">
         <icon icon="danger"/>
         <span>{{ errorMsg }}</span>
@@ -54,6 +52,24 @@
         permalink: '',
         iconURL: '',
         openMethod: '',
+        openMethods: [
+          {
+            'text': this.$t('openMethod1', this.$store.state.locale),
+            'value': ''
+          },
+          {
+            'text': this.$t('openMethod2', this.$store.state.locale),
+            'value': '_blank'
+          },
+          {
+            'text': this.$t('openMethod3', this.$store.state.locale),
+            'value': '_parent'
+          },
+          {
+            'text': this.$t('openMethod4', this.$store.state.locale),
+            'value': '_top'
+          }
+        ],
         titleRules: [
           (v) => !!v || this.$t('required', this.$store.state.locale),
           (v) => v.length <= 32 || this.$t('validateRule2', this.$store.state.locale)
