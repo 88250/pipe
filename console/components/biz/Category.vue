@@ -63,6 +63,11 @@
         ]
       }
     },
+    watch: {
+      id: function () {
+        this.init()
+      }
+    },
     methods: {
       async created () {
         if (!this.$refs.form.validate()) {
@@ -93,19 +98,22 @@
           this.$set(this, 'error', true)
           this.$set(this, 'errorMsg', responseData.msg)
         }
+      },
+      async init () {
+        if (this.id === '') {
+          return
+        }
+        const responseData = await this.axios.get(`/console/categories/${this.id}`)
+        if (responseData) {
+          this.$set(this, 'title', responseData.title)
+          this.$set(this, 'permalink', responseData.permalink)
+          this.$set(this, 'description', responseData.description)
+          this.$set(this, 'tags', responseData.tags)
+        }
       }
     },
-    async mounted () {
-      if (this.id === '') {
-        return
-      }
-      const responseData = await this.axios.get(`/console/categories/${this.id}`)
-      if (responseData) {
-        this.$set(this, 'title', responseData.title)
-        this.$set(this, 'permalink', responseData.permalink)
-        this.$set(this, 'description', responseData.description)
-        this.$set(this, 'tags', responseData.tags)
-      }
+    mounted () {
+      this.init()
     }
   }
 </script>

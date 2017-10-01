@@ -209,6 +209,7 @@
   }
 
   &--select {
+    cursor: pointer;
     .input-group__selections__comma {
       font-size: 16px;
       padding-right: 4px;
@@ -434,6 +435,20 @@
   transition: 0.3s cubic-bezier(0.25, 0.8, 0.5, 1);
   box-shadow: $shadow-hover;
   border-radius: 4px;
+  // select input
+  .card > .list li {
+    border-bottom-width: 0;
+    padding: 0;
+    .list__tile {
+      cursor: pointer;
+      line-height: 40px;
+      padding: 0 15px;
+    }
+    .list__tile--active {
+      color: $blue;
+      background-color: rgba(0, 0, 0, 0.02);
+    }
+  }
   .list  {
     background: #fff;
     list-style-type: none;
