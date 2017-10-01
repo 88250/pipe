@@ -27,6 +27,8 @@ type Comment struct {
 	Content                   string `gorm:"type:text" json:"content"`
 	OriginalCommentID         uint   `json:"originalCommentID"` // ID of replied comment
 	OriginalCommentAuthorName string `gorm:"size:32" json:"originalCommentAuthorName"`
+	IP                        string `gorm:"size:128" json:"ip"`
+	UserAgent                 string `gorm:"size:255" json:"userAgent"`
 
 	BlogID uint `json:"blogID"`
 }
