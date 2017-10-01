@@ -89,17 +89,17 @@ func (srv *initService) InitPlatform(platformAdmin *model.User) error {
 
 	tx := db.Begin()
 
+	if err := initPlatformAdmin(tx, platformAdmin, blogID); nil != err {
+		tx.Rollback()
+
+		return err
+	}
 	if err := initPreference(tx, platformAdmin, blogID); nil != err {
 		tx.Rollback()
 
 		return err
 	}
 	if err := initStatistic(tx, blogID); nil != err {
-		tx.Rollback()
-
-		return err
-	}
-	if err := initPlatformAdmin(tx, platformAdmin, blogID); nil != err {
 		tx.Rollback()
 
 		return err
