@@ -20,10 +20,12 @@ package model
 type Category struct {
 	Model
 
-	Title       string `gorm:"size:128" json:"title"`
-	Permalink   string `gorm:"size:255" json:"permalink"`
-	Description string `gorm:"size:255" json:"description"`
-	Number      int    `json:"number"` // for sorting
+	Title           string `gorm:"size:128" json:"title"`
+	Permalink       string `gorm:"size:255" json:"permalink"`
+	Description     string `gorm:"size:255" json:"description"`
+	MetaKeywords    string `gorm:"size:255" json:"metaKeywords"`
+	MetaDescription string `gorm:"type:text" json:"metaDescription"`
+	Number          int    `json:"number"` // for sorting
 
 	BlogID uint `json:"blogID"`
 }
