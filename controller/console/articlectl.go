@@ -42,8 +42,8 @@ func AddArticleCtl(c *gin.Context) {
 	}
 
 	if err := service.Article.AddArticle(article); nil != err {
-		log.Error("add article failed: " + err.Error())
 		result.Code = -1
+		result.Msg = err.Error()
 	}
 }
 
