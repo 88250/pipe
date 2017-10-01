@@ -33,6 +33,8 @@ func AddArticleCtl(c *gin.Context) {
 	result := util.NewResult()
 	defer c.JSON(http.StatusOK, result)
 
+	sessionData := util.GetSession(c)
+
 	article := &model.Article{}
 	if err := c.BindJSON(article); nil != err {
 		result.Code = -1
@@ -41,6 +43,8 @@ func AddArticleCtl(c *gin.Context) {
 		return
 	}
 
+	article.BlogID = sessionData.BID
+	article.AuthorID = sessionData.UID
 	if err := service.Article.AddArticle(article); nil != err {
 		result.Code = -1
 		result.Msg = err.Error()
