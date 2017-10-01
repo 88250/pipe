@@ -3,18 +3,18 @@
   "msg": "",
   "data": {
     "currentId": "1",
-    "skins": [
+    "themes": [
       {
         "id": "1",
         "title": "Solo.go",
         "previewURL": "https://img.hacpai.com/20170818zhixiaoyun.jpeg",
-        "thumbnailURL": "https://img.hacpai.com/?skin=Finding"
+        "thumbnailURL": "https://img.hacpai.com/?theme=Finding"
       },
       {
         "id": "2",
         "title": "abc",
         "previewURL": "https://img.hacpai.com/20170818zhixiaoyun.jpeg",
-        "thumbnailURL": "https://img.hacpai.com/?skin=Finding"
+        "thumbnailURL": "https://img.hacpai.com/?theme=Finding"
       }
     ]
   }

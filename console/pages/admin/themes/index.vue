@@ -1,12 +1,12 @@
 <template>
-  <div class="admin__skins">
+  <div class="admin__themes">
     <div class="card"
          v-for="item in list"
          :key="item.previewURL"
-         :class="{ 'skin--current': item.id === currentId }">
-      <div class="skin__img-wrap">
+         :class="{ 'themes--current': item.id === currentId }">
+      <div class="themes__img-wrap">
         <img :src="item.previewURL"/>
-        <div class="skin__overlay">
+        <div class="themes__overlay">
           <div>
             <button
               v-show="item.id !== currentId"
@@ -40,7 +40,7 @@
     },
     methods: {
       async setup (id) {
-        const responseData = await this.axios.put(`/console/skins/${id}`)
+        const responseData = await this.axios.put(`/console/themes/${id}`)
         if (responseData.code === 0) {
           this.$store.commit('setSnackBar', {
             snackBar: true,
@@ -58,9 +58,9 @@
       }
     },
     async mounted () {
-      const responseData = await this.axios.get('/console/skins')
+      const responseData = await this.axios.get('/console/themes')
       if (responseData) {
-        this.$set(this, 'list', responseData.skins)
+        this.$set(this, 'list', responseData.themes)
         this.$set(this, 'currentId', responseData.currentId)
       }
     }
@@ -70,31 +70,31 @@
 <style lang="sass">
   @import '~assets/scss/_variables'
 
-  .admin__skins
+  .admin__themes
     display: flex
     .card
       margin: 0 30px 30px 0
       align-content: flex-start
 
-      &.skin--current
+      &.theme--current
         background-color: $blue
 
         h3
           color: #fff
 
-      .skin__img-wrap
+      .theme__img-wrap
         overflow: hidden
         height: 250px
         width: 360px
         margin-bottom: 15px
         position: relative
         &:hover
-          .skin__overlay
+          .theme__overlay
             opacity: 1
           img
             transform: scale(1.2) translateZ(0)
 
-      .skin__overlay
+      .theme__overlay
         top: 0
         width: 100%
         height: 100%

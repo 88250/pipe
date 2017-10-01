@@ -45,13 +45,13 @@
       ],
       "mockFile": "responseSwitchBlog.json"
     },
-    "console/skins": {
+    "console/themes": {
       "verbs": [
         "get"
       ],
-      "mockFile": "skinList.json"
+      "mockFile": "themeList.json"
     },
-    "console/skins/:id": {
+    "console/themes/:id": {
       "verbs": [
         "put"
       ],
@@ -133,7 +133,7 @@
         }
       }
     },
-    "console/navigation": {
+    "console/navigations": {
       "verbs": [
         "get",
         "post"
@@ -147,7 +147,7 @@
         }
       }
     },
-    "console/navigation/:id": {
+    "console/navigations/:id": {
       "verbs": [
         "delete",
         "put",

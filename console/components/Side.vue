@@ -48,9 +48,9 @@
       role: 2
     },
     {
-      title: app.$t('skinList', locale),
-      icon: 'skin',
-      link: '/admin/skins',
+      title: app.$t('themeList', locale),
+      icon: 'theme',
+      link: '/admin/themes',
       role: 1
     },
     {
@@ -76,7 +76,7 @@
         },
         {
           title: app.$t('navigationList', locale),
-          link: '/admin/navigation/management',
+          link: '/admin/navigations/management',
           role: 1
         },
         {

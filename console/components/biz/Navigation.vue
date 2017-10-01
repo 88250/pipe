@@ -91,14 +91,14 @@
         }
         let responseData = {}
         if (this.id === '') {
-          responseData = await this.axios.post('/console/navigation', {
+          responseData = await this.axios.post('/console/navigations', {
             title: this.title,
             permalink: this.permalink,
             iconURL: this.iconURL,
             openMethod: this.openMethod
           })
         } else {
-          responseData = await this.axios.put(`/console/navigation/${this.id}`, {
+          responseData = await this.axios.put(`/console/navigations/${this.id}`, {
             title: this.title,
             permalink: this.permalink,
             iconURL: this.iconURL,
@@ -119,7 +119,7 @@
         if (this.id === '') {
           return
         }
-        const responseData = await this.axios.get(`/console/navigation/${this.id}`)
+        const responseData = await this.axios.get(`/console/navigations/${this.id}`)
         if (responseData) {
           this.$set(this, 'title', responseData.title)
           this.$set(this, 'permalink', responseData.permalink)

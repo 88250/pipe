@@ -82,7 +82,7 @@
     },
     methods: {
       async getList (currentPage) {
-        const responseData = await this.axios.get(`/console/navigation?p=${currentPage}`)
+        const responseData = await this.axios.get(`/console/navigations?p=${currentPage}`)
         if (responseData) {
           this.$set(this, 'list', responseData.navigation)
           this.$set(this, 'currentPageNum', responseData.pagination.currentPageNum)
@@ -91,7 +91,7 @@
         }
       },
       async remove (id) {
-        const responseData = await this.axios.delete(`/console/navigation/${id}`)
+        const responseData = await this.axios.delete(`/console/navigations/${id}`)
         if (responseData === null) {
           this.$store.commit('setSnackBar', {
             snackBar: true,
@@ -99,6 +99,7 @@
             snackModify: 'success'
           })
           this.getList(1)
+          this.$set(this, 'showForm', false)
         }
       },
       addSuccess () {

@@ -98,6 +98,7 @@
             snackModify: 'success'
           })
           this.getList(1)
+          this.$set(this, 'showForm', false)
         }
       },
       addSuccess () {
