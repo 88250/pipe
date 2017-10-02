@@ -111,14 +111,14 @@ func (srv *articleService) RemoveArticle(id uint) error {
 		return err
 	}
 	comments := []*model.Comment{}
-	if err := db.Model(&model.Comment{}).Where("on_id = ? AND on_type = ?", id, model.CommentOnTypeArticle).
+	if err := db.Model(&model.Comment{}).Where("article_id = ?", id).
 		Find(&comments).Error; nil != err {
 		tx.Rollback()
 
 		return err
 	}
 	if 0 < len(comments) {
-		if err := db.Where("on_id = ? AND on_type = ?", id, model.CommentOnTypeArticle).Delete(&model.Comment{}).Error; nil != err {
+		if err := db.Where("article_id = ?", id).Delete(&model.Comment{}).Error; nil != err {
 			tx.Rollback()
 
 			return err

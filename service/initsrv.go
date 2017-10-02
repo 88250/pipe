@@ -205,8 +205,7 @@ Solo.go 博客系统是一个开源项目，如果你觉得它很赞，请到[�
 	}
 
 	comment := &model.Comment{
-		OnID:            article.ID,
-		OnType:          model.CommentOnTypeArticle,
+		ArticleID:       article.ID,
 		AuthorName:      "Daniel",
 		AuthorAvatarURL: "https://img.hacpai.com/avatar/1353745196354_1500432853138.png?imageView2/1/w/80/h/80/interlace/0/q/100",
 		Content:         "写博客需要坚持，相信积累后必然会有收获，我们一起努力加油 :smile:",
@@ -306,14 +305,14 @@ func initPreference(tx *gorm.DB, blogAdmin *model.User, blogID uint) error {
 	}
 	if err := tx.Create(&model.Setting{
 		Category: model.SettingCategoryPreference,
-		Name:     model.SettingNamePreferenceMetaDes,
+		Name:     model.SettingNamePreferenceMetaDescription,
 		Value:    "小而美的 golang 博客平台",
 		BlogID:   blogID}).Error; nil != err {
 		return err
 	}
 	if err := tx.Create(&model.Setting{
 		Category: model.SettingCategoryPreference,
-		Name:     model.SettingNamePreferenceMetaKey,
+		Name:     model.SettingNamePreferenceMetaKeywords,
 		Value:    "Solo.go,golang,博客,开源",
 		BlogID:   blogID}).Error; nil != err {
 		return err
@@ -411,7 +410,7 @@ func initPreference(tx *gorm.DB, blogAdmin *model.User, blogID uint) error {
 	}
 	if err := tx.Create(&model.Setting{
 		Category: model.SettingCategoryPreference,
-		Name:     model.SettingNamePreferenceSkin,
+		Name:     model.SettingNamePreferenceTheme,
 		Value:    "classic",
 		BlogID:   blogID}).Error; nil != err {
 		return err

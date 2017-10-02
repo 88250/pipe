@@ -20,19 +20,14 @@ package model
 type Comment struct {
 	Model
 
-	OnID                      uint   `json:"onID"`                 // ID of article or page
-	OnType                    int    `gorm:"size:8" json:"onType"` // 0: article, 1: page
-	AuthorName                string `gorm:"size:32" json:"authorName"`
-	AuthorAvatarURL           string `gorm:"size:255" json:"authorAvatarURL"`
-	Content                   string `gorm:"type:text" json:"content"`
-	OriginalCommentID         uint   `json:"originalCommentID"` // ID of replied comment
-	OriginalCommentAuthorName string `gorm:"size:32" json:"originalCommentAuthorName"`
+	ArticleID               uint   `json:"articleID"`
+	AuthorName              string `gorm:"size:32" json:"authorName"`
+	AuthorAvatarURL         string `gorm:"size:255" json:"authorAvatarURL"`
+	Content                 string `gorm:"type:text" json:"content"`
+	ParentCommentID         uint   `json:"parentCommentID"` // ID of replied comment
+	ParentCommentAuthorName string `gorm:"size:32" json:"parentCommentAuthorName"`
+	IP                      string `gorm:"size:128" json:"ip"`
+	UserAgent               string `gorm:"size:255" json:"userAgent"`
 
 	BlogID uint `json:"blogID"`
 }
-
-// Comment on types.
-const (
-	CommentOnTypeArticle = iota
-	CommentOnTypePage
-)

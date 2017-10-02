@@ -33,6 +33,8 @@ type Article struct {
 	Password     string `gorm:"size:16" json:"password"`
 	ViewCount    int    `json:"viewCount"`
 	CommentCount int    `json:"commentCount"`
+	IP           string `gorm:"size:128" json:"ip"`
+	UserAgent    string `gorm:"size:255" json:"userAgent"`
 
 	BlogID uint `json:"blogID"`
 }
