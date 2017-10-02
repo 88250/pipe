@@ -80,11 +80,6 @@
           role: 1
         },
         {
-          title: app.$t('linkList', locale),
-          link: '/admin/links/management',
-          role: 1
-        },
-        {
           title: app.$t('userList', locale),
           link: '/admin/users/management',
           role: 1
