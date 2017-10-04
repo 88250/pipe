@@ -34,7 +34,7 @@ func TestAddArticle(t *testing.T) {
 			Abstract:    "Test 摘要",
 			Tags:        "Tag1, 标签2",
 			Content:     "正文部分",
-			Permalink:   "/test" + strconv.Itoa(i),
+			Path:        "/test" + strconv.Itoa(i),
 			Status:      model.ArticleStatusPublished,
 			Topped:      false,
 			Commentable: true,
