@@ -11,7 +11,7 @@
           <div class="fn-flex-1">
             <div class="list__title">
               <div class="avatar avatar--small" :style="`background-image: url(${item.iconURL})`"></div>
-              <nuxt-link target="_blank" :to="`${$store.state.blogPath}/${item.permalink}`">
+              <nuxt-link target="_blank" :to="`${$store.state.blogPath}/${item.url}`">
                 {{ item.title }}
               </nuxt-link>
             </div>

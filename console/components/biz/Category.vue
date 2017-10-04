@@ -10,7 +10,7 @@
       ></v-text-field>
       <v-text-field
         label="URI"
-        v-model="permalink"
+        v-model="url"
         :rules="titleRules"
         :counter="32"
         required
@@ -51,7 +51,7 @@
         errorMsg: '',
         error: false,
         title: '',
-        permalink: '',
+        url: '',
         description: '',
         tags: '',
         titleRules: [
@@ -77,14 +77,14 @@
         if (this.id === '') {
           responseData = await this.axios.post('/console/categories', {
             title: this.title,
-            permalink: this.permalink,
+            url: this.url,
             description: this.description,
             tags: this.tags
           })
         } else {
           responseData = await this.axios.put(`/console/categories/${this.id}`, {
             title: this.title,
-            permalink: this.permalink,
+            url: this.url,
             description: this.description,
             tags: this.tags
           })
@@ -106,7 +106,7 @@
         const responseData = await this.axios.get(`/console/categories/${this.id}`)
         if (responseData) {
           this.$set(this, 'title', responseData.title)
-          this.$set(this, 'permalink', responseData.permalink)
+          this.$set(this, 'url', responseData.url)
           this.$set(this, 'description', responseData.description)
           this.$set(this, 'tags', responseData.tags)
         }

@@ -8,10 +8,10 @@
         </div>
         <div class="fn-flex-1">
           <div class="list__title">
-            <nuxt-link :to="item.permalink">{{ item.title }}</nuxt-link>
+            <nuxt-link :to="item.url">{{ item.title }}</nuxt-link>
           </div>
           <div class="list__meta">
-            <nuxt-link :key="tag.title" v-for="tag in item.tags" :to="tag.permalink">{{ tag.title }}</nuxt-link>&nbsp;
+            <nuxt-link :key="tag.title" v-for="tag in item.tags" :to="tag.url">{{ tag.title }}</nuxt-link>&nbsp;
             {{ item.commentCount }} {{ $t('comment', $store.state.locale) }} •
             {{ item.viewCount }} {{ $t('view', $store.state.locale) }} •
             <time>{{ item.createdAt }}</time>

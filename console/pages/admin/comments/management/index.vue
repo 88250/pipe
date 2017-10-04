@@ -6,7 +6,7 @@
              :style="`background-image: url(${item.author.avatarURL})`"></div>
         <div class="fn-flex-1">
           <div class="list__title">
-            <nuxt-link :to="item.permalink">{{ item.title }}</nuxt-link>
+            <nuxt-link :to="item.url">{{ item.title }}</nuxt-link>
             <span class="btn btn--small btn--success admin__comment-author" v-if="userCount > 1">
               <span class="avatar avatar--small"
                    :style="`background-image: url(${item.articleAuthor.avatarURL})`"></span>

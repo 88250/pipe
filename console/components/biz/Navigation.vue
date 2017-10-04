@@ -10,7 +10,7 @@
       ></v-text-field>
       <v-text-field
         :label="$t('links', $store.state.locale)"
-        v-model="permalink"
+        v-model="url"
         :rules="titleRules"
         :counter="32"
         required
@@ -49,7 +49,7 @@
         errorMsg: '',
         error: false,
         title: '',
-        permalink: '',
+        url: '',
         iconURL: '',
         openMethod: '',
         openMethods: [
@@ -93,14 +93,14 @@
         if (this.id === '') {
           responseData = await this.axios.post('/console/navigations', {
             title: this.title,
-            permalink: this.permalink,
+            url: this.url,
             iconURL: this.iconURL,
             openMethod: this.openMethod
           })
         } else {
           responseData = await this.axios.put(`/console/navigations/${this.id}`, {
             title: this.title,
-            permalink: this.permalink,
+            url: this.url,
             iconURL: this.iconURL,
             openMethod: this.openMethod
           })
@@ -122,7 +122,7 @@
         const responseData = await this.axios.get(`/console/navigations/${this.id}`)
         if (responseData) {
           this.$set(this, 'title', responseData.title)
-          this.$set(this, 'permalink', responseData.permalink)
+          this.$set(this, 'url', responseData.url)
           this.$set(this, 'iconURL', responseData.iconURL)
           this.$set(this, 'openMethod', responseData.openMethod)
         }

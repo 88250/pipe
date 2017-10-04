@@ -10,7 +10,7 @@
         <li v-for="item in list" :key="item.id" class="fn-flex">
           <div class="fn-flex-1">
             <div class="list__title">
-              <nuxt-link :to="`${$store.state.blogPath}/${item.permalink}`">
+              <nuxt-link :to="`${$store.state.blogPath}/${item.url}`">
                 {{ item.title }}
               </nuxt-link>
             </div>

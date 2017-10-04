@@ -6,7 +6,7 @@
       {
         "id": 0,
         "title": "世界，你好！",
-        "permalink": "lift",
+        "url": "lift",
         "description": "世界，你好！世界，你好！世界，你好！",
         "number": 1,
         "tags": "a, b, c"
@@ -14,7 +14,7 @@
       {
         "id": 0,
         "title": "世界，你好！",
-        "permalink": "lift",
+        "url": "lift",
         "description": "世界，你好！世界，你好！世界，你好！",
         "number": 1,
         "tags": "a, b, c"

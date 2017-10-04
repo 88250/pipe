@@ -24,7 +24,7 @@
 
         <v-text-field
           :label="$t('links', $store.state.locale)"
-          v-model="permalink"
+          v-model="url"
         ></v-text-field>
 
         <v-text-field
@@ -69,7 +69,7 @@
           (v) => !!v || this.$t('required', this.$store.state.locale),
           (v) => v.length <= 32 || this.$t('validateRule2', this.$store.state.locale)
         ],
-        permalink: '',
+        url: '',
         password: '',
         tags: '',
         commentable: false
@@ -89,7 +89,7 @@
           title: this.title,
           abstract: this.abstract,
           content: this.content,
-          permalink: this.permalink,
+          url: this.url,
           password: this.password,
           tags: this.tags,
           commentable: this.commentable
@@ -111,7 +111,7 @@
           title: this.title,
           abstract: this.abstract,
           content: this.content,
-          permalink: this.permalink,
+          url: this.url,
           password: this.password,
           tags: this.tags,
           commentable: this.commentable
@@ -134,7 +134,7 @@
           this.$set(this, 'title', responseData.title)
           this.$set(this, 'abstract', responseData.abstract)
           this.$set(this, 'content', responseData.content)
-          this.$set(this, 'permalink', responseData.permalink)
+          this.$set(this, 'url', responseData.url)
           this.$set(this, 'password', responseData.password)
           this.$set(this, 'tags', responseData.tags)
           this.$set(this, 'commentable', responseData.commentable)
