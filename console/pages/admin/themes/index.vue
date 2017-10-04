@@ -3,10 +3,10 @@
     <div class="card"
          v-for="item in list"
          :key="item.previewURL"
-         :class="{ 'themes--current': item.id === currentId }">
-      <div class="themes__img-wrap">
+         :class="{ 'theme--current': item.id === currentId }">
+      <div class="theme__img-wrap">
         <img :src="item.previewURL"/>
-        <div class="themes__overlay">
+        <div class="theme__overlay">
           <div>
             <button
               v-show="item.id !== currentId"

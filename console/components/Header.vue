@@ -93,6 +93,14 @@
     &__logo
       background-color: $white
       width: 240px
+      display: flex
+      align-items: center
+      a
+        color: $text-title
+        margin: 0 auto
+        font-size: 18px
+        &:hover
+          text-decoration: none
 
     &__nav
       background-color: $blue
