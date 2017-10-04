@@ -74,20 +74,20 @@ func GetArticleCtl(c *gin.Context) {
 }
 
 type ConsoleArticle struct {
-	ID           uint            `json:"id"`
-	Author       *Author         `json:"author"`
-	CreatedAt    string          `json:"createdAt"`
-	Title        string          `gorm:"size:128" json:"title"`
-	Tags         []*TagPermalink `json:"tags"`
-	Permalink    string          `json:"permalink"`
-	Topped       bool            `json:"topped"`
-	ViewCount    int             `json:"viewCount"`
-	CommentCount int             `json:"commentCount"`
+	ID           uint          `json:"id"`
+	Author       *Author       `json:"author"`
+	CreatedAt    string        `json:"createdAt"`
+	Title        string        `gorm:"size:128" json:"title"`
+	Tags         []*ConsoleTag `json:"tags"`
+	URL          string        `json:"url"`
+	Topped       bool          `json:"topped"`
+	ViewCount    int           `json:"viewCount"`
+	CommentCount int           `json:"commentCount"`
 }
 
-type TagPermalink struct {
-	Title     string `json:"title"`
-	Permalink string `json:"permalink,omitempty"`
+type ConsoleTag struct {
+	Title string `json:"title"`
+	URL   string `json:"url,omitempty"`
 }
 
 type Author struct {
@@ -104,14 +104,14 @@ func GetArticlesCtl(c *gin.Context) {
 
 	articles := []*ConsoleArticle{}
 	for _, articleModel := range articleModels {
-		tagPermalinks := []*TagPermalink{}
+		consoleTags := []*ConsoleTag{}
 		tagStrs := strings.Split(articleModel.Tags, ",")
 		for _, tagStr := range tagStrs {
-			tagPermalink := &TagPermalink{
-				Title:     tagStr,
-				Permalink: sessionData.BPath + "/" + tagStr,
+			consoleTag := &ConsoleTag{
+				Title: tagStr,
+				URL:   sessionData.BPath + "/" + tagStr,
 			}
-			tagPermalinks = append(tagPermalinks, tagPermalink)
+			consoleTags = append(consoleTags, consoleTag)
 		}
 
 		authorModel := service.User.GetUser(articleModel.AuthorID)
@@ -131,8 +131,8 @@ func GetArticlesCtl(c *gin.Context) {
 			Author:       author,
 			CreatedAt:    articleModel.CreatedAt.Format("2006-01-02"),
 			Title:        articleModel.Title,
-			Tags:         tagPermalinks,
-			Permalink:    sessionData.BPath + articleModel.Permalink,
+			Tags:         consoleTags,
+			URL:          sessionData.BPath + articleModel.Path,
 			Topped:       articleModel.Topped,
 			ViewCount:    articleModel.ViewCount,
 			CommentCount: articleModel.CommentCount,

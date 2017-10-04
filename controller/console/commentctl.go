@@ -32,7 +32,7 @@ type ConsoleComment struct {
 	CreatedAt     string  `json:"createdAt"`
 	Title         string  `gorm:"size:128" json:"title"`
 	Content       string  `gorm:"type:text" json:"content"`
-	Permalink     string  `json:"permalink"`
+	URL           string  `json:"url"`
 }
 
 func GetCommentsCtl(c *gin.Context) {
@@ -60,7 +60,7 @@ func GetCommentsCtl(c *gin.Context) {
 			CreatedAt:     commentModel.CreatedAt.Format("2006-01-02"),
 			Title:         "article title",
 			Content:       commentModel.Content,
-			Permalink:     sessionData.BPath + "todo comment link",
+			URL:           sessionData.BPath + "/todo comment path",
 		}
 
 		comments = append(comments, comment)

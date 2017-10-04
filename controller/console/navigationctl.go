@@ -28,7 +28,7 @@ import (
 type ConsoleNavigation struct {
 	ID         uint   `json:"id"`
 	Title      string `gorm:"size:128" json:"title"`
-	Permalink  string `json:"permalink"`
+	URL        string `json:"url"`
 	IconURL    string `json:"iconURL"`
 	OpenMethod string `json:"openMethod"`
 	Number     int    `json:"number"`
@@ -46,7 +46,7 @@ func GetNavigationsCtl(c *gin.Context) {
 		comment := &ConsoleNavigation{
 			ID:         navigationModel.ID,
 			Title:      navigationModel.Title,
-			Permalink:  navigationModel.Permalink,
+			URL:        navigationModel.URL,
 			IconURL:    navigationModel.IconURL,
 			OpenMethod: navigationModel.OpenMethod,
 			Number:     navigationModel.Number,

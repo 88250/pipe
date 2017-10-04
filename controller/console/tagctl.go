@@ -28,10 +28,10 @@ func GetTagsCtl(c *gin.Context) {
 	result := util.NewResult()
 	defer c.JSON(http.StatusOK, result)
 
-	tags := []*TagPermalink{}
+	tags := []*ConsoleTag{}
 	tagModels := service.Tag.ConsoleGetTags()
 	for _, tagModel := range tagModels {
-		tags = append(tags, &TagPermalink{Title: tagModel.Title})
+		tags = append(tags, &ConsoleTag{Title: tagModel.Title})
 	}
 
 	result.Data = tags

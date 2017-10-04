@@ -145,7 +145,7 @@ func initPlatformAdmin(tx *gorm.DB, admin *model.User, blogID uint) error {
 func initNavigation(tx *gorm.DB, blogID uint) error {
 	navigation := &model.Navigation{
 		Title:      "黑客派",
-		Permalink:  "https://hacpai.com",
+		URL:        "https://hacpai.com",
 		IconURL:    "",
 		OpenMethod: model.NavigationOpenMethodBlank,
 		Number:     0,
@@ -173,7 +173,7 @@ Solo.go 博客系统是一个开源项目，如果你觉得它很赞，请到[�
 		Abstract:     content,
 		Tags:         "Solo.go",
 		Content:      content,
-		Permalink:    "/hello-world",
+		Path:         "/hello-world",
 		Status:       model.ArticleStatusPublished,
 		Topped:       false,
 		Commentable:  true,
