@@ -165,6 +165,38 @@
         }
       }
     },
+    "console/users": {
+      "verbs": [
+        "get",
+        "post"
+      ],
+      "responses": {
+        "post": {
+          "mockFile": "success.json"
+        },
+        "get": {
+          "mockFile": "userList.json"
+        }
+      }
+    },
+    "console/users/:id": {
+      "verbs": [
+        "delete",
+        "put",
+        "get"
+      ],
+      "responses": {
+        "delete": {
+          "mockFile": "success.json"
+        },
+        "put": {
+          "mockFile": "error.json"
+        },
+        "get": {
+          "mockFile": "user.json"
+        }
+      }
+    },
     "hp/apis/check-account": {
       "verbs": [
         "post"
