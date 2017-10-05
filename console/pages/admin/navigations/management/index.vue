@@ -8,9 +8,9 @@
       </div>
       <ul class="list">
         <li v-for="item in list" :key="item.id" class="fn-flex">
+          <div class="avatar avatar--mid avatar--space" :style="`background-image: url(${item.iconURL})`"></div>
           <div class="fn-flex-1">
             <div class="list__title">
-              <div class="avatar avatar--small" :style="`background-image: url(${item.iconURL})`"></div>
               <nuxt-link target="_blank" :to="`${$store.state.blogPath}/${item.url}`">
                 {{ item.title }}
               </nuxt-link>

@@ -1,6 +1,7 @@
 <template>
   <div>
     <button @click="changeLang">lang</button>
+    B3key
   </div>
 </template>
 

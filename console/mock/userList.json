@@ -5,19 +5,21 @@
     "navigation": [
       {
         "id": 0,
-        "title": "世界，你好！",
-        "permalink": "lift",
-        "iconURL": "https://static.hacpai.com/images/tags/b3log.png",
-        "openMethod": "_blank",
-        "number": 1
+        "name": "Liyuan Li",
+        "nickname": "Vanessa",
+        "email": "lly219@gmail.com",
+        "role": 1,
+        "avatarURL": "https://static.hacpai.com/images/tags/b3log.png",
+        "PublishedArticleCount": 20
       },
       {
         "id": 0,
-        "title": "世界，你好！",
-        "permalink": "lift",
-        "iconURL": "https://static.hacpai.com/images/tags/b3log.png",
-        "openMethod": "_self",
-        "number": 1
+        "name": "Liyuan Li2",
+        "nickname": "Vanessa",
+        "email": "lly219@gmail.com",
+        "role": 1,
+        "avatarURL": "https://static.hacpai.com/images/tags/b3log.png",
+        "PublishedArticleCount": 20
       }
     ],
     "pagination": {

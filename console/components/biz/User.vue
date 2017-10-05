@@ -2,31 +2,37 @@
   <div class="card__body fn-clear">
     <v-form ref="form">
       <v-text-field
-        :label="$t('title', $store.state.locale)"
-        v-model="title"
+        :label="$t('account', $store.state.locale)"
+        v-model="name"
         :counter="32"
         :rules="titleRules"
         required
       ></v-text-field>
       <v-text-field
-        :label="$t('links', $store.state.locale)"
-        v-model="permalink"
+        :label="$t('nickname', $store.state.locale)"
+        v-model="nickname"
         :rules="titleRules"
         :counter="32"
         required
       ></v-text-field>
       <v-text-field
-        :label="$t('iconPath', $store.state.locale)"
-        v-model="iconURL"
-        :rules="iconURLRules"
+        :label="$t('hacpaiEmail', $store.state.locale)"
+        v-model="email"
+        :rules="titleRules"
         :counter="32"
+        required
       ></v-text-field>
-      <v-select
-        :label="$t('openMethod', $store.state.locale)"
-        :items="openMethods"
-        v-model="openMethod"
-        append-icon=""
-      ></v-select>
+      <v-text-field
+        :label="$t('password', $store.state.locale)"
+        v-model="password"
+        :counter="32"
+        type="password"
+        required
+      ></v-text-field>
+      <v-text-field
+        :label="$t('avatarURL', $store.state.locale)"
+        v-model="avatarURL"
+      ></v-text-field>
       <div class="alert alert--danger" v-show="error">
         <icon icon="danger"/>
         <span>{{ errorMsg }}</span>
@@ -42,40 +48,21 @@
 </template>
 
 <script>
+  import md5 from 'blueimp-md5'
+
   export default {
     props: ['id'],
     data () {
       return {
         errorMsg: '',
         error: false,
-        title: '',
-        permalink: '',
-        iconURL: '',
-        openMethod: '',
-        openMethods: [
-          {
-            'text': this.$t('openMethod1', this.$store.state.locale),
-            'value': ''
-          },
-          {
-            'text': this.$t('openMethod2', this.$store.state.locale),
-            'value': '_blank'
-          },
-          {
-            'text': this.$t('openMethod3', this.$store.state.locale),
-            'value': '_parent'
-          },
-          {
-            'text': this.$t('openMethod4', this.$store.state.locale),
-            'value': '_top'
-          }
-        ],
+        name: '',
+        nickname: '',
+        avatarURL: '',
+        password: '',
+        email: '',
         titleRules: [
-          (v) => !!v || this.$t('required', this.$store.state.locale),
-          (v) => v.length <= 32 || this.$t('validateRule2', this.$store.state.locale)
-        ],
-        iconURLRules: [
-          (v) => v.length <= 32 || this.$t('validateRule2', this.$store.state.locale)
+          (v) => !!v || this.$t('required', this.$store.state.locale)
         ]
       }
     },
@@ -91,18 +78,20 @@
         }
         let responseData = {}
         if (this.id === '') {
-          responseData = await this.axios.post('/console/navigations', {
-            title: this.title,
-            permalink: this.permalink,
-            iconURL: this.iconURL,
-            openMethod: this.openMethod
+          responseData = await this.axios.post('/console/users', {
+            name: this.name,
+            nickname: this.nickname,
+            email: this.email,
+            password: md5(this.password),
+            avatarURL: this.avatarURL
           })
         } else {
-          responseData = await this.axios.put(`/console/navigations/${this.id}`, {
-            title: this.title,
-            permalink: this.permalink,
-            iconURL: this.iconURL,
-            openMethod: this.openMethod
+          responseData = await this.axios.put(`/console/users/${this.id}`, {
+            name: this.name,
+            nickname: this.nickname,
+            email: this.email,
+            password: md5(this.password),
+            avatarURL: this.avatarURL
           })
         }
 
@@ -119,12 +108,13 @@
         if (this.id === '') {
           return
         }
-        const responseData = await this.axios.get(`/console/navigations/${this.id}`)
+        const responseData = await this.axios.get(`/console/users/${this.id}`)
         if (responseData) {
-          this.$set(this, 'title', responseData.title)
-          this.$set(this, 'permalink', responseData.permalink)
-          this.$set(this, 'iconURL', responseData.iconURL)
-          this.$set(this, 'openMethod', responseData.openMethod)
+          this.$set(this, 'name', responseData.name)
+          this.$set(this, 'nickname', responseData.nickname)
+          this.$set(this, 'email', responseData.email)
+          this.$set(this, 'avatarURL', responseData.avatarURL)
+          this.$set(this, 'password', responseData.password)
         }
       }
     },
