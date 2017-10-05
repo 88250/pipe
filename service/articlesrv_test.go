@@ -41,7 +41,7 @@ func TestAddArticle(t *testing.T) {
 			BlogID:      1,
 		}
 
-		Article.AddArticle(article)
+		Article.ConsoleAddArticle(article)
 	}
 }
 
@@ -74,7 +74,7 @@ func TestUpdateArticle(t *testing.T) {
 	updatedTitle := "Updated title"
 	article := Article.ConsoleGetArticle(1)
 	article.Title = updatedTitle
-	if err := Article.UpdateArticle(article); nil != err {
+	if err := Article.ConsoleUpdateArticle(article); nil != err {
 		t.Errorf("update article failed: " + err.Error())
 
 		return
@@ -87,7 +87,7 @@ func TestUpdateArticle(t *testing.T) {
 }
 
 func TestRemoveArticle(t *testing.T) {
-	if err := Article.RemoveArticle(1); nil != err {
+	if err := Article.ConsoleRemoveArticle(1); nil != err {
 		t.Error(err)
 	}
 
