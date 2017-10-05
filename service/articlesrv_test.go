@@ -96,3 +96,10 @@ func TestRemoveArticle(t *testing.T) {
 		t.Error("remove article failed")
 	}
 }
+
+func TestNormalizeTagStr(t *testing.T) {
+	tagStr := normalizeTagStr("带 空 格1,分号2；顿号3、正常4")
+	if "带空格1,分号2,顿号3,正常4" != tagStr {
+		t.Error("exptected is [%s], actual is [%s]", "带空格1,分号2,顿号3,正常4", tagStr)
+	}
+}

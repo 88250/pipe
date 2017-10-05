@@ -21,6 +21,8 @@ import (
 	"errors"
 	"fmt"
 	"math"
+	"regexp"
+	"strings"
 	"sync"
 
 	"github.com/b3log/solo.go/model"
@@ -148,4 +150,40 @@ func (srv *articleService) ConsoleUpdateArticle(article *model.Article) error {
 	tx.Commit()
 
 	return nil
+}
+
+func normalizeTagStr(tagStr string) string {
+	reg := regexp.MustCompile(`\s+`)
+	tagStr = reg.ReplaceAllString(tagStr, "")
+	tagStr = strings.Replace(tagStr, "，", ",", -1)
+	tagStr = strings.Replace(tagStr, "、", ",", -1)
+	tagStr = strings.Replace(tagStr, "；", ",", -1)
+	tagStr = strings.Replace(tagStr, ";", ",", -1)
+
+	reg = regexp.MustCompile(`[\u4e00-\u9fa5,\w,&,\+,\-,\.]+`)
+	tags := strings.Split(tagStr, ",")
+	retTags := []string{}
+	for _, tag := range tags {
+		if contains(retTags, tag) {
+			continue
+		}
+
+		if !reg.MatchString(tag) {
+			continue
+		}
+
+		retTags = append(retTags, tag)
+	}
+
+	return strings.Join(retTags, ",")
+}
+
+func contains(strs []string, str string) bool {
+	for _, s := range strs {
+		if s == str {
+			return true
+		}
+	}
+
+	return false
 }
