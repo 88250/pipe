@@ -160,7 +160,7 @@ func normalizeTagStr(tagStr string) string {
 	tagStr = strings.Replace(tagStr, "；", ",", -1)
 	tagStr = strings.Replace(tagStr, ";", ",", -1)
 
-	reg = regexp.MustCompile(`[\u4e00-\u9fa5,\w,&,\+,\-,\.]+`)
+	reg = regexp.MustCompile(`[\\u4e00-\\u9fa5,\\w,&,\\+,-,\\.]+`)
 	tags := strings.Split(tagStr, ",")
 	retTags := []string{}
 	for _, tag := range tags {
