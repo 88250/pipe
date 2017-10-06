@@ -47,6 +47,12 @@ func (srv *articleService) ConsoleAddArticle(article *model.Article) error {
 	srv.mutex.Lock()
 	defer srv.mutex.Unlock()
 
+	tagStr := normalizeTagStr(article.Tags)
+	if "" == tagStr {
+		return errors.New("invalid tag [" + article.Tags + "]")
+	}
+	article.Tags = tagStr
+
 	tx := db.Begin()
 	if err := tx.Create(article).Error; nil != err {
 		tx.Rollback()
