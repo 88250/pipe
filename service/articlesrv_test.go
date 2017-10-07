@@ -41,7 +41,9 @@ func TestAddArticle(t *testing.T) {
 			BlogID:      1,
 		}
 
-		Article.ConsoleAddArticle(article)
+		if err := Article.ConsoleAddArticle(article); nil != err {
+			t.Error("add article failed: " + err.Error())
+		}
 	}
 }
 
@@ -86,6 +88,19 @@ func TestUpdateArticle(t *testing.T) {
 	}
 }
 
+func TestNormalizeTagStr(t *testing.T) {
+	tagStr := normalizeTagStr("带 空 格1,分号2；顿号3、正常4")
+	if "带空格1,分号2,顿号3,正常4" != tagStr {
+		t.Error("exptected is [%s], actual is [%s]", "带空格1,分号2,顿号3,正常4", tagStr)
+	}
+}
+
+func TestTag(t *testing.T) {
+	article := Article.ConsoleGetArticle(1)
+
+	tag(article)
+}
+
 func TestRemoveArticle(t *testing.T) {
 	if err := Article.ConsoleRemoveArticle(1); nil != err {
 		t.Error(err)
@@ -94,12 +109,5 @@ func TestRemoveArticle(t *testing.T) {
 	article := Article.ConsoleGetArticle(1)
 	if nil != article {
 		t.Error("remove article failed")
-	}
-}
-
-func TestNormalizeTagStr(t *testing.T) {
-	tagStr := normalizeTagStr("带 空 格1,分号2；顿号3、正常4")
-	if "带空格1,分号2,顿号3,正常4" != tagStr {
-		t.Error("exptected is [%s], actual is [%s]", "带空格1,分号2,顿号3,正常4", tagStr)
 	}
 }

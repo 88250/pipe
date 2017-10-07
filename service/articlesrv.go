@@ -54,6 +54,7 @@ func (srv *articleService) ConsoleAddArticle(article *model.Article) error {
 	article.Tags = tagStr
 
 	tx := db.Begin()
+	tag(article)
 	if err := tx.Create(article).Error; nil != err {
 		tx.Rollback()
 
@@ -182,6 +183,30 @@ func normalizeTagStr(tagStr string) string {
 	}
 
 	return strings.Join(retTags, ",")
+}
+
+func tag(article *model.Article) error {
+	tags := strings.Split(article.Tags, ",")
+	for _, tagTitle := range tags {
+		tag := &model.Tag{BlogID: article.BlogID}
+		db.Where("title = ?", tagTitle).First(tag)
+		if "" == tag.Title {
+			tag.Title = tagTitle
+			tag.ArticleCount = 1
+			tag.PublishedArticleCount = 1
+			if err := db.Create(tag).Error; nil != err {
+				return err
+			}
+		} else {
+			tag.ArticleCount = tag.ArticleCount + 1
+			tag.PublishedArticleCount = tag.PublishedArticleCount + 1
+			if err := db.Model(&model.Tag{}).Update(tag).Error; nil != err {
+				return err
+			}
+		}
+	}
+
+	return nil
 }
 
 func contains(strs []string, str string) bool {
