@@ -33,9 +33,9 @@ func GetBasicSettingsCtl(c *gin.Context) {
 	defer c.JSON(http.StatusOK, result)
 
 	sessionData := util.GetSession(c)
-	basicSettings := service.Setting.GetAllSettings(sessionData.BID, model.SettingCategoryBasic)
+	settings := service.Setting.GetAllSettings(sessionData.BID, model.SettingCategoryBasic)
 	data := map[string]interface{}{}
-	for _, setting := range basicSettings {
+	for _, setting := range settings {
 		if model.SettingNameBasicCommentable == setting.Name {
 			v, err := strconv.ParseBool(setting.Value)
 			if nil != err {
@@ -48,6 +48,7 @@ func GetBasicSettingsCtl(c *gin.Context) {
 			data[setting.Name] = setting.Value
 		}
 	}
+	delete(data, model.SettingNameBasicPath)
 	result.Data = data
 }
 
@@ -88,6 +89,31 @@ func UpdateBasicSettingsCtl(c *gin.Context) {
 		result.Code = -1
 		result.Msg = err.Error()
 	}
+}
+
+func GetPreferenceSettingsCtl(c *gin.Context) {
+	result := util.NewResult()
+	defer c.JSON(http.StatusOK, result)
+
+	sessionData := util.GetSession(c)
+	settings := service.Setting.GetAllSettings(sessionData.BID, model.SettingCategoryPreference)
+	data := map[string]interface{}{}
+	for _, setting := range settings {
+		if model.SettingNamePreferenceArticleListStyle != setting.Name {
+			v, err := strconv.ParseInt(setting.Value, 10, 64)
+			if nil != err {
+				log.Errorf("value of preference setting [name=%s] must be an integer", setting.Name)
+				data[setting.Name] = 10
+			} else {
+				data[setting.Name] = v
+			}
+		} else {
+			data[setting.Name] = setting.Value
+		}
+	}
+	delete(data, model.SettingNamePreferenceTheme)
+	delete(data, model.SettingNamePreferenceVer)
+	result.Data = data
 }
 
 func UpdatePreferenceSettingsCtl(c *gin.Context) {

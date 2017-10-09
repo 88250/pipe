@@ -64,6 +64,8 @@ func MapRoutes() *gin.Engine {
 	consoleSettingsGroup := consoleGroup.Group("/settings")
 	consoleSettingsGroup.GET("/basic", console.GetBasicSettingsCtl)
 	consoleSettingsGroup.PUT("/basic", console.UpdateBasicSettingsCtl)
+	consoleSettingsGroup.GET("/preference", console.GetPreferenceSettingsCtl)
+	consoleSettingsGroup.PUT("/preference", console.UpdatePreferenceSettingsCtl)
 	consoleGroup.POST("/blog/switch/:id", console.BlogSwitchCtl)
 	themeGroup := ret.Group("")
 	themeGroup.GET("/", indexCtl)
