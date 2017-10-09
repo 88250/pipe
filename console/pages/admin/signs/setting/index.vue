@@ -7,7 +7,8 @@
           :label="$t('signs', $store.state.locale)"
           v-model="sign"
           multi-line
-          @keyup.ctrl.enter="update"
+          @keyup.ctrl.13="update"
+          @keyup.meta.13="update"
         ></v-text-field>
 
         <div class="alert alert--danger" v-show="error">

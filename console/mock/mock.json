@@ -210,6 +210,19 @@
         }
       }
     },
+    "console/configurations": {
+      "verbs": [
+        "get", "post"
+      ],
+      "responses": {
+        "post": {
+          "mockFile": "success.json"
+        },
+        "get": {
+          "mockFile": "configuration.json"
+        }
+      }
+    },
     "console/signs": {
       "verbs": [
         "get", "post"
