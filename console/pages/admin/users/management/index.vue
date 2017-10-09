@@ -18,7 +18,7 @@
             <div class="list__meta">
               {{ item.email }}  •
               {{ item.PublishedArticleCount }} {{ $t('article', $store.state.locale) }} •
-              {{ item.role }}
+              {{ getRoleName(item.role) }}
             </div>
           </div>
           <v-menu
@@ -83,6 +83,20 @@
       }
     },
     methods: {
+      getRoleName (role) {
+        let roleName = this.$t('commonUser', this.$store.state.locale)
+        switch (role) {
+          case 0:
+            roleName = this.$t('superAdmin', this.$store.state.locale)
+            break
+          case 1:
+            roleName = this.$t('blogAdmin', this.$store.state.locale)
+            break
+          default:
+            break
+        }
+        return roleName
+      },
       async getList (currentPage) {
         const responseData = await this.axios.get(`/console/users?p=${currentPage}`)
         if (responseData) {

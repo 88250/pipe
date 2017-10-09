@@ -16,7 +16,7 @@
               </nuxt-link>
             </div>
             <div class="list__meta">
-              {{ $t('openMethod', $store.state.locale) }} {{ item.openMethod }}
+              {{ getOpenMethodName(item.openMethod) }}
             </div>
           </div>
           <v-menu
@@ -81,6 +81,23 @@
       }
     },
     methods: {
+      getOpenMethodName (openMethod) {
+        let openMethodName = this.$t('openMethod1', this.$store.state.locale)
+        switch (openMethod) {
+          case '_blank':
+            openMethodName = this.$t('openMethod2', this.$store.state.locale)
+            break
+          case '_parent':
+            openMethodName = this.$t('openMethod3', this.$store.state.locale)
+            break
+          case '_top':
+            openMethodName = this.$t('openMethod4', this.$store.state.locale)
+            break
+          default:
+            break
+        }
+        return openMethodName
+      },
       async getList (currentPage) {
         const responseData = await this.axios.get(`/console/navigations?p=${currentPage}`)
         if (responseData) {

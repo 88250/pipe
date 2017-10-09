@@ -78,6 +78,7 @@
   "openMethod3": "在父窗口/框架打开 (_parent)",
   "openMethod4": "在顶部框架打开（重置所有框架） (_top)",
   "superAdmin": "超级管理员",
+  "blogAdmin": "博客管理员",
   "commonUser": "普通用户",
   "account": "账号",
   "avatarURL": "头像地址",
@@ -110,8 +111,6 @@
   "clearData": "数据清理",
   "staticBlog": "静态博客",
   "blogPath": "博客路径",
-  "blogMember": "博客成员",
-  "blogAdmin": "博客管理员",
   "internationalization": "国际化",
   "feed": "订阅"
 }

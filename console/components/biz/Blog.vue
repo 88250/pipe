@@ -34,7 +34,7 @@
         v-model="blogPath"
       ></v-text-field>
       <v-text-field
-        :label="$t('blogMember', $store.state.locale)"
+        :label="$t('commonUser', $store.state.locale)"
         v-model="blogMembers"
       ></v-text-field>
       <v-text-field
