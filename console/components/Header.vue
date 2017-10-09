@@ -21,10 +21,10 @@
           :nudge-right="24"
           :nudge-width="100">
           <v-toolbar-title slot="activator">
-            <button class="btn btn--success">
+            <v-btn class="btn btn--success">
               {{ $store.state.blogTitle }}
               <icon icon="chevron-down"/>
-            </button>
+            </v-btn>
           </v-toolbar-title>
           <v-list>
             <v-list-tile>
@@ -37,7 +37,7 @@
 
         <nuxt-link v-if="$route.path.indexOf('/admin') === -1" to="/admin">{{ $t('manage', $store.state.locale) }}
         </nuxt-link>
-        <button class="btn btn--danger btn--space" @click="logout">{{ $t('logout', $store.state.locale) }}</button>
+        <v-btn class="btn btn--danger btn--space" @click="logout">{{ $t('logout', $store.state.locale) }}</v-btn>
       </div>
     </div>
   </header>

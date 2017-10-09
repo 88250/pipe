@@ -17,9 +17,9 @@
         </div>
       </v-form>
 
-      <button class="fn-right btn btn--margin-t30 btn--info btn--space" @click="update">
+      <v-btn class="fn-right btn btn--margin-t30 btn--info btn--space" @click="update">
         {{ $t('confirm', $store.state.locale) }}
-      </button>
+      </v-btn>
     </div>
   </div>
 </template>

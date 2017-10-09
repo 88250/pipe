@@ -101,5 +101,7 @@
   "footer": "页脚",
   "noticeBoard": "公告",
   "removeUnusedTags": "移除无用标签",
+  "removeData": "物理删除冗余数据",
+  "clearData": "数据清理",
   "staticBlog": "静态博客"
 }

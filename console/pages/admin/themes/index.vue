@@ -8,11 +8,10 @@
         <img :src="item.previewURL"/>
         <div class="theme__overlay">
           <div>
-            <button
+            <v-btn
               v-show="item.id !== currentId"
               class="btn btn--info"
-              @click="setup(item.id)">{{ $t('setup', $store.state.locale) }}
-            </button>
+              @click="setup(item.id)">{{ $t('setup', $store.state.locale) }}</v-btn>
             <a
               class="btn btn--danger btn--space"
               target="_blank"
@@ -103,7 +102,7 @@
         opacity: 0
         background-color: rgba(0, 0, 0, 0.7)
 
-        div
+        & > div
           top: 50%
           left: 0
           right: 0
