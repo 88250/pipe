@@ -1,5 +1,5 @@
 <template>
-  <div class="admin__themes">
+  <div class="admin__themes fn-clear">
     <div class="card"
          v-for="item in list"
          :key="item.previewURL"
@@ -70,10 +70,10 @@
   @import '~assets/scss/_variables'
 
   .admin__themes
-    display: flex
     .card
       margin: 0 30px 30px 0
-      align-content: flex-start
+      float: left
+      width: 360px
 
       &.theme--current
         background-color: $blue
@@ -83,8 +83,6 @@
 
       .theme__img-wrap
         overflow: hidden
-        height: 250px
-        width: 360px
         margin-bottom: 15px
         position: relative
         &:hover
@@ -110,8 +108,7 @@
           position: absolute
           text-align: center
       img
-        height: 250px
-        width: 360px
+        width: 100%
         transition: all .4s linear
       h3
         margin-bottom: 25px

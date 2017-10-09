@@ -50,4 +50,5 @@
       line-height: 20px
       a
         display: block
+        padding-right: 15px
 </style>

@@ -114,7 +114,7 @@
         },
         {
           title: app.$t('internationalization', locale),
-          link: '/admin/settings/internationalization',
+          link: '/admin/settings/i18n',
           role: 1
         },
         {
@@ -127,7 +127,7 @@
     {
       title: app.$t('others', locale),
       icon: 'inbox',
-      link: '/admin/others/management',
+      link: '/admin/others',
       role: 2
     },
     {
