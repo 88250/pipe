@@ -43,12 +43,12 @@
         <span>{{ errorMsg }}</span>
       </div>
       <div class="fn-right">
-        <button @click="edit" class="btn btn--info btn--margin-t30" v-if="$route.query.id">
+        <v-btn @click="edit" class="btn btn--info btn--margin-t30" v-if="$route.query.id">
           {{ $t('edit', $store.state.locale) }}
-        </button>
-        <button @click="publish" class="btn btn--info btn--margin-t30" v-else>{{ $t('publish', $store.state.locale)
+        </v-btn>
+        <v-btn @click="publish" class="btn btn--info btn--margin-t30" v-else>{{ $t('publish', $store.state.locale)
           }}
-        </button>
+        </v-btn>
       </div>
     </div>
   </div>

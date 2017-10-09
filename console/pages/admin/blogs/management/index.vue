@@ -1,22 +1,22 @@
 <template>
   <div>
     <div class="card fn-clear">
-      <navigation v-if="showForm" :show.sync="showForm" @addSuccess="addSuccess" :id="editId"></navigation>
+      <blog v-if="showForm" :show.sync="showForm" @addSuccess="addSuccess" :id="editId"></blog>
 
       <div v-show="!showForm" class="card__body fn-clear">
         <v-btn class="btn btn--success fn-right" @click="edit('')">{{ $t('new', $store.state.locale) }}</v-btn>
       </div>
       <ul class="list">
         <li v-for="item in list" :key="item.id" class="fn-flex">
-          <div class="avatar avatar--mid avatar--space" :style="`background-image: url(${item.iconURL})`"></div>
+          <div class="avatar avatar--mid avatar--space" :style="`background-image: url(${item.blogAdmin.avatarURL})`"></div>
           <div class="fn-flex-1">
             <div class="list__title">
-              <nuxt-link target="_blank" :to="`${$store.state.blogPath}/${item.url}`">
-                {{ item.title }}
+              <nuxt-link target="_blank" :to="`/${item.blogPath}`">
+                {{ item.blogTitle }}
               </nuxt-link>
             </div>
             <div class="list__meta">
-              {{ $t('openMethod', $store.state.locale) }} {{ item.openMethod }}
+              {{ item.blogSubtitle }}
             </div>
           </div>
           <v-menu
@@ -59,11 +59,11 @@
 </template>
 
 <script>
-  import Navigation from '~/components/biz/Navigation'
+  import Blog from '~/components/biz/Blog'
 
   export default {
     components: {
-      Navigation
+      Blog
     },
     data () {
       return {
@@ -77,12 +77,12 @@
     },
     head () {
       return {
-        title: `${this.$store.state.blogTitle} - ${this.$t('navigationList', this.$store.state.locale)}`
+        title: `${this.$store.state.blogTitle} - ${this.$t('blogList', this.$store.state.locale)}`
       }
     },
     methods: {
       async getList (currentPage) {
-        const responseData = await this.axios.get(`/console/navigations?p=${currentPage}`)
+        const responseData = await this.axios.get(`/console/blogs?p=${currentPage}`)
         if (responseData) {
           this.$set(this, 'list', responseData.navigation)
           this.$set(this, 'currentPageNum', responseData.pagination.currentPageNum)
@@ -91,7 +91,7 @@
         }
       },
       async remove (id) {
-        const responseData = await this.axios.delete(`/console/navigations/${id}`)
+        const responseData = await this.axios.delete(`/console/blogs/${id}`)
         if (responseData === null) {
           this.$store.commit('setSnackBar', {
             snackBar: true,

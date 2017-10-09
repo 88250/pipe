@@ -4,7 +4,7 @@
       <user v-if="showForm" :show.sync="showForm" @addSuccess="addSuccess" :id="editId"></user>
 
       <div v-show="!showForm" class="card__body fn-clear">
-        <button class="btn btn--success fn-right" @click="edit('')">{{ $t('new', $store.state.locale) }}</button>
+        <v-btn class="btn btn--success fn-right" @click="edit('')">{{ $t('new', $store.state.locale) }}</v-btn>
       </div>
 
       <ul class="list">
@@ -28,10 +28,10 @@
             :nudge-width="100"
             :open-on-hover="true">
             <v-toolbar-title slot="activator">
-              <button class="btn btn--info" @click="edit(item.id)">
+              <v-btn class="btn btn--info" @click="edit(item.id)">
                 {{ $t('edit', $store.state.locale) }}
                 <icon icon="chevron-down"/>
-              </button>
+              </v-btn>
             </v-toolbar-title>
             <v-list>
               <v-list-tile>

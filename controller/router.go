@@ -45,6 +45,7 @@ func MapRoutes() *gin.Engine {
 	api.POST("/init", initCtl)
 	api.POST("/login", loginCtl)
 	api.POST("/logout", logoutCtl)
+	api.Any("/hp/*apis", util.HacPaiAPI())
 	statusGroup := api.Group("/status")
 	statusGroup.GET("", GetPlatformStatusCtl)
 	statusGroup.GET("/ping", pingCtl)
@@ -58,10 +59,12 @@ func MapRoutes() *gin.Engine {
 	consoleGroup.GET("/comments", console.GetCommentsCtl)
 	consoleGroup.DELETE("/comments/:id", console.RemoveCommentCtl)
 	consoleGroup.GET("/navigations", console.GetNavigationsCtl)
-	consoleGroup.GET("navigation/:id", console.GetNavigationCtl)
+	consoleGroup.GET("/navigation/:id", console.GetNavigationCtl)
 	consoleGroup.GET("/tags", console.GetTagsCtl)
+	consoleGroup.PUT("/preferences", console.UpdatePreferencesCtl)
 	consoleGroup.POST("/blog/switch/:id", console.BlogSwitchCtl)
-	api.Any("/hp/*apis", util.HacPaiAPI())
+	themeGroup := ret.Group("")
+	themeGroup.GET("/", indexCtl)
 
 	ret.LoadHTMLFiles("console/dist/admin/index.html")
 	ret.GET("/admin", func(c *gin.Context) {

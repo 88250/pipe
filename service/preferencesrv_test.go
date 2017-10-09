@@ -52,3 +52,22 @@ func TestGetPreferences(t *testing.T) {
 		t.Errorf("expected is [%s], actual is [%s]", "Solo.go 示例", settings[model.SettingNamePreferenceBlogTitle].Value)
 	}
 }
+
+func TestUpdatePreferences(t *testing.T) {
+	settings := Preference.GetPreferences(1, model.SettingNamePreferenceBlogTitle, model.SettingNamePreferenceBlogSubtitle)
+	settings[model.SettingNamePreferenceBlogTitle].Value = "更新后的标题"
+	prefs := []*model.Setting{}
+	for _, setting := range settings {
+		prefs = append(prefs, setting)
+	}
+	if err := Preference.UpdatePreferences(prefs); nil != err {
+		t.Errorf("updates settings failed: " + err.Error())
+
+		return
+	}
+
+	settings = Preference.GetPreferences(1, model.SettingNamePreferenceBlogTitle, model.SettingNamePreferenceBlogSubtitle)
+	if "更新后的标题" != settings[model.SettingNamePreferenceBlogTitle].Value {
+		t.Errorf("expected is [%s], actual is [%s]", "更新后的标题", settings[model.SettingNamePreferenceBlogTitle].Value)
+	}
+}

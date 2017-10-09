@@ -21,6 +21,8 @@ import (
 	"errors"
 	"fmt"
 	"math"
+	"regexp"
+	"strings"
 	"sync"
 
 	"github.com/b3log/solo.go/model"
@@ -41,11 +43,18 @@ const (
 	adminConsoleArticleListWindowsSize = 20
 )
 
-func (srv *articleService) AddArticle(article *model.Article) error {
+func (srv *articleService) ConsoleAddArticle(article *model.Article) error {
 	srv.mutex.Lock()
 	defer srv.mutex.Unlock()
 
+	tagStr := normalizeTagStr(article.Tags)
+	if "" == tagStr {
+		return errors.New("invalid tag [" + article.Tags + "]")
+	}
+	article.Tags = tagStr
+
 	tx := db.Begin()
+	tag(article)
 	if err := tx.Create(article).Error; nil != err {
 		tx.Rollback()
 
@@ -80,7 +89,7 @@ func (srv *articleService) ConsoleGetArticle(id uint) *model.Article {
 	return ret
 }
 
-func (srv *articleService) RemoveArticle(id uint) error {
+func (srv *articleService) ConsoleRemoveArticle(id uint) error {
 	srv.mutex.Lock()
 	defer srv.mutex.Unlock()
 
@@ -130,7 +139,7 @@ func (srv *articleService) RemoveArticle(id uint) error {
 	return nil
 }
 
-func (srv *articleService) UpdateArticle(article *model.Article) error {
+func (srv *articleService) ConsoleUpdateArticle(article *model.Article) error {
 	srv.mutex.Lock()
 	defer srv.mutex.Unlock()
 
@@ -148,4 +157,64 @@ func (srv *articleService) UpdateArticle(article *model.Article) error {
 	tx.Commit()
 
 	return nil
+}
+
+func normalizeTagStr(tagStr string) string {
+	reg := regexp.MustCompile(`\s+`)
+	tagStr = reg.ReplaceAllString(tagStr, "")
+	tagStr = strings.Replace(tagStr, "，", ",", -1)
+	tagStr = strings.Replace(tagStr, "、", ",", -1)
+	tagStr = strings.Replace(tagStr, "；", ",", -1)
+	tagStr = strings.Replace(tagStr, ";", ",", -1)
+
+	reg = regexp.MustCompile(`[\\u4e00-\\u9fa5,\\w,&,\\+,-,\\.]+`)
+	tags := strings.Split(tagStr, ",")
+	retTags := []string{}
+	for _, tag := range tags {
+		if contains(retTags, tag) {
+			continue
+		}
+
+		if !reg.MatchString(tag) {
+			continue
+		}
+
+		retTags = append(retTags, tag)
+	}
+
+	return strings.Join(retTags, ",")
+}
+
+func tag(article *model.Article) error {
+	tags := strings.Split(article.Tags, ",")
+	for _, tagTitle := range tags {
+		tag := &model.Tag{BlogID: article.BlogID}
+		db.Where("title = ?", tagTitle).First(tag)
+		if "" == tag.Title {
+			tag.Title = tagTitle
+			tag.ArticleCount = 1
+			tag.PublishedArticleCount = 1
+			if err := db.Create(tag).Error; nil != err {
+				return err
+			}
+		} else {
+			tag.ArticleCount = tag.ArticleCount + 1
+			tag.PublishedArticleCount = tag.PublishedArticleCount + 1
+			if err := db.Model(&model.Tag{}).Update(tag).Error; nil != err {
+				return err
+			}
+		}
+	}
+
+	return nil
+}
+
+func contains(strs []string, str string) bool {
+	for _, s := range strs {
+		if s == str {
+			return true
+		}
+	}
+
+	return false
 }

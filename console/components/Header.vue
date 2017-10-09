@@ -13,6 +13,9 @@
         </nuxt-link>
       </div>
       <div v-else>
+        <span class="header__bar" v-if="$route.path.indexOf('/admin') > -1" @click="toggleSide">
+          <icon icon="bars"/>
+        </span>
         {{ $store.state.nickname }} &nbsp;
         <v-menu
           z-index="100"
@@ -21,10 +24,10 @@
           :nudge-right="24"
           :nudge-width="100">
           <v-toolbar-title slot="activator">
-            <button class="btn btn--success">
+            <v-btn class="btn btn--success">
               {{ $store.state.blogTitle }}
               <icon icon="chevron-down"/>
-            </button>
+            </v-btn>
           </v-toolbar-title>
           <v-list>
             <v-list-tile>
@@ -37,7 +40,7 @@
 
         <nuxt-link v-if="$route.path.indexOf('/admin') === -1" to="/admin">{{ $t('manage', $store.state.locale) }}
         </nuxt-link>
-        <button class="btn btn--danger btn--space" @click="logout">{{ $t('logout', $store.state.locale) }}</button>
+        <v-btn class="btn btn--danger btn--space" @click="logout">{{ $t('logout', $store.state.locale) }}</v-btn>
       </div>
     </div>
   </header>
@@ -47,6 +50,9 @@
   export default {
     props: ['from'],
     methods: {
+      toggleSide () {
+
+      },
       async switchBlog (item) {
         if (item.path === this.$store.state.blogPath) {
           return
@@ -101,6 +107,15 @@
         font-size: 18px
         &:hover
           text-decoration: none
+
+    &__bar
+      float: left
+      margin: 12px
+      cursor: pointer
+
+      .icon
+        height: 20px
+        width: 20px
 
     &__nav
       background-color: $blue

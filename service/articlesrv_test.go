@@ -41,7 +41,9 @@ func TestAddArticle(t *testing.T) {
 			BlogID:      1,
 		}
 
-		Article.AddArticle(article)
+		if err := Article.ConsoleAddArticle(article); nil != err {
+			t.Error("add article failed: " + err.Error())
+		}
 	}
 }
 
@@ -74,7 +76,7 @@ func TestUpdateArticle(t *testing.T) {
 	updatedTitle := "Updated title"
 	article := Article.ConsoleGetArticle(1)
 	article.Title = updatedTitle
-	if err := Article.UpdateArticle(article); nil != err {
+	if err := Article.ConsoleUpdateArticle(article); nil != err {
 		t.Errorf("update article failed: " + err.Error())
 
 		return
@@ -86,8 +88,21 @@ func TestUpdateArticle(t *testing.T) {
 	}
 }
 
+func TestNormalizeTagStr(t *testing.T) {
+	tagStr := normalizeTagStr("带 空 格1,分号2；顿号3、正常4")
+	if "带空格1,分号2,顿号3,正常4" != tagStr {
+		t.Error("exptected is [%s], actual is [%s]", "带空格1,分号2,顿号3,正常4", tagStr)
+	}
+}
+
+func TestTag(t *testing.T) {
+	article := Article.ConsoleGetArticle(1)
+
+	tag(article)
+}
+
 func TestRemoveArticle(t *testing.T) {
-	if err := Article.RemoveArticle(1); nil != err {
+	if err := Article.ConsoleRemoveArticle(1); nil != err {
 		t.Error(err)
 	}
 
