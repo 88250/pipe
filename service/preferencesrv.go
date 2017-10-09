@@ -59,7 +59,7 @@ func (srv *preferenceService) UpdatePreferences(prefs []*model.Setting) error {
 
 	tx := db.Begin()
 	for _, pref := range prefs {
-		if err := db.Model(&model.Setting{}).Updates(pref).Error; nil != err {
+		if err := db.Model(&model.Setting{}).Where("name = ?", pref.Name).Updates(pref).Error; nil != err {
 			tx.Rollback()
 
 			return err
