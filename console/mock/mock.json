@@ -197,7 +197,7 @@
         }
       }
     },
-    "console/preference": {
+    "console/preferences": {
       "verbs": [
         "get", "post"
       ],
@@ -207,6 +207,19 @@
         },
         "get": {
           "mockFile": "preference.json"
+        }
+      }
+    },
+    "console/signs": {
+      "verbs": [
+        "get", "post"
+      ],
+      "responses": {
+        "post": {
+          "mockFile": "success.json"
+        },
+        "get": {
+          "mockFile": "sign.json"
         }
       }
     },

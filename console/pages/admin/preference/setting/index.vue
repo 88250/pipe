@@ -172,7 +172,7 @@
         if (!this.$refs.form.validate()) {
           return
         }
-        const responseData = await this.axios.post('/console/categories', {
+        const responseData = await this.axios.post('/console/preferences', {
           locale: this.locale,
           timeZone: this.timeZone,
           articleListStyle: this.articleListStyle,
@@ -208,7 +208,7 @@
       }
     },
     async mounted () {
-      const responseData = await this.axios.get('/console/preference')
+      const responseData = await this.axios.get('/console/preferences')
       if (responseData) {
         this.$set(this, 'locale', responseData.locale)
         this.$set(this, 'timeZone', responseData.timeZone)
