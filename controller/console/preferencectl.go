@@ -19,6 +19,7 @@ package console
 
 import (
 	"net/http"
+	"strconv"
 
 	"github.com/b3log/solo.go/model"
 	"github.com/b3log/solo.go/service"
@@ -32,17 +33,33 @@ func UpdatePreferencesCtl(c *gin.Context) {
 
 	sessionData := util.GetSession(c)
 
-	prefs := []*model.Setting{}
-	if err := c.BindJSON(&prefs); nil != err {
+	args := map[string]interface{}{}
+
+	if err := c.BindJSON(&args); nil != err {
 		result.Code = -1
 		result.Msg = "parses update preferences request failed"
 
 		return
 	}
 
-	for _, pref := range prefs {
-		pref.Category = model.SettingCategoryPreference
-		pref.BlogID = sessionData.BID
+	prefs := []*model.Setting{}
+	for k, v := range args {
+		var value interface{}
+		switch v.(type) {
+		case float64:
+			value = strconv.FormatFloat(v.(float64), 'f', 0, 64)
+		default:
+			value = v.(string)
+		}
+
+		pref := &model.Setting{
+			Category: model.SettingCategoryPreference,
+			BlogID:   sessionData.BID,
+			Name:     k,
+			Value:    value.(string),
+		}
+
+		prefs = append(prefs, pref)
 	}
 
 	if err := service.Preference.UpdatePreferences(prefs); nil != err {
