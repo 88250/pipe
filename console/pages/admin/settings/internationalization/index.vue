@@ -47,7 +47,7 @@
     },
     methods: {
       async update () {
-        const responseData = await this.axios.post('/console/settings/internationalization', {
+        const responseData = await this.axios.put('/console/settings/internationalization', {
           locale: this.locale,
           timezone: this.timezone
         })

@@ -51,7 +51,12 @@
     props: ['from'],
     methods: {
       toggleSide () {
-
+        const className = document.querySelector('#sologo').className
+        if (className === '') {
+          document.querySelector('#sologo').className = 'body--side'
+        } else {
+          document.querySelector('#sologo').className = ''
+        }
       },
       async switchBlog (item) {
         if (item.path === this.$store.state.blogPath) {
@@ -88,6 +93,9 @@
 <style lang="sass">
   @import '~assets/scss/_variables'
 
+  .body--side .header__logo
+    display: flex
+
   .header
     position: fixed
     height: 60px
@@ -97,9 +105,9 @@
     color: #fff
 
     &__logo
+      display: none
       background-color: $white
       width: 240px
-      display: flex
       align-items: center
       a
         color: $text-title
@@ -110,7 +118,7 @@
 
     &__bar
       float: left
-      margin: 12px
+      margin: 9px 15px
       cursor: pointer
 
       .icon

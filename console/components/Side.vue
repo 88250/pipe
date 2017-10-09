@@ -155,7 +155,11 @@
 <style lang="sass">
   @import '~assets/scss/_variables'
 
+  .body--side .side
+    display: block
+
   .side
+    display: none
     width: 240px
     background-color: $white
     position: fixed
@@ -165,6 +169,7 @@
     overflow: auto
     padding-top: 60px
     box-sizing: border-box
+    z-index: 9
 
     .list
       transition: height 0.4s cubic-bezier(0.4, 0, 0.2, 1)

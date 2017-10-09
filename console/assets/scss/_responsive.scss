@@ -1,0 +1,30 @@
+@media (max-width: 768px) {
+  .header__logo {
+    display: none !important;
+  }
+
+  .main {
+    margin-left: 0 !important;
+    .content {
+      padding: 15px;
+    }
+  }
+
+  .admin__about {
+    display: block;
+
+    .about__side {
+      text-align: center;
+      margin: 30px;
+    }
+  }
+
+  .btn {
+    padding: 4px 6px;
+    font-size: 13px;
+  }
+
+  .card--space {
+    margin-bottom: 15px;
+  }
+}

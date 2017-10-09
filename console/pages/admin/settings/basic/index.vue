@@ -72,7 +72,7 @@
     },
     methods: {
       async update () {
-        const responseData = await this.axios.post('/console/settings/basic', {
+        const responseData = await this.axios.put('/console/settings/basic', {
           blogTitle: this.blogTitle,
           blogSubtitle: this.blogSubtitle,
           header: this.header,

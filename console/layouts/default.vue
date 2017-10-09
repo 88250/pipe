@@ -1,5 +1,5 @@
 <template>
-  <div data-app="true">
+  <div data-app="true" class="body--side" id="sologo">
     <solo-header from="admin"/>
     <side/>
     <div class="main">
@@ -55,8 +55,11 @@
 
 <style lang="sass">
   @import '~assets/scss/_variables'
+
   .main
     padding-top: 60px
+
+  .body--side .main
     margin-left: 240px
 
   .content

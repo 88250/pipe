@@ -40,7 +40,7 @@
     },
     methods: {
       async update () {
-        const responseData = await this.axios.post('/console/settings/sign', {
+        const responseData = await this.axios.put('/console/settings/sign', {
           sign: this.sign
         })
 

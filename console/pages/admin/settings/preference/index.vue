@@ -117,7 +117,7 @@
         if (!this.$refs.form.validate()) {
           return
         }
-        const responseData = await this.axios.post('/console/settings/preference', {
+        const responseData = await this.axios.put('/console/settings/preference', {
           articleListStyle: this.articleListStyle,
           mostUseTagListSize: this.mostUseTagListSize,
           recentCommentListSize: this.recentCommentListSize,

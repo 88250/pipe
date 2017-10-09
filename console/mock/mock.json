@@ -231,10 +231,10 @@
     },
     "console/settings/preference": {
       "verbs": [
-        "get", "post"
+        "get", "put"
       ],
       "responses": {
-        "post": {
+        "put": {
           "mockFile": "success.json"
         },
         "get": {
@@ -244,10 +244,10 @@
     },
     "console/settings/basic": {
       "verbs": [
-        "get", "post"
+        "get", "put"
       ],
       "responses": {
-        "post": {
+        "put": {
           "mockFile": "success.json"
         },
         "get": {
@@ -257,10 +257,10 @@
     },
     "console/settings/sign": {
       "verbs": [
-        "get", "post"
+        "get", "put"
       ],
       "responses": {
-        "post": {
+        "put": {
           "mockFile": "success.json"
         },
         "get": {
@@ -270,10 +270,10 @@
     },
     "console/settings/internationalization": {
       "verbs": [
-        "get", "post"
+        "get", "put"
       ],
       "responses": {
-        "post": {
+        "put": {
           "mockFile": "success.json"
         },
         "get": {
@@ -283,10 +283,10 @@
     },
     "console/settings/feed": {
       "verbs": [
-        "get", "post"
+        "get", "put"
       ],
       "responses": {
-        "post": {
+        "put": {
           "mockFile": "success.json"
         },
         "get": {

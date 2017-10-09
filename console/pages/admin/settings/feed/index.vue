@@ -61,7 +61,7 @@
         if (!this.$refs.form.validate()) {
           return
         }
-        const responseData = await this.axios.post('/console/settings/feed', {
+        const responseData = await this.axios.put('/console/settings/feed', {
           feedOutputMode: this.feedOutputMode,
           feedOutputCnt: this.feedOutputCnt
         })
