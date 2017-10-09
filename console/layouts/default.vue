@@ -1,5 +1,5 @@
 <template>
-  <div data-app="true" class="body--side" id="sologo">
+  <div data-app="true" :class="bodySide" id="sologo">
     <solo-header from="admin"/>
     <side/>
     <div class="main">
@@ -21,7 +21,6 @@
 </template>
 
 <script>
-  import Vue from 'vue'
   import Side from '~/components/Side'
   import SoloHeader from '~/components/Header'
   import SoloFooter from '~/components/Footer'
@@ -29,6 +28,7 @@
   export default {
     data () {
       return {
+        bodySide: 'body--side',
         snack: false
       }
     },
@@ -52,9 +52,9 @@
       SoloFooter
     },
     mounted () {
-      Vue.nextTick(function () {
-      })
-      console.log(document.documentElement.clientWidth)
+      if (document.documentElement.clientWidth < 721) {
+        this.$set(this, 'bodySide', '')
+      }
     }
   }
 </script>
