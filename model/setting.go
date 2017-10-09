@@ -59,9 +59,8 @@ const (
 	SettingNamePreferenceRelevantArticleListSize    = "relevantArticleListSize"
 	SettingNamePreferenceSign                       = "sign"
 	SettingNamePreferenceTheme                      = "theme"
-	SettingNamePreferenceTimezone                   = "timeZone"
+	SettingNamePreferenceTimezone                   = "timezone"
 	SettingNamePreferenceVer                        = "version"
-	SettingNamePreferenceEnableArticleUpdateHint    = "enableArticleUpdateHint"
 )
 
 // Setting names of category "statistic"
