@@ -197,6 +197,12 @@
         }
       }
     },
+    "console/preference": {
+      "verbs": [
+        "get"
+      ],
+      "mockFile": "preference.json"
+    },
     "hp/apis/check-account": {
       "verbs": [
         "post"

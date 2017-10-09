@@ -116,11 +116,6 @@
           title: app.$t('parameters', locale),
           link: '/admin/parameters/setting',
           role: 1
-        },
-        {
-          title: app.$t('upload', locale),
-          link: '/admin/upload/setting',
-          role: 1
         }
       ]
     },

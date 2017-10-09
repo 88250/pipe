@@ -1,0 +1,21 @@
+{
+  "code": 0,
+  "msg": "",
+  "data": {
+    "locale": "zh_CN",
+    "timeZone": "Asia/Shanghai",
+    "articleListStyle": "titleOnly",
+    "mostUseTagListSize": 1,
+    "recentCommentListSize": 2,
+    "mostCommentArticleListSize": 3,
+    "mostViewArticleListSize": 4,
+    "articleListPageSize": 5,
+    "articleListWindowSize": 6,
+    "randomArticleListSize": 7,
+    "relevantArticleListSize": 8,
+    "externalRelevantArticleListSize": 9,
+    "enableArticleUpdateHint": true,
+    "feedOutputMode": "title",
+    "feedOutputCnt": 10
+  }
+}
