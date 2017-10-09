@@ -81,7 +81,6 @@ func UpdateBasicSettingsCtl(c *gin.Context) {
 			Name:     k,
 			Value:    value.(string),
 		}
-
 		basics = append(basics, basic)
 	}
 
@@ -145,7 +144,6 @@ func UpdatePreferenceSettingsCtl(c *gin.Context) {
 			Name:     k,
 			Value:    value.(string),
 		}
-
 		prefs = append(prefs, pref)
 	}
 
@@ -171,7 +169,7 @@ func UpdateSignSettingsCtl(c *gin.Context) {
 	args := map[string]interface{}{}
 	if err := c.BindJSON(&args); nil != err {
 		result.Code = -1
-		result.Msg = "parses update preference settings request failed"
+		result.Msg = "parses update sign settings request failed"
 
 		return
 	}
@@ -212,7 +210,7 @@ func UpdateI18nSettingsCtl(c *gin.Context) {
 	args := map[string]interface{}{}
 	if err := c.BindJSON(&args); nil != err {
 		result.Code = -1
-		result.Msg = "parses update preference settings request failed"
+		result.Msg = "parses update i18n settings request failed"
 
 		return
 	}
@@ -226,11 +224,71 @@ func UpdateI18nSettingsCtl(c *gin.Context) {
 			Name:     k,
 			Value:    v.(string),
 		}
-
 		i18ns = append(i18ns, i18n)
 	}
 
 	if err := service.Setting.UpdateSettings(model.SettingCategoryI18n, i18ns); nil != err {
+		result.Code = -1
+		result.Msg = err.Error()
+	}
+}
+
+func GetFeedSettingsCtl(c *gin.Context) {
+	result := util.NewResult()
+	defer c.JSON(http.StatusOK, result)
+
+	sessionData := util.GetSession(c)
+	settings := service.Setting.GetAllSettings(sessionData.BID, model.SettingCategoryFeed)
+	data := map[string]interface{}{}
+	for _, setting := range settings {
+		if model.SettingNameFeedOutputSize == setting.Name {
+			v, err := strconv.ParseInt(setting.Value, 10, 64)
+			if nil != err {
+				log.Errorf("value of feed setting [name=%s] must be an integer", setting.Name)
+				data[setting.Name] = 20
+			} else {
+				data[setting.Name] = v
+			}
+		} else {
+			data[setting.Name] = setting.Value
+		}
+	}
+	result.Data = data
+}
+
+func UpdateFeedSettingsCtl(c *gin.Context) {
+	result := util.NewResult()
+	defer c.JSON(http.StatusOK, result)
+
+	args := map[string]interface{}{}
+	if err := c.BindJSON(&args); nil != err {
+		result.Code = -1
+		result.Msg = "parses update feed settings request failed"
+
+		return
+	}
+
+	sessionData := util.GetSession(c)
+	feeds := []*model.Setting{}
+	for k, v := range args {
+		var value interface{}
+		switch v.(type) {
+		case float64:
+			value = strconv.FormatFloat(v.(float64), 'f', 0, 64)
+		default:
+			value = v.(string)
+		}
+
+		feed := &model.Setting{
+			Category: model.SettingCategoryFeed,
+			BlogID:   sessionData.BID,
+			Name:     k,
+			Value:    value.(string),
+		}
+		feeds = append(feeds, feed)
+	}
+
+	if err := service.Setting.UpdateSettings(model.SettingCategoryFeed, feeds); nil != err {
 		result.Code = -1
 		result.Msg = err.Error()
 	}
