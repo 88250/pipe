@@ -13,6 +13,9 @@
         </nuxt-link>
       </div>
       <div v-else>
+        <span class="header__bar" v-if="$route.path.indexOf('/admin') > -1" @click="toggleSide">
+          <icon icon="bars"/>
+        </span>
         {{ $store.state.nickname }} &nbsp;
         <v-menu
           z-index="100"
@@ -47,6 +50,9 @@
   export default {
     props: ['from'],
     methods: {
+      toggleSide () {
+
+      },
       async switchBlog (item) {
         if (item.path === this.$store.state.blogPath) {
           return
@@ -101,6 +107,15 @@
         font-size: 18px
         &:hover
           text-decoration: none
+
+    &__bar
+      float: left
+      margin: 12px
+      cursor: pointer
+
+      .icon
+        height: 20px
+        width: 20px
 
     &__nav
       background-color: $blue
