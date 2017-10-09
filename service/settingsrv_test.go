@@ -61,15 +61,15 @@ func TestGetSettings(t *testing.T) {
 	}
 }
 
-func TestUpdatePreferences(t *testing.T) {
+func TestUpdateSettings(t *testing.T) {
 	settings := Setting.GetSettings(1, model.SettingCategoryBasic,
 		[]string{model.SettingNameBasicBlogTitle, model.SettingNameBasicBlogSubtitle})
 	settings[model.SettingNameBasicBlogTitle].Value = "更新后的标题"
-	prefs := []*model.Setting{}
+	basics := []*model.Setting{}
 	for _, setting := range settings {
-		prefs = append(prefs, setting)
+		basics = append(basics, setting)
 	}
-	if err := Setting.UpdatePreferences(prefs); nil != err {
+	if err := Setting.UpdateSettings(model.SettingCategoryBasic, basics); nil != err {
 		t.Errorf("updates settings failed: " + err.Error())
 
 		return

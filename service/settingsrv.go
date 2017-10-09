@@ -63,13 +63,13 @@ func (srv *settingService) GetSettings(blogID uint, category string, names []str
 	return ret
 }
 
-func (srv *settingService) UpdatePreferences(prefs []*model.Setting) error {
+func (srv *settingService) UpdateSettings(category string, settings []*model.Setting) error {
 	srv.mutex.Lock()
 	defer srv.mutex.Unlock()
 
 	tx := db.Begin()
-	for _, pref := range prefs {
-		if err := db.Model(&model.Setting{}).Where("name = ?", pref.Name).Updates(pref).Error; nil != err {
+	for _, setting := range settings {
+		if err := db.Model(&model.Setting{}).Where("category = ? AND name = ?", category, setting.Name).Updates(setting).Error; nil != err {
 			tx.Rollback()
 
 			return err

@@ -51,14 +51,53 @@ func GetBasicSettingsCtl(c *gin.Context) {
 	result.Data = data
 }
 
-func UpdateSettingsCtl(c *gin.Context) {
+func UpdateBasicSettingsCtl(c *gin.Context) {
 	result := util.NewResult()
 	defer c.JSON(http.StatusOK, result)
 
 	args := map[string]interface{}{}
 	if err := c.BindJSON(&args); nil != err {
 		result.Code = -1
-		result.Msg = "parses update preferences request failed"
+		result.Msg = "parses update basic settings request failed"
+
+		return
+	}
+
+	sessionData := util.GetSession(c)
+	basics := []*model.Setting{}
+	for k, v := range args {
+		var value interface{}
+		switch v.(type) {
+		case bool:
+			value = strconv.FormatBool(v.(bool))
+		default:
+			value = v.(string)
+		}
+
+		basic := &model.Setting{
+			Category: model.SettingCategoryBasic,
+			BlogID:   sessionData.BID,
+			Name:     k,
+			Value:    value.(string),
+		}
+
+		basics = append(basics, basic)
+	}
+
+	if err := service.Setting.UpdateSettings(model.SettingCategoryBasic, basics); nil != err {
+		result.Code = -1
+		result.Msg = err.Error()
+	}
+}
+
+func UpdatePreferenceSettingsCtl(c *gin.Context) {
+	result := util.NewResult()
+	defer c.JSON(http.StatusOK, result)
+
+	args := map[string]interface{}{}
+	if err := c.BindJSON(&args); nil != err {
+		result.Code = -1
+		result.Msg = "parses update preference settings request failed"
 
 		return
 	}
@@ -84,7 +123,7 @@ func UpdateSettingsCtl(c *gin.Context) {
 		prefs = append(prefs, pref)
 	}
 
-	if err := service.Setting.UpdatePreferences(prefs); nil != err {
+	if err := service.Setting.UpdateSettings(model.SettingCategoryPreference, prefs); nil != err {
 		result.Code = -1
 		result.Msg = err.Error()
 	}
