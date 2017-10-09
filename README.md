@@ -57,9 +57,27 @@ TBD
 
 ### 管理后台
 
-Vue.js
+Vue.js, Nuxt, Vuetify
 
-TBD
+安装依赖
+```
+cd console && npm install
+```
+console/config/env.json 中 `clientBaseURL` 为 `/api` 时需启动 `./solo`，为 `/mock` 时需运行 
+```
+npm run mock
+```
+开发
+```
+npm run dev
+```
+
+
+
+打包
+```
+npm run build
+```
 
 ### 后端框架
 
