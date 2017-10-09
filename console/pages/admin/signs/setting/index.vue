@@ -4,81 +4,10 @@
 
       <v-form ref="form">
         <v-text-field
-          :label="$t('language', $store.state.locale)"
-          v-model="locale"
-          :counter="32"
-          required
-        ></v-text-field>
-        <v-text-field
-          :label="$t('timeZone', $store.state.locale)"
-          v-model="timeZone"
-          :counter="32"
-          required
-        ></v-text-field>
-        <v-text-field
-          :label="$t('articleListStyle', $store.state.locale)"
-          v-model="articleListStyle"
-          :counter="32"
-        ></v-text-field>
-        <v-text-field
-          :label="$t('mostUseTagListSize', $store.state.locale)"
-          v-model="mostUseTagListSize"
-          :counter="32"
-        ></v-text-field>
-        <v-text-field
-          :label="$t('recentCommentListSize', $store.state.locale)"
-          v-model="recentCommentListSize"
-          :counter="32"
-        ></v-text-field>
-        <v-text-field
-          :label="$t('mostCommentArticleListSize', $store.state.locale)"
-          v-model="mostCommentArticleListSize"
-          :counter="32"
-        ></v-text-field>
-        <v-text-field
-          :label="$t('mostViewArticleListSize', $store.state.locale)"
-          v-model="mostViewArticleListSize"
-          :counter="32"
-        ></v-text-field>
-        <v-text-field
-          :label="$t('articleListPageSize', $store.state.locale)"
-          v-model="articleListPageSize"
-          :counter="32"
-        ></v-text-field>
-        <v-text-field
-          :label="$t('articleListWindowSize', $store.state.locale)"
-          v-model="articleListWindowSize"
-          :counter="32"
-        ></v-text-field>
-        <v-text-field
-          :label="$t('randomArticleListSize', $store.state.locale)"
-          v-model="randomArticleListSize"
-          :counter="32"
-        ></v-text-field>
-        <v-text-field
-          :label="$t('relevantArticleListSize', $store.state.locale)"
-          v-model="relevantArticleListSize"
-          :counter="32"
-        ></v-text-field>
-        <v-text-field
-          :label="$t('externalRelevantArticleListSize', $store.state.locale)"
-          v-model="externalRelevantArticleListSize"
-          :counter="32"
-        ></v-text-field>
-        <v-text-field
-          :label="$t('enableArticleUpdateHint', $store.state.locale)"
-          v-model="enableArticleUpdateHint"
-          :counter="32"
-        ></v-text-field>
-        <v-text-field
-          :label="$t('feedOutputMode', $store.state.locale)"
-          v-model="feedOutputMode"
-          :counter="32"
-        ></v-text-field>
-        <v-text-field
-          :label="$t('feedOutputCnt', $store.state.locale)"
-          v-model="feedOutputCnt"
-          :counter="32"
+          :label="$t('signs', $store.state.locale)"
+          v-model="sign"
+          multi-line
+          @keyup.ctrl.enter="update"
         ></v-text-field>
 
         <div class="alert alert--danger" v-show="error">
@@ -86,6 +15,7 @@
           <span>{{ errorMsg }}</span>
         </div>
       </v-form>
+
       <button class="fn-right btn btn--margin-t30 btn--info btn--space" @click="update">
         {{ $t('confirm', $store.state.locale) }}
       </button>
@@ -97,38 +27,44 @@
   export default {
     data () {
       return {
-        locale: '',
-        timeZone: '',
-        articleListStyle: '',
-        mostUseTagListSize: '',
-        recentCommentListSize: '',
-        mostCommentArticleListSize: '',
-        mostViewArticleListSize: '',
-        articleListPageSize: '',
-        articleListWindowSize: '',
-        randomArticleListSize: '',
-        relevantArticleListSize: '',
-        externalRelevantArticleListSize: '',
-        enableArticleUpdateHint: '',
-        feedOutputMode: '',
-        feedOutputCnt: '',
+        sign: '',
         error: false,
         errorMsg: ''
       }
     },
     head () {
       return {
-        title: `${this.$store.state.blogTitle} - ${this.$t('preference', this.$store.state.locale)}`
+        title: `${this.$store.state.blogTitle} - ${this.$t('signs', this.$store.state.locale)}`
       }
     },
     methods: {
-      update (id) {
-        this.$set(this, 'showForm', true)
-        this.$set(this, 'editId', id)
+      async update () {
+        if (!this.$refs.form.validate()) {
+          return
+        }
+        const responseData = await this.axios.post('/console/signs', {
+          sign: this.sign
+        })
+
+        if (responseData.code === 0) {
+          this.$set(this, 'error', false)
+          this.$set(this, 'errorMsg', '')
+          this.$store.commit('setSnackBar', {
+            snackBar: true,
+            snackMsg: this.$t('setupSuccess', this.$store.state.locale),
+            snackModify: 'success'
+          })
+        } else {
+          this.$set(this, 'error', true)
+          this.$set(this, 'errorMsg', responseData.msg)
+        }
       }
     },
-    mounted () {
-      // get
+    async mounted () {
+      const responseData = await this.axios.get('/console/signs')
+      if (responseData) {
+        this.$set(this, 'sign', responseData)
+      }
     }
   }
 </script>
