@@ -236,6 +236,12 @@
         }
       }
     },
+    "console/b3log-key": {
+      "verbs": [
+        "get"
+      ],
+      "mockFile": "sign.json"
+    },
     "hp/apis/check-account": {
       "verbs": [
         "post"

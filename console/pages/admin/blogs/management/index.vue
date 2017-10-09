@@ -1,134 +1,118 @@
 <template>
   <div>
-    <div class="card fn-clear card__body">
+    <div class="card fn-clear">
+      <user v-if="showForm" :show.sync="showForm" @addSuccess="addSuccess" :id="editId"></user>
 
-      <v-form ref="form">
-        <v-text-field
-          :label="$t('language', $store.state.locale)"
-          v-model="locale"
-          :counter="32"
-          required
-        ></v-text-field>
-        <v-text-field
-          :label="$t('timezone', $store.state.locale)"
-          v-model="timezone"
-          :counter="32"
-          required
-        ></v-text-field>
-        <v-text-field
-          :label="$t('articleListStyle', $store.state.locale)"
-          v-model="articleListStyle"
-          :counter="32"
-        ></v-text-field>
-        <v-text-field
-          :label="$t('mostUseTagListSize', $store.state.locale)"
-          v-model="mostUseTagListSize"
-          :counter="32"
-        ></v-text-field>
-        <v-text-field
-          :label="$t('recentCommentListSize', $store.state.locale)"
-          v-model="recentCommentListSize"
-          :counter="32"
-        ></v-text-field>
-        <v-text-field
-          :label="$t('mostCommentArticleListSize', $store.state.locale)"
-          v-model="mostCommentArticleListSize"
-          :counter="32"
-        ></v-text-field>
-        <v-text-field
-          :label="$t('mostViewArticleListSize', $store.state.locale)"
-          v-model="mostViewArticleListSize"
-          :counter="32"
-        ></v-text-field>
-        <v-text-field
-          :label="$t('articleListPageSize', $store.state.locale)"
-          v-model="articleListPageSize"
-          :counter="32"
-        ></v-text-field>
-        <v-text-field
-          :label="$t('articleListWindowSize', $store.state.locale)"
-          v-model="articleListWindowSize"
-          :counter="32"
-        ></v-text-field>
-        <v-text-field
-          :label="$t('randomArticleListSize', $store.state.locale)"
-          v-model="randomArticleListSize"
-          :counter="32"
-        ></v-text-field>
-        <v-text-field
-          :label="$t('relevantArticleListSize', $store.state.locale)"
-          v-model="relevantArticleListSize"
-          :counter="32"
-        ></v-text-field>
-        <v-text-field
-          :label="$t('externalRelevantArticleListSize', $store.state.locale)"
-          v-model="externalRelevantArticleListSize"
-          :counter="32"
-        ></v-text-field>
-        <v-text-field
-          :label="$t('enableArticleUpdateHint', $store.state.locale)"
-          v-model="enableArticleUpdateHint"
-          :counter="32"
-        ></v-text-field>
-        <v-text-field
-          :label="$t('feedOutputMode', $store.state.locale)"
-          v-model="feedOutputMode"
-          :counter="32"
-        ></v-text-field>
-        <v-text-field
-          :label="$t('feedOutputCnt', $store.state.locale)"
-          v-model="feedOutputCnt"
-          :counter="32"
-        ></v-text-field>
-
-        <div class="alert alert--danger" v-show="error">
-          <icon icon="danger"/>
-          <span>{{ errorMsg }}</span>
-        </div>
-      </v-form>
-      <button class="fn-right btn btn--margin-t30 btn--info btn--space" @click="update">
-        {{ $t('confirm', $store.state.locale) }}
-      </button>
+      <div v-show="!showForm" class="card__body fn-clear">
+        <button class="btn btn--success fn-right" @click="edit('')">{{ $t('new', $store.state.locale) }}</button>
+      </div>
+      <ul class="list">
+        <li v-for="item in list" :key="item.id" class="fn-flex">
+          <div class="fn-flex-1">
+            <div class="list__title">
+              <div class="avatar avatar--small" :style="`background-image: url(${item.iconURL})`"></div>
+              <nuxt-link target="_blank" :to="`${$store.state.blogPath}/${item.permalink}`">
+                {{ item.title }}
+              </nuxt-link>
+            </div>
+            <div class="list__meta">
+              {{ $t('openMethod', $store.state.locale) }} {{ item.openMethod }}
+            </div>
+          </div>
+          <v-menu
+            v-if="$store.state.role < 2"
+            :nudge-bottom="38"
+            :nudge-right="24"
+            :nudge-width="100"
+            :open-on-hover="true">
+            <v-toolbar-title slot="activator">
+              <button class="btn btn--info" @click="edit(item.id)">
+                {{ $t('edit', $store.state.locale) }}
+                <icon icon="chevron-down"/>
+              </button>
+            </v-toolbar-title>
+            <v-list>
+              <v-list-tile>
+                <v-list-tile-title>
+                  <div @click="edit(item.id)">{{ $t('edit', $store.state.locale) }}</div>
+                </v-list-tile-title>
+                <v-list-tile-title>
+                  <div @click="remove(item.id)">{{ $t('delete', $store.state.locale) }}</div>
+                </v-list-tile-title>
+              </v-list-tile>
+            </v-list>
+          </v-menu>
+        </li>
+      </ul>
+      <v-pagination
+        :length="pageCount"
+        v-model="currentPageNum"
+        :total-visible="windowSize"
+        class="fn-right"
+        circle
+        next-icon=">"
+        prev-icon="<"
+        @input="getList"
+      ></v-pagination>
     </div>
   </div>
 </template>
 
 <script>
+  import User from '~/components/biz/User'
+
   export default {
+    components: {
+      User
+    },
     data () {
       return {
-        locale: '',
-        timezone: '',
-        articleListStyle: '',
-        mostUseTagListSize: '',
-        recentCommentListSize: '',
-        mostCommentArticleListSize: '',
-        mostViewArticleListSize: '',
-        articleListPageSize: '',
-        articleListWindowSize: '',
-        randomArticleListSize: '',
-        relevantArticleListSize: '',
-        externalRelevantArticleListSize: '',
-        enableArticleUpdateHint: '',
-        feedOutputMode: '',
-        feedOutputCnt: '',
-        error: false,
-        errorMsg: ''
+        editId: '',
+        showForm: false,
+        currentPageNum: 1,
+        pageCount: 1,
+        windowSize: 1,
+        list: []
       }
     },
     head () {
       return {
-        title: `${this.$store.state.blogTitle} - ${this.$t('preference', this.$store.state.locale)}`
+        title: `${this.$store.state.blogTitle} - ${this.$t('navigationList', this.$store.state.locale)}`
       }
     },
     methods: {
-      update (id) {
+      async getList (currentPage) {
+        const responseData = await this.axios.get(`/console/navigations?p=${currentPage}`)
+        if (responseData) {
+          this.$set(this, 'list', responseData.navigation)
+          this.$set(this, 'currentPageNum', responseData.pagination.currentPageNum)
+          this.$set(this, 'pageCount', responseData.pagination.pageCount)
+          this.$set(this, 'windowSize', responseData.pagination.windowSize)
+        }
+      },
+      async remove (id) {
+        const responseData = await this.axios.delete(`/console/navigations/${id}`)
+        if (responseData === null) {
+          this.$store.commit('setSnackBar', {
+            snackBar: true,
+            snackMsg: this.$t('deleteSuccess', this.$store.state.locale),
+            snackModify: 'success'
+          })
+          this.getList(1)
+          this.$set(this, 'showForm', false)
+        }
+      },
+      addSuccess () {
+        this.getList(1)
+        this.$set(this, 'showForm', false)
+      },
+      edit (id) {
         this.$set(this, 'showForm', true)
         this.$set(this, 'editId', id)
       }
     },
     mounted () {
-      // get
+      this.getList(1)
     }
   }
 </script>

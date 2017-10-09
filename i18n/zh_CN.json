@@ -99,5 +99,7 @@
   "blogTitle": "博客标题",
   "blogSubtitle": "博客子标题",
   "footer": "页脚",
-  "noticeBoard": "公告"
+  "noticeBoard": "公告",
+  "removeUnusedTags": "移除无用标签",
+  "staticBlog": "静态博客"
 }

@@ -1,7 +1,9 @@
 <template>
   <div class="card fn-clear">
-    <div v-show="!showForm" class="card__body fn-clear">
-      <nuxt-link class="btn btn--success fn-right" to="/admin/articles/post">{{ $t('new', $store.state.locale) }}</nuxt-link>
+    <div class="fn-clear card__body">
+      <nuxt-link class="btn btn--success fn-right" to="/admin/articles/post">
+        {{ $t('new', $store.state.locale) }}
+      </nuxt-link>
     </div>
     <ul class="list">
       <li v-for="item in list" :key="item.id" class="fn-flex">

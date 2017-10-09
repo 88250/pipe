@@ -92,7 +92,7 @@
         {
           title: app.$t('others', locale),
           link: '/admin/others/management',
-          role: 1
+          role: 2
         }
       ]
     },

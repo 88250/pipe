@@ -2,7 +2,7 @@
   <div>
     <div class="card fn-clear card__body">
 
-      <v-form ref="form">
+      <v-form>
         <v-text-field
           :label="$t('blogTitle', $store.state.locale)"
           v-model="blogTitle"
@@ -69,9 +69,6 @@
     },
     methods: {
       async update () {
-        if (!this.$refs.form.validate()) {
-          return
-        }
         const responseData = await this.axios.post('/console/configurations', {
           blogTitle: this.blogTitle,
           blogSubtitle: this.blogSubtitle,
