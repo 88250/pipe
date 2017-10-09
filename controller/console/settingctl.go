@@ -191,3 +191,47 @@ func UpdateSignSettingsCtl(c *gin.Context) {
 		result.Msg = err.Error()
 	}
 }
+
+func GetI18nSettingsCtl(c *gin.Context) {
+	result := util.NewResult()
+	defer c.JSON(http.StatusOK, result)
+
+	sessionData := util.GetSession(c)
+	settings := service.Setting.GetAllSettings(sessionData.BID, model.SettingCategoryI18n)
+	data := map[string]interface{}{}
+	for _, setting := range settings {
+		data[setting.Name] = setting.Value
+	}
+	result.Data = data
+}
+
+func UpdateI18nSettingsCtl(c *gin.Context) {
+	result := util.NewResult()
+	defer c.JSON(http.StatusOK, result)
+
+	args := map[string]interface{}{}
+	if err := c.BindJSON(&args); nil != err {
+		result.Code = -1
+		result.Msg = "parses update preference settings request failed"
+
+		return
+	}
+
+	sessionData := util.GetSession(c)
+	i18ns := []*model.Setting{}
+	for k, v := range args {
+		i18n := &model.Setting{
+			Category: model.SettingCategoryI18n,
+			BlogID:   sessionData.BID,
+			Name:     k,
+			Value:    v.(string),
+		}
+
+		i18ns = append(i18ns, i18n)
+	}
+
+	if err := service.Setting.UpdateSettings(model.SettingCategoryI18n, i18ns); nil != err {
+		result.Code = -1
+		result.Msg = err.Error()
+	}
+}
