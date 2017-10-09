@@ -80,7 +80,7 @@ func InitConf() {
 	if "" != *confLogFilePath {
 		Conf.LogFilePath = *confLogFilePath
 	}
-	f, err := os.OpenFile(Conf.LogFilePath, os.O_CREATE|os.O_APPEND, 0644)
+	f, err := os.OpenFile(Conf.LogFilePath, os.O_CREATE|os.O_APPEND|os.O_RDWR, os.ModeAppend)
 	if nil != err {
 		log.Fatal("creates log file [" + Conf.LogFilePath + "] failed: " + err.Error())
 	}
