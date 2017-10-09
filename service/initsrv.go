@@ -94,12 +94,32 @@ func (srv *initService) InitPlatform(platformAdmin *model.User) error {
 
 		return err
 	}
-	if err := initPreference(tx, platformAdmin, blogID); nil != err {
+	if err := initBasicSettings(tx, platformAdmin, blogID); nil != err {
 		tx.Rollback()
 
 		return err
 	}
-	if err := initStatistic(tx, blogID); nil != err {
+	if err := initPreferenceSettings(tx, blogID); nil != err {
+		tx.Rollback()
+
+		return err
+	}
+	if err := initSignSettings(tx, blogID); nil != err {
+		tx.Rollback()
+
+		return err
+	}
+	if err := initI18nSettings(tx, blogID); nil != err {
+		tx.Rollback()
+
+		return err
+	}
+	if err := initFeedSettings(tx, blogID); nil != err {
+		tx.Rollback()
+
+		return err
+	}
+	if err := initStatisticSettings(tx, blogID); nil != err {
 		tx.Rollback()
 
 		return err
@@ -218,7 +238,75 @@ Solo.go 博客系统是一个开源项目，如果你觉得它很赞，请到[�
 	return nil
 }
 
-func initPreference(tx *gorm.DB, blogAdmin *model.User, blogID uint) error {
+func initBasicSettings(tx *gorm.DB, blogAdmin *model.User, blogID uint) error {
+	if err := tx.Create(&model.Setting{
+		Category: model.SettingCategoryBasic,
+		Name:     model.SettingNameBasicPath,
+		Value:    "/" + blogAdmin.Name,
+		BlogID:   blogID}).Error; nil != err {
+		return err
+	}
+	if err := tx.Create(&model.Setting{
+		Category: model.SettingCategoryBasic,
+		Name:     model.SettingNameBasicBlogSubtitle,
+		Value:    "小而美的 golang 博客平台",
+		BlogID:   blogID}).Error; nil != err {
+		return err
+	}
+	if err := tx.Create(&model.Setting{
+		Category: model.SettingCategoryBasic,
+		Name:     model.SettingNameBasicBlogTitle,
+		Value:    "Solo.go 示例",
+		BlogID:   blogID}).Error; nil != err {
+		return err
+	}
+	if err := tx.Create(&model.Setting{
+		Category: model.SettingCategoryBasic,
+		Name:     model.SettingNameBasicCommentable,
+		Value:    "true",
+		BlogID:   blogID}).Error; nil != err {
+		return err
+	}
+	if err := tx.Create(&model.Setting{
+		Category: model.SettingCategoryBasic,
+		Name:     model.SettingNameBasicFooter,
+		Value:    "<!-- 这里可用于放置备案信息等，支持 HTML、脚本 -->",
+		BlogID:   blogID}).Error; nil != err {
+		return err
+	}
+	if err := tx.Create(&model.Setting{
+		Category: model.SettingCategoryBasic,
+		Name:     model.SettingNameBasicHeader,
+		Value:    "<!-- 这里可用于插入第三方统计等，支持 HTML、脚本 -->",
+		BlogID:   blogID}).Error; nil != err {
+		return err
+	}
+	if err := tx.Create(&model.Setting{
+		Category: model.SettingCategoryBasic,
+		Name:     model.SettingNameBasicMetaDescription,
+		Value:    "小而美的 golang 博客平台",
+		BlogID:   blogID}).Error; nil != err {
+		return err
+	}
+	if err := tx.Create(&model.Setting{
+		Category: model.SettingCategoryBasic,
+		Name:     model.SettingNameBasicMetaKeywords,
+		Value:    "Solo.go,golang,博客,开源",
+		BlogID:   blogID}).Error; nil != err {
+		return err
+	}
+	if err := tx.Create(&model.Setting{
+		Category: model.SettingCategoryBasic,
+		Name:     model.SettingNameBasicNoticeBoard,
+		Value:    "<!-- 支持 HTML、脚本 -->",
+		BlogID:   blogID}).Error; nil != err {
+		return err
+	}
+
+	return nil
+}
+
+func initPreferenceSettings(tx *gorm.DB, blogID uint) error {
 	if err := tx.Create(&model.Setting{
 		Category: model.SettingCategoryPreference,
 		Name:     model.SettingNamePreferenceArticleListPageSize,
@@ -242,78 +330,8 @@ func initPreference(tx *gorm.DB, blogAdmin *model.User, blogID uint) error {
 	}
 	if err := tx.Create(&model.Setting{
 		Category: model.SettingCategoryPreference,
-		Name:     model.SettingNamePreferenceBlogSubtitle,
-		Value:    "小而美的 golang 博客平台",
-		BlogID:   blogID}).Error; nil != err {
-		return err
-	}
-	if err := tx.Create(&model.Setting{
-		Category: model.SettingCategoryPreference,
-		Name:     model.SettingNamePreferenceBlogTitle,
-		Value:    "Solo.go 示例",
-		BlogID:   blogID}).Error; nil != err {
-		return err
-	}
-	if err := tx.Create(&model.Setting{
-		Category: model.SettingCategoryPreference,
-		Name:     model.SettingNamePreferenceCommentable,
-		Value:    "true",
-		BlogID:   blogID}).Error; nil != err {
-		return err
-	}
-	if err := tx.Create(&model.Setting{
-		Category: model.SettingCategoryPreference,
 		Name:     model.SettingNamePreferenceExternalArticleListSize,
 		Value:    "7",
-		BlogID:   blogID}).Error; nil != err {
-		return err
-	}
-	if err := tx.Create(&model.Setting{
-		Category: model.SettingCategoryPreference,
-		Name:     model.SettingNamePreferenceFeedOutputSize,
-		Value:    "20",
-		BlogID:   blogID}).Error; nil != err {
-		return err
-	}
-	if err := tx.Create(&model.Setting{
-		Category: model.SettingCategoryPreference,
-		Name:     model.SettingNamePreferenceFeedOutputMode,
-		Value:    model.SettingPreferenceFeedOutputModeValueAbstract,
-		BlogID:   blogID}).Error; nil != err {
-		return err
-	}
-	if err := tx.Create(&model.Setting{
-		Category: model.SettingCategoryPreference,
-		Name:     model.SettingNamePreferenceFooter,
-		Value:    "<!-- 这里可用于放置备案信息等，支持 HTML、脚本 -->",
-		BlogID:   blogID}).Error; nil != err {
-		return err
-	}
-	if err := tx.Create(&model.Setting{
-		Category: model.SettingCategoryPreference,
-		Name:     model.SettingNamePreferenceHeader,
-		Value:    "<!-- 这里可用于插入第三方统计等，支持 HTML、脚本 -->",
-		BlogID:   blogID}).Error; nil != err {
-		return err
-	}
-	if err := tx.Create(&model.Setting{
-		Category: model.SettingCategoryPreference,
-		Name:     model.SettingNamePreferenceLocale,
-		Value:    "zh_CN",
-		BlogID:   blogID}).Error; nil != err {
-		return err
-	}
-	if err := tx.Create(&model.Setting{
-		Category: model.SettingCategoryPreference,
-		Name:     model.SettingNamePreferenceMetaDescription,
-		Value:    "小而美的 golang 博客平台",
-		BlogID:   blogID}).Error; nil != err {
-		return err
-	}
-	if err := tx.Create(&model.Setting{
-		Category: model.SettingCategoryPreference,
-		Name:     model.SettingNamePreferenceMetaKeywords,
-		Value:    "Solo.go,golang,博客,开源",
 		BlogID:   blogID}).Error; nil != err {
 		return err
 	}
@@ -340,48 +358,6 @@ func initPreference(tx *gorm.DB, blogAdmin *model.User, blogID uint) error {
 	}
 	if err := tx.Create(&model.Setting{
 		Category: model.SettingCategoryPreference,
-		Name:     model.SettingNamePreferenceNoticeBoard,
-		Value:    "<!-- 支持 HTML、脚本 -->",
-		BlogID:   blogID}).Error; nil != err {
-		return err
-	}
-	if err := tx.Create(&model.Setting{
-		Category: model.SettingCategoryPreference,
-		Name:     model.SettingNamePreferencePath,
-		Value:    "/" + blogAdmin.Name,
-		BlogID:   blogID}).Error; nil != err {
-		return err
-	}
-	if err := tx.Create(&model.Setting{
-		Category: model.SettingCategoryPreference,
-		Name:     model.SettingNamePreferenceQiniuAK,
-		Value:    "",
-		BlogID:   blogID}).Error; nil != err {
-		return err
-	}
-	if err := tx.Create(&model.Setting{
-		Category: model.SettingCategoryPreference,
-		Name:     model.SettingNamePreferenceQiniuBucket,
-		Value:    "",
-		BlogID:   blogID}).Error; nil != err {
-		return err
-	}
-	if err := tx.Create(&model.Setting{
-		Category: model.SettingCategoryPreference,
-		Name:     model.SettingNamePreferenceQiniuDomain,
-		Value:    "",
-		BlogID:   blogID}).Error; nil != err {
-		return err
-	}
-	if err := tx.Create(&model.Setting{
-		Category: model.SettingCategoryPreference,
-		Name:     model.SettingNamePreferenceQiniuSK,
-		Value:    "",
-		BlogID:   blogID}).Error; nil != err {
-		return err
-	}
-	if err := tx.Create(&model.Setting{
-		Category: model.SettingCategoryPreference,
 		Name:     model.SettingNamePreferenceRandomArticleListSize,
 		Value:    "7",
 		BlogID:   blogID}).Error; nil != err {
@@ -403,22 +379,8 @@ func initPreference(tx *gorm.DB, blogAdmin *model.User, blogID uint) error {
 	}
 	if err := tx.Create(&model.Setting{
 		Category: model.SettingCategoryPreference,
-		Name:     model.SettingNamePreferenceSign,
-		Value:    "<!-- 支持 HTML、脚本 -->",
-		BlogID:   blogID}).Error; nil != err {
-		return err
-	}
-	if err := tx.Create(&model.Setting{
-		Category: model.SettingCategoryPreference,
 		Name:     model.SettingNamePreferenceTheme,
-		Value:    "classic",
-		BlogID:   blogID}).Error; nil != err {
-		return err
-	}
-	if err := tx.Create(&model.Setting{
-		Category: model.SettingCategoryPreference,
-		Name:     model.SettingNamePreferenceTimezone,
-		Value:    "Asia/Shanghai",
+		Value:    "yilia",
 		BlogID:   blogID}).Error; nil != err {
 		return err
 	}
@@ -433,7 +395,57 @@ func initPreference(tx *gorm.DB, blogAdmin *model.User, blogID uint) error {
 	return nil
 }
 
-func initStatistic(tx *gorm.DB, blogID uint) error {
+func initSignSettings(tx *gorm.DB, blogID uint) error {
+	if err := tx.Create(&model.Setting{
+		Category: model.SettingCategorySign,
+		Name:     model.SettingNameSignContent,
+		Value:    "<!-- 支持 HTML、脚本 -->",
+		BlogID:   blogID}).Error; nil != err {
+		return err
+	}
+
+	return nil
+}
+
+func initI18nSettings(tx *gorm.DB, blogID uint) error {
+	if err := tx.Create(&model.Setting{
+		Category: model.SettingCategoryI18n,
+		Name:     model.SettingNameI18nLocale,
+		Value:    "zh_CN",
+		BlogID:   blogID}).Error; nil != err {
+		return err
+	}
+	if err := tx.Create(&model.Setting{
+		Category: model.SettingCategoryI18n,
+		Name:     model.SettingNameI18nTimezone,
+		Value:    "Asia/Shanghai",
+		BlogID:   blogID}).Error; nil != err {
+		return err
+	}
+
+	return nil
+}
+
+func initFeedSettings(tx *gorm.DB, blogID uint) error {
+	if err := tx.Create(&model.Setting{
+		Category: model.SettingCategoryFeed,
+		Name:     model.SettingNameFeedOutputSize,
+		Value:    "20",
+		BlogID:   blogID}).Error; nil != err {
+		return err
+	}
+	if err := tx.Create(&model.Setting{
+		Category: model.SettingCategoryFeed,
+		Name:     model.SettingNameFeedOutputMode,
+		Value:    model.SettingFeedOutputModeValueAbstract,
+		BlogID:   blogID}).Error; nil != err {
+		return err
+	}
+
+	return nil
+}
+
+func initStatisticSettings(tx *gorm.DB, blogID uint) error {
 	if err := tx.Create(&model.Setting{
 		Category: model.SettingCategoryStatistic,
 		Name:     model.SettingNameStatisticArticleCount,

@@ -59,7 +59,8 @@ func loginCtl(c *gin.Context) {
 		return
 	}
 
-	settings := service.Preference.GetPreferences(user.BlogID, model.SettingNamePreferenceBlogTitle, model.SettingNamePreferencePath)
+	settings := service.Setting.GetSettings(user.BlogID, model.SettingCategoryBasic,
+		[]string{model.SettingNameBasicBlogTitle, model.SettingNameBasicPath})
 	if 1 > len(settings) {
 		result.Code = -1
 		result.Msg = fmt.Sprint("not found blog settings [blogID=%d]", user.BlogID)
@@ -68,8 +69,8 @@ func loginCtl(c *gin.Context) {
 	data := map[string]interface{}{}
 	data["name"] = user.Name
 	data["nickname"] = user.Nickname
-	data["blogTitle"] = settings[model.SettingNamePreferenceBlogTitle].Value
-	data["blogPath"] = settings[model.SettingNamePreferencePath].Value
+	data["blogTitle"] = settings[model.SettingNameBasicBlogTitle].Value
+	data["blogPath"] = settings[model.SettingNameBasicPath].Value
 	data["role"] = user.Role
 	blogs := service.User.GetUserBlogs(user.ID)
 	if 1 > len(blogs) {
@@ -84,7 +85,7 @@ func loginCtl(c *gin.Context) {
 		UName: user.Name,
 		URole: user.Role,
 		BID:   user.BlogID,
-		BPath: settings[model.SettingNamePreferencePath].Value,
+		BPath: settings[model.SettingNameBasicPath].Value,
 	}
 	if err := sessionData.Save(c); nil != err {
 		result.Code = -1
