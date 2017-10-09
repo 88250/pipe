@@ -61,6 +61,7 @@ func MapRoutes() *gin.Engine {
 	consoleGroup.GET("/navigations", console.GetNavigationsCtl)
 	consoleGroup.GET("/navigation/:id", console.GetNavigationCtl)
 	consoleGroup.GET("/tags", console.GetTagsCtl)
+	consoleGroup.POST("/blog/switch/:id", console.BlogSwitchCtl)
 	consoleSettingsGroup := consoleGroup.Group("/settings")
 	consoleSettingsGroup.GET("/basic", console.GetBasicSettingsCtl)
 	consoleSettingsGroup.PUT("/basic", console.UpdateBasicSettingsCtl)
@@ -70,7 +71,8 @@ func MapRoutes() *gin.Engine {
 	consoleSettingsGroup.PUT("/sign", console.UpdateSignSettingsCtl)
 	consoleSettingsGroup.GET("/i18n", console.GetI18nSettingsCtl)
 	consoleSettingsGroup.PUT("/i18n", console.UpdateI18nSettingsCtl)
-	consoleGroup.POST("/blog/switch/:id", console.BlogSwitchCtl)
+	consoleSettingsGroup.GET("/feed", console.GetFeedSettingsCtl)
+	consoleSettingsGroup.PUT("/feed", console.UpdateFeedSettingsCtl)
 	themeGroup := ret.Group("")
 	themeGroup.GET("/", indexCtl)
 
