@@ -11,9 +11,9 @@
           <div class="avatar avatar--mid avatar--space" :style="`background-image: url(${item.iconURL})`"></div>
           <div class="fn-flex-1">
             <div class="list__title">
-              <nuxt-link target="_blank" :to="`${$store.state.blogPath}/${item.url}`">
+              <a target="_blank" :href="`${item.url}`">
                 {{ item.title }}
-              </nuxt-link>
+              </a>
             </div>
             <div class="list__meta">
               {{ getOpenMethodName(item.openMethod) }}
