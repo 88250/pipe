@@ -197,6 +197,38 @@
         }
       }
     },
+    "console/blogs": {
+      "verbs": [
+        "get",
+        "post"
+      ],
+      "responses": {
+        "post": {
+          "mockFile": "success.json"
+        },
+        "get": {
+          "mockFile": "blogList.json"
+        }
+      }
+    },
+    "console/blogs/:id": {
+      "verbs": [
+        "delete",
+        "put",
+        "get"
+      ],
+      "responses": {
+        "delete": {
+          "mockFile": "success.json"
+        },
+        "put": {
+          "mockFile": "error.json"
+        },
+        "get": {
+          "mockFile": "blog.json"
+        }
+      }
+    },
     "console/preferences": {
       "verbs": [
         "get", "post"

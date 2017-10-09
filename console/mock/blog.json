@@ -1,0 +1,16 @@
+{
+  "code": 0,
+  "msg": "",
+  "data": {
+    "footer": "footer",
+    "header": "header",
+    "blogTitle": "blogTitle",
+    "blogSubtitle": "blogSubtitle",
+    "metaKeywords": "metaKeywords",
+    "metaDescription": "metaDescription",
+    "noticeBoard": "noticeBoard",
+    "blogPath": "blogPath",
+    "blogMembers": "blogMembers",
+    "blogAdmin": "blogAdmin"
+  }
+}

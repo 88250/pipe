@@ -103,5 +103,8 @@
   "removeUnusedTags": "移除无用标签",
   "removeData": "物理删除冗余数据",
   "clearData": "数据清理",
-  "staticBlog": "静态博客"
+  "staticBlog": "静态博客",
+  "blogPath": "博客路径",
+  "blogMember": "博客成员",
+  "blogAdmin": "博客管理员"
 }

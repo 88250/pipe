@@ -48,9 +48,6 @@
   export default {
     data () {
       return {
-        requiredRules: [
-          (v) => /^\d+$/.test(v) || this.$t('validateRule3', this.$store.state.locale)
-        ],
         blogTitle: '',
         blogSubtitle: '',
         header: '',
