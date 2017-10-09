@@ -2,7 +2,7 @@
   "code": 0,
   "msg": "",
   "data": {
-    "feedOutputMode": "full",
-    "feedOutputCnt": 10
+    "outputMode": "full",
+    "outputCnt": 10
   }
 }

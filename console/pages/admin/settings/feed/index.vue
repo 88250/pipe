@@ -62,8 +62,8 @@
           return
         }
         const responseData = await this.axios.put('/console/settings/feed', {
-          feedOutputMode: this.feedOutputMode,
-          feedOutputCnt: this.feedOutputCnt
+          outputMode: this.feedOutputMode,
+          outputCnt: this.feedOutputCnt
         })
 
         if (responseData.code === 0) {
@@ -83,8 +83,8 @@
     async mounted () {
       const responseData = await this.axios.get('/console/settings/feed')
       if (responseData) {
-        this.$set(this, 'feedOutputMode', responseData.feedOutputMode)
-        this.$set(this, 'feedOutputCnt', responseData.feedOutputCnt)
+        this.$set(this, 'feedOutputMode', responseData.outputMode)
+        this.$set(this, 'feedOutputCnt', responseData.outputCnt)
       }
     }
   }
