@@ -268,7 +268,7 @@
         }
       }
     },
-    "console/settings/internationalization": {
+    "console/settings/i18n": {
       "verbs": [
         "get", "put"
       ],
@@ -277,7 +277,7 @@
           "mockFile": "success.json"
         },
         "get": {
-          "mockFile": "internationalization.json"
+          "mockFile": "i18n.json"
         }
       }
     },

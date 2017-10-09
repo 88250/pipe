@@ -47,7 +47,7 @@
     },
     methods: {
       async update () {
-        const responseData = await this.axios.put('/console/settings/internationalization', {
+        const responseData = await this.axios.put('/console/settings/i18n', {
           locale: this.locale,
           timezone: this.timezone
         })
@@ -67,7 +67,7 @@
       }
     },
     async mounted () {
-      const responseData = await this.axios.get('/console/settings/internationalization')
+      const responseData = await this.axios.get('/console/settings/i18n')
       if (responseData) {
         this.$set(this, 'locale', responseData.locale)
         this.$set(this, 'timezone', responseData.timezone)

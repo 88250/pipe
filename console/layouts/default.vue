@@ -21,6 +21,7 @@
 </template>
 
 <script>
+  import Vue from 'vue'
   import Side from '~/components/Side'
   import SoloHeader from '~/components/Header'
   import SoloFooter from '~/components/Footer'
@@ -49,6 +50,11 @@
       Side,
       SoloHeader,
       SoloFooter
+    },
+    mounted () {
+      Vue.nextTick(function () {
+      })
+      console.log(document.documentElement.clientWidth)
     }
   }
 </script>
