@@ -118,7 +118,7 @@
     },
     head () {
       return {
-        title: `${this.$store.state.blogTitle} - ${this.$t('parameters', this.$store.state.locale)}`
+        title: `${this.$store.state.blogTitle} - ${this.$t('preference', this.$store.state.locale)}`
       }
     },
     methods: {

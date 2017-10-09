@@ -11,9 +11,9 @@
   "userList": "用户管理",
   "others": "其他",
   "setting": "设置",
-  "configuration": "基本配置",
+  "baseInfo": "基本信息",
   "signs": "签名档",
-  "parameters": "参数",
+  "preference": "偏好设置",
   "qiniu": "七牛",
   "upload": "上传",
   "uploadConfig": "上传配置",
@@ -26,6 +26,7 @@
   "required": "不能为空",
   "validateRule": "不能超过16个字",
   "validateRule2": "不能超过32个字",
+  "validateRule3": "请输入整数",
   "emailRule": "请输入正确的邮箱",
   "hacpaiRule": "认证错误，请登录<a target='_blank' href='https://hacpai.com/login?goto=https%3A%2F%2Fhacpai.com%2F'>黑客派</a>后进行查看",
   "tags": "标签",
@@ -90,5 +91,10 @@
   "externalRelevantArticleListSize": "站外相关阅读显示数目",
   "enableArticleUpdateHint": "启用文章更新提示",
   "feedOutputMode": "订阅输出模式",
-  "feedOutputCnt": "订阅输出文章数"
+  "feedOutputCnt": "订阅输出文章数",
+  "export": "导出",
+  "import": "导入",
+  "abstract": "摘要",
+  "content": "正文",
+  "fullArticle" : "全文"
 }

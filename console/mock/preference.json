@@ -4,7 +4,7 @@
   "data": {
     "locale": "zh_CN",
     "timeZone": "Asia/Shanghai",
-    "articleListStyle": "titleOnly",
+    "articleListStyle": "title",
     "mostUseTagListSize": 1,
     "recentCommentListSize": 2,
     "mostCommentArticleListSize": 3,
@@ -15,7 +15,8 @@
     "relevantArticleListSize": 8,
     "externalRelevantArticleListSize": 9,
     "enableArticleUpdateHint": true,
-    "feedOutputMode": "title",
-    "feedOutputCnt": 10
+    "feedOutputMode": "full",
+    "feedOutputCnt": 10,
+    "commentable": false
   }
 }

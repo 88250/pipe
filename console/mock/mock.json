@@ -199,9 +199,16 @@
     },
     "console/preference": {
       "verbs": [
-        "get"
+        "get", "post"
       ],
-      "mockFile": "preference.json"
+      "responses": {
+        "post": {
+          "mockFile": "success.json"
+        },
+        "get": {
+          "mockFile": "preference.json"
+        }
+      }
     },
     "hp/apis/check-account": {
       "verbs": [

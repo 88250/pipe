@@ -8,7 +8,7 @@
   export default {
     head () {
       return {
-        title: `${this.$store.state.blogTitle} - ${this.$t('configuration', this.$store.state.locale)}`
+        title: `${this.$store.state.blogTitle} - ${this.$t('baseInfo', this.$store.state.locale)}`
       }
     },
     methods: {
