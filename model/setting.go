@@ -27,6 +27,21 @@ type Setting struct {
 	BlogID uint `json:"blogID"`
 }
 
+// Setting names of catgory "basic".
+const (
+	SettingCategoryBasic = "basic"
+
+	SettingNameBasicPath            = "path"
+	SettingNameBasicBlogSubtitle    = "blogSubtitle"
+	SettingNameBasicBlogTitle       = "blogTitle"
+	SettingNameBasicCommentable     = "commentable"
+	SettingNameBasicFooter          = "footer"
+	SettingNameBasicHeader          = "header"
+	SettingNameBasicNoticeBoard     = "noticeBoard"
+	SettingNameBasicMetaDescription = "metaDescription"
+	SettingNameBasicMetaKeywords    = "metaKeywords"
+)
+
 // Setting names of category "preference".
 const (
 	SettingCategoryPreference = "preference"
@@ -34,36 +49,47 @@ const (
 	SettingNamePreferenceArticleListPageSize        = "articleListPageSize"
 	SettingNamePreferenceArticleListWindowSize      = "articleListWindowSize"
 	SettingNamePreferenceArticleListStyle           = "articleListStyle"
-	SettingNamePreferenceBlogSubtitle               = "blogSubtitle"
-	SettingNamePreferenceBlogTitle                  = "blogTitle"
-	SettingNamePreferenceCommentable                = "commentable"
 	SettingNamePreferenceExternalArticleListSize    = "externalRelevantArticleListSize"
-	SettingNamePreferenceFeedOutputSize             = "feedOutputSize"
-	SettingNamePreferenceFeedOutputMode             = "feedOutputMode"
-	SettingNamePreferenceFooter                     = "footer"
-	SettingNamePreferenceHeader                     = "header"
-	SettingNamePreferenceLocale                     = "locale"
-	SettingNamePreferenceMetaDescription            = "metaDescription"
-	SettingNamePreferenceMetaKeywords               = "metaKeywords"
 	SettingNamePreferenceMostCommentArticleListSize = "mostCommentArticleListSize"
 	SettingNamePreferenceMostUseTagListSize         = "mostUseTagListSize"
 	SettingNamePreferenceMostViewArticleListSize    = "mostViewArticleListSize"
-	SettingNamePreferenceNoticeBoard                = "noticeBoard"
-	SettingNamePreferencePath                       = "path"
-	SettingNamePreferenceQiniuAK                    = "qiniuAK"
-	SettingNamePreferenceQiniuBucket                = "qiniuBucket"
-	SettingNamePreferenceQiniuDomain                = "qiniuDomain"
-	SettingNamePreferenceQiniuSK                    = "qiniuSK"
 	SettingNamePreferenceRandomArticleListSize      = "randomArticleListSize"
 	SettingNamePreferenceRecentCommentListSize      = "recentCommentListSize"
 	SettingNamePreferenceRelevantArticleListSize    = "relevantArticleListSize"
-	SettingNamePreferenceSign                       = "sign"
 	SettingNamePreferenceTheme                      = "theme"
-	SettingNamePreferenceTimezone                   = "timezone"
 	SettingNamePreferenceVer                        = "version"
 )
 
-// Setting names of category "statistic"
+// Setting names of category "sign".
+const (
+	SettingCategorySign = "sign"
+
+	SettingNameSignContent = "content"
+)
+
+// Setting names of category "i18n".
+const (
+	SettingCategoryI18n = "i18n"
+
+	SettingNameI18nLocale   = "locale"
+	SettingNameI18nTimezone = "timezone"
+)
+
+// Setting names of category "feed".
+const (
+	SettingCategoryFeed = "feed"
+
+	SettingNameFeedOutputSize = "outputSize"
+	SettingNameFeedOutputMode = "outputMode"
+)
+
+// Setting value of category "feed".
+const (
+	SettingFeedOutputModeValueAbstract = "abstract"
+	SettingFeedOutputModeValueFull     = "full"
+)
+
+// Setting names of category "statistic".
 const (
 	SettingCategoryStatistic = "statistic"
 
@@ -78,7 +104,4 @@ const (
 	SettingPreferenceArticleListStyleValueTitle         = "title"
 	SettingPreferenceArticleListStyleValueTitleAbstract = "titleAbstract"
 	SettingPreferenceArticleListStyleValueTitleContent  = "titleContent"
-
-	SettingPreferenceFeedOutputModeValueAbstract = "abstract"
-	SettingPreferenceFeedOutputModeValueFull     = "full"
 )

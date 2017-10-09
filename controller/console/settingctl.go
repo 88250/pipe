@@ -25,16 +25,37 @@ import (
 	"github.com/b3log/solo.go/service"
 	"github.com/b3log/solo.go/util"
 	"github.com/gin-gonic/gin"
+	log "github.com/sirupsen/logrus"
 )
 
-func UpdatePreferencesCtl(c *gin.Context) {
+func GetBasicSettingsCtl(c *gin.Context) {
 	result := util.NewResult()
 	defer c.JSON(http.StatusOK, result)
 
 	sessionData := util.GetSession(c)
+	basicSettings := service.Setting.GetAllSettings(sessionData.BID, model.SettingCategoryBasic)
+	data := map[string]interface{}{}
+	for _, setting := range basicSettings {
+		if model.SettingNameBasicCommentable == setting.Name {
+			v, err := strconv.ParseBool(setting.Value)
+			if nil != err {
+				log.Errorf("value of basic setting [name=%s] must be \"true\" or \"false\"", setting.Name)
+				data[setting.Name] = true
+			} else {
+				data[setting.Name] = v
+			}
+		} else {
+			data[setting.Name] = setting.Value
+		}
+	}
+	result.Data = data
+}
+
+func UpdateSettingsCtl(c *gin.Context) {
+	result := util.NewResult()
+	defer c.JSON(http.StatusOK, result)
 
 	args := map[string]interface{}{}
-
 	if err := c.BindJSON(&args); nil != err {
 		result.Code = -1
 		result.Msg = "parses update preferences request failed"
@@ -42,6 +63,7 @@ func UpdatePreferencesCtl(c *gin.Context) {
 		return
 	}
 
+	sessionData := util.GetSession(c)
 	prefs := []*model.Setting{}
 	for k, v := range args {
 		var value interface{}
@@ -62,7 +84,7 @@ func UpdatePreferencesCtl(c *gin.Context) {
 		prefs = append(prefs, pref)
 	}
 
-	if err := service.Preference.UpdatePreferences(prefs); nil != err {
+	if err := service.Setting.UpdatePreferences(prefs); nil != err {
 		result.Code = -1
 		result.Msg = err.Error()
 	}

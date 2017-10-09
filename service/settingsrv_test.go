@@ -22,8 +22,8 @@ import (
 	"github.com/b3log/solo.go/model"
 )
 
-func TestGetPreference(t *testing.T) {
-	setting := Preference.GetPreference(model.SettingNamePreferenceBlogTitle, 1)
+func TestGetSetting(t *testing.T) {
+	setting := Setting.GetSetting(model.SettingCategoryBasic, model.SettingNameBasicBlogTitle, 1)
 	if nil == setting {
 		t.Errorf("setting is nil")
 
@@ -35,8 +35,16 @@ func TestGetPreference(t *testing.T) {
 	}
 }
 
-func TestGetPreferences(t *testing.T) {
-	settings := Preference.GetPreferences(1, model.SettingNamePreferenceBlogTitle, model.SettingNamePreferenceBlogSubtitle)
+func TestGetAllSettings(t *testing.T) {
+	basicSettings := Setting.GetAllSettings(1, model.SettingCategoryBasic)
+	if 9 != len(basicSettings) {
+		t.Errorf("expected is [%d], actual is [%d]", 9, len(basicSettings))
+	}
+}
+
+func TestGetSettings(t *testing.T) {
+	settings := Setting.GetSettings(1, model.SettingCategoryBasic,
+		[]string{model.SettingNameBasicBlogTitle, model.SettingNameBasicBlogSubtitle})
 	if nil == settings {
 		t.Errorf("settings is nil")
 
@@ -48,26 +56,28 @@ func TestGetPreferences(t *testing.T) {
 		return
 	}
 
-	if "Solo.go 示例" != settings[model.SettingNamePreferenceBlogTitle].Value {
-		t.Errorf("expected is [%s], actual is [%s]", "Solo.go 示例", settings[model.SettingNamePreferenceBlogTitle].Value)
+	if "Solo.go 示例" != settings[model.SettingNameBasicBlogTitle].Value {
+		t.Errorf("expected is [%s], actual is [%s]", "Solo.go 示例", settings[model.SettingNameBasicBlogTitle].Value)
 	}
 }
 
 func TestUpdatePreferences(t *testing.T) {
-	settings := Preference.GetPreferences(1, model.SettingNamePreferenceBlogTitle, model.SettingNamePreferenceBlogSubtitle)
-	settings[model.SettingNamePreferenceBlogTitle].Value = "更新后的标题"
+	settings := Setting.GetSettings(1, model.SettingCategoryBasic,
+		[]string{model.SettingNameBasicBlogTitle, model.SettingNameBasicBlogSubtitle})
+	settings[model.SettingNameBasicBlogTitle].Value = "更新后的标题"
 	prefs := []*model.Setting{}
 	for _, setting := range settings {
 		prefs = append(prefs, setting)
 	}
-	if err := Preference.UpdatePreferences(prefs); nil != err {
+	if err := Setting.UpdatePreferences(prefs); nil != err {
 		t.Errorf("updates settings failed: " + err.Error())
 
 		return
 	}
 
-	settings = Preference.GetPreferences(1, model.SettingNamePreferenceBlogTitle, model.SettingNamePreferenceBlogSubtitle)
-	if "更新后的标题" != settings[model.SettingNamePreferenceBlogTitle].Value {
-		t.Errorf("expected is [%s], actual is [%s]", "更新后的标题", settings[model.SettingNamePreferenceBlogTitle].Value)
+	settings = Setting.GetSettings(1, model.SettingCategoryBasic,
+		[]string{model.SettingNameBasicBlogTitle, model.SettingNameBasicBlogSubtitle})
+	if "更新后的标题" != settings[model.SettingNameBasicBlogTitle].Value {
+		t.Errorf("expected is [%s], actual is [%s]", "更新后的标题", settings[model.SettingNameBasicBlogTitle].Value)
 	}
 }

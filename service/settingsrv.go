@@ -22,27 +22,37 @@ import (
 	"github.com/b3log/solo.go/model"
 )
 
-var Preference = &preferenceService{
+var Setting = &settingService{
 	mutex: &sync.Mutex{},
 }
 
-type preferenceService struct {
+type settingService struct {
 	mutex *sync.Mutex
 }
 
-func (srv *preferenceService) GetPreference(preferenceName string, blogID uint) *model.Setting {
+func (srv *settingService) GetSetting(category, name string, blogID uint) *model.Setting {
 	ret := &model.Setting{}
-	if nil != db.Where("name = ? AND category = ? AND blog_id = ?", preferenceName, model.SettingCategoryPreference, blogID).Find(ret).Error {
+	if nil != db.Where("category = ? AND name = ? AND blog_id = ?", category, name, blogID).Find(ret).Error {
 		return nil
 	}
 
 	return ret
 }
 
-func (srv *preferenceService) GetPreferences(blogID uint, preferenceNames ...string) map[string]*model.Setting {
+func (srv *settingService) GetAllSettings(blogID uint, category string) []*model.Setting {
+	ret := []*model.Setting{}
+
+	if nil != db.Where("category = ? AND blog_id = ?", category, blogID).Find(&ret).Error {
+		return nil
+	}
+
+	return ret
+}
+
+func (srv *settingService) GetSettings(blogID uint, category string, names []string) map[string]*model.Setting {
 	ret := map[string]*model.Setting{}
 	settings := []*model.Setting{}
-	if nil != db.Where("name IN (?) AND category = ? AND blog_id = ?", preferenceNames, model.SettingCategoryPreference, blogID).Find(&settings).Error {
+	if nil != db.Where("category = ? AND name IN (?) AND blog_id = ?", category, names, blogID).Find(&settings).Error {
 		return nil
 	}
 
@@ -53,7 +63,7 @@ func (srv *preferenceService) GetPreferences(blogID uint, preferenceNames ...str
 	return ret
 }
 
-func (srv *preferenceService) UpdatePreferences(prefs []*model.Setting) error {
+func (srv *settingService) UpdatePreferences(prefs []*model.Setting) error {
 	srv.mutex.Lock()
 	defer srv.mutex.Unlock()
 
