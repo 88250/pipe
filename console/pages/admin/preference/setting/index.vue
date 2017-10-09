@@ -10,8 +10,8 @@
           append-icon=""
         ></v-select>
         <v-text-field
-          :label="$t('timeZone', $store.state.locale)"
-          v-model="timeZone"
+          :label="$t('timezone', $store.state.locale)"
+          v-model="timezone"
           readonly
         ></v-text-field>
         <v-select
@@ -75,13 +75,6 @@
           :rules="requiredRules"
         ></v-text-field>
         <label class="checkbox">
-          <input type="checkbox"
-                 :checked="enableArticleUpdateHint"
-                 @click="enableArticleUpdateHint = !enableArticleUpdateHint"/><span
-          class="checkbox__icon"></span>
-          {{ $t('enableArticleUpdateHint', $store.state.locale) }}
-        </label> <br/>
-        <label class="checkbox">
           <input type="checkbox" :checked="commentable" @click="commentable = !commentable"/><span
           class="checkbox__icon"></span>
           {{ $t('allowComment', $store.state.locale) }}
@@ -126,7 +119,7 @@
           'text': 'English(US)',
           'value': 'en_US'
         }],
-        timeZone: 'Asia/Shanghai',
+        timezone: 'Asia/Shanghai',
         articleListStyle: 'title',
         articleListStyleItems: [{
           'text': this.$t('title', this.$store.state.locale),
@@ -147,7 +140,6 @@
         randomArticleListSize: 10,
         relevantArticleListSize: 10,
         externalRelevantArticleListSize: 10,
-        enableArticleUpdateHint: true,
         commentable: true,
         feedOutputMode: 'abstract',
         feedOutputModeItems: [{
@@ -174,7 +166,7 @@
         }
         const responseData = await this.axios.post('/console/preferences', {
           locale: this.locale,
-          timeZone: this.timeZone,
+          timezone: this.timezone,
           articleListStyle: this.articleListStyle,
           mostUseTagListSize: this.mostUseTagListSize,
           recentCommentListSize: this.recentCommentListSize,
@@ -185,7 +177,6 @@
           randomArticleListSize: this.randomArticleListSize,
           relevantArticleListSize: this.relevantArticleListSize,
           externalRelevantArticleListSize: this.externalRelevantArticleListSize,
-          enableArticleUpdateHint: this.enableArticleUpdateHint,
           feedOutputMode: this.feedOutputMode,
           feedOutputCnt: this.feedOutputCnt,
           commentable: this.commentable
@@ -211,7 +202,7 @@
       const responseData = await this.axios.get('/console/preferences')
       if (responseData) {
         this.$set(this, 'locale', responseData.locale)
-        this.$set(this, 'timeZone', responseData.timeZone)
+        this.$set(this, 'timezone', responseData.timezone)
         this.$set(this, 'articleListStyle', responseData.articleListStyle)
         this.$set(this, 'mostUseTagListSize', responseData.mostUseTagListSize)
         this.$set(this, 'recentCommentListSize', responseData.recentCommentListSize)
@@ -222,7 +213,6 @@
         this.$set(this, 'randomArticleListSize', responseData.randomArticleListSize)
         this.$set(this, 'relevantArticleListSize', responseData.relevantArticleListSize)
         this.$set(this, 'externalRelevantArticleListSize', responseData.externalRelevantArticleListSize)
-        this.$set(this, 'enableArticleUpdateHint', responseData.enableArticleUpdateHint)
         this.$set(this, 'feedOutputMode', responseData.feedOutputMode)
         this.$set(this, 'feedOutputCnt', responseData.feedOutputCnt)
         this.$set(this, 'commentable', responseData.commentable)

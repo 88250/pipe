@@ -10,8 +10,8 @@
           required
         ></v-text-field>
         <v-text-field
-          :label="$t('timeZone', $store.state.locale)"
-          v-model="timeZone"
+          :label="$t('timezone', $store.state.locale)"
+          v-model="timezone"
           :counter="32"
           required
         ></v-text-field>
@@ -98,7 +98,7 @@
     data () {
       return {
         locale: '',
-        timeZone: '',
+        timezone: '',
         articleListStyle: '',
         mostUseTagListSize: '',
         recentCommentListSize: '',
