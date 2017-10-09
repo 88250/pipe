@@ -154,3 +154,40 @@ func UpdatePreferenceSettingsCtl(c *gin.Context) {
 		result.Msg = err.Error()
 	}
 }
+
+func GetSignSettingsCtl(c *gin.Context) {
+	result := util.NewResult()
+	defer c.JSON(http.StatusOK, result)
+
+	sessionData := util.GetSession(c)
+	signSetting := service.Setting.GetSetting(model.SettingCategorySign, model.SettingNameSignContent, sessionData.BID)
+	result.Data = signSetting.Value
+}
+
+func UpdateSignSettingsCtl(c *gin.Context) {
+	result := util.NewResult()
+	defer c.JSON(http.StatusOK, result)
+
+	args := map[string]interface{}{}
+	if err := c.BindJSON(&args); nil != err {
+		result.Code = -1
+		result.Msg = "parses update preference settings request failed"
+
+		return
+	}
+
+	sessionData := util.GetSession(c)
+	signs := []*model.Setting{}
+	sign := &model.Setting{
+		Category: model.SettingCategorySign,
+		BlogID:   sessionData.BID,
+		Name:     model.SettingNameSignContent,
+		Value:    args["sign"].(string),
+	}
+	signs = append(signs, sign)
+
+	if err := service.Setting.UpdateSettings(model.SettingCategorySign, signs); nil != err {
+		result.Code = -1
+		result.Msg = err.Error()
+	}
+}
