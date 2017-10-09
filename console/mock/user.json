@@ -2,10 +2,11 @@
   "code": 0,
   "msg": "",
   "data": {
-    "title": "世界，你好！",
-    "permalink": "lift",
-    "iconURL": "https://static.hacpai.com/images/tags/b3log.png",
-    "openMethod": "_blank",
-    "number": 1
+    "name": "Liyuan Li",
+    "nickname": "Vanessa",
+    "email": "lly219@gmail.com",
+    "role": 1,
+    "avatarURL": "https://static.hacpai.com/images/tags/b3log.png",
+    "password": "111"
   }
 }

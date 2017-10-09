@@ -1,5 +1,8 @@
 <template>
   <div class="card fn-clear">
+    <div class="fn-clear card__body">
+      <nuxt-link to="/admin/articles/post" class="btn btn--success fn-right">{{ $t('new', $store.state.locale) }}</nuxt-link>
+    </div>
     <ul class="list">
       <li v-for="item in list" :key="item.id" class="fn-flex">
         <div v-if="userCount > 1">

@@ -4,19 +4,21 @@
       <user v-if="showForm" :show.sync="showForm" @addSuccess="addSuccess" :id="editId"></user>
 
       <div v-show="!showForm" class="card__body fn-clear">
-        <button class="btn btn--success fn-right" @click="edit('')">{{ $t('new', $store.state.locale) }}</button>
+        <v-btn class="btn btn--success fn-right" @click="edit('')">{{ $t('new', $store.state.locale) }}</v-btn>
       </div>
+
       <ul class="list">
         <li v-for="item in list" :key="item.id" class="fn-flex">
+          <div class="avatar avatar--mid avatar--space" :style="`background-image: url(${item.avatarURL})`"></div>
           <div class="fn-flex-1">
             <div class="list__title">
-              <div class="avatar avatar--small" :style="`background-image: url(${item.iconURL})`"></div>
-              <nuxt-link target="_blank" :to="`${$store.state.blogPath}/${item.permalink}`">
-                {{ item.title }}
-              </nuxt-link>
+              {{ item.name }} /
+              <small>{{ item.nickname }}</small>
             </div>
             <div class="list__meta">
-              {{ $t('openMethod', $store.state.locale) }} {{ item.openMethod }}
+              {{ item.email }}  •
+              {{ item.PublishedArticleCount }} {{ $t('article', $store.state.locale) }} •
+              {{ item.role }}
             </div>
           </div>
           <v-menu
@@ -26,10 +28,10 @@
             :nudge-width="100"
             :open-on-hover="true">
             <v-toolbar-title slot="activator">
-              <button class="btn btn--info" @click="edit(item.id)">
+              <v-btn class="btn btn--info" @click="edit(item.id)">
                 {{ $t('edit', $store.state.locale) }}
                 <icon icon="chevron-down"/>
-              </button>
+              </v-btn>
             </v-toolbar-title>
             <v-list>
               <v-list-tile>
@@ -77,12 +79,12 @@
     },
     head () {
       return {
-        title: `${this.$store.state.blogTitle} - ${this.$t('navigationList', this.$store.state.locale)}`
+        title: `${this.$store.state.blogTitle} - ${this.$t('userList', this.$store.state.locale)}`
       }
     },
     methods: {
       async getList (currentPage) {
-        const responseData = await this.axios.get(`/console/navigations?p=${currentPage}`)
+        const responseData = await this.axios.get(`/console/users?p=${currentPage}`)
         if (responseData) {
           this.$set(this, 'list', responseData.navigation)
           this.$set(this, 'currentPageNum', responseData.pagination.currentPageNum)
@@ -91,7 +93,7 @@
         }
       },
       async remove (id) {
-        const responseData = await this.axios.delete(`/console/navigations/${id}`)
+        const responseData = await this.axios.delete(`/console/users/${id}`)
         if (responseData === null) {
           this.$store.commit('setSnackBar', {
             snackBar: true,

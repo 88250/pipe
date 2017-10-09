@@ -86,13 +86,13 @@
         },
         {
           title: app.$t('blogManage', locale),
-          link: '/admin/blog/management',
+          link: '/admin/blogs/management',
           role: 0
         },
         {
           title: app.$t('others', locale),
           link: '/admin/others/management',
-          role: 1
+          role: 2
         }
       ]
     },
@@ -103,7 +103,7 @@
       role: 1,
       items: [
         {
-          title: app.$t('configuration', locale),
+          title: app.$t('baseInfo', locale),
           link: '/admin/configurations/setting',
           role: 1
         },
@@ -113,13 +113,8 @@
           role: 1
         },
         {
-          title: app.$t('parameters', locale),
-          link: '/admin/parameters/setting',
-          role: 1
-        },
-        {
-          title: app.$t('upload', locale),
-          link: '/admin/upload/setting',
+          title: app.$t('preference', locale),
+          link: '/admin/preference/setting',
           role: 1
         }
       ]

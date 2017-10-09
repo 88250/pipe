@@ -52,3 +52,20 @@ func (srv *preferenceService) GetPreferences(blogID uint, preferenceNames ...str
 
 	return ret
 }
+
+func (srv *preferenceService) UpdatePreferences(prefs []*model.Setting) error {
+	srv.mutex.Lock()
+	defer srv.mutex.Unlock()
+
+	tx := db.Begin()
+	for _, pref := range prefs {
+		if err := db.Model(&model.Setting{}).Where("name = ?", pref.Name).Updates(pref).Error; nil != err {
+			tx.Rollback()
+
+			return err
+		}
+	}
+	tx.Commit()
+
+	return nil
+}

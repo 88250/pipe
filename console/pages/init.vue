@@ -36,7 +36,7 @@
             </div>
           </a>
         </div>
-        <button class="btn btn--info fn-right" @click="step = 2">{{ $t('nextStep', $store.state.locale) }}</button>
+        <v-btn class="btn btn--info fn-right" @click="step = 2">{{ $t('nextStep', $store.state.locale) }}</v-btn>
       </v-stepper-content>
 
       <v-stepper-content step="2" class="fn-clear">
@@ -67,8 +67,8 @@
           </div>
         </v-form>
         <div class="fn-right">
-          <button class="btn btn--info" @click="step = 1">{{ $t('preStep', $store.state.locale) }}</button>
-          <button class="btn btn--success btn--space" @click="checkHP">{{ $t('confirm', $store.state.locale) }}</button>
+          <v-btn class="btn btn--info" @click="step = 1">{{ $t('preStep', $store.state.locale) }}</v-btn>
+          <v-btn class="btn btn--success btn--space" @click="checkHP">{{ $t('confirm', $store.state.locale) }}</v-btn>
         </div>
       </v-stepper-content>
 
@@ -104,8 +104,8 @@
           </div>
         </v-form>
         <div class="fn-right">
-          <button class="btn btn--info" @click="step = 2">{{ $t('preStep', $store.state.locale) }}</button>
-          <button class="btn btn--success btn--space" @click="init">{{ $t('confirm', $store.state.locale) }}</button>
+          <v-btn class="btn btn--info" @click="step = 2">{{ $t('preStep', $store.state.locale) }}</v-btn>
+          <v-btn class="btn btn--success btn--space" @click="init">{{ $t('confirm', $store.state.locale) }}</v-btn>
         </div>
       </v-stepper-content>
 

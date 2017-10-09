@@ -413,6 +413,10 @@ blockquote {
     background-color: $red;
     color: #fff;
   }
+
+  &--space {
+    margin-bottom: 30px;
+  }
 }
 
 // alert

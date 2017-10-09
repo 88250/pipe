@@ -20,11 +20,11 @@
           </div>
         </div>
         <div>
-          <button
+          <v-btn
             v-if="$store.state.name === item.author.name || $store.state.role < 2"
             class="btn btn--danger"
             @click="remove(item.id)">{{ $t('delete', $store.state.locale) }}
-          </button>
+          </v-btn>
         </div>
       </li>
     </ul>

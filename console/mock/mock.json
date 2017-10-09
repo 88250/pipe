@@ -197,6 +197,83 @@
         }
       }
     },
+    "console/blogs": {
+      "verbs": [
+        "get",
+        "post"
+      ],
+      "responses": {
+        "post": {
+          "mockFile": "success.json"
+        },
+        "get": {
+          "mockFile": "blogList.json"
+        }
+      }
+    },
+    "console/blogs/:id": {
+      "verbs": [
+        "delete",
+        "put",
+        "get"
+      ],
+      "responses": {
+        "delete": {
+          "mockFile": "success.json"
+        },
+        "put": {
+          "mockFile": "error.json"
+        },
+        "get": {
+          "mockFile": "blog.json"
+        }
+      }
+    },
+    "console/preferences": {
+      "verbs": [
+        "get", "post"
+      ],
+      "responses": {
+        "post": {
+          "mockFile": "success.json"
+        },
+        "get": {
+          "mockFile": "preference.json"
+        }
+      }
+    },
+    "console/configurations": {
+      "verbs": [
+        "get", "post"
+      ],
+      "responses": {
+        "post": {
+          "mockFile": "success.json"
+        },
+        "get": {
+          "mockFile": "configuration.json"
+        }
+      }
+    },
+    "console/signs": {
+      "verbs": [
+        "get", "post"
+      ],
+      "responses": {
+        "post": {
+          "mockFile": "success.json"
+        },
+        "get": {
+          "mockFile": "sign.json"
+        }
+      }
+    },
+    "console/b3log-key": {
+      "verbs": [
+        "get"
+      ],
+      "mockFile": "sign.json"
+    },
     "hp/apis/check-account": {
       "verbs": [
         "post"
