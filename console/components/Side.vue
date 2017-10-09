@@ -88,36 +88,47 @@
           title: app.$t('blogManage', locale),
           link: '/admin/blogs/management',
           role: 0
-        },
-        {
-          title: app.$t('others', locale),
-          link: '/admin/others/management',
-          role: 2
         }
       ]
     },
     {
       title: app.$t('setting', locale),
       icon: 'setting',
-      active: app.$route.path.indexOf('setting') > -1,
+      active: app.$route.path.indexOf('settings') > -1,
       role: 1,
       items: [
         {
           title: app.$t('baseInfo', locale),
-          link: '/admin/configurations/setting',
-          role: 1
-        },
-        {
-          title: app.$t('signs', locale),
-          link: '/admin/signs/setting',
+          link: '/admin/settings/basic',
           role: 1
         },
         {
           title: app.$t('preference', locale),
-          link: '/admin/preference/setting',
+          link: '/admin/settings/preference',
+          role: 1
+        },
+        {
+          title: app.$t('signs', locale),
+          link: '/admin/settings/sign',
+          role: 1
+        },
+        {
+          title: app.$t('internationalization', locale),
+          link: '/admin/settings/internationalization',
+          role: 1
+        },
+        {
+          title: app.$t('feed', locale),
+          link: '/admin/settings/feed',
           role: 1
         }
       ]
+    },
+    {
+      title: app.$t('others', locale),
+      icon: 'inbox',
+      link: '/admin/others/management',
+      role: 2
     },
     {
       title: app.$t('about', locale),

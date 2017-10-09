@@ -229,7 +229,7 @@
         }
       }
     },
-    "console/preferences": {
+    "console/settings/preference": {
       "verbs": [
         "get", "post"
       ],
@@ -242,7 +242,7 @@
         }
       }
     },
-    "console/configurations": {
+    "console/settings/basic": {
       "verbs": [
         "get", "post"
       ],
@@ -251,11 +251,11 @@
           "mockFile": "success.json"
         },
         "get": {
-          "mockFile": "configuration.json"
+          "mockFile": "basic.json"
         }
       }
     },
-    "console/signs": {
+    "console/settings/sign": {
       "verbs": [
         "get", "post"
       ],
@@ -265,6 +265,32 @@
         },
         "get": {
           "mockFile": "sign.json"
+        }
+      }
+    },
+    "console/settings/internationalization": {
+      "verbs": [
+        "get", "post"
+      ],
+      "responses": {
+        "post": {
+          "mockFile": "success.json"
+        },
+        "get": {
+          "mockFile": "internationalization.json"
+        }
+      }
+    },
+    "console/settings/feed": {
+      "verbs": [
+        "get", "post"
+      ],
+      "responses": {
+        "post": {
+          "mockFile": "success.json"
+        },
+        "get": {
+          "mockFile": "feed.json"
         }
       }
     },

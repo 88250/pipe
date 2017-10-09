@@ -31,6 +31,11 @@
           :label="$t('noticeBoard', $store.state.locale)"
           v-model="noticeBoard"
         ></v-text-field>
+        <label class="checkbox">
+          <input type="checkbox" :checked="commentable" @click="commentable = !commentable"/><span
+          class="checkbox__icon"></span>
+          {{ $t('allowComment', $store.state.locale) }}
+        </label>
 
         <div class="alert alert--danger" v-show="error">
           <icon icon="danger"/>
@@ -55,6 +60,7 @@
         metaKeywords: '',
         metaDescription: '',
         noticeBoard: '',
+        commentable: true,
         error: false,
         errorMsg: ''
       }
@@ -66,14 +72,15 @@
     },
     methods: {
       async update () {
-        const responseData = await this.axios.post('/console/configurations', {
+        const responseData = await this.axios.post('/console/settings/basic', {
           blogTitle: this.blogTitle,
           blogSubtitle: this.blogSubtitle,
           header: this.header,
           footer: this.footer,
           metaKeywords: this.metaKeywords,
           metaDescription: this.metaDescription,
-          noticeBoard: this.noticeBoard
+          noticeBoard: this.noticeBoard,
+          commentable: this.commentable
         })
 
         if (responseData.code === 0) {
@@ -93,7 +100,7 @@
       }
     },
     async mounted () {
-      const responseData = await this.axios.get('/console/configurations')
+      const responseData = await this.axios.get('/console/settings/basic')
       if (responseData) {
         this.$set(this, 'blogTitle', responseData.blogTitle)
         this.$set(this, 'blogSubtitle', responseData.blogSubtitle)
@@ -102,6 +109,7 @@
         this.$set(this, 'metaKeywords', responseData.metaKeywords)
         this.$set(this, 'metaDescription', responseData.metaDescription)
         this.$set(this, 'noticeBoard', responseData.noticeBoard)
+        this.$set(this, 'commentable', responseData.commentable)
       }
     }
   }

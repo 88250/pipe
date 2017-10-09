@@ -2,19 +2,18 @@
   <div>
     <div class="card fn-clear card__body">
 
-      <v-form ref="form">
+      <v-form>
+        <v-select
+          :label="$t('language', $store.state.locale)"
+          :items="localeItems"
+          v-model="locale"
+          append-icon=""
+        ></v-select>
         <v-text-field
-          :label="$t('signs', $store.state.locale)"
-          v-model="sign"
-          multi-line
-          @keyup.ctrl.13="update"
-          @keyup.meta.13="update"
+          :label="$t('timezone', $store.state.locale)"
+          v-model="timezone"
+          readonly
         ></v-text-field>
-
-        <div class="alert alert--danger" v-show="error">
-          <icon icon="danger"/>
-          <span>{{ errorMsg }}</span>
-        </div>
       </v-form>
 
       <v-btn class="fn-right btn btn--margin-t30 btn--info btn--space" @click="update">
@@ -28,23 +27,29 @@
   export default {
     data () {
       return {
-        sign: '',
+        locale: this.$store.state.locale,
+        localeItems: [{
+          'text': '简体中文',
+          'value': 'zh_CN'
+        }, {
+          'text': 'English(US)',
+          'value': 'en_US'
+        }],
+        timezone: 'Asia/Shanghai',
         error: false,
         errorMsg: ''
       }
     },
     head () {
       return {
-        title: `${this.$store.state.blogTitle} - ${this.$t('signs', this.$store.state.locale)}`
+        title: `${this.$store.state.blogTitle} - ${this.$t('internationalization', this.$store.state.locale)}`
       }
     },
     methods: {
       async update () {
-        if (!this.$refs.form.validate()) {
-          return
-        }
-        const responseData = await this.axios.post('/console/signs', {
-          sign: this.sign
+        const responseData = await this.axios.post('/console/settings/internationalization', {
+          locale: this.locale,
+          timezone: this.timezone
         })
 
         if (responseData.code === 0) {
@@ -62,9 +67,10 @@
       }
     },
     async mounted () {
-      const responseData = await this.axios.get('/console/signs')
+      const responseData = await this.axios.get('/console/settings/internationalization')
       if (responseData) {
-        this.$set(this, 'sign', responseData)
+        this.$set(this, 'locale', responseData.locale)
+        this.$set(this, 'timezone', responseData.timezone)
       }
     }
   }

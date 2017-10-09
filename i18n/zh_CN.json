@@ -11,9 +11,9 @@
   "userList": "用户管理",
   "others": "其他",
   "setting": "设置",
-  "baseInfo": "基本信息",
+  "baseInfo": "基本配置",
   "signs": "签名档",
-  "preference": "偏好设置",
+  "preference": "偏好设定",
   "qiniu": "七牛",
   "upload": "上传",
   "uploadConfig": "上传配置",
@@ -111,5 +111,7 @@
   "staticBlog": "静态博客",
   "blogPath": "博客路径",
   "blogMember": "博客成员",
-  "blogAdmin": "博客管理员"
+  "blogAdmin": "博客管理员",
+  "internationalization": "国际化",
+  "feed": "订阅"
 }

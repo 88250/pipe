@@ -1,0 +1,8 @@
+{
+  "code": 0,
+  "msg": "",
+  "data": {
+    "feedOutputMode": "full",
+    "feedOutputCnt": 10
+  }
+}

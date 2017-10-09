@@ -2,8 +2,6 @@
   "code": 0,
   "msg": "",
   "data": {
-    "locale": "zh_CN",
-    "timezone": "Asia/Shanghai",
     "articleListStyle": "title",
     "mostUseTagListSize": 1,
     "recentCommentListSize": 2,
@@ -13,9 +11,6 @@
     "articleListWindowSize": 6,
     "randomArticleListSize": 7,
     "relevantArticleListSize": 8,
-    "externalRelevantArticleListSize": 9,
-    "feedOutputMode": "full",
-    "feedOutputCnt": 10,
-    "commentable": false
+    "externalRelevantArticleListSize": 9
   }
 }

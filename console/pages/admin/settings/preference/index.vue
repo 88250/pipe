@@ -4,17 +4,6 @@
 
       <v-form ref="form">
         <v-select
-          :label="$t('language', $store.state.locale)"
-          :items="localeItems"
-          v-model="locale"
-          append-icon=""
-        ></v-select>
-        <v-text-field
-          :label="$t('timezone', $store.state.locale)"
-          v-model="timezone"
-          readonly
-        ></v-text-field>
-        <v-select
           :label="$t('articleListStyle', $store.state.locale)"
           v-model="articleListStyle"
           :items="articleListStyleItems"
@@ -74,23 +63,6 @@
           required
           :rules="requiredRules"
         ></v-text-field>
-        <label class="checkbox">
-          <input type="checkbox" :checked="commentable" @click="commentable = !commentable"/><span
-          class="checkbox__icon"></span>
-          {{ $t('allowComment', $store.state.locale) }}
-        </label>
-        <v-select
-          :label="$t('feedOutputMode', $store.state.locale)"
-          v-model="feedOutputMode"
-          :items="feedOutputModeItems"
-          append-icon=""
-        ></v-select>
-        <v-text-field
-          :label="$t('feedOutputCnt', $store.state.locale)"
-          v-model="feedOutputCnt"
-          required
-          :rules="requiredRules"
-        ></v-text-field>
 
         <div class="alert alert--danger" v-show="error">
           <icon icon="danger"/>
@@ -111,15 +83,6 @@
         requiredRules: [
           (v) => /^\d+$/.test(v) || this.$t('validateRule3', this.$store.state.locale)
         ],
-        locale: this.$store.state.locale,
-        localeItems: [{
-          'text': '简体中文',
-          'value': 'zh_CN'
-        }, {
-          'text': 'English(US)',
-          'value': 'en_US'
-        }],
-        timezone: 'Asia/Shanghai',
         articleListStyle: 'title',
         articleListStyleItems: [{
           'text': this.$t('title', this.$store.state.locale),
@@ -140,16 +103,6 @@
         randomArticleListSize: 10,
         relevantArticleListSize: 10,
         externalRelevantArticleListSize: 10,
-        commentable: true,
-        feedOutputMode: 'abstract',
-        feedOutputModeItems: [{
-          'text': `${this.$t('abstract', this.$store.state.locale)}`,
-          'value': 'abstract'
-        }, {
-          'text': `${this.$t('fullArticle', this.$store.state.locale)}`,
-          'value': 'full'
-        }],
-        feedOutputCnt: 10,
         error: false,
         errorMsg: ''
       }
@@ -164,9 +117,7 @@
         if (!this.$refs.form.validate()) {
           return
         }
-        const responseData = await this.axios.post('/console/preferences', {
-          locale: this.locale,
-          timezone: this.timezone,
+        const responseData = await this.axios.post('/console/settings/preference', {
           articleListStyle: this.articleListStyle,
           mostUseTagListSize: this.mostUseTagListSize,
           recentCommentListSize: this.recentCommentListSize,
@@ -176,10 +127,7 @@
           articleListWindowSize: this.articleListWindowSize,
           randomArticleListSize: this.randomArticleListSize,
           relevantArticleListSize: this.relevantArticleListSize,
-          externalRelevantArticleListSize: this.externalRelevantArticleListSize,
-          feedOutputMode: this.feedOutputMode,
-          feedOutputCnt: this.feedOutputCnt,
-          commentable: this.commentable
+          externalRelevantArticleListSize: this.externalRelevantArticleListSize
         })
 
         if (responseData.code === 0) {
@@ -199,10 +147,8 @@
       }
     },
     async mounted () {
-      const responseData = await this.axios.get('/console/preferences')
+      const responseData = await this.axios.get('/console/settings/preference')
       if (responseData) {
-        this.$set(this, 'locale', responseData.locale)
-        this.$set(this, 'timezone', responseData.timezone)
         this.$set(this, 'articleListStyle', responseData.articleListStyle)
         this.$set(this, 'mostUseTagListSize', responseData.mostUseTagListSize)
         this.$set(this, 'recentCommentListSize', responseData.recentCommentListSize)
@@ -213,9 +159,6 @@
         this.$set(this, 'randomArticleListSize', responseData.randomArticleListSize)
         this.$set(this, 'relevantArticleListSize', responseData.relevantArticleListSize)
         this.$set(this, 'externalRelevantArticleListSize', responseData.externalRelevantArticleListSize)
-        this.$set(this, 'feedOutputMode', responseData.feedOutputMode)
-        this.$set(this, 'feedOutputCnt', responseData.feedOutputCnt)
-        this.$set(this, 'commentable', responseData.commentable)
       }
     }
   }
