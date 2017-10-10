@@ -27,11 +27,25 @@ type Setting struct {
 	BlogID uint `json:"blogID"`
 }
 
+// Setting names of category "system".
+const (
+	SettingCategorySystem = "system"
+
+	SettingNameSystemPath = "path"
+	SettingNameSystemVer  = "version"
+)
+
+// Setting names of category "theme".
+const (
+	SettingCategoryTheme = "theme"
+
+	SettingNameThemeName = "name"
+)
+
 // Setting names of catgory "basic".
 const (
 	SettingCategoryBasic = "basic"
 
-	SettingNameBasicPath            = "path"
 	SettingNameBasicBlogSubtitle    = "blogSubtitle"
 	SettingNameBasicBlogTitle       = "blogTitle"
 	SettingNameBasicCommentable     = "commentable"
@@ -64,7 +78,7 @@ const (
 const (
 	SettingCategorySign = "sign"
 
-	SettingNameSignContent = "content"
+	SettingNameArticleSign = "articleSign"
 )
 
 // Setting names of category "i18n".

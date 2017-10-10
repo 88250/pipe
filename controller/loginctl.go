@@ -59,18 +59,27 @@ func loginCtl(c *gin.Context) {
 		return
 	}
 
-	settings := service.Setting.GetSettings(user.BlogID, model.SettingCategoryBasic,
-		[]string{model.SettingNameBasicBlogTitle, model.SettingNameBasicPath})
-	if 1 > len(settings) {
+	blogTitleSetting := service.Setting.GetSetting(model.SettingCategoryBasic, model.SettingNameBasicBlogTitle, user.BlogID)
+	if nil == blogTitleSetting {
 		result.Code = -1
-		result.Msg = fmt.Sprint("not found blog settings [blogID=%d]", user.BlogID)
+		result.Msg = fmt.Sprintf("not found blog title settings [blogID=%d]", user.BlogID)
+
+		return
+	}
+
+	pathSetting := service.Setting.GetSetting(model.SettingCategorySystem, model.SettingNameSystemPath, user.BlogID)
+	if nil == pathSetting {
+		result.Code = -1
+		result.Msg = fmt.Sprintf("not found path settings [blogID=%d]", user.BlogID)
+
+		return
 	}
 
 	data := map[string]interface{}{}
 	data["name"] = user.Name
 	data["nickname"] = user.Nickname
-	data["blogTitle"] = settings[model.SettingNameBasicBlogTitle].Value
-	data["blogPath"] = settings[model.SettingNameBasicPath].Value
+	data["blogTitle"] = blogTitleSetting.Value
+	data["blogPath"] = pathSetting.Value
 	data["role"] = user.Role
 	blogs := service.User.GetUserBlogs(user.ID)
 	if 1 > len(blogs) {
@@ -85,7 +94,7 @@ func loginCtl(c *gin.Context) {
 		UName: user.Name,
 		URole: user.Role,
 		BID:   user.BlogID,
-		BPath: settings[model.SettingNameBasicPath].Value,
+		BPath: pathSetting.Value,
 	}
 	if err := sessionData.Save(c); nil != err {
 		result.Code = -1

@@ -48,7 +48,7 @@ func GetBasicSettingsCtl(c *gin.Context) {
 			data[setting.Name] = setting.Value
 		}
 	}
-	delete(data, model.SettingNameBasicPath)
+
 	result.Data = data
 }
 
@@ -110,8 +110,7 @@ func GetPreferenceSettingsCtl(c *gin.Context) {
 			data[setting.Name] = setting.Value
 		}
 	}
-	delete(data, model.SettingNamePreferenceTheme)
-	delete(data, model.SettingNamePreferenceVer)
+
 	result.Data = data
 }
 
@@ -158,7 +157,7 @@ func GetSignSettingsCtl(c *gin.Context) {
 	defer c.JSON(http.StatusOK, result)
 
 	sessionData := util.GetSession(c)
-	signSetting := service.Setting.GetSetting(model.SettingCategorySign, model.SettingNameSignContent, sessionData.BID)
+	signSetting := service.Setting.GetSetting(model.SettingCategorySign, model.SettingNameArticleSign, sessionData.BID)
 	result.Data = signSetting.Value
 }
 
@@ -179,7 +178,7 @@ func UpdateSignSettingsCtl(c *gin.Context) {
 	sign := &model.Setting{
 		Category: model.SettingCategorySign,
 		BlogID:   sessionData.BID,
-		Name:     model.SettingNameSignContent,
+		Name:     model.SettingNameArticleSign,
 		Value:    args["sign"].(string),
 	}
 	signs = append(signs, sign)

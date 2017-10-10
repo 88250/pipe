@@ -70,18 +70,24 @@ func (srv *userService) GetUserBlogs(userID uint) []*UserBlog {
 
 	ret := []*UserBlog{}
 	for _, rel := range correlations {
-		basics := Setting.GetSettings(rel.ID1, model.SettingCategoryBasic,
-			[]string{model.SettingNameBasicBlogTitle, model.SettingNameBasicPath})
-		if nil == basics {
-			log.Errorf("not found basic settings [blogID=%d]", rel.ID1)
+		blogTitleSetting := Setting.GetSetting(model.SettingCategoryBasic, model.SettingNameBasicBlogTitle, rel.ID1)
+		if nil == blogTitleSetting {
+			log.Errorf("not found blog title settings [blogID=%d]", rel.ID1)
+
+			continue
+		}
+
+		pathSetting := Setting.GetSetting(model.SettingCategorySystem, model.SettingNameSystemPath, rel.ID1)
+		if nil == pathSetting {
+			log.Errorf("not found path settings [blogID=%d]", rel.ID1)
 
 			continue
 		}
 
 		blog := &UserBlog{
 			ID:       rel.ID1,
-			Title:    basics[model.SettingNameBasicBlogTitle].Value,
-			Path:     basics[model.SettingNameBasicPath].Value,
+			Title:    blogTitleSetting.Value,
+			Path:     pathSetting.Value,
 			UserID:   userID,
 			UserRole: model.UserRoleBlogUser,
 		}
