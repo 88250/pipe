@@ -85,6 +85,7 @@
         overflow: hidden
         margin-bottom: 15px
         position: relative
+        min-height: 250px
         &:hover
           .theme__overlay
             opacity: 1
