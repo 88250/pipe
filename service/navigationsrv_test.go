@@ -18,6 +18,8 @@ package service
 
 import (
 	"testing"
+
+	"github.com/b3log/solo.go/model"
 )
 
 func TestConsoleGetNavigations(t *testing.T) {
@@ -41,5 +43,80 @@ func TestConsoleGetNavigation(t *testing.T) {
 
 	if 1 != navigation.ID {
 		t.Errorf("id is not [1]")
+	}
+}
+
+func TestConsoleAddNavigation(t *testing.T) {
+	navigation := &model.Navigation{
+		Title:      "测试添加的导航",
+		URL:        "http://b3log.org",
+		IconURL:    "图标 URL",
+		OpenMethod: model.NavigationOpenMethodBlank,
+		Number:     3,
+		BlogID:     1,
+	}
+
+	if err := Navigation.ConsoleAddNavigation(navigation); nil != err {
+		t.Errorf("add navigation failed: " + err.Error())
+
+		return
+	}
+
+	navigation = Navigation.ConsoleGetNavigation(navigation.ID)
+	if nil == navigation {
+		t.Errorf("navigation is nil")
+
+		return
+	}
+
+	if 2 != navigation.ID {
+		t.Errorf("id is not [2]")
+	}
+}
+
+func TestConsoleUpdateNavigation(t *testing.T) {
+	navigation := Navigation.ConsoleGetNavigation(2)
+	if nil == navigation {
+		t.Errorf("navigation is nil")
+
+		return
+	}
+
+	navigation.Title = "更新后的导航标题"
+	if err := Navigation.ConsoleUpdateNavigation(navigation); nil != err {
+		t.Errorf("update navigation failed: " + err.Error())
+
+		return
+	}
+
+	navigation = Navigation.ConsoleGetNavigation(2)
+	if nil == navigation {
+		t.Errorf("navigation is nil")
+
+		return
+	}
+
+	if "更新后的导航标题" != navigation.Title {
+		t.Errorf("expected is [%s], actual is [%s]", "更新后的导航标题", navigation.Title)
+	}
+}
+
+func TestConsoleRemoveNavigation(t *testing.T) {
+	navigation := Navigation.ConsoleGetNavigation(2)
+	if nil == navigation {
+		t.Errorf("navigation is nil")
+
+		return
+	}
+
+	if err := Navigation.ConsoleRemoveNavigation(2); nil != err {
+		t.Errorf("remove navigation failed: " + err.Error())
+
+		return
+	}
+
+	navigation = Navigation.ConsoleGetNavigation(2)
+	if nil != navigation {
+		t.Errorf("expected is [nil], actual is [%v]", navigation)
 	}
 }

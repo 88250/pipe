@@ -17,6 +17,8 @@
 package service
 
 import (
+	"errors"
+	"fmt"
 	"math"
 	"sync"
 
@@ -37,6 +39,60 @@ const (
 	adminConsoleNavigationListPageSize    = 15
 	adminConsoleNavigationListWindowsSize = 20
 )
+
+func (srv *navigationService) ConsoleAddNavigation(navigation *model.Navigation) error {
+	srv.mutex.Lock()
+	defer srv.mutex.Unlock()
+
+	tx := db.Begin()
+	if err := tx.Create(navigation).Error; nil != err {
+		tx.Rollback()
+
+		return err
+	}
+	tx.Commit()
+
+	return nil
+}
+
+func (srv *navigationService) ConsoleRemoveNavigation(id uint) error {
+	srv.mutex.Lock()
+	defer srv.mutex.Unlock()
+
+	navigation := &model.Navigation{
+		Model: model.Model{ID: id},
+	}
+
+	tx := db.Begin()
+	if err := db.Delete(navigation).Error; nil != err {
+		tx.Rollback()
+
+		return err
+	}
+	tx.Commit()
+
+	return nil
+}
+
+func (srv *navigationService) ConsoleUpdateNavigation(navigation *model.Navigation) error {
+	srv.mutex.Lock()
+	defer srv.mutex.Unlock()
+
+	count := 0
+	if db.Model(&model.Navigation{}).Where("id = ?", navigation.ID).Count(&count); 1 > count {
+		return errors.New(fmt.Sprintf("not found navigation [id=%d] to update", navigation.ID))
+	}
+
+	tx := db.Begin()
+	if err := db.Model(&model.Navigation{}).Updates(navigation).Error; nil != err {
+		tx.Rollback()
+
+		return err
+	}
+	tx.Commit()
+
+	return nil
+}
 
 func (srv *navigationService) ConsoleGetNavigations(page int, blogID uint) (ret []*model.Navigation, pagination *util.Pagination) {
 	offset := (page - 1) * adminConsoleNavigationListPageSize

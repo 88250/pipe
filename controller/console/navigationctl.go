@@ -20,6 +20,7 @@ import (
 	"net/http"
 	"strconv"
 
+	"github.com/b3log/solo.go/model"
 	"github.com/b3log/solo.go/service"
 	"github.com/b3log/solo.go/util"
 	"github.com/gin-gonic/gin"
@@ -81,4 +82,71 @@ func GetNavigationCtl(c *gin.Context) {
 	}
 
 	result.Data = data
+}
+
+func RemoveNavigationCtl(c *gin.Context) {
+	result := util.NewResult()
+	defer c.JSON(http.StatusOK, result)
+
+	idArg := c.Param("id")
+	id, err := strconv.Atoi(idArg)
+	if nil != err {
+		result.Code = -1
+		result.Msg = err.Error()
+
+		return
+	}
+
+	if err := service.Navigation.ConsoleRemoveNavigation(uint(id)); nil != err {
+		result.Code = -1
+		result.Msg = err.Error()
+	}
+}
+
+func UpdateNavigationCtl(c *gin.Context) {
+	result := util.NewResult()
+	defer c.JSON(http.StatusOK, result)
+
+	idArg := c.Param("id")
+	id, err := strconv.Atoi(idArg)
+	if nil != err {
+		result.Code = -1
+		result.Msg = err.Error()
+
+		return
+	}
+
+	navigation := &model.Navigation{Model: model.Model{ID: uint(id)}}
+	if err := c.BindJSON(navigation); nil != err {
+		result.Code = -1
+		result.Msg = "parses update navigation request failed"
+
+		return
+	}
+
+	if err := service.Navigation.ConsoleUpdateNavigation(navigation); nil != err {
+		result.Code = -1
+		result.Msg = err.Error()
+	}
+}
+
+func AddNavigationCtl(c *gin.Context) {
+	result := util.NewResult()
+	defer c.JSON(http.StatusOK, result)
+
+	sessionData := util.GetSession(c)
+
+	navigation := &model.Navigation{}
+	if err := c.BindJSON(navigation); nil != err {
+		result.Code = -1
+		result.Msg = "parses add navigation request failed"
+
+		return
+	}
+
+	navigation.BlogID = sessionData.BID
+	if err := service.Navigation.ConsoleAddNavigation(navigation); nil != err {
+		result.Code = -1
+		result.Msg = err.Error()
+	}
 }
