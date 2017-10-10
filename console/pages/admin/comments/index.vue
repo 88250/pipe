@@ -5,26 +5,28 @@
         <div class="avatar avatar--mid avatar--space"
              :style="`background-image: url(${item.author.avatarURL})`"></div>
         <div class="fn-flex-1">
-          <div class="list__title">
-            <nuxt-link :to="item.url">{{ item.title }}</nuxt-link>
-            <span class="btn btn--small btn--success admin__comment-author" v-if="userCount > 1">
-              <span class="avatar avatar--small"
-                   :style="`background-image: url(${item.articleAuthor.avatarURL})`"></span>
-              {{ item.articleAuthor.name }}
-            </span>
+          <div class="fn-flex">
+            <div class="fn-flex-1">
+              <nuxt-link :to="item.url" class="list__title">
+                {{ item.title }}
+              </nuxt-link>
+              <small class="fn-nowrap" v-if="userCount > 1">
+                By {{ item.articleAuthor.name }}
+              </small>
+            </div>
+            <div>
+              <v-btn
+                v-if="$store.state.name === item.author.name || $store.state.role < 2"
+                class="btn btn--danger btn--small"
+                @click="remove(item.id)">{{ $t('delete', $store.state.locale) }}
+              </v-btn>
+            </div>
           </div>
           <div class="content-reset" v-html="item.content"></div>
           <div class="list__meta">
-            <time>{{ item.createdAt }}</time>
-            • {{ item.author.name }}
+            <time class="fn-nowrap">{{ item.createdAt }}</time> •
+            <span class="fn-nowrap">{{ item.author.name }}</span>
           </div>
-        </div>
-        <div>
-          <v-btn
-            v-if="$store.state.name === item.author.name || $store.state.role < 2"
-            class="btn btn--danger"
-            @click="remove(item.id)">{{ $t('delete', $store.state.locale) }}
-          </v-btn>
         </div>
       </li>
     </ul>
@@ -65,7 +67,7 @@
           this.$set(this, 'list', responseData.comments)
           this.$set(this, 'currentPageNum', responseData.pagination.currentPageNum)
           this.$set(this, 'pageCount', responseData.pagination.pageCount)
-          this.$set(this, 'windowSize', responseData.pagination.windowSize)
+          this.$set(this, 'windowSize', document.documentElement.clientWidth < 721 ? 5 : responseData.pagination.windowSize)
         }
       },
       async remove (id) {
@@ -85,8 +87,3 @@
     }
   }
 </script>
-
-<style lang="sass">
-  .admin__comment-author
-    display: initial
-</style>

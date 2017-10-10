@@ -9,7 +9,7 @@
     layout: 'console',
     head () {
       return {
-        title: `${this.$store.state.blogTitle}`
+        title: this.$t('index', this.$store.state.locale)
       }
     },
     mounted () {

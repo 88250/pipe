@@ -1,54 +1,54 @@
 <template>
   <div class="card fn-clear">
     <div class="fn-clear card__body">
-      <nuxt-link to="/admin/articles/post" class="btn btn--success fn-right">{{ $t('new', $store.state.locale) }}</nuxt-link>
+      <nuxt-link to="/admin/articles/post" class="btn btn--success fn-right">{{ $t('new', $store.state.locale) }}
+      </nuxt-link>
     </div>
     <ul class="list">
       <li v-for="item in list" :key="item.id" class="fn-flex">
-        <div v-if="userCount > 1">
-          <div class="avatar avatar--mid avatar--space"
-               :style="`background-image: url(${item.author.avatarURL})`"></div>
-        </div>
+        <div class="avatar avatar--mid avatar--space"
+             v-if="userCount > 1"
+             :style="`background-image: url(${item.author.avatarURL})`"></div>
         <div class="fn-flex-1">
-          <div class="list__title">
-            <nuxt-link :to="item.url">{{ item.title }}</nuxt-link>
+          <div class="fn-flex">
+            <nuxt-link class="fn-flex-1 list__title" :to="item.url">{{ item.title }}</nuxt-link>
+            <v-menu
+              v-if="$store.state.name === item.author.name || $store.state.role < 2"
+              :nudge-bottom="24"
+              :nudge-width="60"
+              :nudge-right="60"
+              :open-on-hover="true">
+              <v-toolbar-title slot="activator">
+                <nuxt-link class="btn btn--small btn--info" :to="`/admin/articles/post?id=${item.id}`">
+                  {{ $t('edit', $store.state.locale) }}
+                  <icon icon="chevron-down"/>
+                </nuxt-link>
+              </v-toolbar-title>
+              <v-list>
+                <v-list-tile>
+                  <v-list-tile-title>
+                    <nuxt-link :to="`/admin/articles/post?id=${item.id}`">{{ $t('edit', $store.state.locale) }}</nuxt-link>
+                  </v-list-tile-title>
+                  <v-list-tile-title>
+                    <div @click="remove(item.id)">{{ $t('delete', $store.state.locale) }}</div>
+                  </v-list-tile-title>
+                  <v-list-tile-title>
+                    <div @click="top(item.id)">{{ $t('top', $store.state.locale) }}</div>
+                  </v-list-tile-title>
+                </v-list-tile>
+              </v-list>
+            </v-menu>
           </div>
           <div class="list__meta">
-            <nuxt-link :key="tag.title" v-for="tag in item.tags" :to="tag.url">{{ tag.title }}</nuxt-link>&nbsp;
-            {{ item.commentCount }} {{ $t('comment', $store.state.locale) }} •
-            {{ item.viewCount }} {{ $t('view', $store.state.locale) }} •
-            <time>{{ item.createdAt }}</time>
-            <span v-if="userCount > 1">
+            <nuxt-link class="fn-nowrap" :key="tag.title" v-for="tag in item.tags" :to="tag.url">{{ tag.title }}</nuxt-link>&nbsp;
+            <span class="fn-nowrap">{{ item.commentCount }} {{ $t('comment', $store.state.locale) }}</span> •
+            <span class="fn-nowrap">{{ item.viewCount }} {{ $t('view', $store.state.locale) }}</span> •
+            <time class="fn-nowrap">{{ item.createdAt }}</time>
+            <span v-if="userCount > 1" class="fn-nowrap">
                • {{ item.author.name }}
             </span>
           </div>
         </div>
-        <v-menu
-          v-if="$store.state.name === item.author.name || $store.state.role < 2"
-          :nudge-bottom="38"
-          :nudge-right="24"
-          :nudge-width="100"
-          :open-on-hover="true">
-          <v-toolbar-title slot="activator">
-            <nuxt-link class="btn btn--info" :to="`/admin/articles/post?id=${item.id}`">
-              {{ $t('edit', $store.state.locale) }}
-              <icon icon="chevron-down"/>
-            </nuxt-link>
-          </v-toolbar-title>
-          <v-list>
-            <v-list-tile>
-              <v-list-tile-title>
-                <nuxt-link :to="`/admin/articles/post?id=${item.id}`">{{ $t('edit', $store.state.locale) }}</nuxt-link>
-              </v-list-tile-title>
-              <v-list-tile-title>
-                <div @click="remove(item.id)">{{ $t('delete', $store.state.locale) }}</div>
-              </v-list-tile-title>
-              <v-list-tile-title>
-                <div @click="top(item.id)">{{ $t('top', $store.state.locale) }}</div>
-              </v-list-tile-title>
-            </v-list-tile>
-          </v-list>
-        </v-menu>
       </li>
     </ul>
     <v-pagination
@@ -88,7 +88,7 @@
           this.$set(this, 'list', responseData.articles)
           this.$set(this, 'currentPageNum', responseData.pagination.currentPageNum)
           this.$set(this, 'pageCount', responseData.pagination.pageCount)
-          this.$set(this, 'windowSize', responseData.pagination.windowSize)
+          this.$set(this, 'windowSize', document.documentElement.clientWidth < 721 ? 5 : responseData.pagination.windowSize)
         }
       },
       async remove (id) {

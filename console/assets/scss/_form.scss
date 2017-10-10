@@ -112,14 +112,16 @@ label.checkbox {
 
     .icon {
       float: right;
-      margin: 0px 0 0 5px;
+      margin: 3px 0 0 5px;
+      height: 10px;
+      width: 10px;
     }
   }
 
   &--space {
     margin-left: 15px;
   }
-  
+
   &--block {
     display: block;
   }

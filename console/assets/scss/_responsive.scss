@@ -54,4 +54,18 @@
       margin-bottom: 15px;
     }
   }
+
+  .pagination a {
+    margin: 2px;
+  }
+
+  .list .admin__comment-author {
+    display: none;
+  }
+
+  .avatar--mid {
+    height: 24px;
+    width: 24px;
+    margin-right: 10px;
+  }
 }

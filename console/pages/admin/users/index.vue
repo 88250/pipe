@@ -11,39 +11,41 @@
         <li v-for="item in list" :key="item.id" class="fn-flex">
           <div class="avatar avatar--mid avatar--space" :style="`background-image: url(${item.avatarURL})`"></div>
           <div class="fn-flex-1">
-            <div class="list__title">
-              {{ item.name }} /
-              <small>{{ item.nickname }}</small>
+            <div class="fn-flex">
+              <div class="list__title fn-flex-1">
+                {{ item.name }} /
+                <small>{{ item.nickname }}</small>
+              </div>
+              <v-menu
+                v-if="$store.state.role < 2"
+                :nudge-bottom="24"
+                :nudge-width="60"
+                :nudge-right="60"
+                :open-on-hover="true">
+                <v-toolbar-title slot="activator">
+                  <v-btn class="btn btn--small btn--info" @click="edit(item.id)">
+                    {{ $t('edit', $store.state.locale) }}
+                    <icon icon="chevron-down"/>
+                  </v-btn>
+                </v-toolbar-title>
+                <v-list>
+                  <v-list-tile>
+                    <v-list-tile-title>
+                      <div @click="edit(item.id)">{{ $t('edit', $store.state.locale) }}</div>
+                    </v-list-tile-title>
+                    <v-list-tile-title>
+                      <div @click="remove(item.id)">{{ $t('delete', $store.state.locale) }}</div>
+                    </v-list-tile-title>
+                  </v-list-tile>
+                </v-list>
+              </v-menu>
             </div>
             <div class="list__meta">
-              {{ item.email }}  •
-              {{ item.PublishedArticleCount }} {{ $t('article', $store.state.locale) }} •
-              {{ getRoleName(item.role) }}
+              <span class="fn-nowrap">{{ item.email }}</span> •
+              <span class="fn-nowrap">{{ item.PublishedArticleCount }} {{ $t('article', $store.state.locale) }}</span> •
+              <span class="fn-nowrap">{{ getRoleName(item.role) }}</span>
             </div>
           </div>
-          <v-menu
-            v-if="$store.state.role < 2"
-            :nudge-bottom="38"
-            :nudge-right="24"
-            :nudge-width="100"
-            :open-on-hover="true">
-            <v-toolbar-title slot="activator">
-              <v-btn class="btn btn--info" @click="edit(item.id)">
-                {{ $t('edit', $store.state.locale) }}
-                <icon icon="chevron-down"/>
-              </v-btn>
-            </v-toolbar-title>
-            <v-list>
-              <v-list-tile>
-                <v-list-tile-title>
-                  <div @click="edit(item.id)">{{ $t('edit', $store.state.locale) }}</div>
-                </v-list-tile-title>
-                <v-list-tile-title>
-                  <div @click="remove(item.id)">{{ $t('delete', $store.state.locale) }}</div>
-                </v-list-tile-title>
-              </v-list-tile>
-            </v-list>
-          </v-menu>
         </li>
       </ul>
       <v-pagination
@@ -103,7 +105,7 @@
           this.$set(this, 'list', responseData.navigation)
           this.$set(this, 'currentPageNum', responseData.pagination.currentPageNum)
           this.$set(this, 'pageCount', responseData.pagination.pageCount)
-          this.$set(this, 'windowSize', responseData.pagination.windowSize)
+          this.$set(this, 'windowSize', document.documentElement.clientWidth < 721 ? 5 : responseData.pagination.windowSize)
         }
       },
       async remove (id) {

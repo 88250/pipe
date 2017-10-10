@@ -34,7 +34,7 @@
     },
     head () {
       return {
-        title: `${this.$store.state.userName} - ${this.error.statusCode === 404 ? 404 : '50x'}`
+        title: `${this.$store.state.blogTitle ? this.$store.state.blogTitle + ' - ' : ''}${this.error.statusCode === 404 ? 404 : '50x'}`
       }
     },
     props: ['error']

@@ -7,40 +7,38 @@
         <v-btn class="btn btn--success fn-right" @click="edit('')">{{ $t('new', $store.state.locale) }}</v-btn>
       </div>
       <ul class="list">
-        <li v-for="item in list" :key="item.id" class="fn-flex">
-          <div class="fn-flex-1">
-            <div class="list__title">
-              <nuxt-link :to="`${$store.state.blogPath}/${item.url}`">
-                {{ item.title }}
-              </nuxt-link>
-            </div>
-            <div class="list__meta">
-              {{ item.description }}
-            </div>
+        <li v-for="item in list" :key="item.id" class="fn-flex-1">
+          <div class="fn-flex">
+            <nuxt-link class="list__title fn-flex-1" :to="`${$store.state.blogPath}/${item.url}`">
+              {{ item.title }}
+            </nuxt-link>
+            <v-menu
+              v-if="$store.state.role < 2"
+              :nudge-bottom="24"
+              :nudge-width="60"
+              :nudge-right="60"
+              :open-on-hover="true">
+              <v-toolbar-title slot="activator">
+                <v-btn class="btn btn--info btn--small" @click="edit(item.id)">
+                  {{ $t('edit', $store.state.locale) }}
+                  <icon icon="chevron-down"/>
+                </v-btn>
+              </v-toolbar-title>
+              <v-list>
+                <v-list-tile>
+                  <v-list-tile-title>
+                    <div @click="edit(item.id)">{{ $t('edit', $store.state.locale) }}</div>
+                  </v-list-tile-title>
+                  <v-list-tile-title>
+                    <div @click="remove(item.id)">{{ $t('delete', $store.state.locale) }}</div>
+                  </v-list-tile-title>
+                </v-list-tile>
+              </v-list>
+            </v-menu>
           </div>
-          <v-menu
-            v-if="$store.state.role < 2"
-            :nudge-bottom="38"
-            :nudge-right="24"
-            :nudge-width="100"
-            :open-on-hover="true">
-            <v-toolbar-title slot="activator">
-              <v-btn class="btn btn--info" @click="edit(item.id)">
-                {{ $t('edit', $store.state.locale) }}
-                <icon icon="chevron-down"/>
-              </v-btn>
-            </v-toolbar-title>
-            <v-list>
-              <v-list-tile>
-                <v-list-tile-title>
-                  <div @click="edit(item.id)">{{ $t('edit', $store.state.locale) }}</div>
-                </v-list-tile-title>
-                <v-list-tile-title>
-                  <div @click="remove(item.id)">{{ $t('delete', $store.state.locale) }}</div>
-                </v-list-tile-title>
-              </v-list-tile>
-            </v-list>
-          </v-menu>
+          <div class="list__meta">
+            {{ item.description }}
+          </div>
         </li>
       </ul>
       <v-pagination
@@ -86,7 +84,7 @@
           this.$set(this, 'list', responseData.categories)
           this.$set(this, 'currentPageNum', responseData.pagination.currentPageNum)
           this.$set(this, 'pageCount', responseData.pagination.pageCount)
-          this.$set(this, 'windowSize', responseData.pagination.windowSize)
+          this.$set(this, 'windowSize', document.documentElement.clientWidth < 721 ? 5 : responseData.pagination.windowSize)
         }
       },
       async remove (id) {

@@ -10,24 +10,18 @@
     }
 
     .list__title {
-      line-height: 18px;
+      line-height: 24px;
       font-size: 16px;
       font-weight: 400;
       color: $text-title;
-      margin-bottom: 8px;
-      display: inline-block;
-
-      a {
-        color: $text-title;
-        &:hover {
-          text-decoration: none;
-          color: $text-color;
-        }
-      }
+    }
+    a.list__title:hover {
+      text-decoration: none;
+      color: $text-color;
     }
 
     .list__meta {
-      line-height: 20px;
+      line-height: 22px;
       color: $fade;
     }
   }

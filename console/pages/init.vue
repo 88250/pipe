@@ -157,7 +157,7 @@
     },
     head () {
       return {
-        title: `${this.$store.state.blogTitle} - ${this.$t('init', this.$store.state.locale)}`
+        title: this.$t('welcome', this.$store.state.locale)
       }
     },
     methods: {

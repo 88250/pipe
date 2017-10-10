@@ -7,9 +7,11 @@
       </nuxt-link>
     </div>
     <div class="header__nav fn-flex-1">
-      <div v-if="$store.state.name === ''">
-        <nuxt-link :to="`/login?goto=${$route.path.indexOf('/login') > -1 ? '/' : $route.fullPath}`">
-          {{ $t('login', $store.state.locale) }}
+      <div v-if="$store.state.name === ''" class="header__bar--unlogin">
+        <a :href="`/login?goto=${$route.path.indexOf('/login') > -1 ? '/' : $route.fullPath}`">{{ $t('login', $store.state.locale) }}</a>
+        &nbsp;
+        <nuxt-link to="/init">
+          {{ $t('register', $store.state.locale) }}
         </nuxt-link>
       </div>
       <div v-else>
@@ -20,9 +22,7 @@
         <v-menu
           z-index="100"
           v-if="$route.path.indexOf('/admin') > -1 && $store.state.blogs.length > 1"
-          :nudge-bottom="38"
-          :nudge-right="24"
-          :nudge-width="100">
+          :nudge-bottom="38">
           <v-toolbar-title slot="activator">
             <v-btn class="btn btn--success">
               {{ $store.state.blogTitle }}
@@ -120,11 +120,11 @@
       float: left
       margin: 9px 15px
       cursor: pointer
-
       .icon
         height: 20px
         width: 20px
-
+      &--unlogin
+        margin-top: 8px
     &__nav
       background-color: $blue
       padding: 11px 15px 0 0
