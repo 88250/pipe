@@ -60,6 +60,7 @@ func GetNavigationsCtl(c *gin.Context) {
 	data["pagination"] = pagination
 	result.Data = data
 }
+
 func GetNavigationCtl(c *gin.Context) {
 	result := util.NewResult()
 	defer c.JSON(http.StatusOK, result)
