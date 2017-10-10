@@ -69,7 +69,7 @@ func (srv *settingService) UpdateSettings(category string, settings []*model.Set
 
 	tx := db.Begin()
 	for _, setting := range settings {
-		if err := db.Model(&model.Setting{}).Where("category = ? AND name = ?", category, setting.Name).Updates(setting).Error; nil != err {
+		if err := tx.Model(&model.Setting{}).Where("category = ? AND name = ?", category, setting.Name).Updates(setting).Error; nil != err {
 			tx.Rollback()
 
 			return err

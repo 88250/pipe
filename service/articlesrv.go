@@ -65,12 +65,21 @@ func (srv *articleService) ConsoleAddArticle(article *model.Article) error {
 		return err
 	}
 	author.ArticleCount = author.ArticleCount + 1
-	if err := tx.Model(&model.User{}).Updates(author).Error; nil != err {
+	if err := tx.Save(author).Error; nil != err {
 		tx.Rollback()
 
 		return err
 	}
-	Statistic.IncArticleCountWithoutTx(tx, article.BlogID)
+	if err := Statistic.IncArticleCountWithoutTx(tx, article.BlogID); nil != err {
+		tx.Rollback()
+
+		return err
+	}
+	if err := Statistic.IncPublishedArticleCountWithoutTx(tx, article.BlogID); nil != err {
+		tx.Rollback()
+
+		return err
+	}
 	tx.Commit()
 
 	return nil
@@ -115,7 +124,8 @@ func (srv *articleService) ConsoleRemoveArticle(id uint) error {
 		return err
 	}
 	author.ArticleCount = author.ArticleCount - 1
-	if err := tx.Model(&model.User{}).Updates(author).Error; nil != err {
+	author.PublishedArticleCount = author.PublishedArticleCount - 1
+	if err := tx.Save(author).Error; nil != err {
 		tx.Rollback()
 
 		return err
@@ -130,9 +140,13 @@ func (srv *articleService) ConsoleRemoveArticle(id uint) error {
 
 		return err
 	}
+	if err := Statistic.DecPublishedArticleCountWithoutTx(tx, author.BlogID); nil != err {
+		tx.Rollback()
+
+		return err
+	}
 	comments := []*model.Comment{}
-	if err := tx.Model(&model.Comment{}).Where("article_id = ?", id).
-		Find(&comments).Error; nil != err {
+	if err := tx.Model(&model.Comment{}).Where("article_id = ?", id).Find(&comments).Error; nil != err {
 		tx.Rollback()
 
 		return err
@@ -162,7 +176,7 @@ func (srv *articleService) ConsoleUpdateArticle(article *model.Article) error {
 	}
 
 	tx := db.Begin()
-	if err := db.Model(&model.Article{}).Updates(article).Error; nil != err {
+	if err := tx.Save(article).Error; nil != err {
 		tx.Rollback()
 
 		return err
@@ -213,7 +227,7 @@ func tag(article *model.Article) error {
 		} else {
 			tag.ArticleCount = tag.ArticleCount + 1
 			tag.PublishedArticleCount = tag.PublishedArticleCount + 1
-			if err := db.Model(&model.Tag{}).Update(tag).Error; nil != err {
+			if err := db.Save(tag).Error; nil != err {
 				return err
 			}
 		}

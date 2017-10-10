@@ -155,6 +155,7 @@ func initPlatformAdmin(tx *gorm.DB, admin *model.User, blogID uint) error {
 	admin.Role = model.UserRolePlatformAdmin
 	admin.ArticleCount, admin.PublishedArticleCount = 1, 1 // article "Hello, World!"
 	admin.BlogID = blogID
+	admin.Locale = "zh_CN"
 	if err := tx.Create(admin).Error; nil != err {
 		return err
 	}

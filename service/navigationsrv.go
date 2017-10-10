@@ -84,7 +84,7 @@ func (srv *navigationService) ConsoleUpdateNavigation(navigation *model.Navigati
 	}
 
 	tx := db.Begin()
-	if err := db.Model(&model.Navigation{}).Updates(navigation).Error; nil != err {
+	if err := tx.Save(navigation).Error; nil != err {
 		tx.Rollback()
 
 		return err
