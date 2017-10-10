@@ -98,7 +98,14 @@ func TestNormalizeTagStr(t *testing.T) {
 func TestTag(t *testing.T) {
 	article := Article.ConsoleGetArticle(1)
 
-	tag(article)
+	tx := db.Begin()
+	if err := tag(tx, article); nil != err {
+		tx.Rollback()
+		t.Errorf("tag failed: " + err.Error())
+
+		return
+	}
+	tx.Commit()
 }
 
 func TestRemoveArticle(t *testing.T) {

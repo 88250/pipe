@@ -27,6 +27,7 @@ import (
 
 	"github.com/b3log/solo.go/model"
 	"github.com/b3log/solo.go/util"
+	"github.com/jinzhu/gorm"
 )
 
 var Article = &articleService{
@@ -54,7 +55,7 @@ func (srv *articleService) ConsoleAddArticle(article *model.Article) error {
 	article.Tags = tagStr
 
 	tx := db.Begin()
-	tag(article)
+	tag(tx, article)
 	if err := tx.Create(article).Error; nil != err {
 		tx.Rollback()
 
@@ -212,22 +213,22 @@ func normalizeTagStr(tagStr string) string {
 	return strings.Join(retTags, ",")
 }
 
-func tag(article *model.Article) error {
+func tag(tx *gorm.DB, article *model.Article) error {
 	tags := strings.Split(article.Tags, ",")
 	for _, tagTitle := range tags {
 		tag := &model.Tag{BlogID: article.BlogID}
-		db.Where("title = ?", tagTitle).First(tag)
+		tx.Where("title = ?", tagTitle).First(tag)
 		if "" == tag.Title {
 			tag.Title = tagTitle
 			tag.ArticleCount = 1
 			tag.PublishedArticleCount = 1
-			if err := db.Create(tag).Error; nil != err {
+			if err := tx.Create(tag).Error; nil != err {
 				return err
 			}
 		} else {
 			tag.ArticleCount = tag.ArticleCount + 1
 			tag.PublishedArticleCount = tag.PublishedArticleCount + 1
-			if err := db.Save(tag).Error; nil != err {
+			if err := tx.Save(tag).Error; nil != err {
 				return err
 			}
 		}

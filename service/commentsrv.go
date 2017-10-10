@@ -71,11 +71,12 @@ func (srv *commentService) RemoveComment(id uint) error {
 	srv.mutex.Lock()
 	defer srv.mutex.Unlock()
 
-	comment := &model.Comment{
-		Model: model.Model{ID: id},
-	}
+	comment := &model.Comment{}
 
 	tx := db.Begin()
+	if err := tx.First(comment, id).Error; nil != err {
+		return err
+	}
 	if err := tx.Delete(comment).Error; nil != err {
 		tx.Rollback()
 
