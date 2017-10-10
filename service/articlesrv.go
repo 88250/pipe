@@ -143,7 +143,9 @@ func (srv *articleService) ConsoleRemoveArticle(id uint) error {
 
 			return err
 		}
-
+		for _, _ = range comments {
+			Statistic.DecCommentCountWithoutTx(tx, author.BlogID)
+		}
 	}
 	tx.Commit()
 
