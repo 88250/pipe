@@ -30,8 +30,8 @@ type ConsoleComment struct {
 	Author        *Author `json:"author"`
 	ArticleAuthor *Author `json:"articleAuthor"`
 	CreatedAt     string  `json:"createdAt"`
-	Title         string  `gorm:"size:128" json:"title"`
-	Content       string  `gorm:"type:text" json:"content"`
+	Title         string  `json:"title"`
+	Content       string  `json:"content"`
 	URL           string  `json:"url"`
 }
 

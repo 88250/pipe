@@ -95,13 +95,13 @@ func TestNormalizeTagStr(t *testing.T) {
 	}
 }
 
-func TestTag(t *testing.T) {
+func TestTagArticle(t *testing.T) {
 	article := Article.ConsoleGetArticle(1)
 
 	tx := db.Begin()
-	if err := tag(tx, article); nil != err {
+	if err := tagArticle(tx, article); nil != err {
 		tx.Rollback()
-		t.Errorf("tag failed: " + err.Error())
+		t.Errorf("tag article failed: " + err.Error())
 
 		return
 	}

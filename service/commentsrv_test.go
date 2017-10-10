@@ -18,6 +18,8 @@ package service
 
 import (
 	"testing"
+
+	"github.com/b3log/solo.go/model"
 )
 
 func TestConsoleGetComments(t *testing.T) {
@@ -25,6 +27,8 @@ func TestConsoleGetComments(t *testing.T) {
 
 	if 0 != len(comments) {
 		t.Errorf("expected is [%d], actual is [%d]", 0, len(comments))
+
+		return
 	}
 	if 0 != pagination.RecordCount {
 		t.Errorf("expected is [%d], actual is [%d]", 0, pagination.RecordCount)
@@ -32,8 +36,23 @@ func TestConsoleGetComments(t *testing.T) {
 }
 
 func TestRemoveComment(t *testing.T) {
-	if err := Comment.RemoveComment(1); nil != err {
+	comment := &model.Comment{
+		ArticleID:       1,
+		AuthorName:      "Daniel",
+		AuthorAvatarURL: "https://img.hacpai.com/avatar/1353745196354_1500432853138.png?imageView2/1/w/80/h/80/interlace/0/q/100",
+		Content:         "写博客需要坚持，相信积累后必然会有收获，我们一起努力加油 :smile:",
+		BlogID:          1,
+	}
+	if err := Comment.AddComment(comment); nil != err {
+		t.Errorf("add comment failed: " + err.Error())
+
+		return
+	}
+
+	if err := Comment.RemoveComment(comment.ID); nil != err {
 		t.Error(err)
+
+		return
 	}
 
 	comments, _ := Comment.ConsoleGetComments(1, 1)

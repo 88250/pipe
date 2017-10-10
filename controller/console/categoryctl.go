@@ -14,19 +14,34 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-package model
+package console
 
-// Category model.
-type Category struct {
-	Model
+import (
+	"net/http"
 
-	Title           string `gorm:"size:128" json:"title"`
-	Path            string `gorm:"size:255" json:"path"`
-	Description     string `gorm:"size:255" json:"description"`
-	MetaKeywords    string `gorm:"size:255" json:"metaKeywords"`
-	MetaDescription string `gorm:"type:text" json:"metaDescription"`
-	Tags            string `gorm:"size:128" json:"tags"`
-	Number          int    `json:"number"` // for sorting
+	"github.com/b3log/solo.go/service"
+	"github.com/b3log/solo.go/util"
+	"github.com/gin-gonic/gin"
+)
 
-	BlogID uint `json:"blogID"`
+type ConsoleCategory struct {
+	ID          uint   `json:"id"`
+	Title       string `json:"title"`
+	URL         string `json:"url"`
+	Description string `json:"description"`
+	Number      int    `json:"number"`
+	Tags        string `json:"tags"`
+}
+
+func GetCategoriesCtl(c *gin.Context) {
+	result := util.NewResult()
+	defer c.JSON(http.StatusOK, result)
+
+	categories := []*ConsoleCategory{}
+	categoryModels := service.Category.ConsoleGetCategories()
+	for _, categoryModel := range categoryModels {
+		categories = append(categories, &ConsoleCategory{Title: categoryModel.Title})
+	}
+
+	result.Data = categories
 }
