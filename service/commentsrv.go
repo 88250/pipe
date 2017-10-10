@@ -61,7 +61,7 @@ func (srv *commentService) AddComment(comment *model.Comment) error {
 
 		return err
 	}
-	Statistic.IncCommentCountWithoutTx(comment.BlogID)
+	Statistic.IncCommentCountWithoutTx(tx, comment.BlogID)
 	tx.Commit()
 
 	return nil
@@ -76,12 +76,12 @@ func (srv *commentService) RemoveComment(id uint) error {
 	}
 
 	tx := db.Begin()
-	if err := db.Delete(comment).Error; nil != err {
+	if err := tx.Delete(comment).Error; nil != err {
 		tx.Rollback()
 
 		return err
 	}
-	Statistic.DecCommentCountWithoutTx(comment.BlogID)
+	Statistic.DecCommentCountWithoutTx(tx, comment.BlogID)
 	tx.Commit()
 
 	return nil

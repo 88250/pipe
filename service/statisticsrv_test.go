@@ -30,7 +30,7 @@ func TestGetStatistic(t *testing.T) {
 		return
 	}
 
-	if "0" != setting.Value {
+	if "99" != setting.Value {
 		t.Errorf("expected is [%s], actual is [%s]", "1", setting.Value)
 	}
 }
@@ -61,7 +61,7 @@ func TestIncArticleCount(t *testing.T) {
 		return
 	}
 
-	if "1" != setting.Value {
+	if "99" != setting.Value {
 		t.Errorf("expected is [%s], actual is [%s]", "1", setting.Value)
 	}
 
@@ -72,7 +72,7 @@ func TestIncArticleCount(t *testing.T) {
 	}
 
 	setting = Statistic.GetStatistic(model.SettingNameStatisticArticleCount, 1)
-	if "2" != setting.Value {
+	if "100" != setting.Value {
 		t.Errorf("expected is [%s], actual is [%s]", "2", setting.Value)
 	}
 }
@@ -85,7 +85,7 @@ func TestDecArticleCount(t *testing.T) {
 		return
 	}
 
-	if "2" != setting.Value {
+	if "100" != setting.Value {
 		t.Errorf("expected is [%s], actual is [%s]", "2", setting.Value)
 	}
 
@@ -96,8 +96,8 @@ func TestDecArticleCount(t *testing.T) {
 	}
 
 	setting = Statistic.GetStatistic(model.SettingNameStatisticArticleCount, 1)
-	if "0" != setting.Value {
-		t.Errorf("expected is [%s], actual is [%s]", "2", setting.Value)
+	if "99" != setting.Value {
+		t.Errorf("expected is [%s], actual is [%s]", "99", setting.Value)
 	}
 }
 
@@ -109,7 +109,7 @@ func TestIncCommentCount(t *testing.T) {
 		return
 	}
 
-	if "0" != setting.Value {
+	if "1" != setting.Value {
 		t.Errorf("expected is [%s], actual is [%s]", "1", setting.Value)
 	}
 
@@ -120,7 +120,7 @@ func TestIncCommentCount(t *testing.T) {
 	}
 
 	setting = Statistic.GetStatistic(model.SettingNameStatisticCommentCount, 1)
-	if "1" != setting.Value {
+	if "2" != setting.Value {
 		t.Errorf("expected is [%s], actual is [%s]", "2", setting.Value)
 	}
 }
@@ -133,8 +133,8 @@ func TestDecCommentCount(t *testing.T) {
 		return
 	}
 
-	if "1" != setting.Value {
-		t.Errorf("expected is [%s], actual is [%s]", "1", setting.Value)
+	if "2" != setting.Value {
+		t.Errorf("expected is [%s], actual is [%s]", "2", setting.Value)
 	}
 
 	if err := Statistic.DecCommentCount(1); nil != err {
@@ -144,7 +144,7 @@ func TestDecCommentCount(t *testing.T) {
 	}
 
 	setting = Statistic.GetStatistic(model.SettingNameStatisticCommentCount, 1)
-	if "0" != setting.Value {
-		t.Errorf("expected is [%s], actual is [%s]", "2", setting.Value)
+	if "1" != setting.Value {
+		t.Errorf("expected is [%s], actual is [%s]", "1", setting.Value)
 	}
 }

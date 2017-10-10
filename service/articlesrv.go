@@ -61,16 +61,16 @@ func (srv *articleService) ConsoleAddArticle(article *model.Article) error {
 		return err
 	}
 	author := &model.User{}
-	if err := db.First(author, article.AuthorID).Error; nil != err {
+	if err := tx.First(author, article.AuthorID).Error; nil != err {
 		return err
 	}
 	author.ArticleCount = author.ArticleCount + 1
-	if err := db.Model(&model.User{}).Updates(author).Error; nil != err {
+	if err := tx.Model(&model.User{}).Updates(author).Error; nil != err {
 		tx.Rollback()
 
 		return err
 	}
-	Statistic.IncArticleCountWithoutTx(article.BlogID)
+	Statistic.IncArticleCountWithoutTx(tx, article.BlogID)
 	tx.Commit()
 
 	return nil
@@ -107,38 +107,38 @@ func (srv *articleService) ConsoleRemoveArticle(id uint) error {
 	article := &model.Article{}
 
 	tx := db.Begin()
-	if err := db.First(article, id).Error; nil != err {
+	if err := tx.First(article, id).Error; nil != err {
 		return err
 	}
 	author := &model.User{}
-	if err := db.First(author, article.AuthorID).Error; nil != err {
+	if err := tx.First(author, article.AuthorID).Error; nil != err {
 		return err
 	}
 	author.ArticleCount = author.ArticleCount - 1
-	if err := db.Model(&model.User{}).Updates(author).Error; nil != err {
+	if err := tx.Model(&model.User{}).Updates(author).Error; nil != err {
 		tx.Rollback()
 
 		return err
 	}
-	if err := db.Delete(article).Error; nil != err {
+	if err := tx.Delete(article).Error; nil != err {
 		tx.Rollback()
 
 		return err
 	}
-	if err := Statistic.DecArticleCountWithoutTx(author.BlogID); nil != err {
+	if err := Statistic.DecArticleCountWithoutTx(tx, author.BlogID); nil != err {
 		tx.Rollback()
 
 		return err
 	}
 	comments := []*model.Comment{}
-	if err := db.Model(&model.Comment{}).Where("article_id = ?", id).
+	if err := tx.Model(&model.Comment{}).Where("article_id = ?", id).
 		Find(&comments).Error; nil != err {
 		tx.Rollback()
 
 		return err
 	}
 	if 0 < len(comments) {
-		if err := db.Where("article_id = ?", id).Delete(&model.Comment{}).Error; nil != err {
+		if err := tx.Where("article_id = ?", id).Delete(&model.Comment{}).Error; nil != err {
 			tx.Rollback()
 
 			return err
