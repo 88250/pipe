@@ -38,9 +38,9 @@ func GetCategoriesCtl(c *gin.Context) {
 	defer c.JSON(http.StatusOK, result)
 
 	categories := []*ConsoleCategory{}
-	tagModels := service.Tag.ConsoleGetTags()
-	for _, tagModel := range tagModels {
-		categories = append(categories, &ConsoleTag{Title: tagModel.Title})
+	categoryModels := service.Category.ConsoleGetCategories()
+	for _, categoryModel := range categoryModels {
+		categories = append(categories, &ConsoleCategory{Title: categoryModel.Title})
 	}
 
 	result.Data = categories
