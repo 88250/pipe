@@ -140,6 +140,11 @@ func (srv *articleService) ConsoleRemoveArticle(id uint) error {
 
 		return err
 	}
+	if err := tx.Where("id1 = ? AND type = ?", article.ID, model.CorrelationArticleTag).Delete(model.Correlation{}).Error; nil != err {
+		tx.Rollback()
+
+		return err
+	}
 	if err := Statistic.DecArticleCountWithoutTx(tx, author.BlogID); nil != err {
 		tx.Rollback()
 
