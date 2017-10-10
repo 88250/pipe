@@ -50,13 +50,17 @@ func (srv *articleService) ConsoleAddArticle(article *model.Article) error {
 
 	tagStr := normalizeTagStr(article.Tags)
 	if "" == tagStr {
-		return errors.New("invalid tag [" + article.Tags + "]")
+		return errors.New("invalid tags [" + article.Tags + "]")
 	}
 	article.Tags = tagStr
 
 	tx := db.Begin()
-	tag(tx, article)
 	if err := tx.Create(article).Error; nil != err {
+		tx.Rollback()
+
+		return err
+	}
+	if err := tagArticle(tx, article); nil != err {
 		tx.Rollback()
 
 		return err
@@ -213,7 +217,7 @@ func normalizeTagStr(tagStr string) string {
 	return strings.Join(retTags, ",")
 }
 
-func tag(tx *gorm.DB, article *model.Article) error {
+func tagArticle(tx *gorm.DB, article *model.Article) error {
 	tags := strings.Split(article.Tags, ",")
 	for _, tagTitle := range tags {
 		tag := &model.Tag{BlogID: article.BlogID}
@@ -231,6 +235,16 @@ func tag(tx *gorm.DB, article *model.Article) error {
 			if err := tx.Save(tag).Error; nil != err {
 				return err
 			}
+		}
+
+		rel := &model.Correlation{
+			ID1:    article.ID,
+			ID2:    tag.ID,
+			Type:   model.CorrelationArticleTag,
+			BlogID: article.BlogID,
+		}
+		if err := tx.Create(rel).Error; nil != err {
+			return err
 		}
 	}
 

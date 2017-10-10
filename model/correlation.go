@@ -32,7 +32,7 @@ type Correlation struct {
 
 	ID1  uint `json:"id1"`
 	ID2  uint `json:"id2"`
-	Type int  `gorm:"size:16" json:"type"`
+	Type int  `json:"type"`
 
 	BlogID uint `json:"blogID"`
 }
