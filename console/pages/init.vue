@@ -128,6 +128,8 @@
 
 <script>
   import md5 from 'blueimp-md5'
+  import { required, maxSize, email } from '~/plugins/validate'
+
   export default {
     layout: 'console',
     data () {
@@ -135,18 +137,17 @@
         step: 1,
         userName: '',
         userNameRules: [
-          (v) => !!v || this.$t('required', this.$store.state.locale),
-          (v) => v.length <= 16 || this.$t('validateRule', this.$store.state.locale)
+          (v) => required.call(this, v),
+          (v) => maxSize.call(this, v, 16)
         ],
         userEmail: '',
         userEmailRules: [
-          (v) => !!v || this.$t('required', this.$store.state.locale),
-          (v) => /^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$/.test(v) ||
-            this.$t('emailRule', this.$store.state.locale)
+          (v) => required.call(this, v),
+          (v) => email.call(this, v)
         ],
         userB3Key: '',
         userB3KeyRules: [
-          (v) => v.length <= 32 || this.$t('validateRule2', this.$store.state.locale)
+          (v) => maxSize.call(this, v, 32)
         ],
         postError: false,
         postInitError: false,

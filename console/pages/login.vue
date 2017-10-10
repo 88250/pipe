@@ -36,6 +36,7 @@
 <script>
   import md5 from 'blueimp-md5'
   import 'particles.js'
+  import { required, maxSize } from '~/plugins/validate'
 
   export default {
     layout: 'console',
@@ -49,8 +50,8 @@
         accountOrEmail: '',
         password: '',
         userNameRules: [
-          (v) => !!v || this.$t('required', this.$store.state.locale),
-          (v) => v.length <= 16 || this.$t('validateRule', this.$store.state.locale)
+          (v) => required.call(this, v),
+          (v) => maxSize.call(this, v, 16)
         ],
         error: false,
         errorMsg: ''
