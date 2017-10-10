@@ -60,6 +60,17 @@ func (srv *articleService) ConsoleAddArticle(article *model.Article) error {
 
 		return err
 	}
+	author := &model.User{}
+	if err := db.First(author, article.AuthorID).Error; nil != err {
+		return err
+	}
+	author.ArticleCount = author.ArticleCount + 1
+	if err := db.Model(&model.User{}).Updates(author).Error; nil != err {
+		tx.Rollback()
+
+		return err
+	}
+	Statistic.IncArticleCountWithoutTx(article.BlogID)
 	tx.Commit()
 
 	return nil

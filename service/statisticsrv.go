@@ -121,3 +121,71 @@ func (srv *statisticService) DecArticleCountWithoutTx(blogID uint) error {
 
 	return nil
 }
+
+func (srv *statisticService) IncCommentCount(blogID uint) error {
+	tx := db.Begin()
+	if err := srv.IncCommentCountWithoutTx(blogID); nil != err {
+		tx.Rollback()
+
+		return err
+	}
+	tx.Commit()
+
+	return nil
+}
+
+func (srv *statisticService) IncCommentCountWithoutTx(blogID uint) error {
+	srv.mutex.Lock()
+	defer srv.mutex.Unlock()
+
+	setting := &model.Setting{}
+	if err := db.Where("name = ? AND category = ? AND blog_id = ?", model.SettingNameStatisticCommentCount, model.SettingCategoryStatistic, blogID).Find(setting).Error; nil != err {
+		return err
+	}
+
+	count, err := strconv.Atoi(setting.Value)
+	if nil != err {
+		return err
+	}
+
+	setting.Value = strconv.Itoa(count + 1)
+	if err := db.Model(&model.Setting{}).Update(setting).Error; nil != err {
+		return err
+	}
+
+	return nil
+}
+
+func (srv *statisticService) DecCommentCount(blogID uint) error {
+	tx := db.Begin()
+	if err := srv.DecCommentCountWithoutTx(blogID); nil != err {
+		tx.Rollback()
+
+		return err
+	}
+	tx.Commit()
+
+	return nil
+}
+
+func (srv *statisticService) DecCommentCountWithoutTx(blogID uint) error {
+	srv.mutex.Lock()
+	defer srv.mutex.Unlock()
+
+	setting := &model.Setting{}
+	if err := db.Where("name = ? AND category = ? AND blog_id = ?", model.SettingNameStatisticCommentCount, model.SettingCategoryStatistic, blogID).Find(setting).Error; nil != err {
+		return err
+	}
+
+	count, err := strconv.Atoi(setting.Value)
+	if nil != err {
+		return err
+	}
+
+	setting.Value = strconv.Itoa(count - 1)
+	if err := db.Model(&model.Setting{}).Update(setting).Error; nil != err {
+		return err
+	}
+
+	return nil
+}
