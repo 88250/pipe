@@ -101,7 +101,7 @@
       async getList (currentPage) {
         const responseData = await this.axios.get(`/console/navigations?p=${currentPage}`)
         if (responseData) {
-          this.$set(this, 'list', responseData.navigation)
+          this.$set(this, 'list', responseData.navigations)
           this.$set(this, 'currentPageNum', responseData.pagination.currentPageNum)
           this.$set(this, 'pageCount', responseData.pagination.pageCount)
           this.$set(this, 'windowSize', responseData.pagination.windowSize)

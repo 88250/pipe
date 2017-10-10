@@ -37,7 +37,7 @@ func TestGetSetting(t *testing.T) {
 
 func TestGetAllSettings(t *testing.T) {
 	basicSettings := Setting.GetAllSettings(1, model.SettingCategoryBasic)
-	if 9 != len(basicSettings) {
+	if 8 != len(basicSettings) {
 		t.Errorf("expected is [%d], actual is [%d]", 9, len(basicSettings))
 	}
 }

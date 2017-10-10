@@ -30,7 +30,7 @@ func TestGetStatistic(t *testing.T) {
 		return
 	}
 
-	if "0" != setting.Value {
+	if "99" != setting.Value {
 		t.Errorf("expected is [%s], actual is [%s]", "1", setting.Value)
 	}
 }
@@ -48,8 +48,11 @@ func TestGetStatistics(t *testing.T) {
 		return
 	}
 
-	if "1" != settings[model.SettingNameStatisticCommentCount].Value {
-		t.Errorf("expected is [%s], actual is [%s]", "1", settings[model.SettingNameStatisticCommentCount].Value)
+	if "99" != settings[model.SettingNameStatisticArticleCount].Value {
+		t.Errorf("expected is [%s], actual is [%s]", "99", settings[model.SettingNameStatisticArticleCount].Value)
+	}
+	if "0" != settings[model.SettingNameStatisticCommentCount].Value {
+		t.Errorf("expected is [%s], actual is [%s]", "0", settings[model.SettingNameStatisticCommentCount].Value)
 	}
 }
 
@@ -61,8 +64,8 @@ func TestIncArticleCount(t *testing.T) {
 		return
 	}
 
-	if "0" != setting.Value {
-		t.Errorf("expected is [%s], actual is [%s]", "1", setting.Value)
+	if "99" != setting.Value {
+		t.Errorf("expected is [%s], actual is [%s]", "99", setting.Value)
 	}
 
 	if err := Statistic.IncArticleCount(1); nil != err {
@@ -72,8 +75,8 @@ func TestIncArticleCount(t *testing.T) {
 	}
 
 	setting = Statistic.GetStatistic(model.SettingNameStatisticArticleCount, 1)
-	if "1" != setting.Value {
-		t.Errorf("expected is [%s], actual is [%s]", "2", setting.Value)
+	if "100" != setting.Value {
+		t.Errorf("expected is [%s], actual is [%s]", "100", setting.Value)
 	}
 }
 
@@ -85,18 +88,66 @@ func TestDecArticleCount(t *testing.T) {
 		return
 	}
 
-	if "1" != setting.Value {
-		t.Errorf("expected is [%s], actual is [%s]", "1", setting.Value)
+	if "100" != setting.Value {
+		t.Errorf("expected is [%s], actual is [%s]", "2", setting.Value)
 	}
 
 	if err := Statistic.DecArticleCount(1); nil != err {
-		t.Error("Inc article count failed")
+		t.Error("dec article count failed")
 
 		return
 	}
 
 	setting = Statistic.GetStatistic(model.SettingNameStatisticArticleCount, 1)
+	if "99" != setting.Value {
+		t.Errorf("expected is [%s], actual is [%s]", "99", setting.Value)
+	}
+}
+
+func TestIncCommentCount(t *testing.T) {
+	setting := Statistic.GetStatistic(model.SettingNameStatisticCommentCount, 1)
+	if nil == setting {
+		t.Errorf("setting is nil")
+
+		return
+	}
+
 	if "0" != setting.Value {
-		t.Errorf("expected is [%s], actual is [%s]", "2", setting.Value)
+		t.Errorf("expected is [%s], actual is [%s]", "0", setting.Value)
+	}
+
+	if err := Statistic.IncCommentCount(1); nil != err {
+		t.Error("inc article count failed")
+
+		return
+	}
+
+	setting = Statistic.GetStatistic(model.SettingNameStatisticCommentCount, 1)
+	if "1" != setting.Value {
+		t.Errorf("expected is [%s], actual is [%s]", "1", setting.Value)
+	}
+}
+
+func TestDecCommentCount(t *testing.T) {
+	setting := Statistic.GetStatistic(model.SettingNameStatisticCommentCount, 1)
+	if nil == setting {
+		t.Errorf("setting is nil")
+
+		return
+	}
+
+	if "1" != setting.Value {
+		t.Errorf("expected is [%s], actual is [%s]", "1", setting.Value)
+	}
+
+	if err := Statistic.DecCommentCount(1); nil != err {
+		t.Error("dec comment count failed")
+
+		return
+	}
+
+	setting = Statistic.GetStatistic(model.SettingNameStatisticCommentCount, 1)
+	if "0" != setting.Value {
+		t.Errorf("expected is [%s], actual is [%s]", "0", setting.Value)
 	}
 }

@@ -21,6 +21,7 @@ import (
 	"sync"
 
 	"github.com/b3log/solo.go/model"
+	"github.com/jinzhu/gorm"
 )
 
 var Statistic = &statisticService{
@@ -56,7 +57,7 @@ func (srv *statisticService) GetStatistics(blogID uint, statisticNames ...string
 
 func (srv *statisticService) IncArticleCount(blogID uint) error {
 	tx := db.Begin()
-	if err := srv.IncArticleCountWithoutTx(blogID); nil != err {
+	if err := srv.IncArticleCountWithoutTx(tx, blogID); nil != err {
 		tx.Rollback()
 
 		return err
@@ -66,12 +67,12 @@ func (srv *statisticService) IncArticleCount(blogID uint) error {
 	return nil
 }
 
-func (srv *statisticService) IncArticleCountWithoutTx(blogID uint) error {
+func (srv *statisticService) IncArticleCountWithoutTx(tx *gorm.DB, blogID uint) error {
 	srv.mutex.Lock()
 	defer srv.mutex.Unlock()
 
 	setting := &model.Setting{}
-	if err := db.Where("name = ? AND category = ? AND blog_id = ?", model.SettingNameStatisticArticleCount, model.SettingCategoryStatistic, blogID).Find(setting).Error; nil != err {
+	if err := tx.Where("name = ? AND category = ? AND blog_id = ?", model.SettingNameStatisticArticleCount, model.SettingCategoryStatistic, blogID).Find(setting).Error; nil != err {
 		return err
 	}
 
@@ -81,7 +82,7 @@ func (srv *statisticService) IncArticleCountWithoutTx(blogID uint) error {
 	}
 
 	setting.Value = strconv.Itoa(count + 1)
-	if err := db.Model(&model.Setting{}).Update(setting).Error; nil != err {
+	if err := tx.Save(setting).Error; nil != err {
 		return err
 	}
 
@@ -90,7 +91,7 @@ func (srv *statisticService) IncArticleCountWithoutTx(blogID uint) error {
 
 func (srv *statisticService) DecArticleCount(blogID uint) error {
 	tx := db.Begin()
-	if err := srv.DecArticleCountWithoutTx(blogID); nil != err {
+	if err := srv.DecArticleCountWithoutTx(tx, blogID); nil != err {
 		tx.Rollback()
 
 		return err
@@ -100,12 +101,12 @@ func (srv *statisticService) DecArticleCount(blogID uint) error {
 	return nil
 }
 
-func (srv *statisticService) DecArticleCountWithoutTx(blogID uint) error {
+func (srv *statisticService) DecArticleCountWithoutTx(tx *gorm.DB, blogID uint) error {
 	srv.mutex.Lock()
 	defer srv.mutex.Unlock()
 
 	setting := &model.Setting{}
-	if err := db.Where("name = ? AND category = ? AND blog_id = ?", model.SettingNameStatisticArticleCount, model.SettingCategoryStatistic, blogID).Find(setting).Error; nil != err {
+	if err := tx.Where("name = ? AND category = ? AND blog_id = ?", model.SettingNameStatisticArticleCount, model.SettingCategoryStatistic, blogID).Find(setting).Error; nil != err {
 		return err
 	}
 
@@ -115,7 +116,142 @@ func (srv *statisticService) DecArticleCountWithoutTx(blogID uint) error {
 	}
 
 	setting.Value = strconv.Itoa(count - 1)
-	if err := db.Model(&model.Setting{}).Update(setting).Error; nil != err {
+	if err := tx.Save(setting).Error; nil != err {
+		return err
+	}
+
+	return nil
+}
+
+func (srv *statisticService) IncPublishedArticleCount(blogID uint) error {
+	tx := db.Begin()
+	if err := srv.IncPublishedArticleCountWithoutTx(tx, blogID); nil != err {
+		tx.Rollback()
+
+		return err
+	}
+	tx.Commit()
+
+	return nil
+}
+
+func (srv *statisticService) IncPublishedArticleCountWithoutTx(tx *gorm.DB, blogID uint) error {
+	srv.mutex.Lock()
+	defer srv.mutex.Unlock()
+
+	setting := &model.Setting{}
+	if err := tx.Where("name = ? AND category = ? AND blog_id = ?", model.SettingNameStatisticPublishedArticleCount, model.SettingCategoryStatistic, blogID).Find(setting).Error; nil != err {
+		return err
+	}
+
+	count, err := strconv.Atoi(setting.Value)
+	if nil != err {
+		return err
+	}
+
+	setting.Value = strconv.Itoa(count + 1)
+	if err := tx.Save(setting).Error; nil != err {
+		return err
+	}
+
+	return nil
+}
+
+func (srv *statisticService) DecPublishedArticleCount(blogID uint) error {
+	tx := db.Begin()
+	if err := srv.DecPublishedArticleCountWithoutTx(tx, blogID); nil != err {
+		tx.Rollback()
+
+		return err
+	}
+	tx.Commit()
+
+	return nil
+}
+
+func (srv *statisticService) DecPublishedArticleCountWithoutTx(tx *gorm.DB, blogID uint) error {
+	srv.mutex.Lock()
+	defer srv.mutex.Unlock()
+
+	setting := &model.Setting{}
+	if err := tx.Where("name = ? AND category = ? AND blog_id = ?", model.SettingNameStatisticPublishedArticleCount, model.SettingCategoryStatistic, blogID).Find(setting).Error; nil != err {
+		return err
+	}
+
+	count, err := strconv.Atoi(setting.Value)
+	if nil != err {
+		return err
+	}
+
+	setting.Value = strconv.Itoa(count - 1)
+	if err := tx.Save(setting).Error; nil != err {
+		return err
+	}
+
+	return nil
+}
+
+func (srv *statisticService) IncCommentCount(blogID uint) error {
+	tx := db.Begin()
+	if err := srv.IncCommentCountWithoutTx(tx, blogID); nil != err {
+		tx.Rollback()
+
+		return err
+	}
+	tx.Commit()
+
+	return nil
+}
+
+func (srv *statisticService) IncCommentCountWithoutTx(tx *gorm.DB, blogID uint) error {
+	srv.mutex.Lock()
+	defer srv.mutex.Unlock()
+
+	setting := &model.Setting{}
+	if err := tx.Where("name = ? AND category = ? AND blog_id = ?", model.SettingNameStatisticCommentCount, model.SettingCategoryStatistic, blogID).Find(setting).Error; nil != err {
+		return err
+	}
+
+	count, err := strconv.Atoi(setting.Value)
+	if nil != err {
+		return err
+	}
+
+	setting.Value = strconv.Itoa(count + 1)
+	if err := tx.Save(setting).Error; nil != err {
+		return err
+	}
+
+	return nil
+}
+
+func (srv *statisticService) DecCommentCount(blogID uint) error {
+	tx := db.Begin()
+	if err := srv.DecCommentCountWithoutTx(tx, blogID); nil != err {
+		tx.Rollback()
+
+		return err
+	}
+	tx.Commit()
+
+	return nil
+}
+
+func (srv *statisticService) DecCommentCountWithoutTx(tx *gorm.DB, blogID uint) error {
+	srv.mutex.Lock()
+	defer srv.mutex.Unlock()
+
+	setting := &model.Setting{}
+	if err := tx.Where("name = ? AND category = ? AND blog_id = ?", model.SettingNameStatisticCommentCount, model.SettingCategoryStatistic, blogID).Find(setting).Error; nil != err {
+		return err
+	}
+
+	count, err := strconv.Atoi(setting.Value)
+	if nil != err {
+		return err
+	}
+	setting.Value = strconv.Itoa(count - 1)
+	if err := tx.Save(setting).Error; nil != err {
 		return err
 	}
 

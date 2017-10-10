@@ -27,6 +27,7 @@ import (
 
 	"github.com/b3log/solo.go/model"
 	"github.com/b3log/solo.go/util"
+	"github.com/jinzhu/gorm"
 )
 
 var Article = &articleService{
@@ -54,8 +55,28 @@ func (srv *articleService) ConsoleAddArticle(article *model.Article) error {
 	article.Tags = tagStr
 
 	tx := db.Begin()
-	tag(article)
+	tag(tx, article)
 	if err := tx.Create(article).Error; nil != err {
+		tx.Rollback()
+
+		return err
+	}
+	author := &model.User{}
+	if err := tx.First(author, article.AuthorID).Error; nil != err {
+		return err
+	}
+	author.ArticleCount = author.ArticleCount + 1
+	if err := tx.Save(author).Error; nil != err {
+		tx.Rollback()
+
+		return err
+	}
+	if err := Statistic.IncArticleCountWithoutTx(tx, article.BlogID); nil != err {
+		tx.Rollback()
+
+		return err
+	}
+	if err := Statistic.IncPublishedArticleCountWithoutTx(tx, article.BlogID); nil != err {
 		tx.Rollback()
 
 		return err
@@ -96,43 +117,50 @@ func (srv *articleService) ConsoleRemoveArticle(id uint) error {
 	article := &model.Article{}
 
 	tx := db.Begin()
-	if err := db.First(article, id).Error; nil != err {
+	if err := tx.First(article, id).Error; nil != err {
 		return err
 	}
 	author := &model.User{}
-	if err := db.First(author, article.AuthorID).Error; nil != err {
+	if err := tx.First(author, article.AuthorID).Error; nil != err {
 		return err
 	}
 	author.ArticleCount = author.ArticleCount - 1
-	if err := db.Model(&model.User{}).Updates(author).Error; nil != err {
+	author.PublishedArticleCount = author.PublishedArticleCount - 1
+	if err := tx.Save(author).Error; nil != err {
 		tx.Rollback()
 
 		return err
 	}
-	if err := db.Delete(article).Error; nil != err {
+	if err := tx.Delete(article).Error; nil != err {
 		tx.Rollback()
 
 		return err
 	}
-	if err := Statistic.DecArticleCountWithoutTx(author.BlogID); nil != err {
+	if err := Statistic.DecArticleCountWithoutTx(tx, author.BlogID); nil != err {
+		tx.Rollback()
+
+		return err
+	}
+	if err := Statistic.DecPublishedArticleCountWithoutTx(tx, author.BlogID); nil != err {
 		tx.Rollback()
 
 		return err
 	}
 	comments := []*model.Comment{}
-	if err := db.Model(&model.Comment{}).Where("article_id = ?", id).
-		Find(&comments).Error; nil != err {
+	if err := tx.Model(&model.Comment{}).Where("article_id = ?", id).Find(&comments).Error; nil != err {
 		tx.Rollback()
 
 		return err
 	}
 	if 0 < len(comments) {
-		if err := db.Where("article_id = ?", id).Delete(&model.Comment{}).Error; nil != err {
+		if err := tx.Where("article_id = ?", id).Delete(&model.Comment{}).Error; nil != err {
 			tx.Rollback()
 
 			return err
 		}
-
+		for _, _ = range comments {
+			Statistic.DecCommentCountWithoutTx(tx, author.BlogID)
+		}
 	}
 	tx.Commit()
 
@@ -149,7 +177,7 @@ func (srv *articleService) ConsoleUpdateArticle(article *model.Article) error {
 	}
 
 	tx := db.Begin()
-	if err := db.Model(&model.Article{}).Updates(article).Error; nil != err {
+	if err := tx.Save(article).Error; nil != err {
 		tx.Rollback()
 
 		return err
@@ -185,22 +213,22 @@ func normalizeTagStr(tagStr string) string {
 	return strings.Join(retTags, ",")
 }
 
-func tag(article *model.Article) error {
+func tag(tx *gorm.DB, article *model.Article) error {
 	tags := strings.Split(article.Tags, ",")
 	for _, tagTitle := range tags {
 		tag := &model.Tag{BlogID: article.BlogID}
-		db.Where("title = ?", tagTitle).First(tag)
+		tx.Where("title = ?", tagTitle).First(tag)
 		if "" == tag.Title {
 			tag.Title = tagTitle
 			tag.ArticleCount = 1
 			tag.PublishedArticleCount = 1
-			if err := db.Create(tag).Error; nil != err {
+			if err := tx.Create(tag).Error; nil != err {
 				return err
 			}
 		} else {
 			tag.ArticleCount = tag.ArticleCount + 1
 			tag.PublishedArticleCount = tag.PublishedArticleCount + 1
-			if err := db.Model(&model.Tag{}).Update(tag).Error; nil != err {
+			if err := tx.Save(tag).Error; nil != err {
 				return err
 			}
 		}

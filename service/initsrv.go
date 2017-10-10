@@ -94,7 +94,17 @@ func (srv *initService) InitPlatform(platformAdmin *model.User) error {
 
 		return err
 	}
-	if err := initBasicSettings(tx, platformAdmin, blogID); nil != err {
+	if err := initSystemSettings(tx, platformAdmin, blogID); nil != err {
+		tx.Rollback()
+
+		return err
+	}
+	if err := initThemeSettings(tx, blogID); nil != err {
+		tx.Rollback()
+
+		return err
+	}
+	if err := initBasicSettings(tx, blogID); nil != err {
 		tx.Rollback()
 
 		return err
@@ -145,6 +155,7 @@ func initPlatformAdmin(tx *gorm.DB, admin *model.User, blogID uint) error {
 	admin.Role = model.UserRolePlatformAdmin
 	admin.ArticleCount, admin.PublishedArticleCount = 1, 1 // article "Hello, World!"
 	admin.BlogID = blogID
+	admin.Locale = "zh_CN"
 	if err := tx.Create(admin).Error; nil != err {
 		return err
 	}
@@ -238,14 +249,38 @@ Solo.go 博客系统是一个开源项目，如果你觉得它很赞，请到[�
 	return nil
 }
 
-func initBasicSettings(tx *gorm.DB, blogAdmin *model.User, blogID uint) error {
+func initSystemSettings(tx *gorm.DB, blogAdmin *model.User, blogID uint) error {
 	if err := tx.Create(&model.Setting{
-		Category: model.SettingCategoryBasic,
-		Name:     model.SettingNameBasicPath,
+		Category: model.SettingCategorySystem,
+		Name:     model.SettingNameSystemPath,
 		Value:    "/" + blogAdmin.Name,
 		BlogID:   blogID}).Error; nil != err {
 		return err
 	}
+	if err := tx.Create(&model.Setting{
+		Category: model.SettingCategorySystem,
+		Name:     model.SettingNameSystemVer,
+		Value:    "1.0.0",
+		BlogID:   blogID}).Error; nil != err {
+		return err
+	}
+
+	return nil
+}
+
+func initThemeSettings(tx *gorm.DB, blogID uint) error {
+	if err := tx.Create(&model.Setting{
+		Category: model.SettingCategoryTheme,
+		Name:     model.SettingNameThemeName,
+		Value:    "yilia",
+		BlogID:   blogID}).Error; nil != err {
+		return err
+	}
+
+	return nil
+}
+
+func initBasicSettings(tx *gorm.DB, blogID uint) error {
 	if err := tx.Create(&model.Setting{
 		Category: model.SettingCategoryBasic,
 		Name:     model.SettingNameBasicBlogSubtitle,
@@ -377,20 +412,6 @@ func initPreferenceSettings(tx *gorm.DB, blogID uint) error {
 		BlogID:   blogID}).Error; nil != err {
 		return err
 	}
-	if err := tx.Create(&model.Setting{
-		Category: model.SettingCategoryPreference,
-		Name:     model.SettingNamePreferenceTheme,
-		Value:    "yilia",
-		BlogID:   blogID}).Error; nil != err {
-		return err
-	}
-	if err := tx.Create(&model.Setting{
-		Category: model.SettingCategoryPreference,
-		Name:     model.SettingNamePreferenceVer,
-		Value:    "1.0.0",
-		BlogID:   blogID}).Error; nil != err {
-		return err
-	}
 
 	return nil
 }
@@ -398,7 +419,7 @@ func initPreferenceSettings(tx *gorm.DB, blogID uint) error {
 func initSignSettings(tx *gorm.DB, blogID uint) error {
 	if err := tx.Create(&model.Setting{
 		Category: model.SettingCategorySign,
-		Name:     model.SettingNameSignContent,
+		Name:     model.SettingNameArticleSign,
 		Value:    "<!-- 支持 HTML、脚本 -->",
 		BlogID:   blogID}).Error; nil != err {
 		return err

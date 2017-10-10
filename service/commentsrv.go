@@ -51,20 +51,38 @@ func (srv *commentService) ConsoleGetComments(page int, blogID uint) (ret []*mod
 	return
 }
 
-func (srv *commentService) RemoveComment(id uint) error {
+func (srv *commentService) AddComment(comment *model.Comment) error {
 	srv.mutex.Lock()
 	defer srv.mutex.Unlock()
 
-	comment := &model.Comment{
-		Model: model.Model{ID: id},
-	}
-
 	tx := db.Begin()
-	if err := db.Delete(comment).Error; nil != err {
+	if err := tx.Create(comment).Error; nil != err {
 		tx.Rollback()
 
 		return err
 	}
+	Statistic.IncCommentCountWithoutTx(tx, comment.BlogID)
+	tx.Commit()
+
+	return nil
+}
+
+func (srv *commentService) RemoveComment(id uint) error {
+	srv.mutex.Lock()
+	defer srv.mutex.Unlock()
+
+	comment := &model.Comment{}
+
+	tx := db.Begin()
+	if err := tx.First(comment, id).Error; nil != err {
+		return err
+	}
+	if err := tx.Delete(comment).Error; nil != err {
+		tx.Rollback()
+
+		return err
+	}
+	Statistic.DecCommentCountWithoutTx(tx, comment.BlogID)
 	tx.Commit()
 
 	return nil
