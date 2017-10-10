@@ -56,37 +56,42 @@
     {
       title: app.$t('manage', locale),
       icon: 'manage',
-      active: app.$route.path.indexOf('management') > -1,
+      active: app.$route.path === '/admin/articles' ||
+      app.$route.path === '/admin/comments' ||
+      app.$route.path === '/admin/categories' ||
+      app.$route.path === '/admin/navigations' ||
+      app.$route.path === '/admin/users' ||
+      app.$route.path === '/admin/blogs',
       role: 2,
       items: [
         {
           title: app.$t('articleList', locale),
-          link: '/admin/articles/management',
+          link: '/admin/articles',
           role: 2
         },
         {
           title: app.$t('commentList', locale),
-          link: '/admin/comments/management',
+          link: '/admin/comments',
           role: 2
         },
         {
           title: app.$t('categoryList', locale),
-          link: '/admin/categories/management',
+          link: '/admin/categories',
           role: 1
         },
         {
           title: app.$t('navigationList', locale),
-          link: '/admin/navigations/management',
+          link: '/admin/navigations',
           role: 1
         },
         {
           title: app.$t('userList', locale),
-          link: '/admin/users/management',
+          link: '/admin/users',
           role: 1
         },
         {
           title: app.$t('blogManage', locale),
-          link: '/admin/blogs/management',
+          link: '/admin/blogs',
           role: 0
         }
       ]

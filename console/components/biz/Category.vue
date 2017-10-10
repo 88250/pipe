@@ -44,6 +44,8 @@
 </template>
 
 <script>
+  import { required, maxSize } from '~/plugins/validate'
+
   export default {
     props: ['id'],
     data () {
@@ -55,11 +57,11 @@
         description: '',
         tags: '',
         titleRules: [
-          (v) => !!v || this.$t('required', this.$store.state.locale),
-          (v) => v.length <= 32 || this.$t('validateRule2', this.$store.state.locale)
+          (v) => required.call(this, v),
+          (v) => maxSize.call(this, v, 32)
         ],
         descriptionRules: [
-          (v) => v.length <= 32 || this.$t('validateRule2', this.$store.state.locale)
+          (v) => maxSize.call(this, v, 32)
         ]
       }
     },

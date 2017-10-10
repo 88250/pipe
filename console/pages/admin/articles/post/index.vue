@@ -56,7 +56,7 @@
 
 <script>
   import 'mavon-editor/dist/css/index.css'
-
+  import { required, maxSize } from '~/plugins/validate'
   export default {
     data () {
       return {
@@ -66,8 +66,8 @@
         abstract: '',
         title: '',
         titleRules: [
-          (v) => !!v || this.$t('required', this.$store.state.locale),
-          (v) => v.length <= 32 || this.$t('validateRule2', this.$store.state.locale)
+          (v) => required.call(this, v),
+          (v) => maxSize.call(this, v, 32)
         ],
         url: '',
         password: '',

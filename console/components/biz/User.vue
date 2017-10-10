@@ -5,20 +5,20 @@
         :label="$t('account', $store.state.locale)"
         v-model="name"
         :counter="32"
-        :rules="titleRules"
+        :rules="requiredRules"
         required
       ></v-text-field>
       <v-text-field
         :label="$t('nickname', $store.state.locale)"
         v-model="nickname"
-        :rules="titleRules"
+        :rules="requiredRules"
         :counter="32"
         required
       ></v-text-field>
       <v-text-field
         :label="$t('hacpaiEmail', $store.state.locale)"
         v-model="email"
-        :rules="titleRules"
+        :rules="requiredRules"
         :counter="32"
         required
       ></v-text-field>
@@ -49,6 +49,7 @@
 
 <script>
   import md5 from 'blueimp-md5'
+  import { required } from '~/plugins/validate'
 
   export default {
     props: ['id'],
@@ -61,8 +62,8 @@
         avatarURL: '',
         password: '',
         email: '',
-        titleRules: [
-          (v) => !!v || this.$t('required', this.$store.state.locale)
+        requiredRules: [
+          (v) => required.call(this, v)
         ]
       }
     },
