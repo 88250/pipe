@@ -45,7 +45,6 @@
         }
       }
     },
-    middleware: 'authenticated',
     components: {
       Side,
       SoloHeader,
