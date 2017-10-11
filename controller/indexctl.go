@@ -30,7 +30,7 @@ import (
 
 func indexCtl(c *gin.Context) {
 	theme := "yilia"
-	t, err := template.ParseFiles("theme/" + theme + "/index.html")
+	t, err := template.ParseFiles("theme/"+theme+"/index.html", "theme/"+theme+"/side.html")
 	if nil != err {
 		log.Error("loads theme [" + theme + "] failed: " + err.Error())
 		c.String(http.StatusNotFound, "loads theme failed")
