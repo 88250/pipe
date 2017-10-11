@@ -24,6 +24,7 @@ import (
 	"sort"
 	"strings"
 
+	"github.com/b3log/solo.go/util"
 	log "github.com/sirupsen/logrus"
 )
 
@@ -42,7 +43,7 @@ func Load() {
 	f.Close()
 
 	for _, name := range names {
-		if !isLetter(rune(name[0])) || !strings.HasSuffix(name, ".json") {
+		if !util.IsLetter(rune(name[0])) || !strings.HasSuffix(name, ".json") {
 			continue
 		}
 
@@ -90,8 +91,4 @@ func GetLocalesNames() []string {
 	sort.Strings(ret)
 
 	return ret
-}
-
-func isLetter(r rune) bool {
-	return 'a' <= r && 'z' >= r || 'A' <= r && 'Z' >= r
 }

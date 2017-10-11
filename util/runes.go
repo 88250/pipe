@@ -14,32 +14,8 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-// Package i18n includes internationalization related manipulations.
+package util
 
-package theme
-
-import (
-	"os"
-
-	"github.com/b3log/solo.go/util"
-	log "github.com/sirupsen/logrus"
-)
-
-var themes = []string{}
-
-// Load loads themes.
-func Load() {
-	f, _ := os.Open("theme/x")
-	names, _ := f.Readdirnames(-1)
-	f.Close()
-
-	for _, name := range names {
-		if !util.IsLetter(rune(name[0])) {
-			continue
-		}
-
-		themes = append(themes, name)
-	}
-
-	log.Debugf("loaded [%d] themes", len(themes))
+func IsLetter(r rune) bool {
+	return 'a' <= r && 'z' >= r || 'A' <= r && 'Z' >= r
 }
