@@ -32,7 +32,7 @@ type loginRequest struct {
 	PasswordHashed string `json:"passwordHashed" binding:"required"`
 }
 
-func loginCtl(c *gin.Context) {
+func loginAction(c *gin.Context) {
 	result := util.NewResult()
 	defer c.JSON(http.StatusOK, result)
 
@@ -102,7 +102,7 @@ func loginCtl(c *gin.Context) {
 	}
 }
 
-func logoutCtl(c *gin.Context) {
+func logoutAction(c *gin.Context) {
 	result := util.NewResult()
 	defer c.JSON(http.StatusOK, result)
 

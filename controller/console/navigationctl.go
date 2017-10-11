@@ -35,7 +35,7 @@ type ConsoleNavigation struct {
 	Number     int    `json:"number"`
 }
 
-func GetNavigationsCtl(c *gin.Context) {
+func GetNavigationsAction(c *gin.Context) {
 	result := util.NewResult()
 	defer c.JSON(http.StatusOK, result)
 
@@ -62,7 +62,7 @@ func GetNavigationsCtl(c *gin.Context) {
 	result.Data = data
 }
 
-func GetNavigationCtl(c *gin.Context) {
+func GetNavigationAction(c *gin.Context) {
 	result := util.NewResult()
 	defer c.JSON(http.StatusOK, result)
 
@@ -84,7 +84,7 @@ func GetNavigationCtl(c *gin.Context) {
 	result.Data = data
 }
 
-func RemoveNavigationCtl(c *gin.Context) {
+func RemoveNavigationAction(c *gin.Context) {
 	result := util.NewResult()
 	defer c.JSON(http.StatusOK, result)
 
@@ -103,7 +103,7 @@ func RemoveNavigationCtl(c *gin.Context) {
 	}
 }
 
-func UpdateNavigationCtl(c *gin.Context) {
+func UpdateNavigationAction(c *gin.Context) {
 	result := util.NewResult()
 	defer c.JSON(http.StatusOK, result)
 
@@ -130,7 +130,7 @@ func UpdateNavigationCtl(c *gin.Context) {
 	}
 }
 
-func AddNavigationCtl(c *gin.Context) {
+func AddNavigationAction(c *gin.Context) {
 	result := util.NewResult()
 	defer c.JSON(http.StatusOK, result)
 

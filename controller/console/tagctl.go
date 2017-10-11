@@ -24,7 +24,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func GetTagsCtl(c *gin.Context) {
+func GetTagsAction(c *gin.Context) {
 	result := util.NewResult()
 	defer c.JSON(http.StatusOK, result)
 

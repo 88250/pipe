@@ -29,7 +29,7 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
-func AddArticleCtl(c *gin.Context) {
+func AddArticleAction(c *gin.Context) {
 	result := util.NewResult()
 	defer c.JSON(http.StatusOK, result)
 
@@ -51,7 +51,7 @@ func AddArticleCtl(c *gin.Context) {
 	}
 }
 
-func GetArticleCtl(c *gin.Context) {
+func GetArticleAction(c *gin.Context) {
 	result := util.NewResult()
 	defer c.JSON(http.StatusOK, result)
 
@@ -95,7 +95,7 @@ type Author struct {
 	AvatarURL string `json:"avatarURL"`
 }
 
-func GetArticlesCtl(c *gin.Context) {
+func GetArticlesAction(c *gin.Context) {
 	result := util.NewResult()
 	defer c.JSON(http.StatusOK, result)
 
@@ -147,7 +147,7 @@ func GetArticlesCtl(c *gin.Context) {
 	result.Data = data
 }
 
-func RemoveArticleCtl(c *gin.Context) {
+func RemoveArticleAction(c *gin.Context) {
 	result := util.NewResult()
 	defer c.JSON(http.StatusOK, result)
 
@@ -166,7 +166,7 @@ func RemoveArticleCtl(c *gin.Context) {
 	}
 }
 
-func UpdateArticleCtl(c *gin.Context) {
+func UpdateArticleAction(c *gin.Context) {
 	result := util.NewResult()
 	defer c.JSON(http.StatusOK, result)
 

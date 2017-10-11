@@ -24,11 +24,11 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func pingCtl(c *gin.Context) {
+func pingAction(c *gin.Context) {
 	c.String(http.StatusOK, "pong")
 }
 
-func GetPlatformStatusCtl(c *gin.Context) {
+func GetPlatformStatusAction(c *gin.Context) {
 	result := util.NewResult()
 	defer c.JSON(http.StatusOK, result)
 

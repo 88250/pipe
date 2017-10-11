@@ -28,7 +28,7 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
-func indexCtl(c *gin.Context) {
+func indexAction(c *gin.Context) {
 	theme := "yilia"
 	t, err := template.ParseFiles("theme/"+theme+"/index.html", "theme/"+theme+"/side.html", "theme/"+theme+"/footer.html", "theme/"+theme+"/header.html")
 	if nil != err {

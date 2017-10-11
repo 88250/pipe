@@ -35,7 +35,7 @@ type ConsoleComment struct {
 	URL           string  `json:"url"`
 }
 
-func GetCommentsCtl(c *gin.Context) {
+func GetCommentsAction(c *gin.Context) {
 	result := util.NewResult()
 	defer c.JSON(http.StatusOK, result)
 
@@ -72,7 +72,7 @@ func GetCommentsCtl(c *gin.Context) {
 	result.Data = data
 }
 
-func RemoveCommentCtl(c *gin.Context) {
+func RemoveCommentAction(c *gin.Context) {
 	result := util.NewResult()
 	defer c.JSON(http.StatusOK, result)
 

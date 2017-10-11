@@ -25,7 +25,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func BlogSwitchCtl(c *gin.Context) {
+func BlogSwitchAction(c *gin.Context) {
 	result := util.NewResult()
 	defer c.JSON(http.StatusOK, result)
 

@@ -34,7 +34,7 @@ type ConsoleCategory struct {
 	Tags        string `json:"tags"`
 }
 
-func GetCategoriesCtl(c *gin.Context) {
+func GetCategoriesAction(c *gin.Context) {
 	result := util.NewResult()
 	defer c.JSON(http.StatusOK, result)
 
@@ -58,7 +58,7 @@ func GetCategoriesCtl(c *gin.Context) {
 	result.Data = data
 }
 
-func AddCategoryCtl(c *gin.Context) {
+func AddCategoryAction(c *gin.Context) {
 	result := util.NewResult()
 	defer c.JSON(http.StatusOK, result)
 
