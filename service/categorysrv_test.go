@@ -53,3 +53,9 @@ func TestConsoleGetCategories(t *testing.T) {
 		t.Errorf("expected is [%d], actual is [%d]", 1, len(categories))
 	}
 }
+
+func TestRemoveCategory(t *testing.T) {
+	if err := Category.RemoveCategory(1); nil != err {
+		t.Errorf("remove category failed: " + err.Error())
+	}
+}

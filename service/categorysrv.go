@@ -65,6 +65,28 @@ func (srv *categoryService) ConsoleGetCategories() (ret []*model.Category) {
 }
 
 func (srv *categoryService) RemoveCategory(id uint) error {
+	srv.mutex.Lock()
+	defer srv.mutex.Unlock()
+
+	category := &model.Category{}
+
+	tx := db.Begin()
+	if err := tx.First(category, id).Error; nil != err {
+		return err
+	}
+
+	if err := tx.Where("id1 = ? AND type = ?", category.ID, model.CorrelationCategoryTag).Delete(model.Correlation{}).Error; nil != err {
+		tx.Rollback()
+
+		return err
+	}
+	if err := tx.Delete(category).Error; nil != err {
+		tx.Rollback()
+
+		return err
+	}
+	tx.Commit()
+
 	return nil
 }
 
