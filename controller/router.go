@@ -29,8 +29,12 @@ import (
 // MapRoutes returns a gin engine and binds controllers with request URLs.
 func MapRoutes() *gin.Engine {
 	ret := gin.New()
-	// TODO: D, ret.Use(favicon.New("./favicon.ico"))
+
 	ret.Use(gin.Recovery())
+
+	ret.StaticFile("/favicon.ico", "console/static/favicon.ico")
+	ret.Static("/css", "theme/css")
+	ret.Static("/js", "theme/js")
 
 	store := sessions.NewCookieStore([]byte(util.Conf.SessionSecret))
 	store.Options(sessions.Options{
@@ -42,42 +46,54 @@ func MapRoutes() *gin.Engine {
 	ret.Use(sessions.Sessions("sologo", store))
 
 	api := ret.Group("/api")
-	api.POST("/init", initCtl)
-	api.POST("/login", loginCtl)
-	api.POST("/logout", logoutCtl)
+	api.POST("/init", initAction)
+	api.POST("/login", loginAction)
+	api.POST("/logout", logoutAction)
 	api.Any("/hp/*apis", util.HacPaiAPI())
+
 	statusGroup := api.Group("/status")
-	statusGroup.GET("", GetPlatformStatusCtl)
-	statusGroup.GET("/ping", pingCtl)
+	statusGroup.GET("", GetPlatformStatusAction)
+	statusGroup.GET("/ping", pingAction)
+
 	consoleGroup := api.Group("/console")
 	consoleGroup.Use(console.LoginCheck())
-	consoleGroup.POST("/articles", console.AddArticleCtl)
-	consoleGroup.GET("/articles", console.GetArticlesCtl)
-	consoleGroup.GET("/articles/:id", console.GetArticleCtl)
-	consoleGroup.DELETE("/articles/:id", console.RemoveArticleCtl)
-	consoleGroup.PUT("/articles/:id", console.UpdateArticleCtl)
-	consoleGroup.GET("/comments", console.GetCommentsCtl)
-	consoleGroup.DELETE("/comments/:id", console.RemoveCommentCtl)
-	consoleGroup.GET("/navigations", console.GetNavigationsCtl)
-	consoleGroup.GET("/navigations/:id", console.GetNavigationCtl)
-	consoleGroup.PUT("/navigations/:id", console.UpdateNavigationCtl)
-	consoleGroup.POST("/navigations", console.AddNavigationCtl)
-	consoleGroup.DELETE("/navigations/:id", console.RemoveNavigationCtl)
-	consoleGroup.GET("/tags", console.GetTagsCtl)
-	consoleGroup.POST("/blog/switch/:id", console.BlogSwitchCtl)
+
+	consoleGroup.POST("/articles", console.AddArticleAction)
+	consoleGroup.GET("/articles", console.GetArticlesAction)
+	consoleGroup.GET("/articles/:id", console.GetArticleAction)
+	consoleGroup.DELETE("/articles/:id", console.RemoveArticleAction)
+	consoleGroup.PUT("/articles/:id", console.UpdateArticleAction)
+
+	consoleGroup.GET("/comments", console.GetCommentsAction)
+	consoleGroup.DELETE("/comments/:id", console.RemoveCommentAction)
+
+	consoleGroup.GET("/navigations", console.GetNavigationsAction)
+	consoleGroup.GET("/navigations/:id", console.GetNavigationAction)
+	consoleGroup.PUT("/navigations/:id", console.UpdateNavigationAction)
+	consoleGroup.POST("/navigations", console.AddNavigationAction)
+	consoleGroup.DELETE("/navigations/:id", console.RemoveNavigationAction)
+
+	consoleGroup.GET("/categories", console.GetCategoriesAction)
+	consoleGroup.POST("/categories", console.AddCategoryAction)
+
+	consoleGroup.GET("/tags", console.GetTagsAction)
+
+	consoleGroup.POST("/blog/switch/:id", console.BlogSwitchAction)
+
 	consoleSettingsGroup := consoleGroup.Group("/settings")
-	consoleSettingsGroup.GET("/basic", console.GetBasicSettingsCtl)
-	consoleSettingsGroup.PUT("/basic", console.UpdateBasicSettingsCtl)
-	consoleSettingsGroup.GET("/preference", console.GetPreferenceSettingsCtl)
-	consoleSettingsGroup.PUT("/preference", console.UpdatePreferenceSettingsCtl)
-	consoleSettingsGroup.GET("/sign", console.GetSignSettingsCtl)
-	consoleSettingsGroup.PUT("/sign", console.UpdateSignSettingsCtl)
-	consoleSettingsGroup.GET("/i18n", console.GetI18nSettingsCtl)
-	consoleSettingsGroup.PUT("/i18n", console.UpdateI18nSettingsCtl)
-	consoleSettingsGroup.GET("/feed", console.GetFeedSettingsCtl)
-	consoleSettingsGroup.PUT("/feed", console.UpdateFeedSettingsCtl)
+	consoleSettingsGroup.GET("/basic", console.GetBasicSettingsAction)
+	consoleSettingsGroup.PUT("/basic", console.UpdateBasicSettingsAction)
+	consoleSettingsGroup.GET("/preference", console.GetPreferenceSettingsAction)
+	consoleSettingsGroup.PUT("/preference", console.UpdatePreferenceSettingsAction)
+	consoleSettingsGroup.GET("/sign", console.GetSignSettingsAction)
+	consoleSettingsGroup.PUT("/sign", console.UpdateSignSettingsAction)
+	consoleSettingsGroup.GET("/i18n", console.GetI18nSettingsAction)
+	consoleSettingsGroup.PUT("/i18n", console.UpdateI18nSettingsAction)
+	consoleSettingsGroup.GET("/feed", console.GetFeedSettingsAction)
+	consoleSettingsGroup.PUT("/feed", console.UpdateFeedSettingsAction)
+
 	themeGroup := ret.Group("")
-	themeGroup.GET("/", indexCtl)
+	themeGroup.GET("/", indexAction)
 
 	ret.LoadHTMLFiles("console/dist/admin/index.html")
 	ret.GET("/admin", func(c *gin.Context) {

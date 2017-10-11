@@ -35,7 +35,7 @@ type ConsoleNavigation struct {
 	Number     int    `json:"number"`
 }
 
-func GetNavigationsCtl(c *gin.Context) {
+func GetNavigationsAction(c *gin.Context) {
 	result := util.NewResult()
 	defer c.JSON(http.StatusOK, result)
 
@@ -62,7 +62,7 @@ func GetNavigationsCtl(c *gin.Context) {
 	result.Data = data
 }
 
-func GetNavigationCtl(c *gin.Context) {
+func GetNavigationAction(c *gin.Context) {
 	result := util.NewResult()
 	defer c.JSON(http.StatusOK, result)
 
@@ -84,7 +84,7 @@ func GetNavigationCtl(c *gin.Context) {
 	result.Data = data
 }
 
-func RemoveNavigationCtl(c *gin.Context) {
+func RemoveNavigationAction(c *gin.Context) {
 	result := util.NewResult()
 	defer c.JSON(http.StatusOK, result)
 
@@ -97,13 +97,13 @@ func RemoveNavigationCtl(c *gin.Context) {
 		return
 	}
 
-	if err := service.Navigation.ConsoleRemoveNavigation(uint(id)); nil != err {
+	if err := service.Navigation.RemoveNavigation(uint(id)); nil != err {
 		result.Code = -1
 		result.Msg = err.Error()
 	}
 }
 
-func UpdateNavigationCtl(c *gin.Context) {
+func UpdateNavigationAction(c *gin.Context) {
 	result := util.NewResult()
 	defer c.JSON(http.StatusOK, result)
 
@@ -124,13 +124,13 @@ func UpdateNavigationCtl(c *gin.Context) {
 		return
 	}
 
-	if err := service.Navigation.ConsoleUpdateNavigation(navigation); nil != err {
+	if err := service.Navigation.UpdateNavigation(navigation); nil != err {
 		result.Code = -1
 		result.Msg = err.Error()
 	}
 }
 
-func AddNavigationCtl(c *gin.Context) {
+func AddNavigationAction(c *gin.Context) {
 	result := util.NewResult()
 	defer c.JSON(http.StatusOK, result)
 
@@ -145,7 +145,7 @@ func AddNavigationCtl(c *gin.Context) {
 	}
 
 	navigation.BlogID = sessionData.BID
-	if err := service.Navigation.ConsoleAddNavigation(navigation); nil != err {
+	if err := service.Navigation.AddNavigation(navigation); nil != err {
 		result.Code = -1
 		result.Msg = err.Error()
 	}

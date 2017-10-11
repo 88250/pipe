@@ -28,7 +28,7 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
-func GetBasicSettingsCtl(c *gin.Context) {
+func GetBasicSettingsAction(c *gin.Context) {
 	result := util.NewResult()
 	defer c.JSON(http.StatusOK, result)
 
@@ -52,7 +52,7 @@ func GetBasicSettingsCtl(c *gin.Context) {
 	result.Data = data
 }
 
-func UpdateBasicSettingsCtl(c *gin.Context) {
+func UpdateBasicSettingsAction(c *gin.Context) {
 	result := util.NewResult()
 	defer c.JSON(http.StatusOK, result)
 
@@ -90,7 +90,7 @@ func UpdateBasicSettingsCtl(c *gin.Context) {
 	}
 }
 
-func GetPreferenceSettingsCtl(c *gin.Context) {
+func GetPreferenceSettingsAction(c *gin.Context) {
 	result := util.NewResult()
 	defer c.JSON(http.StatusOK, result)
 
@@ -114,7 +114,7 @@ func GetPreferenceSettingsCtl(c *gin.Context) {
 	result.Data = data
 }
 
-func UpdatePreferenceSettingsCtl(c *gin.Context) {
+func UpdatePreferenceSettingsAction(c *gin.Context) {
 	result := util.NewResult()
 	defer c.JSON(http.StatusOK, result)
 
@@ -152,7 +152,7 @@ func UpdatePreferenceSettingsCtl(c *gin.Context) {
 	}
 }
 
-func GetSignSettingsCtl(c *gin.Context) {
+func GetSignSettingsAction(c *gin.Context) {
 	result := util.NewResult()
 	defer c.JSON(http.StatusOK, result)
 
@@ -161,7 +161,7 @@ func GetSignSettingsCtl(c *gin.Context) {
 	result.Data = signSetting.Value
 }
 
-func UpdateSignSettingsCtl(c *gin.Context) {
+func UpdateSignSettingsAction(c *gin.Context) {
 	result := util.NewResult()
 	defer c.JSON(http.StatusOK, result)
 
@@ -189,7 +189,7 @@ func UpdateSignSettingsCtl(c *gin.Context) {
 	}
 }
 
-func GetI18nSettingsCtl(c *gin.Context) {
+func GetI18nSettingsAction(c *gin.Context) {
 	result := util.NewResult()
 	defer c.JSON(http.StatusOK, result)
 
@@ -202,7 +202,7 @@ func GetI18nSettingsCtl(c *gin.Context) {
 	result.Data = data
 }
 
-func UpdateI18nSettingsCtl(c *gin.Context) {
+func UpdateI18nSettingsAction(c *gin.Context) {
 	result := util.NewResult()
 	defer c.JSON(http.StatusOK, result)
 
@@ -232,7 +232,7 @@ func UpdateI18nSettingsCtl(c *gin.Context) {
 	}
 }
 
-func GetFeedSettingsCtl(c *gin.Context) {
+func GetFeedSettingsAction(c *gin.Context) {
 	result := util.NewResult()
 	defer c.JSON(http.StatusOK, result)
 
@@ -255,7 +255,7 @@ func GetFeedSettingsCtl(c *gin.Context) {
 	result.Data = data
 }
 
-func UpdateFeedSettingsCtl(c *gin.Context) {
+func UpdateFeedSettingsAction(c *gin.Context) {
 	result := util.NewResult()
 	defer c.JSON(http.StatusOK, result)
 

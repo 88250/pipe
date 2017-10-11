@@ -42,15 +42,17 @@ func TestAddCategory(t *testing.T) {
 }
 
 func TestConsoleGetCategories(t *testing.T) {
-	categories := Category.ConsoleGetCategories()
+	categories, pagination := Category.ConsoleGetCategories(1, 1)
 	if nil == categories {
 		t.Errorf("categories is nil")
 
 		return
 	}
-
 	if 1 != len(categories) {
 		t.Errorf("expected is [%d], actual is [%d]", 1, len(categories))
+	}
+	if 1 != pagination.RecordCount {
+		t.Errorf("expected is [%d], actual is [%d]", 1, pagination.RecordCount)
 	}
 }
 

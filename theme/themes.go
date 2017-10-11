@@ -14,25 +14,35 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-package console
+// Package i18n includes internationalization related manipulations.
+
+package theme
 
 import (
-	"net/http"
+	"os"
 
-	"github.com/b3log/solo.go/service"
-	"github.com/b3log/solo.go/util"
-	"github.com/gin-gonic/gin"
+	log "github.com/sirupsen/logrus"
 )
 
-func GetTagsAction(c *gin.Context) {
-	result := util.NewResult()
-	defer c.JSON(http.StatusOK, result)
+var themes = []string{}
 
-	tags := []*ConsoleTag{}
-	tagModels := service.Tag.ConsoleGetTags()
-	for _, tagModel := range tagModels {
-		tags = append(tags, &ConsoleTag{Title: tagModel.Title})
+// Load loads themes.
+func Load() {
+	f, _ := os.Open("theme/x")
+	names, _ := f.Readdirnames(-1)
+	f.Close()
+
+	for _, name := range names {
+		if !isLetter(rune(name[0])) {
+			continue
+		}
+
+		themes = append(themes, name)
 	}
 
-	result.Data = tags
+	log.Debugf("loaded [%d] themes", len(themes))
+}
+
+func isLetter(r rune) bool {
+	return 'a' <= r && 'z' >= r || 'A' <= r && 'Z' >= r
 }
