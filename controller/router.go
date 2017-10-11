@@ -29,8 +29,12 @@ import (
 // MapRoutes returns a gin engine and binds controllers with request URLs.
 func MapRoutes() *gin.Engine {
 	ret := gin.New()
-	// TODO: D, ret.Use(favicon.New("./favicon.ico"))
+
 	ret.Use(gin.Recovery())
+
+	ret.StaticFile("/favicon.ico", "console/static/favicon.ico")
+	ret.Static("/css", "theme/css")
+	ret.Static("/js", "theme/js")
 
 	store := sessions.NewCookieStore([]byte(util.Conf.SessionSecret))
 	store.Options(sessions.Options{

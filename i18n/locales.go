@@ -41,10 +41,6 @@ func Load() {
 	names, _ := f.Readdirnames(-1)
 	f.Close()
 
-	if len(locales) == len(names)-1 {
-		return
-	}
-
 	for _, name := range names {
 		if !isLetter(rune(name[0])) || !strings.HasSuffix(name, ".json") {
 			continue

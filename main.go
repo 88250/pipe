@@ -27,6 +27,7 @@ import (
 	"github.com/b3log/solo.go/controller"
 	"github.com/b3log/solo.go/i18n"
 	"github.com/b3log/solo.go/service"
+	"github.com/b3log/solo.go/theme"
 	"github.com/b3log/solo.go/util"
 	"github.com/gin-gonic/gin"
 	log "github.com/sirupsen/logrus"
@@ -37,8 +38,9 @@ func init() {
 	gin.SetMode(gin.ReleaseMode)
 	gin.DefaultWriter = io.MultiWriter(os.Stdout)
 
-	util.InitConf()
+	util.LoadConf()
 	i18n.Load()
+	theme.Load()
 }
 
 // Entry point.

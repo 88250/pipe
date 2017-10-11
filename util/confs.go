@@ -50,8 +50,8 @@ type Configuration struct {
 	DataFilePath          string // database file path
 }
 
-// InitConf initializes the conf. Args will override configuration file.
-func InitConf() {
+// LoadConf loads the configurations. Command-line arguments will override configuration file.
+func LoadConf() {
 	confPath := flag.String("conf", "solo.json", "path of solo.json")
 	confServer := flag.String("server", "", "this will override Solo.Server if specified")
 	confStaticServer := flag.String("static_server", "", "this will override Solo.StaticServer if specified")
