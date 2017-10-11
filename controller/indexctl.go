@@ -38,10 +38,16 @@ func indexCtl(c *gin.Context) {
 		return
 	}
 
+	dataModel := map[string]interface{}{}
 	localeSetting := service.Setting.GetSetting(model.SettingCategoryI18n, model.SettingNameI18nLocale, 1)
+	dataModel["i18n"] = i18n.GetMessages(localeSetting.Value)
+	dataModel["hi"] = "Index"
+	basicSettings := service.Setting.GetAllSettings(1, model.SettingCategoryBasic)
+	basicSettingMap := map[string]string{}
+	for _, basicSetting := range basicSettings {
+		basicSettingMap[basicSetting.Name] = basicSetting.Value
+	}
+	dataModel["setting"] = basicSettingMap
 
-	model := map[string]interface{}{}
-	model["i18n"] = i18n.GetMessages(localeSetting.Value)
-	model["hi"] = "Index"
-	t.Execute(c.Writer, model)
+	t.Execute(c.Writer, dataModel)
 }
