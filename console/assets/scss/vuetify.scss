@@ -215,6 +215,32 @@
       font-size: 16px;
       padding-right: 4px;
     }
+
+    .chip {
+      align-items: center;
+      border-radius: 28px;
+      color: rgba(0,0,0,0.87);
+      cursor: default;
+      display: inline-flex;
+      height: 32px;
+      font-size: 13px;
+      margin: 4px;
+      outline: none;
+      padding: 0 12px;
+      transition: 0.3s cubic-bezier(0.25, 0.8, 0.5, 1);
+      vertical-align: middle;
+      white-space: nowrap;
+      background: #e0e0e0;
+
+      &__close {
+        display: none;
+      }
+
+      &.chip--selected {
+        background: #82b1ff;
+        color: #fff;
+      }
+    }
   }
 
   &--required {
@@ -436,6 +462,10 @@
   transition: 0.3s cubic-bezier(0.25, 0.8, 0.5, 1);
   box-shadow: $shadow-hover;
   border-radius: 4px;
+  // for multiple select
+  .input-group--selection-controls.checkbox {
+    display: none;
+  }
   // select input
   .card > .list li {
     border-bottom-width: 0;

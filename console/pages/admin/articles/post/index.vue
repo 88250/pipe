@@ -12,13 +12,16 @@
 
         <mavon-editor v-model="content"/>
 
-        <v-text-field
-          :label="$t('tags', $store.state.locale)"
+        <v-select
           v-model="tags"
-          :rules="titleRules"
-          :counter="10"
+          :label="$t('tags', $store.state.locale)"
+          chips
+          tags
+          :items="tagsItems"
           required
-        ></v-text-field>
+          append-icon=""
+          :rules="tagsRules"
+        ></v-select>
 
         <mavon-editor v-model="abstract"/>
 
@@ -57,6 +60,7 @@
 <script>
   import 'mavon-editor/dist/css/index.css'
   import { required, maxSize } from '~/plugins/validate'
+
   export default {
     data () {
       return {
@@ -69,9 +73,13 @@
           (v) => required.call(this, v),
           (v) => maxSize.call(this, v, 32)
         ],
+        tagsRules: [
+          (v) => this.tags.length > 0 || this.$t('required', this.$store.state.locale)
+        ],
         url: '',
         password: '',
-        tags: '',
+        tags: [],
+        tagsItems: ['sologo'],
         commentable: false
       }
     },
@@ -91,13 +99,13 @@
           content: this.content,
           url: this.url,
           password: this.password,
-          tags: this.tags,
+          tags: this.tags.toString(),
           commentable: this.commentable
         })
         if (responseData.code === 0) {
           this.$set(this, 'error', false)
           this.$set(this, 'errorMsg', '')
-          this.$router.push('/admin/articles/management')
+          this.$router.push('/admin/articles')
         } else {
           this.$set(this, 'error', true)
           this.$set(this, 'errorMsg', responseData.msg)
@@ -113,13 +121,13 @@
           content: this.content,
           url: this.url,
           password: this.password,
-          tags: this.tags,
+          tags: this.tags.toString(),
           commentable: this.commentable
         })
         if (responseData.code === 0) {
           this.$set(this, 'error', false)
           this.$set(this, 'errorMsg', '')
-          this.$router.push('/admin/articles/management')
+          this.$router.push('/admin/articles')
         } else {
           this.$set(this, 'error', true)
           this.$set(this, 'errorMsg', responseData.msg)
@@ -136,9 +144,19 @@
           this.$set(this, 'content', responseData.content)
           this.$set(this, 'url', responseData.url)
           this.$set(this, 'password', responseData.password)
-          this.$set(this, 'tags', responseData.tags)
+          this.$set(this, 'tags', responseData.tags.split(','))
           this.$set(this, 'commentable', responseData.commentable)
         }
+      }
+
+      // get tags
+      const tagResponseData = await this.axios.get('/console/tags/')
+      if (tagResponseData) {
+        let tagList = []
+        tagResponseData.map((v) => {
+          tagList.push(v.title)
+        })
+        this.$set(this, 'tagsItems', tagList)
       }
     }
   }
