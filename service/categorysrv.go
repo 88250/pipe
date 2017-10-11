@@ -64,6 +64,10 @@ func (srv *categoryService) ConsoleGetCategories() (ret []*model.Category) {
 	return
 }
 
+func (srv *categoryService) RemoveCategory(id uint) error {
+	return nil
+}
+
 func tagCategory(tx *gorm.DB, category *model.Category) error {
 	tags := strings.Split(category.Tags, ",")
 	for _, tagTitle := range tags {

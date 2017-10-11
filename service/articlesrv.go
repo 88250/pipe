@@ -44,7 +44,7 @@ const (
 	adminConsoleArticleListWindowsSize = 20
 )
 
-func (srv *articleService) ConsoleAddArticle(article *model.Article) error {
+func (srv *articleService) AddArticle(article *model.Article) error {
 	srv.mutex.Lock()
 	defer srv.mutex.Unlock()
 
@@ -114,7 +114,7 @@ func (srv *articleService) ConsoleGetArticle(id uint) *model.Article {
 	return ret
 }
 
-func (srv *articleService) ConsoleRemoveArticle(id uint) error {
+func (srv *articleService) RemoveArticle(id uint) error {
 	srv.mutex.Lock()
 	defer srv.mutex.Unlock()
 
@@ -176,7 +176,7 @@ func (srv *articleService) ConsoleRemoveArticle(id uint) error {
 	return nil
 }
 
-func (srv *articleService) ConsoleUpdateArticle(article *model.Article) error {
+func (srv *articleService) UpdateArticle(article *model.Article) error {
 	srv.mutex.Lock()
 	defer srv.mutex.Unlock()
 

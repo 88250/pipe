@@ -45,7 +45,7 @@ func AddArticleCtl(c *gin.Context) {
 
 	article.BlogID = sessionData.BID
 	article.AuthorID = sessionData.UID
-	if err := service.Article.ConsoleAddArticle(article); nil != err {
+	if err := service.Article.AddArticle(article); nil != err {
 		result.Code = -1
 		result.Msg = err.Error()
 	}
@@ -160,7 +160,7 @@ func RemoveArticleCtl(c *gin.Context) {
 		return
 	}
 
-	if err := service.Article.ConsoleRemoveArticle(uint(id)); nil != err {
+	if err := service.Article.RemoveArticle(uint(id)); nil != err {
 		result.Code = -1
 		result.Msg = err.Error()
 	}
