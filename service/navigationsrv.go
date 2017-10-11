@@ -40,7 +40,7 @@ const (
 	adminConsoleNavigationListWindowsSize = 20
 )
 
-func (srv *navigationService) ConsoleAddNavigation(navigation *model.Navigation) error {
+func (srv *navigationService) AddNavigation(navigation *model.Navigation) error {
 	srv.mutex.Lock()
 	defer srv.mutex.Unlock()
 
@@ -55,7 +55,7 @@ func (srv *navigationService) ConsoleAddNavigation(navigation *model.Navigation)
 	return nil
 }
 
-func (srv *navigationService) ConsoleRemoveNavigation(id uint) error {
+func (srv *navigationService) RemoveNavigation(id uint) error {
 	srv.mutex.Lock()
 	defer srv.mutex.Unlock()
 
@@ -74,7 +74,7 @@ func (srv *navigationService) ConsoleRemoveNavigation(id uint) error {
 	return nil
 }
 
-func (srv *navigationService) ConsoleUpdateNavigation(navigation *model.Navigation) error {
+func (srv *navigationService) UpdateNavigation(navigation *model.Navigation) error {
 	srv.mutex.Lock()
 	defer srv.mutex.Unlock()
 

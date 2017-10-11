@@ -56,7 +56,7 @@ func TestConsoleAddNavigation(t *testing.T) {
 		BlogID:     1,
 	}
 
-	if err := Navigation.ConsoleAddNavigation(navigation); nil != err {
+	if err := Navigation.AddNavigation(navigation); nil != err {
 		t.Errorf("add navigation failed: " + err.Error())
 
 		return
@@ -83,7 +83,7 @@ func TestConsoleUpdateNavigation(t *testing.T) {
 	}
 
 	navigation.Title = "更新后的导航标题"
-	if err := Navigation.ConsoleUpdateNavigation(navigation); nil != err {
+	if err := Navigation.UpdateNavigation(navigation); nil != err {
 		t.Errorf("update navigation failed: " + err.Error())
 
 		return
@@ -109,7 +109,7 @@ func TestConsoleRemoveNavigation(t *testing.T) {
 		return
 	}
 
-	if err := Navigation.ConsoleRemoveNavigation(2); nil != err {
+	if err := Navigation.RemoveNavigation(2); nil != err {
 		t.Errorf("remove navigation failed: " + err.Error())
 
 		return
