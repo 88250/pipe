@@ -21,9 +21,9 @@ import (
 	"html/template"
 	"net/http"
 
+	"github.com/b3log/solo.go/i18n"
 	"github.com/b3log/solo.go/model"
 	"github.com/b3log/solo.go/service"
-	"github.com/b3log/wide/i18n"
 	"github.com/gin-gonic/gin"
 	log "github.com/sirupsen/logrus"
 )
@@ -38,7 +38,6 @@ func indexCtl(c *gin.Context) {
 		return
 	}
 
-	i18n.Load() // FIXME: D, i18n
 	localeSetting := service.Setting.GetSetting(model.SettingCategoryI18n, model.SettingNameI18nLocale, 1)
 
 	model := map[string]interface{}{}

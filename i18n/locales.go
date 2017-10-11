@@ -33,8 +33,7 @@ type locale struct {
 	TimeZone string
 }
 
-// All locales.
-var Locales = map[string]locale{}
+var locales = map[string]locale{}
 
 // Load loads i18n message configurations.
 func Load() {
@@ -42,7 +41,7 @@ func Load() {
 	names, _ := f.Readdirnames(-1)
 	f.Close()
 
-	if len(Locales) == len(names)-1 {
+	if len(locales) == len(names)-1 {
 		return
 	}
 
@@ -55,7 +54,7 @@ func Load() {
 		load(loc)
 	}
 
-	log.Debugf("loaded [%d] language configuration files", len(Locales))
+	log.Debugf("loaded [%d] language configuration files", len(locales))
 }
 
 func load(localeStr string) {
@@ -71,24 +70,24 @@ func load(localeStr string) {
 		log.Fatal("parses i18n configurations failed: " + err.Error())
 	}
 
-	Locales[localeStr] = l
+	locales[localeStr] = l
 }
 
-// Get gets a message with the specified locale and key.
-func Get(locale, key string) interface{} {
-	return Locales[locale].Langs[key]
+// GetMessage gets a message with the specified locale and key.
+func GetMessage(locale, key string) interface{} {
+	return locales[locale].Langs[key]
 }
 
-// GetAll gets all messages with the specified locale.
-func GetAll(locale string) map[string]interface{} {
-	return Locales[locale].Langs
+// GetMessages gets all messages with the specified locale.
+func GetMessages(locale string) map[string]interface{} {
+	return locales[locale].Langs
 }
 
 // GetLocalesNames gets names of all locales. Returns ["zh_CN", "en_US"] for example.
 func GetLocalesNames() []string {
 	ret := []string{}
 
-	for name := range Locales {
+	for name := range locales {
 		ret = append(ret, name)
 	}
 
