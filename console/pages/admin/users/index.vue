@@ -8,7 +8,8 @@
       </div>
 
       <ul class="list">
-        <li v-for="item in list" :key="item.id" class="fn-flex">
+        <li v-for="item in list" :key="item.id" class="fn-flex"
+            v-if="($store.state.role === 2 && item.name === $store.state.name) || $store.state.role < 2">
           <div class="avatar avatar--mid avatar--space" :style="`background-image: url(${item.avatarURL})`"></div>
           <div class="fn-flex-1">
             <div class="fn-flex">
@@ -17,7 +18,6 @@
                 <small>{{ item.nickname }}</small>
               </div>
               <v-menu
-                v-if="$store.state.role < 2"
                 :nudge-bottom="24"
                 :nudge-width="60"
                 :nudge-right="60"

@@ -87,7 +87,7 @@
         {
           title: app.$t('userList', locale),
           link: '/admin/users',
-          role: 1
+          role: 2
         },
         {
           title: app.$t('blogManage', locale),

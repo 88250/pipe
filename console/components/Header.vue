@@ -18,7 +18,7 @@
         <span class="header__bar" v-if="$route.path.indexOf('/admin') > -1" @click="toggleSide">
           <icon icon="bars"/>
         </span>
-        {{ $store.state.nickname }} &nbsp;
+        {{ $store.state.nickname || $store.state.name }} &nbsp;
         <v-menu
           z-index="100"
           v-if="$route.path.indexOf('/admin') > -1 && $store.state.blogs.length > 1"
