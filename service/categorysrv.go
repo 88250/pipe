@@ -18,10 +18,12 @@ package service
 
 import (
 	"errors"
+	"math"
 	"strings"
 	"sync"
 
 	"github.com/b3log/solo.go/model"
+	"github.com/b3log/solo.go/util"
 	"github.com/jinzhu/gorm"
 )
 
@@ -33,6 +35,12 @@ type categoryService struct {
 	mutex *sync.Mutex
 }
 
+// Category pagination arguments of admin console.
+const (
+	adminConsoleCategoryListPageSize    = 15
+	adminConsoleCategoryListWindowsSize = 20
+)
+
 func (srv *categoryService) AddCategory(category *model.Category) error {
 	srv.mutex.Lock()
 	defer srv.mutex.Unlock()
@@ -41,6 +49,7 @@ func (srv *categoryService) AddCategory(category *model.Category) error {
 	if "" == tagStr {
 		return errors.New("invalid tags [" + category.Tags + "]")
 	}
+	category.Tags = tagStr
 
 	tx := db.Begin()
 	if err := tx.Create(category).Error; nil != err {
@@ -58,8 +67,15 @@ func (srv *categoryService) AddCategory(category *model.Category) error {
 	return nil
 }
 
-func (srv *categoryService) ConsoleGetCategories() (ret []*model.Category) {
-	db.Where(model.Category{}).Order("number ASC").Find(&ret)
+func (srv *categoryService) ConsoleGetCategories(page int, blogID uint) (ret []*model.Category, pagination *util.Pagination) {
+	offset := (page - 1) * adminConsoleCategoryListPageSize
+	count := 0
+	db.Model(model.Category{}).Order("number ASC, id DESC").
+		Where(model.Category{BlogID: blogID}).
+		Count(&count).Offset(offset).Limit(adminConsoleCategoryListPageSize).Find(&ret)
+
+	pageCount := int(math.Ceil(float64(count) / adminConsoleCategoryListPageSize))
+	pagination = util.NewPagination(page, adminConsoleCategoryListPageSize, pageCount, adminConsoleCategoryListWindowsSize, count)
 
 	return
 }

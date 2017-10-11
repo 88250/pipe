@@ -46,25 +46,36 @@ func MapRoutes() *gin.Engine {
 	api.POST("/login", loginCtl)
 	api.POST("/logout", logoutCtl)
 	api.Any("/hp/*apis", util.HacPaiAPI())
+
 	statusGroup := api.Group("/status")
 	statusGroup.GET("", GetPlatformStatusCtl)
 	statusGroup.GET("/ping", pingCtl)
+
 	consoleGroup := api.Group("/console")
 	consoleGroup.Use(console.LoginCheck())
+
 	consoleGroup.POST("/articles", console.AddArticleCtl)
 	consoleGroup.GET("/articles", console.GetArticlesCtl)
 	consoleGroup.GET("/articles/:id", console.GetArticleCtl)
 	consoleGroup.DELETE("/articles/:id", console.RemoveArticleCtl)
 	consoleGroup.PUT("/articles/:id", console.UpdateArticleCtl)
+
 	consoleGroup.GET("/comments", console.GetCommentsCtl)
 	consoleGroup.DELETE("/comments/:id", console.RemoveCommentCtl)
+
 	consoleGroup.GET("/navigations", console.GetNavigationsCtl)
 	consoleGroup.GET("/navigations/:id", console.GetNavigationCtl)
 	consoleGroup.PUT("/navigations/:id", console.UpdateNavigationCtl)
 	consoleGroup.POST("/navigations", console.AddNavigationCtl)
 	consoleGroup.DELETE("/navigations/:id", console.RemoveNavigationCtl)
+
+	consoleGroup.GET("/categories", console.GetCategoriesCtl)
+	consoleGroup.POST("/categories", console.AddCategoryCtl)
+
 	consoleGroup.GET("/tags", console.GetTagsCtl)
+
 	consoleGroup.POST("/blog/switch/:id", console.BlogSwitchCtl)
+
 	consoleSettingsGroup := consoleGroup.Group("/settings")
 	consoleSettingsGroup.GET("/basic", console.GetBasicSettingsCtl)
 	consoleSettingsGroup.PUT("/basic", console.UpdateBasicSettingsCtl)
@@ -76,6 +87,7 @@ func MapRoutes() *gin.Engine {
 	consoleSettingsGroup.PUT("/i18n", console.UpdateI18nSettingsCtl)
 	consoleSettingsGroup.GET("/feed", console.GetFeedSettingsCtl)
 	consoleSettingsGroup.PUT("/feed", console.UpdateFeedSettingsCtl)
+
 	themeGroup := ret.Group("")
 	themeGroup.GET("/", indexCtl)
 

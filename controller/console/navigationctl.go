@@ -97,7 +97,7 @@ func RemoveNavigationCtl(c *gin.Context) {
 		return
 	}
 
-	if err := service.Navigation.ConsoleRemoveNavigation(uint(id)); nil != err {
+	if err := service.Navigation.RemoveNavigation(uint(id)); nil != err {
 		result.Code = -1
 		result.Msg = err.Error()
 	}
@@ -124,7 +124,7 @@ func UpdateNavigationCtl(c *gin.Context) {
 		return
 	}
 
-	if err := service.Navigation.ConsoleUpdateNavigation(navigation); nil != err {
+	if err := service.Navigation.UpdateNavigation(navigation); nil != err {
 		result.Code = -1
 		result.Msg = err.Error()
 	}
@@ -145,7 +145,7 @@ func AddNavigationCtl(c *gin.Context) {
 	}
 
 	navigation.BlogID = sessionData.BID
-	if err := service.Navigation.ConsoleAddNavigation(navigation); nil != err {
+	if err := service.Navigation.AddNavigation(navigation); nil != err {
 		result.Code = -1
 		result.Msg = err.Error()
 	}

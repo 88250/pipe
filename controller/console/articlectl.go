@@ -187,7 +187,7 @@ func UpdateArticleCtl(c *gin.Context) {
 		return
 	}
 
-	if err := service.Article.ConsoleUpdateArticle(article); nil != err {
+	if err := service.Article.UpdateArticle(article); nil != err {
 		result.Code = -1
 		result.Msg = err.Error()
 	}

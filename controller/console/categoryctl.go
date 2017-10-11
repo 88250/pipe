@@ -19,6 +19,7 @@ package console
 import (
 	"net/http"
 
+	"github.com/b3log/solo.go/model"
 	"github.com/b3log/solo.go/service"
 	"github.com/b3log/solo.go/util"
 	"github.com/gin-gonic/gin"
@@ -37,11 +38,43 @@ func GetCategoriesCtl(c *gin.Context) {
 	result := util.NewResult()
 	defer c.JSON(http.StatusOK, result)
 
+	sessionData := util.GetSession(c)
+	categoryModels, pagination := service.Category.ConsoleGetCategories(c.GetInt("p"), sessionData.BID)
+
 	categories := []*ConsoleCategory{}
-	categoryModels := service.Category.ConsoleGetCategories()
 	for _, categoryModel := range categoryModels {
-		categories = append(categories, &ConsoleCategory{Title: categoryModel.Title})
+		categories = append(categories, &ConsoleCategory{
+			Title:       categoryModel.Title,
+			URL:         sessionData.BPath + categoryModel.Path,
+			Description: categoryModel.Description,
+			Number:      categoryModel.Number,
+			Tags:        categoryModel.Tags,
+		})
 	}
 
-	result.Data = categories
+	data := map[string]interface{}{}
+	data["categories"] = categories
+	data["pagination"] = pagination
+	result.Data = data
+}
+
+func AddCategoryCtl(c *gin.Context) {
+	result := util.NewResult()
+	defer c.JSON(http.StatusOK, result)
+
+	sessionData := util.GetSession(c)
+
+	category := &model.Category{}
+	if err := c.BindJSON(category); nil != err {
+		result.Code = -1
+		result.Msg = "parses add category request failed"
+
+		return
+	}
+
+	category.BlogID = sessionData.BID
+	if err := service.Category.AddCategory(category); nil != err {
+		result.Code = -1
+		result.Msg = err.Error()
+	}
 }
