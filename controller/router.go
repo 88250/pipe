@@ -20,14 +20,13 @@ import (
 	"strings"
 
 	"github.com/b3log/solo.go/controller/console"
+	"github.com/b3log/solo.go/theme"
 	"github.com/b3log/solo.go/util"
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
 )
 
 type DataModel map[string]interface{}
-
-const defaultTheme = "gina"
 
 // MapRoutes returns a gin engine and binds controllers with request URLs.
 func MapRoutes() *gin.Engine {
@@ -93,9 +92,9 @@ func MapRoutes() *gin.Engine {
 
 	ret.StaticFile("/favicon.ico", "console/static/favicon.ico")
 
-	themePath := "theme/x/" + defaultTheme
-	ret.Static("/css", themePath+"/css")
-	ret.Static("/js", themePath+"/js")
+	themePath := "theme/x/" + theme.DefaultTheme
+	ret.Static(themePath+"/css", themePath+"/css")
+	ret.Static(themePath+"/js", themePath+"/js")
 	ret.LoadHTMLGlob(themePath + "/*.html")
 	themeGroup := ret.Group("")
 	themeGroup.GET("/", indexAction)

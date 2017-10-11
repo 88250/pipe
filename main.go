@@ -35,7 +35,8 @@ import (
 
 // The only one init function in Solo.go.
 func init() {
-	gin.SetMode(gin.ReleaseMode)
+	//gin.SetMode(gin.ReleaseMode)
+	gin.SetMode(gin.DebugMode)
 	gin.DefaultWriter = io.MultiWriter(os.Stdout)
 
 	util.LoadConf()

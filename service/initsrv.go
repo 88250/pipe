@@ -21,6 +21,7 @@ import (
 	"sync"
 
 	"github.com/b3log/solo.go/model"
+	"github.com/b3log/solo.go/theme"
 	"github.com/b3log/solo.go/util"
 	"github.com/jinzhu/gorm"
 	log "github.com/sirupsen/logrus"
@@ -272,7 +273,7 @@ func initThemeSettings(tx *gorm.DB, blogID uint) error {
 	if err := tx.Create(&model.Setting{
 		Category: model.SettingCategoryTheme,
 		Name:     model.SettingNameThemeName,
-		Value:    "yilia",
+		Value:    theme.DefaultTheme,
 		BlogID:   blogID}).Error; nil != err {
 		return err
 	}

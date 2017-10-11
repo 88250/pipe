@@ -25,6 +25,8 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
+const DefaultTheme = "gina"
+
 var themes = []string{}
 
 // Load loads themes.

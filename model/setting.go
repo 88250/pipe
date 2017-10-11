@@ -39,7 +39,7 @@ const (
 const (
 	SettingCategoryTheme = "theme"
 
-	SettingNameThemeName = "name"
+	SettingNameThemeName = "themeName"
 )
 
 // Setting names of catgory "basic".
