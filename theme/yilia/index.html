@@ -1,23 +1,22 @@
-<#include "macro-head.ftl">
 <!DOCTYPE html>
 <html>
-    <head>
-        <@head title="${blogTitle}">
-        <#if metaKeywords??>
+<head>
+    <@head title="${blogTitle}">
+    <#if metaKeywords??>
         <meta name="keywords" content="${metaKeywords}"/>
-        </#if>
-        <#if metaDescription??>
+    </#if>
+    <#if metaDescription??>
         <meta name="description" content="${metaDescription}"/>
-        </#if>
-        </@head>
-    </head>
-    <body>
-        <#include "side.ftl">
-        <main>
-            <#include "article-list.ftl">
+    </#if>
+</head>
+<body>
+{{template "side"}}
+<#include "side.ftl">
+    <main>
+        <#include "article-list.ftl">
             <#include "footer.ftl">
-        </main>
-            {{.hi}}
-            {{.i18n.abstract}}
-    </body>
+    </main>
+    {{.hi}}11
+    {{.i18n.abstract}}
+</body>
 </html>
