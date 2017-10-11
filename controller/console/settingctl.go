@@ -33,7 +33,7 @@ func GetBasicSettingsAction(c *gin.Context) {
 	defer c.JSON(http.StatusOK, result)
 
 	sessionData := util.GetSession(c)
-	settings := service.Setting.GetAllSettings(sessionData.BID, model.SettingCategoryBasic)
+	settings := service.Setting.GetCategorySettings(sessionData.BID, model.SettingCategoryBasic)
 	data := map[string]interface{}{}
 	for _, setting := range settings {
 		if model.SettingNameBasicCommentable == setting.Name {
@@ -95,7 +95,7 @@ func GetPreferenceSettingsAction(c *gin.Context) {
 	defer c.JSON(http.StatusOK, result)
 
 	sessionData := util.GetSession(c)
-	settings := service.Setting.GetAllSettings(sessionData.BID, model.SettingCategoryPreference)
+	settings := service.Setting.GetCategorySettings(sessionData.BID, model.SettingCategoryPreference)
 	data := map[string]interface{}{}
 	for _, setting := range settings {
 		if model.SettingNamePreferenceArticleListStyle != setting.Name {
@@ -194,7 +194,7 @@ func GetI18nSettingsAction(c *gin.Context) {
 	defer c.JSON(http.StatusOK, result)
 
 	sessionData := util.GetSession(c)
-	settings := service.Setting.GetAllSettings(sessionData.BID, model.SettingCategoryI18n)
+	settings := service.Setting.GetCategorySettings(sessionData.BID, model.SettingCategoryI18n)
 	data := map[string]interface{}{}
 	for _, setting := range settings {
 		data[setting.Name] = setting.Value
@@ -237,7 +237,7 @@ func GetFeedSettingsAction(c *gin.Context) {
 	defer c.JSON(http.StatusOK, result)
 
 	sessionData := util.GetSession(c)
-	settings := service.Setting.GetAllSettings(sessionData.BID, model.SettingCategoryFeed)
+	settings := service.Setting.GetCategorySettings(sessionData.BID, model.SettingCategoryFeed)
 	data := map[string]interface{}{}
 	for _, setting := range settings {
 		if model.SettingNameFeedOutputSize == setting.Name {

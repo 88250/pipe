@@ -14,29 +14,24 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-// Package controller is the "controller" layer.
-package controller
+package console
 
 import (
 	"net/http"
+	"text/template"
 
-	"github.com/b3log/solo.go/i18n"
-	"github.com/b3log/solo.go/model"
-	"github.com/b3log/solo.go/service"
 	"github.com/gin-gonic/gin"
+	log "github.com/sirupsen/logrus"
 )
 
-func indexAction(c *gin.Context) {
-	dataModel := DataModel{}
-	localeSetting := service.Setting.GetSetting(model.SettingCategoryI18n, model.SettingNameI18nLocale, 1)
-	dataModel["i18n"] = i18n.GetMessages(localeSetting.Value)
+func IndexAction(c *gin.Context) {
+	t, err := template.ParseFiles("console/dist/admin/index.html")
+	if nil != err {
+		log.Error("loads console index failed: " + err.Error())
+		c.String(http.StatusNotFound, "loads console index failed")
 
-	settings := service.Setting.GetCategorySettings(1, model.SettingCategoryBasic)
-	settingMap := map[string]string{}
-	for _, setting := range settings {
-		settingMap[setting.Name] = setting.Value
+		return
 	}
-	dataModel["setting"] = settingMap
 
-	c.HTML(http.StatusOK, "index.html", dataModel)
+	t.Execute(c.Writer, nil)
 }

@@ -39,7 +39,7 @@ func (srv *settingService) GetSetting(category, name string, blogID uint) *model
 	return ret
 }
 
-func (srv *settingService) GetAllSettings(blogID uint, category string) []*model.Setting {
+func (srv *settingService) GetCategorySettings(blogID uint, category string) []*model.Setting {
 	ret := []*model.Setting{}
 
 	if nil != db.Where("category = ? AND blog_id = ?", category, blogID).Find(&ret).Error {

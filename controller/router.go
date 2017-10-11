@@ -17,7 +17,6 @@
 package controller
 
 import (
-	"net/http"
 	"strings"
 
 	"github.com/b3log/solo.go/controller/console"
@@ -26,15 +25,15 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+type DataModel map[string]interface{}
+
+const defaultTheme = "gina"
+
 // MapRoutes returns a gin engine and binds controllers with request URLs.
 func MapRoutes() *gin.Engine {
 	ret := gin.New()
 
 	ret.Use(gin.Recovery())
-
-	ret.StaticFile("/favicon.ico", "console/static/favicon.ico")
-	ret.Static("/css", "theme/css")
-	ret.Static("/js", "theme/js")
 
 	store := sessions.NewCookieStore([]byte(util.Conf.SessionSecret))
 	store.Options(sessions.Options{
@@ -92,13 +91,16 @@ func MapRoutes() *gin.Engine {
 	consoleSettingsGroup.GET("/feed", console.GetFeedSettingsAction)
 	consoleSettingsGroup.PUT("/feed", console.UpdateFeedSettingsAction)
 
+	ret.StaticFile("/favicon.ico", "console/static/favicon.ico")
+
+	themePath := "theme/x/" + defaultTheme
+	ret.Static("/css", themePath+"/css")
+	ret.Static("/js", themePath+"/js")
+	ret.LoadHTMLGlob(themePath + "/*.html")
 	themeGroup := ret.Group("")
 	themeGroup.GET("/", indexAction)
 
-	ret.LoadHTMLFiles("console/dist/admin/index.html")
-	ret.GET("/admin", func(c *gin.Context) {
-		c.HTML(http.StatusOK, "index.html", nil)
-	})
+	ret.GET("/admin", console.IndexAction)
 	ret.Static("/assets", "./console/dist")
 
 	return ret
