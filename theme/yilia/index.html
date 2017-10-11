@@ -1,13 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <@head title="${blogTitle}">
-    <#if metaKeywords??>
-        <meta name="keywords" content="${metaKeywords}"/>
-    </#if>
-    <#if metaDescription??>
-        <meta name="description" content="${metaDescription}"/>
-    </#if>
+    {{template "head"  "aaa" }}
+    <meta name="keywords" content="${metaKeywords}"/><meta name="description" content="${metaDescription}"/>
 </head>
 <body>
 {{template "side"}}
