@@ -35,13 +35,16 @@ import (
 
 // The only one init function in Solo.go.
 func init() {
-	//gin.SetMode(gin.ReleaseMode)
-	gin.SetMode(gin.DebugMode)
-	gin.DefaultWriter = io.MultiWriter(os.Stdout)
-
 	util.LoadConf()
 	i18n.Load()
 	theme.Load()
+
+	if "dev" == util.Conf.RuntimeMode {
+		gin.SetMode(gin.DebugMode)
+	} else {
+		gin.SetMode(gin.ReleaseMode)
+	}
+	gin.DefaultWriter = io.MultiWriter(os.Stdout)
 }
 
 // Entry point.
