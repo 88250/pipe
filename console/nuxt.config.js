@@ -25,7 +25,6 @@ module.exports = {
   ],
   plugins: [
     { src: '~/plugins/axios.js', ssr: false },
-    { src: '~/plugins/i18n.js', ssr: false },
     { src: '~/plugins/init.js', ssr: false },
     { src: '~/plugins/nuxt-client-init.js', ssr: false }
   ],
@@ -34,7 +33,7 @@ module.exports = {
   ** Build configuration
   */
   build: {
-    vendor: ['vue-i18n', '~/assets/symbol.js', 'axios', 'vuetify'],
+    vendor: ['babel-polyfill', 'vue-i18n', '~/assets/symbol.js', 'axios', 'vuetify'],
     publicPath: env.publicPath,
     extractCSS: true,
     ssr: false,

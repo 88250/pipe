@@ -1,17 +1,16 @@
 <!DOCTYPE html>
 <html>
 <head>
-    {{$article := "<meta name='keywords' content=''${metaKeywords}'/><meta name='description' content=''${metaDescription}'>"}}
     {{template "head" .}}
 </head>
 <body>
 {{template "side"}}
-<#include "side.ftl">
     <main>
         <#include "article-list.ftl">
             <#include "footer.ftl">
     </main>
     {{.i18n.abstract}}
     {{.setting.blogTitle}}
+{{template "footer" .}}
 </body>
 </html>
