@@ -23,9 +23,9 @@
     <span onclick="Util.goTop()" class="icon-goup"></span>
 </footer>
 {{if eq .conf.RuntimeMode "dev"}}
-<script type="text/javascript" src="{{.conf.StaticServer}}/theme/js/js/jquery.min.js" charset="utf-8"></script>
-<script type="text/javascript" src="{{.conf.StaticServer}}/theme/js/js/common.js" charset="utf-8"></script>
 <script type="text/javascript" src="{{.conf.StaticServer}}/theme/x/{{.setting.themeName}}/js/symbol.js?{{.conf.StaticResourceVersion}}" charset="utf-8"></script>
+<script type="text/javascript" src="{{.conf.StaticServer}}/theme/js/jquery-3.2.1.min.js" charset="utf-8"></script>
+<script type="text/javascript" src="{{.conf.StaticServer}}/theme/js/common.js" charset="utf-8"></script>
 <script type="text/javascript" src="{{.conf.StaticServer}}/theme/x/{{.setting.themeName}}/js/common.js?{{.conf.StaticResourceVersion}}" charset="utf-8"></script>
 {{else}}
 <script type="text/javascript" src="{{.conf.StaticServer}}/theme/x/{{.setting.themeName}}/js/common.min.js?{{.conf.StaticResourceVersion}}" charset="utf-8"></script>

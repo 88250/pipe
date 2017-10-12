@@ -26,6 +26,7 @@ gulp.task('sass:watch', function () {
 })
 
 gulp.task('clean', ['sass'], function () {
+  // TODO: editor js
   // set static version
   const newVersion = (new Date()).getTime()
   // set sw.js
@@ -41,21 +42,23 @@ gulp.task('clean', ['sass'], function () {
     .pipe(clean())
 })
 
-gulp.task('build', ['sass', 'clean'], function (cb) {
+gulp.task('build', function (cb) {
   const minify = composer(uglifyjs)
   // min sw.js
   gulp.src('./sw.js')
     .pipe(minify().on('error', gulpUtil.log))
     .pipe(rename({ suffix: '.min' }))
     .pipe(gulp.dest('.'))
-  // concat js
-  const eachThemeJS = ['./theme/js/jquery.min.js',
-    './theme/js/common.js']
-
-  gulp.src(eachThemeJS)
-    .pipe(minify().on('error', gulpUtil.log))
-    .pipe(concat('jquery.fileupload.min.js'))
-    .pipe(gulp.dest('./src/main/webapp/'))
-  // editor js
+  // theme js
+  const commonJS = ['./js/jquery-3.2.1.min.js', './js/common.js']
+  fs.readdirSync('./x').forEach(function (file) {
+    const jsPath = `./x/${file}/js/`
+    let themeJS = [`${jsPath}symbol.js`].concat(commonJS)
+    themeJS.push(`${jsPath}common.js`)
+    gulp.src(themeJS)
+      .pipe(minify().on('error', gulpUtil.log))
+      .pipe(concat('common.min.js'))
+      .pipe(gulp.dest(jsPath))
+  })
 })
 gulp.task('default', ['sass', 'clean', 'build'])
