@@ -148,6 +148,8 @@ func (srv *initService) InitPlatform(platformAdmin *model.User) error {
 
 	tx.Commit()
 	log.Debug("Initialized platform")
+	
+	srv.inited = true
 
 	return nil
 }
