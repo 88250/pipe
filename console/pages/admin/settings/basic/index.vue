@@ -8,35 +8,35 @@
           v-model="basicBlogTitle"
         ></v-text-field>
         <v-text-field
-          :label="$t('blogSubtitle', $store.state.locale)"
-          v-model="blogSubtitle"
+          :label="$t('basicBlogSubtitle', $store.state.locale)"
+          v-model="basicBlogSubtitle"
         ></v-text-field>
         <v-text-field
-          :label="$t('faviconURL', $store.state.locale)"
-          v-model="faviconURL"
+          :label="$t('basicFaviconURL', $store.state.locale)"
+          v-model="basicFaviconURL"
         ></v-text-field>
         <v-text-field
           label="Meta Keywords"
-          v-model="metaKeywords"
+          v-model="basicMetaKeywords"
         ></v-text-field>
         <v-text-field
           label="Meta Description"
-          v-model="metaDescription"
+          v-model="basicMetaDescription"
         ></v-text-field>
         <v-text-field
           label="HTML head"
-          v-model="header"
+          v-model="basicHeader"
         ></v-text-field>
         <v-text-field
-          :label="$t('footer', $store.state.locale)"
-          v-model="footer"
+          :label="$t('basicFooter', $store.state.locale)"
+          v-model="basicFooter"
         ></v-text-field>
         <v-text-field
-          :label="$t('noticeBoard', $store.state.locale)"
-          v-model="noticeBoard"
+          :label="$t('basicNoticeBoard', $store.state.locale)"
+          v-model="basicNoticeBoard"
         ></v-text-field>
         <label class="checkbox">
-          <input type="checkbox" :checked="commentable" @click="commentable = !commentable"/><span
+          <input type="checkbox" :checked="basicCommentable" @click="basicCommentable = !basicCommentable"/><span
           class="checkbox__icon"></span>
           {{ $t('allowComment', $store.state.locale) }}
         </label>
@@ -58,14 +58,14 @@
     data () {
       return {
         basicBlogTitle: '',
-        blogSubtitle: '',
-        faviconURL: '',
-        header: '',
-        footer: '',
-        metaKeywords: '',
-        metaDescription: '',
-        noticeBoard: '',
-        commentable: true,
+        basicBlogSubtitle: '',
+        basicFaviconURL: '',
+        basicHeader: '',
+        basicFooter: '',
+        basicMetaKeywords: '',
+        basicMetaDescription: '',
+        basicNoticeBoard: '',
+        basicCommentable: true,
         error: false,
         errorMsg: ''
       }
@@ -79,14 +79,14 @@
       async update () {
         const responseData = await this.axios.put('/console/settings/basic', {
           basicBlogTitle: this.basicBlogTitle,
-          blogSubtitle: this.blogSubtitle,
-          faviconURL: this.faviconURL,
-          header: this.header,
-          footer: this.footer,
-          metaKeywords: this.metaKeywords,
-          metaDescription: this.metaDescription,
-          noticeBoard: this.noticeBoard,
-          commentable: this.commentable
+          basicBlogSubtitle: this.basicBlogSubtitle,
+          basicFaviconURL: this.basicFaviconURL,
+          basicHeader: this.basicHeader,
+          basicFooter: this.basicFooter,
+          basicMetaKeywords: this.basicMetaKeywords,
+          basicMetaDescription: this.basicMetaDescription,
+          basicNoticeBoard: this.basicNoticeBoard,
+          basicCommentable: this.basicCommentable
         })
 
         if (responseData.code === 0) {
@@ -109,14 +109,14 @@
       const responseData = await this.axios.get('/console/settings/basic')
       if (responseData) {
         this.$set(this, 'basicBlogTitle', responseData.basicBlogTitle)
-        this.$set(this, 'blogSubtitle', responseData.blogSubtitle)
-        this.$set(this, 'faviconURL', responseData.faviconURL)
-        this.$set(this, 'header', responseData.header)
-        this.$set(this, 'footer', responseData.footer)
-        this.$set(this, 'metaKeywords', responseData.metaKeywords)
-        this.$set(this, 'metaDescription', responseData.metaDescription)
-        this.$set(this, 'noticeBoard', responseData.noticeBoard)
-        this.$set(this, 'commentable', responseData.commentable)
+        this.$set(this, 'basicBlogTitle', responseData.basicBlogTitle)
+        this.$set(this, 'basicFaviconURL', responseData.basicFaviconURL)
+        this.$set(this, 'basicHeader', responseData.basicHeader)
+        this.$set(this, 'basicFooter', responseData.basicFooter)
+        this.$set(this, 'basicMetaKeywords', responseData.basicMetaKeywords)
+        this.$set(this, 'basicMetaDescription', responseData.basicMetaDescription)
+        this.$set(this, 'basicNoticeBoard', responseData.basicNoticeBoard)
+        this.$set(this, 'basicCommentable', responseData.basicCommentable)
       }
     }
   }

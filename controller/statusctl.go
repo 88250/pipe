@@ -24,11 +24,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func pingAction(c *gin.Context) {
-	c.String(http.StatusOK, "pong")
-}
-
-func GetPlatformStatusAction(c *gin.Context) {
+func GetStatusAction(c *gin.Context) {
 	result := util.NewResult()
 	defer c.JSON(http.StatusOK, result)
 
