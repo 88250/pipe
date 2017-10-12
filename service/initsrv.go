@@ -49,7 +49,7 @@ func (srv *initService) Inited() (platformStatus *PlatformStatus, err error) {
 	}
 
 	localeSetting := &model.Setting{}
-	if err = db.Where("name = ? AND value IS NOT NULL AND blog_id = ?", "locale", uint(1)).
+	if err = db.Where("name = ? AND value IS NOT NULL AND blog_id = ?", model.SettingNameI18nLocale, uint(1)).
 		Find(localeSetting).Error; nil != err {
 		if gorm.ErrRecordNotFound == err {
 			err = nil
