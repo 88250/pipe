@@ -9,6 +9,7 @@
     "metaKeywords": "metaKeywords",
     "metaDescription": "metaDescription",
     "noticeBoard": "noticeBoard",
+    "faviconURL": "https://static.hacpai.com/images/favicon.png",
     "commentable": false
   }
 }

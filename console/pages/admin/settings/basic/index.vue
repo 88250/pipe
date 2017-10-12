@@ -12,6 +12,10 @@
           v-model="blogSubtitle"
         ></v-text-field>
         <v-text-field
+          :label="$t('faviconURL', $store.state.locale)"
+          v-model="faviconURL"
+        ></v-text-field>
+        <v-text-field
           label="Meta Keywords"
           v-model="metaKeywords"
         ></v-text-field>
@@ -55,6 +59,7 @@
       return {
         blogTitle: '',
         blogSubtitle: '',
+        faviconURL: '',
         header: '',
         footer: '',
         metaKeywords: '',
@@ -75,6 +80,7 @@
         const responseData = await this.axios.put('/console/settings/basic', {
           blogTitle: this.blogTitle,
           blogSubtitle: this.blogSubtitle,
+          faviconURL: this.faviconURL,
           header: this.header,
           footer: this.footer,
           metaKeywords: this.metaKeywords,
@@ -104,6 +110,7 @@
       if (responseData) {
         this.$set(this, 'blogTitle', responseData.blogTitle)
         this.$set(this, 'blogSubtitle', responseData.blogSubtitle)
+        this.$set(this, 'faviconURL', responseData.faviconURL)
         this.$set(this, 'header', responseData.header)
         this.$set(this, 'footer', responseData.footer)
         this.$set(this, 'metaKeywords', responseData.metaKeywords)

@@ -11,6 +11,8 @@
     "noticeBoard": "noticeBoard",
     "blogPath": "blogPath",
     "blogMembers": "blogMembers",
-    "blogAdmin": "blogAdmin"
+    "blogAdmin": "blogAdmin",
+    "faviconURL": "https://static.hacpai.com/images/favicon.png",
+    "commentable": false
   }
 }

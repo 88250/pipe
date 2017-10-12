@@ -92,7 +92,7 @@
         {
           title: app.$t('blogManage', locale),
           link: '/admin/blogs',
-          role: 0
+          role: 2
         }
       ]
     },

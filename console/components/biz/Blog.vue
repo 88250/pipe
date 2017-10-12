@@ -10,6 +10,10 @@
         v-model="blogSubtitle"
       ></v-text-field>
       <v-text-field
+        :label="$t('faviconURL', $store.state.locale)"
+        v-model="faviconURL"
+      ></v-text-field>
+      <v-text-field
         label="Meta Keywords"
         v-model="metaKeywords"
       ></v-text-field>
@@ -41,6 +45,11 @@
         :label="$t('blogAdmin', $store.state.locale)"
         v-model="blogAdmin"
       ></v-text-field>
+      <label class="checkbox">
+        <input type="checkbox" :checked="commentable" @click="commentable = !commentable"/><span
+        class="checkbox__icon"></span>
+        {{ $t('allowComment', $store.state.locale) }}
+      </label>
       <div class="alert alert--danger" v-show="error">
         <icon icon="danger"/>
         <span>{{ errorMsg }}</span>
@@ -64,6 +73,7 @@
         error: false,
         blogTitle: '',
         blogSubtitle: '',
+        faviconURL: '',
         header: '',
         footer: '',
         metaKeywords: '',
@@ -71,7 +81,8 @@
         noticeBoard: '',
         blogPath: '',
         blogMembers: '',
-        blogAdmin: ''
+        blogAdmin: '',
+        commentable: true
       }
     },
     watch: {
@@ -85,32 +96,24 @@
           return
         }
         let responseData = {}
+        const requestData = {
+          blogTitle: this.blogTitle,
+          blogSubtitle: this.blogSubtitle,
+          faviconURL: this.faviconURL,
+          header: this.header,
+          footer: this.footer,
+          metaKeywords: this.metaKeywords,
+          metaDescription: this.metaDescription,
+          noticeBoard: this.noticeBoard,
+          blogPath: this.blogPath,
+          blogMembers: this.blogMembers,
+          blogAdmin: this.blogAdmin,
+          commentable: this.commentable
+        }
         if (this.id === '') {
-          responseData = await this.axios.post('/console/blogs', {
-            blogTitle: this.blogTitle,
-            blogSubtitle: this.blogSubtitle,
-            header: this.header,
-            footer: this.footer,
-            metaKeywords: this.metaKeywords,
-            metaDescription: this.metaDescription,
-            noticeBoard: this.noticeBoard,
-            blogPath: this.blogPath,
-            blogMembers: this.blogMembers,
-            blogAdmin: this.blogAdmin
-          })
+          responseData = await this.axios.post('/console/blogs', requestData)
         } else {
-          responseData = await this.axios.put(`/console/blogs/${this.id}`, {
-            blogTitle: this.blogTitle,
-            blogSubtitle: this.blogSubtitle,
-            header: this.header,
-            footer: this.footer,
-            metaKeywords: this.metaKeywords,
-            metaDescription: this.metaDescription,
-            noticeBoard: this.noticeBoard,
-            blogPath: this.blogPath,
-            blogMembers: this.blogMembers,
-            blogAdmin: this.blogAdmin
-          })
+          responseData = await this.axios.put(`/console/blogs/${this.id}`, requestData)
         }
 
         if (responseData.code === 0) {
@@ -130,6 +133,7 @@
         if (responseData) {
           this.$set(this, 'blogTitle', responseData.blogTitle)
           this.$set(this, 'blogSubtitle', responseData.blogSubtitle)
+          this.$set(this, 'faviconURL', responseData.faviconURL)
           this.$set(this, 'header', responseData.header)
           this.$set(this, 'footer', responseData.footer)
           this.$set(this, 'metaKeywords', responseData.metaKeywords)
@@ -138,6 +142,7 @@
           this.$set(this, 'blogPath', responseData.blogPath)
           this.$set(this, 'blogMembers', responseData.blogMembers)
           this.$set(this, 'blogAdmin', responseData.blogAdmin)
+          this.$set(this, 'commentable', responseData.commentable)
         }
       }
     },
