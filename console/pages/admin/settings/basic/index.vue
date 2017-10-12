@@ -4,8 +4,8 @@
 
       <v-form>
         <v-text-field
-          :label="$t('basicBlogTitle', $store.state.locale)"
-          v-model="basicBlogTitle"
+          :label="$t('blogTitle', $store.state.locale)"
+          v-model="blogTitle"
         ></v-text-field>
         <v-text-field
           :label="$t('blogSubtitle', $store.state.locale)"
@@ -57,7 +57,7 @@
   export default {
     data () {
       return {
-        basicBlogTitle: '',
+        blogTitle: '',
         blogSubtitle: '',
         faviconURL: '',
         header: '',
@@ -72,21 +72,21 @@
     },
     head () {
       return {
-        title: `${this.$store.state.basicBlogTitle} - ${this.$t('baseInfo', this.$store.state.locale)}`
+        title: `${this.$store.state.blogTitle} - ${this.$t('baseInfo', this.$store.state.locale)}`
       }
     },
     methods: {
       async update () {
         const responseData = await this.axios.put('/console/settings/basic', {
-          basicBlogTitle: this.basicBlogTitle,
-          blogSubtitle: this.blogSubtitle,
-          faviconURL: this.faviconURL,
-          header: this.header,
-          footer: this.footer,
-          metaKeywords: this.metaKeywords,
-          metaDescription: this.metaDescription,
-          noticeBoard: this.noticeBoard,
-          commentable: this.commentable
+          basicBlogTitle: this.blogTitle,
+          basicBlogSubtitle: this.blogSubtitle,
+          basicFaviconURL: this.faviconURL,
+          basicHeader: this.header,
+          basicFooter: this.footer,
+          basicMetaKeywords: this.metaKeywords,
+          basicMetaDescription: this.metaDescription,
+          basicNoticeBoard: this.noticeBoard,
+          basicCommentable: this.commentable
         })
 
         if (responseData.code === 0) {
@@ -108,15 +108,15 @@
     async mounted () {
       const responseData = await this.axios.get('/console/settings/basic')
       if (responseData) {
-        this.$set(this, 'basicBlogTitle', responseData.basicBlogTitle)
-        this.$set(this, 'blogSubtitle', responseData.blogSubtitle)
-        this.$set(this, 'faviconURL', responseData.faviconURL)
-        this.$set(this, 'header', responseData.header)
-        this.$set(this, 'footer', responseData.footer)
-        this.$set(this, 'metaKeywords', responseData.metaKeywords)
-        this.$set(this, 'metaDescription', responseData.metaDescription)
-        this.$set(this, 'noticeBoard', responseData.noticeBoard)
-        this.$set(this, 'commentable', responseData.commentable)
+        this.$set(this, 'blogTitle', responseData.basicBlogTitle)
+        this.$set(this, 'blogSubtitle', responseData.basicBlogSubtitle)
+        this.$set(this, 'faviconURL', responseData.basicFaviconURL)
+        this.$set(this, 'header', responseData.basicHeader)
+        this.$set(this, 'footer', responseData.basicFooter)
+        this.$set(this, 'metaKeywords', responseData.basicMetaKeywords)
+        this.$set(this, 'metaDescription', responseData.basicMetaDescription)
+        this.$set(this, 'noticeBoard', responseData.basicNoticeBoard)
+        this.$set(this, 'commentable', responseData.basicCommentable)
       }
     }
   }

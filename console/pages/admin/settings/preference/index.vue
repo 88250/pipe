@@ -4,62 +4,62 @@
 
       <v-form ref="form">
         <v-select
-          :label="$t('preferenceArticleListStyle', $store.state.locale)"
+          :label="$t('articleListStyle', $store.state.locale)"
           v-model="preferenceArticleListStyle"
           :items="preferenceArticleListStyleItems"
           append-icon=""
         ></v-select>
         <v-text-field
-          :label="$t('preferenceMostUseTagListSize', $store.state.locale)"
+          :label="$t('mostUseTagListSize', $store.state.locale)"
           v-model="preferenceMostUseTagListSize"
           required
           :rules="requiredRules"
         ></v-text-field>
         <v-text-field
-          :label="$t('preferenceRecentCommentListSize', $store.state.locale)"
+          :label="$t('recentCommentListSize', $store.state.locale)"
           v-model="preferenceRecentCommentListSize"
           required
           :rules="requiredRules"
         ></v-text-field>
         <v-text-field
-          :label="$t('preferenceMostCommentArticleListSize', $store.state.locale)"
+          :label="$t('mostCommentArticleListSize', $store.state.locale)"
           v-model="preferenceMostCommentArticleListSize"
           required
           :rules="requiredRules"
         ></v-text-field>
         <v-text-field
-          :label="$t('preferenceMostViewArticleListSize', $store.state.locale)"
+          :label="$t('mostViewArticleListSize', $store.state.locale)"
           v-model="preferenceMostViewArticleListSize"
           required
           :rules="requiredRules"
         ></v-text-field>
         <v-text-field
-          :label="$t('preferenceArticleListPageSize', $store.state.locale)"
+          :label="$t('articleListPageSize', $store.state.locale)"
           v-model="preferenceArticleListPageSize"
           required
           :rules="requiredRules"
         ></v-text-field>
         <v-text-field
-          :label="$t('preferenceArticleListWindowSize', $store.state.locale)"
+          :label="$t('articleListWindowSize', $store.state.locale)"
           v-model="preferenceArticleListWindowSize"
           required
           :rules="requiredRules"
         ></v-text-field>
         <v-text-field
-          :label="$t('preferenceRandomArticleListSize', $store.state.locale)"
+          :label="$t('randomArticleListSize', $store.state.locale)"
           v-model="preferenceRandomArticleListSize"
           required
           :rules="requiredRules"
         ></v-text-field>
         <v-text-field
-          :label="$t('preferenceRelevantArticleListSize', $store.state.locale)"
+          :label="$t('relevantArticleListSize', $store.state.locale)"
           v-model="preferenceRelevantArticleListSize"
           required
           :rules="requiredRules"
         ></v-text-field>
         <v-text-field
-          :label="$t('preferenceExternalpreferenceRelevantArticleListSize', $store.state.locale)"
-          v-model="preferenceExternalpreferenceRelevantArticleListSize"
+          :label="$t('externalRelevantArticleListSize', $store.state.locale)"
+          v-model="preferenceExternalRelevantArticleListSize"
           required
           :rules="requiredRules"
         ></v-text-field>
@@ -104,7 +104,7 @@
         preferenceArticleListWindowSize: 20,
         preferenceRandomArticleListSize: 10,
         preferenceRelevantArticleListSize: 10,
-        preferenceExternalpreferenceRelevantArticleListSize: 10,
+        preferenceExternalRelevantArticleListSize: 10,
         error: false,
         errorMsg: ''
       }
@@ -129,7 +129,7 @@
           preferenceArticleListWindowSize: this.preferenceArticleListWindowSize,
           preferenceRandomArticleListSize: this.preferenceRandomArticleListSize,
           preferenceRelevantArticleListSize: this.preferenceRelevantArticleListSize,
-          preferenceExternalpreferenceRelevantArticleListSize: this.preferenceExternalpreferenceRelevantArticleListSize
+          preferenceExternalRelevantArticleListSize: this.preferenceExternalRelevantArticleListSize
         })
 
         if (responseData.code === 0) {
@@ -160,7 +160,7 @@
         this.$set(this, 'preferenceArticleListWindowSize', responseData.preferenceArticleListWindowSize)
         this.$set(this, 'preferenceRandomArticleListSize', responseData.preferenceRandomArticleListSize)
         this.$set(this, 'preferenceRelevantArticleListSize', responseData.preferenceRelevantArticleListSize)
-        this.$set(this, 'preferenceExternalpreferenceRelevantArticleListSize', responseData.preferenceExternalpreferenceRelevantArticleListSize)
+        this.$set(this, 'preferenceExternalRelevantArticleListSize', responseData.preferenceExternalRelevantArticleListSize)
       }
     }
   }

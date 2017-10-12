@@ -48,8 +48,8 @@
     methods: {
       async update () {
         const responseData = await this.axios.put('/console/settings/i18n', {
-          locale: this.locale,
-          timezone: this.timezone
+          i18nLocale: this.locale,
+          i18nTimezone: this.timezone
         })
 
         if (responseData.code === 0) {
@@ -69,8 +69,8 @@
     async mounted () {
       const responseData = await this.axios.get('/console/settings/i18n')
       if (responseData) {
-        this.$set(this, 'locale', responseData.locale)
-        this.$set(this, 'timezone', responseData.timezone)
+        this.$set(this, 'locale', responseData.i18nLocale)
+        this.$set(this, 'timezone', responseData.i18nTimezone)
       }
     }
   }
