@@ -3,9 +3,14 @@
   "version": "1.0.0",
   "author": "Vanessa <lly219@gmail.com>",
   "private": true,
+  "config": {
+    "nuxt": {
+      "host": "0.0.0.0"
+    }
+  },
   "scripts": {
     "mock": "apimocker --config ./mock/mock.json",
-    "dev": "HOST=0.0.0.0 nuxt",
+    "dev": "nuxt",
     "build": "nuxt build",
     "start": "nuxt start",
     "generate": "nuxt generate",
