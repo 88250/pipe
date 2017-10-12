@@ -54,7 +54,7 @@ const (
 	SettingNameBasicNoticeBoard     = "basicNoticeBoard"
 	SettingNameBasicMetaDescription = "basicMetaDescription"
 	SettingNameBasicMetaKeywords    = "basicMetaKeywords"
-	SettingNameBasicF
+	SettingNameBasicFaviconURL      = "basicFaviconURL"
 )
 
 // Setting names of category "preference".

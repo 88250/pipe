@@ -4,62 +4,62 @@
 
       <v-form ref="form">
         <v-select
-          :label="$t('articleListStyle', $store.state.locale)"
-          v-model="articleListStyle"
-          :items="articleListStyleItems"
+          :label="$t('preferenceArticleListStyle', $store.state.locale)"
+          v-model="preferenceArticleListStyle"
+          :items="preferenceArticleListStyleItems"
           append-icon=""
         ></v-select>
         <v-text-field
-          :label="$t('mostUseTagListSize', $store.state.locale)"
-          v-model="mostUseTagListSize"
+          :label="$t('preferenceMostUseTagListSize', $store.state.locale)"
+          v-model="preferenceMostUseTagListSize"
           required
           :rules="requiredRules"
         ></v-text-field>
         <v-text-field
-          :label="$t('recentCommentListSize', $store.state.locale)"
-          v-model="recentCommentListSize"
+          :label="$t('preferenceRecentCommentListSize', $store.state.locale)"
+          v-model="preferenceRecentCommentListSize"
           required
           :rules="requiredRules"
         ></v-text-field>
         <v-text-field
-          :label="$t('mostCommentArticleListSize', $store.state.locale)"
-          v-model="mostCommentArticleListSize"
+          :label="$t('preferenceMostCommentArticleListSize', $store.state.locale)"
+          v-model="preferenceMostCommentArticleListSize"
           required
           :rules="requiredRules"
         ></v-text-field>
         <v-text-field
-          :label="$t('mostViewArticleListSize', $store.state.locale)"
-          v-model="mostViewArticleListSize"
+          :label="$t('preferenceMostViewArticleListSize', $store.state.locale)"
+          v-model="preferenceMostViewArticleListSize"
           required
           :rules="requiredRules"
         ></v-text-field>
         <v-text-field
-          :label="$t('articleListPageSize', $store.state.locale)"
-          v-model="articleListPageSize"
+          :label="$t('preferenceArticleListPageSize', $store.state.locale)"
+          v-model="preferenceArticleListPageSize"
           required
           :rules="requiredRules"
         ></v-text-field>
         <v-text-field
-          :label="$t('articleListWindowSize', $store.state.locale)"
-          v-model="articleListWindowSize"
+          :label="$t('preferenceArticleListWindowSize', $store.state.locale)"
+          v-model="preferenceArticleListWindowSize"
           required
           :rules="requiredRules"
         ></v-text-field>
         <v-text-field
-          :label="$t('randomArticleListSize', $store.state.locale)"
-          v-model="randomArticleListSize"
+          :label="$t('preferenceRandomArticleListSize', $store.state.locale)"
+          v-model="preferenceRandomArticleListSize"
           required
           :rules="requiredRules"
         ></v-text-field>
         <v-text-field
-          :label="$t('relevantArticleListSize', $store.state.locale)"
-          v-model="relevantArticleListSize"
+          :label="$t('preferenceRelevantArticleListSize', $store.state.locale)"
+          v-model="preferenceRelevantArticleListSize"
           required
           :rules="requiredRules"
         ></v-text-field>
         <v-text-field
-          :label="$t('externalRelevantArticleListSize', $store.state.locale)"
-          v-model="externalRelevantArticleListSize"
+          :label="$t('preferenceExternalpreferenceRelevantArticleListSize', $store.state.locale)"
+          v-model="preferenceExternalpreferenceRelevantArticleListSize"
           required
           :rules="requiredRules"
         ></v-text-field>
@@ -85,8 +85,8 @@
         requiredRules: [
           (v) => numberOnly.call(this, v)
         ],
-        articleListStyle: 'title',
-        articleListStyleItems: [{
+        preferenceArticleListStyle: 'title',
+        preferenceArticleListStyleItems: [{
           'text': this.$t('title', this.$store.state.locale),
           'value': 'title'
         }, {
@@ -96,15 +96,15 @@
           'text': `${this.$t('title', this.$store.state.locale)}+${this.$t('content', this.$store.state.locale)}`,
           'value': 'titleContent'
         }],
-        mostUseTagListSize: 10,
-        recentCommentListSize: 10,
-        mostCommentArticleListSize: 10,
-        mostViewArticleListSize: 10,
-        articleListPageSize: 15,
-        articleListWindowSize: 20,
-        randomArticleListSize: 10,
-        relevantArticleListSize: 10,
-        externalRelevantArticleListSize: 10,
+        preferenceMostUseTagListSize: 10,
+        preferenceRecentCommentListSize: 10,
+        preferenceMostCommentArticleListSize: 10,
+        preferenceMostViewArticleListSize: 10,
+        preferenceArticleListPageSize: 15,
+        preferenceArticleListWindowSize: 20,
+        preferenceRandomArticleListSize: 10,
+        preferenceRelevantArticleListSize: 10,
+        preferenceExternalpreferenceRelevantArticleListSize: 10,
         error: false,
         errorMsg: ''
       }
@@ -120,16 +120,16 @@
           return
         }
         const responseData = await this.axios.put('/console/settings/preference', {
-          articleListStyle: this.articleListStyle,
-          mostUseTagListSize: this.mostUseTagListSize,
-          recentCommentListSize: this.recentCommentListSize,
-          mostCommentArticleListSize: this.mostCommentArticleListSize,
-          mostViewArticleListSize: this.mostViewArticleListSize,
-          articleListPageSize: this.articleListPageSize,
-          articleListWindowSize: this.articleListWindowSize,
-          randomArticleListSize: this.randomArticleListSize,
-          relevantArticleListSize: this.relevantArticleListSize,
-          externalRelevantArticleListSize: this.externalRelevantArticleListSize
+          preferenceArticleListStyle: this.preferenceArticleListStyle,
+          preferenceMostUseTagListSize: this.preferenceMostUseTagListSize,
+          preferenceRecentCommentListSize: this.preferenceRecentCommentListSize,
+          preferenceMostCommentArticleListSize: this.preferenceMostCommentArticleListSize,
+          preferenceMostViewArticleListSize: this.preferenceMostViewArticleListSize,
+          preferenceArticleListPageSize: this.preferenceArticleListPageSize,
+          preferenceArticleListWindowSize: this.preferenceArticleListWindowSize,
+          preferenceRandomArticleListSize: this.preferenceRandomArticleListSize,
+          preferenceRelevantArticleListSize: this.preferenceRelevantArticleListSize,
+          preferenceExternalpreferenceRelevantArticleListSize: this.preferenceExternalpreferenceRelevantArticleListSize
         })
 
         if (responseData.code === 0) {
@@ -151,16 +151,16 @@
     async mounted () {
       const responseData = await this.axios.get('/console/settings/preference')
       if (responseData) {
-        this.$set(this, 'articleListStyle', responseData.articleListStyle)
-        this.$set(this, 'mostUseTagListSize', responseData.mostUseTagListSize)
-        this.$set(this, 'recentCommentListSize', responseData.recentCommentListSize)
-        this.$set(this, 'mostCommentArticleListSize', responseData.mostCommentArticleListSize)
-        this.$set(this, 'mostViewArticleListSize', responseData.mostViewArticleListSize)
-        this.$set(this, 'articleListPageSize', responseData.articleListPageSize)
-        this.$set(this, 'articleListWindowSize', responseData.articleListWindowSize)
-        this.$set(this, 'randomArticleListSize', responseData.randomArticleListSize)
-        this.$set(this, 'relevantArticleListSize', responseData.relevantArticleListSize)
-        this.$set(this, 'externalRelevantArticleListSize', responseData.externalRelevantArticleListSize)
+        this.$set(this, 'preferenceArticleListStyle', responseData.preferenceArticleListStyle)
+        this.$set(this, 'preferenceMostUseTagListSize', responseData.preferenceMostUseTagListSize)
+        this.$set(this, 'preferenceRecentCommentListSize', responseData.preferenceRecentCommentListSize)
+        this.$set(this, 'preferenceMostCommentArticleListSize', responseData.preferenceMostCommentArticleListSize)
+        this.$set(this, 'preferenceMostViewArticleListSize', responseData.preferenceMostViewArticleListSize)
+        this.$set(this, 'preferenceArticleListPageSize', responseData.preferenceArticleListPageSize)
+        this.$set(this, 'preferenceArticleListWindowSize', responseData.preferenceArticleListWindowSize)
+        this.$set(this, 'preferenceRandomArticleListSize', responseData.preferenceRandomArticleListSize)
+        this.$set(this, 'preferenceRelevantArticleListSize', responseData.preferenceRelevantArticleListSize)
+        this.$set(this, 'preferenceExternalpreferenceRelevantArticleListSize', responseData.preferenceExternalpreferenceRelevantArticleListSize)
       }
     }
   }

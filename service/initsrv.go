@@ -148,7 +148,7 @@ func (srv *initService) InitPlatform(platformAdmin *model.User) error {
 
 	tx.Commit()
 	log.Debug("Initialized platform")
-	
+
 	srv.inited = true
 
 	return nil
@@ -337,6 +337,13 @@ func initBasicSettings(tx *gorm.DB, blogID uint) error {
 		Category: model.SettingCategoryBasic,
 		Name:     model.SettingNameBasicNoticeBoard,
 		Value:    "<!-- 支持 HTML、脚本 -->",
+		BlogID:   blogID}).Error; nil != err {
+		return err
+	}
+	if err := tx.Create(&model.Setting{
+		Category: model.SettingCategoryBasic,
+		Name:     model.SettingNameBasicFaviconURL,
+		Value:    "https://img.hacpai.com/solo-favicon.ico",
 		BlogID:   blogID}).Error; nil != err {
 		return err
 	}

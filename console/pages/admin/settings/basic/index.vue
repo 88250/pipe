@@ -4,8 +4,8 @@
 
       <v-form>
         <v-text-field
-          :label="$t('blogTitle', $store.state.locale)"
-          v-model="blogTitle"
+          :label="$t('basicBlogTitle', $store.state.locale)"
+          v-model="basicBlogTitle"
         ></v-text-field>
         <v-text-field
           :label="$t('blogSubtitle', $store.state.locale)"
@@ -57,7 +57,7 @@
   export default {
     data () {
       return {
-        blogTitle: '',
+        basicBlogTitle: '',
         blogSubtitle: '',
         faviconURL: '',
         header: '',
@@ -72,13 +72,13 @@
     },
     head () {
       return {
-        title: `${this.$store.state.blogTitle} - ${this.$t('baseInfo', this.$store.state.locale)}`
+        title: `${this.$store.state.basicBlogTitle} - ${this.$t('baseInfo', this.$store.state.locale)}`
       }
     },
     methods: {
       async update () {
         const responseData = await this.axios.put('/console/settings/basic', {
-          blogTitle: this.blogTitle,
+          basicBlogTitle: this.basicBlogTitle,
           blogSubtitle: this.blogSubtitle,
           faviconURL: this.faviconURL,
           header: this.header,
@@ -108,7 +108,7 @@
     async mounted () {
       const responseData = await this.axios.get('/console/settings/basic')
       if (responseData) {
-        this.$set(this, 'blogTitle', responseData.blogTitle)
+        this.$set(this, 'basicBlogTitle', responseData.basicBlogTitle)
         this.$set(this, 'blogSubtitle', responseData.blogSubtitle)
         this.$set(this, 'faviconURL', responseData.faviconURL)
         this.$set(this, 'header', responseData.header)
