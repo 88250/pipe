@@ -7,9 +7,7 @@
 {{ APP }}
 <script>
   (function () {
-    var ua = window.navigator.userAgent
-    var msie = ua.indexOf('MSIE ')
-    if (msie > -1) {
+    if (navigator.userAgent.indexOf('MSIE ') > -1) {
       document.body.innerHTML = '<div>为了让浏览器能更好的发展，您能拥有更好的体验，让我们放弃使用那些过时的、不安全的浏览器吧！</div><br>' +
         '<ul>' +
         '<li><a href="http://www.google.com/chrome" target="_blank" rel="noopener">谷歌浏览器</a></li>' +

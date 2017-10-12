@@ -1,18 +1,14 @@
 {{define "head"}}
-<meta charset="utf-8" />
+<meta charset="utf-8"/>
 <title>{{.title}}</title>
 <meta name="keywords" content="{{.metaDescription}}"/>
 <meta name="description" content="{{.metaKeywords}}"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
-<meta name="owner" content="B3log Team" />
-<meta name="copyright" content="B3log" />
-<meta http-equiv="Window-target" content="_top" />
-{{if .setting.faviconURL}}
+<meta name="owner" content="B3log Team"/>
+<meta name="copyright" content="B3log"/>
+<meta http-equiv="Window-target" content="_top"/>
 <link rel="icon" type="image/x-icon" href="{{.setting.faviconURL}}">
-<link rel="icon" type="image/png" href="{{.setting.faviconURL}}">
-{{else}}
-<link rel="icon" type="image/x-icon" href="{{.conf.StaticServer}}/favicon.ico">
-{{end}}
-<link href="{{.conf.Server}}/blog-articles-rss.do" title="RSS" type="application/rss+xml" rel="alternate" />
-<link type="text/css" rel="stylesheet" href="{{.conf.StaticServer}}/theme/x/{{.setting.themeName}}/css/common.css?{{.conf.StaticResourceVersion}}" charset="utf-8" />
+<link href="{{.conf.Server}}/blog-articles-rss.do" title="RSS" type="application/rss+xml" rel="alternate"/>
+<link type="text/css" rel="stylesheet"
+      href="{{.conf.StaticServer}}/theme/x/{{.setting.themeName}}/css/common.css?{{.conf.StaticResourceVersion}}"/>
 {{end}}
