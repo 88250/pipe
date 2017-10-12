@@ -14,18 +14,36 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+// Package controller is the "controller" layer.
 package controller
 
 import (
 	"net/http"
 
+	"github.com/b3log/solo.go/i18n"
+	"github.com/b3log/solo.go/model"
+	"github.com/b3log/solo.go/service"
+	"github.com/b3log/solo.go/util"
 	"github.com/gin-gonic/gin"
 )
 
-func showIndexAction(c *gin.Context) {
+func showArticleAction(c *gin.Context) {
 	dataModel := DataModel{}
 
 	fillCommon(&dataModel)
 
 	c.HTML(http.StatusOK, "index.html", dataModel)
+}
+
+func fillCommon(dataModel *DataModel) {
+	localeSetting := service.Setting.GetSetting(model.SettingCategoryI18n, model.SettingNameI18nLocale, 1)
+	(*dataModel)["i18n"] = i18n.GetMessages(localeSetting.Value)
+
+	settings := service.Setting.GetAllSettings(1)
+	settingMap := map[string]string{}
+	for _, setting := range settings {
+		settingMap[setting.Name] = setting.Value
+	}
+	(*dataModel)["setting"] = settingMap
+	(*dataModel)["conf"] = util.Conf
 }

@@ -96,7 +96,8 @@ func MapRoutes() *gin.Engine {
 	ret.Static("/theme/js", "theme/js")
 	ret.LoadHTMLGlob(themePath + "/*.html")
 	themeGroup := ret.Group("")
-	themeGroup.GET("/", indexAction)
+	themeGroup.GET("/", showIndexAction)
+	themeGroup.GET("/article/:link")
 
 	ret.GET("/admin", console.IndexAction)
 	ret.Static("/assets", "./console/dist")
