@@ -31,7 +31,9 @@ TBD
 
 ## 文档
 
-数据浏览可以使用 SQLite 的图形化工具 [SQLiteBrowser](http://sqlitebrowser.org)。Solo.go 有内存缓存，**切勿直接修改数据库**。
+* 用户指南 数据浏览可以使用 SQLite 的图形化工具 [SQLiteBrowser](http://sqlitebrowser.org)。
+* 开发指南
+* 主题开发指南
 
 ## 构建
 
@@ -48,12 +50,6 @@ go build -o solo
 ```
 
 ## 技术栈
-
-### 主题
-
-jQuery
-
-TBD
 
 ### 管理后台
 
@@ -72,17 +68,21 @@ npm run mock
 npm run dev
 ```
 
-
-
 打包
 ```
 npm run build
 ```
 
-### 后端框架
+### 服务器端
 
 * Web 层使用 [Gin](https://github.com/gin-gonic/gin) 框架
 * 持久层使用 [GORM](https://github.com/jinzhu/gorm) ORM 库
+
+### 主题
+
+jQuery
+
+TBD
 
 ## 作者
 
@@ -104,7 +104,9 @@ Solo.go 使用 GPLv3 作为开源授权协议，请尽量遵循，即使是在�
 
 Solo.go 的诞生离不开以下开源项目：
 
+* [Vue.js](https://github.com/vuejs/vue)：渐进式 JavaScript 框架
 * [jQuery](https://github.com/jquery/jquery)：使用最广泛的 JavaScript 工具库
 * [Gin](https://github.com/gin-gonic/gin)：又快又好用的 golang HTTP web 框架
 * [GORM](https://github.com/jinzhu/gorm)：梦幻般的 golang ORM 库
+* [Logrus](https://github.com/sirupsen/logrus)：结构化的 golang 日志组件
 * [IntelliJ IDEA](https://www.jetbrains.com/idea)：全宇宙暂时排名第二的 IDE
