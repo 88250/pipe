@@ -78,22 +78,17 @@
           return
         }
         let responseData = {}
+        const requestData = {
+          name: this.name,
+          nickname: this.nickname,
+          email: this.email,
+          password: md5(this.password),
+          avatarURL: this.avatarURL
+        }
         if (this.id === '') {
-          responseData = await this.axios.post('/console/users', {
-            name: this.name,
-            nickname: this.nickname,
-            email: this.email,
-            password: md5(this.password),
-            avatarURL: this.avatarURL
-          })
+          responseData = await this.axios.post('/console/users', requestData)
         } else {
-          responseData = await this.axios.put(`/console/users/${this.id}`, {
-            name: this.name,
-            nickname: this.nickname,
-            email: this.email,
-            password: md5(this.password),
-            avatarURL: this.avatarURL
-          })
+          responseData = await this.axios.put(`/console/users/${this.id}`, requestData)
         }
 
         if (responseData.code === 0) {

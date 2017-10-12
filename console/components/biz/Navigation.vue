@@ -92,20 +92,16 @@
           return
         }
         let responseData = {}
+        const requestData = {
+          title: this.title,
+          url: this.url,
+          iconURL: this.iconURL,
+          openMethod: this.openMethod
+        }
         if (this.id === '') {
-          responseData = await this.axios.post('/console/navigations', {
-            title: this.title,
-            url: this.url,
-            iconURL: this.iconURL,
-            openMethod: this.openMethod
-          })
+          responseData = await this.axios.post('/console/navigations', requestData)
         } else {
-          responseData = await this.axios.put(`/console/navigations/${this.id}`, {
-            title: this.title,
-            url: this.url,
-            iconURL: this.iconURL,
-            openMethod: this.openMethod
-          })
+          responseData = await this.axios.put(`/console/navigations/${this.id}`, requestData)
         }
 
         if (responseData.code === 0) {

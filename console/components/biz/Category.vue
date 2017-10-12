@@ -76,20 +76,16 @@
           return
         }
         let responseData = {}
+        const requestData = {
+          title: this.title,
+          url: this.url,
+          description: this.description,
+          tags: this.tags
+        }
         if (this.id === '') {
-          responseData = await this.axios.post('/console/categories', {
-            title: this.title,
-            url: this.url,
-            description: this.description,
-            tags: this.tags
-          })
+          responseData = await this.axios.post('/console/categories', requestData)
         } else {
-          responseData = await this.axios.put(`/console/categories/${this.id}`, {
-            title: this.title,
-            url: this.url,
-            description: this.description,
-            tags: this.tags
-          })
+          responseData = await this.axios.put(`/console/categories/${this.id}`, requestData)
         }
 
         if (responseData.code === 0) {
