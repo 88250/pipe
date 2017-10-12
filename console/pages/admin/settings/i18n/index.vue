@@ -4,14 +4,14 @@
 
       <v-form>
         <v-select
-          :label="$t('language', $store.state.locale)"
+          :label="$t('i18nLocale', $store.state.locale)"
           :items="localeItems"
-          v-model="locale"
+          v-model="i18nLocale"
           append-icon=""
         ></v-select>
         <v-text-field
-          :label="$t('timezone', $store.state.locale)"
-          v-model="timezone"
+          :label="$t('i18nTimezone', $store.state.locale)"
+          v-model="i18nTimezone"
           readonly
         ></v-text-field>
       </v-form>
@@ -27,7 +27,7 @@
   export default {
     data () {
       return {
-        locale: this.$store.state.locale,
+        i18nLocale: this.$store.state.locale,
         localeItems: [{
           'text': '简体中文',
           'value': 'zh_CN'
@@ -35,7 +35,7 @@
           'text': 'English(US)',
           'value': 'en_US'
         }],
-        timezone: 'Asia/Shanghai',
+        i18nTimezone: 'Asia/Shanghai',
         error: false,
         errorMsg: ''
       }
@@ -48,8 +48,8 @@
     methods: {
       async update () {
         const responseData = await this.axios.put('/console/settings/i18n', {
-          locale: this.locale,
-          timezone: this.timezone
+          i18nLocale: this.i18nLocale,
+          i18nTimezone: this.i18nTimezone
         })
 
         if (responseData.code === 0) {
@@ -69,8 +69,8 @@
     async mounted () {
       const responseData = await this.axios.get('/console/settings/i18n')
       if (responseData) {
-        this.$set(this, 'locale', responseData.locale)
-        this.$set(this, 'timezone', responseData.timezone)
+        this.$set(this, 'i18nLocale', responseData.i18nLocale)
+        this.$set(this, 'i18nTimezone', responseData.i18nTimezone)
       }
     }
   }
