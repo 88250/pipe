@@ -31,8 +31,8 @@ type Setting struct {
 const (
 	SettingCategorySystem = "system"
 
-	SettingNameSystemPath = "path"
-	SettingNameSystemVer  = "version"
+	SettingNameSystemPath = "systemPath"
+	SettingNameSystemVer  = "systemVersion"
 )
 
 // Setting names of category "theme".
@@ -46,55 +46,54 @@ const (
 const (
 	SettingCategoryBasic = "basic"
 
-	SettingNameBasicBlogSubtitle    = "blogSubtitle"
-	SettingNameBasicBlogTitle       = "blogTitle"
-	SettingNameBasicCommentable     = "commentable"
-	SettingNameBasicFooter          = "footer"
-	SettingNameBasicHeader          = "header"
-	SettingNameBasicNoticeBoard     = "noticeBoard"
-	SettingNameBasicMetaDescription = "metaDescription"
-	SettingNameBasicMetaKeywords    = "metaKeywords"
+	SettingNameBasicBlogSubtitle    = "basicBlogSubtitle"
+	SettingNameBasicBlogTitle       = "basicBlogTitle"
+	SettingNameBasicCommentable     = "basicCommentable"
+	SettingNameBasicFooter          = "basicFooter"
+	SettingNameBasicHeader          = "basicHeader"
+	SettingNameBasicNoticeBoard     = "basicNoticeBoard"
+	SettingNameBasicMetaDescription = "basicMetaDescription"
+	SettingNameBasicMetaKeywords    = "basicMetaKeywords"
+	SettingNameBasicF
 )
 
 // Setting names of category "preference".
 const (
 	SettingCategoryPreference = "preference"
 
-	SettingNamePreferenceArticleListPageSize        = "articleListPageSize"
-	SettingNamePreferenceArticleListWindowSize      = "articleListWindowSize"
-	SettingNamePreferenceArticleListStyle           = "articleListStyle"
-	SettingNamePreferenceExternalArticleListSize    = "externalRelevantArticleListSize"
-	SettingNamePreferenceMostCommentArticleListSize = "mostCommentArticleListSize"
-	SettingNamePreferenceMostUseTagListSize         = "mostUseTagListSize"
-	SettingNamePreferenceMostViewArticleListSize    = "mostViewArticleListSize"
-	SettingNamePreferenceRandomArticleListSize      = "randomArticleListSize"
-	SettingNamePreferenceRecentCommentListSize      = "recentCommentListSize"
-	SettingNamePreferenceRelevantArticleListSize    = "relevantArticleListSize"
-	SettingNamePreferenceTheme                      = "theme"
-	SettingNamePreferenceVer                        = "version"
+	SettingNamePreferenceArticleListPageSize        = "preferenceArticleListPageSize"
+	SettingNamePreferenceArticleListWindowSize      = "preferenceArticleListWindowSize"
+	SettingNamePreferenceArticleListStyle           = "preferenceArticleListStyle"
+	SettingNamePreferenceExternalArticleListSize    = "preferenceExternalRelevantArticleListSize"
+	SettingNamePreferenceMostCommentArticleListSize = "preferenceMostCommentArticleListSize"
+	SettingNamePreferenceMostUseTagListSize         = "preferenceMostUseTagListSize"
+	SettingNamePreferenceMostViewArticleListSize    = "preferenceMostViewArticleListSize"
+	SettingNamePreferenceRandomArticleListSize      = "preferenceRandomArticleListSize"
+	SettingNamePreferenceRecentCommentListSize      = "preferenceRecentCommentListSize"
+	SettingNamePreferenceRelevantArticleListSize    = "preferenceRelevantArticleListSize"
 )
 
 // Setting names of category "sign".
 const (
 	SettingCategorySign = "sign"
 
-	SettingNameArticleSign = "articleSign"
+	SettingNameArticleSign = "signArticle"
 )
 
 // Setting names of category "i18n".
 const (
 	SettingCategoryI18n = "i18n"
 
-	SettingNameI18nLocale   = "locale"
-	SettingNameI18nTimezone = "timezone"
+	SettingNameI18nLocale   = "i18nLocale"
+	SettingNameI18nTimezone = "i18nTimezone"
 )
 
 // Setting names of category "feed".
 const (
 	SettingCategoryFeed = "feed"
 
-	SettingNameFeedOutputSize = "outputSize"
-	SettingNameFeedOutputMode = "outputMode"
+	SettingNameFeedOutputSize = "feedOutputSize"
+	SettingNameFeedOutputMode = "feedOutputMode"
 )
 
 // Setting value of category "feed".
@@ -107,10 +106,10 @@ const (
 const (
 	SettingCategoryStatistic = "statistic"
 
-	SettingNameStatisticArticleCount          = "articleCount"
-	SettingNameStatisticPublishedArticleCount = "publishedArticleCount"
-	SettingNameStatisticCommentCount          = "commentCount"
-	SettingNameStatisticViewCount             = "viewCount"
+	SettingNameStatisticArticleCount          = "statisticArticleCount"
+	SettingNameStatisticPublishedArticleCount = "statisticPublishedArticleCount"
+	SettingNameStatisticCommentCount          = "statisticCommentCount"
+	SettingNameStatisticViewCount             = "statisticViewCount"
 )
 
 // Setting values of category "preference".

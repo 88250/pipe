@@ -2,7 +2,7 @@
   "code": 0,
   "msg": "",
   "data": {
-    "locale": "zh_CN",
-    "timezone": "Asia/Shanghai"
+    "i18nLocale": "zh_CN",
+    "i18nTimezone": "Asia/Shanghai"
   }
 }

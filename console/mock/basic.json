@@ -2,14 +2,14 @@
   "code": 0,
   "msg": "",
   "data": {
-    "footer": "footer",
-    "header": "header",
-    "blogTitle": "blogTitle",
-    "blogSubtitle": "blogSubtitle",
-    "metaKeywords": "metaKeywords",
-    "metaDescription": "metaDescription",
-    "noticeBoard": "noticeBoard",
-    "faviconURL": "https://static.hacpai.com/images/favicon.png",
-    "commentable": false
+    "basicFooter": "footer",
+    "basicHeader": "header",
+    "basicBlogTitle": "blogTitle",
+    "basicBlogSubtitle": "blogSubtitle",
+    "basicMetaKeywords": "metaKeywords",
+    "basicMetaDescription": "metaDescription",
+    "basicNoticeBoard": "noticeBoard",
+    "basicFaviconURL": "https://static.hacpai.com/images/favicon.png",
+    "basicCommentable": false
   }
 }

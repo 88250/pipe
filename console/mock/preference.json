@@ -2,15 +2,15 @@
   "code": 0,
   "msg": "",
   "data": {
-    "articleListStyle": "title",
-    "mostUseTagListSize": 1,
-    "recentCommentListSize": 2,
-    "mostCommentArticleListSize": 3,
-    "mostViewArticleListSize": 4,
-    "articleListPageSize": 5,
-    "articleListWindowSize": 6,
-    "randomArticleListSize": 7,
-    "relevantArticleListSize": 8,
-    "externalRelevantArticleListSize": 9
+    "preferenceArticleListStyle": "title",
+    "preferenceMostUseTagListSize": 1,
+    "preferenceRecentCommentListSize": 2,
+    "preferenceMostCommentArticleListSize": 3,
+    "preferenceMostViewArticleListSize": 4,
+    "preferenceArticleListPageSize": 5,
+    "preferenceArticleListWindowSize": 6,
+    "preferenceRandomArticleListSize": 7,
+    "preferenceRelevantArticleListSize": 8,
+    "preferenceExternalRelevantArticleListSize": 9
   }
 }
