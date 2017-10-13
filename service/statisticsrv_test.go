@@ -22,6 +22,13 @@ import (
 	"github.com/b3log/solo.go/model"
 )
 
+func TestGetAllStatistics(t *testing.T) {
+	settings := Statistic.GetAllStatistics(1)
+	if 4 != len(settings) {
+		t.Errorf("expected is [%d], actual is [%d]", 4, len(settings))
+	}
+}
+
 func TestGetStatistic(t *testing.T) {
 	setting := Statistic.GetStatistic(model.SettingNameStatisticArticleCount, 1)
 	if nil == setting {

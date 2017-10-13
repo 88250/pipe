@@ -32,6 +32,16 @@ type statisticService struct {
 	mutex *sync.Mutex
 }
 
+func (srv *statisticService) GetAllStatistics(blogID uint) []*model.Setting {
+	ret := []*model.Setting{}
+
+	if nil != db.Where("category = ? AND blog_id = ?", model.SettingCategoryStatistic, blogID).Find(&ret).Error {
+		return nil
+	}
+
+	return ret
+}
+
 func (srv *statisticService) GetStatistic(statisticName string, blogID uint) *model.Setting {
 	ret := &model.Setting{}
 	if nil != db.Where("name = ? AND category = ? AND blog_id = ?", statisticName, model.SettingCategoryStatistic, blogID).Find(ret).Error {

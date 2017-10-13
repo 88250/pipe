@@ -37,8 +37,8 @@ func TestGetSetting(t *testing.T) {
 
 func TestGetAllSettings(t *testing.T) {
 	settings := Setting.GetAllSettings(1)
-	if 31 != len(settings) {
-		t.Errorf("expected is [%d], actual is [%d]", 30, len(settings))
+	if 27 != len(settings) {
+		t.Errorf("expected is [%d], actual is [%d]", 27, len(settings))
 	}
 }
 

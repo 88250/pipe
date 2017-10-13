@@ -52,7 +52,7 @@ func (srv *settingService) GetCategorySettings(blogID uint, category string) []*
 func (srv *settingService) GetAllSettings(blogID uint) []*model.Setting {
 	ret := []*model.Setting{}
 
-	if nil != db.Where("blog_id = ?", blogID).Find(&ret).Error {
+	if nil != db.Where("category != ? AND blog_id = ?", model.SettingCategoryStatistic, blogID).Find(&ret).Error {
 		return nil
 	}
 
