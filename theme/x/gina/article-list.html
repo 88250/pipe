@@ -1,59 +1,59 @@
 {{define "article-list"}}
-<#list articles as article>
-<article>
-    <header>
-        <h2>
-            <a rel="bookmark" href="${servePath}${article.articlePermalink}">
-                ${article.articleTitle}
+<div class="wrapper content">
+    {{range .articles}}
+    <article class="article__item">
+        <header>
+            {{if gt .userCount 1}}
+            <a rel="nofollow"
+               href="{{.Path}}">
+                <span class="avatar avatar--space tooltipped tooltipped--w"
+                      aria-label="{name}"
+                      data-src="https://img.hacpai.com/avatar/1437187265889_1482892516923.png?imageView2/1/w/80/h/80/interlace/0/q/100"></span>
             </a>
-            <#if article.articlePutTop>
-            <sup>
-                ${topArticleLabel}
-            </sup>
-            </#if>
-            <#if article.hasUpdated>
-            <sup>
-                ${updatedLabel}
-            </sup>
-            </#if>
-        </h2>
+            {{end}}
+            <div {{if gt .userCount 1}} class="article__meta" {{end}}>
+                <h2>
+                    <a class="article__title" rel="bookmark" href="${servePath}${article.articlePermalink}">
+                        ${article.articleTitle}
+                    </a>
+                    <sup>
+                        ${topArticleLabel}
+                    </sup>
+                </h2>
+                <div class="ft-gray ft-12">
+                    {{range .Tags}}
+                    <a class="tag" rel="tag" href="${servePath}/tags/${articleTag?url('UTF-8')}">
+                        {{.Title}}
+                    </a>
+                    {{end}}
+                    &nbsp;
+                    <time>${article.articleCreateDate?string("yyyy-MM-dd")}</time>
+                </div>
+            </div>
+        </header>
+        <section class="content__reset article__abstract">
+            ${article.articleAbstract}
+        </section>
+    </article>
+    {{end}}
 
-        <time><span class="icon-date"></span> ${article.articleCreateDate?string("yyyy-MM-dd")}</time>
-    </header>
-    <section class="abstract">
-        ${article.articleAbstract}
-    </section>
-    <footer class="tags">
-        <span class="icon-tag"></span>  &nbsp;
-        <#list article.articleTags?split(",") as articleTag>
-        <a class="tag" rel="tag" href="${servePath}/tags/${articleTag?url('UTF-8')}">
-            ${articleTag}</a>
-        </#list>
 
-        <a rel="nofollow" href="${servePath}/authors/${article.authorId}">
-            <img class="avatar" title="${article.authorName}" alt="${article.authorName}" src="${article.authorThumbnailURL}"/>
-        </a>
-    </footer>
-</article>
-</#list>
-
-<#if 0 != paginationPageCount>
     <nav class="pagination">
         <#if 1 != paginationPageNums?first>
-        <a href="${servePath}${path}/${paginationPreviousPageNum}" class="extend">${previousPageLabel}</a>
-        <a class="page-num" href="${servePath}${path}/1">1</a> ...
+            <a href="${servePath}${path}/${paginationPreviousPageNum}" class="extend">${previousPageLabel}</a>
+            <a class="page-num" href="${servePath}${path}/1">1</a> ...
         </#if>
         <#list paginationPageNums as paginationPageNum>
-        <#if paginationPageNum == paginationCurrentPageNum>
-        <span class="current page-num">${paginationPageNum}</span>
-        <#else>
-        <a class="page-num" href="${servePath}${path}/${paginationPageNum}">${paginationPageNum}</a>
-        </#if>
+            <#if paginationPageNum == paginationCurrentPageNum>
+                <span class="current page-num">${paginationPageNum}</span>
+                <#else>
+                    <a class="page-num" href="${servePath}${path}/${paginationPageNum}">${paginationPageNum}</a>
+            </#if>
         </#list>
         <#if paginationPageNums?last != paginationPageCount> ...
-        <a href="${servePath}${path}/${paginationPageCount}" class="page-num">${paginationPageCount}</a>
-        <a href="${servePath}${path}/${paginationNextPageNum}" class="extend">${nextPagePabel}</a>
+            <a href="${servePath}${path}/${paginationPageCount}" class="page-num">${paginationPageCount}</a>
+            <a href="${servePath}${path}/${paginationNextPageNum}" class="extend">${nextPagePabel}</a>
         </#if>
     </nav>
-    </#if>
+</div>
 {{end}}

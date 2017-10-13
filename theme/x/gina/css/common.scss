@@ -40,6 +40,7 @@ a {
   height: 50px;
   width: 50px;
   border-radius: 50%;
+  display: inline-block;
   @include  image-bg('../images/image-bg.svg');
 
   &--space {
@@ -79,7 +80,7 @@ a {
 
 // tag
 .tag {
-  background-color: $border-color;
+  background-color: #f6f6f6;
   color: $black;
   padding: 3px 10px;
   line-height: 13px;
@@ -90,7 +91,7 @@ a {
 
   &:hover {
     text-decoration: none;
-    background-color: #f6f6f6;
+    background-color: $border-color;
     color: $gray;
   }
 }
@@ -99,6 +100,10 @@ a {
 .wrapper {
   width: 910px;
   margin: 0 auto;
+}
+
+.content {
+  margin: 50px auto;
 }
 
 // header
@@ -172,5 +177,43 @@ a {
     a {
       color: #8899a6;
     }
+  }
+}
+
+// article
+.article {
+
+  &__item {
+    position: relative;
+    padding-bottom: 30px;
+    margin-bottom: 30px;
+    border-bottom: 1px dashed $border-color;
+  }
+
+  &__title {
+    font-size: 22px;
+    color: $black;
+    margin-bottom: 5px;
+    display: inline-block;
+
+    &:hover {
+      color: $gray;
+      text-decoration: none;
+    }
+  }
+
+  &__abstract {
+    margin: 10px 0;
+
+    & > p {
+      margin: 0;
+    }
+  }
+
+  &__meta {
+    position: absolute;
+    width: 100%;
+    padding-left: 70px;
+    top: 0;
   }
 }

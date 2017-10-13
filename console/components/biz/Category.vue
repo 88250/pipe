@@ -47,7 +47,12 @@
   import { required, maxSize } from '~/plugins/validate'
 
   export default {
-    props: ['id'],
+    props: {
+      id: {
+        type: String,
+        required: true
+      }
+    },
     data () {
       return {
         errorMsg: '',

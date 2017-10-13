@@ -11,6 +11,7 @@ var Common = {
   init: function () {
     window.Util.killBrowser()
     window.Util.lazyLoadCSSImage()
+    window.Util.lazyLoadImage()
     this._header()
   },
   _header: function () {

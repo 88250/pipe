@@ -6,7 +6,8 @@
         <h1>404</h1>
         <div class="error__description">Page not found</div>
         <div class="fn-right">
-          <nuxt-link to="/">{{ $t('index', $store.state.locale)}}</nuxt-link> |
+          <nuxt-link to="/">{{ $t('index', $store.state.locale)}}</nuxt-link>
+          |
           <a href="https://hacpai.com">{{ $t('hacpai', $store.state.locale)}}</a>
         </div>
       </div>
@@ -37,7 +38,12 @@
         title: `${this.$store.state.blogTitle ? this.$store.state.blogTitle + ' - ' : ''}${this.error.statusCode === 404 ? 404 : '50x'}`
       }
     },
-    props: ['error']
+    props: {
+      error: {
+        type: Object,
+        required: true
+      }
+    }
   }
 </script>
 

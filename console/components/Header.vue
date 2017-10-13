@@ -48,7 +48,12 @@
 
 <script>
   export default {
-    props: ['from'],
+    props: {
+      from: {
+        type: String,
+        required: true
+      }
+    },
     methods: {
       toggleSide () {
         const className = document.querySelector('#sologo').className
