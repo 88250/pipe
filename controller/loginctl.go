@@ -20,6 +20,8 @@ import (
 	"fmt"
 	"net/http"
 
+	log "github.com/sirupsen/logrus"
+
 	"github.com/b3log/solo.go/model"
 	"github.com/b3log/solo.go/service"
 	"github.com/b3log/solo.go/util"
@@ -110,5 +112,7 @@ func logoutAction(c *gin.Context) {
 	session.Options(sessions.Options{
 		MaxAge: -1,
 	})
-	session.Save()
+	if err := session.Save(); nil != err {
+		log.Errorf("saves session failed: " + err.Error())
+	}
 }

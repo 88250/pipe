@@ -24,7 +24,6 @@ import (
 	"github.com/b3log/solo.go/service"
 	"github.com/b3log/solo.go/util"
 	"github.com/gin-gonic/gin"
-	//	log "github.com/sirupsen/logrus"
 )
 
 type initRequest struct {
