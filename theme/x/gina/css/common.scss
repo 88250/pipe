@@ -191,19 +191,25 @@ a {
   }
 
   &__title {
-    font-size: 22px;
-    color: $black;
-    margin-bottom: 5px;
-    display: inline-block;
+    svg {
+      height: 18px;
+      width: 18px;
+    }
+    a {
+      font-size: 22px;
+      color: $black;
+      margin-bottom: 10px;
+      display: inline-block;
 
-    &:hover {
-      color: $gray;
-      text-decoration: none;
+      &:hover {
+        color: $gray;
+        text-decoration: none;
+      }
     }
   }
 
   &__abstract {
-    margin: 10px 0;
+    margin-top: 10px;
 
     & > p {
       margin: 0;
@@ -215,5 +221,25 @@ a {
     width: 100%;
     padding-left: 70px;
     top: 0;
+  }
+
+  &__action {
+    margin-top: 10px;
+    .action {
+      &__read {
+        border: 1px solid $theme-accent;
+        line-height: 38px;
+        padding: 0 20px;
+        color: $black;
+        display: inline-block;
+        border-radius: 20px;
+
+        &:hover {
+          text-decoration: none;
+          color: #fff;
+          background-color: $theme-accent;
+        }
+      }
+    }
   }
 }

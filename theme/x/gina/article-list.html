@@ -12,29 +12,32 @@
             </a>
             {{end}}
             <div {{if gt $.userCount 1}} class="article__meta" {{end}}>
-                <h2>
-                    <a class="article__title" rel="bookmark" href="${servePath}${article.articlePermalink}">
-                        ${article.articleTitle}
-                    </a>
-                    <sup>
-                        ${topArticleLabel}
-                    </sup>
-                </h2>
-                <div class="ft-gray ft-12">
-                    {{range .Tags}}
-                    <a class="tag" rel="tag" href="${servePath}/tags/${articleTag?url('UTF-8')}">
+                <h2 class="article__title">
+                    {{if .Topped}}
+                    <svg><use xlink:href="#focus"></use></svg>
+                    {{end}}
+                    <a rel="bookmark" href="{{.Path}}">
                         {{.Title}}
                     </a>
-                    {{end}}
-                    &nbsp;
-                    18 条评论  • 热度 1,083°C  •
-                    <time>${article.articleCreateDate?string("yyyy-MM-dd")}</time>
+                </h2>
+                <div class="ft-gray ft-12">
+                    {{/*range .Tags*/}}
+                    <a class="tag" rel="tag" href="${servePath}/tags/${articleTag?url('UTF-8')}">{{.Title}}</a>
+                    {{/*end*/}}
+                    {{.CommentCount}} {{$.i18n.comment}}  •  {{.ViewCount}} {{$.i18n.view}}  •
+                    <time>{{.CreatedAt}}</time>
                 </div>
             </div>
         </header>
+        {{if .Abstract}}
         <section class="content__reset article__abstract">
             {{.Abstract}}
         </section>
+        {{end}}
+        <div class="article__action">
+            <a class="action__read" rel="bookmark" href="{{.Path}}">{{$.i18n.readMore}}</a>
+            <svg><use xlink:href="#reply"></use></svg>
+        </div>
     </article>
     {{end}}
 
