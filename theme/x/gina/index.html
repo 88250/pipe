@@ -4,6 +4,9 @@
     {{template "head" .}}
 </head>
 <body>
+{{range .navigations}}
+{{.Title}}{{.URL}}
+{{end}}
 {{template "header"}}
 <div>
     {{template "article-list"}}

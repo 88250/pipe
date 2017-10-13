@@ -48,4 +48,7 @@ func fillCommon(dataModel *DataModel) {
 	(*dataModel)["metaKeywords"] = settingMap["basicMetaKeywords"]
 	(*dataModel)["metaDescription"] = settingMap["basicMetaDescription"]
 	(*dataModel)["conf"] = util.Conf
+
+	navigations := service.Navigation.GetNavigations(1)
+	(*dataModel)["navigations"] = navigations
 }
