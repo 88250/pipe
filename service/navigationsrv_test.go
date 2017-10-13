@@ -33,6 +33,14 @@ func TestConsoleGetNavigations(t *testing.T) {
 	}
 }
 
+func TestGetNavigations(t *testing.T) {
+	navigations := Navigation.GetNavigations(1)
+
+	if 1 != len(navigations) {
+		t.Errorf("expected is [%d], actual is [%d]", 1, len(navigations))
+	}
+}
+
 func TestConsoleGetNavigation(t *testing.T) {
 	navigation := Navigation.ConsoleGetNavigation(1)
 	if nil == navigation {

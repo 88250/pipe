@@ -107,6 +107,13 @@ func (srv *navigationService) ConsoleGetNavigations(page int, blogID uint) (ret 
 	return
 }
 
+func (srv *navigationService) GetNavigations(blogID uint) (ret []*model.Navigation) {
+	db.Model(model.Navigation{}).Order("number ASC, id DESC").
+		Where(model.Navigation{BlogID: blogID}).Find(&ret)
+
+	return
+}
+
 func (srv *navigationService) ConsoleGetNavigation(id uint) *model.Navigation {
 	ret := &model.Navigation{}
 	if nil != db.First(ret, id).Error {
