@@ -3,7 +3,7 @@
     {{range .articles}}
     <article class="article__item">
         <header>
-            {{if gt .userCount 1}}
+            {{if gt $.userCount 1}}
             <a rel="nofollow"
                href="{{.Path}}">
                 <span class="avatar avatar--space tooltipped tooltipped--w"
@@ -11,7 +11,7 @@
                       data-src="https://img.hacpai.com/avatar/1437187265889_1482892516923.png?imageView2/1/w/80/h/80/interlace/0/q/100"></span>
             </a>
             {{end}}
-            <div {{if gt .userCount 1}} class="article__meta" {{end}}>
+            <div {{if gt $.userCount 1}} class="article__meta" {{end}}>
                 <h2>
                     <a class="article__title" rel="bookmark" href="${servePath}${article.articlePermalink}">
                         ${article.articleTitle}
@@ -27,12 +27,13 @@
                     </a>
                     {{end}}
                     &nbsp;
+                    18 条评论  • 热度 1,083°C  •
                     <time>${article.articleCreateDate?string("yyyy-MM-dd")}</time>
                 </div>
             </div>
         </header>
         <section class="content__reset article__abstract">
-            ${article.articleAbstract}
+            {{.Abstract}}
         </section>
     </article>
     {{end}}
