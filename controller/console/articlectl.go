@@ -74,15 +74,15 @@ func GetArticleAction(c *gin.Context) {
 }
 
 type ConsoleArticle struct {
-	ID           uint          `json:"id"`
-	Author       *Author       `json:"author"`
-	CreatedAt    string        `json:"createdAt"`
-	Title        string        `gorm:"size:128" json:"title"`
-	Tags         []*ConsoleTag `json:"tags"`
-	URL          string        `json:"url"`
-	Topped       bool          `json:"topped"`
-	ViewCount    int           `json:"viewCount"`
-	CommentCount int           `json:"commentCount"`
+	ID           uint           `json:"id"`
+	Author       *ConsoleAuthor `json:"author"`
+	CreatedAt    string         `json:"createdAt"`
+	Title        string         `json:"title"`
+	Tags         []*ConsoleTag  `json:"tags"`
+	URL          string         `json:"url"`
+	Topped       bool           `json:"topped"`
+	ViewCount    int            `json:"viewCount"`
+	CommentCount int            `json:"commentCount"`
 }
 
 type ConsoleTag struct {
@@ -90,7 +90,7 @@ type ConsoleTag struct {
 	URL   string `json:"url,omitempty"`
 }
 
-type Author struct {
+type ConsoleAuthor struct {
 	Name      string `json:"name"`
 	AvatarURL string `json:"avatarURL"`
 }
@@ -121,7 +121,7 @@ func GetArticlesAction(c *gin.Context) {
 			continue
 		}
 
-		author := &Author{
+		author := &ConsoleAuthor{
 			Name:      authorModel.Name,
 			AvatarURL: authorModel.AvatarURL,
 		}

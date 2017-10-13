@@ -19,10 +19,35 @@ package controller
 
 import (
 	"net/http"
+	"strings"
 
 	"github.com/b3log/solo.go/service"
 	"github.com/gin-gonic/gin"
+	"github.com/prometheus/common/log"
 )
+
+type ThemeArticle struct {
+	ID           uint
+	Abstract     string
+	Author       *ThemeAuthor
+	CreatedAt    string
+	Title        string
+	Tags         []*ThemeTag
+	URL          string
+	Topped       bool
+	ViewCount    int
+	CommentCount int
+}
+
+type ThemeTag struct {
+	Title string
+	URL   string
+}
+
+type ThemeAuthor struct {
+	Name      string
+	AvatarURL string
+}
 
 func showArticlesAction(c *gin.Context) {
 	dataModel := DataModel{}
@@ -33,7 +58,47 @@ func showArticlesAction(c *gin.Context) {
 		page = 1
 	}
 
-	articles, pagination := service.Article.GetArticles(page, 1)
+	articleModels, pagination := service.Article.GetArticles(page, 1)
+	articles := []*ThemeArticle{}
+	for _, articleModel := range articleModels {
+		themeTags := []*ThemeTag{}
+		tagStrs := strings.Split(articleModel.Tags, ",")
+		for _, tagStr := range tagStrs {
+			themeTag := &ThemeTag{
+				Title: tagStr,
+				URL:   "/todotagpath",
+			}
+			themeTags = append(themeTags, themeTag)
+		}
+
+		authorModel := service.User.GetUser(articleModel.AuthorID)
+		if nil == authorModel {
+			log.Errorf("not found author of article [id=%d, authorID=%d]", articleModel.ID, articleModel.AuthorID)
+
+			continue
+		}
+
+		author := &ThemeAuthor{
+			Name:      authorModel.Name,
+			AvatarURL: authorModel.AvatarURL,
+		}
+
+		article := &ThemeArticle{
+			ID:           articleModel.ID,
+			Abstract:     articleModel.Abstract,
+			Author:       author,
+			CreatedAt:    articleModel.CreatedAt.Format("2006-01-02"),
+			Title:        articleModel.Title,
+			Tags:         themeTags,
+			URL:          "/todoarticlepath",
+			Topped:       articleModel.Topped,
+			ViewCount:    articleModel.ViewCount,
+			CommentCount: articleModel.CommentCount,
+		}
+
+		articles = append(articles, article)
+	}
+
 	dataModel["articles"] = articles
 	dataModel["pagination"] = pagination
 	c.HTML(http.StatusOK, "index.html", dataModel)

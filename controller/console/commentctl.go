@@ -26,13 +26,13 @@ import (
 )
 
 type ConsoleComment struct {
-	ID            uint    `json:"id"`
-	Author        *Author `json:"author"`
-	ArticleAuthor *Author `json:"articleAuthor"`
-	CreatedAt     string  `json:"createdAt"`
-	Title         string  `json:"title"`
-	Content       string  `json:"content"`
-	URL           string  `json:"url"`
+	ID            uint           `json:"id"`
+	Author        *ConsoleAuthor `json:"author"`
+	ArticleAuthor *ConsoleAuthor `json:"articleAuthor"`
+	CreatedAt     string         `json:"createdAt"`
+	Title         string         `json:"title"`
+	Content       string         `json:"content"`
+	URL           string         `json:"url"`
 }
 
 func GetCommentsAction(c *gin.Context) {
@@ -44,11 +44,11 @@ func GetCommentsAction(c *gin.Context) {
 
 	comments := []*ConsoleComment{}
 	for _, commentModel := range commentModels {
-		author := &Author{
+		author := &ConsoleAuthor{
 			Name:      commentModel.AuthorName,
 			AvatarURL: commentModel.AuthorAvatarURL,
 		}
-		articleAuthor := &Author{
+		articleAuthor := &ConsoleAuthor{
 			Name:      "article author name",
 			AvatarURL: "article author avatar URL",
 		}
