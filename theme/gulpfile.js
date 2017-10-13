@@ -18,7 +18,7 @@ const fs = require('fs')
 gulp.task('sass', function () {
   return gulp.src('./x/*/css/*.scss')
     .pipe(sass({ outputStyle: 'compressed' }).on('error', sass.logError))
-    .pipe(gulp.dest('.'))
+    .pipe(gulp.dest('./x'))
 })
 
 gulp.task('sass:watch', function () {

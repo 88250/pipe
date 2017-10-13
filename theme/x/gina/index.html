@@ -4,13 +4,11 @@
     {{template "head" .}}
 </head>
 <body>
-{{template "side"}}
-    <main>
-        <#include "article-list.ftl">
-            <#include "footer.ftl">
-    </main>
-    {{.i18n.abstract}}
-    {{.setting.blogTitle}}
-{{template "footer" .}}
+{{template "header"}}
+<div>
+    {{template "article-list"}}
+    {{template "side"}}
+</div>
+{{template "footer"}}
 </body>
 </html>

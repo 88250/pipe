@@ -2,7 +2,7 @@
  * variables.
  *
  * @author <a href="http://vanessa.b3log.org">Liyuan Li</a>
- * @version 1.6.0.0, Oct 11, 2017
+ * @version 0.1.0.0, Oct 11, 2017
  */
 
 // Table of Contents
@@ -13,8 +13,8 @@ $blue-lighter: #f1f7fe !default;
 $red: #d23f31 !default;
 $red-light: #ffdce0 !default;
 $green: #569e3d !default;
-$fade-white: rgba(255, 255, 255, .87)!default;
-$fade: rgba(0, 0, 0, .38)!default;
+$fade-white: rgba(255, 255, 255, .87) !default;
+$fade: rgba(0, 0, 0, .38) !default;
 $gray: rgba(0, 0, 0, .54) !default;
 $black: #3b3e43 !default;
 $black-text: rgba(0, 0, 0, .87) !default;
@@ -25,13 +25,4 @@ $font-family-base: "Helvetica Neue", "Luxi Sans", "DejaVu Sans", Tahoma, "Hiragi
 $font-family-code: mononoki, Consolas, "Liberation Mono", Menlo, Courier, monospace !default;
 
 // shadow
-$shadow-tip: 0 1px 2px rgba(0,0,0,.2) !default;
-
-// theme
-$theme-primary: $black;
-$theme-accent: $red;
-$theme-secondary: $black-light;
-$theme-info: $blue-lighter;
-$theme-warning: undefined;
-$theme-error: $red-light;
-$theme-success: $blue-light;
+$shadow-tip: 0 1px 2px rgba(0, 0, 0, .2) !default;

@@ -1,0 +1,122 @@
+/**
+ * function.
+ *
+ * @author <a href="http://vanessa.b3log.org">Liyuan Li</a>
+ * @version 0.1.0.0, Oct 11, 2017
+ */
+
+.fn {
+  &-flex {
+    display: flex;
+  }
+
+  &-flex-1 {
+    flex: 1;
+    min-width: 1px;
+  }
+
+  &-pointer {
+    cursor: pointer;
+  }
+
+  &-clear:before,
+  &-clear:after {
+    display: table;
+    content: "";
+  }
+
+  &-clear:after {
+    clear: both;
+  }
+
+  &-left {
+    float: left;
+  }
+
+  &-right {
+    float: right;
+  }
+
+  &-none {
+    display: none;
+  }
+
+  &-hidden {
+    visibility: hidden;
+  }
+
+  &-ellipsis {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    word-wrap: normal;
+  }
+
+  &-level0 {
+    color: $fade;
+  }
+
+  &-level1 {
+    color: #ffcc00;
+  }
+
+  &-level2 {
+    color: #ffc1cc;
+  }
+
+  &-level3 {
+    color: #ff6633;
+  }
+
+  &-level4 {
+    color: $black;
+  }
+}
+
+// font
+.ft {
+  &-13 {
+    font-size: 13px;
+  }
+
+  &-12 {
+    font-size: 12px;
+  }
+
+  &-gray {
+    color: $gray;
+  }
+
+  &-fade {
+    color: $fade;
+  }
+
+  &-danger {
+    color: $black;
+  }
+
+  &-info {
+    color: $blue;
+  }
+
+  &-success {
+    color: $green;
+  }
+
+  &-a-title {
+    color: $black-light;
+    text-decoration: none;
+  }
+
+  &-a-title:hover {
+    color: $black-text;
+  }
+
+  &-center {
+    text-align: center;
+  }
+
+  &-nowrap {
+    white-space: nowrap;
+  }
+}
