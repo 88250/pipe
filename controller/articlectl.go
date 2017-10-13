@@ -19,53 +19,13 @@ package controller
 
 import (
 	"net/http"
-	"strconv"
-	"time"
 
-	"github.com/b3log/solo.go/i18n"
-	"github.com/b3log/solo.go/model"
-	"github.com/b3log/solo.go/service"
-	"github.com/b3log/solo.go/util"
 	"github.com/gin-gonic/gin"
-	log "github.com/sirupsen/logrus"
 )
 
 func showArticleAction(c *gin.Context) {
 	dataModel := DataModel{}
 
-	fillCommon(&dataModel)
+	fillCommon(c, &dataModel)
 	c.HTML(http.StatusOK, "index.html", dataModel)
-}
-
-func fillCommon(dataModel *DataModel) {
-	if "dev" == util.Conf.RuntimeMode {
-		i18n.Load()
-	}
-	localeSetting := service.Setting.GetSetting(model.SettingCategoryI18n, model.SettingNameI18nLocale, 1)
-	(*dataModel)["i18n"] = i18n.GetMessages(localeSetting.Value)
-
-	settings := service.Setting.GetAllSettings(1)
-	settingMap := map[string]string{}
-	for _, setting := range settings {
-		settingMap[setting.Name] = setting.Value
-	}
-	(*dataModel)["setting"] = settingMap
-	statistics := service.Statistic.GetAllStatistics(1)
-	statisticMap := map[string]int{}
-	for _, statistic := range statistics {
-		count, err := strconv.Atoi(statistic.Value)
-		if nil != err {
-			log.Errorf("statistic [%s] should be an integer, actual is [%v]", statistic.Name, statistic.Value)
-		}
-		statisticMap[statistic.Name] = count
-	}
-	(*dataModel)["statistic"] = statisticMap
-	(*dataModel)["title"] = settingMap["basicBlogTitle"]
-	(*dataModel)["metaKeywords"] = settingMap["basicMetaKeywords"]
-	(*dataModel)["metaDescription"] = settingMap["basicMetaDescription"]
-	(*dataModel)["conf"] = util.Conf
-	(*dataModel)["year"] = time.Now().Year()
-
-	navigations := service.Navigation.GetNavigations(1)
-	(*dataModel)["navigations"] = navigations
 }

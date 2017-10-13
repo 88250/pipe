@@ -57,18 +57,37 @@ type UserBlog struct {
 	UserRole int    `json:"userRole"`
 }
 
-func (srv *userService) GetUserBlogs(userID uint) []*UserBlog {
+func (srv *userService) GetBlogUsers(blogID uint) (ret []*model.User) {
+	correlations := []*model.Correlation{}
+	if nil != db.Where("id1 = ? AND type = ?", blogID, model.CorrelationBlogUser).Find(&correlations).Error {
+		return
+	}
+
+	for _, rel := range correlations {
+		user := &model.User{}
+		if err := db.Where("id = ?", rel.ID2).Find(user).Error; nil != err {
+			log.Errorf("not found user [id=%d]", rel.ID2)
+
+			return
+		}
+
+		ret = append(ret, user)
+	}
+
+	return
+}
+
+func (srv *userService) GetUserBlogs(userID uint) (ret []*UserBlog) {
 	correlations := []*model.Correlation{}
 	if nil != db.Where("id2 = ? AND type = ?", userID, model.CorrelationBlogUser).Find(&correlations).Error {
-		return nil
+		return
 	}
 
 	user := srv.GetUser(userID)
 	if nil == user {
-		return nil
+		return
 	}
 
-	ret := []*UserBlog{}
 	for _, rel := range correlations {
 		blogTitleSetting := Setting.GetSetting(model.SettingCategoryBasic, model.SettingNameBasicBlogTitle, rel.ID1)
 		if nil == blogTitleSetting {

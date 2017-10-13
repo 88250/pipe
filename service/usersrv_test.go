@@ -25,7 +25,6 @@ func TestGetUser(t *testing.T) {
 
 		return
 	}
-
 	if 1 != user.ID {
 		t.Errorf("id is not [1]")
 	}
@@ -53,13 +52,17 @@ func TestGetUserByNameOrEmail(t *testing.T) {
 	}
 }
 
-func TestGetUserBlogs(t *testing.T) {
-	blogs := User.GetUserBlogs(1)
-	if nil == blogs {
-		t.Errorf("blogs is nil")
+func TestGetBlogUsers(t *testing.T) {
+	users := User.GetBlogUsers(1)
+	if 1 > len(users) {
+		t.Errorf("users is empty")
 
 		return
 	}
+}
+
+func TestGetUserBlogs(t *testing.T) {
+	blogs := User.GetUserBlogs(1)
 	if 1 > len(blogs) {
 		t.Errorf("blogs is tempty")
 

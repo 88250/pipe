@@ -25,7 +25,7 @@ import (
 func showIndexAction(c *gin.Context) {
 	dataModel := DataModel{}
 
-	fillCommon(&dataModel)
+	fillCommon(c, &dataModel)
 
 	c.HTML(http.StatusOK, "index.html", dataModel)
 }

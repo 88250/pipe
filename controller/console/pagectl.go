@@ -35,3 +35,15 @@ func ShowPageAction(c *gin.Context) {
 
 	t.Execute(c.Writer, nil)
 }
+
+func ShowLoginAction(c *gin.Context) {
+	t, err := template.ParseFiles("console/dist/login/index.html")
+	if nil != err {
+		log.Error("loads login page failed: " + err.Error())
+		c.String(http.StatusNotFound, "loads login page failed")
+
+		return
+	}
+
+	t.Execute(c.Writer, nil)
+}
