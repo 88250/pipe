@@ -110,8 +110,10 @@ func logoutAction(c *gin.Context) {
 
 	session := sessions.Default(c)
 	session.Options(sessions.Options{
+		Path:   "/",
 		MaxAge: -1,
 	})
+	session.Clear()
 	if err := session.Save(); nil != err {
 		log.Errorf("saves session failed: " + err.Error())
 	}
