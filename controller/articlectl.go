@@ -31,7 +31,6 @@ func showArticleAction(c *gin.Context) {
 	dataModel := DataModel{}
 
 	fillCommon(&dataModel)
-
 	c.HTML(http.StatusOK, "index.html", dataModel)
 }
 
@@ -45,5 +44,8 @@ func fillCommon(dataModel *DataModel) {
 		settingMap[setting.Name] = setting.Value
 	}
 	(*dataModel)["setting"] = settingMap
+	(*dataModel)["title"] = settingMap["basicBlogTitle"]
+	(*dataModel)["metaKeywords"] = settingMap["basicMetaKeywords"]
+	(*dataModel)["metaDescription"] = settingMap["basicMetaDescription"]
 	(*dataModel)["conf"] = util.Conf
 }
