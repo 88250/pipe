@@ -14,7 +14,7 @@ html {
 
 body {
   font-size: 14px;
-  color: $black-text;
+  color: $black;
   background-color: #fff;
   letter-spacing: 0.01rem;
   line-height: 1.75em;
@@ -54,9 +54,33 @@ body {
       }
 
       &:hover {
-        color: $black-text;
+        color: $black;
         text-decoration: none;
       }
+    }
+  }
+
+  &__search {
+    border-left: 1px solid #f4f4f4;
+    float: right;
+    padding-left: 10px;
+    height: 64px;
+    cursor: pointer;
+    &:hover svg {
+      color: $black;
+    }
+    input {
+      width: 0;
+      font-style: italic;
+      border: 0;
+      transition: $transition;
+      padding-right: 10px;
+      display: none;
+    }
+    svg {
+      color: $gray;
+      float: right;
+      margin-top: 26px;
     }
   }
 }

@@ -113,5 +113,6 @@
   "blogPath": "博客路径",
   "internationalization": "国际化",
   "feed": "订阅",
-  "faviconURL": "favicon 地址"
+  "faviconURL": "favicon 地址",
+  "enterSearch": "回车后搜索"
 }

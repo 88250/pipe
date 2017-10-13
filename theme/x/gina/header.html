@@ -13,8 +13,12 @@
 
         自定义导航
 
-        <svg><use xlink:href="#search"></use></svg>
-        搜索
+        <form id="headerSearch" class="header__search" action="{{.conf.Server}}/search">
+            <input type="text" placeholder="{{.i18n.enterSearch}}">
+            <svg>
+                <use xlink:href="#search"></use>
+            </svg>
+        </form>
     </div>
 </header>
 {{end}}

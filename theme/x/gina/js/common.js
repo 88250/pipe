@@ -9,8 +9,18 @@ var Common = {
    * @description 页面初始化
    */
   init: function () {
-    Util.killBrowser();
+    window.Util.killBrowser()
+    this._header()
+  },
+  _header: function () {
+    var $input = $('#headerSearch input')
+    $('#headerSearch').click(function () {
+      $input.show().width(95).focus()
+    })
+    $input.blur(function () {
+      $(this).hide().width(0)
+    })
   }
-};
+}
 
-Common.init();
+Common.init()
