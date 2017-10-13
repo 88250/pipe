@@ -5,7 +5,7 @@
  * @version 0.1.0.0, Oct 13, 2017
  */
 
-@mixin image-bg($image) {
+@mixin image-bg($image: '') {
   background: {
     image: url($image);
     color: rgba(0, 0, 0, 0.02);

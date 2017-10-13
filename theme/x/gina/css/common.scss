@@ -4,7 +4,7 @@
  * @author <a href="http://vanessa.b3log.org">Liyuan Li</a>
  * @version 0.1.0.0, Oct 13, 2017
 */
-@import "../../../scss/*";
+@import '../../../scss/basic';
 
 // reset
 html {
@@ -24,5 +24,39 @@ body {
 .content__reset {
   pre > code {
     background-image: url(../images/code-bg.png);
+  }
+}
+
+// framework
+.wrapper {
+  width: 760px;
+  margin: 0 auto;
+}
+
+// header
+.header {
+  height: 64px;
+  box-shadow: 0 1px 1px -1px rgba(0, 0, 0, .15);
+  line-height: 64px;
+
+  &__wrap {
+    width: 910px;
+    margin: 0 auto;
+
+    a {
+      transition: $transition;
+      color: $gray;
+      padding: 0 10px;
+      font-size: 18px;
+
+      &:first-child {
+        margin-left: -10px;
+      }
+
+      &:hover {
+        color: $black-text;
+        text-decoration: none;
+      }
+    }
   }
 }

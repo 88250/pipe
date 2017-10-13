@@ -5,6 +5,8 @@
  * @version 0.1.0.0, Oct 11, 2017
  */
 
+@import 'mixin';
+
 .content__reset {
   font-family: $font-family-base;
   word-wrap: break-word;
