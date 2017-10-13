@@ -43,10 +43,19 @@ func (sd *SessionData) Save(c *gin.Context) error {
 }
 
 func GetSession(c *gin.Context) *SessionData {
-	session, exists := c.Get("session")
-	if nil == session || !exists {
+	session := sessions.Default(c)
+	sessionDataStr := session.Get("data")
+	if nil == sessionDataStr {
 		return nil
 	}
 
-	return session.(*SessionData)
+	sessionData := &SessionData{}
+	err := json.Unmarshal([]byte(sessionDataStr.(string)), sessionData)
+	if nil != err {
+		return nil
+	}
+
+	c.Set("session", sessionData)
+
+	return sessionData
 }

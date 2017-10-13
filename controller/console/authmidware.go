@@ -17,19 +17,16 @@
 package console
 
 import (
-	"encoding/json"
 	"net/http"
 
 	"github.com/b3log/solo.go/util"
-	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
 )
 
 func LoginCheck() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		session := sessions.Default(c)
-		sessionDataStr := session.Get("data")
-		if nil == sessionDataStr {
+		session := util.GetSession(c)
+		if nil == session {
 			result := util.NewResult()
 			result.Code = -2
 			result.Msg = "unauthenticated request"
@@ -37,19 +34,6 @@ func LoginCheck() gin.HandlerFunc {
 
 			return
 		}
-
-		sessionData := util.SessionData{}
-		err := json.Unmarshal([]byte(sessionDataStr.(string)), &sessionData)
-		if nil != err {
-			result := util.NewResult()
-			result.Code = -2
-			result.Msg = "unauthenticated request"
-			c.AbortWithStatusJSON(http.StatusOK, result)
-
-			return
-		}
-
-		c.Set("session", &sessionData)
 
 		c.Next()
 	}
