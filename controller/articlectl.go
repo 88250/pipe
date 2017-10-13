@@ -35,6 +35,9 @@ func showArticleAction(c *gin.Context) {
 }
 
 func fillCommon(dataModel *DataModel) {
+	if "dev" == util.Conf.RuntimeMode {
+		i18n.Load()
+	}
 	localeSetting := service.Setting.GetSetting(model.SettingCategoryI18n, model.SettingNameI18nLocale, 1)
 	(*dataModel)["i18n"] = i18n.GetMessages(localeSetting.Value)
 

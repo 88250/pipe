@@ -24,7 +24,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func GetStatusAction(c *gin.Context) {
+func getStatusAction(c *gin.Context) {
 	result := util.NewResult()
 	defer c.JSON(http.StatusOK, result)
 

@@ -22,16 +22,9 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func showAuthorsAction(c *gin.Context) {
+func showActivitiesAction(c *gin.Context) {
 	dataModel := DataModel{}
 
 	fillCommon(&dataModel)
-	c.HTML(http.StatusOK, "authors.html", dataModel)
-}
-
-func showAuthorArticlesAction(c *gin.Context) {
-	dataModel := DataModel{}
-
-	fillCommon(&dataModel)
-	c.HTML(http.StatusOK, "author-articles.html", dataModel)
+	c.HTML(http.StatusOK, "activities.html", dataModel)
 }
