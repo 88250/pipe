@@ -26,7 +26,7 @@ import (
 	"github.com/prometheus/common/log"
 )
 
-type ThemeArticle struct {
+type ThemeListArticle struct {
 	ID           uint
 	Abstract     string
 	Author       *ThemeAuthor
@@ -59,7 +59,7 @@ func showArticlesAction(c *gin.Context) {
 	}
 
 	articleModels, pagination := service.Article.GetArticles(page, 1)
-	articles := []*ThemeArticle{}
+	articles := []*ThemeListArticle{}
 	for _, articleModel := range articleModels {
 		themeTags := []*ThemeTag{}
 		tagStrs := strings.Split(articleModel.Tags, ",")
@@ -83,7 +83,7 @@ func showArticlesAction(c *gin.Context) {
 			AvatarURL: authorModel.AvatarURL,
 		}
 
-		article := &ThemeArticle{
+		article := &ThemeListArticle{
 			ID:           articleModel.ID,
 			Abstract:     articleModel.Abstract,
 			Author:       author,
