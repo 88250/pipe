@@ -98,6 +98,7 @@ func MapRoutes() *gin.Engine {
 	themePath := "theme/x/" + theme.DefaultTheme
 	ret.Static(themePath+"/css", themePath+"/css")
 	ret.Static(themePath+"/js", themePath+"/js")
+	ret.Static(themePath+"/images", themePath+"images")
 	ret.Static("/theme/css", "theme/css")
 	ret.Static("/theme/js", "theme/js")
 	ret.LoadHTMLGlob(themePath + "/*.html")
