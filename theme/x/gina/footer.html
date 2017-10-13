@@ -1,33 +1,102 @@
 {{define "footer"}}
 <footer class="footer">
-    <div class="fn-clear">
-        <span class="fn-right">
-            ${viewCount1Label}${statistic.statisticBlogViewCount}
-            &nbsp;
-            ${articleCount1Label}${statistic.statisticPublishedBlogArticleCount}
-            &nbsp; 
-            ${commentCount1Label}${statistic.statisticPublishedBlogCommentCount}
-            &nbsp; 
-            ${onlineVisitor1Label}${onlineVisitorCnt}
-        </span>
+    <div class="wrapper">
+        <div class="footer__side fn-clear">
+            <div class="module fn-left">
+                {{if eq .setting.basicNoticeBoard ""}}
+                <div class="module__header">
+                    {{.i18n.categories}}
+                </div>
+                <div>
+                    {{.setting.basicNoticeBoard}}
+                </div>
+                {{else}}
+                <div class="module__header">
+                    {{.i18n.noticeBoard}}
+                </div>
+                <div>
+                    {{.setting.basicNoticeBoard}}
+                </div>
+                {{end}}
+            </div>
+            <div class="module footer__side-module--mid fn-left">
+                <div class="module__header">
+                    {{.i18n.tags}}
+                </div>
+                <div>
+                   <a class="tag" href="/">tag</a>
+                   <a class="tag" href="/">tag</a>
+                   <a class="tag" href="/">tag sfadfasdfasdasdfsad</a>
+                   <a class="tag" href="/">tag</a>
+                   <a class="tag" href="/">tag</a>
+                   <a class="tag" href="/">tag</a>
+                </div>
+            </div>
+            <div class="module fn-right">
+                <div class="module__header">
+                    {{.i18n.randomArticle}}
+                </div>
+                <div class="module__list">
+                    <ul>
+                        <li class="fn-clear">
+                            <div class="avatar avatar--space fn-left"
+                                 data-src="https://img.hacpai.com/avatar/1437187265889_1482892516923.png?imageView2/1/w/80/h/80/interlace/0/q/100"></div>
+                            <div class="fn-left module__list-content">
+                                <a href="/" class="module__a">的时候在钱塘江</a>
+                                <time class="ft-12 ft-gray">1周前</time>
+                            </div>
+                        </li>
+                        <li class="fn-clear">
+                            <div class="avatar avatar--space fn-left"></div>
+                            <div class="fn-left module__list-content">
+                                <a href="/" class="module__a">的时候在钱塘江</a>
+                                <time class="ft-12 ft-gray">1周前</time>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="footer__info">
+            <div class="fn-clear">
+                {{.setting.basicBlogSubtitle}}
+                <div class="fn-right">
+                    <a href="{{.conf.Server}}{{.setting.systemPath}}">{{.setting.basicBlogTitle}}</a> &copy; {{.year}}
+                    {{.setting.basicFooter}}
+                </div>
+            </div>
+            <div class="fn-clear">
+                <span class="ft-gray">{{.statistic.statisticViewCount}}</span>
+                {{.i18n.view}}
+                &nbsp;
+                <span class="ft-gray">{{.statistic.statisticPublishedArticleCount}}</span>
+                {{.i18n.article}}
+                &nbsp;
+                <span class="ft-gray">{{.statistic.statisticCommentCount}}</span>
+                {{.i18n.comment}}
+                <div class="fn-right ft-gray">
+                    Powered by <a href="http://b3log.org" target="_blank">B3log {{.i18n.openSource}}</a> •
+                    <a href="https://github.com/b3log/solo.go" target="_blank">solo.go</a> {{.setting.systemVersion}}.
+                    Theme by <a href="http://vanessa.b3log.org" target="_blank">Vanessa</a>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="fn-clear">
-        <a href="${servePath}">${blogTitle}</a> 
-        &copy; ${year}
-        ${footerContent}
-        <span class="fn-right">
-            Powered by <a href="http://b3log.org" target="_blank">B3log 开源</a> •
-            <a href="https://hacpai.com/tag/solo" target="_blank">Solo</a> ${version}
-        </span>
-    </div>
-    <span onclick="Util.goTop()" class="icon-goup"></span>
 </footer>
+
 {{if eq .conf.RuntimeMode "dev"}}
-<script type="text/javascript" src="{{.conf.StaticServer}}/theme/x/{{.setting.themeName}}/js/symbol.js?{{.conf.StaticResourceVersion}}" charset="utf-8"></script>
+<script type="text/javascript"
+        src="{{.conf.StaticServer}}/theme/x/{{.setting.themeName}}/js/symbol.js?{{.conf.StaticResourceVersion}}"
+        charset="utf-8"></script>
 <script type="text/javascript" src="{{.conf.StaticServer}}/theme/js/jquery-3.2.1.min.js" charset="utf-8"></script>
 <script type="text/javascript" src="{{.conf.StaticServer}}/theme/js/common.js" charset="utf-8"></script>
-<script type="text/javascript" src="{{.conf.StaticServer}}/theme/x/{{.setting.themeName}}/js/common.js?{{.conf.StaticResourceVersion}}" charset="utf-8"></script>
+<script type="text/javascript"
+        src="{{.conf.StaticServer}}/theme/x/{{.setting.themeName}}/js/common.js?{{.conf.StaticResourceVersion}}"
+        charset="utf-8"></script>
 {{else}}
-<script type="text/javascript" src="{{.conf.StaticServer}}/theme/x/{{.setting.themeName}}/js/common.min.js?{{.conf.StaticResourceVersion}}" charset="utf-8"></script>
+<script type="text/javascript"
+        src="{{.conf.StaticServer}}/theme/x/{{.setting.themeName}}/js/common.min.js?{{.conf.StaticResourceVersion}}"
+        charset="utf-8"></script>
 {{end}}
+
 {{end}}

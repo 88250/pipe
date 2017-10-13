@@ -10,15 +10,16 @@ var Common = {
    */
   init: function () {
     window.Util.killBrowser()
+    window.Util.lazyLoadCSSImage()
     this._header()
   },
   _header: function () {
     var $input = $('#headerSearch input')
     $('#headerSearch').click(function () {
-      $input.show().width(95).focus()
+      $input.width(95).focus()
     })
     $input.blur(function () {
-      $(this).hide().width(0)
+      $(this).width(0)
     })
   }
 }
