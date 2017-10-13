@@ -24,11 +24,11 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
-func IndexAction(c *gin.Context) {
-	t, err := template.ParseFiles("console/dist/admin/index.html")
+func ShowPageAction(c *gin.Context) {
+	t, err := template.ParseFiles("console/dist/admin" + c.Param("path") + "/index.html")
 	if nil != err {
-		log.Error("loads console index failed: " + err.Error())
-		c.String(http.StatusNotFound, "loads console index failed")
+		log.Error("loads console page [" + c.Param("path") + "] failed: " + err.Error())
+		c.String(http.StatusNotFound, "loads console page failed")
 
 		return
 	}

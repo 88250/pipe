@@ -99,7 +99,7 @@ func MapRoutes() *gin.Engine {
 	themeGroup.GET("/", showIndexAction)
 	themeGroup.GET("/article/:link")
 
-	ret.GET("/admin", console.IndexAction)
+	ret.GET("/admin/*path", console.ShowPageAction)
 	ret.Static("/assets", "./console/dist")
 
 	return ret
