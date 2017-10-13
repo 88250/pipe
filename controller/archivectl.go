@@ -24,14 +24,12 @@ import (
 
 func showArchivesAction(c *gin.Context) {
 	dataModel := DataModel{}
-
 	fillCommon(c, &dataModel)
 	c.HTML(http.StatusOK, "archives.html", dataModel)
 }
 
 func showArchiveArticlesAction(c *gin.Context) {
 	dataModel := DataModel{}
-
 	fillCommon(c, &dataModel)
 	c.HTML(http.StatusOK, "archive-articles.html", dataModel)
 }

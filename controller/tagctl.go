@@ -24,14 +24,12 @@ import (
 
 func showTagsAction(c *gin.Context) {
 	dataModel := DataModel{}
-
 	fillCommon(c, &dataModel)
 	c.HTML(http.StatusOK, "tags.html", dataModel)
 }
 
 func showTagArticlesAction(c *gin.Context) {
 	dataModel := DataModel{}
-
 	fillCommon(c, &dataModel)
 	c.HTML(http.StatusOK, "tag-articles.html", dataModel)
 }

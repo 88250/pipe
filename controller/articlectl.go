@@ -20,12 +20,27 @@ package controller
 import (
 	"net/http"
 
+	"github.com/b3log/solo.go/service"
 	"github.com/gin-gonic/gin"
 )
 
+func showArticlesAction(c *gin.Context) {
+	dataModel := DataModel{}
+	fillCommon(c, &dataModel)
+
+	page := c.GetInt("p")
+	if 1 > page {
+		page = 1
+	}
+
+	articles, pagination := service.Article.GetArticles(page, 1)
+	dataModel["articles"] = articles
+	dataModel["pagination"] = pagination
+	c.HTML(http.StatusOK, "index.html", dataModel)
+}
+
 func showArticleAction(c *gin.Context) {
 	dataModel := DataModel{}
-
 	fillCommon(c, &dataModel)
-	c.HTML(http.StatusOK, "index.html", dataModel)
+	c.HTML(http.StatusOK, "article.html", dataModel)
 }

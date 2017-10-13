@@ -22,12 +22,14 @@ import (
 	"fmt"
 	"math"
 	"regexp"
+	"strconv"
 	"strings"
 	"sync"
 
 	"github.com/b3log/solo.go/model"
 	"github.com/b3log/solo.go/util"
 	"github.com/jinzhu/gorm"
+	log "github.com/sirupsen/logrus"
 )
 
 var Article = &articleService{
@@ -101,6 +103,35 @@ func (srv *articleService) ConsoleGetArticles(page int, blogID uint) (ret []*mod
 
 	pageCount := int(math.Ceil(float64(count) / adminConsoleArticleListPageSize))
 	pagination = util.NewPagination(page, adminConsoleArticleListPageSize, pageCount, adminConsoleArticleListWindowsSize, count)
+
+	return
+}
+
+func (srv *articleService) GetArticles(page int, blogID uint) (ret []*model.Article, pagination *util.Pagination) {
+	settings := Setting.GetSettings(blogID, model.SettingCategoryPreference, []string{model.SettingNamePreferenceArticleListPageSize, model.SettingNamePreferenceArticleListWindowSize})
+	pageSize, err := strconv.Atoi(settings[model.SettingNamePreferenceArticleListPageSize].Value)
+	if nil != err {
+		log.Errorf("value of setting [%s] is not an integer, actual is [%v]", model.SettingNamePreferenceArticleListPageSize, settings[model.SettingNamePreferenceArticleListPageSize].Value)
+		pageSize = adminConsoleArticleListPageSize
+	}
+
+	offset := (page - 1) * pageSize
+	count := 0
+	db.Model(model.Article{}).Select("id, created_at, author_id, title, tags, path, topped, view_count, comment_count").
+		Where(model.Article{Status: model.ArticleStatusPublished, BlogID: blogID}).
+		Order("topped DESC, id DESC").Count(&count).
+		Offset(offset).Limit(pageSize).
+		Find(&ret)
+
+	pageCount := int(math.Ceil(float64(count) / float64(pageSize)))
+
+	windowSize, err := strconv.Atoi(settings[model.SettingNamePreferenceArticleListWindowSize].Value)
+	if nil != err {
+		log.Errorf("value of setting [%s] is not an integer, actual is [%v]", model.SettingNamePreferenceArticleListWindowSize, settings[model.SettingNamePreferenceArticleListWindowSize].Value)
+		windowSize = adminConsoleArticleListWindowsSize
+	}
+
+	pagination = util.NewPagination(page, pageSize, pageCount, windowSize, count)
 
 	return
 }

@@ -20,13 +20,12 @@ import (
 	"fmt"
 	"net/http"
 
-	log "github.com/sirupsen/logrus"
-
 	"github.com/b3log/solo.go/model"
 	"github.com/b3log/solo.go/service"
 	"github.com/b3log/solo.go/util"
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
+	log "github.com/sirupsen/logrus"
 )
 
 type loginRequest struct {

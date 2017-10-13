@@ -59,6 +59,18 @@ func TestConsoleGetArticles(t *testing.T) {
 	}
 }
 
+func TestGetArticles(t *testing.T) {
+	articles, pagination := Article.GetArticles(1, 1)
+
+	if 20 != len(articles) {
+		t.Errorf("expected is [%d], actual is [%d]", 20, len(articles))
+	}
+
+	if articleRecordSize+1 /* including "Hello,World!" */ != pagination.RecordCount {
+		t.Errorf("expected is [%d], actual is [%d]", articleRecordSize+1, pagination.RecordCount)
+	}
+}
+
 func TestConsoleGetArticle(t *testing.T) {
 	article := Article.ConsoleGetArticle(1)
 	if nil == article {

@@ -24,14 +24,12 @@ import (
 
 func showCategoriesAction(c *gin.Context) {
 	dataModel := DataModel{}
-
 	fillCommon(c, &dataModel)
 	c.HTML(http.StatusOK, "categories.html", dataModel)
 }
 
 func showCategoryArticlesArticlesAction(c *gin.Context) {
 	dataModel := DataModel{}
-
 	fillCommon(c, &dataModel)
 	c.HTML(http.StatusOK, "category-articles.html", dataModel)
 }
