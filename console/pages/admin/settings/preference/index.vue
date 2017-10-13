@@ -34,18 +34,6 @@
           :rules="requiredRules"
         ></v-text-field>
         <v-text-field
-          :label="$t('articleListPageSize', $store.state.locale)"
-          v-model="preferenceArticleListPageSize"
-          required
-          :rules="requiredRules"
-        ></v-text-field>
-        <v-text-field
-          :label="$t('articleListWindowSize', $store.state.locale)"
-          v-model="preferenceArticleListWindowSize"
-          required
-          :rules="requiredRules"
-        ></v-text-field>
-        <v-text-field
           :label="$t('randomArticleListSize', $store.state.locale)"
           v-model="preferenceRandomArticleListSize"
           required
@@ -60,6 +48,18 @@
         <v-text-field
           :label="$t('externalRelevantArticleListSize', $store.state.locale)"
           v-model="preferenceExternalRelevantArticleListSize"
+          required
+          :rules="requiredRules"
+        ></v-text-field>
+        <v-text-field
+          :label="$t('articleListWindowSize', $store.state.locale)"
+          v-model="preferenceArticleListWindowSize"
+          required
+          :rules="requiredRules"
+        ></v-text-field>
+        <v-text-field
+          :label="$t('articleListPageSize', $store.state.locale)"
+          v-model="preferenceArticleListPageSize"
           required
           :rules="requiredRules"
         ></v-text-field>

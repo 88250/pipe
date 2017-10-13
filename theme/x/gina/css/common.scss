@@ -6,6 +6,10 @@
 */
 @import '../../../scss/basic';
 
+// variable
+$border-color: #f1f1f1;
+$theme-accent: #f47e00;
+
 // reset
 html {
   font-size: 16px;
@@ -21,47 +25,105 @@ body {
   text-rendering: geometricPrecision;
 }
 
+a {
+  transition: $transition;
+}
+
 .content__reset {
   pre > code {
     background-image: url(../images/code-bg.png);
   }
 }
 
+// avatar
+.avatar {
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  @include  image-bg('../images/image-bg.svg');
+
+  &--space {
+    margin-right: 20px;
+  }
+}
+
+// module
+.module {
+  &__header {
+    line-height: 24px;
+    margin-bottom: 20px;
+    color: $black;
+  }
+
+  &__list {
+    li {
+      list-style: none;
+      margin-bottom: 10px;
+      padding-bottom: 10px;
+    }
+
+    &-content {
+      width: 213px;
+    }
+  }
+
+  &__a {
+    color: $black;
+    display: block;
+    &:hover {
+      color: $theme-accent;
+      text-decoration: none;
+    }
+  }
+}
+
+// tag
+.tag {
+  background-color: $border-color;
+  color: $black;
+  padding: 3px 10px;
+  line-height: 13px;
+  font-weight: 400;
+  border-radius: 4px;
+  font-size: 12px;
+  white-space: nowrap;
+
+  &:hover {
+    text-decoration: none;
+    background-color: #f6f6f6;
+    color: $gray;
+  }
+}
+
 // framework
 .wrapper {
-  width: 760px;
+  width: 910px;
   margin: 0 auto;
 }
 
 // header
 .header {
   height: 64px;
-  box-shadow: 0 1px 1px -1px rgba(0, 0, 0, .15);
+  border-bottom: 1px solid $border-color;
   line-height: 64px;
 
-  &__wrap {
-    width: 910px;
-    margin: 0 auto;
+  a {
+    color: $gray;
+    padding: 0 10px;
+    font-size: 16px;
 
-    a {
-      transition: $transition;
-      color: $gray;
-      padding: 0 10px;
-      font-size: 18px;
+    &:first-child {
+      margin-left: -10px;
+    }
 
-      &:first-child {
-        margin-left: -10px;
-      }
-
-      &:hover {
-        color: $black;
-        text-decoration: none;
-      }
+    &:hover {
+      color: $black;
+      text-decoration: none;
     }
   }
 
   &__search {
-    border-left: 1px solid #f4f4f4;
+    border-left: 1px solid $border-color;
     float: right;
     padding-left: 10px;
     height: 64px;
@@ -70,17 +132,45 @@ body {
       color: $black;
     }
     input {
+      font-size: 13px;
       width: 0;
       font-style: italic;
       border: 0;
       transition: $transition;
-      padding-right: 10px;
-      display: none;
     }
     svg {
       color: $gray;
       float: right;
       margin-top: 26px;
+    }
+  }
+}
+
+// footer
+.footer {
+  border-top: 1px solid $border-color;
+  &__side {
+    padding: 50px 0;
+    &-module--mid {
+      margin: 0 30px;
+    }
+    .module {
+      width: 283px;
+
+      .tag {
+        margin: 0 10px 10px 0;
+        display: inline-block;
+      }
+    }
+  }
+  &__info {
+    color: $fade;
+    border-top: 1px dotted $border-color;
+    font-size: 12px;
+    padding: 30px 0;
+
+    a {
+      color: #8899a6;
     }
   }
 }

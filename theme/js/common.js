@@ -1,4 +1,9 @@
 var Util = {
+  imageIntersectionObserver: undefined,
+  CSSImageIntersectionObserver: undefined,
+  /**
+   * @description 不兼容 IE 9 以下
+   */
   killBrowser: function () {
     var index = navigator.userAgent.indexOf('MSIE ')
     if (index > -1) {
@@ -11,5 +16,91 @@ var Util = {
           '</ul>'
       }
     }
-  }
+  },
+  /**
+   * @description 图片延迟加载
+   * @returns {boolean}
+   */
+  lazyLoadImage: function () {
+    var loadImg = function (it) {
+      var testImage = document.createElement('img');
+      testImage.src = it.getAttribute('data-src');
+      testImage.addEventListener('load', function () {
+        it.src = testImage.src;
+        it.style.backgroundImage = 'url()';
+        it.style.backgroundColor = 'transparent';
+      });
+      it.removeAttribute('data-src');
+    };
+
+    if (!('IntersectionObserver' in window)) {
+      $('img').each(function () {
+        if (this.getAttribute('data-src')) {
+          loadImg(this);
+        }
+      });
+      return false;
+    }
+
+    if (Util.imageIntersectionObserver) {
+      Util.imageIntersectionObserver.disconnect();
+      $('img').each(function () {
+        Util.imageIntersectionObserver.observe(this);
+      });
+    } else {
+      Util.imageIntersectionObserver = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entrie) {
+          if ((typeof entrie.isIntersecting === 'undefined' ? entrie.intersectionRatio !== 0 : entrie.isIntersecting)
+            && entrie.target.getAttribute('data-src')) {
+            loadImg(entrie.target);
+          }
+        });
+      });
+      $('img').each(function () {
+        Util.imageIntersectionObserver.observe(this);
+      });
+    }
+  },
+  /**
+   * @description CSS 背景图延迟加载
+   * @returns {boolean}
+   */
+  lazyLoadCSSImage: function () {
+    var loadCSSImage = function (it) {
+      var testImage = document.createElement('img');
+      testImage.src = it.getAttribute('data-src');
+      testImage.addEventListener('load', function () {
+        it.style.backgroundImage = 'url(' + testImage.src + ')';
+      });
+      it.removeAttribute('data-src');
+    };
+
+    if (!('IntersectionObserver' in window)) {
+      $('.avatar').each(function () {
+        if (this.getAttribute('data-src')) {
+          loadCSSImage(this);
+        }
+      });
+      return false;
+    }
+
+    if (Util.CSSImageIntersectionObserver) {
+      Util.CSSImageIntersectionObserver.disconnect();
+      $('.avatar').each(function () {
+        Util.CSSImageIntersectionObserver.observe(this);
+      });
+    } else {
+      Util.CSSImageIntersectionObserver = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entrie) {
+          if ((typeof entrie.isIntersecting === 'undefined' ? entrie.intersectionRatio !== 0 : entrie.isIntersecting)
+            && entrie.target.getAttribute('data-src') && entrie.target.tagName.toLocaleLowerCase() !== 'img') {
+            loadCSSImage(entrie.target);
+          }
+        });
+      });
+      $('.avatar').each(function () {
+        Util.CSSImageIntersectionObserver.observe(this);
+      });
+    }
+  },
 }

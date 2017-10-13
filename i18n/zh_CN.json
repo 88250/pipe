@@ -93,6 +93,7 @@
   "articleListWindowSize": "分页每页显示文章数",
   "articleListPageSize": "分页页码最大宽度",
   "randomArticleListSize": "随机阅读显示数目",
+  "randomArticle": "随机阅读",
   "relevantArticleListSize": "相关阅读显示数目",
   "externalRelevantArticleListSize": "站外相关阅读显示数目",
   "feedOutputMode": "订阅输出模式",
@@ -118,5 +119,7 @@
   "tagsPanel": "标签墙",
   "activities": "动态",
   "archives": "存档",
-  "categories": "分类"
+  "categories": "分类",
+  "team": "团队",
+  "openSource": "开源"
 }

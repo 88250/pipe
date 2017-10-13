@@ -1,21 +1,20 @@
 {{define "header"}}
 <header class="header">
-    <div class="header__wrap">
-        <a href="/">.setting.basicBlogTitle</a>
-        userCount
-        <a href="/authors">
-            authors
-        </a>
-        {{.i18n.activities}}
-        {{.i18n.tagsPanel}}
-        {{.i18n.archives}}
-        {{.i18n.categories}}
+    <div class="wrapper">
+        <a href="{{.conf.Server}}{{.setting.systemPath}}">{{.setting.basicBlogTitle}}</a>
+        <a href="{{.conf.Server}}{{.setting.systemPath}}/activities">{{.i18n.activities}}</a>
+        <a href="{{.conf.Server}}{{.setting.systemPath}}/tags">{{.i18n.tagsPanel}}</a>
+        <a href="{{.conf.Server}}{{.setting.systemPath}}/archives">{{.i18n.archives}}</a>
+        <a href="{{.conf.Server}}{{.setting.systemPath}}/categories">{{.i18n.categories}}</a>
         {{range .navigations}}
-        {{.Title}}{{.URL}}
+        <a href="{{.URL}}" target="{{.OpenMethod}}">{{.Title}}</a>
         {{end}}
-
-        <form id="headerSearch" class="header__search" action="{{.conf.Server}}/search">
-            <input type="text" placeholder="{{.i18n.enterSearch}}">
+        {{.userCount}}
+        <a href="/authors">
+            {{.i18n.team}}
+        </a>
+        <form id="headerSearch" class="header__search" action="{{.conf.Server}}{{.setting.systemPath}}/search">
+            <input type="text" name="keyword" placeholder="{{.i18n.enterSearch}}">
             <svg>
                 <use xlink:href="#search"></use>
             </svg>
