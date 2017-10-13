@@ -6,12 +6,13 @@
         <a href="/authors">
             authors
         </a>
-        动态
-        标签墙
-        存档
-        分类
-
-        自定义导航
+        {{.i18n.activities}}
+        {{.i18n.tagsPanel}}
+        {{.i18n.archives}}
+        {{.i18n.categories}}
+        {{range .navigations}}
+        {{.Title}}{{.URL}}
+        {{end}}
 
         <form id="headerSearch" class="header__search" action="{{.conf.Server}}/search">
             <input type="text" placeholder="{{.i18n.enterSearch}}">
