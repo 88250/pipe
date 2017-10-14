@@ -47,7 +47,7 @@ func MapRoutes() *gin.Engine {
 		Secure:   strings.HasPrefix(util.Conf.Server, "https"),
 		HttpOnly: true,
 	})
-	ret.Use(sessions.Sessions("sologo", store))
+	ret.Use(sessions.Sessions("solo.go", store))
 
 	api := ret.Group("/api")
 	api.POST("/init", initAction)
