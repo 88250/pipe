@@ -31,7 +31,6 @@ func TestAddArticle(t *testing.T) {
 	for i := 0; i < articleRecordSize; i++ {
 		article := &model.Article{AuthorID: 1,
 			Title:       "Test 文章" + strconv.Itoa(i),
-			Abstract:    "Test 摘要",
 			Tags:        "Tag1, 标签2",
 			Content:     "正文部分",
 			Path:        "/test" + strconv.Itoa(i),

@@ -204,7 +204,6 @@ Solo.go 博客系统是一个开源项目，如果你觉得它很赞，请到[�
 	article := &model.Article{
 		AuthorID:     admin.ID,
 		Title:        "世界，你好！",
-		Abstract:     content,
 		Tags:         "Solo.go",
 		Content:      content,
 		Path:         "/hello-world",

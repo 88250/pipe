@@ -6,7 +6,7 @@
           :label="$t('title', $store.state.locale)"
           v-model="title"
           :rules="titleRules"
-          :counter="10"
+          :counter="128"
           required
         ></v-text-field>
 
@@ -22,8 +22,6 @@
           append-icon=""
           :rules="tagsRules"
         ></v-select>
-
-        <mavon-editor v-model="abstract"/>
 
         <v-text-field
           :label="$t('links', $store.state.locale)"
@@ -67,11 +65,10 @@
         error: false,
         errorMsg: '',
         content: '',
-        abstract: '',
         title: '',
         titleRules: [
           (v) => required.call(this, v),
-          (v) => maxSize.call(this, v, 32)
+          (v) => maxSize.call(this, v, 128)
         ],
         tagsRules: [
           (v) => this.tags.length > 0 || this.$t('required', this.$store.state.locale)
@@ -95,7 +92,6 @@
         }
         const responseData = await this.axios.put(`/console/articles/${this.$route.query.id}`, {
           title: this.title,
-          abstract: this.abstract,
           content: this.content,
           url: this.url,
           password: this.password,
@@ -117,7 +113,6 @@
         }
         const responseData = await this.axios.post(`/console/articles/`, {
           title: this.title,
-          abstract: this.abstract,
           content: this.content,
           url: this.url,
           password: this.password,
@@ -140,7 +135,6 @@
         const responseData = await this.axios.get(`/console/articles/${id}`)
         if (responseData) {
           this.$set(this, 'title', responseData.title)
-          this.$set(this, 'abstract', responseData.abstract)
           this.$set(this, 'content', responseData.content)
           this.$set(this, 'url', responseData.url)
           this.$set(this, 'password', responseData.password)

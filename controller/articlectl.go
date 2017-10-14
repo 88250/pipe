@@ -85,7 +85,6 @@ func showArticlesAction(c *gin.Context) {
 
 		article := &ThemeListArticle{
 			ID:           articleModel.ID,
-			Abstract:     articleModel.Abstract,
 			Author:       author,
 			CreatedAt:    articleModel.CreatedAt.Format("2006-01-02"),
 			Title:        articleModel.Title,
