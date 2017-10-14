@@ -23,7 +23,7 @@ import (
 
 	"github.com/b3log/solo.go/service"
 	"github.com/gin-gonic/gin"
-	"github.com/prometheus/common/log"
+	log "github.com/sirupsen/logrus"
 )
 
 type ThemeListArticle struct {
