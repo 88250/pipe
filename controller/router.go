@@ -96,9 +96,9 @@ func MapRoutes() *gin.Engine {
 	ret.StaticFile("/favicon.ico", "console/static/favicon.ico")
 
 	themePath := "theme/x/" + theme.DefaultTheme
-	ret.Static(themePath+"/css", themePath+"/css")
-	ret.Static(themePath+"/js", themePath+"/js")
-	ret.Static(themePath+"/images", themePath+"/images")
+	ret.Static("/"+themePath+"/css", themePath+"/css")
+	ret.Static("/"+themePath+"/js", themePath+"/js")
+	ret.Static("/"+themePath+"/images", themePath+"/images")
 	ret.Static("/theme/css", "theme/css")
 	ret.Static("/theme/js", "theme/js")
 	ret.LoadHTMLGlob(themePath + "/*.html")
@@ -107,7 +107,7 @@ func MapRoutes() *gin.Engine {
 	themeGroup.GET("/activities", showActivitiesAction)
 	themeGroup.GET("/archives/:archive", showArchiveArticlesAction)
 	themeGroup.GET("/archives", showArchivesAction)
-	themeGroup.GET("/article/:link")
+	themeGroup.GET("/articles/:id", showArticleAction)
 	themeGroup.GET("/authors/:name", showAuthorArticlesAction)
 	themeGroup.GET("/authors", showAuthorsAction)
 	themeGroup.GET("/categories", showCategoriesAction)
