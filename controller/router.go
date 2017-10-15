@@ -102,7 +102,8 @@ func MapRoutes() *gin.Engine {
 	ret.Static("/theme/css", "theme/css")
 	ret.Static("/theme/js", "theme/js")
 	ret.LoadHTMLGlob(themePath + "/*.html")
-	themeGroup := ret.Group("")
+	themeGroup := ret.Group("/blog/:username")
+	themeGroup.Use(resolvePath())
 	themeGroup.GET("/", showArticlesAction)
 	themeGroup.GET("/activities", showActivitiesAction)
 	themeGroup.GET("/archives/:archive", showArchiveArticlesAction)
@@ -134,6 +135,7 @@ func fillCommon(c *gin.Context, dataModel *DataModel) {
 	for _, setting := range settings {
 		settingMap[setting.Name] = setting.Value
 	}
+	settingMap[model.SettingNameSystemPath] = "/blog" + settingMap[model.SettingNameSystemPath]
 	(*dataModel)["setting"] = settingMap
 	statistics := service.Statistic.GetAllStatistics(1)
 	statisticMap := map[string]int{}
