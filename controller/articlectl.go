@@ -58,6 +58,9 @@ func showArticlesAction(c *gin.Context) {
 		page = 1
 	}
 
+	username, _ := c.Get("username")
+	log.Info(username)
+
 	articleModels, pagination := service.Article.GetArticles(page, 1)
 	articles := []*ThemeListArticle{}
 	for _, articleModel := range articleModels {
