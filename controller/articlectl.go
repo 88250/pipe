@@ -21,6 +21,7 @@ import (
 	"net/http"
 	"strings"
 
+	"github.com/b3log/solo.go/model"
 	"github.com/b3log/solo.go/service"
 	"github.com/gin-gonic/gin"
 	log "github.com/sirupsen/logrus"
@@ -58,10 +59,10 @@ func showArticlesAction(c *gin.Context) {
 		page = 1
 	}
 
-	username, _ := c.Get("username")
-	log.Info(username)
+	blogAdminVal, _ := c.Get("blogAdmin")
+	blogAdmin := blogAdminVal.(*model.User)
 
-	articleModels, pagination := service.Article.GetArticles(page, 1)
+	articleModels, pagination := service.Article.GetArticles(page, blogAdmin.BlogID)
 	articles := []*ThemeListArticle{}
 	for _, articleModel := range articleModels {
 		themeTags := []*ThemeTag{}

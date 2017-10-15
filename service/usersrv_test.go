@@ -18,6 +18,20 @@ package service
 
 import "testing"
 
+func TestGetUserByName(t *testing.T) {
+	user := User.GetUserByName(testPlatformAdminName)
+	if nil == user {
+		t.Errorf("user is nil")
+
+		return
+	}
+	user = User.GetUserByName("notfound")
+	if nil != user {
+		t.Errorf("user should be nil")
+	}
+
+}
+
 func TestGetUser(t *testing.T) {
 	user := User.GetUser(uint(1))
 	if nil == user {

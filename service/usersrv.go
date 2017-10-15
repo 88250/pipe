@@ -31,6 +31,15 @@ type userService struct {
 	mutex *sync.Mutex
 }
 
+func (srv *userService) GetUserByName(name string) *model.User {
+	ret := &model.User{}
+	if nil != db.Where("name = ?", name).First(ret).Error {
+		return nil
+	}
+
+	return ret
+}
+
 func (srv *userService) GetUser(userID uint) *model.User {
 	ret := &model.User{}
 	if nil != db.First(ret, userID).Error {

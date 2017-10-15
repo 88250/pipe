@@ -17,13 +17,29 @@
 package controller
 
 import (
+	"net/http"
+
+	"github.com/b3log/solo.go/service"
 	"github.com/gin-gonic/gin"
 )
 
-func resolvePath() gin.HandlerFunc {
+func resolveBlog() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		username := c.Param("username")
-		c.Set("username", username)
+		if "" == username {
+			c.AbortWithStatus(http.StatusNotFound)
+
+			return
+		}
+
+		blogAdmin := service.User.GetUserByName(username)
+		if nil == blogAdmin {
+			c.AbortWithStatus(http.StatusNotFound)
+
+			return
+		}
+
+		c.Set("blogAdmin", blogAdmin)
 
 		c.Next()
 	}
