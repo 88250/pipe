@@ -23,7 +23,7 @@ import (
 )
 
 func showActivitiesAction(c *gin.Context) {
-	dataModel := DataModel{}
-	fillCommon(c, &dataModel)
+	dm, _ := c.Get("dataModel")
+	dataModel := *(dm.(*DataModel))
 	c.HTML(http.StatusOK, "activities.html", dataModel)
 }

@@ -23,13 +23,13 @@ import (
 )
 
 func showArchivesAction(c *gin.Context) {
-	dataModel := DataModel{}
-	fillCommon(c, &dataModel)
+	dm, _ := c.Get("dataModel")
+	dataModel := *(dm.(*DataModel))
 	c.HTML(http.StatusOK, "archives.html", dataModel)
 }
 
 func showArchiveArticlesAction(c *gin.Context) {
-	dataModel := DataModel{}
-	fillCommon(c, &dataModel)
+	dm, _ := c.Get("dataModel")
+	dataModel := *(dm.(*DataModel))
 	c.HTML(http.StatusOK, "archive-articles.html", dataModel)
 }

@@ -23,13 +23,13 @@ import (
 )
 
 func showTagsAction(c *gin.Context) {
-	dataModel := DataModel{}
-	fillCommon(c, &dataModel)
+	dm, _ := c.Get("dataModel")
+	dataModel := *(dm.(*DataModel))
 	c.HTML(http.StatusOK, "tags.html", dataModel)
 }
 
 func showTagArticlesAction(c *gin.Context) {
-	dataModel := DataModel{}
-	fillCommon(c, &dataModel)
+	dm, _ := c.Get("dataModel")
+	dataModel := *(dm.(*DataModel))
 	c.HTML(http.StatusOK, "tag-articles.html", dataModel)
 }

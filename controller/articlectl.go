@@ -23,6 +23,7 @@ import (
 
 	"github.com/b3log/solo.go/model"
 	"github.com/b3log/solo.go/service"
+	"github.com/b3log/solo.go/util"
 	"github.com/gin-gonic/gin"
 	log "github.com/sirupsen/logrus"
 )
@@ -51,8 +52,8 @@ type ThemeAuthor struct {
 }
 
 func showArticlesAction(c *gin.Context) {
-	dataModel := DataModel{}
-	fillCommon(c, &dataModel)
+	dm, _ := c.Get("dataModel")
+	dataModel := *(dm.(*DataModel))
 
 	page := c.GetInt("p")
 	if 1 > page {
@@ -70,7 +71,7 @@ func showArticlesAction(c *gin.Context) {
 		for _, tagStr := range tagStrs {
 			themeTag := &ThemeTag{
 				Title: tagStr,
-				URL:   "/todotagpath",
+				URL:   util.PathBlogs + util.PathArticles,
 			}
 			themeTags = append(themeTags, themeTag)
 		}
@@ -108,7 +109,7 @@ func showArticlesAction(c *gin.Context) {
 }
 
 func showArticleAction(c *gin.Context) {
-	dataModel := DataModel{}
-	fillCommon(c, &dataModel)
+	dm, _ := c.Get("dataModel")
+	dataModel := *(dm.(*DataModel))
 	c.HTML(http.StatusOK, "article.html", dataModel)
 }

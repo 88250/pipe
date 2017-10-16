@@ -23,13 +23,13 @@ import (
 )
 
 func showAuthorsAction(c *gin.Context) {
-	dataModel := DataModel{}
-	fillCommon(c, &dataModel)
+	dm, _ := c.Get("dataModel")
+	dataModel := *(dm.(*DataModel))
 	c.HTML(http.StatusOK, "authors.html", dataModel)
 }
 
 func showAuthorArticlesAction(c *gin.Context) {
-	dataModel := DataModel{}
-	fillCommon(c, &dataModel)
+	dm, _ := c.Get("dataModel")
+	dataModel := *(dm.(*DataModel))
 	c.HTML(http.StatusOK, "author-articles.html", dataModel)
 }
