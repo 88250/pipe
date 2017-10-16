@@ -45,8 +45,7 @@ func resolveBlog() gin.HandlerFunc {
 		}
 		c.Set("blogAdmin", blogAdmin)
 
-		dataModel := &DataModel{}
-		fillCommon(c, dataModel)
+		fillCommon(c, &DataModel{})
 
 		c.Next()
 	}

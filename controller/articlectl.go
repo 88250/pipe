@@ -71,7 +71,7 @@ func showArticlesAction(c *gin.Context) {
 		for _, tagStr := range tagStrs {
 			themeTag := &ThemeTag{
 				Title: tagStr,
-				URL:   util.PathBlogs + util.PathArticles,
+				URL:   dataModel["setting"].(map[string]string)[model.SettingNameSystemPath] + util.PathTags + "/" + tagStr,
 			}
 			themeTags = append(themeTags, themeTag)
 		}
@@ -94,7 +94,7 @@ func showArticlesAction(c *gin.Context) {
 			CreatedAt:    articleModel.CreatedAt.Format("2006-01-02"),
 			Title:        articleModel.Title,
 			Tags:         themeTags,
-			URL:          "/todoarticlepath",
+			URL:          dataModel["setting"].(map[string]string)[model.SettingNameSystemPath] + articleModel.Path,
 			Topped:       articleModel.Topped,
 			ViewCount:    articleModel.ViewCount,
 			CommentCount: articleModel.CommentCount,
