@@ -20,6 +20,7 @@ import (
 	"sync"
 
 	"github.com/b3log/solo.go/model"
+	"github.com/b3log/solo.go/util"
 	log "github.com/sirupsen/logrus"
 )
 
@@ -115,7 +116,7 @@ func (srv *userService) GetUserBlogs(userID uint) (ret []*UserBlog) {
 		blog := &UserBlog{
 			ID:       rel.ID1,
 			Title:    blogTitleSetting.Value,
-			Path:     pathSetting.Value,
+			Path:     util.PathBlogs + pathSetting.Value,
 			UserID:   userID,
 			UserRole: model.UserRoleBlogUser,
 		}

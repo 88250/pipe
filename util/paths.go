@@ -22,24 +22,24 @@ import (
 
 // Path prefixes.
 const (
-	pathBlogs      = "/blogs"
-	pathAssets     = "/assets"
-	pathAdmin      = "/admin"
-	pathAPI        = "/api"
-	pathFavicon    = "/favicon.ico"
-	pathTheme      = "/theme"
-	pathActivities = "/activities"
-	pathArchives   = "/archives"
-	pathArticles   = "/articles"
-	pathAuthors    = "/authors"
-	pathCategories = "/categories"
-	pathTags       = "/tags"
-	pathComments   = "/comments"
+	PathBlogs      = "/blogs"
+	PathAssets     = "/assets"
+	PathAdmin      = "/admin"
+	PathAPI        = "/api"
+	PathFavicon    = "/favicon.ico"
+	PathTheme      = "/theme"
+	PathActivities = "/activities"
+	PathArchives   = "/archives"
+	PathArticles   = "/articles"
+	PathAuthors    = "/authors"
+	PathCategories = "/categories"
+	PathTags       = "/tags"
+	PathComments   = "/comments"
 )
 
 var reservedPaths = []string{
-	pathBlogs, pathAssets, pathAdmin, pathAPI, pathFavicon, pathTheme, pathActivities, pathArchives, pathArticles,
-	pathAuthors, pathCategories, pathTags, pathComments,
+	PathBlogs, PathAssets, PathAdmin, PathAPI, PathFavicon, PathTheme, PathActivities, PathArchives, PathArticles,
+	PathAuthors, PathCategories, PathTags, PathComments,
 }
 
 func IsReservedPath(path string) bool {

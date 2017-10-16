@@ -80,7 +80,7 @@ func loginAction(c *gin.Context) {
 	data["name"] = user.Name
 	data["nickname"] = user.Nickname
 	data["blogTitle"] = blogTitleSetting.Value
-	data["blogPath"] = pathSetting.Value
+	data["blogPath"] = util.PathBlogs + pathSetting.Value
 	data["role"] = user.Role
 	blogs := service.User.GetUserBlogs(user.ID)
 	if 1 > len(blogs) {
@@ -95,7 +95,7 @@ func loginAction(c *gin.Context) {
 		UName: user.Name,
 		URole: user.Role,
 		BID:   user.BlogID,
-		BPath: pathSetting.Value,
+		BPath: util.PathBlogs + pathSetting.Value,
 	}
 	if err := sessionData.Save(c); nil != err {
 		result.Code = -1
