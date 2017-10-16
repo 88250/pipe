@@ -1,9 +1,8 @@
 <template>
   <aside class="side">
     <nav>
-      <v-list>
+      <v-list v-for="item in items">
         <v-list-group
-          v-for="item in items"
           :value="item.active"
           :key="item.title"
           v-if="$store.state.role <= item.role">
