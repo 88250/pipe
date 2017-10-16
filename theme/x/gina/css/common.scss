@@ -242,13 +242,22 @@ a {
 
       &__share {
         margin-left: 30px;
+        height: 40px;
 
-        .action__btns {
-          margin-left: 10px;
-        }
-
-        &:hover .action__btns {
-          display: inline-block;
+        &:hover {
+          .action__btn--reply {
+            background-color: $border-color;
+            svg {
+              color: #fff;
+            }
+          }
+          .action__btns {
+            .action__btn {
+              opacity: 1;
+              visibility: visible;
+              transform: translate(0);
+            }
+          }
         }
       }
 
@@ -258,15 +267,62 @@ a {
         width: 40px;
         display: inline-block;
         border: 1px solid $border-color;
-        line-height: 40px;
+        padding-top: 9px;
         text-align: center;
         cursor: pointer;
-        transition: $transition;
+        box-sizing: border-box;
+        transition: background .15s ease-in-out, all 0.35s ease-in;
+
+        svg {
+          height: 18px;
+          width: 18px;
+        }
 
         &:hover {
-          background-color: $border-color;
           svg {
             color: #fff;
+          }
+        }
+      }
+
+      &__btns {
+        margin-left: 10px;
+
+        .action__btn {
+          opacity: 0;
+          transform: translate(20px);
+          visibility: hidden;
+        }
+
+        .action__btn--wechat {
+          border-color: #3caf36;
+          transition-delay: 50ms;
+          &:hover {
+            background-color: #3caf36;
+          }
+        }
+
+        .action__btn--weibo {
+          border-color: #ff9933;
+          transition-delay: 100ms;
+          &:hover {
+            background-color: #ff9933;
+          }
+        }
+
+        .action__btn--twitter {
+          border-color: #18a3fa;
+          transition-delay: 150ms;
+          &:hover {
+            background-color: #18a3fa;
+          }
+        }
+
+        .action__btn--google {
+          border-color: #dc4A3d;
+          transition-delay: 200ms;
+          &:hover {
+            background-color: #dc4A3d;
           }
         }
       }

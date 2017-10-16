@@ -52,6 +52,7 @@ gulp.task('build', function (cb) {
   // theme js
   const commonJS = ['./js/jquery-3.2.1.min.js', './js/common.js']
   fs.readdirSync('./x').forEach(function (file) {
+    // TODO: add peculiarity js
     const jsPath = `./x/${file}/js/`
     let themeJS = [`${jsPath}symbol.js`].concat(commonJS)
     themeJS.push(`${jsPath}common.js`)
