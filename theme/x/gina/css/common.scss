@@ -246,6 +246,11 @@ a {
     height: 100%;
     overflow: auto;
   }
+
+  // TODO
+  &::-webkit-scrollbar {
+    display: none
+  }
 }
 
 // side toggle icon
