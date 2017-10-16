@@ -2,14 +2,14 @@
 <aside class="side">
     <div>
         <div class="side__nav">
-            {{.setting.blogSubtitle}}
+            {{.Setting.blogSubtitle}}
 
-            {{if eq .username ""}}
-            <a href="/login">{{.i18n.login}}</a>
-            <a href="/init">{{.i18n.register}}</a>
+            {{if eq .Username ""}}
+            <a href="/login">{{.I18n.Login}}</a>
+            <a href="/init">{{.I18n.Register}}</a>
             {{else}}
             TODO 头像
-            <a href="/admin">{{.i18n.manage}}</a>
+            <a href="/admin">{{.I18n.Manage}}</a>
             {{end}}
         </div>
 
@@ -17,7 +17,7 @@
             toc
         else
         <div>
-            {{.setting.basicBlogSubtitle}}
+            {{.Setting.BasicBlogSubtitle}}
         </div>
         最近评论
         评论最多
@@ -25,7 +25,7 @@
         end
 
         TODO
-        文章页面地步
+        文章页面
         站外相关
         相关
     </div>

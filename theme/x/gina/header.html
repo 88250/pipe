@@ -1,22 +1,22 @@
 {{define "header"}}
 <header class="header">
     <div class="wrapper">
-        <a href="{{.conf.Server}}{{.setting.systemPath}}">{{.setting.basicBlogTitle}}</a>
-        <a href="{{.conf.Server}}{{.setting.systemPath}}/activities">{{.i18n.activities}}</a>
-        <a href="{{.conf.Server}}{{.setting.systemPath}}/tags">{{.i18n.tagsPanel}}</a>
-        <a href="{{.conf.Server}}{{.setting.systemPath}}/archives">{{.i18n.archives}}</a>
-        <a href="{{.conf.Server}}{{.setting.systemPath}}/categories">{{.i18n.categories}}</a>
-        {{range .navigations}}
+        <a href="{{.BlogURL}}">{{.Setting.BasicBlogTitle}}</a>
+        <a href="{{.BlogURL}}/activities">{{.I18n.Activities}}</a>
+        <a href="{{.BlogURL}}/tags">{{.I18n.TagsPanel}}</a>
+        <a href="{{.BlogURL}}/archives">{{.I18n.Archives}}</a>
+        <a href="{{.BlogURL}}/categories">{{.I18n.Categories}}</a>
+        {{range .Navigations}}
         <a href="{{.URL}}" target="{{.OpenMethod}}">{{.Title}}</a>
         {{end}}
-        {{if gt .userCount 1}}
-        <a href="{{.conf.Server}}{{.setting.systemPath}}/authors">
-            {{.i18n.team}}
+        {{if gt .UserCount 1}}
+        <a href="{{.BlogURL}}/authors">
+            {{.I18n.Team}}
         </a>
         {{end}}
-        <a href="{{.conf.Server}}{{.setting.systemPath}}/rss">TODORSS</a>
-        <form id="headerSearch" class="header__search" action="{{.conf.Server}}{{.setting.systemPath}}/search">
-            <input type="text" name="keyword" placeholder="{{.i18n.enterSearch}}">
+        <a href="{{.BlogURL}}/rss">TODORSS</a>
+        <form id="headerSearch" class="header__search" action="{{.BlogURL}}/search">
+            <input type="text" name="keyword" placeholder="{{.I18n.EnterSearch}}">
             <svg>
                 <use xlink:href="#search"></use>
             </svg>
@@ -24,5 +24,3 @@
     </div>
 </header>
 {{end}}
-
-prop

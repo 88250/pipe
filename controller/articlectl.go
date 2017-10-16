@@ -39,6 +39,7 @@ type ThemeListArticle struct {
 	Topped       bool
 	ViewCount    int
 	CommentCount int
+	ThumbnailURL string
 }
 
 type ThemeTag struct {
@@ -49,6 +50,7 @@ type ThemeTag struct {
 type ThemeAuthor struct {
 	Name      string
 	AvatarURL string
+	URL       string
 }
 
 func showArticlesAction(c *gin.Context) {
@@ -71,7 +73,7 @@ func showArticlesAction(c *gin.Context) {
 		for _, tagStr := range tagStrs {
 			themeTag := &ThemeTag{
 				Title: tagStr,
-				URL:   dataModel["setting"].(map[string]string)[model.SettingNameSystemPath] + util.PathTags + "/" + tagStr,
+				URL:   dataModel["Setting"].(map[string]string)[model.SettingNameSystemPath] + util.PathTags + "/" + tagStr,
 			}
 			themeTags = append(themeTags, themeTag)
 		}
@@ -85,7 +87,8 @@ func showArticlesAction(c *gin.Context) {
 
 		author := &ThemeAuthor{
 			Name:      authorModel.Name,
-			AvatarURL: authorModel.AvatarURL,
+			URL: "http://localhost:5879/blogs/solo/vanessa",
+			AvatarURL: "https://img.hacpai.com/20170818zhixiaoyun.jpeg",
 		}
 
 		article := &ThemeListArticle{
@@ -94,17 +97,18 @@ func showArticlesAction(c *gin.Context) {
 			CreatedAt:    articleModel.CreatedAt.Format("2006-01-02"),
 			Title:        articleModel.Title,
 			Tags:         themeTags,
-			URL:          dataModel["setting"].(map[string]string)[model.SettingNameSystemPath] + articleModel.Path,
+			URL:          dataModel["Setting"].(map[string]string)[model.SettingNameSystemPath] + articleModel.Path,
 			Topped:       articleModel.Topped,
 			ViewCount:    articleModel.ViewCount,
 			CommentCount: articleModel.CommentCount,
+			ThumbnailURL:  "https://img.hacpai.com/20170818zhixiaoyun.jpeg",
 		}
 
 		articles = append(articles, article)
 	}
 
-	dataModel["articles"] = articles
-	dataModel["pagination"] = pagination
+	dataModel["Articles"] = articles
+	dataModel["Pagination"] = pagination
 	c.HTML(http.StatusOK, "index.html", dataModel)
 }
 

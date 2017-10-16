@@ -27,6 +27,7 @@ import (
 	"github.com/b3log/solo.go/util"
 	"github.com/gin-gonic/gin"
 	log "github.com/sirupsen/logrus"
+	"strings"
 )
 
 func resolveBlog() gin.HandlerFunc {
@@ -58,15 +59,22 @@ func fillCommon(c *gin.Context, dataModel *DataModel) {
 		i18n.Load()
 	}
 	localeSetting := service.Setting.GetSetting(model.SettingCategoryI18n, model.SettingNameI18nLocale, 1)
-	(*dataModel)["i18n"] = i18n.GetMessages(localeSetting.Value)
+	i18ns := i18n.GetMessages(localeSetting.Value)
+	i18nMap := map[string]interface{}{}
+	for key, value := range i18ns {
+		i18nMap[strings.Title(key)] = value
+	}
+	(*dataModel)["I18n"] = i18nMap
 
 	settings := service.Setting.GetAllSettings(1)
 	settingMap := map[string]string{}
 	for _, setting := range settings {
-		settingMap[setting.Name] = setting.Value
+		settingMap[strings.Title(setting.Name)] = setting.Value
 	}
-	settingMap[model.SettingNameSystemPath] = util.PathBlogs + settingMap[model.SettingNameSystemPath]
-	(*dataModel)["setting"] = settingMap
+	settingMap["SystemPath"] = util.PathBlogs + settingMap["SystemPath"]
+
+	(*dataModel)["Setting"] = settingMap
+
 	statistics := service.Statistic.GetAllStatistics(1)
 	statisticMap := map[string]int{}
 	for _, statistic := range statistics {
@@ -74,24 +82,59 @@ func fillCommon(c *gin.Context, dataModel *DataModel) {
 		if nil != err {
 			log.Errorf("statistic [%s] should be an integer, actual is [%v]", statistic.Name, statistic.Value)
 		}
-		statisticMap[statistic.Name] = count
+		statisticMap[strings.Title(statistic.Name)] = count
 	}
-	(*dataModel)["statistic"] = statisticMap
-	(*dataModel)["title"] = settingMap["basicBlogTitle"]
-	(*dataModel)["metaKeywords"] = settingMap["basicMetaKeywords"]
-	(*dataModel)["metaDescription"] = settingMap["basicMetaDescription"]
-	(*dataModel)["conf"] = util.Conf
-	(*dataModel)["year"] = time.Now().Year()
+	(*dataModel)["Statistic"] = statisticMap
+	(*dataModel)["Title"] = settingMap["BasicBlogTitle"]
+	(*dataModel)["MetaKeywords"] = settingMap["BasicMetaKeywords"]
+	(*dataModel)["FaviconURL"] = settingMap["BasicFaviconURL"]
+	(*dataModel)["MetaDescription"] = settingMap["BasicMetaDescription"]
+	(*dataModel)["Conf"] = util.Conf
+	(*dataModel)["Year"] = time.Now().Year()
+	(*dataModel)["BlogURL"] = util.Conf.Server + settingMap["SystemPath"]
 
-	(*dataModel)["username"] = ""
+	(*dataModel)["Username"] = ""
 	session := util.GetSession(c)
 	if nil != session {
-		(*dataModel)["username"] = session.UName
+		(*dataModel)["Username"] = session.UName
 	}
-	(*dataModel)["userCount"] = len(service.User.GetBlogUsers(1))
+	(*dataModel)["UserCount"] = len(service.User.GetBlogUsers(1)) + 2
 
 	navigations := service.Navigation.GetNavigations(1)
-	(*dataModel)["navigations"] = navigations
+	(*dataModel)["Navigations"] = navigations
+
+	tags := service.Tag.GetTags(10)
+	themeTags := []*ThemeTag{}
+	for _, tag := range tags {
+		themeTag := &ThemeTag{
+			Title: tag.Title,
+			URL:  util.Conf.Server + settingMap["SystemPath"] + "/" + tag.Title,
+		}
+		themeTags = append(themeTags, themeTag)
+	}
+	(*dataModel)["MostUseCategories"] = themeTags
+	(*dataModel)["MostUseTags"] = themeTags
+	themeArticles := []*ThemeListArticle{}
+	for _, tag := range tags {
+		author := &ThemeAuthor{
+			Name:      "Vanessa",
+			URL: "http://localhost:5879/blogs/solo/vanessa",
+			AvatarURL: "https://img.hacpai.com/20170818zhixiaoyun.jpeg",
+		}
+		themeArticle := &ThemeListArticle{
+			Title: tag.Title,
+			URL:  util.Conf.Server + settingMap["SystemPath"] + "/" + tag.Title,
+			CreatedAt: "1天前",
+			Author: author,
+		}
+		themeArticles = append(themeArticles, themeArticle)
+	}
+	(*dataModel)["RandomArticles"] = themeArticles
+	(*dataModel)["RecentComments"] = themeArticles
+	(*dataModel)["MostViewArticles"] = themeArticles
+	(*dataModel)["MostCommentArticles"] = themeArticles
+	(*dataModel)["RelevantArticles"] = themeArticles
+	(*dataModel)["ExternalRelevantArticles"] = themeArticles
 
 	c.Set("dataModel", dataModel)
 }

@@ -3,80 +3,75 @@
     <div class="wrapper">
         <div class="footer__side fn-clear">
             <div class="module fn-left">
-                {{if eq .setting.basicNoticeBoard ""}}
+                {{if eq .Setting.BasicNoticeBoard ""}}
                 <div class="module__header">
-                    {{.i18n.categories}}
+                    {{.I18n.Categories}}
                 </div>
                 <div>
-                    TODO
+                    {{range .MostUseCategories}}
+                    <a class="tag" href="{{.URL}}">{{.Title}}</a>
+                    {{end}}
                 </div>
                 {{else}}
                 <div class="module__header">
-                    {{.i18n.noticeBoard}}
+                    {{.I18n.NoticeBoard}}
                 </div>
                 <div>
-                    {{.setting.basicNoticeBoard}}
+                    {{.Setting.BasicNoticeBoard}}
                 </div>
                 {{end}}
             </div>
             <div class="module footer__side-module--mid fn-left">
                 <div class="module__header">
-                    {{.i18n.tags}}
+                    {{.I18n.Tags}}
                 </div>
                 <div>
-                   <a class="tag" href="/">tag</a>
-                   <a class="tag" href="/">tag</a>
-                   <a class="tag" href="/">tag sfadfasdfasdasdfsad</a>
-                   <a class="tag" href="/">tag</a>
-                   <a class="tag" href="/">tag</a>
-                   <a class="tag" href="/">tag</a>
+                    {{range .MostUseTags}}
+                    <a class="tag" href="{{.URL}}">{{.Title}}</a>
+                    {{end}}
                 </div>
             </div>
             <div class="module fn-right">
                 <div class="module__header">
-                    {{.i18n.randomArticle}}
+                    {{.I18n.RandomArticle}}
                 </div>
                 <div class="module__list">
                     <ul>
+                        {{range .RandomArticles}}
                         <li class="fn-clear">
-                            <div class="avatar avatar--space fn-left"
-                                 data-src="https://img.hacpai.com/avatar/1437187265889_1482892516923.png?imageView2/1/w/80/h/80/interlace/0/q/100"></div>
+                            <a class="avatar avatar--space fn-left"
+                               href="{{.Author.URL}}"
+                               data-src="{{.Author.AvatarURL}}"></a>
                             <div class="fn-left module__list-content">
-                                <a href="/" class="module__a">的时候在钱塘江</a>
-                                <time class="ft-12 ft-gray">1周前</time>
+                                <a href="{{.URL}}" class="module__a">{{.Title}}</a>
+                                <time class="ft-12 ft-gray">{{.CreatedAt}}</time>
                             </div>
                         </li>
-                        <li class="fn-clear">
-                            <div class="avatar avatar--space fn-left"></div>
-                            <div class="fn-left module__list-content">
-                                <a href="/" class="module__a">的时候在钱塘江</a>
-                                <time class="ft-12 ft-gray">1周前</time>
-                            </div>
-                        </li>
+                        {{end}}
                     </ul>
                 </div>
             </div>
         </div>
         <div class="footer__info">
             <div class="fn-clear">
-                {{.setting.basicBlogSubtitle}}
+                {{.Setting.BasicBlogSubtitle}}
                 <div class="fn-right">
-                    <a href="{{.conf.Server}}{{.setting.systemPath}}">{{.setting.basicBlogTitle}}</a> &copy; {{.year}}
-                    {{.setting.basicFooter}}
+                    <a href="{{.BlogURL}}">{{.Setting.BasicBlogTitle}}</a> &copy; {{.Year}}
+                    {{.Setting.BasicFooter}}
                 </div>
             </div>
             <div class="fn-clear">
-                <span class="ft-gray">{{.statistic.statisticViewCount}}</span>
-                {{.i18n.view}}
+                <span class="ft-gray">{{.Statistic.StatisticViewCount}}</span>
+                {{.I18n.View}}
                 &nbsp;
-                <span class="ft-gray">{{.statistic.statisticPublishedArticleCount}}</span>
-                {{.i18n.article}}
+                <span class="ft-gray">{{.Statistic.StatisticPublishedArticleCount}}</span>
+                {{.I18n.Article}}
                 &nbsp;
-                <span class="ft-gray">{{.statistic.statisticCommentCount}}</span>
-                {{.i18n.comment}}
+                <span class="ft-gray">{{.Statistic.StatisticCommentCount}}</span>
+                {{.I18n.Comment}}
                 <div class="fn-right ft-gray">
-                    Powered by <a href="http://b3log.org" target="_blank">B3log {{.i18n.openSource}}</a> •
-                    <a href="https://github.com/b3log/solo.go" target="_blank">solo.go</a> {{.setting.systemVersion}}.
+                    Powered by <a href="http://b3log.org" target="_blank">B3log {{.I18n.OpenSource}}</a> •
+                    <a href="https://github.com/b3log/solo.go" target="_blank">solo.go</a> {{.Setting.SystemVersion}}.
                     Theme by <a href="http://vanessa.b3log.org" target="_blank">Vanessa</a>
                 </div>
             </div>
@@ -89,21 +84,21 @@
     <span class="sidebar__icon-line"></span>
 </div>
 
-{{if eq .conf.RuntimeMode "dev"}}
+{{if eq .Conf.RuntimeMode "dev"}}
 <script type="text/javascript"
-        src="{{.conf.StaticServer}}/theme/x/{{.setting.themeName}}/js/symbol.js?{{.conf.StaticResourceVersion}}"
+        src="{{.Conf.StaticServer}}/theme/x/{{.Setting.ThemeName}}/js/symbol.js?{{.Conf.StaticResourceVersion}}"
         charset="utf-8"></script>
-<script type="text/javascript" src="{{.conf.StaticServer}}/theme/js/jquery-3.2.1.min.js" charset="utf-8"></script>
-<script type="text/javascript" src="{{.conf.StaticServer}}/theme/js/common.js" charset="utf-8"></script>
+<script type="text/javascript" src="{{.Conf.StaticServer}}/theme/js/jquery-3.2.1.min.js" charset="utf-8"></script>
+<script type="text/javascript" src="{{.Conf.StaticServer}}/theme/js/common.js" charset="utf-8"></script>
 <script type="text/javascript"
-        src="{{.conf.StaticServer}}/theme/x/{{.setting.themeName}}/js/qrcode.min.js"
+        src="{{.Conf.StaticServer}}/theme/x/{{.Setting.ThemeName}}/js/qrcode.min.js"
         charset="utf-8"></script>
 <script type="text/javascript"
-        src="{{.conf.StaticServer}}/theme/x/{{.setting.themeName}}/js/common.js?{{.conf.StaticResourceVersion}}"
+        src="{{.Conf.StaticServer}}/theme/x/{{.Setting.ThemeName}}/js/common.js?{{.Conf.StaticResourceVersion}}"
         charset="utf-8"></script>
 {{else}}
 <script type="text/javascript"
-        src="{{.conf.StaticServer}}/theme/x/{{.setting.themeName}}/js/common.min.js?{{.conf.StaticResourceVersion}}"
+        src="{{.Conf.StaticServer}}/theme/x/{{.Setting.ThemeName}}/js/common.min.js?{{.Conf.StaticResourceVersion}}"
         charset="utf-8"></script>
 {{end}}
 
