@@ -67,7 +67,7 @@
         if (item.path === this.$store.state.blogPath) {
           return
         }
-        const responseData = await this.axios.post(`/console/blog/switch/${item.id}`)
+        const responseData = await this.axios.post(`/console/blogs/switch/${item.id}`)
         if (responseData.code === 0) {
           item.role = responseData.data
           this.$store.commit('setBlog', item)
