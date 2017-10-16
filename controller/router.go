@@ -79,7 +79,7 @@ func MapRoutes() *gin.Engine {
 
 	consoleGroup.GET("/tags", console.GetTagsAction)
 
-	consoleGroup.POST("/blog/switch/:id", console.BlogSwitchAction)
+	consoleGroup.POST("/blogs/switch/:id", console.BlogSwitchAction)
 
 	consoleSettingsGroup := consoleGroup.Group("/settings")
 	consoleSettingsGroup.GET("/basic", console.GetBasicSettingsAction)
@@ -102,7 +102,7 @@ func MapRoutes() *gin.Engine {
 	ret.Static("/theme/css", "theme/css")
 	ret.Static("/theme/js", "theme/js")
 	ret.LoadHTMLGlob(themePath + "/*.html")
-	themeGroup := ret.Group("/blog/:username")
+	themeGroup := ret.Group("/blogs/:username")
 	themeGroup.Use(resolveBlog())
 	themeGroup.GET("/", showArticlesAction)
 	themeGroup.GET("/activities", showActivitiesAction)
