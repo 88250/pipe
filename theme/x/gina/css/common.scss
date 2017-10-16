@@ -139,7 +139,6 @@ a {
     input {
       font-size: 13px;
       width: 0;
-      font-style: italic;
       border: 0;
       transition: $transition;
     }
@@ -238,6 +237,37 @@ a {
           text-decoration: none;
           color: #fff;
           background-color: $theme-accent;
+        }
+      }
+
+      &__share {
+        margin-left: 30px;
+
+        .action__btns {
+          margin-left: 10px;
+        }
+
+        &:hover .action__btns {
+          display: inline-block;
+        }
+      }
+
+      &__btn {
+        border-radius: 50%;
+        height: 40px;
+        width: 40px;
+        display: inline-block;
+        border: 1px solid $border-color;
+        line-height: 40px;
+        text-align: center;
+        cursor: pointer;
+        transition: $transition;
+
+        &:hover {
+          background-color: $border-color;
+          svg {
+            color: #fff;
+          }
         }
       }
     }

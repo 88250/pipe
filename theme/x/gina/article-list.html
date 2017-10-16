@@ -14,18 +14,22 @@
             <div {{if gt $.userCount 1}} class="article__meta" {{end}}>
                 <h2 class="article__title">
                     {{if .Topped}}
-                    <svg><use xlink:href="#focus"></use></svg>
+                    <svg>
+                        <use xlink:href="#focus"></use>
+                    </svg>
                     {{end}}
-                    <a rel="bookmark" href="{{.Path}}">
+                    <a rel="bookmark" href="{{.URL}}">
                         {{.Title}}
                     </a>
                 </h2>
                 <div class="ft-gray ft-12">
-                    {{/*range .Tags*/}}
-                    <a class="tag" rel="tag" href="${servePath}/tags/${articleTag?url('UTF-8')}">{{.Title}}</a>
-                    {{/*end*/}}
-                    {{.CommentCount}} {{$.i18n.comment}}  •  {{.ViewCount}} {{$.i18n.view}}  •
-                    <time>{{.CreatedAt}}</time>
+                    {{range .Tags}}
+                    <a class="tag" rel="tag" href="{{$.conf.Server}}{{$.setting.systemPath}}{{.URL}}">{{.Title}}</a>
+                    {{end}} &nbsp;
+                    <time class="fn-nowrap">{{.CreatedAt}}</time>
+                    •
+                    <span class="fn-nowrap">{{.ViewCount}} {{$.i18n.view}}</span> •
+                    <a href="{{.URL}}#comments" class="fn-nowrap ft-gray">{{.CommentCount}} {{$.i18n.comment}}</a>
                 </div>
             </div>
         </header>
@@ -35,8 +39,26 @@
         </section>
         {{end}}
         <div class="article__action">
-            <a class="action__read" rel="bookmark" href="{{.Path}}">{{$.i18n.readMore}}</a>
-            <svg><use xlink:href="#reply"></use></svg>
+            <a class="action__read" rel="bookmark" href="{{.URL}}">{{$.i18n.readMore}}</a>
+            <span class="action__share">
+                <span class="action__btn">
+                    <svg><use xlink:href="#reply"></use></svg>
+                </span>
+                <span class="action__btns fn-none">
+                    <span class="action__btn">
+                        <svg><use xlink:href="#wechat"></use></svg>
+                    </span>
+                    <span class="action__btn">
+                        <svg><use xlink:href="#weibo"></use></svg>
+                    </span>
+                    <span class="action__btn">
+                        <svg><use xlink:href="#twitter"></use></svg>
+                    </span>
+                    <span class="action__btn">
+                        <svg><use xlink:href="#google"></use></svg>
+                    </span>
+                </span>
+            </span>
         </div>
     </article>
     {{end}}
