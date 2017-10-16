@@ -95,11 +95,13 @@ func (srv *articleService) AddArticle(article *model.Article) error {
 func (srv *articleService) ConsoleGetArticles(page int, blogID uint) (ret []*model.Article, pagination *util.Pagination) {
 	offset := (page - 1) * adminConsoleArticleListPageSize
 	count := 0
-	db.Model(model.Article{}).Select("id, created_at, author_id, title, tags, path, topped, view_count, comment_count").
+	if err := db.Model(model.Article{}).Select("id, created_at, author_id, title, tags, path, topped, view_count, comment_count").
 		Where(model.Article{Status: model.ArticleStatusPublished, BlogID: blogID}).
 		Order("topped DESC, id DESC").Count(&count).
 		Offset(offset).Limit(adminConsoleArticleListPageSize).
-		Find(&ret)
+		Find(&ret).Error; nil != err {
+		log.Errorf("get articles failed: " + err.Error())
+	}
 
 	pageCount := int(math.Ceil(float64(count) / adminConsoleArticleListPageSize))
 	pagination = util.NewPagination(page, adminConsoleArticleListPageSize, pageCount, adminConsoleArticleListWindowsSize, count)
@@ -117,20 +119,20 @@ func (srv *articleService) GetArticles(page int, blogID uint) (ret []*model.Arti
 
 	offset := (page - 1) * pageSize
 	count := 0
-	db.Model(model.Article{}).Select("id, created_at, author_id, title, tags, path, topped, view_count, comment_count").
+	if err := db.Model(model.Article{}).Select("id, created_at, author_id, title, tags, path, topped, view_count, comment_count").
 		Where(model.Article{Status: model.ArticleStatusPublished, BlogID: blogID}).
 		Order("topped DESC, id DESC").Count(&count).
 		Offset(offset).Limit(pageSize).
-		Find(&ret)
+		Find(&ret).Error; nil != err {
+		log.Errorf("get articles failed: " + err.Error())
+	}
 
 	pageCount := int(math.Ceil(float64(count) / float64(pageSize)))
-
 	windowSize, err := strconv.Atoi(settings[model.SettingNamePreferenceArticleListWindowSize].Value)
 	if nil != err {
 		log.Errorf("value of setting [%s] is not an integer, actual is [%v]", model.SettingNamePreferenceArticleListWindowSize, settings[model.SettingNamePreferenceArticleListWindowSize].Value)
 		windowSize = adminConsoleArticleListWindowsSize
 	}
-
 	pagination = util.NewPagination(page, pageSize, pageCount, windowSize, count)
 
 	return
@@ -138,7 +140,9 @@ func (srv *articleService) GetArticles(page int, blogID uint) (ret []*model.Arti
 
 func (srv *articleService) ConsoleGetArticle(id uint) *model.Article {
 	ret := &model.Article{}
-	if nil != db.First(ret, id).Error {
+	if err := db.First(ret, id).Error; nil != err {
+		log.Errorf("get article failed: " + err.Error())
+
 		return nil
 	}
 

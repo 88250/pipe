@@ -20,6 +20,7 @@ import (
 	"sync"
 
 	"github.com/b3log/solo.go/model"
+	log "github.com/sirupsen/logrus"
 )
 
 var Setting = &settingService{
@@ -32,7 +33,9 @@ type settingService struct {
 
 func (srv *settingService) GetSetting(category, name string, blogID uint) *model.Setting {
 	ret := &model.Setting{}
-	if nil != db.Where("category = ? AND name = ? AND blog_id = ?", category, name, blogID).Find(ret).Error {
+	if err := db.Where("category = ? AND name = ? AND blog_id = ?", category, name, blogID).Find(ret).Error; nil != err {
+		log.Errorf("get setting failed: " + err.Error())
+
 		return nil
 	}
 
@@ -42,7 +45,9 @@ func (srv *settingService) GetSetting(category, name string, blogID uint) *model
 func (srv *settingService) GetCategorySettings(blogID uint, category string) []*model.Setting {
 	ret := []*model.Setting{}
 
-	if nil != db.Where("category = ? AND blog_id = ?", category, blogID).Find(&ret).Error {
+	if err := db.Where("category = ? AND blog_id = ?", category, blogID).Find(&ret).Error; nil != err {
+		log.Errorf("get category settings failed: " + err.Error())
+
 		return nil
 	}
 
@@ -52,7 +57,9 @@ func (srv *settingService) GetCategorySettings(blogID uint, category string) []*
 func (srv *settingService) GetAllSettings(blogID uint) []*model.Setting {
 	ret := []*model.Setting{}
 
-	if nil != db.Where("category != ? AND blog_id = ?", model.SettingCategoryStatistic, blogID).Find(&ret).Error {
+	if err := db.Where("category != ? AND blog_id = ?", model.SettingCategoryStatistic, blogID).Find(&ret).Error; nil != err {
+		log.Errorf("get all settings failed: " + err.Error())
+
 		return nil
 	}
 
@@ -62,7 +69,9 @@ func (srv *settingService) GetAllSettings(blogID uint) []*model.Setting {
 func (srv *settingService) GetSettings(blogID uint, category string, names []string) map[string]*model.Setting {
 	ret := map[string]*model.Setting{}
 	settings := []*model.Setting{}
-	if nil != db.Where("category = ? AND name IN (?) AND blog_id = ?", category, names, blogID).Find(&settings).Error {
+	if err := db.Where("category = ? AND name IN (?) AND blog_id = ?", category, names, blogID).Find(&settings).Error; nil != err {
+		log.Errorf("get settings failed: " + err.Error())
+
 		return nil
 	}
 

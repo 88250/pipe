@@ -34,7 +34,9 @@ type userService struct {
 
 func (srv *userService) GetUserByName(name string) *model.User {
 	ret := &model.User{}
-	if nil != db.Where("name = ?", name).First(ret).Error {
+	if err := db.Where("name = ?", name).First(ret).Error; nil != err {
+		log.Errorf("get user by name failed: " + err.Error())
+
 		return nil
 	}
 
@@ -43,7 +45,9 @@ func (srv *userService) GetUserByName(name string) *model.User {
 
 func (srv *userService) GetUser(userID uint) *model.User {
 	ret := &model.User{}
-	if nil != db.First(ret, userID).Error {
+	if err := db.First(ret, userID).Error; nil != err {
+		log.Errorf("get user failed: " + err.Error())
+
 		return nil
 	}
 
@@ -52,7 +56,9 @@ func (srv *userService) GetUser(userID uint) *model.User {
 
 func (srv *userService) GetUserByNameOrEmail(nameOrEmail string) *model.User {
 	ret := &model.User{}
-	if nil != db.Where("name = ? OR email = ?", nameOrEmail, nameOrEmail).Find(ret).Error {
+	if err := db.Where("name = ? OR email = ?", nameOrEmail, nameOrEmail).Find(ret).Error; nil != err {
+		log.Errorf("get user by name or email failed: " + err.Error())
+
 		return nil
 	}
 
@@ -69,7 +75,9 @@ type UserBlog struct {
 
 func (srv *userService) GetBlogUsers(blogID uint) (ret []*model.User) {
 	correlations := []*model.Correlation{}
-	if nil != db.Where("id1 = ? AND type = ?", blogID, model.CorrelationBlogUser).Find(&correlations).Error {
+	if err := db.Where("id1 = ? AND type = ?", blogID, model.CorrelationBlogUser).Find(&correlations).Error; nil != err {
+		log.Errorf("get blog users failed: " + err.Error())
+
 		return
 	}
 
@@ -89,7 +97,9 @@ func (srv *userService) GetBlogUsers(blogID uint) (ret []*model.User) {
 
 func (srv *userService) GetUserBlogs(userID uint) (ret []*UserBlog) {
 	correlations := []*model.Correlation{}
-	if nil != db.Where("id2 = ? AND type = ?", userID, model.CorrelationBlogUser).Find(&correlations).Error {
+	if err := db.Where("id2 = ? AND type = ?", userID, model.CorrelationBlogUser).Find(&correlations).Error; nil != err {
+		log.Errorf("get user blogs failed: " + err.Error())
+
 		return
 	}
 

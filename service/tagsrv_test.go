@@ -24,3 +24,10 @@ func TestConsoleGetTags(t *testing.T) {
 		t.Errorf("tags is nil")
 	}
 }
+
+func TestGetTags(t *testing.T) {
+	tags := Tag.GetTags(2)
+	if nil == tags {
+		t.Errorf("tags is nil")
+	}
+}

@@ -22,6 +22,7 @@ import (
 
 	"github.com/b3log/solo.go/model"
 	"github.com/b3log/solo.go/util"
+	log "github.com/sirupsen/logrus"
 )
 
 var Comment = &commentService{
@@ -41,9 +42,11 @@ const (
 func (srv *commentService) ConsoleGetComments(page int, blogID uint) (ret []*model.Comment, pagination *util.Pagination) {
 	offset := (page - 1) * adminConsoleCommentListPageSize
 	count := 0
-	db.Model(model.Comment{}).Order("id DESC").
+	if err := db.Model(model.Comment{}).Order("id DESC").
 		Where(model.Comment{BlogID: blogID}).
-		Count(&count).Offset(offset).Limit(adminConsoleCommentListPageSize).Find(&ret)
+		Count(&count).Offset(offset).Limit(adminConsoleCommentListPageSize).Find(&ret).Error; nil != err {
+		log.Errorf("get comments failed: " + err.Error())
+	}
 
 	pageCount := int(math.Ceil(float64(count) / adminConsoleCommentListPageSize))
 	pagination = util.NewPagination(page, adminConsoleCommentListPageSize, pageCount, adminConsoleCommentListWindowsSize, count)

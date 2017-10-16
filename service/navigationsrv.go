@@ -24,6 +24,7 @@ import (
 
 	"github.com/b3log/solo.go/model"
 	"github.com/b3log/solo.go/util"
+	log "github.com/sirupsen/logrus"
 )
 
 var Navigation = &navigationService{
@@ -97,9 +98,11 @@ func (srv *navigationService) UpdateNavigation(navigation *model.Navigation) err
 func (srv *navigationService) ConsoleGetNavigations(page int, blogID uint) (ret []*model.Navigation, pagination *util.Pagination) {
 	offset := (page - 1) * adminConsoleNavigationListPageSize
 	count := 0
-	db.Model(model.Navigation{}).Order("number ASC, id DESC").
+	if err := db.Model(model.Navigation{}).Order("number ASC, id DESC").
 		Where(model.Navigation{BlogID: blogID}).
-		Count(&count).Offset(offset).Limit(adminConsoleNavigationListPageSize).Find(&ret)
+		Count(&count).Offset(offset).Limit(adminConsoleNavigationListPageSize).Find(&ret).Error; nil != err {
+		log.Errorf("get navigations failed: " + err.Error())
+	}
 
 	pageCount := int(math.Ceil(float64(count) / adminConsoleNavigationListPageSize))
 	pagination = util.NewPagination(page, adminConsoleNavigationListPageSize, pageCount, adminConsoleNavigationListWindowsSize, count)
@@ -108,15 +111,19 @@ func (srv *navigationService) ConsoleGetNavigations(page int, blogID uint) (ret 
 }
 
 func (srv *navigationService) GetNavigations(blogID uint) (ret []*model.Navigation) {
-	db.Model(model.Navigation{}).Order("number ASC, id DESC").
-		Where(model.Navigation{BlogID: blogID}).Find(&ret)
+	if err := db.Model(model.Navigation{}).Order("number ASC, id DESC").
+		Where(model.Navigation{BlogID: blogID}).Find(&ret).Error; nil != err {
+		log.Errorf("get navigations failed: " + err.Error())
+	}
 
 	return
 }
 
 func (srv *navigationService) ConsoleGetNavigation(id uint) *model.Navigation {
 	ret := &model.Navigation{}
-	if nil != db.First(ret, id).Error {
+	if err := db.First(ret, id).Error; nil != err {
+		log.Errorf("get navigation failed: " + err.Error())
+
 		return nil
 	}
 

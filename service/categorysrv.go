@@ -25,6 +25,7 @@ import (
 	"github.com/b3log/solo.go/model"
 	"github.com/b3log/solo.go/util"
 	"github.com/jinzhu/gorm"
+	log "github.com/sirupsen/logrus"
 )
 
 var Category = &categoryService{
@@ -70,9 +71,11 @@ func (srv *categoryService) AddCategory(category *model.Category) error {
 func (srv *categoryService) ConsoleGetCategories(page int, blogID uint) (ret []*model.Category, pagination *util.Pagination) {
 	offset := (page - 1) * adminConsoleCategoryListPageSize
 	count := 0
-	db.Model(model.Category{}).Order("number ASC, id DESC").
+	if err := db.Model(model.Category{}).Order("number ASC, id DESC").
 		Where(model.Category{BlogID: blogID}).
-		Count(&count).Offset(offset).Limit(adminConsoleCategoryListPageSize).Find(&ret)
+		Count(&count).Offset(offset).Limit(adminConsoleCategoryListPageSize).Find(&ret).Error; nil != err {
+		log.Errorf("get categories failed: " + err.Error())
+	}
 
 	pageCount := int(math.Ceil(float64(count) / adminConsoleCategoryListPageSize))
 	pagination = util.NewPagination(page, adminConsoleCategoryListPageSize, pageCount, adminConsoleCategoryListWindowsSize, count)
