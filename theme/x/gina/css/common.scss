@@ -219,7 +219,7 @@ a {
   width: 340px;
   top: 0;
   right: -340px;
-  overflow: hidden;
+  overflow: auto;
   height: 100%;
   border-left: 1px solid $border-color;
   box-sizing: border-box;
@@ -242,12 +242,23 @@ a {
     }
   }
 
-  & > div {
-    height: 100%;
-    overflow: auto;
+  &__sub-title {
+    font-size: 18px;
+    padding: 30px 30px 0;
   }
 
-  // TODO
+  &__module {
+    margin: 30px;
+
+    .module__list {
+      margin-bottom: 50px;
+    }
+
+    .module__list-content {
+      width: 209px;
+    }
+  }
+
   &::-webkit-scrollbar {
     display: none
   }
