@@ -12,9 +12,22 @@
             <a href="/admin">{{.i18n.manage}}</a>
             {{end}}
         </div>
+
+        if toc
+            toc
+        else
         <div>
             {{.setting.basicBlogSubtitle}}
         </div>
+        最近评论
+        评论最多
+        访问最多
+        end
+
+        TODO
+        文章页面地步
+        站外相关
+        相关
     </div>
 </aside>
 {{end}}
