@@ -18,6 +18,9 @@
   &-pointer {
     cursor: pointer;
   }
+  &-relative {
+    position: relative;
+  }
 
   &-clear:before,
   &-clear:after {

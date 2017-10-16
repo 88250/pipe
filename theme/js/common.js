@@ -63,9 +63,10 @@ var Util = {
   },
   /**
    * @description CSS 背景图延迟加载
+   * @param classes{string} 需要延迟加载的类名
    * @returns {boolean}
    */
-  lazyLoadCSSImage: function () {
+  lazyLoadCSSImage: function (classes) {
     var loadCSSImage = function (it) {
       var testImage = document.createElement('img');
       testImage.src = it.getAttribute('data-src');
@@ -76,7 +77,7 @@ var Util = {
     };
 
     if (!('IntersectionObserver' in window)) {
-      $('.avatar').each(function () {
+      $(classes).each(function () {
         if (this.getAttribute('data-src')) {
           loadCSSImage(this);
         }
@@ -86,7 +87,7 @@ var Util = {
 
     if (Util.CSSImageIntersectionObserver) {
       Util.CSSImageIntersectionObserver.disconnect();
-      $('.avatar').each(function () {
+      $(classes).each(function () {
         Util.CSSImageIntersectionObserver.observe(this);
       });
     } else {
@@ -98,9 +99,9 @@ var Util = {
           }
         });
       });
-      $('.avatar').each(function () {
+      $(classes).each(function () {
         Util.CSSImageIntersectionObserver.observe(this);
       });
     }
-  },
+  }
 }

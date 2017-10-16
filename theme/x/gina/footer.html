@@ -8,7 +8,7 @@
                     {{.i18n.categories}}
                 </div>
                 <div>
-                    {{.setting.basicNoticeBoard}}
+                    TODO
                 </div>
                 {{else}}
                 <div class="module__header">
@@ -83,6 +83,11 @@
         </div>
     </div>
 </footer>
+<div class="sidebar__icon" onclick="Common.toggleSide()">
+    <span class="sidebar__icon-line"></span>
+    <span class="sidebar__icon-line sidebar__icon-line--middle"></span>
+    <span class="sidebar__icon-line"></span>
+</div>
 
 {{if eq .conf.RuntimeMode "dev"}}
 <script type="text/javascript"

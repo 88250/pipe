@@ -6,6 +6,9 @@
 */
 @import '../../../scss/basic';
 
+// z-index
+// article avatar 10
+
 // variable
 $border-color: #f1f1f1;
 $theme-accent: #f47e00;
@@ -23,6 +26,7 @@ body {
   letter-spacing: 0.01rem;
   line-height: 1.75em;
   text-rendering: geometricPrecision;
+  transition: $transition;
 }
 
 a {
@@ -41,7 +45,7 @@ a {
   width: 50px;
   border-radius: 50%;
   display: inline-block;
-  @include  image-bg('../images/image-bg.svg');
+  @include image-bg('../images/image-bg.svg');
 
   &--space {
     margin-right: 20px;
@@ -104,6 +108,35 @@ a {
 
 .content {
   margin: 50px auto;
+}
+
+.body--side {
+  padding-right: 340px;
+
+  .side {
+    right: 0;
+  }
+
+  .sidebar__icon:hover .sidebar__icon-line:first-child,
+  .sidebar__icon-line:first-child {
+    width: 100%;
+    transform: rotateZ(-45deg);
+    top: 7px;
+    background-color: $theme-accent;
+  }
+
+  .sidebar__icon:hover .sidebar__icon-line--middle,
+  .sidebar__icon-line--middle {
+    opacity: 0
+  }
+
+  .sidebar__icon:hover .sidebar__icon-line:last-child,
+  .sidebar__icon-line:last-child {
+    width: 100%;
+    transform: rotateZ(45deg);
+    top: -7px;
+    background-color: $theme-accent;
+  }
 }
 
 // header
@@ -179,17 +212,118 @@ a {
   }
 }
 
+// side
+.side {
+  transition: $transition;
+  position: fixed;
+  width: 340px;
+  top: 0;
+  right: -340px;
+  overflow: hidden;
+  height: 100%;
+  border-left: 1px solid $border-color;
+  box-sizing: border-box;
+
+  &__nav {
+    line-height: 63px;
+    border-bottom: 1px solid $border-color;
+    text-align: right;
+    padding-right: 20px;
+
+    a {
+      color: $gray;
+      padding: 0 10px;
+      font-size: 16px;
+
+      &:hover {
+        text-decoration: none;
+        color: $black;
+      }
+    }
+  }
+
+  & > div {
+    height: 100%;
+    overflow: auto;
+  }
+}
+
+// side toggle icon
+.sidebar__icon {
+  position: fixed;
+  bottom: 36px;
+  width: 17px;
+  height: 17px;
+  right: 36px;
+  border: 3px solid $border-color;
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 50%;
+  background-color: #fff;
+
+  &-line {
+    display: block;
+    position: relative;
+    vertical-align: top;
+    height: 3px;
+    width: 100%;
+    background: $black;
+    margin-top: 4px;
+    transition-duration: .2s;
+    transition-timing-function: ease-in-out;
+    transition-delay: 0s;
+    border-radius: 1px;
+  }
+
+  &-line:first-child {
+    margin-top: 0
+  }
+
+  &:hover {
+    .sidebar__icon-line:first-child {
+      width: 50%;
+      transform: rotateZ(-45deg);
+      top: 3px
+    }
+
+    .sidebar__icon-line-middle {
+      width: 90%
+    }
+
+    .sidebar__icon-line:last-child {
+      width: 50%;
+      transform: rotateZ(45deg);
+      top: -3px
+    }
+  }
+}
+
 // article
 .article {
-
   &__item {
-    position: relative;
-    padding-bottom: 30px;
-    margin-bottom: 30px;
+    padding-bottom: 50px;
+    margin-bottom: 50px;
     border-bottom: 1px dashed $border-color;
   }
 
+  &__thumb {
+    height: 180px;
+    border-radius: 10px;
+    margin-bottom: 30px;
+    display: block;
+    @include image-bg('../images/image-bg.svg');
+  }
+
+  &__meta {
+    padding-left: 70px;
+  }
+
+  &__avatar {
+    position: absolute;
+  }
+
   &__title {
+    word-break: break-all;
     svg {
       height: 18px;
       width: 18px;
@@ -204,29 +338,25 @@ a {
         color: $gray;
         text-decoration: none;
       }
+
+      &:visited {
+        color: #666;
+      }
     }
   }
 
   &__abstract {
     margin-top: 10px;
-
     & > p {
       margin: 0;
     }
   }
 
-  &__meta {
-    position: absolute;
-    width: 100%;
-    padding-left: 70px;
-    top: 0;
-  }
-
   &__action {
-    margin-top: 10px;
+    margin-top: 30px;
     .action {
       &__read {
-        border: 1px solid $theme-accent;
+        border: 1px solid $border-color;
         line-height: 38px;
         padding: 0 20px;
         color: $black;
@@ -241,7 +371,6 @@ a {
       }
 
       &__share {
-        margin-left: 30px;
         height: 40px;
 
         &:hover {
@@ -252,6 +381,9 @@ a {
             }
           }
           .action__btns {
+            #qrCode {
+              display: block;
+            }
             .action__btn {
               opacity: 1;
               visibility: visible;
@@ -276,6 +408,7 @@ a {
         svg {
           height: 18px;
           width: 18px;
+          transition: $transition;
         }
 
         &:hover {
@@ -287,6 +420,13 @@ a {
 
       &__btns {
         margin-left: 10px;
+        position: relative;
+        #qrCode {
+          display: none;
+          position: absolute;
+          top: 35px;
+          left: 0px;
+        }
 
         .action__btn {
           opacity: 0;

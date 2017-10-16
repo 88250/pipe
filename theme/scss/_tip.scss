@@ -11,7 +11,7 @@
 
   &::after {
     position: absolute;
-    z-index: 1000000;
+    z-index: 1000;
     display: none;
     padding: 5px 8px;
     font-size: 11px;
@@ -109,7 +109,7 @@
   &--n::before,
   &--ne::before,
   &--nw::before {
-    top: -6px;
+    top: -5px;
     right: 50%;
     bottom: auto;
     margin-right: -5px;
