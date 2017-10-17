@@ -133,8 +133,6 @@ func fillCommon(c *gin.Context, dataModel *DataModel) {
 	(*dataModel)["RecentComments"] = themeArticles
 	(*dataModel)["MostViewArticles"] = themeArticles
 	(*dataModel)["MostCommentArticles"] = themeArticles
-	(*dataModel)["RelevantArticles"] = themeArticles
-	(*dataModel)["ExternalRelevantArticles"] = themeArticles
 
 	c.Set("dataModel", dataModel)
 }

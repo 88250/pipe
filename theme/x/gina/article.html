@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {{template "head" .}}
+</head>
+<body>
+{{template "header" .}}
+{{template "side" .}}
+<div class="wrapper content">
+    <article class="article__item">
+        <header class="fn-relative article__header">
+            {{if gt $.UserCount 1}}
+            <a rel="nofollow"
+               class="article__avatar"
+               href="{{.Article.Author.URL}}">
+                <span class="avatar tooltipped tooltipped--w"
+                      aria-label="{{.Article.Author.Name}}"
+                      data-src="{{.Article.Author.AvatarURL}}"></span>
+            </a>
+            {{end}}
+            <div {{if gt $.UserCount 1}} class="article__meta" {{end}}>
+                <h2 class="article__title">
+                    {{if .Article.Topped}}
+                    <svg>
+                        <use xlink:href="#focus"></use>
+                    </svg>
+                    {{end}}
+                    <a rel="bookmark" href="{{.Article.URL}}">
+                        {{.Article.Title}}
+                    </a>
+                </h2>
+                <div class="ft-gray ft-12">
+                    {{range .Article.Tags}}
+                    <a class="tag" rel="tag" href="{{.URL}}">{{.Title}}</a>
+                    {{end}} &nbsp;
+                    <time class="fn-nowrap">{{.Article.CreatedAt}}</time>
+                    •
+                    <span class="fn-nowrap">{{.Article.ViewCount}} {{$.I18n.View}}</span> •
+                    <a href="{{.URL}}#comments" class="fn-nowrap ft-gray">{{.Article.CommentCount}}
+                        {{$.I18n.Comment}}</a>
+                </div>
+            </div>
+        </header>
+        <section class="content__reset article__abstract">
+            {{.Article.Content}}
+        </section>
+        <div class="article__action fn-clear">
+            <span class="action__share fn-left">
+                <span class="action__btn action__btn--reply tooltipped--w tooltipped" aria-label="{{$.I18n.Share}}">
+                    <svg><use xlink:href="#reply"></use></svg>
+                </span>
+                <span class="action__btns" id="share">
+                    <span class="action__btn action__btn--wechat" data-type="wechat">
+                        <svg><use xlink:href="#wechat"></use></svg>
+                    </span>
+                    <span class="action__btn action__btn--weibo" data-type="weibo">
+                        <svg><use xlink:href="#weibo"></use></svg>
+                    </span>
+                    <span class="action__btn action__btn--twitter" data-type="twitter">
+                        <svg><use xlink:href="#twitter"></use></svg>
+                    </span>
+                    <span class="action__btn action__btn--google" data-type="google">
+                        <svg><use xlink:href="#google"></use></svg>
+                    </span>
+                    <div id="qrCode"
+                         data-title="{{.Article.Title}}"
+                         data-blogtitle="{{$.Setting.BasicBlogTitle}}"
+                         data-url="{{.Article.URL}}"
+                         data-avatar="{{.Article.Author.AvatarURL}}"></div>
+                </span>
+            </span>
+        </div>
+    </article>
+    <div>
+        <div class="module">
+            <div class="module__header">
+                sf
+            </div>
+            <div class="module__list">
+                <ul>
+                    {{range .RelevantArticles}}
+                    <li class="fn-clear">
+                        <a class="avatar avatar--space fn-left"
+                           href="{{.Author.URL}}"
+                           data-src="{{.Author.AvatarURL}}"></a>
+                        <div class="fn-left module__list-content">
+                            <a href="{{.URL}}" class="module__a">{{.Title}}</a>
+                            <time class="ft-12 ft-gray">{{.CreatedAt}}</time>
+                        </div>
+                    </li>
+                    {{end}}
+                </ul>
+            </div>
+        </div>
+        <div class="module">
+            <div class="module__header">
+                sf
+            </div>
+            <div class="module__list">
+                <ul>
+                    {{range .ExternalRelevantArticles}}
+                    <li class="fn-clear">
+                        <a class="avatar avatar--space fn-left"
+                           href="{{.Author.URL}}"
+                           data-src="{{.Author.AvatarURL}}"></a>
+                        <div class="fn-left module__list-content">
+                            <a href="{{.URL}}" class="module__a">{{.Title}}</a>
+                            <time class="ft-12 ft-gray">{{.CreatedAt}}</time>
+                        </div>
+                    </li>
+                    {{end}}
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{{template "footer" .}}
+</body>
+</html>
+
+
+head & content
+<#if previousArticlePermalink??>
+    <link rel="prev" title="${previousArticleTitle}" href="${servePath}${previousArticlePermalink}">
+</#if>
+<#if nextArticlePermalink??>
+    <link rel="next" title="${nextArticleTitle}" href="${servePath}${nextArticlePermalink}">
+</#if>
+
+<@comments commentList=articleComments article=article>
