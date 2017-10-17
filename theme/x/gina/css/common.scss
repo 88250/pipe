@@ -121,7 +121,7 @@ a {
   .sidebar__icon-line:first-child {
     width: 100%;
     transform: rotateZ(-45deg);
-    top: 7px;
+    top: 6px;
     background-color: $theme-accent;
   }
 
@@ -134,7 +134,7 @@ a {
   .sidebar__icon-line:last-child {
     width: 100%;
     transform: rotateZ(45deg);
-    top: -7px;
+    top: -6px;
     background-color: $theme-accent;
   }
 }
@@ -268,11 +268,11 @@ a {
 .sidebar__icon {
   position: fixed;
   bottom: 36px;
-  width: 17px;
-  height: 17px;
+  width: 16px;
+  height: 14px;
   right: 36px;
   border: 3px solid $border-color;
-  padding: 10px;
+  padding: 10px 9px;
   cursor: pointer;
   border-radius: 50%;
   background-color: #fff;
@@ -284,7 +284,7 @@ a {
     height: 3px;
     width: 100%;
     background: $black;
-    margin-top: 4px;
+    margin-top: 3px;
     transition-duration: .2s;
     transition-timing-function: ease-in-out;
     transition-delay: 0s;
@@ -482,6 +482,36 @@ a {
           }
         }
       }
+    }
+  }
+}
+
+// pagination
+.pagination {
+  line-height: 30px;
+  &__item {
+    border: 1px solid $border-color;
+    padding: 0 11px;
+    display: inline-block;
+    border-radius: 15px;
+    color: $black;
+    cursor: pointer;
+    margin: 0 10px;
+
+    &:hover,
+    &--active {
+      text-decoration: none;
+      background-color: $theme-accent;
+      color: #fff;
+      border-color: $theme-accent;
+    }
+  }
+
+  &__near {
+    color: $gray;
+    &:hover {
+      text-decoration: none;
+      color: $theme-accent;
     }
   }
 }

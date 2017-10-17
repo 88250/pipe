@@ -23,15 +23,21 @@ type Pagination struct {
 	WindowSize     int   `json:"windowSize"`
 	RecordCount    int   `json:"recordCount"`
 	PageNums       []int `json:"pageNums"`
+	NextPageNum    int `json:"nextPageNum"`
+	PreviousPageNum    int `json:"previousPageNum"`
+	PageURL  string `json:"pageURL"`
 }
 
 func NewPagination(currentPageNum, pageSize, pageCount, windowSize, recordCount int) *Pagination {
 	return &Pagination{
 		CurrentPageNum: currentPageNum,
+		NextPageNum:    currentPageNum + 1,
+		PreviousPageNum:currentPageNum - 1,
 		PageSize:       pageSize,
 		PageCount:      pageCount,
 		WindowSize:     windowSize,
 		RecordCount:    recordCount,
+		PageURL:        "http://localhost:5897/blogs/sologo?p=",
 		PageNums:       paginate(currentPageNum, pageSize, pageCount, windowSize),
 	}
 }
@@ -39,6 +45,9 @@ func NewPagination(currentPageNum, pageSize, pageCount, windowSize, recordCount 
 func paginate(currentPageNum, pageSize, pageCount, windowSize int) []int {
 	ret := []int{}
 
+    ret = append(ret, -1) // eq -1 <
+    ret = append(ret, 1)
+    ret = append(ret, 0)    // eq 0 ...
 	if pageCount < windowSize {
 		for i := 0; i < pageCount; i++ {
 			ret = append(ret, i+1)
@@ -55,6 +64,13 @@ func paginate(currentPageNum, pageSize, pageCount, windowSize int) []int {
 			ret = append(ret, first+i)
 		}
 	}
+
+    ret = append(ret, 2)
+    ret = append(ret, 3)
+    ret = append(ret, 4)
+	ret = append(ret, 0)// eq 0 ...
+    ret = append(ret, 100)
+    ret = append(ret, -2)// eq -2 >
 
 	return ret
 }
