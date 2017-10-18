@@ -31,9 +31,9 @@
                     {{range .Tags}}
                     <a class="tag" rel="tag" href="{{.URL}}">{{.Title}}</a>
                     {{end}} &nbsp;
-                    <time class="fn-nowrap">{{.CreatedAt}}</time>
+                    <time class="ft-nowrap">{{.CreatedAt}}</time>
                     •
-                    <span class="fn-nowrap">{{.ViewCount}} {{$.I18n.View}}</span> •
+                    <span class="ft-nowrap">{{.ViewCount}} {{$.I18n.View}}</span> •
                     <a href="{{.URL}}#comments" class="fn-nowrap ft-gray">{{.CommentCount}} {{$.I18n.Comment}}</a>
                 </div>
             </div>

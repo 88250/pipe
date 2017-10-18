@@ -162,6 +162,7 @@ func showArticleAction(c *gin.Context) {
     			ViewCount:    articleModel.ViewCount,
     			CommentCount: articleModel.CommentCount,
     			ThumbnailURL:  "https://img.hacpai.com/20170818zhixiaoyun.jpeg",
+    			Content: "sfasdfsf",
     		}
 
     		articles = append(articles, article)
@@ -187,5 +188,9 @@ func showArticleAction(c *gin.Context) {
 
 	dataModel["RelevantArticles"] = articles
 	dataModel["ExternalRelevantArticles"] = articles
+	dataModel["PreviousArticleTitle"] = "111"
+	dataModel["PreviousArticleURL"] = "111"
+	dataModel["NextArticleTitle"] = "111"
+	dataModel["NextArticleURL"] = "111"
 	c.HTML(http.StatusOK, "article.html", dataModel)
 }
