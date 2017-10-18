@@ -478,8 +478,10 @@ a {
   }
   // end action
 
-  &__relevants {
-    .module {
+  &__two {
+    & > a,
+    & > div {
+      float: left;
       width: 48%;
       &:first-child {
         margin-right: 4%;
@@ -487,6 +489,9 @@ a {
     }
   }
 
+  &__near {
+
+  }
 }
 
 // pagination
