@@ -117,4 +117,15 @@ const (
 	SettingPreferenceArticleListStyleValueTitle         = "title"
 	SettingPreferenceArticleListStyleValueTitleAbstract = "titleAbstract"
 	SettingPreferenceArticleListStyleValueTitleContent  = "titleContent"
+
+	SettingPreferenceArticleListPageSizeDefault        = 20
+	SettingPreferenceArticleListWindowSizeDefault      = 20
+	SettingPreferenceArticleListStyleDefault           = SettingPreferenceArticleListStyleValueTitleAbstract
+	SettingPreferenceExternalArticleListSizeDefault    = 7
+	SettingPreferenceMostCommentArticleListSizeDefault = 7
+	SettingPreferenceMostUseTagListSizeDefault         = 15
+	SettingPreferenceMostViewArticleListSizeDefault    = 15
+	SettingPreferenceRandomArticleListSizeDefault      = 7
+	SettingPreferenceRecentCommentListSizeDefault      = 7
+	SettingPreferenceRelevantArticleListSizeDefault    = 7
 )

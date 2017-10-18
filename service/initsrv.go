@@ -18,6 +18,7 @@ package service
 
 import (
 	"errors"
+	"strconv"
 	"sync"
 
 	"github.com/b3log/solo.go/model"
@@ -354,70 +355,70 @@ func initPreferenceSettings(tx *gorm.DB, blogID uint) error {
 	if err := tx.Create(&model.Setting{
 		Category: model.SettingCategoryPreference,
 		Name:     model.SettingNamePreferenceArticleListPageSize,
-		Value:    "20",
+		Value:    strconv.Itoa(model.SettingPreferenceArticleListPageSizeDefault),
 		BlogID:   blogID}).Error; nil != err {
 		return err
 	}
 	if err := tx.Create(&model.Setting{
 		Category: model.SettingCategoryPreference,
 		Name:     model.SettingNamePreferenceArticleListWindowSize,
-		Value:    "20",
+		Value:    strconv.Itoa(model.SettingPreferenceArticleListWindowSizeDefault),
 		BlogID:   blogID}).Error; nil != err {
 		return err
 	}
 	if err := tx.Create(&model.Setting{
 		Category: model.SettingCategoryPreference,
 		Name:     model.SettingNamePreferenceArticleListStyle,
-		Value:    model.SettingPreferenceArticleListStyleValueTitleAbstract,
+		Value:    model.SettingPreferenceArticleListStyleDefault,
 		BlogID:   blogID}).Error; nil != err {
 		return err
 	}
 	if err := tx.Create(&model.Setting{
 		Category: model.SettingCategoryPreference,
 		Name:     model.SettingNamePreferenceExternalArticleListSize,
-		Value:    "7",
+		Value:    strconv.Itoa(model.SettingPreferenceExternalArticleListSizeDefault),
 		BlogID:   blogID}).Error; nil != err {
 		return err
 	}
 	if err := tx.Create(&model.Setting{
 		Category: model.SettingCategoryPreference,
 		Name:     model.SettingNamePreferenceMostCommentArticleListSize,
-		Value:    "7",
+		Value:    strconv.Itoa(model.SettingPreferenceMostCommentArticleListSizeDefault),
 		BlogID:   blogID}).Error; nil != err {
 		return err
 	}
 	if err := tx.Create(&model.Setting{
 		Category: model.SettingCategoryPreference,
 		Name:     model.SettingNamePreferenceMostUseTagListSize,
-		Value:    "15",
+		Value:    strconv.Itoa(model.SettingPreferenceMostUseTagListSizeDefault),
 		BlogID:   blogID}).Error; nil != err {
 		return err
 	}
 	if err := tx.Create(&model.Setting{
 		Category: model.SettingCategoryPreference,
 		Name:     model.SettingNamePreferenceMostViewArticleListSize,
-		Value:    "7",
+		Value:    strconv.Itoa(model.SettingPreferenceMostViewArticleListSizeDefault),
 		BlogID:   blogID}).Error; nil != err {
 		return err
 	}
 	if err := tx.Create(&model.Setting{
 		Category: model.SettingCategoryPreference,
 		Name:     model.SettingNamePreferenceRandomArticleListSize,
-		Value:    "7",
+		Value:    strconv.Itoa(model.SettingPreferenceRandomArticleListSizeDefault),
 		BlogID:   blogID}).Error; nil != err {
 		return err
 	}
 	if err := tx.Create(&model.Setting{
 		Category: model.SettingCategoryPreference,
 		Name:     model.SettingNamePreferenceRecentCommentListSize,
-		Value:    "7",
+		Value:    strconv.Itoa(model.SettingPreferenceRecentCommentListSizeDefault),
 		BlogID:   blogID}).Error; nil != err {
 		return err
 	}
 	if err := tx.Create(&model.Setting{
 		Category: model.SettingCategoryPreference,
 		Name:     model.SettingNamePreferenceRelevantArticleListSize,
-		Value:    "7",
+		Value:    strconv.Itoa(model.SettingPreferenceRelevantArticleListSizeDefault),
 		BlogID:   blogID}).Error; nil != err {
 		return err
 	}
