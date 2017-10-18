@@ -1,0 +1,17 @@
+{{define "module-list"}}
+<div class="module__list">
+    <ul>
+        {{range .}}
+        <li class="fn-clear">
+            <a class="avatar avatar--space fn-left"
+               href="{{.Author.URL}}"
+               data-src="{{.Author.AvatarURL}}"></a>
+            <div class="fn-left module__list-content">
+                <a href="{{.URL}}" class="module__a">{{.Title}}</a>
+                <time class="ft-12 ft-gray">{{.CreatedAt}}</time>
+            </div>
+        </li>
+        {{end}}
+    </ul>
+</div>
+{{end}}

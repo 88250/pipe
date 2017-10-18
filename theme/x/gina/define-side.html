@@ -1,0 +1,37 @@
+{{define "side"}}
+<aside class="side">
+    <div class="side__nav">
+        {{.Setting.blogSubtitle}}
+
+        {{if eq .Username ""}}
+        <a href="/login">{{.I18n.Login}}</a>
+        <a href="/init">{{.I18n.Register}}</a>
+        {{else}}
+        TODO 头像
+        <a href="/admin">{{.I18n.Manage}}</a>
+        {{end}}
+    </div>
+
+    {{if .Toc}}
+    TODO TOC
+    {{else}}
+    <div class="side__sub-title">
+        {{.Setting.BasicBlogSubtitle}}
+    </div>
+    <div class="side__module">
+        <div class="module__header">
+            {{.I18n.RecentComment}}
+        </div>
+        {{template "module-list" .RecentComments}}
+        <div class="module__header">
+            {{.I18n.MostCommentArticle}}
+        </div>
+        {{template "module-list" .MostCommentArticles}}
+        <div class="module__header">
+            {{.I18n.MostViewArticle}}
+        </div>
+        {{template "module-list" .MostViewArticles}}
+    </div>
+    {{end}}
+</aside>
+{{end}}

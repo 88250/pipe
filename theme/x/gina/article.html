@@ -76,41 +76,13 @@
             <div class="module__header">
                 sf
             </div>
-            <div class="module__list">
-                <ul>
-                    {{range .RelevantArticles}}
-                    <li class="fn-clear">
-                        <a class="avatar avatar--space fn-left"
-                           href="{{.Author.URL}}"
-                           data-src="{{.Author.AvatarURL}}"></a>
-                        <div class="fn-left module__list-content">
-                            <a href="{{.URL}}" class="module__a">{{.Title}}</a>
-                            <time class="ft-12 ft-gray">{{.CreatedAt}}</time>
-                        </div>
-                    </li>
-                    {{end}}
-                </ul>
-            </div>
+            {{template "module-list" .RelevantArticles}}
         </div>
         <div class="module">
             <div class="module__header">
                 sf
             </div>
-            <div class="module__list">
-                <ul>
-                    {{range .ExternalRelevantArticles}}
-                    <li class="fn-clear">
-                        <a class="avatar avatar--space fn-left"
-                           href="{{.Author.URL}}"
-                           data-src="{{.Author.AvatarURL}}"></a>
-                        <div class="fn-left module__list-content">
-                            <a href="{{.URL}}" class="module__a">{{.Title}}</a>
-                            <time class="ft-12 ft-gray">{{.CreatedAt}}</time>
-                        </div>
-                    </li>
-                    {{end}}
-                </ul>
-            </div>
+            {{template "module-list" .ExternalRelevantArticles}}
         </div>
     </div>
 </div>
