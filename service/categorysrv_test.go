@@ -57,7 +57,7 @@ func TestConsoleGetCategories(t *testing.T) {
 }
 
 func TestGetGetCategories(t *testing.T) {
-	categories := Category.GetCategories(2)
+	categories := Category.GetCategories(2, 1)
 	if nil == categories {
 		t.Errorf("categories is nil")
 	}

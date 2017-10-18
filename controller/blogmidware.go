@@ -109,7 +109,7 @@ func fillCommon(c *gin.Context, dataModel *DataModel) {
 	navigations := service.Navigation.GetNavigations(blogID)
 	(*dataModel)["Navigations"] = navigations
 
-	categories := service.Category.GetCategories(math.MaxInt8)
+	categories := service.Category.GetCategories(math.MaxInt8, blogID)
 	themeCategories := []*ThemeCategory{}
 	for _, category := range categories {
 		themeCategory := &ThemeCategory{
