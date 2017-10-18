@@ -91,7 +91,7 @@
             {{len .Comments}} {{.I18n.Comment}}
         </div>
         {{range .Comments}}
-        <section>
+        <section class="comment__item">
             <a rel="nofollow"
                class="avatar fn-absolute"
                data-src="{{.Author.AvatarURL}}"
@@ -100,7 +100,25 @@
             <div class="fn-padding60">
                 <a href="{{.Author.AvatarURL}}" class="module__list-title">{{.Author.Name}}</a> •
                 <span class="ft-nowrap ft-12 ft-gray">{{.CreatedAt}}</span>
-                <div class="content-reset">
+                <svg class="comment__btn"><use xlink:href="#remove"></use></svg>
+                {{if ne $.Username ""}}
+                <svg class="comment__btn"><use xlink:href="#reply"></use></svg>
+                {{end}}
+                <div class="content__reset">
+                    {{.Content}}
+                </div>
+            </div>
+        </section>
+        <section class="comment__item">
+            <a rel="nofollow"
+               class="avatar fn-absolute"
+               data-src="{{.Author.AvatarURL}}"
+               href="{{.Author.URL}}">
+            </a>
+            <div class="fn-padding60">
+                <a href="{{.Author.AvatarURL}}" class="module__list-title">{{.Author.Name}}</a> •
+                <span class="ft-nowrap ft-12 ft-gray">{{.CreatedAt}}</span>
+                <div class="content__reset">
                     {{.Content}}
                 </div>
             </div>
