@@ -83,6 +83,14 @@ func (srv *categoryService) ConsoleGetCategories(page int, blogID uint) (ret []*
 	return
 }
 
+func (srv *categoryService) GetCategories(size int) (ret []*model.Category) {
+	if err := db.Where(model.Category{}).Order("number asc").Limit(size).Find(&ret).Error; nil != err {
+		log.Errorf("get categories failed: " + err.Error())
+	}
+
+	return
+}
+
 func (srv *categoryService) RemoveCategory(id uint) error {
 	srv.mutex.Lock()
 	defer srv.mutex.Unlock()

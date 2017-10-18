@@ -56,6 +56,13 @@ func TestConsoleGetCategories(t *testing.T) {
 	}
 }
 
+func TestGetGetCategories(t *testing.T) {
+	categories := Category.GetCategories(2)
+	if nil == categories {
+		t.Errorf("categories is nil")
+	}
+}
+
 func TestRemoveCategory(t *testing.T) {
 	if err := Category.RemoveCategory(1); nil != err {
 		t.Errorf("remove category failed: " + err.Error())
