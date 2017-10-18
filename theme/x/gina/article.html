@@ -76,7 +76,7 @@
             </span>
         </div>
     </article>
-    {{if (ne (len .RelevantArticles) 0) | (ne (len .ExternalRelevantArticles) 0)}}
+    {{if or (ne (len .RelevantArticles) 0) (ne (len .ExternalRelevantArticles) 0)}}
     <div class="fn-clear article__relevants fn-bottom">
         <div class="module fn-left">
             {{template "module-list" dict "List" .RelevantArticles "Title" .I18n.RelevantArticle "UserCount" .UserCount}}
@@ -109,8 +109,19 @@
         </section>
         {{end}}
     </div>
-    {{template "pagination" .}}
+    <div{{if or (.PreviousArticle) (.NextArticle)}} class="fn-bottom"{{end}}>
+        {{template "pagination" .}}
+    </div>
     {{end}}
+
+    <div>
+        {{if .PreviousArticle}}
+        <a href="{{.PreviousArticle.URL}}">
+            {{.PreviousArticle.Title}}
+        </a>
+        {{end}}
+    </div>
+
 </div>
 {{template "footer" .}}
 </body>

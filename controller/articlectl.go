@@ -188,9 +188,7 @@ func showArticleAction(c *gin.Context) {
 
 	dataModel["RelevantArticles"] = articles
 	dataModel["ExternalRelevantArticles"] = articles
-	dataModel["PreviousArticleTitle"] = "111"
-	dataModel["PreviousArticleURL"] = "111"
-	dataModel["NextArticleTitle"] = "111"
-	dataModel["NextArticleURL"] = "111"
+	dataModel["PreviousArticle"] = dataModel["Article"]
+	dataModel["NextArticleTitle"] = dataModel["Article"]
 	c.HTML(http.StatusOK, "article.html", dataModel)
 }
