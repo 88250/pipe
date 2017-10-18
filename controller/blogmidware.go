@@ -21,13 +21,14 @@ import (
 	"strconv"
 	"time"
 
+	"strings"
+
 	"github.com/b3log/solo.go/i18n"
 	"github.com/b3log/solo.go/model"
 	"github.com/b3log/solo.go/service"
 	"github.com/b3log/solo.go/util"
 	"github.com/gin-gonic/gin"
 	log "github.com/sirupsen/logrus"
-	"strings"
 )
 
 func resolveBlog() gin.HandlerFunc {
@@ -103,29 +104,37 @@ func fillCommon(c *gin.Context, dataModel *DataModel) {
 	navigations := service.Navigation.GetNavigations(1)
 	(*dataModel)["Navigations"] = navigations
 
-	tags := service.Tag.GetTags(10)
+	tagSize, err := strconv.Atoi(settingMap[model.SettingNamePreferenceMostUseTagListSize])
+	if nil != err {
+		log.Errorf("setting [%s] shoud be an integer, actual is [%v]", model.SettingNamePreferenceMostUseTagListSize,
+			settingMap[model.SettingNamePreferenceMostUseTagListSize])
+		tagSize = model.SettingPreferenceMostUseTagListSizeDefault
+	}
+	tags := service.Tag.GetTags(tagSize)
 	themeTags := []*ThemeTag{}
 	for _, tag := range tags {
 		themeTag := &ThemeTag{
 			Title: tag.Title,
-			URL:  util.Conf.Server + settingMap["SystemPath"] + "/" + tag.Title,
+			URL:   util.Conf.Server + settingMap["SystemPath"] + "/" + tag.Title,
 		}
 		themeTags = append(themeTags, themeTag)
 	}
-	(*dataModel)["MostUseCategories"] = themeTags
 	(*dataModel)["MostUseTags"] = themeTags
+
+	(*dataModel)["MostUseCategories"] = themeTags
+
 	themeArticles := []*ThemeListArticle{}
 	for _, tag := range tags {
 		author := &ThemeAuthor{
 			Name:      "Vanessa",
-			URL: "http://localhost:5879/blogs/solo/vanessa",
+			URL:       "http://localhost:5879/blogs/solo/vanessa",
 			AvatarURL: "https://img.hacpai.com/20170818zhixiaoyun.jpeg",
 		}
 		themeArticle := &ThemeListArticle{
-			Title: tag.Title,
-			URL:  util.Conf.Server + settingMap["SystemPath"] + "/" + tag.Title,
+			Title:     tag.Title,
+			URL:       util.Conf.Server + settingMap["SystemPath"] + "/" + tag.Title,
 			CreatedAt: "1天前",
-			Author: author,
+			Author:    author,
 		}
 		themeArticles = append(themeArticles, themeArticle)
 	}
