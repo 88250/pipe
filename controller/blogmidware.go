@@ -191,6 +191,13 @@ func fillRecentComments(settingMap *map[string]string, dataModel *DataModel, blo
 		themeComment := &ThemeListComment{
 			Content: comment.Content,
 			URL:     "todo",
+			Title: "sdf",
+			CreatedAt: "2019-12-12",
+			Author: &ThemeAuthor{
+				Name:      "Vanessa",
+				URL:       "http://localhost:5879/blogs/solo/vanessa",
+				AvatarURL: "https://img.hacpai.com/20170818zhixiaoyun.jpeg",
+			},
 		}
 		themeRecentComments = append(themeRecentComments, themeComment)
 	}

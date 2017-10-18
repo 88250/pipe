@@ -35,4 +35,7 @@ type ThemeListComment struct {
 	ID      uint
 	Content string
 	URL     string
+	Author  *ThemeAuthor
+	Title	string
+CreatedAt string
 }

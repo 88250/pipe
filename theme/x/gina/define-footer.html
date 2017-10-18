@@ -77,5 +77,10 @@
         src="{{.Conf.StaticServer}}/theme/x/{{.Setting.ThemeName}}/js/common.min.js?{{.Conf.StaticResourceVersion}}"
         charset="utf-8"></script>
 {{end}}
+<script>
+    var conf = {
+      server: "{{.Conf.Server}}"
+    }
+</script>
 
 {{end}}

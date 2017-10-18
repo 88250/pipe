@@ -123,6 +123,7 @@
   "feed": "订阅",
   "faviconURL": "favicon 地址",
   "enterSearch": "回车后搜索",
+  "search": "搜索",
   "tagsPanel": "标签墙",
   "activities": "动态",
   "archives": "存档",
@@ -130,5 +131,10 @@
   "team": "团队",
   "openSource": "开源",
   "readMore": "阅读更多",
-  "share": "分享"
+  "share": "分享",
+  "confirmDelete": "确认是否删除？",
+  "stayStep": "留下你的脚步",
+  "VerificationCode": "验证码",
+  "email": "邮箱",
+  "reply": "回复"
 }

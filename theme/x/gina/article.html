@@ -51,18 +51,25 @@
         </section>
         <div class="article__action fn-clear">
             {{if ne $.Username ""}}
-            <a class="fn-right action__btn action__btn--edit action__btn--read"
+            <a class="fn-right action__btn action__btn--edit action__btn--read  "
                href="{{$.Conf.Server}}/admin/articles/post?id={{.Article.ID}}">
                 <svg>
                     <use xlink:href="#edit"></use>
                 </svg>
             </a>
             {{end}}
-            <span class="action__share fn-left">
-                <span class="action__btn action__btn--reply tooltipped--w tooltipped" aria-label="{{$.I18n.Share}}">
-                    <svg><use xlink:href="#reply"></use></svg>
+            <a class="fn-right action__btn action__btn--edit action__btn--read fn-clear"
+               href="javascript:Common.showComment('{{.I18n.Comment}}{{.Article.Title}}', '{{.Article.ID}}')">
+                {{$.I18n.Comment}} &nbsp;
+                <svg class="fn-right">
+                    <use xlink:href="#comment"></use>
+                </svg>
+            </a>
+            <span class="action__share">
+                <span class="action__btn action__btn--reply fn-left">
+                    {{$.I18n.Share}} &nbsp; <svg class="fn-right"><use xlink:href="#reply"></use></svg>
                 </span>
-                <span class="action__btns" id="share">
+                <span class="action__btns fn-left" id="share">
                     <span class="action__btn action__btn--wechat" data-type="wechat">
                         <svg><use xlink:href="#wechat"></use></svg>
                     </span>
@@ -86,47 +93,50 @@
     </article>
 
     {{if gt (len .Comments) 0}}
-    <div class="fn-bottom">
-        <div class="module__header">
-            {{len .Comments}} {{.I18n.Comment}}
+    <div id="comments">
+        <div class="fn-bottom">
+            <div class="module__header">
+                <span id="commentsCnt">{{len .Comments}}</span> {{.I18n.Comment}}
+            </div>
+            {{range .Comments}}
+            <section class="comment__item" id="comment{{.ID}}">
+                <a rel="nofollow"
+                   class="avatar fn-absolute"
+                   data-src="{{.Author.AvatarURL}}"
+                   href="{{.Author.URL}}">
+                </a>
+                <div class="fn-padding60">
+                    <div>
+                        <a href="{{.Author.AvatarURL}}" class="module__list-title">{{.Author.Name}}</a> •
+                        <span class="ft-nowrap ft-12 ft-gray">{{.CreatedAt}}</span>
+                        {{if ne $.Username ""}}
+                        <span class="comment__btn"
+                              onclick="Common.removeComment('{{.ID}}', '{{$.I18n.ConfirmDelete}}', '{{$.I18n.StayStep}}')">
+                            <svg><use xlink:href="#remove"></use></svg>
+                        </span>
+                        {{end}}
+                        <span class="comment__btn"
+                              onclick="Common.showComment('{{$.I18n.Reply}}{{.Author.Name}}', '{{$.Article.ID}}', '{{.ID}}')">
+                            {{$.I18n.Reply}} <svg><use xlink:href="#comment"></use></svg>
+                        </span>
+                    </div>
+                    <div class="content__reset">
+                        {{.Content}}
+                    </div>
+                </div>
+            </section>
+            {{end}}
         </div>
-        {{range .Comments}}
-        <section class="comment__item">
-            <a rel="nofollow"
-               class="avatar fn-absolute"
-               data-src="{{.Author.AvatarURL}}"
-               href="{{.Author.URL}}">
-            </a>
-            <div class="fn-padding60">
-                <a href="{{.Author.AvatarURL}}" class="module__list-title">{{.Author.Name}}</a> •
-                <span class="ft-nowrap ft-12 ft-gray">{{.CreatedAt}}</span>
-                <svg class="comment__btn"><use xlink:href="#remove"></use></svg>
-                {{if ne $.Username ""}}
-                <svg class="comment__btn"><use xlink:href="#reply"></use></svg>
-                {{end}}
-                <div class="content__reset">
-                    {{.Content}}
-                </div>
-            </div>
-        </section>
-        <section class="comment__item">
-            <a rel="nofollow"
-               class="avatar fn-absolute"
-               data-src="{{.Author.AvatarURL}}"
-               href="{{.Author.URL}}">
-            </a>
-            <div class="fn-padding60">
-                <a href="{{.Author.AvatarURL}}" class="module__list-title">{{.Author.Name}}</a> •
-                <span class="ft-nowrap ft-12 ft-gray">{{.CreatedAt}}</span>
-                <div class="content__reset">
-                    {{.Content}}
-                </div>
-            </div>
-        </section>
-        {{end}}
+        <div class="fn-bottom">
+        {{template "pagination" .}}
+        </div>
     </div>
-    <div class="fn-bottom"}>
-    {{template "pagination" .}}
+    {{else}}
+    <div class="fn-bottom ft-center comment__null"
+         onclick="Common.showComment('{{.I18n.Comment}}{{.Article.Title}}', '{{.Article.ID}}')"
+         id="comments">
+        {{.I18n.StayStep}}
+        <svg><use xlink:href="#comment"></use></svg>
     </div>
     {{end}}
 
@@ -205,7 +215,9 @@
     {{else}}
     <div class="fn-clear article__near fn-two">
         {{if .PreviousArticle}}
-        <a href="{{.PreviousArticle.URL}}" rel="prev">
+        <a href="{{.PreviousArticle.URL}}"
+           class="tooltipped tooltipped--w"
+           rel="prev" aria-label="{{.I18n.PreArticle}}">
             <svg class="near__icon">
                 <use xlink:href="#chevron-left"></use>
             </svg>
@@ -214,7 +226,9 @@
         {{end}}
 
         {{if .NextArticle}}
-        <a href="{{.NextArticle.URL}}" rel="next" class="ft-right">
+        <a href="{{.NextArticle.URL}}" rel="next"
+           class="tooltipped tooltipped--e ft-right"
+           aria-label="{{.I18n.NextArticle}}">
             <b class="ft-break">{{.NextArticle.Title}}</b>
             <svg class="near__icon-last">
                 <use xlink:href="#chevron-right"></use>
@@ -223,8 +237,38 @@
         {{end}}
     </div>
     {{end}}
-
 </div>
+
+<div class="editor" id="editor">
+    <div class="wrapper">
+        <div id="replyObject"></div>
+        <div class="form">
+            {{if eq .Username ""}}
+            <input id="commentName" type="text" placeholder="{{.I18n.Nickname}}">
+            <input id="commentEmail" type="text" placeholder="{{.I18n.Email}}">
+            <input id="commentURL" type="text" placeholder="URL">
+            {{end}}
+            <textarea id="commentContent" placeholder="{{.I18n.Content}}" rows="3"></textarea>
+            {{if eq .Username ""}}
+            <input id="commentValidation" type="text" placeholder="{{.I18n.VerificationCode}}">
+            {{end}}
+            <div class="article__action fn-clear">
+                <span class="fn-right action__btn action__btn--edit action__btn--read"
+                        onclick="Common.addComment('{{.I18n.Comment}}')">
+                    {{.I18n.Confirm}}&nbsp;<svg class="fn-right"><use xlink:href="#comment"></use></svg>
+                </span>
+                <span class="fn-right action__btn action__btn--edit action__btn--read"
+                onclick="Common.hideComment()">
+                    {{.I18n.Cancel}}&nbsp;<svg class="fn-right"><use xlink:href="#chevron-up"></use></svg>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
 {{template "footer" .}}
+<script>
+    Util.localStorageComment()
+</script>
 </body>
 </html>

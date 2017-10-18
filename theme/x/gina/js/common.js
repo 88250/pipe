@@ -57,6 +57,52 @@ var Common = {
   },
   toggleSide: function () {
     $('body').toggleClass('body--side')
+    if ($('body').hasClass('body--side')) {
+      $('#editor').width(940)
+    } else {
+      $('#editor').width('100%')
+    }
+  },
+  removeComment(id, label, label2) {
+    if (confirm(label)) {
+      Util.reomveComment(id, function () {
+        $('#comment' + id).remove()
+        $('#commentsCnt').text(parseInt($('#commentsCnt').text()) - 1)
+        if ($('#comments section').length === 0) {
+          $('#comments').addClass('ft-center comment__null fn-bottom').attr('onclick', 'Common.showComment()')
+            .html(label2 + ' <svg><use xlink:href="#comment"></use></svg>')
+        }
+      }, function (msg) {
+        alert(msg)
+      })
+    }
+  },
+  showComment: function (reply, id, commentId) {
+    $('#editor').css('bottom', '0').data('id', id).data('commentid', commentId)
+    $('body').css('padding-bottom', $('#editor').outerHeight() + 'px')
+    $('#replyObject').text(reply)
+  },
+  hideComment: function () {
+    $('#editor').css('bottom', '-400px')
+    $('body').css('padding-bottom', 0)
+  },
+  addComment: function (label) {
+    Util.addComment($('#editor').data('commentid') || $('#editor').data('id'), function (data) {
+      Common.hideComment();
+      $('#commentsCnt').text(parseInt($('#commentsCnt').text()) + 1);
+
+      var contentHTML = '<section></section>';
+      // TODO contentHTML
+      if (parseInt($('#commentsCnt').text()) === 1) {
+        $('#comments').removeClass('ft-center comment__null').removeAttr('onclick')
+          .html('<div class="module__header"><span id="commentsCnt">1</span> ' +
+            label + '</div>' + contentHTML);
+      } else {
+        $('#comments section:last').after(contentHTML);
+      }
+    }, function (msg) {
+      alert(msg)
+    })
   }
 }
 

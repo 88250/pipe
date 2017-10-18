@@ -15,7 +15,9 @@
         </a>
         {{end}}
         <a href="{{.BlogURL}}/rss">TODORSS</a>
-        <form id="headerSearch" class="header__search" action="{{.BlogURL}}/search">
+        <form id="headerSearch"
+              class="header__search"
+              action="{{.BlogURL}}/search">
             <input type="text" name="keyword" placeholder="{{.I18n.EnterSearch}}">
             <svg>
                 <use xlink:href="#search"></use>

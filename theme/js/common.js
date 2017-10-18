@@ -103,5 +103,50 @@ var Util = {
         Util.CSSImageIntersectionObserver.observe(this);
       });
     }
+  },
+  reomveComment: function (id, succCB, errorCB) {
+    $.ajax({
+      url: conf.server + '/api/console/comments/' + id,
+      type: 'DELETE',
+      success: function (result) {
+        if (result.code === 0) {
+          succCB && succCB();
+        } else {
+          errorCB && errorCB(result.msg);
+        }
+      }
+    });
+  },
+  addComment: function (id, succCB, errorCB) {
+    $.ajax({
+      url: conf.server + '/api/console/comments/' + id,
+      type: 'POST',
+      success: function (result) {
+        if (result.code === 0) {
+          localStorage.removeItem('themeCommentName');
+          localStorage.removeItem('themeCommentEmail');
+          localStorage.removeItem('themeCommentURL');
+          localStorage.removeItem('themeCommentContent');
+          succCB && succCB(result.data);
+        } else {
+          errorCB && errorCB(result.msg);
+        }
+      }
+    });
+  },
+  localStorageComment: function () {
+    $('#commentName').val(localStorage.getItem('themeCommentName') || '').keyup(function () {
+      localStorage.setItem('themeCommentName', $(this).val())
+    });
+    $('#commentEmail').val(localStorage.getItem('themeCommentEmail') || '').keyup(function () {
+      localStorage.setItem('themeCommentEmail', $(this).val())
+    });
+    $('#commentURL').val(localStorage.getItem('themeCommentURL') || '').keyup(function () {
+      localStorage.setItem('themeCommentURL', $(this).val())
+    });
+    $('#commentContent').val(localStorage.getItem('themeCommentContent') || '').keyup(function () {
+      localStorage.setItem('themeCommentContent', $(this).val())
+    });
   }
-}
+};
+

@@ -8,6 +8,9 @@
 
 // z-index
 // article avatar 10
+// side 99
+// editor 100
+// side bar icon 200
 
 // variable
 $border-color: #f1f1f1;
@@ -254,6 +257,7 @@ a {
   height: 100%;
   border-left: 1px solid $border-color;
   box-sizing: border-box;
+  z-index: 99;
 
   &__nav {
     line-height: 63px;
@@ -303,6 +307,7 @@ a {
   cursor: pointer;
   border-radius: 50%;
   background-color: #fff;
+  z-index: 200;
 
   &-line {
     display: block;
@@ -620,9 +625,41 @@ a {
   &__btn {
     cursor: pointer;
     float: right;
-    margin: 7px 0 0 10px;
+    margin-left: 20px;
+    svg {
+      margin-top: 4px;
+    }
     &:hover {
       color: $theme-accent;
     }
+  }
+
+  &__null {
+    cursor: pointer;
+    transition: $transition;
+    &:hover {
+      color: $theme-accent;
+    }
+  }
+}
+
+// editor
+.editor {
+  position: fixed;
+  bottom: -400px;
+  width: 100%;
+  background-color: $border-color;
+  padding: 30px 0;
+  transition: $transition;
+  z-index: 100;
+  left: 0;
+
+  input,
+  textarea {
+    margin-bottom: 10px;
+  }
+
+  .article__action {
+    margin-top: 0px;
   }
 }

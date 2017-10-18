@@ -51,11 +51,11 @@
             </a>
             {{end}}
             <a class="action__btn action__btn--read fn-right" rel="bookmark" href="{{.URL}}">{{$.I18n.ReadMore}}</a>
-            <span class="action__share fn-left">
-                <span class="action__btn action__btn--reply tooltipped--w tooltipped" aria-label="{{$.I18n.Share}}">
-                    <svg><use xlink:href="#reply"></use></svg>
+            <span class="action__share">
+                <span class="action__btn action__btn--reply fn-clear fn-left">
+                    {{$.I18n.Share}} &nbsp; <svg class="fn-right"><use xlink:href="#reply"></use></svg>
                 </span>
-                <span class="action__btns" id="share">
+                <span class="action__btns fn-left" id="share">
                     <span class="action__btn action__btn--wechat" data-type="wechat">
                         <svg><use xlink:href="#wechat"></use></svg>
                     </span>
