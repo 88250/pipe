@@ -138,6 +138,16 @@ func (srv *articleService) GetArticles(page int, blogID uint) (ret []*model.Arti
 	return
 }
 
+func (srv *articleService) GetMostViewArticles(size int, blogID uint) (ret []*model.Article) {
+	if err := db.Model(model.Article{}).Select("id, created_at, author_id, title, path").
+		Where(model.Article{Status: model.ArticleStatusPublished, BlogID: blogID}).
+		Order("view_count DESC, id DESC").Limit(size).Find(&ret).Error; nil != err {
+		log.Errorf("get most view articles failed: " + err.Error())
+	}
+
+	return
+}
+
 func (srv *articleService) ConsoleGetArticle(id uint) *model.Article {
 	ret := &model.Article{}
 	if err := db.First(ret, id).Error; nil != err {

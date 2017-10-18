@@ -19,14 +19,14 @@ package service
 import "testing"
 
 func TestConsoleGetTags(t *testing.T) {
-	tags := Tag.ConsoleGetTags()
+	tags := Tag.ConsoleGetTags(1)
 	if nil == tags {
 		t.Errorf("tags is nil")
 	}
 }
 
 func TestGetTags(t *testing.T) {
-	tags := Tag.GetTags(2)
+	tags := Tag.GetTags(2, 1)
 	if nil == tags {
 		t.Errorf("tags is nil")
 	}
