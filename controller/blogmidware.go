@@ -17,6 +17,7 @@
 package controller
 
 import (
+	"math"
 	"net/http"
 	"strconv"
 	"time"
@@ -121,7 +122,16 @@ func fillCommon(c *gin.Context, dataModel *DataModel) {
 	}
 	(*dataModel)["MostUseTags"] = themeTags
 
-	(*dataModel)["MostUseCategories"] = themeTags
+	categories := service.Category.GetCategories(math.MaxInt8)
+	themeCategories := []*ThemeCategory{}
+	for _, category := range categories {
+		themeCategory := &ThemeCategory{
+			Title: category.Title,
+			URL:   util.Conf.Server + settingMap["SystemPath"] + "/" + category.Title,
+		}
+		themeCategories = append(themeCategories, themeCategory)
+	}
+	(*dataModel)["MostUseCategories"] = themeCategories
 
 	themeArticles := []*ThemeListArticle{}
 	for _, tag := range tags {
@@ -138,10 +148,10 @@ func fillCommon(c *gin.Context, dataModel *DataModel) {
 		}
 		themeArticles = append(themeArticles, themeArticle)
 	}
-	(*dataModel)["RandomArticles"] = themeArticles
 	(*dataModel)["RecentComments"] = themeArticles
 	(*dataModel)["MostViewArticles"] = themeArticles
 	(*dataModel)["MostCommentArticles"] = themeArticles
+	(*dataModel)["RandomArticles"] = themeArticles
 
 	c.Set("dataModel", dataModel)
 }
