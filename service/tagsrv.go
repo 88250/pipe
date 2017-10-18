@@ -31,16 +31,16 @@ type tagService struct {
 	mutex *sync.Mutex
 }
 
-func (srv *tagService) ConsoleGetTags() (ret []*model.Tag) {
-	if err := db.Where(model.Tag{}).Order("article_count DESC, id DESC").Find(&ret).Error; nil != err {
+func (srv *tagService) ConsoleGetTags(blogID uint) (ret []*model.Tag) {
+	if err := db.Where(model.Tag{BlogID: blogID}).Order("article_count DESC, id DESC").Find(&ret).Error; nil != err {
 		log.Errorf("get tags failed: " + err.Error())
 	}
 
 	return
 }
 
-func (srv *tagService) GetTags(size int) (ret []*model.Tag) {
-	if err := db.Where(model.Tag{}).Order("article_count DESC, id DESC").Limit(size).Find(&ret).Error; nil != err {
+func (srv *tagService) GetTags(size int, blogID uint) (ret []*model.Tag) {
+	if err := db.Where(model.Tag{BlogID: blogID}).Order("article_count DESC, id DESC").Limit(size).Find(&ret).Error; nil != err {
 		log.Errorf("get tags failed: " + err.Error())
 	}
 

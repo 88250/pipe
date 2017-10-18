@@ -48,7 +48,6 @@ func TestAddArticle(t *testing.T) {
 
 func TestConsoleGetArticles(t *testing.T) {
 	articles, pagination := Article.ConsoleGetArticles(1, 1)
-
 	if adminConsoleArticleListPageSize != len(articles) {
 		t.Errorf("expected is [%d], actual is [%d]", adminConsoleArticleListPageSize, len(articles))
 	}
@@ -60,13 +59,20 @@ func TestConsoleGetArticles(t *testing.T) {
 
 func TestGetArticles(t *testing.T) {
 	articles, pagination := Article.GetArticles(1, 1)
-
 	if 20 != len(articles) {
 		t.Errorf("expected is [%d], actual is [%d]", 20, len(articles))
-	}
 
+		return
+	}
 	if articleRecordSize+1 /* including "Hello,World!" */ != pagination.RecordCount {
 		t.Errorf("expected is [%d], actual is [%d]", articleRecordSize+1, pagination.RecordCount)
+	}
+}
+
+func TestGetMostViewArticles(t *testing.T) {
+	articles := Article.GetMostViewArticles(10, 1)
+	if 10 != len(articles) {
+		t.Errorf("expected is [%d], actual is [%d]", 10, len(articles))
 	}
 }
 
@@ -77,7 +83,6 @@ func TestConsoleGetArticle(t *testing.T) {
 
 		return
 	}
-
 	if 1 != article.ID {
 		t.Errorf("id is not [1]")
 	}

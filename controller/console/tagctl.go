@@ -28,8 +28,10 @@ func GetTagsAction(c *gin.Context) {
 	result := util.NewResult()
 	defer c.JSON(http.StatusOK, result)
 
+	sessionData := util.GetSession(c)
+
 	tags := []*ConsoleTag{}
-	tagModels := service.Tag.ConsoleGetTags()
+	tagModels := service.Tag.ConsoleGetTags(sessionData.BID)
 	for _, tagModel := range tagModels {
 		tags = append(tags, &ConsoleTag{Title: tagModel.Title})
 	}

@@ -57,10 +57,14 @@ func resolveBlog() gin.HandlerFunc {
 type DataModel map[string]interface{}
 
 func fillCommon(c *gin.Context, dataModel *DataModel) {
+	blogAdminVal, _ := c.Get("blogAdmin")
+	blogAdmin := blogAdminVal.(*model.User)
+	blogID := blogAdmin.BlogID
+
 	if "dev" == util.Conf.RuntimeMode {
 		i18n.Load()
 	}
-	localeSetting := service.Setting.GetSetting(model.SettingCategoryI18n, model.SettingNameI18nLocale, 1)
+	localeSetting := service.Setting.GetSetting(model.SettingCategoryI18n, model.SettingNameI18nLocale, blogID)
 	i18ns := i18n.GetMessages(localeSetting.Value)
 	i18nMap := map[string]interface{}{}
 	for key, value := range i18ns {
@@ -68,7 +72,7 @@ func fillCommon(c *gin.Context, dataModel *DataModel) {
 	}
 	(*dataModel)["I18n"] = i18nMap
 
-	settings := service.Setting.GetAllSettings(1)
+	settings := service.Setting.GetAllSettings(blogID)
 	settingMap := map[string]string{}
 	for _, setting := range settings {
 		settingMap[strings.Title(setting.Name)] = setting.Value
@@ -77,7 +81,7 @@ func fillCommon(c *gin.Context, dataModel *DataModel) {
 
 	(*dataModel)["Setting"] = settingMap
 
-	statistics := service.Statistic.GetAllStatistics(1)
+	statistics := service.Statistic.GetAllStatistics(blogID)
 	statisticMap := map[string]int{}
 	for _, statistic := range statistics {
 		count, err := strconv.Atoi(statistic.Value)
@@ -100,27 +104,10 @@ func fillCommon(c *gin.Context, dataModel *DataModel) {
 	if nil != session {
 		(*dataModel)["Username"] = session.UName
 	}
-	(*dataModel)["UserCount"] = len(service.User.GetBlogUsers(1)) + 2
+	(*dataModel)["UserCount"] = len(service.User.GetBlogUsers(blogID)) + 2
 
-	navigations := service.Navigation.GetNavigations(1)
+	navigations := service.Navigation.GetNavigations(blogID)
 	(*dataModel)["Navigations"] = navigations
-
-	tagSize, err := strconv.Atoi(settingMap[model.SettingNamePreferenceMostUseTagListSize])
-	if nil != err {
-		log.Errorf("setting [%s] shoud be an integer, actual is [%v]", model.SettingNamePreferenceMostUseTagListSize,
-			settingMap[model.SettingNamePreferenceMostUseTagListSize])
-		tagSize = model.SettingPreferenceMostUseTagListSizeDefault
-	}
-	tags := service.Tag.GetTags(tagSize)
-	themeTags := []*ThemeTag{}
-	for _, tag := range tags {
-		themeTag := &ThemeTag{
-			Title: tag.Title,
-			URL:   util.Conf.Server + settingMap["SystemPath"] + "/" + tag.Title,
-		}
-		themeTags = append(themeTags, themeTag)
-	}
-	(*dataModel)["MostUseTags"] = themeTags
 
 	categories := service.Category.GetCategories(math.MaxInt8)
 	themeCategories := []*ThemeCategory{}
@@ -133,25 +120,58 @@ func fillCommon(c *gin.Context, dataModel *DataModel) {
 	}
 	(*dataModel)["MostUseCategories"] = themeCategories
 
-	themeArticles := []*ThemeListArticle{}
+	fillMostUseTags(&settingMap, dataModel, blogID)
+	fillMostViewArticles(&settingMap, dataModel, blogID)
+
+	(*dataModel)["RecentComments"] = (*dataModel)["MostViewArticles"]
+	(*dataModel)["MostCommentArticles"] = (*dataModel)["MostViewArticles"]
+	(*dataModel)["RandomArticles"] = (*dataModel)["MostViewArticles"]
+
+	c.Set("dataModel", dataModel)
+}
+
+func fillMostUseTags(settingMap *map[string]string, dataModel *DataModel, blogID uint) {
+	tagSize, err := strconv.Atoi((*settingMap)[strings.Title(model.SettingNamePreferenceMostUseTagListSize)])
+	if nil != err {
+		log.Errorf("setting [%s] should be an integer, actual is [%v]", model.SettingNamePreferenceMostUseTagListSize,
+			(*settingMap)[model.SettingNamePreferenceMostUseTagListSize])
+		tagSize = model.SettingPreferenceMostUseTagListSizeDefault
+	}
+	tags := service.Tag.GetTags(tagSize, blogID)
+	themeTags := []*ThemeTag{}
 	for _, tag := range tags {
+		themeTag := &ThemeTag{
+			Title: tag.Title,
+			URL:   util.Conf.Server + (*settingMap)["SystemPath"] + "/" + tag.Title,
+		}
+		themeTags = append(themeTags, themeTag)
+	}
+	(*dataModel)["MostUseTags"] = themeTags
+}
+
+func fillMostViewArticles(settingMap *map[string]string, dataModel *DataModel, blogID uint) {
+	mostViewArticleSize, err := strconv.Atoi((*settingMap)[strings.Title(model.SettingNamePreferenceMostViewArticleListSize)])
+	if nil != err {
+		log.Errorf("setting [%s] should be an integer, actual is [%v]", model.SettingNamePreferenceMostViewArticleListSize,
+			(*settingMap)[model.SettingNamePreferenceMostViewArticleListSize])
+		mostViewArticleSize = model.SettingPreferenceMostViewArticleListSizeDefault
+	}
+	mostViewArticles := service.Article.GetMostViewArticles(mostViewArticleSize, blogID)
+	themeMostViewArticles := []*ThemeListArticle{}
+	for _, article := range mostViewArticles {
 		author := &ThemeAuthor{
 			Name:      "Vanessa",
 			URL:       "http://localhost:5879/blogs/solo/vanessa",
 			AvatarURL: "https://img.hacpai.com/20170818zhixiaoyun.jpeg",
 		}
 		themeArticle := &ThemeListArticle{
-			Title:     tag.Title,
-			URL:       util.Conf.Server + settingMap["SystemPath"] + "/" + tag.Title,
+			Title:     article.Title,
+			URL:       util.Conf.Server + (*settingMap)["SystemPath"] + article.Path,
 			CreatedAt: "1天前",
 			Author:    author,
 		}
-		themeArticles = append(themeArticles, themeArticle)
+		themeMostViewArticles = append(themeMostViewArticles, themeArticle)
 	}
-	(*dataModel)["RecentComments"] = themeArticles
-	(*dataModel)["MostViewArticles"] = themeArticles
-	(*dataModel)["MostCommentArticles"] = themeArticles
-	(*dataModel)["RandomArticles"] = themeArticles
 
-	c.Set("dataModel", dataModel)
+	(*dataModel)["MostViewArticles"] = themeMostViewArticles
 }
