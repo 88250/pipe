@@ -17,36 +17,37 @@
 package controller
 
 import (
+	"errors"
 	"strings"
 
 	"html/template"
+
 	"github.com/b3log/solo.go/controller/console"
 	"github.com/b3log/solo.go/theme"
 	"github.com/b3log/solo.go/util"
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
-	log "github.com/sirupsen/logrus"
 )
 
 // MapRoutes returns a gin engine and binds controllers with request URLs.
 func MapRoutes() *gin.Engine {
 	ret := gin.New()
 	ret.SetFuncMap(template.FuncMap{
-            "dict":  func(values ...interface{}) (map[string]interface{}, error) {
-                             if len(values)%2 != 0 {
-                                 return nil, log.Error("Unable to connect to local syslog daemon")
-                             }
-                             dict := make(map[string]interface{}, len(values)/2)
-                             for i := 0; i < len(values); i+=2 {
-                                 key, ok := values[i].(string)
-                                 if !ok {
-                                     return nil, log.Error("")
-                                 }
-                                 dict[key] = values[i+1]
-                             }
-                             return dict, nil
-                         },
-        })
+		"dict": func(values ...interface{}) (map[string]interface{}, error) {
+			if len(values)%2 != 0 {
+				return nil, errors.New("Unable to connect to local syslog daemon")
+			}
+			dict := make(map[string]interface{}, len(values)/2)
+			for i := 0; i < len(values); i += 2 {
+				key, ok := values[i].(string)
+				if !ok {
+					return nil, errors.New("")
+				}
+				dict[key] = values[i+1]
+			}
+			return dict, nil
+		},
+	})
 
 	ret.Use(gin.Recovery())
 
