@@ -13,13 +13,12 @@
 # Project-local glide cache, RE: https://github.com/Masterminds/glide/issues/736
 .glide/
 
-.idea
-
-solo.log
-
 # File head utility (https://github.com/b3log/header) binary 
 header
 solo
 
 # Theme
 /theme/node_modules
+
+# IDE
+.idea/
