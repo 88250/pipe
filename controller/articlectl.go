@@ -189,6 +189,6 @@ func showArticleAction(c *gin.Context) {
 	dataModel["RelevantArticles"] = articles
 	dataModel["ExternalRelevantArticles"] = articles
 	dataModel["PreviousArticle"] = dataModel["Article"]
-	dataModel["NextArticleTitle"] = dataModel["Article"]
+	dataModel["NextArticle"] = dataModel["Article"]
 	c.HTML(http.StatusOK, "article.html", dataModel)
 }

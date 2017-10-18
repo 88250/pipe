@@ -9,7 +9,7 @@
 <div class="wrapper content">
     <article class="fn-bottom">
         <header class="fn-relative article__header">
-            {{if gt $.UserCount 1}}
+            {{if gt .UserCount 1}}
             <a rel="nofollow"
                href="{{.Article.Author.URL}}"
                class="avatar tooltipped tooltipped--w fn-absolute"
@@ -17,7 +17,7 @@
                data-src="{{.Article.Author.AvatarURL}}">
             </a>
             {{end}}
-            <div {{if gt $.UserCount 1}} class="fn-padding80" {{end}}>
+            <div {{if gt .UserCount 1}} class="fn-padding80" {{end}}>
                 <h2 class="article__title">
                     {{if .Article.Topped}}
                     <svg>
@@ -77,11 +77,11 @@
         </div>
     </article>
     {{if or (ne (len .RelevantArticles) 0) (ne (len .ExternalRelevantArticles) 0)}}
-    <div class="fn-clear article__relevants fn-bottom">
-        <div class="module fn-left">
+    <div class="fn-clear article__two fn-bottom">
+        <div>
             {{template "module-list" dict "List" .RelevantArticles "Title" .I18n.RelevantArticle "UserCount" .UserCount}}
         </div>
-        <div class="module fn-left">
+        <div>
             {{template "module-list" dict "List" .ExternalRelevantArticles "Title" .I18n.ExternalRelevantArticle "UserCount" .UserCount}}
         </div>
     </div>
@@ -114,10 +114,36 @@
     </div>
     {{end}}
 
-    <div>
+    <div class="fn-clear article__near article__two">
         {{if .PreviousArticle}}
-        <a href="{{.PreviousArticle.URL}}">
-            {{.PreviousArticle.Title}}
+        <a href="{{.PreviousArticle.URL}}" rel="prev">
+            <svg class="fn-left"><use xlink:href="#chevron-left"></use></svg>
+            {{if gt .UserCount 1}}
+            <span class="avatar tooltipped tooltipped--n fn-left"
+               aria-label="{{.PreviousArticle.Author.Name}}"
+               data-src="{{.PreviousArticle.Author.AvatarURL}}">
+            </span>
+            {{end}}
+            <span class="fn-left">
+                Next<br>
+                <b>{{.PreviousArticle.Title}}</b>
+            </span>
+        </a>
+        {{end}}
+
+        {{if .PreviousArticle}}
+        <a href="{{.NextArticle.URL}}" rel="prev">
+            <svg class="fn-right"><use xlink:href="#chevron-right"></use></svg>
+            {{if gt .UserCount 1}}
+            <span class="avatar tooltipped tooltipped--n fn-right"
+                  aria-label="{{.NextArticle.Author.Name}}"
+                  data-src="{{.NextArticle.Author.AvatarURL}}">
+            </span>
+            {{end}}
+            <span class="fn-right">
+                Next<br>
+                <b>{{.NextArticle.Title}}</b>
+            </span>
         </a>
         {{end}}
     </div>
