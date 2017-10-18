@@ -54,6 +54,16 @@ func (srv *commentService) ConsoleGetComments(page int, blogID uint) (ret []*mod
 	return
 }
 
+func (srv *commentService) GetRecentComments(size int, blogID uint) (ret []*model.Comment) {
+	if err := db.Model(model.Comment{}).Select("id, created_at, content").
+		Where(model.Comment{BlogID: blogID}).
+		Order("created_at DESC, id DESC").Limit(size).Find(&ret).Error; nil != err {
+		log.Errorf("get recent comments failed: " + err.Error())
+	}
+
+	return
+}
+
 func (srv *commentService) AddComment(comment *model.Comment) error {
 	srv.mutex.Lock()
 	defer srv.mutex.Unlock()

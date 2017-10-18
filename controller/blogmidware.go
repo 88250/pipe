@@ -106,28 +106,30 @@ func fillCommon(c *gin.Context, dataModel *DataModel) {
 	}
 	(*dataModel)["UserCount"] = len(service.User.GetBlogUsers(blogID)) + 2
 
-	navigations := service.Navigation.GetNavigations(blogID)
-	(*dataModel)["Navigations"] = navigations
+	(*dataModel)["Navigations"] = service.Navigation.GetNavigations(blogID)
 
+	fillMostUseCategories(&settingMap, dataModel, blogID)
+	fillMostUseTags(&settingMap, dataModel, blogID)
+	fillMostViewArticles(&settingMap, dataModel, blogID)
+	fillRecentComments(&settingMap, dataModel, blogID)
+
+	(*dataModel)["MostCommentArticles"] = (*dataModel)["MostViewArticles"]
+	(*dataModel)["RandomArticles"] = (*dataModel)["MostViewArticles"]
+
+	c.Set("dataModel", dataModel)
+}
+
+func fillMostUseCategories(settingMap *map[string]string, dataModel *DataModel, blogID uint) {
 	categories := service.Category.GetCategories(math.MaxInt8, blogID)
 	themeCategories := []*ThemeCategory{}
 	for _, category := range categories {
 		themeCategory := &ThemeCategory{
 			Title: category.Title,
-			URL:   util.Conf.Server + settingMap["SystemPath"] + "/" + category.Title,
+			URL:   util.Conf.Server + (*settingMap)["SystemPath"] + "/" + category.Title,
 		}
 		themeCategories = append(themeCategories, themeCategory)
 	}
 	(*dataModel)["MostUseCategories"] = themeCategories
-
-	fillMostUseTags(&settingMap, dataModel, blogID)
-	fillMostViewArticles(&settingMap, dataModel, blogID)
-
-	(*dataModel)["RecentComments"] = (*dataModel)["MostViewArticles"]
-	(*dataModel)["MostCommentArticles"] = (*dataModel)["MostViewArticles"]
-	(*dataModel)["RandomArticles"] = (*dataModel)["MostViewArticles"]
-
-	c.Set("dataModel", dataModel)
 }
 
 func fillMostUseTags(settingMap *map[string]string, dataModel *DataModel, blogID uint) {
@@ -174,4 +176,24 @@ func fillMostViewArticles(settingMap *map[string]string, dataModel *DataModel, b
 	}
 
 	(*dataModel)["MostViewArticles"] = themeMostViewArticles
+}
+
+func fillRecentComments(settingMap *map[string]string, dataModel *DataModel, blogID uint) {
+	recentCommentSize, err := strconv.Atoi((*settingMap)[strings.Title(model.SettingNamePreferenceRecentCommentListSize)])
+	if nil != err {
+		log.Errorf("setting [%s] should be an integer, actual is [%v]", model.SettingNamePreferenceRecentCommentListSize,
+			(*settingMap)[model.SettingNamePreferenceRecentCommentListSize])
+		recentCommentSize = model.SettingPreferenceRecentCommentListSizeDefault
+	}
+	recentComments := service.Comment.GetRecentComments(recentCommentSize, blogID)
+	themeRecentComments := []*ThemeListComment{}
+	for _, comment := range recentComments {
+		themeComment := &ThemeListComment{
+			Content: comment.Content,
+			URL:     "todo",
+		}
+		themeRecentComments = append(themeRecentComments, themeComment)
+	}
+
+	(*dataModel)["RecentComments"] = themeRecentComments
 }

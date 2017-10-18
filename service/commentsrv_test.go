@@ -24,7 +24,6 @@ import (
 
 func TestConsoleGetComments(t *testing.T) {
 	comments, pagination := Comment.ConsoleGetComments(1, 1)
-
 	if 0 != len(comments) {
 		t.Errorf("expected is [%d], actual is [%d]", 0, len(comments))
 
@@ -32,6 +31,15 @@ func TestConsoleGetComments(t *testing.T) {
 	}
 	if 0 != pagination.RecordCount {
 		t.Errorf("expected is [%d], actual is [%d]", 0, pagination.RecordCount)
+	}
+}
+
+func TestGetRecentComments(t *testing.T) {
+	comments := Comment.GetRecentComments(10, 1)
+	if 0 != len(comments) {
+		t.Errorf("expected is [%d], actual is [%d]", 0, len(comments))
+
+		return
 	}
 }
 

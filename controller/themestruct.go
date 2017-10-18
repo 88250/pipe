@@ -30,3 +30,9 @@ type ThemeCategory struct {
 	Title string
 	URL   string
 }
+
+type ThemeListComment struct {
+	ID      uint
+	Content string
+	URL     string
+}
