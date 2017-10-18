@@ -32,10 +32,10 @@
                     {{range .Article.Tags}}
                     <a class="tag" rel="tag" href="{{.URL}}">{{.Title}}</a>
                     {{end}} &nbsp;
-                    <time class="fn-nowrap">{{.Article.CreatedAt}}</time>
+                    <time class="ft-nowrap">{{.Article.CreatedAt}}</time>
                     •
-                    <span class="fn-nowrap">{{.Article.ViewCount}} {{$.I18n.View}}</span> •
-                    <a href="{{.URL}}#comments" class="fn-nowrap ft-gray">{{.Article.CommentCount}}
+                    <span class="ft-nowrap">{{.Article.ViewCount}} {{$.I18n.View}}</span> •
+                    <a href="{{.URL}}#comments" class="ft-nowrap ft-gray">{{.Article.CommentCount}}
                         {{$.I18n.Comment}}</a>
                 </div>
             </div>
@@ -89,13 +89,23 @@
 
     {{if gt (len .Comments) 0}}
     <div class="fn-bottom">
+        <div class="module__header">
+            {{len .Comments}} {{.I18n.Comment}}
+        </div>
         {{range .Comments}}
         <section>
             <a rel="nofollow"
-               class="avatar"
+               class="avatar fn-absolute"
                data-src="{{.Author.AvatarURL}}"
                href="{{.Author.URL}}">
             </a>
+            <div class="fn-padding60">
+                <a href="{{.Author.AvatarURL}}" class="module__list-title">{{.Author.Name}}</a> •
+                <span class="ft-nowrap ft-12 ft-gray">{{.CreatedAt}}</span>
+                <div class="content-reset">
+                    {{.Content}}
+                </div>
+            </div>
         </section>
         {{end}}
     </div>

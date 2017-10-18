@@ -43,7 +43,7 @@ a {
 .fn-bottom {
   padding-bottom: 50px;
   margin-bottom: 50px;
-  border-bottom: 1px dashed $border-color;
+  border-bottom: 1px dotted $border-color;
 }
 
 .fn-absolute {
@@ -89,7 +89,6 @@ a {
 
     &-title {
       color: $black;
-      display: block;
       word-break: break-all;
       &:hover {
         color: $gray;
