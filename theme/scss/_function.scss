@@ -122,4 +122,12 @@
   &-nowrap {
     white-space: nowrap;
   }
+
+  &-break {
+    word-break: break-all;
+  }
+
+  &-right {
+    text-align: right;
+  }
 }

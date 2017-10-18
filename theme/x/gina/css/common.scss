@@ -58,6 +58,28 @@ a {
   padding-left: 80px;
 }
 
+.fn-two {
+  & > a,
+  & > div {
+    float: left;
+    width: 48%;
+    &:first-child {
+      margin-right: 4%;
+    }
+  }
+}
+
+.fn-three {
+  & > div,
+  & > a {
+    width: 30%;
+    float: left;
+  }
+  &--mid {
+    margin: 0 5%;
+  }
+}
+
 // avatar
 .avatar {
   height: 50px;
@@ -204,16 +226,9 @@ a {
   border-top: 1px solid $border-color;
   &__side {
     padding: 50px 0;
-    &-module--mid {
-      margin: 0 2%;
-    }
-    .module {
-      width: 32%;
-
-      .tag {
-        margin: 0 10px 10px 0;
-        display: inline-block;
-      }
+    .tag {
+      margin: 0 10px 10px 0;
+      display: inline-block;
     }
   }
   &__info {
@@ -334,10 +349,15 @@ a {
     margin-bottom: 30px;
     display: block;
     @include image-bg('../images/image-bg.svg');
+
+    &--relevant {
+      margin-bottom: 10px;
+    }
   }
 
   &__title {
     word-break: break-all;
+    margin-bottom: 10px;
     svg {
       height: 18px;
       width: 18px;
@@ -345,9 +365,6 @@ a {
     a {
       font-size: 22px;
       color: $black;
-      margin-bottom: 10px;
-      display: inline-block;
-
       &:hover {
         color: $gray;
         text-decoration: none;
@@ -478,19 +495,58 @@ a {
   }
   // end action
 
-  &__two {
-    & > a,
-    & > div {
-      float: left;
-      width: 48%;
-      &:first-child {
-        margin-right: 4%;
+  &__near a {
+    color: $black;
+    position: relative;
+    .near__svg {
+      margin: 17px 10px 0 0;
+    }
+    .avatar {
+      margin-right: 10px;
+      margin-left: 24px;
+    }
+
+    .near__title {
+      padding-left: 84px;
+      display: block;
+      line-height: 25px;
+    }
+
+    &.near__next {
+      svg {
+        right: 0;
+        top: 17px;
+        margin: 0;
+      }
+
+      .avatar {
+        margin: 0;
+        right: 24px;
+      }
+
+      .near__title {
+        text-align: right;
+        padding: 0 84px 0 0;
       }
     }
-  }
 
-  &__near {
+    .near__icon {
+      float: left;
+      margin: 4px 10px 0 0;
+    }
 
+    .near__icon-last {
+      float: right;
+      margin: 4px 0 0 10px;
+    }
+
+    &:hover {
+      text-decoration: none;
+      color: $gray;
+      svg {
+        color: $theme-accent;
+      }
+    }
   }
 }
 
@@ -516,7 +572,7 @@ a {
   }
 
   &__near {
-    color: $gray;
+    color: $black;
     &:hover {
       text-decoration: none;
       color: $theme-accent;

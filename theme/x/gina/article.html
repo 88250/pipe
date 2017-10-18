@@ -2,6 +2,12 @@
 <html>
 <head>
     {{template "head" .}}
+    {{if .PreviousArticle}}
+    <link rel="prev" title="{{.PreviousArticle.Title}}" href="{{.PreviousArticle.URL}}">
+    {{end}}
+    {{if .NextArticle}}
+    <link rel="next" title="{{.NextArticle.Title}}" href="{{.NextArticle.URL}}">
+    {{end}}
 </head>
 <body>
 {{template "header" .}}
@@ -47,7 +53,9 @@
             {{if ne $.Username ""}}
             <a class="fn-right action__btn action__btn--edit action__btn--read"
                href="{{$.Conf.Server}}/admin/articles/post?id={{.Article.ID}}">
-                <svg><use xlink:href="#edit"></use></svg>
+                <svg>
+                    <use xlink:href="#edit"></use>
+                </svg>
             </a>
             {{end}}
             <span class="action__share fn-left">
@@ -76,16 +84,6 @@
             </span>
         </div>
     </article>
-    {{if or (ne (len .RelevantArticles) 0) (ne (len .ExternalRelevantArticles) 0)}}
-    <div class="fn-clear article__two fn-bottom">
-        <div>
-            {{template "module-list" dict "List" .RelevantArticles "Title" .I18n.RelevantArticle "UserCount" .UserCount}}
-        </div>
-        <div>
-            {{template "module-list" dict "List" .ExternalRelevantArticles "Title" .I18n.ExternalRelevantArticle "UserCount" .UserCount}}
-        </div>
-    </div>
-    {{end}}
 
     {{if gt (len .Comments) 0}}
     <div class="fn-bottom">
@@ -109,55 +107,106 @@
         </section>
         {{end}}
     </div>
-    <div{{if or (.PreviousArticle) (.NextArticle)}} class="fn-bottom"{{end}}>
-        {{template "pagination" .}}
+    <div class="fn-bottom"}>
+    {{template "pagination" .}}
     </div>
     {{end}}
 
-    <div class="fn-clear article__near article__two">
+    {{if or (ne (len .RelevantArticles) 0) (ne (len .ExternalRelevantArticles) 0)}}
+    <div class="fn-bottom fn-three fn-clear">
+        {{if ne (len .RelevantArticles) 0}}
+        {{range $index, $item := .RelevantArticles}}
+        {{if lt $index 2}}
+        <div{{if eq $index 1}} class="fn-three--mid"{{end}}>
+            <div class="module__header">
+                {{if eq $index 0}}
+                {{$.I18n.RelevantArticle}}
+                {{else}}
+                &nbsp;
+                {{end}}
+            </div>
+            <a class="article__thumb article__thumb--relevant" data-src="{{$item.ThumbnailURL}}" href="{{$item.URL}}"></a>
+            <a class="module__list-title" href="{{$item.URL}}">{{$item.Title}}</a>
+        </div>
+        {{end}}
+        {{end}}
+        {{end}}
+
+        {{if ne (len .ExternalRelevantArticles) 0}}
+        {{range $index, $item := .ExternalRelevantArticles}}
+        {{if or (or (and (eq (len $.RelevantArticles) 0) (lt $index 3)) (and (eq (len $.RelevantArticles) 1) (lt $index 2))) (and (eq (len $.RelevantArticles) 2) (lt $index 1))}}
+        <div{{if or (and (eq (len $.RelevantArticles) 0) (eq $index 1)) (and (eq (len $.RelevantArticles) 1) (eq $index 0))}} class="fn-three--mid"{{end}}>
+            <div class="module__header">
+                {{if eq $index 0}}
+                {{$.I18n.ExternalRelevantArticle}}
+                {{else}}
+                &nbsp;
+                {{end}}
+            </div>
+            <a class="article__thumb article__thumb--relevant" data-src="{{$item.ThumbnailURL}}" href="{{$item.URL}}"></a>
+            <a class="module__list-title" href="{{$item.URL}}">{{$item.Title}}</a>
+        </div>
+        {{end}}
+        {{end}}
+        {{end}}
+    </div>
+    {{end}}
+
+    {{if gt .UserCount 1}}
+    <div class="fn-clear article__near fn-two">
         {{if .PreviousArticle}}
         <a href="{{.PreviousArticle.URL}}" rel="prev">
-            <svg class="fn-left"><use xlink:href="#chevron-left"></use></svg>
-            {{if gt .UserCount 1}}
-            <span class="avatar tooltipped tooltipped--n fn-left"
-               aria-label="{{.PreviousArticle.Author.Name}}"
-               data-src="{{.PreviousArticle.Author.AvatarURL}}">
-            </span>
-            {{end}}
-            <span class="fn-left">
-                Next<br>
-                <b>{{.PreviousArticle.Title}}</b>
+            <svg class="fn-absolute near__svg">
+                <use xlink:href="#chevron-left"></use>
+            </svg>
+            <span class="avatar tooltipped tooltipped--n fn-absolute"
+                  aria-label="{{.PreviousArticle.Author.Name}}"
+                  data-src="{{.PreviousArticle.Author.AvatarURL}}"></span>
+            <span class="near__title">
+                 {{.I18n.PreArticle}}<br>
+                <b class="ft-break">{{.PreviousArticle.Title}}</b>
             </span>
         </a>
         {{end}}
 
-        {{if .PreviousArticle}}
-        <a href="{{.NextArticle.URL}}" rel="prev">
-            <svg class="fn-right"><use xlink:href="#chevron-right"></use></svg>
-            {{if gt .UserCount 1}}
-            <span class="avatar tooltipped tooltipped--n fn-right"
+        {{if .NextArticle}}
+        <a href="{{.NextArticle.URL}}" rel="next" class="near__next">
+            <svg class="fn-absolute near__svg">
+                <use xlink:href="#chevron-right"></use>
+            </svg>
+            <span class="avatar tooltipped tooltipped--n fn-absolute"
                   aria-label="{{.NextArticle.Author.Name}}"
-                  data-src="{{.NextArticle.Author.AvatarURL}}">
-            </span>
-            {{end}}
-            <span class="fn-right">
-                Next<br>
-                <b>{{.NextArticle.Title}}</b>
+                  data-src="{{.NextArticle.Author.AvatarURL}}"></span>
+            <span class="near__title">
+                {{.I18n.NextArticle}}<br>
+                <b class="ft-break">{{.NextArticle.Title}}</b>
             </span>
         </a>
         {{end}}
     </div>
+    {{else}}
+    <div class="fn-clear article__near fn-two">
+        {{if .PreviousArticle}}
+        <a href="{{.PreviousArticle.URL}}" rel="prev">
+            <svg class="near__icon">
+                <use xlink:href="#chevron-left"></use>
+            </svg>
+            <b class="ft-break">{{.PreviousArticle.Title}}</b>
+        </a>
+        {{end}}
+
+        {{if .NextArticle}}
+        <a href="{{.NextArticle.URL}}" rel="next" class="ft-right">
+            <b class="ft-break">{{.NextArticle.Title}}</b>
+            <svg class="near__icon-last">
+                <use xlink:href="#chevron-right"></use>
+            </svg>
+        </a>
+        {{end}}
+    </div>
+    {{end}}
 
 </div>
 {{template "footer" .}}
 </body>
 </html>
-
-
-head & content
-<#if previousArticlePermalink??>
-    <link rel="prev" title="${previousArticleTitle}" href="${servePath}${previousArticlePermalink}">
-</#if>
-<#if nextArticlePermalink??>
-    <link rel="next" title="${nextArticleTitle}" href="${servePath}${nextArticlePermalink}">
-</#if>

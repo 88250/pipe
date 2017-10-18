@@ -1,8 +1,8 @@
 {{define "footer"}}
 <footer class="footer">
     <div class="wrapper">
-        <div class="footer__side fn-clear">
-            <div class="module fn-left">
+        <div class="footer__side fn-clear fn-three">
+            <div>
                 {{if eq .Setting.BasicNoticeBoard ""}}
                 {{template "module-list"  dict "List" .MostUseCategories "Title" .I18n.Categories "UserCount" .UserCount}}
                 {{else}}
@@ -14,7 +14,7 @@
                 </div>
                 {{end}}
             </div>
-            <div class="module footer__side-module--mid fn-left">
+            <div class="fn-three--mid">
                 <div class="module__header">
                     {{.I18n.Tags}}
                 </div>
@@ -24,7 +24,7 @@
                     {{end}}
                 </div>
             </div>
-            <div class="module fn-right">
+            <div>
                 {{template "module-list"  dict "List" .RandomArticles "Title" .I18n.RandomArticle "UserCount" .UserCount}}
             </div>
         </div>
