@@ -4,14 +4,7 @@
         <div class="footer__side fn-clear">
             <div class="module fn-left">
                 {{if eq .Setting.BasicNoticeBoard ""}}
-                <div class="module__header">
-                    {{.I18n.Categories}}
-                </div>
-                <div>
-                    {{range .MostUseCategories}}
-                    <a class="tag" href="{{.URL}}">{{.Title}}</a>
-                    {{end}}
-                </div>
+                {{template "module-list"  dict "List" .MostUseCategories "Title" .I18n.Categories "UserCount" .UserCount}}
                 {{else}}
                 <div class="module__header">
                     {{.I18n.NoticeBoard}}
@@ -32,24 +25,7 @@
                 </div>
             </div>
             <div class="module fn-right">
-                <div class="module__header">
-                    {{.I18n.RandomArticle}}
-                </div>
-                <div class="module__list">
-                    <ul>
-                        {{range .RandomArticles}}
-                        <li class="fn-clear">
-                            <a class="avatar avatar--space fn-left"
-                               href="{{.Author.URL}}"
-                               data-src="{{.Author.AvatarURL}}"></a>
-                            <div class="fn-left module__list-content">
-                                <a href="{{.URL}}" class="module__a">{{.Title}}</a>
-                                <time class="ft-12 ft-gray">{{.CreatedAt}}</time>
-                            </div>
-                        </li>
-                        {{end}}
-                    </ul>
-                </div>
+                {{template "module-list"  dict "List" .RandomArticles "Title" .I18n.RandomArticle "UserCount" .UserCount}}
             </div>
         </div>
         <div class="footer__info">

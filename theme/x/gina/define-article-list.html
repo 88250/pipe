@@ -1,7 +1,7 @@
 {{define "article-list"}}
 <div class="wrapper content">
     {{range .Articles}}
-    <article class="article__item">
+    <article class="fn-bottom">
         <header class="fn-relative article__header">
             {{if .ThumbnailURL}}
             <a class="article__thumb"
@@ -10,14 +10,13 @@
             {{end}}
             {{if gt $.UserCount 1}}
             <a rel="nofollow"
-               class="article__avatar"
+               class="avatar tooltipped tooltipped--w fn-absolute"
+               aria-label="{{.Author.Name}}"
+               data-src="{{.Author.AvatarURL}}"
                href="{{.Author.URL}}">
-                <span class="avatar tooltipped tooltipped--w"
-                      aria-label="{{.Author.Name}}"
-                      data-src="{{.Author.AvatarURL}}"></span>
             </a>
             {{end}}
-            <div {{if gt $.UserCount 1}} class="article__meta" {{end}}>
+            <div {{if gt $.UserCount 1}} class="fn-padding80" {{end}}>
                 <h2 class="article__title">
                     {{if .Topped}}
                     <svg>
@@ -45,7 +44,13 @@
         </section>
         {{end}}
         <div class="article__action fn-clear">
-            <a class="action__read fn-right" rel="bookmark" href="{{.URL}}">{{$.I18n.ReadMore}}</a>
+            {{if ne $.Username ""}}
+            <a class="fn-right action__btn action__btn--edit action__btn--read"
+               href="{{$.Conf.Server}}/admin/articles/post?id={{.ID}}">
+                <svg><use xlink:href="#edit"></use></svg>
+            </a>
+            {{end}}
+            <a class="action__btn action__btn--read fn-right" rel="bookmark" href="{{.URL}}">{{$.I18n.ReadMore}}</a>
             <span class="action__share fn-left">
                 <span class="action__btn action__btn--reply tooltipped--w tooltipped" aria-label="{{$.I18n.Share}}">
                     <svg><use xlink:href="#reply"></use></svg>

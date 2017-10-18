@@ -7,18 +7,17 @@
 {{template "header" .}}
 {{template "side" .}}
 <div class="wrapper content">
-    <article class="article__item">
+    <article class="fn-bottom">
         <header class="fn-relative article__header">
             {{if gt $.UserCount 1}}
             <a rel="nofollow"
-               class="article__avatar"
-               href="{{.Article.Author.URL}}">
-                <span class="avatar tooltipped tooltipped--w"
-                      aria-label="{{.Article.Author.Name}}"
-                      data-src="{{.Article.Author.AvatarURL}}"></span>
+               href="{{.Article.Author.URL}}"
+               class="avatar tooltipped tooltipped--w fn-absolute"
+               aria-label="{{.Article.Author.Name}}"
+               data-src="{{.Article.Author.AvatarURL}}">
             </a>
             {{end}}
-            <div {{if gt $.UserCount 1}} class="article__meta" {{end}}>
+            <div {{if gt $.UserCount 1}} class="fn-padding80" {{end}}>
                 <h2 class="article__title">
                     {{if .Article.Topped}}
                     <svg>
@@ -45,6 +44,12 @@
             {{.Article.Content}}
         </section>
         <div class="article__action fn-clear">
+            {{if ne $.Username ""}}
+            <a class="fn-right action__btn action__btn--edit action__btn--read"
+               href="{{$.Conf.Server}}/admin/articles/post?id={{.Article.ID}}">
+                <svg><use xlink:href="#edit"></use></svg>
+            </a>
+            {{end}}
             <span class="action__share fn-left">
                 <span class="action__btn action__btn--reply tooltipped--w tooltipped" aria-label="{{$.I18n.Share}}">
                     <svg><use xlink:href="#reply"></use></svg>
@@ -71,20 +76,31 @@
             </span>
         </div>
     </article>
-    <div>
-        <div class="module">
-            <div class="module__header">
-                sf
-            </div>
-            {{template "module-list" .RelevantArticles}}
+    {{if (ne (len .RelevantArticles) 0) | (ne (len .ExternalRelevantArticles) 0)}}
+    <div class="fn-clear article__relevants fn-bottom">
+        <div class="module fn-left">
+            {{template "module-list" dict "List" .RelevantArticles "Title" .I18n.RelevantArticle "UserCount" .UserCount}}
         </div>
-        <div class="module">
-            <div class="module__header">
-                sf
-            </div>
-            {{template "module-list" .ExternalRelevantArticles}}
+        <div class="module fn-left">
+            {{template "module-list" dict "List" .ExternalRelevantArticles "Title" .I18n.ExternalRelevantArticle "UserCount" .UserCount}}
         </div>
     </div>
+    {{end}}
+
+    {{if gt (len .Comments) 0}}
+    <div class="fn-bottom">
+        {{range .Comments}}
+        <section>
+            <a rel="nofollow"
+               class="avatar"
+               data-src="{{.Author.AvatarURL}}"
+               href="{{.Author.URL}}">
+            </a>
+        </section>
+        {{end}}
+    </div>
+    {{template "pagination" .}}
+    {{end}}
 </div>
 {{template "footer" .}}
 </body>
@@ -98,5 +114,3 @@ head & content
 <#if nextArticlePermalink??>
     <link rel="next" title="${nextArticleTitle}" href="${servePath}${nextArticlePermalink}">
 </#if>
-
-<@comments commentList=articleComments article=article>

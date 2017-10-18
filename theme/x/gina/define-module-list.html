@@ -1,17 +1,25 @@
 {{define "module-list"}}
+{{if ne (len .List) 0}}
+<div class="module__header">
+    {{.Title}}
+</div>
 <div class="module__list">
     <ul>
-        {{range .}}
+        {{range .List}}
         <li class="fn-clear">
-            <a class="avatar avatar--space fn-left"
+            {{if gt $.UserCount 1}}
+            <a class="avatar tooltipped tooltipped--w fn-absolute"
                href="{{.Author.URL}}"
+               aria-label="{{.Author.Name}}"
                data-src="{{.Author.AvatarURL}}"></a>
-            <div class="fn-left module__list-content">
-                <a href="{{.URL}}" class="module__a">{{.Title}}</a>
+            {{end}}
+            <div{{if gt $.UserCount 1}} class="fn-padding60"{{end}}>
+                <a href="{{.URL}}" class="module__list-title">{{.Title}}</a>
                 <time class="ft-12 ft-gray">{{.CreatedAt}}</time>
             </div>
         </li>
         {{end}}
     </ul>
 </div>
+{{end}}
 {{end}}
