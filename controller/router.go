@@ -126,6 +126,7 @@ func MapRoutes() *gin.Engine {
 	themeGroup.GET(util.PathCategories+"/:category", showCategoriesAction)
 	themeGroup.GET(util.PathTags, showTagsAction)
 	themeGroup.GET(util.PathTags+"/:tag", showTagArticlesAction)
+	themeGroup.POST(util.PathComments, addCommentAction)
 
 	ret.GET(util.PathAdmin+"/*path", console.ShowPageAction)
 	ret.GET("/login", console.ShowLoginAction)
