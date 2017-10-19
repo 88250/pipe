@@ -10,15 +10,19 @@
             <a href="{{.Item.Author.AvatarURL}}" class="module__list-title">{{.Item.Author.Name}}</a> •
             <span class="ft-nowrap ft-12 ft-gray">{{.Item.CreatedAt}}</span>
             {{if ne .Username ""}}
-            <span class="comment__btn"
-                  onclick="Common.removeComment('{{.Item.ID}}', '{{.I18n.ConfirmDelete}}', '{{.I18n.StayStep}}')">
-                            <svg><use xlink:href="#remove"></use></svg>
-                        </span>
+            <span class="comment__btn commentDelete"
+                  data-id="{{.Item.ID}}"
+                  data-label="{{.I18n.ConfirmDelete}}"
+                  data-label2="{{.I18n.StayStep}}">
+                <svg><use xlink:href="#remove"></use></svg>
+            </span>
             {{end}}
-            <span class="comment__btn"
-                  onclick="Common.showComment('{{.I18n.Reply}}{{.Item.Author.Name}}', '{{.ArticleID}}', '{{.Item.ID}}')">
-                            {{.I18n.Reply}} <svg><use xlink:href="#comment"></use></svg>
-                        </span>
+            <span class="comment__btn commentAdd"
+                  data-title="{{.I18n.Reply}}{{.Item.Author.Name}}"
+                  data-id="{{.ArticleID}}"
+                  data-commentid="{{.Item.ID}}">
+                {{.I18n.Reply}} <svg><use xlink:href="#comment"></use></svg>
+            </span>
         </div>
         <div class="content__reset">
             {{.Item.Content}}

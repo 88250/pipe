@@ -54,7 +54,7 @@ export const LazyLoadImage = () => {
 
 /**
  * @description CSS 背景图延迟加载
- * @param classes{string} 需要延迟加载的类名
+ * @param {string} classes 需要延迟加载的类名
  */
 export const LazyLoadCSSImage = (classes) => {
   const loadCSSImage = (it) => {
@@ -103,7 +103,7 @@ export const LazyLoadCSSImage = (classes) => {
  */
 export const ReomveComment = (id, succCB, errorCB) => {
   $.ajax({
-    url: conf.server + '/api/console/comments/' + id,
+    url: `${location.origin}/api/console/comments/${id}`,
     type: 'DELETE',
     success: (result) => {
       if (result.code === 0) {
@@ -161,19 +161,11 @@ export const KillBrowser = () => {
 }
 
 /**
- * @description 对评论信息进行本地存储
+ * @description 对输入内容进行本地存储
+ * @param {string} id 输入框 id
  */
-export const LocalStorageComment = () => {
-  $('#commentName').val(localStorage.getItem('themeCommentName') || '').keyup(() => {
-    localStorage.setItem('themeCommentName', $(this).val())
-  })
-  $('#commentEmail').val(localStorage.getItem('themeCommentEmail') || '').keyup(() => {
-    localStorage.setItem('themeCommentEmail', $(this).val())
-  })
-  $('#commentURL').val(localStorage.getItem('themeCommentURL') || '').keyup(() => {
-    localStorage.setItem('themeCommentURL', $(this).val())
-  })
-  $('#commentContent').val(localStorage.getItem('themeCommentContent') || '').keyup(() => {
-    localStorage.setItem('themeCommentContent', $(this).val())
+export const LocalStorageInput = (id) => {
+  $(`#${id}`).val(localStorage.getItem(`input${id}`) || '').keyup(function () {
+    localStorage.setItem(`input${id}`, $(this).val())
   })
 }

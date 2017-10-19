@@ -55,7 +55,7 @@
                 <span class="action__btn action__btn--reply fn-clear fn-left">
                     {{$.I18n.Share}} &nbsp; <svg class="fn-right"><use xlink:href="#reply"></use></svg>
                 </span>
-                <span class="action__btns fn-left" id="share">
+                <span class="action__btns fn-left">
                     <span class="action__btn action__btn--wechat" data-type="wechat">
                         <svg><use xlink:href="#wechat"></use></svg>
                     </span>
@@ -68,7 +68,7 @@
                     <span class="action__btn action__btn--google" data-type="google">
                         <svg><use xlink:href="#google"></use></svg>
                     </span>
-                    <div id="qrCode"
+                    <div class="action__code"
                          data-title="{{.Title}}"
                          data-blogtitle="{{$.Setting.BasicBlogTitle}}"
                          data-url="{{.URL}}"

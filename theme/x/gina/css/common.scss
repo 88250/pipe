@@ -469,7 +469,7 @@ a {
             color: $fade;
           }
           .action__btns {
-            #qrCode {
+            .action__code {
               display: block;
             }
             .action__btn {
@@ -482,7 +482,7 @@ a {
         .action__btns {
           margin-left: 10px;
           position: relative;
-          #qrCode {
+          .action__code {
             display: none;
             position: absolute;
             top: 48px;
@@ -648,7 +648,7 @@ a {
 // editor
 .editor {
   position: fixed;
-  bottom: -400px;
+  bottom: -210px;
   width: 100%;
   background-color: $border-color;
   padding: 30px 0;

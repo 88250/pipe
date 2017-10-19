@@ -58,18 +58,20 @@
                 </svg>
             </a>
             {{end}}
-            <a class="fn-right action__btn action__btn--edit action__btn--read fn-clear"
-               href="javascript:Common.showComment('{{.I18n.Comment}}{{.Article.Title}}', '{{.Article.ID}}')">
+            <span class="fn-right action__btn action__btn--edit action__btn--read fn-clear"
+                  data-title="{{.I18n.Comment}}{{.Article.Title}}"
+                  id="articleCommentBtn"
+                  data-id="{{.Article.ID}}">
                 {{$.I18n.Comment}} &nbsp;
                 <svg class="fn-right">
                     <use xlink:href="#comment"></use>
                 </svg>
-            </a>
+            </span>
             <span class="action__share">
                 <span class="action__btn action__btn--reply fn-left">
                     {{$.I18n.Share}} &nbsp; <svg class="fn-right"><use xlink:href="#reply"></use></svg>
                 </span>
-                <span class="action__btns fn-left" id="share">
+                <span class="action__btns fn-left">
                     <span class="action__btn action__btn--wechat" data-type="wechat">
                         <svg><use xlink:href="#wechat"></use></svg>
                     </span>
@@ -82,7 +84,7 @@
                     <span class="action__btn action__btn--google" data-type="google">
                         <svg><use xlink:href="#google"></use></svg>
                     </span>
-                    <div id="qrCode"
+                    <div class="action__code"
                          data-title="{{.Article.Title}}"
                          data-blogtitle="{{$.Setting.BasicBlogTitle}}"
                          data-url="{{.Article.URL}}"
@@ -108,7 +110,8 @@
     </div>
     {{else}}
     <div class="fn-bottom ft-center comment__null"
-         onclick="Common.showComment('{{.I18n.Comment}}{{.Article.Title}}', '{{.Article.ID}}')"
+         data-title="{{.I18n.Comment}}{{.Article.Title}}"
+         data-id="{{.Article.ID}}"
          id="comments">
         {{.I18n.StayStep}}
         <svg><use xlink:href="#comment"></use></svg>
@@ -219,22 +222,15 @@
     <div class="wrapper">
         <div id="replyObject"></div>
         <div class="form">
-            {{if eq .Username ""}}
-            <input id="commentName" type="text" placeholder="{{.I18n.Nickname}}">
-            <input id="commentEmail" type="text" placeholder="{{.I18n.Email}}">
-            <input id="commentURL" type="text" placeholder="URL">
-            {{end}}
             <textarea id="commentContent" placeholder="{{.I18n.Content}}" rows="3"></textarea>
-            {{if eq .Username ""}}
-            <input id="commentValidation" type="text" placeholder="{{.I18n.VerificationCode}}">
-            {{end}}
             <div class="article__action fn-clear">
                 <span class="fn-right action__btn action__btn--edit action__btn--read"
-                        onclick="Common.addComment('{{.I18n.Comment}}')">
+                      id="editorAdd"
+                      data-label="{{.I18n.Comment}}">
                     {{.I18n.Confirm}}&nbsp;<svg class="fn-right"><use xlink:href="#comment"></use></svg>
                 </span>
                 <span class="fn-right action__btn action__btn--edit action__btn--read"
-                onclick="Common.hideComment()">
+                      id="editorCancel">
                     {{.I18n.Cancel}}&nbsp;<svg class="fn-right"><use xlink:href="#chevron-up"></use></svg>
                 </span>
             </div>
