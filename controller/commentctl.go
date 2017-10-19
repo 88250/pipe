@@ -14,3 +14,45 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+package controller
+
+import (
+	"net/http"
+
+	"github.com/b3log/solo.go/model"
+	"github.com/b3log/solo.go/service"
+	"github.com/b3log/solo.go/util"
+	"github.com/gin-gonic/gin"
+)
+
+func addCommentAction(c *gin.Context) {
+	result := util.NewResult()
+	defer c.JSON(http.StatusOK, result)
+
+	blogAdminVal, _ := c.Get("blogAdmin")
+	blogAdmin := blogAdminVal.(*model.User)
+
+	sessionData := util.GetSession(c)
+	if nil == sessionData {
+		result.Code = -1
+		result.Msg = "Please login before comment"
+
+		return
+	}
+
+	comment := &model.Comment{
+		AuthorID: sessionData.UID,
+		BlogID:   blogAdmin.BlogID,
+	}
+	if err := c.BindJSON(comment); nil != err {
+		result.Code = -1
+		result.Msg = "parses add comment request failed"
+
+		return
+	}
+
+	if err := service.Comment.AddComment(comment); nil != err {
+		result.Code = -1
+		result.Msg = err.Error()
+	}
+}

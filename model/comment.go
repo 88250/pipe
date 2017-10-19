@@ -21,8 +21,10 @@ type Comment struct {
 	Model
 
 	ArticleID               uint   `json:"articleID"`
-	AuthorName              string `gorm:"size:32" json:"authorName"`
-	AuthorAvatarURL         string `gorm:"size:255" json:"authorAvatarURL"`
+	AuthorName              string `gorm:"size:32" json:"authorName"`       // Outside B3
+	AuthorEmail             string `gorm:"size:64" json:"email"`            // Outside B3
+	AuthorAvatarURL         string `gorm:"size:255" json:"authorAvatarURL"` // Outside B3
+	AuthorID                uint   `json:"authorID"`                        // B3 account
 	Content                 string `gorm:"type:text" json:"content"`
 	ParentCommentID         uint   `json:"parentCommentID"` // ID of replied comment
 	ParentCommentAuthorName string `gorm:"size:32" json:"parentCommentAuthorName"`
