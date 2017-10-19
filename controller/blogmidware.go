@@ -112,9 +112,8 @@ func fillCommon(c *gin.Context, dataModel *DataModel) {
 	fillMostUseTags(&settingMap, dataModel, blogID)
 	fillMostViewArticles(&settingMap, dataModel, blogID)
 	fillRecentComments(&settingMap, dataModel, blogID)
-
-	(*dataModel)["MostCommentArticles"] = (*dataModel)["MostViewArticles"]
-	(*dataModel)["RandomArticles"] = (*dataModel)["MostViewArticles"]
+	fillMostCommentArticles(&settingMap, dataModel, blogID)
+	fillRandomArticles(&settingMap, dataModel, blogID)
 
 	c.Set("dataModel", dataModel)
 }
@@ -203,4 +202,58 @@ func fillRecentComments(settingMap *map[string]string, dataModel *DataModel, blo
 	}
 
 	(*dataModel)["RecentComments"] = themeRecentComments
+}
+
+func fillMostCommentArticles(settingMap *map[string]string, dataModel *DataModel, blogID uint) {
+	mostCommentArticleSize, err := strconv.Atoi((*settingMap)[strings.Title(model.SettingNamePreferenceMostCommentArticleListSize)])
+	if nil != err {
+		log.Errorf("setting [%s] should be an integer, actual is [%v]", model.SettingNamePreferenceMostCommentArticleListSize,
+			(*settingMap)[model.SettingNamePreferenceMostCommentArticleListSize])
+		mostCommentArticleSize = model.SettingPreferenceMostCommentArticleListSizeDefault
+	}
+	mostCommentArticles := service.Article.GetMostCommentArticles(mostCommentArticleSize, blogID)
+	themeMostCommentArticles := []*ThemeListArticle{}
+	for _, article := range mostCommentArticles {
+		author := &ThemeAuthor{
+			Name:      "Vanessa",
+			URL:       "http://localhost:5879/blogs/solo/vanessa",
+			AvatarURL: "https://img.hacpai.com/20170818zhixiaoyun.jpeg",
+		}
+		themeArticle := &ThemeListArticle{
+			Title:     article.Title,
+			URL:       util.Conf.Server + (*settingMap)["SystemPath"] + article.Path,
+			CreatedAt: humanize.Time(article.CreatedAt),
+			Author:    author,
+		}
+		themeMostCommentArticles = append(themeMostCommentArticles, themeArticle)
+	}
+
+	(*dataModel)["MostCommentArticles"] = themeMostCommentArticles
+}
+
+func fillRandomArticles(settingMap *map[string]string, dataModel *DataModel, blogID uint) {
+	randomArticleSize, err := strconv.Atoi((*settingMap)[strings.Title(model.SettingNamePreferenceRandomArticleListSize)])
+	if nil != err {
+		log.Errorf("setting [%s] should be an integer, actual is [%v]", model.SettingNamePreferenceRandomArticleListSize,
+			(*settingMap)[model.SettingNamePreferenceRandomArticleListSize])
+		randomArticleSize = model.SettingPreferenceRandomArticleListSizeDefault
+	}
+	randomArticles := service.Article.GetRandomArticles(randomArticleSize, blogID)
+	themeRandomArticles := []*ThemeListArticle{}
+	for _, article := range randomArticles {
+		author := &ThemeAuthor{
+			Name:      "Vanessa",
+			URL:       "http://localhost:5879/blogs/solo/vanessa",
+			AvatarURL: "https://img.hacpai.com/20170818zhixiaoyun.jpeg",
+		}
+		themeArticle := &ThemeListArticle{
+			Title:     article.Title,
+			URL:       util.Conf.Server + (*settingMap)["SystemPath"] + article.Path,
+			CreatedAt: humanize.Time(article.CreatedAt),
+			Author:    author,
+		}
+		themeRandomArticles = append(themeRandomArticles, themeArticle)
+	}
+
+	(*dataModel)["RandomArticles"] = themeRandomArticles
 }
