@@ -17,6 +17,7 @@ const livereload = require('gulp-livereload')
 const source = require('vinyl-source-stream')
 const buffer = require('vinyl-buffer')
 const sourcemaps = require('gulp-sourcemaps')
+const es = require('event-stream')
 
 gulp.task('sass', function () {
   return gulp.src('./x/*/css/*.scss')
@@ -24,17 +25,23 @@ gulp.task('sass', function () {
     .pipe(gulp.dest('./x'))
 })
 
-gulp.task('dev', function (cb) {
-  const file = gulpUtil.env.theme || 'gina'
-  return browserify({entries: [`./x/${file}/js/common.js`, `./x/${file}/js/article.js`], debug: true})
-    .transform('babelify', {presets: ['es2015']})
-    .bundle()
-    .pipe(source())
-    .pipe(buffer())
-    .pipe(sourcemaps.init())
-    .pipe(sourcemaps.write('.'))
-    .pipe(gulp.dest(`./x/${file}/js/`))
-    .pipe(livereload())
+gulp.task('dev', function () {
+  const theme = gulpUtil.env.theme || 'gina'
+  const files = [`./x/${theme}/js/common.js`, `./x/${theme}/js/article.js`]
+
+  var tasks = files.map(function (entry) {
+    return browserify({entries: [entry]})
+      .transform('babelify', {presets: ['es2015']})
+      .bundle()
+      .pipe(source(entry))
+      .pipe(rename({suffix: '.min'}))
+      .pipe(buffer())
+      .pipe(sourcemaps.init())
+      .pipe(sourcemaps.write('.'))
+      .pipe(gulp.dest('.'))
+      .pipe(livereload())
+  })
+  return es.merge.apply(null, tasks)
 })
 
 gulp.task('watch', function () {
@@ -65,14 +72,19 @@ gulp.task('build', function () {
   // theme js
   fs.readdirSync('./x').forEach(function (file) {
     const jsPath = `./x/${file}/js/`
-    browserify({entries: [`./x/${file}/js/common.js`, `./x/${file}/js/article.js`]})
+    browserify({entries: `${jsPath}/common.js`})
       .transform('babelify', {presets: ['es2015']})
       .bundle()
       .pipe(source('common.min.js'))
-      .pipe(buffer())
       .pipe(minify().on('error', gulpUtil.log))
       .pipe(gulp.dest(jsPath))
-      .pipe(livereload())
+
+    browserify({entries: `${jsPath}/article.js`})
+      .transform('babelify', {presets: ['es2015']})
+      .bundle()
+      .pipe(source('article.min.js'))
+      .pipe(minify().on('error', gulpUtil.log))
+      .pipe(gulp.dest(jsPath))
   })
 })
 

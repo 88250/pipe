@@ -1,7 +1,7 @@
 {
     "Server": "http://0.0.0.0:5897",
     "StaticServer": "",
-    "StaticResourceVersion": "1508392271576",
+    "StaticResourceVersion": "1508395566741",
     "LogFilePath": "${home}/solo.go.log",
     "LogLevel": "debug",
     "SessionSecret": "BEYOND",

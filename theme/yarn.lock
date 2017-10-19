@@ -1283,7 +1283,7 @@ event-emitter@^0.3.5:
     d "1"
     es5-ext "~0.10.14"
 
-event-stream@^3.1.7:
+event-stream@^3.1.7, event-stream@^3.3.4:
   version "3.3.4"
   resolved "http://registry.npm.taobao.org/event-stream/download/event-stream-3.3.4.tgz#4ab4c9a0f5a54db9338b4c34d86bfce8f4b35571"
   dependencies:
