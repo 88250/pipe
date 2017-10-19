@@ -39,7 +39,7 @@ var modeName = DebugMode
 
 func init() {
 	mode := os.Getenv(ENV_GIN_MODE)
-	if mode == "" {
+	if len(mode) == 0 {
 		SetMode(DebugMode)
 	} else {
 		SetMode(mode)
