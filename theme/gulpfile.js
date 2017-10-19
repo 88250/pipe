@@ -2,11 +2,10 @@
  * @file themes tool.
  *
  * @author <a href='http://vanessa.b3log.org'>Liyuan Li</a>
- * @version 0.2.0.0, Oct 12, 2017
+ * @version 0.3.0.0, Oct 19, 2017
  */
 
 const gulp = require('gulp')
-const concat = require('gulp-concat')
 const sass = require('gulp-sass')
 const clean = require('gulp-clean')
 const rename = require('gulp-rename')
@@ -14,19 +13,54 @@ const composer = require('gulp-uglify/composer')
 const uglifyjs = require('uglify-es')
 const gulpUtil = require('gulp-util')
 const fs = require('fs')
+const browserify = require('browserify')
+const livereload = require('gulp-livereload')
+const source = require('vinyl-source-stream')
+const buffer = require('vinyl-buffer')
+const sourcemaps  = require('gulp-sourcemaps');
 
 gulp.task('sass', function () {
   return gulp.src('./x/*/css/*.scss')
-    .pipe(sass({ outputStyle: 'compressed' }).on('error', sass.logError))
+    .pipe(sass({outputStyle: 'compressed'}).on('error', sass.logError))
     .pipe(gulp.dest('./x'))
 })
 
-gulp.task('sass:watch', function () {
+gulp.task('dev', function (cb) {
+  fs.readdirSync('./x').forEach(function (file) {
+    const jsPath = `./x/${file}/js/`
+    browserify({entries: `./x/${file}/js/common.js`, debug: true})
+      .transform('babelify', {presets: ['es2015']})
+      .bundle()
+      .pipe(source('common.min.js'))
+      .pipe(buffer())
+      .pipe(sourcemaps.init())
+      .pipe(minify().on('error', gulpUtil.log))
+      .pipe(sourcemaps.write('.'))
+      .pipe(gulp.dest(jsPath))
+      .pipe(livereload())
+
+    browserify({entries: `./x/${file}/js/article.js`, debug: true})
+      .transform('babelify', {presets: ['es2015']})
+      .bundle()
+      .pipe(source('article.min.js'))
+      .pipe(buffer())
+      .pipe(sourcemaps.init())
+      .pipe(minify().on('error', gulpUtil.log))
+      .pipe(sourcemaps.write('.'))
+      .pipe(gulp.dest(jsPath))
+      .pipe(livereload())
+  })
+})
+
+
+gulp.task('watch', function () {
+  livereload.listen()
+  gulp.watch(['./x/*/js/article.js', './x/*/js/common.js', './x/*/js/symbol.js'], ['dev'])
   gulp.watch('./x/*/css/*.scss', ['sass'])
 })
 
-gulp.task('clean', ['sass'], function () {
-  // TODO: editor js
+
+gulp.task('build', function (cb) {
   // set static version
   const newVersion = (new Date()).getTime()
   // set sw.js
@@ -37,29 +71,36 @@ gulp.task('clean', ['sass'], function () {
   fs.writeFileSync('../solo.json',
     fs.readFileSync('../solo.json', 'UTF-8')
       .replace(/"StaticResourceVersion": "\d{13}"/, `"StaticResourceVersion": "${newVersion}"`), 'UTF-8')
-  // remove min js
-  return gulp.src(['./x/*/js/*.min.js', './sw.min.js'], { read: false })
-    .pipe(clean())
-})
 
-gulp.task('build', function (cb) {
   const minify = composer(uglifyjs)
   // min sw.js
   gulp.src('./sw.js')
     .pipe(minify().on('error', gulpUtil.log))
-    .pipe(rename({ suffix: '.min' }))
+    .pipe(rename({suffix: '.min'}))
     .pipe(gulp.dest('.'))
+
   // theme js
-  const commonJS = ['./js/jquery-3.2.1.min.js', './js/common.js']
   fs.readdirSync('./x').forEach(function (file) {
-    // TODO: add peculiarity js
     const jsPath = `./x/${file}/js/`
-    let themeJS = [`${jsPath}symbol.js`].concat(commonJS)
-    themeJS.push(`${jsPath}common.js`)
-    gulp.src(themeJS)
+    browserify({entries: `./x/${file}/js/common.js`})
+      .transform('babelify', {presets: ['es2015']})
+      .bundle()
+      .pipe(source('common.min.js'))
+      .pipe(buffer())
       .pipe(minify().on('error', gulpUtil.log))
-      .pipe(concat('common.min.js'))
       .pipe(gulp.dest(jsPath))
+      .pipe(livereload())
+
+    browserify({entries: `./x/${file}/js/article.js`})
+      .transform('babelify', {presets: ['es2015']})
+      .bundle()
+      .pipe(source('article.min.js'))
+      .pipe(buffer())
+      .pipe(minify().on('error', gulpUtil.log))
+      .pipe(gulp.dest(jsPath))
+      .pipe(livereload())
   })
 })
+
+
 gulp.task('default', ['sass', 'clean', 'build'])

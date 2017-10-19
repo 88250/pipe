@@ -485,8 +485,10 @@ a {
           #qrCode {
             display: none;
             position: absolute;
-            top: 35px;
-            left: 0px;
+            top: 48px;
+            left: 0;
+            height: 128px;
+            width: 128px;
           }
 
           .action__btn {

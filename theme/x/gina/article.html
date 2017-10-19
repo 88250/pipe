@@ -99,32 +99,7 @@
                 <span id="commentsCnt">{{len .Comments}}</span> {{.I18n.Comment}}
             </div>
             {{range .Comments}}
-            <section class="comment__item" id="comment{{.ID}}">
-                <a rel="nofollow"
-                   class="avatar fn-absolute"
-                   data-src="{{.Author.AvatarURL}}"
-                   href="{{.Author.URL}}">
-                </a>
-                <div class="fn-padding60">
-                    <div>
-                        <a href="{{.Author.AvatarURL}}" class="module__list-title">{{.Author.Name}}</a> •
-                        <span class="ft-nowrap ft-12 ft-gray">{{.CreatedAt}}</span>
-                        {{if ne $.Username ""}}
-                        <span class="comment__btn"
-                              onclick="Common.removeComment('{{.ID}}', '{{$.I18n.ConfirmDelete}}', '{{$.I18n.StayStep}}')">
-                            <svg><use xlink:href="#remove"></use></svg>
-                        </span>
-                        {{end}}
-                        <span class="comment__btn"
-                              onclick="Common.showComment('{{$.I18n.Reply}}{{.Author.Name}}', '{{$.Article.ID}}', '{{.ID}}')">
-                            {{$.I18n.Reply}} <svg><use xlink:href="#comment"></use></svg>
-                        </span>
-                    </div>
-                    <div class="content__reset">
-                        {{.Content}}
-                    </div>
-                </div>
-            </section>
+            {{template "comment" dict "Item" . "I18n" $.I18n "Username" $.Username "ArticleID" $.Article.ID}}
             {{end}}
         </div>
         <div class="fn-bottom">
@@ -267,8 +242,5 @@
 </div>
 
 {{template "footer" .}}
-<script>
-    Util.localStorageComment()
-</script>
 </body>
 </html>
