@@ -51,13 +51,16 @@ type Store interface {
 // Use the convenience function securecookie.GenerateRandomKey() to create
 // strong keys.
 func NewCookieStore(keyPairs ...[]byte) *CookieStore {
-	return &CookieStore{
+	cs := &CookieStore{
 		Codecs: securecookie.CodecsFromPairs(keyPairs...),
 		Options: &Options{
 			Path:   "/",
 			MaxAge: 86400 * 30,
 		},
 	}
+
+	cs.MaxAge(cs.Options.MaxAge)
+	return cs
 }
 
 // CookieStore stores sessions using secure cookies.
@@ -110,6 +113,20 @@ func (s *CookieStore) Save(r *http.Request, w http.ResponseWriter,
 	return nil
 }
 
+// MaxAge sets the maximum age for the store and the underlying cookie
+// implementation. Individual sessions can be deleted by setting Options.MaxAge
+// = -1 for that session.
+func (s *CookieStore) MaxAge(age int) {
+	s.Options.MaxAge = age
+
+	// Set the maxAge for each securecookie instance.
+	for _, codec := range s.Codecs {
+		if sc, ok := codec.(*securecookie.SecureCookie); ok {
+			sc.MaxAge(age)
+		}
+	}
+}
+
 // FilesystemStore ------------------------------------------------------------
 
 var fileMutex sync.RWMutex
@@ -124,7 +141,7 @@ func NewFilesystemStore(path string, keyPairs ...[]byte) *FilesystemStore {
 	if path == "" {
 		path = os.TempDir()
 	}
-	return &FilesystemStore{
+	fs := &FilesystemStore{
 		Codecs: securecookie.CodecsFromPairs(keyPairs...),
 		Options: &Options{
 			Path:   "/",
@@ -132,11 +149,14 @@ func NewFilesystemStore(path string, keyPairs ...[]byte) *FilesystemStore {
 		},
 		path: path,
 	}
+
+	fs.MaxAge(fs.Options.MaxAge)
+	return fs
 }
 
 // FilesystemStore stores sessions in the filesystem.
 //
-// It also serves as a referece for custom stores.
+// It also serves as a reference for custom stores.
 //
 // This store is still experimental and not well tested. Feedback is welcome.
 type FilesystemStore struct {
@@ -185,8 +205,22 @@ func (s *FilesystemStore) New(r *http.Request, name string) (*Session, error) {
 }
 
 // Save adds a single session to the response.
+//
+// If the Options.MaxAge of the session is <= 0 then the session file will be
+// deleted from the store path. With this process it enforces the properly
+// session cookie handling so no need to trust in the cookie management in the
+// web browser.
 func (s *FilesystemStore) Save(r *http.Request, w http.ResponseWriter,
 	session *Session) error {
+	// Delete if max-age is <= 0
+	if session.Options.MaxAge <= 0 {
+		if err := s.erase(session); err != nil {
+			return err
+		}
+		http.SetCookie(w, NewCookie(session.Name(), "", session.Options))
+		return nil
+	}
+
 	if session.ID == "" {
 		// Because the ID is used in the filename, encode it to
 		// use alphanumeric characters only.
@@ -204,6 +238,20 @@ func (s *FilesystemStore) Save(r *http.Request, w http.ResponseWriter,
 	}
 	http.SetCookie(w, NewCookie(session.Name(), encoded, session.Options))
 	return nil
+}
+
+// MaxAge sets the maximum age for the store and the underlying cookie
+// implementation. Individual sessions can be deleted by setting Options.MaxAge
+// = -1 for that session.
+func (s *FilesystemStore) MaxAge(age int) {
+	s.Options.MaxAge = age
+
+	// Set the maxAge for each securecookie instance.
+	for _, codec := range s.Codecs {
+		if sc, ok := codec.(*securecookie.SecureCookie); ok {
+			sc.MaxAge(age)
+		}
+	}
 }
 
 // save writes encoded session.Values to a file.
@@ -233,4 +281,15 @@ func (s *FilesystemStore) load(session *Session) error {
 		return err
 	}
 	return nil
+}
+
+// delete session file
+func (s *FilesystemStore) erase(session *Session) error {
+	filename := filepath.Join(s.path, "session_"+session.ID)
+
+	fileMutex.RLock()
+	defer fileMutex.RUnlock()
+
+	err := os.Remove(filename)
+	return err
 }
