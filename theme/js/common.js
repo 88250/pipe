@@ -117,13 +117,14 @@ export const ReomveComment = (id, succCB, errorCB) => {
 
 /**
  * @description 添加评论
- * @param {string} id 文章 id 或评论 id
+ * @param {string} data 评论内容
  * @param {function} succCB 成功回调
  * @param {function} errorCB 失败回调
  */
-export const AddComment = (id, succCB, errorCB) => {
+export const AddComment = (data, succCB, errorCB) => {
   $.ajax({
-    url: `${location.origin}/api/console/comments/${id}`,
+    url: `${location.origin}/blogs/sologo/comments`,
+    data,
     type: 'POST',
     success: (result) => {
       if (result.code === 0) {

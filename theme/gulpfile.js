@@ -7,7 +7,6 @@
 
 const gulp = require('gulp')
 const sass = require('gulp-sass')
-const clean = require('gulp-clean')
 const rename = require('gulp-rename')
 const composer = require('gulp-uglify/composer')
 const uglifyjs = require('uglify-es')
@@ -17,7 +16,7 @@ const browserify = require('browserify')
 const livereload = require('gulp-livereload')
 const source = require('vinyl-source-stream')
 const buffer = require('vinyl-buffer')
-const sourcemaps  = require('gulp-sourcemaps');
+const sourcemaps = require('gulp-sourcemaps')
 
 gulp.task('sass', function () {
   return gulp.src('./x/*/css/*.scss')
@@ -26,32 +25,17 @@ gulp.task('sass', function () {
 })
 
 gulp.task('dev', function (cb) {
-  fs.readdirSync('./x').forEach(function (file) {
-    const jsPath = `./x/${file}/js/`
-    browserify({entries: `./x/${file}/js/common.js`, debug: true})
-      .transform('babelify', {presets: ['es2015']})
-      .bundle()
-      .pipe(source('common.min.js'))
-      .pipe(buffer())
-      .pipe(sourcemaps.init())
-      .pipe(minify().on('error', gulpUtil.log))
-      .pipe(sourcemaps.write('.'))
-      .pipe(gulp.dest(jsPath))
-      .pipe(livereload())
-
-    browserify({entries: `./x/${file}/js/article.js`, debug: true})
-      .transform('babelify', {presets: ['es2015']})
-      .bundle()
-      .pipe(source('article.min.js'))
-      .pipe(buffer())
-      .pipe(sourcemaps.init())
-      .pipe(minify().on('error', gulpUtil.log))
-      .pipe(sourcemaps.write('.'))
-      .pipe(gulp.dest(jsPath))
-      .pipe(livereload())
-  })
+  const file = gulpUtil.env.theme || 'gina'
+  return browserify({entries: [`./x/${file}/js/common.js`, `./x/${file}/js/article.js`], debug: true})
+    .transform('babelify', {presets: ['es2015']})
+    .bundle()
+    .pipe(source())
+    .pipe(buffer())
+    .pipe(sourcemaps.init())
+    .pipe(sourcemaps.write('.'))
+    .pipe(gulp.dest(`./x/${file}/js/`))
+    .pipe(livereload())
 })
-
 
 gulp.task('watch', function () {
   livereload.listen()
@@ -59,8 +43,7 @@ gulp.task('watch', function () {
   gulp.watch('./x/*/css/*.scss', ['sass'])
 })
 
-
-gulp.task('build', function (cb) {
+gulp.task('build', function () {
   // set static version
   const newVersion = (new Date()).getTime()
   // set sw.js
@@ -82,7 +65,7 @@ gulp.task('build', function (cb) {
   // theme js
   fs.readdirSync('./x').forEach(function (file) {
     const jsPath = `./x/${file}/js/`
-    browserify({entries: `./x/${file}/js/common.js`})
+    browserify({entries: [`./x/${file}/js/common.js`, `./x/${file}/js/article.js`]})
       .transform('babelify', {presets: ['es2015']})
       .bundle()
       .pipe(source('common.min.js'))
@@ -90,17 +73,7 @@ gulp.task('build', function (cb) {
       .pipe(minify().on('error', gulpUtil.log))
       .pipe(gulp.dest(jsPath))
       .pipe(livereload())
-
-    browserify({entries: `./x/${file}/js/article.js`})
-      .transform('babelify', {presets: ['es2015']})
-      .bundle()
-      .pipe(source('article.min.js'))
-      .pipe(buffer())
-      .pipe(minify().on('error', gulpUtil.log))
-      .pipe(gulp.dest(jsPath))
-      .pipe(livereload())
   })
 })
 
-
-gulp.task('default', ['sass', 'clean', 'build'])
+gulp.task('default', ['sass', 'build'])

@@ -214,6 +214,7 @@
     {{end}}
 </div>
 
+{{if ne .Username ""}}
 <div class="editor" id="editor">
     <div class="wrapper">
         <div id="replyObject"></div>
@@ -240,6 +241,7 @@
         </div>
     </div>
 </div>
+{{end}}
 
 {{template "footer" .}}
 </body>

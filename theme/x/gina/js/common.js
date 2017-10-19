@@ -8,7 +8,7 @@
 import $ from 'jquery'
 import QRious from 'qrious'
 import { KillBrowser, LazyLoadCSSImage, LazyLoadImage } from '../../../js/common'
-import Icon from './symbol';
+import Icon from './symbol'
 
 const Common = {
   /**
@@ -20,6 +20,9 @@ const Common = {
     LazyLoadImage()
     Common._header()
     Common._share()
+    $('#sidebarIcon').click(() => {
+      Common.toggleSide()
+    })
   },
   _header: () => {
     const $headerSearch = $('#headerSearch')
