@@ -69,6 +69,7 @@ func fillCommon(c *gin.Context, dataModel *DataModel) {
 	i18nMap := map[string]interface{}{}
 	for key, value := range i18ns {
 		i18nMap[strings.Title(key)] = value
+		i18nMap[key] = value
 	}
 	(*dataModel)["I18n"] = i18nMap
 
@@ -76,6 +77,7 @@ func fillCommon(c *gin.Context, dataModel *DataModel) {
 	settingMap := map[string]string{}
 	for _, setting := range settings {
 		settingMap[strings.Title(setting.Name)] = setting.Value
+		settingMap[setting.Name] = setting.Value
 	}
 	settingMap["SystemPath"] = util.PathBlogs + settingMap["SystemPath"]
 
@@ -89,6 +91,7 @@ func fillCommon(c *gin.Context, dataModel *DataModel) {
 			log.Errorf("statistic [%s] should be an integer, actual is [%v]", statistic.Name, statistic.Value)
 		}
 		statisticMap[strings.Title(statistic.Name)] = count
+		statisticMap[statistic.Name] = count
 	}
 	(*dataModel)["Statistic"] = statisticMap
 	(*dataModel)["Title"] = settingMap["BasicBlogTitle"]
@@ -132,7 +135,7 @@ func fillMostUseCategories(settingMap *map[string]string, dataModel *DataModel, 
 }
 
 func fillMostUseTags(settingMap *map[string]string, dataModel *DataModel, blogID uint) {
-	tagSize, err := strconv.Atoi((*settingMap)[strings.Title(model.SettingNamePreferenceMostUseTagListSize)])
+	tagSize, err := strconv.Atoi((*settingMap)[model.SettingNamePreferenceMostUseTagListSize])
 	if nil != err {
 		log.Errorf("setting [%s] should be an integer, actual is [%v]", model.SettingNamePreferenceMostUseTagListSize,
 			(*settingMap)[model.SettingNamePreferenceMostUseTagListSize])
@@ -151,7 +154,7 @@ func fillMostUseTags(settingMap *map[string]string, dataModel *DataModel, blogID
 }
 
 func fillMostViewArticles(settingMap *map[string]string, dataModel *DataModel, blogID uint) {
-	mostViewArticleSize, err := strconv.Atoi((*settingMap)[strings.Title(model.SettingNamePreferenceMostViewArticleListSize)])
+	mostViewArticleSize, err := strconv.Atoi((*settingMap)[model.SettingNamePreferenceMostViewArticleListSize])
 	if nil != err {
 		log.Errorf("setting [%s] should be an integer, actual is [%v]", model.SettingNamePreferenceMostViewArticleListSize,
 			(*settingMap)[model.SettingNamePreferenceMostViewArticleListSize])
@@ -178,7 +181,7 @@ func fillMostViewArticles(settingMap *map[string]string, dataModel *DataModel, b
 }
 
 func fillRecentComments(settingMap *map[string]string, dataModel *DataModel, blogID uint) {
-	recentCommentSize, err := strconv.Atoi((*settingMap)[strings.Title(model.SettingNamePreferenceRecentCommentListSize)])
+	recentCommentSize, err := strconv.Atoi((*settingMap)[model.SettingNamePreferenceRecentCommentListSize])
 	if nil != err {
 		log.Errorf("setting [%s] should be an integer, actual is [%v]", model.SettingNamePreferenceRecentCommentListSize,
 			(*settingMap)[model.SettingNamePreferenceRecentCommentListSize])
@@ -205,7 +208,7 @@ func fillRecentComments(settingMap *map[string]string, dataModel *DataModel, blo
 }
 
 func fillMostCommentArticles(settingMap *map[string]string, dataModel *DataModel, blogID uint) {
-	mostCommentArticleSize, err := strconv.Atoi((*settingMap)[strings.Title(model.SettingNamePreferenceMostCommentArticleListSize)])
+	mostCommentArticleSize, err := strconv.Atoi((*settingMap)[model.SettingNamePreferenceMostCommentArticleListSize])
 	if nil != err {
 		log.Errorf("setting [%s] should be an integer, actual is [%v]", model.SettingNamePreferenceMostCommentArticleListSize,
 			(*settingMap)[model.SettingNamePreferenceMostCommentArticleListSize])
@@ -232,7 +235,7 @@ func fillMostCommentArticles(settingMap *map[string]string, dataModel *DataModel
 }
 
 func fillRandomArticles(settingMap *map[string]string, dataModel *DataModel, blogID uint) {
-	randomArticleSize, err := strconv.Atoi((*settingMap)[strings.Title(model.SettingNamePreferenceRandomArticleListSize)])
+	randomArticleSize, err := strconv.Atoi((*settingMap)[model.SettingNamePreferenceRandomArticleListSize])
 	if nil != err {
 		log.Errorf("setting [%s] should be an integer, actual is [%v]", model.SettingNamePreferenceRandomArticleListSize,
 			(*settingMap)[model.SettingNamePreferenceRandomArticleListSize])
