@@ -20,14 +20,14 @@ import (
 	"math"
 	"net/http"
 	"strconv"
-	"time"
-
 	"strings"
+	"time"
 
 	"github.com/b3log/solo.go/i18n"
 	"github.com/b3log/solo.go/model"
 	"github.com/b3log/solo.go/service"
 	"github.com/b3log/solo.go/util"
+	"github.com/dustin/go-humanize"
 	"github.com/gin-gonic/gin"
 	log "github.com/sirupsen/logrus"
 )
@@ -169,7 +169,7 @@ func fillMostViewArticles(settingMap *map[string]string, dataModel *DataModel, b
 		themeArticle := &ThemeListArticle{
 			Title:     article.Title,
 			URL:       util.Conf.Server + (*settingMap)["SystemPath"] + article.Path,
-			CreatedAt: "1天前",
+			CreatedAt: humanize.Time(article.CreatedAt),
 			Author:    author,
 		}
 		themeMostViewArticles = append(themeMostViewArticles, themeArticle)
@@ -189,10 +189,10 @@ func fillRecentComments(settingMap *map[string]string, dataModel *DataModel, blo
 	themeRecentComments := []*ThemeListComment{}
 	for _, comment := range recentComments {
 		themeComment := &ThemeListComment{
-			Content: comment.Content,
-			URL:     "todo",
-			Title: "sdf",
-			CreatedAt: "2019-12-12",
+			Title:     comment.Content,
+			Content:   comment.Content,
+			URL:       "todo",
+			CreatedAt: humanize.Time(comment.CreatedAt),
 			Author: &ThemeAuthor{
 				Name:      "Vanessa",
 				URL:       "http://localhost:5879/blogs/solo/vanessa",
