@@ -54,33 +54,18 @@
         </div>
     </div>
 </footer>
-<div class="sidebar__icon" onclick="Common.toggleSide()">
+<div class="sidebar__icon" id="sidebarIcon">
     <span class="sidebar__icon-line"></span>
     <span class="sidebar__icon-line sidebar__icon-line--middle"></span>
     <span class="sidebar__icon-line"></span>
 </div>
 
-{{if eq .Conf.RuntimeMode "dev"}}
+{{if .Article}}
 <script type="text/javascript"
-        src="{{.Conf.StaticServer}}/theme/x/{{.Setting.ThemeName}}/js/symbol.js?{{.Conf.StaticResourceVersion}}"
-        charset="utf-8"></script>
-<script type="text/javascript" src="{{.Conf.StaticServer}}/theme/js/jquery-3.2.1.min.js" charset="utf-8"></script>
-<script type="text/javascript" src="{{.Conf.StaticServer}}/theme/js/common.js" charset="utf-8"></script>
-<script type="text/javascript"
-        src="{{.Conf.StaticServer}}/theme/x/{{.Setting.ThemeName}}/js/qrcode.min.js"
-        charset="utf-8"></script>
-<script type="text/javascript"
-        src="{{.Conf.StaticServer}}/theme/x/{{.Setting.ThemeName}}/js/common.js?{{.Conf.StaticResourceVersion}}"
-        charset="utf-8"></script>
+        src="{{.Conf.StaticServer}}/theme/x/{{.Setting.ThemeName}}/js/article.min.js?{{.Conf.StaticResourceVersion}}"></script>
 {{else}}
 <script type="text/javascript"
-        src="{{.Conf.StaticServer}}/theme/x/{{.Setting.ThemeName}}/js/common.min.js?{{.Conf.StaticResourceVersion}}"
-        charset="utf-8"></script>
+        src="{{.Conf.StaticServer}}/theme/x/{{.Setting.ThemeName}}/js/common.min.js?{{.Conf.StaticResourceVersion}}"></script>
 {{end}}
-<script>
-    var conf = {
-      server: "{{.Conf.Server}}"
-    }
-</script>
 
 {{end}}
