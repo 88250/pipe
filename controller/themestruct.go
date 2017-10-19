@@ -32,10 +32,10 @@ type ThemeCategory struct {
 }
 
 type ThemeListComment struct {
-	ID      uint
-	Content string
-	URL     string
-	Author  *ThemeAuthor
-	Title	string
-CreatedAt string
+	ID        uint
+	Title     string
+	Content   string
+	URL       string
+	Author    *ThemeAuthor
+	CreatedAt string
 }
