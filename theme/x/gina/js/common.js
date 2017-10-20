@@ -17,7 +17,7 @@ const Common = {
    */
   init: () => {
     KillBrowser()
-    LazyLoadCSSImage('.avatar, .article__thumb')
+    LazyLoadCSSImage('.avatar, .article__thumb, .emotion__item')
     LazyLoadImage()
     Common._header()
     Common._share()

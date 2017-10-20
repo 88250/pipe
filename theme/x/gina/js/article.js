@@ -6,7 +6,7 @@
  */
 
 import $ from 'jquery'
-import { AddComment, LocalStorageInput, ReomveComment } from '../../../js/common'
+import { AddComment, LocalStorageInput, ReomveComment, InitEditor } from '../../../js/common'
 import './common'
 import hljs from 'highlight.js'
 
@@ -47,6 +47,8 @@ const Article = {
     $('#editorCancel').click(function () {
       Article.hideComment()
     })
+
+    InitEditor('emotions', 'commentContent')
   },
   removeComment: (id, label, label2) => {
     if (confirm(label)) {
