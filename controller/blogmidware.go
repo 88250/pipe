@@ -161,14 +161,14 @@ func fillMostViewArticles(settingMap *map[string]string, dataModel *DataModel, b
 		mostViewArticleSize = model.SettingPreferenceMostViewArticleListSizeDefault
 	}
 	mostViewArticles := service.Article.GetMostViewArticles(mostViewArticleSize, blogID)
-	themeMostViewArticles := []*ThemeListArticle{}
+	themeMostViewArticles := []*ThemeArticle{}
 	for _, article := range mostViewArticles {
 		author := &ThemeAuthor{
 			Name:      "Vanessa",
 			URL:       "http://localhost:5879/blogs/solo/vanessa",
 			AvatarURL: "https://img.hacpai.com/20170818zhixiaoyun.jpeg",
 		}
-		themeArticle := &ThemeListArticle{
+		themeArticle := &ThemeArticle{
 			Title:     article.Title,
 			URL:       util.Conf.Server + (*settingMap)["SystemPath"] + article.Path,
 			CreatedAt: humanize.Time(article.CreatedAt),
@@ -215,14 +215,14 @@ func fillMostCommentArticles(settingMap *map[string]string, dataModel *DataModel
 		mostCommentArticleSize = model.SettingPreferenceMostCommentArticleListSizeDefault
 	}
 	mostCommentArticles := service.Article.GetMostCommentArticles(mostCommentArticleSize, blogID)
-	themeMostCommentArticles := []*ThemeListArticle{}
+	themeMostCommentArticles := []*ThemeArticle{}
 	for _, article := range mostCommentArticles {
 		author := &ThemeAuthor{
 			Name:      "Vanessa",
 			URL:       "http://localhost:5879/blogs/solo/vanessa",
 			AvatarURL: "https://img.hacpai.com/20170818zhixiaoyun.jpeg",
 		}
-		themeArticle := &ThemeListArticle{
+		themeArticle := &ThemeArticle{
 			Title:     article.Title,
 			URL:       util.Conf.Server + (*settingMap)["SystemPath"] + article.Path,
 			CreatedAt: humanize.Time(article.CreatedAt),
@@ -242,14 +242,14 @@ func fillRandomArticles(settingMap *map[string]string, dataModel *DataModel, blo
 		randomArticleSize = model.SettingPreferenceRandomArticleListSizeDefault
 	}
 	randomArticles := service.Article.GetRandomArticles(randomArticleSize, blogID)
-	themeRandomArticles := []*ThemeListArticle{}
+	themeRandomArticles := []*ThemeArticle{}
 	for _, article := range randomArticles {
 		author := &ThemeAuthor{
 			Name:      "Vanessa",
 			URL:       "http://localhost:5879/blogs/solo/vanessa",
 			AvatarURL: "https://img.hacpai.com/20170818zhixiaoyun.jpeg",
 		}
-		themeArticle := &ThemeListArticle{
+		themeArticle := &ThemeArticle{
 			Title:     article.Title,
 			URL:       util.Conf.Server + (*settingMap)["SystemPath"] + article.Path,
 			CreatedAt: humanize.Time(article.CreatedAt),

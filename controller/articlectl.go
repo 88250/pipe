@@ -41,7 +41,7 @@ func showArticlesAction(c *gin.Context) {
 	blogAdmin := blogAdminVal.(*model.User)
 
 	articleModels, pagination := service.Article.GetArticles(page, blogAdmin.BlogID)
-	articles := []*ThemeListArticle{}
+	articles := []*ThemeArticle{}
 	for _, articleModel := range articleModels {
 		themeTags := []*ThemeTag{}
 		tagStrs := strings.Split(articleModel.Tags, ",")
@@ -66,7 +66,7 @@ func showArticlesAction(c *gin.Context) {
 			AvatarURL: "https://img.hacpai.com/20170818zhixiaoyun.jpeg",
 		}
 
-		article := &ThemeListArticle{
+		article := &ThemeArticle{
 			ID:           articleModel.ID,
 			Author:       author,
 			CreatedAt:    articleModel.CreatedAt.Format("2006-01-02"),
@@ -77,7 +77,7 @@ func showArticlesAction(c *gin.Context) {
 			ViewCount:    articleModel.ViewCount,
 			CommentCount: articleModel.CommentCount,
 			ThumbnailURL: "https://img.hacpai.com/20170818zhixiaoyun.jpeg",
-			Editable: false,
+			Editable:     false,
 		}
 
 		articles = append(articles, article)
@@ -101,7 +101,7 @@ func showArticleAction(c *gin.Context) {
 	blogAdmin := blogAdminVal.(*model.User)
 
 	articleModels, pagination := service.Article.GetArticles(page, blogAdmin.BlogID)
-	articles := []*ThemeListArticle{}
+	articles := []*ThemeArticle{}
 	themeTags := []*ThemeTag{}
 	for _, articleModel := range articleModels {
 		tagStrs := strings.Split(articleModel.Tags, ",")
@@ -126,7 +126,7 @@ func showArticleAction(c *gin.Context) {
 			AvatarURL: "https://img.hacpai.com/20170818zhixiaoyun.jpeg",
 		}
 
-		article := &ThemeListArticle{
+		article := &ThemeArticle{
 			ID:           articleModel.ID,
 			Author:       author,
 			CreatedAt:    articleModel.CreatedAt.Format("2006-01-02"),
@@ -138,14 +138,13 @@ func showArticleAction(c *gin.Context) {
 			CommentCount: articleModel.CommentCount,
 			ThumbnailURL: "https://img.hacpai.com/20170818zhixiaoyun.jpeg",
 			Content:      "sfasdfsf",
-			Removable: true,
-			Editable: false,
+			Editable:     false,
 		}
 
 		articles = append(articles, article)
 	}
 
-	dataModel["Article"] = &ThemeListArticle{
+	dataModel["Article"] = &ThemeArticle{
 		Author: &ThemeAuthor{
 			Name:      "Vanessa",
 			URL:       "http://localhost:5879/blogs/solo/vanessa",
@@ -159,7 +158,7 @@ func showArticleAction(c *gin.Context) {
 		ViewCount:    1,
 		CommentCount: 1,
 		Content:      "sfasdfsf",
-		Editable: true,
+		Editable:     true,
 	}
 	dataModel["Comments"] = articles
 	dataModel["Pagination"] = pagination
