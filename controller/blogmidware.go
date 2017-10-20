@@ -79,7 +79,8 @@ func fillCommon(c *gin.Context, dataModel *DataModel) {
 		settingMap[strings.Title(setting.Name)] = setting.Value
 		settingMap[setting.Name] = setting.Value
 	}
-	settingMap["SystemPath"] = util.PathBlogs + settingMap["SystemPath"]
+	settingMap[strings.Title(model.SettingNameSystemPath)] = util.PathBlogs + settingMap[strings.Title(model.SettingNameSystemPath)]
+	settingMap[model.SettingNameSystemPath] = util.PathBlogs + settingMap[model.SettingNameSystemPath]
 
 	(*dataModel)["Setting"] = settingMap
 
@@ -100,7 +101,7 @@ func fillCommon(c *gin.Context, dataModel *DataModel) {
 	(*dataModel)["MetaDescription"] = settingMap["BasicMetaDescription"]
 	(*dataModel)["Conf"] = util.Conf
 	(*dataModel)["Year"] = time.Now().Year()
-	(*dataModel)["BlogURL"] = util.Conf.Server + settingMap["SystemPath"]
+	(*dataModel)["BlogURL"] = util.Conf.Server + settingMap[model.SettingNameSystemPath]
 
 	(*dataModel)["Username"] = ""
 	session := util.GetSession(c)
@@ -127,7 +128,7 @@ func fillMostUseCategories(settingMap *map[string]string, dataModel *DataModel, 
 	for _, category := range categories {
 		themeCategory := &ThemeCategory{
 			Title: category.Title,
-			URL:   util.Conf.Server + (*settingMap)["SystemPath"] + "/" + category.Title,
+			URL:   util.Conf.Server + (*settingMap)[model.SettingNameSystemPath] + "/" + category.Title,
 		}
 		themeCategories = append(themeCategories, themeCategory)
 	}
@@ -146,7 +147,7 @@ func fillMostUseTags(settingMap *map[string]string, dataModel *DataModel, blogID
 	for _, tag := range tags {
 		themeTag := &ThemeTag{
 			Title: tag.Title,
-			URL:   util.Conf.Server + (*settingMap)["SystemPath"] + "/" + tag.Title,
+			URL:   util.Conf.Server + (*settingMap)[model.SettingNameSystemPath] + "/" + tag.Title,
 		}
 		themeTags = append(themeTags, themeTag)
 	}
@@ -161,16 +162,16 @@ func fillMostViewArticles(settingMap *map[string]string, dataModel *DataModel, b
 		mostViewArticleSize = model.SettingPreferenceMostViewArticleListSizeDefault
 	}
 	mostViewArticles := service.Article.GetMostViewArticles(mostViewArticleSize, blogID)
-	themeMostViewArticles := []*ThemeListArticle{}
+	themeMostViewArticles := []*ThemeArticle{}
 	for _, article := range mostViewArticles {
 		author := &ThemeAuthor{
 			Name:      "Vanessa",
 			URL:       "http://localhost:5879/blogs/solo/vanessa",
 			AvatarURL: "https://img.hacpai.com/20170818zhixiaoyun.jpeg",
 		}
-		themeArticle := &ThemeListArticle{
+		themeArticle := &ThemeArticle{
 			Title:     article.Title,
-			URL:       util.Conf.Server + (*settingMap)["SystemPath"] + article.Path,
+			URL:       util.Conf.Server + (*settingMap)[model.SettingNameSystemPath] + article.Path,
 			CreatedAt: humanize.Time(article.CreatedAt),
 			Author:    author,
 		}
@@ -215,16 +216,16 @@ func fillMostCommentArticles(settingMap *map[string]string, dataModel *DataModel
 		mostCommentArticleSize = model.SettingPreferenceMostCommentArticleListSizeDefault
 	}
 	mostCommentArticles := service.Article.GetMostCommentArticles(mostCommentArticleSize, blogID)
-	themeMostCommentArticles := []*ThemeListArticle{}
+	themeMostCommentArticles := []*ThemeArticle{}
 	for _, article := range mostCommentArticles {
 		author := &ThemeAuthor{
 			Name:      "Vanessa",
 			URL:       "http://localhost:5879/blogs/solo/vanessa",
 			AvatarURL: "https://img.hacpai.com/20170818zhixiaoyun.jpeg",
 		}
-		themeArticle := &ThemeListArticle{
+		themeArticle := &ThemeArticle{
 			Title:     article.Title,
-			URL:       util.Conf.Server + (*settingMap)["SystemPath"] + article.Path,
+			URL:       util.Conf.Server + (*settingMap)[model.SettingNameSystemPath] + article.Path,
 			CreatedAt: humanize.Time(article.CreatedAt),
 			Author:    author,
 		}
@@ -242,16 +243,16 @@ func fillRandomArticles(settingMap *map[string]string, dataModel *DataModel, blo
 		randomArticleSize = model.SettingPreferenceRandomArticleListSizeDefault
 	}
 	randomArticles := service.Article.GetRandomArticles(randomArticleSize, blogID)
-	themeRandomArticles := []*ThemeListArticle{}
+	themeRandomArticles := []*ThemeArticle{}
 	for _, article := range randomArticles {
 		author := &ThemeAuthor{
 			Name:      "Vanessa",
 			URL:       "http://localhost:5879/blogs/solo/vanessa",
 			AvatarURL: "https://img.hacpai.com/20170818zhixiaoyun.jpeg",
 		}
-		themeArticle := &ThemeListArticle{
+		themeArticle := &ThemeArticle{
 			Title:     article.Title,
-			URL:       util.Conf.Server + (*settingMap)["SystemPath"] + article.Path,
+			URL:       util.Conf.Server + (*settingMap)[model.SettingNameSystemPath] + article.Path,
 			CreatedAt: humanize.Time(article.CreatedAt),
 			Author:    author,
 		}

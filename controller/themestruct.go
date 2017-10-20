@@ -16,7 +16,7 @@
 
 package controller
 
-type ThemeListArticle struct {
+type ThemeArticle struct {
 	ID           uint
 	Abstract     string
 	Author       *ThemeAuthor
@@ -29,8 +29,7 @@ type ThemeListArticle struct {
 	CommentCount int
 	ThumbnailURL string
 	Content      string
-	Removable       bool
-    Editable     bool
+	Editable     bool
 }
 
 type ThemeTag struct {
@@ -56,4 +55,5 @@ type ThemeListComment struct {
 	URL       string
 	Author    *ThemeAuthor
 	CreatedAt string
+	Removable bool
 }
