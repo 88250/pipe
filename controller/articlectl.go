@@ -101,7 +101,7 @@ func showArticleAction(c *gin.Context) {
 	blogAdmin := blogAdminVal.(*model.User)
 
 	articleModels, pagination := service.Article.GetArticles(page, blogAdmin.BlogID)
-	articles := []*ThemeArticle{}
+	articles := []*ThemeListComment{}
 	themeTags := []*ThemeTag{}
 	for _, articleModel := range articleModels {
 		tagStrs := strings.Split(articleModel.Tags, ",")
@@ -126,19 +126,12 @@ func showArticleAction(c *gin.Context) {
 			AvatarURL: "https://img.hacpai.com/20170818zhixiaoyun.jpeg",
 		}
 
-		article := &ThemeArticle{
+		article := &ThemeListComment{
 			ID:           articleModel.ID,
 			Author:       author,
 			CreatedAt:    articleModel.CreatedAt.Format("2006-01-02"),
-			Title:        articleModel.Title,
-			Tags:         themeTags,
-			URL:          dataModel["Setting"].(map[string]string)[model.SettingNameSystemPath] + articleModel.Path,
-			Topped:       articleModel.Topped,
-			ViewCount:    articleModel.ViewCount,
-			CommentCount: articleModel.CommentCount,
-			ThumbnailURL: "https://img.hacpai.com/20170818zhixiaoyun.jpeg",
-			Content:      "sfasdfsf",
-			Editable:     false,
+			Title:      "sfasdfsf",
+			Removable: true,
 		}
 
 		articles = append(articles, article)
