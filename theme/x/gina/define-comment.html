@@ -9,7 +9,7 @@
         <div>
             <a href="{{.Item.Author.AvatarURL}}" class="module__list-title">{{.Item.Author.Name}}</a> •
             <span class="ft-nowrap ft-12 ft-gray">{{.Item.CreatedAt}}</span>
-            {{if ne .Username ""}}
+            {{if .Item.Removable}}
             <span class="comment__btn commentDelete"
                   data-id="{{.Item.ID}}"
                   data-label="{{.I18n.ConfirmDelete}}"

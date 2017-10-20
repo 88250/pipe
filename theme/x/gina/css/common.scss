@@ -411,24 +411,23 @@ a {
           transition: $transition;
         }
         &:hover {
-          text-decoration: none;
-          background-color: $border-color;
-          color: $fade;
-        }
-        &--edit {
-          margin-left: 10px;
-        }
-        &--read:hover {
           color: #fff;
           background-color: $theme-accent;
           border-color: $theme-accent;
+          text-decoration: none;
         }
+
+        &--space {
+          margin-left: 10px;
+        }
+
         &--wechat {
           border-color: #3caf36;
           transition-delay: 50ms;
           &:hover {
             background-color: #3caf36;
             color: #fff;
+            border-color: #3caf36;
           }
         }
 
@@ -438,6 +437,7 @@ a {
           &:hover {
             background-color: #ff9933;
             color: #fff;
+            border-color: #ff9933;
           }
         }
 
@@ -447,6 +447,7 @@ a {
           &:hover {
             background-color: #18a3fa;
             color: #fff;
+            border-color: #18a3fa;
           }
         }
 
@@ -456,6 +457,7 @@ a {
           &:hover {
             background-color: #dc4A3d;
             color: #fff;
+            border-color: #dc4A3d;
           }
         }
       }
@@ -464,10 +466,12 @@ a {
         height: 40px;
 
         &:hover {
-          .action__btn--reply {
+          .action__btn--share {
             background-color: $border-color;
+            border-color: $border-color;
             color: $fade;
           }
+
           .action__btns {
             .action__code {
               display: block;
@@ -490,7 +494,6 @@ a {
             height: 128px;
             width: 128px;
           }
-
           .action__btn {
             opacity: 0;
             transform: translate(20px);

@@ -29,6 +29,8 @@ type ThemeListArticle struct {
 	CommentCount int
 	ThumbnailURL string
 	Content      string
+	Removable       bool
+    Editable     bool
 }
 
 type ThemeTag struct {

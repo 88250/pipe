@@ -77,6 +77,7 @@ func showArticlesAction(c *gin.Context) {
 			ViewCount:    articleModel.ViewCount,
 			CommentCount: articleModel.CommentCount,
 			ThumbnailURL: "https://img.hacpai.com/20170818zhixiaoyun.jpeg",
+			Editable: false,
 		}
 
 		articles = append(articles, article)
@@ -137,6 +138,8 @@ func showArticleAction(c *gin.Context) {
 			CommentCount: articleModel.CommentCount,
 			ThumbnailURL: "https://img.hacpai.com/20170818zhixiaoyun.jpeg",
 			Content:      "sfasdfsf",
+			Removable: true,
+			Editable: false,
 		}
 
 		articles = append(articles, article)
@@ -156,6 +159,7 @@ func showArticleAction(c *gin.Context) {
 		ViewCount:    1,
 		CommentCount: 1,
 		Content:      "sfasdfsf",
+		Editable: true,
 	}
 	dataModel["Comments"] = articles
 	dataModel["Pagination"] = pagination
