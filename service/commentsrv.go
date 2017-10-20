@@ -35,8 +35,14 @@ type commentService struct {
 
 // Comment pagination arguments of admin console.
 const (
-	adminConsoleCommentListPageSize    = 15
-	adminConsoleCommentListWindowsSize = 20
+	adminConsoleCommentListPageSize   = 15
+	adminConsoleCommentListWindowSize = 20
+)
+
+// Comment pagination arguments of theme.
+const (
+	themeCommentListPageSize   = 15
+	themeCommentListWindowSize = 20
 )
 
 func (srv *commentService) ConsoleGetComments(page int, blogID uint) (ret []*model.Comment, pagination *util.Pagination) {
@@ -49,7 +55,7 @@ func (srv *commentService) ConsoleGetComments(page int, blogID uint) (ret []*mod
 	}
 
 	pageCount := int(math.Ceil(float64(count) / adminConsoleCommentListPageSize))
-	pagination = util.NewPagination(page, adminConsoleCommentListPageSize, pageCount, adminConsoleCommentListWindowsSize, count)
+	pagination = util.NewPagination(page, adminConsoleCommentListPageSize, pageCount, adminConsoleCommentListWindowSize, count)
 
 	return
 }
@@ -60,6 +66,21 @@ func (srv *commentService) GetRecentComments(size int, blogID uint) (ret []*mode
 		Order("created_at DESC, id DESC").Limit(size).Find(&ret).Error; nil != err {
 		log.Errorf("get recent comments failed: " + err.Error())
 	}
+
+	return
+}
+
+func (srv *commentService) GetArticleComments(articleID uint, page int, blogID uint) (ret []*model.Comment, pagination *util.Pagination) {
+	offset := (page - 1) * themeCommentListPageSize
+	count := 0
+	if err := db.Model(model.Comment{}).Order("id DESC").
+		Where(model.Comment{ArticleID: articleID, BlogID: blogID}).
+		Count(&count).Offset(offset).Limit(themeCommentListPageSize).Find(&ret).Error; nil != err {
+		log.Errorf("get comments failed: " + err.Error())
+	}
+
+	pageCount := int(math.Ceil(float64(count) / themeCommentListPageSize))
+	pagination = util.NewPagination(page, themeCommentListPageSize, pageCount, themeCommentListWindowSize, count)
 
 	return
 }

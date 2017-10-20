@@ -37,8 +37,8 @@ type navigationService struct {
 
 // Navigation pagination arguments of admin console.
 const (
-	adminConsoleNavigationListPageSize    = 15
-	adminConsoleNavigationListWindowsSize = 20
+	adminConsoleNavigationListPageSize   = 15
+	adminConsoleNavigationListWindowSize = 20
 )
 
 func (srv *navigationService) AddNavigation(navigation *model.Navigation) error {
@@ -105,7 +105,7 @@ func (srv *navigationService) ConsoleGetNavigations(page int, blogID uint) (ret 
 	}
 
 	pageCount := int(math.Ceil(float64(count) / adminConsoleNavigationListPageSize))
-	pagination = util.NewPagination(page, adminConsoleNavigationListPageSize, pageCount, adminConsoleNavigationListWindowsSize, count)
+	pagination = util.NewPagination(page, adminConsoleNavigationListPageSize, pageCount, adminConsoleNavigationListWindowSize, count)
 
 	return
 }

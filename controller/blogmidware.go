@@ -65,6 +65,7 @@ func resolveBlog() gin.HandlerFunc {
 
 		c.Set("article", article)
 		showArticleAction(c)
+		c.Abort()
 	}
 }
 

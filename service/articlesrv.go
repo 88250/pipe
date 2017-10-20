@@ -42,8 +42,8 @@ type articleService struct {
 
 // Article pagination arguments of admin console.
 const (
-	adminConsoleArticleListPageSize    = 15
-	adminConsoleArticleListWindowsSize = 20
+	adminConsoleArticleListPageSize   = 15
+	adminConsoleArticleListWindowSize = 20
 )
 
 func (srv *articleService) GetArticleByPath(path string) *model.Article {
@@ -113,7 +113,7 @@ func (srv *articleService) ConsoleGetArticles(page int, blogID uint) (ret []*mod
 	}
 
 	pageCount := int(math.Ceil(float64(count) / adminConsoleArticleListPageSize))
-	pagination = util.NewPagination(page, adminConsoleArticleListPageSize, pageCount, adminConsoleArticleListWindowsSize, count)
+	pagination = util.NewPagination(page, adminConsoleArticleListPageSize, pageCount, adminConsoleArticleListWindowSize, count)
 
 	return
 }
@@ -140,7 +140,7 @@ func (srv *articleService) GetArticles(page int, blogID uint) (ret []*model.Arti
 	windowSize, err := strconv.Atoi(settings[model.SettingNamePreferenceArticleListWindowSize].Value)
 	if nil != err {
 		log.Errorf("value of setting [%s] is not an integer, actual is [%v]", model.SettingNamePreferenceArticleListWindowSize, settings[model.SettingNamePreferenceArticleListWindowSize].Value)
-		windowSize = adminConsoleArticleListWindowsSize
+		windowSize = adminConsoleArticleListWindowSize
 	}
 	pagination = util.NewPagination(page, pageSize, pageCount, windowSize, count)
 

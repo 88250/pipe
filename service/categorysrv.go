@@ -38,8 +38,8 @@ type categoryService struct {
 
 // Category pagination arguments of admin console.
 const (
-	adminConsoleCategoryListPageSize    = 15
-	adminConsoleCategoryListWindowsSize = 20
+	adminConsoleCategoryListPageSize   = 15
+	adminConsoleCategoryListWindowSize = 20
 )
 
 func (srv *categoryService) AddCategory(category *model.Category) error {
@@ -78,7 +78,7 @@ func (srv *categoryService) ConsoleGetCategories(page int, blogID uint) (ret []*
 	}
 
 	pageCount := int(math.Ceil(float64(count) / adminConsoleCategoryListPageSize))
-	pagination = util.NewPagination(page, adminConsoleCategoryListPageSize, pageCount, adminConsoleCategoryListWindowsSize, count)
+	pagination = util.NewPagination(page, adminConsoleCategoryListPageSize, pageCount, adminConsoleCategoryListWindowSize, count)
 
 	return
 }

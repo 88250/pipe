@@ -43,6 +43,18 @@ func TestGetRecentComments(t *testing.T) {
 	}
 }
 
+func TestGetArticleComments(t *testing.T) {
+	comments, pagination := Comment.GetArticleComments(1, 1, 1)
+	if 0 != len(comments) {
+		t.Errorf("expected is [%d], actual is [%d]", 0, len(comments))
+
+		return
+	}
+	if 0 != pagination.RecordCount {
+		t.Errorf("expected is [%d], actual is [%d]", 0, pagination.RecordCount)
+	}
+}
+
 func TestRemoveComment(t *testing.T) {
 	comment := &model.Comment{
 		ArticleID:       1,

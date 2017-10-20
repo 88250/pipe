@@ -168,7 +168,30 @@ func showArticleAction(c *gin.Context) {
 		articles = append(articles, article)
 	}
 
-	dataModel["Comments"] = articles
+	page := c.GetInt("p")
+	if 1 > page {
+		page = 1
+	}
+	commentModels, pagination := service.Comment.GetArticleComments(article.ID, page, blogAdmin.BlogID)
+	comments := []*ThemeComment{}
+	for _, commentModel := range commentModels {
+		author := &ThemeAuthor{
+			Name:      "test name",
+			URL:       "http://localhost:5879/blogs/solo/vanessa",
+			AvatarURL: "https://img.hacpai.com/20170818zhixiaoyun.jpeg",
+		}
+
+		comment := &ThemeComment{
+			ID:        commentModel.ID,
+			Content:   commentModel.Content,
+			Author:    author,
+			Removable: false,
+		}
+
+		comments = append(comments, comment)
+	}
+
+	dataModel["Comments"] = comments
 	dataModel["Pagination"] = pagination
 
 	dataModel["RelevantArticles"] = articles
