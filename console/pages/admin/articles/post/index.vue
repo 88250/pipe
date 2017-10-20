@@ -44,7 +44,10 @@
         <span>{{ errorMsg }}</span>
       </div>
       <div class="fn-right">
-        <v-btn @click="edit" class="btn btn--info btn--margin-t30" v-if="$route.query.id">
+        <v-btn @click="remove" class="btn btn--danger btn--margin-t30" v-if="$route.query.id">
+          {{ $t('delete', $store.state.locale) }}
+        </v-btn>
+        <v-btn @click="edit" class="btn btn--info btn--space btn--margin-t30" v-if="$route.query.id">
           {{ $t('edit', $store.state.locale) }}
         </v-btn>
         <v-btn @click="publish" class="btn btn--info btn--margin-t30" v-else>{{ $t('publish', $store.state.locale)
@@ -105,6 +108,17 @@
         } else {
           this.$set(this, 'error', true)
           this.$set(this, 'errorMsg', responseData.msg)
+        }
+      },
+      async remove () {
+        const responseData = await this.axios.delete(`/console/articles/${this.$route.query.id}`)
+        if (responseData === null) {
+          this.$store.commit('setSnackBar', {
+            snackBar: true,
+            snackMsg: this.$t('deleteSuccess', this.$store.state.locale),
+            snackModify: 'success'
+          })
+          this.$router.push('/admin/articles')
         }
       },
       async publish () {
