@@ -48,7 +48,7 @@ type ThemeCategory struct {
 	URL   string
 }
 
-type ThemeListComment struct {
+type ThemeComment struct {
 	ID        uint
 	Title     string
 	Content   string

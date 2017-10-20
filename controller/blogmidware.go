@@ -203,9 +203,9 @@ func fillRecentComments(settingMap *map[string]string, dataModel *DataModel, blo
 		recentCommentSize = model.SettingPreferenceRecentCommentListSizeDefault
 	}
 	recentComments := service.Comment.GetRecentComments(recentCommentSize, blogID)
-	themeRecentComments := []*ThemeListComment{}
+	themeRecentComments := []*ThemeComment{}
 	for _, comment := range recentComments {
-		themeComment := &ThemeListComment{
+		themeComment := &ThemeComment{
 			Title:     comment.Content,
 			Content:   comment.Content,
 			URL:       "todo",
