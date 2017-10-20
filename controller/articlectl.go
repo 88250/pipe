@@ -196,7 +196,34 @@ func showArticleAction(c *gin.Context) {
 
 	dataModel["RelevantArticles"] = articles
 	dataModel["ExternalRelevantArticles"] = articles
-	dataModel["PreviousArticle"] = dataModel["Article"]
-	dataModel["NextArticle"] = dataModel["Article"]
+	fillPreviousArticle(c, article, &dataModel)
+	fillNextArticle(c, article, &dataModel)
+
 	c.HTML(http.StatusOK, "article.html", dataModel)
+}
+
+func fillPreviousArticle(c *gin.Context, article *model.Article, dataModel *DataModel) {
+	previous := service.Article.GetPreviousArticle(article.ID, article.BlogID)
+	if nil == previous {
+		return
+	}
+
+	previousArticle := &ThemeArticle{
+		Title: previous.Title,
+		URL:   getSystemPath(c) + previous.Path,
+	}
+	(*dataModel)["PreviousArticle"] = previousArticle
+}
+
+func fillNextArticle(c *gin.Context, article *model.Article, dataModel *DataModel) {
+	next := service.Article.GetNextArticle(article.ID, article.BlogID)
+	if nil == next {
+		return
+	}
+
+	nextArticle := &ThemeArticle{
+		Title: next.Title,
+		URL:   getSystemPath(c) + next.Path,
+	}
+	(*dataModel)["NextArticle"] = nextArticle
 }
