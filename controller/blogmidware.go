@@ -48,9 +48,23 @@ func resolveBlog() gin.HandlerFunc {
 		}
 		c.Set("blogAdmin", blogAdmin)
 
-		fillCommon(c, &DataModel{})
+		dataModel := &DataModel{}
+		fillCommon(c, dataModel)
 
-		c.Next()
+		path := strings.Split(c.Request.RequestURI, username)[1]
+		path = strings.TrimSpace(path)
+		if end := strings.Index(path, "?"); 0 < end {
+			path = path[:end]
+		}
+		article := service.Article.GetArticleByPath(path)
+		if nil == article {
+			c.Next()
+
+			return
+		}
+
+		c.Set("article", article)
+		showArticleAction(c)
 	}
 }
 
@@ -260,4 +274,11 @@ func fillRandomArticles(settingMap *map[string]string, dataModel *DataModel, blo
 	}
 
 	(*dataModel)["RandomArticles"] = themeRandomArticles
+}
+
+func getSystemPath(c *gin.Context) string {
+	dm, _ := c.Get("dataModel")
+	dataModel := dm.(*DataModel)
+
+	return (*dataModel)["Setting"].(map[string]string)[model.SettingNameSystemPath]
 }

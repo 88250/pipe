@@ -18,15 +18,15 @@ package controller
 
 import (
 	"errors"
-	"strings"
-
 	"html/template"
+	"strings"
 
 	"github.com/b3log/solo.go/controller/console"
 	"github.com/b3log/solo.go/theme"
 	"github.com/b3log/solo.go/util"
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
+	log "github.com/sirupsen/logrus"
 )
 
 // MapRoutes returns a gin engine and binds controllers with request URLs.
@@ -116,21 +116,65 @@ func MapRoutes() *gin.Engine {
 	themeGroup := ret.Group(util.PathBlogs + "/:username")
 	themeGroup.Use(resolveBlog())
 	themeGroup.GET("", showArticlesAction)
-	themeGroup.GET(util.PathActivities, showActivitiesAction)
-	themeGroup.GET(util.PathArchives+"/:archive", showArchiveArticlesAction)
-	themeGroup.GET(util.PathArchives, showArchivesAction)
-	themeGroup.GET(util.PathArticles+"/:id", showArticleAction)
-	themeGroup.GET(util.PathAuthors+"/:name", showAuthorArticlesAction)
-	themeGroup.GET(util.PathAuthors, showAuthorsAction)
-	themeGroup.GET(util.PathCategories, showCategoriesAction)
-	themeGroup.GET(util.PathCategories+"/:category", showCategoriesAction)
-	themeGroup.GET(util.PathTags, showTagsAction)
-	themeGroup.GET(util.PathTags+"/:tag", showTagArticlesAction)
-	themeGroup.POST(util.PathComments, addCommentAction)
+	themeGroup.Any("/*path", routePath)
 
 	ret.GET(util.PathAdmin+"/*path", console.ShowPageAction)
 	ret.GET("/login", console.ShowLoginAction)
 	ret.Static(util.PathAssets, "./console/dist")
 
 	return ret
+}
+
+func routePath(c *gin.Context) {
+	path := c.Param("path")
+
+	switch path {
+	case util.PathActivities:
+		showActivitiesAction(c)
+
+		return
+	case util.PathArchives:
+		showArchiveArticlesAction(c)
+
+		return
+	case util.PathAuthors:
+		showAuthorsAction(c)
+
+		return
+	case util.PathCategories:
+		showCategoriesAction(c)
+
+		return
+	case util.PathTags:
+		showTagsAction(c)
+
+		return
+	case util.PathComments:
+		addCommentAction(c)
+
+		return
+	}
+
+	if strings.Contains(path, util.PathArchives+"/") {
+		showArchiveArticlesAction(c)
+
+		return
+	}
+	if strings.Contains(path, util.PathAuthors+"/") {
+		showAuthorArticlesAction(c)
+
+		return
+	}
+	if strings.Contains(path, util.PathCategories+"/") {
+		showCategoryArticlesArticlesAction(c)
+
+		return
+	}
+	if strings.Contains(path, util.PathTags+"/") {
+		showTagArticlesAction(c)
+
+		return
+	}
+
+	log.Info("can't handle path [" + path + "]")
 }

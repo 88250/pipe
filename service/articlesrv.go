@@ -46,6 +46,15 @@ const (
 	adminConsoleArticleListWindowsSize = 20
 )
 
+func (srv *articleService) GetArticleByPath(path string) *model.Article {
+	ret := &model.Article{}
+	if err := db.Where("path = ?", path).Find(ret).Error; nil != err {
+		return nil
+	}
+
+	return ret
+}
+
 func (srv *articleService) AddArticle(article *model.Article) error {
 	srv.mutex.Lock()
 	defer srv.mutex.Unlock()

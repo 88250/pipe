@@ -44,8 +44,18 @@ func ConnectDB() {
 		&model.Category{}, &model.Setting{}, &model.Correlation{},
 	}
 
-	db.DropTableIfExists(tables...)
-	db.AutoMigrate(tables...)
+	// TODO: D, remove it after release 1.0.0
+	if err = db.DropTableIfExists(tables...).Error; nil != err {
+		log.Fatal("drops tables failed: " + err.Error())
+	}
+
+	if err = db.AutoMigrate(tables...).Error; nil != err {
+		log.Fatal("auto migrate tables failed: " + err.Error())
+	}
+
+	if err = db.Model(&model.Article{}).AddUniqueIndex("idx_article_path", "path").Error; nil != err {
+		log.Fatal("adds index failed: " + err.Error())
+	}
 }
 
 func DisconnectDB() {

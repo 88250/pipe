@@ -27,6 +27,13 @@ const (
 	articleRecordSize = 99
 )
 
+func TestGetArticleByPath(t *testing.T) {
+	article := Article.GetArticleByPath("/hello-world")
+	if nil == article {
+		t.Errorf("article is nil")
+	}
+}
+
 func TestAddArticle(t *testing.T) {
 	for i := 0; i < articleRecordSize; i++ {
 		article := &model.Article{AuthorID: 1,

@@ -92,23 +92,47 @@ func showArticleAction(c *gin.Context) {
 	dm, _ := c.Get("dataModel")
 	dataModel := *(dm.(*DataModel))
 
-	page := c.GetInt("p")
-	if 1 > page {
-		page = 1
-	}
-
 	blogAdminVal, _ := c.Get("blogAdmin")
 	blogAdmin := blogAdminVal.(*model.User)
 
-	articleModels, pagination := service.Article.GetArticles(page, blogAdmin.BlogID)
-	articles := []*ThemeArticle{}
+	a, _ := c.Get("article")
+	article := a.(*model.Article)
+
 	themeTags := []*ThemeTag{}
+	tagStrs := strings.Split(article.Tags, ",")
+	for _, tagStr := range tagStrs {
+		themeTag := &ThemeTag{
+			Title: tagStr,
+			URL:   getSystemPath(c) + util.PathTags + "/" + tagStr,
+		}
+		themeTags = append(themeTags, themeTag)
+	}
+
+	dataModel["Article"] = &ThemeArticle{
+		Author: &ThemeAuthor{
+			Name:      "Vanessa",
+			URL:       "http://localhost:5879/blogs/solo/vanessa",
+			AvatarURL: "https://img.hacpai.com/20170818zhixiaoyun.jpeg",
+		},
+		CreatedAt:    article.CreatedAt.Format("2006-01-02"),
+		Title:        article.Title,
+		Tags:         themeTags,
+		URL:          getSystemPath(c) + article.Path,
+		Topped:       article.Topped,
+		ViewCount:    article.ViewCount,
+		CommentCount: article.CommentCount,
+		Content:      article.Content,
+		Editable:     true,
+	}
+
+	articleModels, pagination := service.Article.GetArticles(1, blogAdmin.BlogID)
+	articles := []*ThemeArticle{}
 	for _, articleModel := range articleModels {
 		tagStrs := strings.Split(articleModel.Tags, ",")
 		for _, tagStr := range tagStrs {
 			themeTag := &ThemeTag{
 				Title: tagStr,
-				URL:   dataModel["Setting"].(map[string]string)[model.SettingNameSystemPath] + util.PathTags + "/" + tagStr,
+				URL:   getSystemPath(c) + util.PathTags + "/" + tagStr,
 			}
 			themeTags = append(themeTags, themeTag)
 		}
@@ -132,7 +156,7 @@ func showArticleAction(c *gin.Context) {
 			CreatedAt:    articleModel.CreatedAt.Format("2006-01-02"),
 			Title:        articleModel.Title,
 			Tags:         themeTags,
-			URL:          dataModel["Setting"].(map[string]string)[model.SettingNameSystemPath] + articleModel.Path,
+			URL:          getSystemPath(c) + articleModel.Path,
 			Topped:       articleModel.Topped,
 			ViewCount:    articleModel.ViewCount,
 			CommentCount: articleModel.CommentCount,
@@ -144,22 +168,6 @@ func showArticleAction(c *gin.Context) {
 		articles = append(articles, article)
 	}
 
-	dataModel["Article"] = &ThemeArticle{
-		Author: &ThemeAuthor{
-			Name:      "Vanessa",
-			URL:       "http://localhost:5879/blogs/solo/vanessa",
-			AvatarURL: "https://img.hacpai.com/20170818zhixiaoyun.jpeg",
-		},
-		CreatedAt:    "2015-12-12",
-		Title:        "Title",
-		Tags:         themeTags,
-		URL:          "url",
-		Topped:       true,
-		ViewCount:    1,
-		CommentCount: 1,
-		Content:      "sfasdfsf",
-		Editable:     true,
-	}
 	dataModel["Comments"] = articles
 	dataModel["Pagination"] = pagination
 
