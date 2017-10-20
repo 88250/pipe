@@ -169,3 +169,47 @@ export const LocalStorageInput = (id) => {
     localStorage.setItem(`input${id}`, $(this).val())
   })
 }
+
+/**
+ * @description 评论框初始化
+ * @param {string} emojiId 表情 id
+ * @param {string} commentId 评论框 id
+ */
+export const InitEditor = (emojiId, commentId) => {
+  const _getCursorEndPosition = (textarea) => {
+    textarea.focus()
+    if (textarea.setSelectionRange) { // W3C
+      return textarea.selectionEnd
+    } else if (document.selection) { // IE
+      let i = 0
+      const oS = document.selection.createRange()
+      const oR = document.body.createTextRange()
+      oR.moveToElementText(textarea)
+      oS.getBookmark()
+      for (i = 0; oR.compareEndPoints('StartToStart', oS) < 0 && oS.moveStart("character", -1) !== 0; i++) {
+        if (textarea.value.charAt(i) === '\n') {
+          i++
+        }
+      }
+      return i
+    }
+  }
+
+  $(`#${emojiId}`).find('span').click(function () {
+    const comment = document.getElementById(commentId)
+    let endPosition = _getCursorEndPosition(comment)
+    const key = this.title + ' '
+    let textValue = comment.value
+    textValue = textValue.substring(0, endPosition) + key + textValue.substring(endPosition, textValue.length)
+    comment.value = textValue
+    if (document.selection) {
+      endPosition -= textValue.split('\n').length - 1
+      const oR = comment.createTextRange()
+      oR.collapse(true)
+      oR.moveStart('character', endPosition + key.length)
+      oR.select()
+    } else {
+      comment.setSelectionRange(endPosition + key.length, endPosition + key.length)
+    }
+  })
+}

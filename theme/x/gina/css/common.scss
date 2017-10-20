@@ -655,6 +655,22 @@ a {
 
 // editor
 .editor {
+  .emotion {
+    &__item {
+      @include image-bg('../images/image-bg.svg');
+      cursor: pointer;
+      float: left;
+      height: 24px;
+      margin: 10px 10px 5px 0;
+      width: 24px;
+      transition: $transition;
+      background-color: transparent;
+
+      &:hover {
+        transform: scale(1.2) rotate(360deg);
+      }
+    }
+  }
   position: fixed;
   bottom: -210px;
   width: 100%;
