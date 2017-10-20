@@ -198,5 +198,6 @@ func showArticleAction(c *gin.Context) {
 	dataModel["ExternalRelevantArticles"] = articles
 	dataModel["PreviousArticle"] = dataModel["Article"]
 	dataModel["NextArticle"] = dataModel["Article"]
+	dataModel["ToC"] = "<ul id='toc' class='toc'><li class='toc__1'><a data-id='toc_1_0'>ToC</a></li><li class='toc__2'><a data-id='toc_2_0'>ToC</a></li><li class='toc__3'><a data-id='toc_3_0'>ToC</a></li><li class='toc__4'><a data-id='toc_4_0'>ToC</a></li><li class='toc__5'><a data-id='toc_5_0'>ToC</a></li><li class='toc__6'><a data-id='toc_6_0'>ToC</a></li><li class='toc__6'><a data-id='toc_6_1'>ToC</a></li></ul>"
 	c.HTML(http.StatusOK, "article.html", dataModel)
 }

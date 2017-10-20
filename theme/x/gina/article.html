@@ -9,7 +9,7 @@
     <link rel="next" title="{{.NextArticle.Title}}" href="{{.NextArticle.URL}}">
     {{end}}
 </head>
-<body>
+<body {{if .ToC}}class="body--side"{{end}}>
 {{template "header" .}}
 {{template "side" .}}
 <div class="wrapper content">
