@@ -9,7 +9,7 @@
     <link rel="next" title="{{.NextArticle.Title}}" href="{{.NextArticle.URL}}">
     {{end}}
 </head>
-<body {{if .ToC}}class="body--side"{{end}}>
+<body {{if .ToC}}class="body--side" {{end}}>
 {{template "header" .}}
 {{template "side" .}}
 <div class="wrapper content">
@@ -46,8 +46,17 @@
                 </div>
             </div>
         </header>
-        <section class="content__reset article__abstract">
+        <section class="content__reset article__abstract" id="articleContent">
             {{.Article.Content}}
+            <ul>
+                <li><a id='toc_1_0'>ToC</a></li>
+                <li><a id='toc_2_0'>ToC</a></li>
+                <li><a id='toc_3_0'>ToC</a></li>
+                <li><a id='toc_4_0'>ToC</a></li>
+                <li><a id='toc_5_0'>ToC</a></li>
+                <li><a id='toc_6_0'>ToC</a></li>
+                <li><a id='toc_6_1'>ToC</a></li>
+            </ul>
         </section>
         <div class="article__action fn-clear">
             {{if .Article.Editable}}
@@ -105,7 +114,7 @@
             {{end}}
         </div>
         <div class="fn-bottom">
-        {{template "pagination" .}}
+            {{template "pagination" .}}
         </div>
     </div>
     {{else}}
@@ -114,7 +123,9 @@
          data-id="{{.Article.ID}}"
          id="comments">
         {{.I18n.StayStep}}
-        <svg><use xlink:href="#comment"></use></svg>
+        <svg>
+            <use xlink:href="#comment"></use>
+        </svg>
     </div>
     {{end}}
 
@@ -123,98 +134,103 @@
         {{if ne (len .RelevantArticles) 0}}
         {{range $index, $item := .RelevantArticles}}
         {{if lt $index 2}}
-        <div{{if eq $index 1}} class="fn-three--mid"{{end}}>
-            <div class="module__header">
-                {{if eq $index 0}}
-                {{$.I18n.RelevantArticle}}
-                {{else}}
-                &nbsp;
-                {{end}}
-            </div>
-            <a class="article__thumb article__thumb--relevant" data-src="{{$item.Author.AvatarURL}}" href="{{$item.URL}}"></a>
-            <a class="module__list-title" href="{{$item.URL}}">{{$item.Title}}</a>
+        <div
+        {{if eq $index 1}} class="fn-three--mid"{{end}}>
+        <div class="module__header">
+            {{if eq $index 0}}
+            {{$.I18n.RelevantArticle}}
+            {{else}}
+            &nbsp;
+            {{end}}
         </div>
-        {{end}}
-        {{end}}
-        {{end}}
-
-        {{if ne (len .ExternalRelevantArticles) 0}}
-        {{range $index, $item := .ExternalRelevantArticles}}
-        {{if or (or (and (eq (len $.RelevantArticles) 0) (lt $index 3)) (and (eq (len $.RelevantArticles) 1) (lt $index 2))) (and (eq (len $.RelevantArticles) 2) (lt $index 1))}}
-        <div{{if or (and (eq (len $.RelevantArticles) 0) (eq $index 1)) (and (eq (len $.RelevantArticles) 1) (eq $index 0))}} class="fn-three--mid"{{end}}>
-            <div class="module__header">
-                {{if eq $index 0}}
-                {{$.I18n.ExternalRelevantArticle}}
-                {{else}}
-                &nbsp;
-                {{end}}
-            </div>
-            <a class="article__thumb article__thumb--relevant" data-src="{{$item.Author.AvatarURL}}" href="{{$item.URL}}"></a>
-            <a class="module__list-title" href="{{$item.URL}}">{{$item.Title}}</a>
-        </div>
-        {{end}}
-        {{end}}
-        {{end}}
+        <a class="article__thumb article__thumb--relevant" data-src="{{$item.Author.AvatarURL}}"
+           href="{{$item.URL}}"></a>
+        <a class="module__list-title" href="{{$item.URL}}">{{$item.Title}}</a>
     </div>
     {{end}}
+    {{end}}
+    {{end}}
 
-    {{if gt .UserCount 1}}
-    <div class="fn-clear article__near fn-two">
-        {{if .PreviousArticle}}
-        <a href="{{.PreviousArticle.URL}}" rel="prev">
-            <svg class="fn-absolute near__svg">
-                <use xlink:href="#chevron-left"></use>
-            </svg>
-            <span class="avatar tooltipped tooltipped--n fn-absolute"
-                  aria-label="{{.PreviousArticle.Author.Name}}"
-                  data-src="{{.PreviousArticle.Author.AvatarURL}}"></span>
-            <span class="near__title">
+    {{if ne (len .ExternalRelevantArticles) 0}}
+    {{range $index, $item := .ExternalRelevantArticles}}
+    {{if or (or (and (eq (len $.RelevantArticles) 0) (lt $index 3)) (and (eq (len $.RelevantArticles) 1) (lt $index 2)))
+    (and (eq (len $.RelevantArticles) 2) (lt $index 1))}}
+    <div
+    {{if or (and (eq (len $.RelevantArticles) 0) (eq $index 1)) (and (eq (len $.RelevantArticles) 1) (eq $index 0))}}
+    class="fn-three--mid"{{end}}>
+    <div class="module__header">
+        {{if eq $index 0}}
+        {{$.I18n.ExternalRelevantArticle}}
+        {{else}}
+        &nbsp;
+        {{end}}
+    </div>
+    <a class="article__thumb article__thumb--relevant" data-src="{{$item.Author.AvatarURL}}" href="{{$item.URL}}"></a>
+    <a class="module__list-title" href="{{$item.URL}}">{{$item.Title}}</a>
+</div>
+{{end}}
+{{end}}
+{{end}}
+</div>
+{{end}}
+
+{{if gt .UserCount 1}}
+<div class="fn-clear article__near fn-two">
+    {{if .PreviousArticle}}
+    <a href="{{.PreviousArticle.URL}}" rel="prev">
+        <svg class="fn-absolute near__svg">
+            <use xlink:href="#chevron-left"></use>
+        </svg>
+        <span class="avatar tooltipped tooltipped--n fn-absolute"
+              aria-label="{{.PreviousArticle.Author.Name}}"
+              data-src="{{.PreviousArticle.Author.AvatarURL}}"></span>
+        <span class="near__title">
                  {{.I18n.PreArticle}}<br>
                 <b class="ft-break">{{.PreviousArticle.Title}}</b>
             </span>
-        </a>
-        {{end}}
+    </a>
+    {{end}}
 
-        {{if .NextArticle}}
-        <a href="{{.NextArticle.URL}}" rel="next" class="near__next">
-            <svg class="fn-absolute near__svg">
-                <use xlink:href="#chevron-right"></use>
-            </svg>
-            <span class="avatar tooltipped tooltipped--n fn-absolute"
-                  aria-label="{{.NextArticle.Author.Name}}"
-                  data-src="{{.NextArticle.Author.AvatarURL}}"></span>
-            <span class="near__title">
+    {{if .NextArticle}}
+    <a href="{{.NextArticle.URL}}" rel="next" class="near__next">
+        <svg class="fn-absolute near__svg">
+            <use xlink:href="#chevron-right"></use>
+        </svg>
+        <span class="avatar tooltipped tooltipped--n fn-absolute"
+              aria-label="{{.NextArticle.Author.Name}}"
+              data-src="{{.NextArticle.Author.AvatarURL}}"></span>
+        <span class="near__title">
                 {{.I18n.NextArticle}}<br>
                 <b class="ft-break">{{.NextArticle.Title}}</b>
             </span>
-        </a>
-        {{end}}
-    </div>
-    {{else}}
-    <div class="fn-clear article__near fn-two">
-        {{if .PreviousArticle}}
-        <a href="{{.PreviousArticle.URL}}"
-           class="tooltipped tooltipped--w"
-           rel="prev" aria-label="{{.I18n.PreArticle}}">
-            <svg class="near__icon">
-                <use xlink:href="#chevron-left"></use>
-            </svg>
-            <b class="ft-break">{{.PreviousArticle.Title}}</b>
-        </a>
-        {{end}}
-
-        {{if .NextArticle}}
-        <a href="{{.NextArticle.URL}}" rel="next"
-           class="tooltipped tooltipped--e ft-right"
-           aria-label="{{.I18n.NextArticle}}">
-            <b class="ft-break">{{.NextArticle.Title}}</b>
-            <svg class="near__icon-last">
-                <use xlink:href="#chevron-right"></use>
-            </svg>
-        </a>
-        {{end}}
-    </div>
+    </a>
     {{end}}
+</div>
+{{else}}
+<div class="fn-clear article__near fn-two">
+    {{if .PreviousArticle}}
+    <a href="{{.PreviousArticle.URL}}"
+       class="tooltipped tooltipped--w"
+       rel="prev" aria-label="{{.I18n.PreArticle}}">
+        <svg class="near__icon">
+            <use xlink:href="#chevron-left"></use>
+        </svg>
+        <b class="ft-break">{{.PreviousArticle.Title}}</b>
+    </a>
+    {{end}}
+
+    {{if .NextArticle}}
+    <a href="{{.NextArticle.URL}}" rel="next"
+       class="tooltipped tooltipped--e ft-right"
+       aria-label="{{.I18n.NextArticle}}">
+        <b class="ft-break">{{.NextArticle.Title}}</b>
+        <svg class="near__icon-last">
+            <use xlink:href="#chevron-right"></use>
+        </svg>
+    </a>
+    {{end}}
+</div>
+{{end}}
 </div>
 
 {{if ne .Username ""}}
@@ -223,21 +239,36 @@
         <div id="replyObject"></div>
         <div class="form">
             <div id="emotions">
-                <span class="emotion__item" title=":smile:" data-src="{{.Conf.StaticServer}}/theme/js/emoji/graphics/smile.png"></span>
-                <span class="emotion__item" title=":joy:" data-src="{{.Conf.StaticServer}}/theme/js/emoji/graphics/joy.png"></span>
-                <span class="emotion__item" title=":stuck_out_tongue_winking_eye:" data-src="{{.Conf.StaticServer}}/theme/js/emoji/graphics/stuck_out_tongue_winking_eye.png"></span>
-                <span class="emotion__item" title=":persevere:" data-src="{{.Conf.StaticServer}}/theme/js/emoji/graphics/persevere.png"></span>
-                <span class="emotion__item" title=":sob:" data-src="{{.Conf.StaticServer}}/theme/js/emoji/graphics/sob.png"></span>
-                <span class="emotion__item" title=":cold_sweat:" data-src="{{.Conf.StaticServer}}/theme/js/emoji/graphics/cold_sweat.png"></span>
-                <span class="emotion__item" title=":rage:" data-src="{{.Conf.StaticServer}}/theme/js/emoji/graphics/rage.png"></span>
-                <span class="emotion__item" title=":triumph:" data-src="{{.Conf.StaticServer}}/theme/js/emoji/graphics/triumph.png"></span>
-                <span class="emotion__item" title=":eyes:" data-src="{{.Conf.StaticServer}}/theme/js/emoji/graphics/eyes.png"></span>
-                <span class="emotion__item" title=":scream:" data-src="{{.Conf.StaticServer}}/theme/js/emoji/graphics/scream.png"></span>
-                <span class="emotion__item" title=":sunglasses:" data-src="{{.Conf.StaticServer}}/theme/js/emoji/graphics/sunglasses.png"></span>
-                <span class="emotion__item" title=":yum:" data-src="{{.Conf.StaticServer}}/theme/js/emoji/graphics/yum.png"></span>
-                <span class="emotion__item" title=":heart:" data-src="{{.Conf.StaticServer}}/theme/js/emoji/graphics/heart.png"></span>
-                <span class="emotion__item" title=":broken_heart:" data-src="{{.Conf.StaticServer}}/theme/js/emoji/graphics/broken_heart.png"></span>
-                <span class="emotion__item" title=":smiling_imp:" data-src="{{.Conf.StaticServer}}/theme/js/emoji/graphics/smiling_imp.png"></span>
+                <span class="emotion__item" title=":smile:"
+                      data-src="{{.Conf.StaticServer}}/theme/js/emoji/graphics/smile.png"></span>
+                <span class="emotion__item" title=":joy:"
+                      data-src="{{.Conf.StaticServer}}/theme/js/emoji/graphics/joy.png"></span>
+                <span class="emotion__item" title=":stuck_out_tongue_winking_eye:"
+                      data-src="{{.Conf.StaticServer}}/theme/js/emoji/graphics/stuck_out_tongue_winking_eye.png"></span>
+                <span class="emotion__item" title=":persevere:"
+                      data-src="{{.Conf.StaticServer}}/theme/js/emoji/graphics/persevere.png"></span>
+                <span class="emotion__item" title=":sob:"
+                      data-src="{{.Conf.StaticServer}}/theme/js/emoji/graphics/sob.png"></span>
+                <span class="emotion__item" title=":cold_sweat:"
+                      data-src="{{.Conf.StaticServer}}/theme/js/emoji/graphics/cold_sweat.png"></span>
+                <span class="emotion__item" title=":rage:"
+                      data-src="{{.Conf.StaticServer}}/theme/js/emoji/graphics/rage.png"></span>
+                <span class="emotion__item" title=":triumph:"
+                      data-src="{{.Conf.StaticServer}}/theme/js/emoji/graphics/triumph.png"></span>
+                <span class="emotion__item" title=":eyes:"
+                      data-src="{{.Conf.StaticServer}}/theme/js/emoji/graphics/eyes.png"></span>
+                <span class="emotion__item" title=":scream:"
+                      data-src="{{.Conf.StaticServer}}/theme/js/emoji/graphics/scream.png"></span>
+                <span class="emotion__item" title=":sunglasses:"
+                      data-src="{{.Conf.StaticServer}}/theme/js/emoji/graphics/sunglasses.png"></span>
+                <span class="emotion__item" title=":yum:"
+                      data-src="{{.Conf.StaticServer}}/theme/js/emoji/graphics/yum.png"></span>
+                <span class="emotion__item" title=":heart:"
+                      data-src="{{.Conf.StaticServer}}/theme/js/emoji/graphics/heart.png"></span>
+                <span class="emotion__item" title=":broken_heart:"
+                      data-src="{{.Conf.StaticServer}}/theme/js/emoji/graphics/broken_heart.png"></span>
+                <span class="emotion__item" title=":smiling_imp:"
+                      data-src="{{.Conf.StaticServer}}/theme/js/emoji/graphics/smiling_imp.png"></span>
             </div>
             <textarea id="commentContent" placeholder="{{.I18n.Content}}" rows="3"></textarea>
             <div class="article__action fn-clear">

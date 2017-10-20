@@ -20,6 +20,7 @@ package controller
 import (
 	"net/http"
 	"strings"
+	"html/template"
 
 	"github.com/b3log/solo.go/model"
 	"github.com/b3log/solo.go/service"
@@ -121,7 +122,7 @@ func showArticleAction(c *gin.Context) {
 		Topped:       article.Topped,
 		ViewCount:    article.ViewCount,
 		CommentCount: article.CommentCount,
-		Content:      article.Content,
+		Content:      template.HTML("<ul><li class='toc__1'><a id='toc_1_0'>ToC</a></li><li class='toc__2'><a id='toc_2_0'>ToC</a></li><li class='toc__3'><a id='toc_3_0'>ToC</a></li><li class='toc__4'><a id='toc_4_0'>ToC</a></li><li class='toc__5'><a id='toc_5_0'>ToC</a></li><li class='toc__6'><a id='toc_6_0'>ToC</a></li><li class='toc__6'><a id='toc_6_1'>ToC</a></li></ul>"),
 		Editable:     true,
 	}
 

@@ -6,7 +6,7 @@
  */
 
 import $ from 'jquery'
-import { AddComment, LocalStorageInput, ReomveComment, InitEditor } from '../../../js/common'
+import { AddComment, InitEditor, LocalStorageInput, ReomveComment, InitToc } from '../../../js/common'
 import './common'
 import hljs from 'highlight.js'
 
@@ -15,7 +15,18 @@ const Article = {
    * @description 页面初始化
    */
   init: () => {
+    Article._initEvent()
+    Article._initToc()
     LocalStorageInput('commentContent')
+    InitEditor('emotions', 'commentContent')
+  },
+  _initToc: () => {
+    if ($('#toc').length === 1) {
+      $('#editor').width($(window).width() - 340)
+      InitToc('toc', 'articleContent')
+    }
+  },
+  _initEvent: () => {
     $('#articleCommentBtn').click(function () {
       const $this = $(this)
       Article.showComment($this.data('title'), $this.data('id'))
@@ -48,7 +59,6 @@ const Article = {
       Article.hideComment()
     })
 
-    InitEditor('emotions', 'commentContent')
   },
   removeComment: (id, label, label2) => {
     if (confirm(label)) {
@@ -60,7 +70,7 @@ const Article = {
         if ($comments.find('section').length === 1) {
           $comments.addClass('ft-center comment__null fn-bottom')
             .html(`${label2} <svg><use xlink:href="#comment"></use></svg>`).click(function () {
-              const $itemReplyBtn = $item.find('.comment__btn:last')
+            const $itemReplyBtn = $item.find('.comment__btn:last')
             Article.showComment($itemReplyBtn.data('title'), $itemReplyBtn.data('id'))
           })
         } else {
@@ -115,9 +125,9 @@ const Article = {
         $comments.find('section').last().after(data)
       }
 
-      $comments.find('pre > code').each(function(i, block) {
-        hljs.highlightBlock(block);
-      });
+      $comments.find('pre > code').each(function (i, block) {
+        hljs.highlightBlock(block)
+      })
     }, (msg) => {
       alert(msg)
     })

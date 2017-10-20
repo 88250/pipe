@@ -213,3 +213,74 @@ export const InitEditor = (emojiId, commentId) => {
     }
   })
 }
+
+/**
+ * @description 初始化目录
+ * @param {string} tocId 目录 id
+ * @param {string} articleId 目录对应正文 id
+ */
+export const InitToc = (tocId, articleId, articleOffset = 0, activeClass = 'toc__item--active') => {
+  const $toc = $(`#${tocId}`)
+  const $articleTocs = $(`#${articleId} [id^=toc]`)
+  const $tocScroll = $('.side')
+  let isUlScroll = false
+  let tocPositionArray = []
+
+  // 目录点击
+  $toc.find('li').click(function () {
+    const $it = $(this)
+    setTimeout(function () {
+      $toc.find('li').removeClass(activeClass)
+      $it.addClass(activeClass)
+    }, 50)
+  })
+
+  $(window).scroll(function (event) {
+    // 界面各种图片加载会导致帖子目录定位
+    tocPositionArray = []
+    $articleTocs.each(function (i) {
+      tocPositionArray.push({
+        id: this.id,
+        offsetTop: this.offsetTop
+      })
+    })
+
+    // 当前目录样式
+    let scrollTop = $(window).scrollTop()
+    for (let i = 0, iMax = tocPositionArray.length; i < iMax; i++) {
+      if (scrollTop < tocPositionArray[i].offsetTop - articleOffset) {
+        $toc.find('li').removeClass(activeClass)
+        const index = i > 0 ? i - 1 : 0
+        $toc.find('a[data-id="' + $articleTocs[index].id + '"]').parent().addClass(activeClass)
+        break
+      }
+    }
+    if (scrollTop >= $articleTocs[$articleTocs.length - 1].offsetTop - articleOffset) {
+      $toc.find('li').removeClass(activeClass)
+      $toc.find('li:last').addClass(activeClass)
+    }
+
+    // auto scroll to current toc
+    var liOffsetTop = $toc.find(`li.${activeClass}`)[0].offsetTop
+    if (!isUlScroll) {
+      // down scroll
+      if ($tocScroll.scrollTop() < liOffsetTop - $tocScroll.height() + 30) {
+        $tocScroll.scrollTop(liOffsetTop - $tocScroll.height() + 30)
+      }
+      // up scroll
+      if ($tocScroll.scrollTop() > liOffsetTop - 30) {
+        $tocScroll.scrollTop(liOffsetTop)
+      }
+    }
+    // 在目录上滚动到边界时，会滚动 window，为了不让 window 滚动触发目录滚动。
+    setTimeout(function () {
+      isUlScroll = false
+    }, 600)
+  })
+
+  $(window).scroll()
+
+  $tocScroll.scrollTop($toc.find(`li.${activeClass}`)[0].offsetTop).scroll(function () {
+    isUlScroll = true
+  })
+}
