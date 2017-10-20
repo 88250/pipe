@@ -15,10 +15,14 @@ export const state = () => ({
   }],
   snackMsg: '',
   snackBar: false,
-  snackModify: 'error'
+  snackModify: 'error',
+  menu: []
 })
 
 export const mutations = {
+  setMenu (state, data) {
+    state.menu = data
+  },
   setBaseInfo (state, data) {
     state.locale = data.locale
     state.version = data.version

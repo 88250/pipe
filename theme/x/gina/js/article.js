@@ -8,6 +8,7 @@
 import $ from 'jquery'
 import { AddComment, LocalStorageInput, ReomveComment } from '../../../js/common'
 import './common'
+import hljs from 'highlight.js'
 
 const Article = {
   /**
@@ -75,7 +76,12 @@ const Article = {
       location.href = `${location.origin}/login`
       return false
     }
-    $editor.css('bottom', '0').data('id', id).data('commentid', commentId)
+    if (commentId) {
+      $editor.data('commentid', commentId)
+    } else {
+      $editor.removeData('commentid')
+    }
+    $editor.css('bottom', '0').data('id', id)
     $('body').css('padding-bottom', $editor.outerHeight() + 'px')
     $('#replyObject').text(reply)
   },
@@ -86,21 +92,30 @@ const Article = {
   },
   addComment: (label) => {
     const $editor = $('#editor')
-    AddComment({
+    let requestData = {
       'articleID': $editor.data('id'),
-      'content': $('#commentContent').val(),
-      'parentCommentID': $editor.data('commentid')
-    }, (data) => {
+      'content': $('#commentContent').val()
+    }
+    if ($editor.data('commentid')) {
+      requestData.parentCommentID = $editor.data('commentid')
+    }
+
+    AddComment(requestData, (data) => {
       Article.hideComment()
       const $commentsCnt = $('#commentsCnt')
+      const $comments = $('#comments')
 
       if ($commentsCnt.length === 0) {
-        $('#comments').removeClass('ft-center comment__null').removeAttr('onclick')
+        $comments.removeClass('ft-center comment__null').removeAttr('onclick')
           .html(`<div class="module__header"><span id="commentsCnt">1</span>${label}</div>${data}`)
       } else {
         $commentsCnt.text(parseInt($commentsCnt.text()) + 1)
-        $('#comments').find('section').last().after(data)
+        $comments.find('section').last().after(data)
       }
+
+      $comments.find('pre > code').each(function(i, block) {
+        hljs.highlightBlock(block);
+      });
     }, (msg) => {
       alert(msg)
     })

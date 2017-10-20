@@ -1,10 +1,9 @@
 <template>
   <aside class="side">
     <nav>
-      <v-list v-for="item in items">
+      <v-list v-for="item in $store.state.menu" :key="item.title">
         <v-list-group
           :value="item.active"
-          :key="item.title"
           v-if="$store.state.role <= item.role">
           <v-list-tile ripple slot="item">
             <nuxt-link :to="item.link" v-if="!item.items">
@@ -33,125 +32,11 @@
 </template>
 
 <script>
-  const genNavData = (app, locale) => [
-    {
-      title: app.$t('home', locale),
-      icon: 'home',
-      link: '/admin/',
-      role: 2
-    },
-    {
-      title: app.$t('postArticle', locale),
-      icon: 'add',
-      link: '/admin/articles/post',
-      role: 2
-    },
-    {
-      title: app.$t('themeList', locale),
-      icon: 'theme',
-      link: '/admin/themes',
-      role: 1
-    },
-    {
-      title: app.$t('manage', locale),
-      icon: 'manage',
-      active: app.$route.path === '/admin/articles' ||
-      app.$route.path === '/admin/comments' ||
-      app.$route.path === '/admin/categories' ||
-      app.$route.path === '/admin/navigations' ||
-      app.$route.path === '/admin/users' ||
-      app.$route.path === '/admin/blogs',
-      role: 2,
-      items: [
-        {
-          title: app.$t('articleList', locale),
-          link: '/admin/articles',
-          role: 2
-        },
-        {
-          title: app.$t('commentList', locale),
-          link: '/admin/comments',
-          role: 2
-        },
-        {
-          title: app.$t('categoryList', locale),
-          link: '/admin/categories',
-          role: 1
-        },
-        {
-          title: app.$t('navigationList', locale),
-          link: '/admin/navigations',
-          role: 1
-        },
-        {
-          title: app.$t('userList', locale),
-          link: '/admin/users',
-          role: 2
-        },
-        {
-          title: app.$t('blogManage', locale),
-          link: '/admin/blogs',
-          role: 2
-        }
-      ]
-    },
-    {
-      title: app.$t('setting', locale),
-      icon: 'setting',
-      active: app.$route.path.indexOf('settings') > -1,
-      role: 1,
-      items: [
-        {
-          title: app.$t('baseInfo', locale),
-          link: '/admin/settings/basic',
-          role: 1
-        },
-        {
-          title: app.$t('preference', locale),
-          link: '/admin/settings/preference',
-          role: 1
-        },
-        {
-          title: app.$t('signs', locale),
-          link: '/admin/settings/sign',
-          role: 1
-        },
-        {
-          title: app.$t('internationalization', locale),
-          link: '/admin/settings/i18n',
-          role: 1
-        },
-        {
-          title: app.$t('feed', locale),
-          link: '/admin/settings/feed',
-          role: 1
-        }
-      ]
-    },
-    {
-      title: app.$t('others', locale),
-      icon: 'inbox',
-      link: '/admin/others',
-      role: 2
-    },
-    {
-      title: app.$t('about', locale),
-      icon: 'info',
-      link: '/admin/about',
-      role: 2
-    }
-  ]
+  import { genMenuData } from '~/plugins/utils'
 
   export default {
-    watch: {
-      '$store.state.locale': function (val) {
-        this.$set(this, 'items', genNavData(this, val))
-      }
-    },
-    data () {
-      return {
-        items: genNavData(this, this.$store.state.locale)
-      }
+    mounted () {
+      this.$store.commit('setMenu', genMenuData(this, this.$store.state.locale))
     }
   }
 </script>

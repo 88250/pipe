@@ -5,6 +5,7 @@
  * @version 0.1.0.0, Oct 13, 2017
 */
 @import '../../../scss/basic';
+@import "github.css";
 
 // z-index
 // article avatar 10
@@ -37,8 +38,12 @@ a {
 }
 
 .content__reset {
-  pre > code {
+  pre > code,
+  pre {
     background-image: url(../images/code-bg.png);
+    border-radius: 5px;
+    background-color: #f2f2f2;
+    display: block;
   }
 }
 

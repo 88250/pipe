@@ -36,10 +36,11 @@
     "marked": "^0.3.6",
     "uglify-es": "^3.0.26",
     "vinyl-buffer": "^1.0.0",
-    "vinyl-source-stream": "^1.1.0"
+    "vinyl-source-stream": "^1.1.0",
+    "event-stream": "^3.3.4"
   },
   "dependencies": {
-    "event-stream": "^3.3.4",
+    "highlight.js": "^9.12.0",
     "jquery": "^3.2.1",
     "qrious": "^4.0.2"
   }
