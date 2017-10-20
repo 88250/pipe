@@ -21,6 +21,7 @@
           required
           append-icon=""
           :rules="tagsRules"
+          min-width="200"
         ></v-select>
 
         <v-text-field
