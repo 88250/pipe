@@ -122,7 +122,7 @@ func showArticleAction(c *gin.Context) {
 		Topped:       article.Topped,
 		ViewCount:    article.ViewCount,
 		CommentCount: article.CommentCount,
-		Content:      template.HTML("<ul><li class='toc__1'><a id='toc_1_0'>ToC</a></li><li class='toc__2'><a id='toc_2_0'>ToC</a></li><li class='toc__3'><a id='toc_3_0'>ToC</a></li><li class='toc__4'><a id='toc_4_0'>ToC</a></li><li class='toc__5'><a id='toc_5_0'>ToC</a></li><li class='toc__6'><a id='toc_6_0'>ToC</a></li><li class='toc__6'><a id='toc_6_1'>ToC</a></li></ul>"),
+		Content:      article.Content,
 		Editable:     true,
 	}
 
@@ -197,8 +197,34 @@ func showArticleAction(c *gin.Context) {
 
 	dataModel["RelevantArticles"] = articles
 	dataModel["ExternalRelevantArticles"] = articles
-	dataModel["PreviousArticle"] = dataModel["Article"]
-	dataModel["NextArticle"] = dataModel["Article"]
-	dataModel["ToC"] = "<ul id='toc' class='toc'><li class='toc__1'><a data-id='toc_1_0'>ToC</a></li><li class='toc__2'><a data-id='toc_2_0'>ToC</a></li><li class='toc__3'><a data-id='toc_3_0'>ToC</a></li><li class='toc__4'><a data-id='toc_4_0'>ToC</a></li><li class='toc__5'><a data-id='toc_5_0'>ToC</a></li><li class='toc__6'><a data-id='toc_6_0'>ToC</a></li><li class='toc__6'><a data-id='toc_6_1'>ToC</a></li></ul>"
+	fillPreviousArticle(c, article, &dataModel)
+	fillNextArticle(c, article, &dataModel)
+dataModel["ToC"] = "<ul id='toc' class='toc'><li class='toc__1'><a data-id='toc_1_0'>ToC</a></li><li class='toc__2'><a data-id='toc_2_0'>ToC</a></li><li class='toc__3'><a data-id='toc_3_0'>ToC</a></li><li class='toc__4'><a data-id='toc_4_0'>ToC</a></li><li class='toc__5'><a data-id='toc_5_0'>ToC</a></li><li class='toc__6'><a data-id='toc_6_0'>ToC</a></li><li class='toc__6'><a data-id='toc_6_1'>ToC</a></li></ul>"
 	c.HTML(http.StatusOK, "article.html", dataModel)
+}
+
+func fillPreviousArticle(c *gin.Context, article *model.Article, dataModel *DataModel) {
+	previous := service.Article.GetPreviousArticle(article.ID, article.BlogID)
+	if nil == previous {
+		return
+	}
+
+	previousArticle := &ThemeArticle{
+		Title: previous.Title,
+		URL:   getSystemPath(c) + previous.Path,
+	}
+	(*dataModel)["PreviousArticle"] = previousArticle
+}
+
+func fillNextArticle(c *gin.Context, article *model.Article, dataModel *DataModel) {
+	next := service.Article.GetNextArticle(article.ID, article.BlogID)
+	if nil == next {
+		return
+	}
+
+	nextArticle := &ThemeArticle{
+		Title: next.Title,
+		URL:   getSystemPath(c) + next.Path,
+	}
+	(*dataModel)["NextArticle"] = nextArticle
 }

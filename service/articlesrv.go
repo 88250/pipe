@@ -46,6 +46,24 @@ const (
 	adminConsoleArticleListWindowSize = 20
 )
 
+func (srv *articleService) GetPreviousArticle(id uint, blogID uint) *model.Article {
+	ret := &model.Article{}
+	if err := db.Where("id < ? AND blog_id = ?", id, blogID).Limit(1).Find(ret).Error; nil != err {
+		return nil
+	}
+
+	return ret
+}
+
+func (srv *articleService) GetNextArticle(id uint, blogID uint) *model.Article {
+	ret := &model.Article{}
+	if err := db.Where("id > ? AND blog_id = ?", id, blogID).Limit(1).Find(ret).Error; nil != err {
+		return nil
+	}
+
+	return ret
+}
+
 func (srv *articleService) GetArticleByPath(path string) *model.Article {
 	ret := &model.Article{}
 	if err := db.Where("path = ?", path).Find(ret).Error; nil != err {

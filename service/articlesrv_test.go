@@ -53,6 +53,30 @@ func TestAddArticle(t *testing.T) {
 	}
 }
 
+func TestGetPreviousArticle(t *testing.T) {
+	article := Article.GetPreviousArticle(2, 1)
+	if nil == article {
+		t.Errorf("article is nil")
+
+		return
+	}
+	if article.ID >= 2 {
+		t.Errorf("it is not the previous article")
+	}
+}
+
+func TestGetNextArticle(t *testing.T) {
+	article := Article.GetNextArticle(1, 1)
+	if nil == article {
+		t.Errorf("article is nil")
+
+		return
+	}
+	if article.ID <= 1 {
+		t.Errorf("it is not the next article")
+	}
+}
+
 func TestConsoleGetArticles(t *testing.T) {
 	articles, pagination := Article.ConsoleGetArticles(1, 1)
 	if adminConsoleArticleListPageSize != len(articles) {
