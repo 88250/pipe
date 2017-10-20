@@ -153,8 +153,7 @@
 
     {{if ne (len .ExternalRelevantArticles) 0}}
     {{range $index, $item := .ExternalRelevantArticles}}
-    {{if or (or (and (eq (len $.RelevantArticles) 0) (lt $index 3)) (and (eq (len $.RelevantArticles) 1) (lt $index 2)))
-    (and (eq (len $.RelevantArticles) 2) (lt $index 1))}}
+    {{if or (or (and (eq (len $.RelevantArticles) 0) (lt $index 3)) (and (eq (len $.RelevantArticles) 1) (lt $index 2))) (and (eq (len $.RelevantArticles) 2) (lt $index 1))}}
     <div
     {{if or (and (eq (len $.RelevantArticles) 0) (eq $index 1)) (and (eq (len $.RelevantArticles) 1) (eq $index 0))}}
     class="fn-three--mid"{{end}}>
