@@ -18,15 +18,20 @@ package util
 
 import (
 	"crypto/md5"
+	"regexp"
+	"strings"
 
 	"github.com/bluele/gcache"
+	"github.com/hackebrot/turtle"
 	"github.com/microcosm-cc/bluemonday"
 	"github.com/russross/blackfriday"
+	log "github.com/sirupsen/logrus"
 )
 
 var markdownCache = gcache.New(1024).LRU().Build()
 
 func Markdown(mdText string) string {
+	mdText = emojify(mdText)
 	mdTextBytes := []byte(mdText)
 
 	digest := md5.New()
@@ -44,4 +49,20 @@ func Markdown(mdText string) string {
 	markdownCache.Set(key, ret)
 
 	return ret.(string)
+}
+
+var emojiRegx = regexp.MustCompile(":[a-z_]+:")
+
+func emojify(text string) string {
+	return emojiRegx.ReplaceAllStringFunc(text, func(emojiASCII string) string {
+		emojiASCII = strings.Replace(emojiASCII, ":", "", -1)
+		emoji := turtle.Emojis[emojiASCII]
+		if nil == emoji {
+			log.Warn("not found [" + emojiASCII + "]")
+
+			return emojiASCII
+		}
+
+		return emoji.Char
+	})
 }
