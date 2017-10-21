@@ -21,7 +21,7 @@ TBD
 * [聚合分类](https://github.com/b3log/solo/issues/12256) / 标签
 * 自定义导航（页面、链接）
 * 多主题 / 多语言
-* 上传七牛云
+* 内置云存储
 * 多博客、团队博客
 * SQL、JSON、MD 格式导出
 * [Hexo/Jekyll 导入](https://hacpai.com/article/1498490209748)
