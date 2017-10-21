@@ -278,8 +278,19 @@ func fillRandomArticles(settingMap *map[string]string, dataModel *DataModel, blo
 }
 
 func getSystemPath(c *gin.Context) string {
-	dm, _ := c.Get("dataModel")
-	dataModel := dm.(*DataModel)
+	dataModel := getDataModel(c)
 
-	return (*dataModel)["Setting"].(map[string]string)[model.SettingNameSystemPath]
+	return dataModel["Setting"].(map[string]string)[model.SettingNameSystemPath]
+}
+
+func getBlogAdmin(c *gin.Context) *model.User {
+	blogAdminVal, _ := c.Get("blogAdmin")
+
+	return blogAdminVal.(*model.User)
+}
+
+func getDataModel(c *gin.Context) DataModel {
+	dataModelVal, _ := c.Get("dataModel")
+
+	return *(dataModelVal.(*DataModel))
 }
