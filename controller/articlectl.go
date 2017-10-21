@@ -18,9 +18,9 @@
 package controller
 
 import (
+	"html/template"
 	"net/http"
 	"strings"
-	"html/template"
 
 	"github.com/b3log/solo.go/model"
 	"github.com/b3log/solo.go/service"
@@ -30,17 +30,11 @@ import (
 )
 
 func showArticlesAction(c *gin.Context) {
-	dm, _ := c.Get("dataModel")
-	dataModel := *(dm.(*DataModel))
-
 	page := c.GetInt("p")
 	if 1 > page {
 		page = 1
 	}
-
-	blogAdminVal, _ := c.Get("blogAdmin")
-	blogAdmin := blogAdminVal.(*model.User)
-
+	blogAdmin := getBlogAdmin(c)
 	articleModels, pagination := service.Article.GetArticles(page, blogAdmin.BlogID)
 	articles := []*ThemeArticle{}
 	for _, articleModel := range articleModels {
@@ -49,7 +43,7 @@ func showArticlesAction(c *gin.Context) {
 		for _, tagStr := range tagStrs {
 			themeTag := &ThemeTag{
 				Title: tagStr,
-				URL:   dataModel["Setting"].(map[string]string)[model.SettingNameSystemPath] + util.PathTags + "/" + tagStr,
+				URL:   getSystemPath(c) + util.PathTags + "/" + tagStr,
 			}
 			themeTags = append(themeTags, themeTag)
 		}
@@ -73,7 +67,7 @@ func showArticlesAction(c *gin.Context) {
 			CreatedAt:    articleModel.CreatedAt.Format("2006-01-02"),
 			Title:        articleModel.Title,
 			Tags:         themeTags,
-			URL:          dataModel["Setting"].(map[string]string)[model.SettingNameSystemPath] + articleModel.Path,
+			URL:          getSystemPath(c) + articleModel.Path,
 			Topped:       articleModel.Topped,
 			ViewCount:    articleModel.ViewCount,
 			CommentCount: articleModel.CommentCount,
@@ -84,17 +78,16 @@ func showArticlesAction(c *gin.Context) {
 		articles = append(articles, article)
 	}
 
+	dataModel := getDataModel(c)
+
 	dataModel["Articles"] = articles
 	dataModel["Pagination"] = pagination
 	c.HTML(http.StatusOK, "index.html", dataModel)
 }
 
 func showArticleAction(c *gin.Context) {
-	dm, _ := c.Get("dataModel")
-	dataModel := *(dm.(*DataModel))
-
-	blogAdminVal, _ := c.Get("blogAdmin")
-	blogAdmin := blogAdminVal.(*model.User)
+	dataModel := getDataModel(c)
+	blogAdmin := getBlogAdmin(c)
 
 	a, _ := c.Get("article")
 	article := a.(*model.Article)
@@ -122,7 +115,7 @@ func showArticleAction(c *gin.Context) {
 		Topped:       article.Topped,
 		ViewCount:    article.ViewCount,
 		CommentCount: article.CommentCount,
-		Content:      article.Content,
+		Content:      template.HTML(util.Markdown(article.Content)),
 		Editable:     true,
 	}
 
@@ -199,7 +192,7 @@ func showArticleAction(c *gin.Context) {
 	dataModel["ExternalRelevantArticles"] = articles
 	fillPreviousArticle(c, article, &dataModel)
 	fillNextArticle(c, article, &dataModel)
-dataModel["ToC"] = template.HTML("<ul id='toc' class='toc'><li class='toc__1'><a data-id='toc_1_0'>ToC</a></li><li class='toc__2'><a data-id='toc_2_0'>ToC</a></li><li class='toc__3'><a data-id='toc_3_0'>ToC</a></li><li class='toc__4'><a data-id='toc_4_0'>ToC</a></li><li class='toc__5'><a data-id='toc_5_0'>ToC</a></li><li class='toc__6'><a data-id='toc_6_0'>ToC</a></li><li class='toc__6'><a data-id='toc_6_1'>ToC</a></li></ul>")
+	dataModel["ToC"] = template.HTML("<ul id='toc' class='toc'><li class='toc__1'><a data-id='toc_1_0'>ToC</a></li><li class='toc__2'><a data-id='toc_2_0'>ToC</a></li><li class='toc__3'><a data-id='toc_3_0'>ToC</a></li><li class='toc__4'><a data-id='toc_4_0'>ToC</a></li><li class='toc__5'><a data-id='toc_5_0'>ToC</a></li><li class='toc__6'><a data-id='toc_6_0'>ToC</a></li><li class='toc__6'><a data-id='toc_6_1'>ToC</a></li></ul>")
 	c.HTML(http.StatusOK, "article.html", dataModel)
 }
 
