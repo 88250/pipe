@@ -105,6 +105,12 @@
 			"revisionTime": "2017-10-08T21:47:40Z"
 		},
 		{
+			"checksumSHA1": "1WcSdC+uOCaEeFgVeKkTKxNa/GU=",
+			"path": "github.com/hackebrot/turtle",
+			"revision": "a7f0ff34fdd62b552db01c81dff3cf029e0c2889",
+			"revisionTime": "2017-10-05T16:45:02Z"
+		},
+		{
 			"checksumSHA1": "LKJvPs+N7WDpaHGzzgnYTp0rCn4=",
 			"path": "github.com/jinzhu/gorm",
 			"revision": "b1885a643b4977c9089d77eb07c0fd96591f94b8",
