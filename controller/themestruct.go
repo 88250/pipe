@@ -16,6 +16,10 @@
 
 package controller
 
+import (
+	"html/template"
+)
+
 type ThemeArticle struct {
 	ID           uint
 	Abstract     string
@@ -28,7 +32,7 @@ type ThemeArticle struct {
 	ViewCount    int
 	CommentCount int
 	ThumbnailURL string
-	Content      string
+	Content      template.HTML
 	Editable     bool
 }
 
