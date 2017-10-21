@@ -105,11 +105,11 @@ Solo.go 使用 GPLv3 作为开源授权协议，请尽量遵循，即使是在�
 Solo.go 的诞生离不开以下开源项目：
 
 * [Vue.js](https://github.com/vuejs/vue)：渐进式 JavaScript 框架
-* [jQuery](https://github.com/jquery/jquery)：使用最广泛的 JavaScript 工具库
+* [jQuery](https://github.com/jquery/jquery)：使用广泛的 JavaScript 工具库
 * [Gin](https://github.com/gin-gonic/gin)：又快又好用的 golang HTTP web 框架
 * [GORM](https://github.com/jinzhu/gorm)：梦幻般的 golang ORM 库
 * [Logrus](https://github.com/sirupsen/logrus)：结构化的 golang 日志组件
 * [Blackfriday](github.com/russross/blackfriday)：golang Markdown 处理器
-* [SQLite](https://www.sqlite.org)：全世界使用最广的嵌入式 SQL 引擎
+* [SQLite](https://www.sqlite.org)：使用广泛的嵌入式 SQL 引擎
 * [GCache](github.com/bluele/gcache)：golang 缓存库
 * [IntelliJ IDEA](https://www.jetbrains.com/idea)：全宇宙暂时排名第二的 IDE
