@@ -99,7 +99,7 @@ func (srv *statisticService) IncArticleCountWithoutTx(tx *gorm.DB, blogID uint) 
 	}
 
 	setting.Value = strconv.Itoa(count + 1)
-	if err := tx.Save(setting).Error; nil != err {
+	if err := tx.Model(setting).Updates(setting).Error; nil != err {
 		return err
 	}
 
@@ -133,7 +133,7 @@ func (srv *statisticService) DecArticleCountWithoutTx(tx *gorm.DB, blogID uint) 
 	}
 
 	setting.Value = strconv.Itoa(count - 1)
-	if err := tx.Save(setting).Error; nil != err {
+	if err := tx.Model(setting).Updates(setting).Error; nil != err {
 		return err
 	}
 
@@ -167,7 +167,7 @@ func (srv *statisticService) IncPublishedArticleCountWithoutTx(tx *gorm.DB, blog
 	}
 
 	setting.Value = strconv.Itoa(count + 1)
-	if err := tx.Save(setting).Error; nil != err {
+	if err := tx.Model(setting).Updates(setting).Error; nil != err {
 		return err
 	}
 
@@ -201,7 +201,7 @@ func (srv *statisticService) DecPublishedArticleCountWithoutTx(tx *gorm.DB, blog
 	}
 
 	setting.Value = strconv.Itoa(count - 1)
-	if err := tx.Save(setting).Error; nil != err {
+	if err := tx.Model(setting).Updates(setting).Error; nil != err {
 		return err
 	}
 
@@ -235,7 +235,7 @@ func (srv *statisticService) IncCommentCountWithoutTx(tx *gorm.DB, blogID uint) 
 	}
 
 	setting.Value = strconv.Itoa(count + 1)
-	if err := tx.Save(setting).Error; nil != err {
+	if err := tx.Model(setting).Updates(setting).Error; nil != err {
 		return err
 	}
 
@@ -268,7 +268,7 @@ func (srv *statisticService) DecCommentCountWithoutTx(tx *gorm.DB, blogID uint) 
 		return err
 	}
 	setting.Value = strconv.Itoa(count - 1)
-	if err := tx.Save(setting).Error; nil != err {
+	if err := tx.Model(setting).Updates(setting).Error; nil != err {
 		return err
 	}
 

@@ -97,7 +97,7 @@
         const responseData = await this.axios.put(`/console/articles/${this.$route.query.id}`, {
           title: this.title,
           content: this.content,
-          url: this.url,
+          path: this.url,
           password: this.password,
           tags: this.tags.toString(),
           commentable: this.commentable
@@ -126,10 +126,10 @@
         if (!this.$refs.form.validate()) {
           return
         }
-        const responseData = await this.axios.post(`/console/articles/`, {
+        const responseData = await this.axios.post(`/console/articles`, {
           title: this.title,
           content: this.content,
-          url: this.url,
+          path: this.url,
           password: this.password,
           tags: this.tags.toString(),
           commentable: this.commentable
@@ -151,7 +151,7 @@
         if (responseData) {
           this.$set(this, 'title', responseData.title)
           this.$set(this, 'content', responseData.content)
-          this.$set(this, 'url', responseData.url)
+          this.$set(this, 'url', responseData.path)
           this.$set(this, 'password', responseData.password)
           this.$set(this, 'tags', responseData.tags.split(','))
           this.$set(this, 'commentable', responseData.commentable)

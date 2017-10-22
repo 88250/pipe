@@ -99,7 +99,7 @@ func (srv *articleService) AddArticle(article *model.Article) error {
 		return err
 	}
 	author.ArticleCount = author.ArticleCount + 1
-	if err := tx.Save(author).Error; nil != err {
+	if err := tx.Model(author).Updates(author).Error; nil != err {
 		tx.Rollback()
 
 		return err
@@ -222,7 +222,7 @@ func (srv *articleService) RemoveArticle(id uint) error {
 	}
 	author.ArticleCount = author.ArticleCount - 1
 	author.PublishedArticleCount = author.PublishedArticleCount - 1
-	if err := tx.Save(author).Error; nil != err {
+	if err := tx.Model(author).Updates(author).Error; nil != err {
 		tx.Rollback()
 
 		return err
@@ -278,7 +278,7 @@ func (srv *articleService) UpdateArticle(article *model.Article) error {
 	}
 
 	tx := db.Begin()
-	if err := tx.Save(article).Error; nil != err {
+	if err := tx.Model(article).Updates(article).Error; nil != err {
 		tx.Rollback()
 
 		return err
@@ -329,7 +329,7 @@ func tagArticle(tx *gorm.DB, article *model.Article) error {
 		} else {
 			tag.ArticleCount = tag.ArticleCount + 1
 			tag.PublishedArticleCount = tag.PublishedArticleCount + 1
-			if err := tx.Save(tag).Error; nil != err {
+			if err := tx.Model(tag).Updates(tag).Error; nil != err {
 				return err
 			}
 		}
