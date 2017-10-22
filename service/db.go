@@ -24,7 +24,7 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
-const tablePrefix = "b3_solo_go_"
+const tablePrefix = "b3_pipe_"
 
 var db *gorm.DB
 

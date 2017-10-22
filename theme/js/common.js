@@ -123,7 +123,7 @@ export const ReomveComment = (id, succCB, errorCB) => {
  */
 export const AddComment = (data, succCB, errorCB) => {
   $.ajax({
-    url: `${location.origin}/blogs/sologo/comments`,
+    url: `${location.origin}/blogs/pipe/comments`,
     data,
     type: 'POST',
     success: (result) => {

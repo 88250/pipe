@@ -1,6 +1,6 @@
 <template>
   <div class="error">
-    <solo-header from="error"/>
+    <pipe-header from="error"/>
     <div class="error__content fn-clear">
       <div v-if="error.statusCode === 404">
         <h1>404</h1>
@@ -20,18 +20,18 @@
         </div>
       </div>
     </div>
-    <solo-footer/>
+    <pipe-footer/>
   </div>
 </template>
 
 <script>
-  import SoloFooter from '~/components/Footer'
-  import SoloHeader from '~/components/Header'
+  import PipeFooter from '~/components/Footer'
+  import PipeHeader from '~/components/Header'
 
   export default {
     components: {
-      SoloFooter,
-      SoloHeader
+      PipeFooter,
+      PipeHeader
     },
     head () {
       return {

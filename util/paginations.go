@@ -37,7 +37,7 @@ func NewPagination(currentPageNum, pageSize, pageCount, windowSize, recordCount 
 		PageCount:      pageCount,
 		WindowSize:     windowSize,
 		RecordCount:    recordCount,
-		PageURL:        "http://localhost:5897/blogs/sologo/",
+		PageURL:        "http://localhost:5897/blogs/pipe",
 		PageNums:       paginate(currentPageNum, pageSize, pageCount, windowSize),
 	}
 }

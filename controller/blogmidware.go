@@ -182,7 +182,7 @@ func fillMostViewArticles(settingMap *map[string]string, dataModel *DataModel, b
 	for _, article := range mostViewArticles {
 		author := &ThemeAuthor{
 			Name:      "Vanessa",
-			URL:       "http://localhost:5879/blogs/solo/vanessa",
+			URL:       "http://localhost:5879/blogs/pipe/vanessa",
 			AvatarURL: "https://img.hacpai.com/20170818zhixiaoyun.jpeg",
 		}
 		themeArticle := &ThemeArticle{
@@ -214,7 +214,7 @@ func fillRecentComments(settingMap *map[string]string, dataModel *DataModel, blo
 			CreatedAt: humanize.Time(comment.CreatedAt),
 			Author: &ThemeAuthor{
 				Name:      "Vanessa",
-				URL:       "http://localhost:5879/blogs/solo/vanessa",
+				URL:       "http://localhost:5879/blogs/pipe/vanessa",
 				AvatarURL: "https://img.hacpai.com/20170818zhixiaoyun.jpeg",
 			},
 		}
@@ -236,7 +236,7 @@ func fillMostCommentArticles(settingMap *map[string]string, dataModel *DataModel
 	for _, article := range mostCommentArticles {
 		author := &ThemeAuthor{
 			Name:      "Vanessa",
-			URL:       "http://localhost:5879/blogs/solo/vanessa",
+			URL:       "http://localhost:5879/blogs/pipe/vanessa",
 			AvatarURL: "https://img.hacpai.com/20170818zhixiaoyun.jpeg",
 		}
 		themeArticle := &ThemeArticle{
@@ -263,7 +263,7 @@ func fillRandomArticles(settingMap *map[string]string, dataModel *DataModel, blo
 	for _, article := range randomArticles {
 		author := &ThemeAuthor{
 			Name:      "Vanessa",
-			URL:       "http://localhost:5879/blogs/solo/vanessa",
+			URL:       "http://localhost:5879/blogs/pipe/vanessa",
 			AvatarURL: "https://img.hacpai.com/20170818zhixiaoyun.jpeg",
 		}
 		themeArticle := &ThemeArticle{

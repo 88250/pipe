@@ -36,7 +36,7 @@ var Version = "1.0.0"
 // Pipe configuration.
 var Conf *Configuration
 
-// Configuration (solo.json).
+// Configuration (pipe.json).
 type Configuration struct {
 	Server                string // server scheme, host and port
 	StaticServer          string // static resources server scheme, host and port
@@ -52,13 +52,13 @@ type Configuration struct {
 
 // LoadConf loads the configurations. Command-line arguments will override configuration file.
 func LoadConf() {
-	confPath := flag.String("conf", "solo.json", "path of solo.json")
-	confServer := flag.String("server", "", "this will override Solo.Server if specified")
-	confStaticServer := flag.String("static_server", "", "this will override Solo.StaticServer if specified")
-	confStaticResourceVer := flag.String("static_resource_ver", "", "this will override Solo.StaticResourceVersion if specified")
-	confLogFilePath := flag.String("log_file_path", "", "this will override Solo.LogFilePath if specified")
-	confLogLevel := flag.String("log_level", "", "this will override Solo.LogLevel if specified")
-	confDataFilePath := flag.String("data_file_path", "", "this will override Solo.DataFilePath if specified")
+	confPath := flag.String("conf", "pipe.json", "path of pipe.json")
+	confServer := flag.String("server", "", "this will override Conf.Server if specified")
+	confStaticServer := flag.String("static_server", "", "this will override Conf.StaticServer if specified")
+	confStaticResourceVer := flag.String("static_resource_ver", "", "this will override Conf.StaticResourceVersion if specified")
+	confLogFilePath := flag.String("log_file_path", "", "this will override Conf.LogFilePath if specified")
+	confLogLevel := flag.String("log_level", "", "this will override Conf.LogLevel if specified")
+	confDataFilePath := flag.String("data_file_path", "", "this will override Conf.DataFilePath if specified")
 
 	flag.Parse()
 
@@ -69,7 +69,7 @@ func LoadConf() {
 
 	Conf = &Configuration{}
 	if err = json.Unmarshal(bytes, Conf); nil != err {
-		log.Fatal("parses [solo.json] failed: ", err)
+		log.Fatal("parses [pipe.json] failed: ", err)
 	}
 
 	home, err := UserHome()

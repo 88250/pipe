@@ -1,10 +1,10 @@
 <template>
   <div class="default">
-    <solo-header from="default"/>
+    <pipe-header from="default"/>
     <div class="default__content">
       <nuxt/>
     </div>
-    <solo-footer/>
+    <pipe-footer/>
     <v-snackbar
       :top="true"
       v-model="snack"
@@ -18,8 +18,8 @@
 </template>
 
 <script>
-  import SoloFooter from '~/components/Footer'
-  import SoloHeader from '~/components/Header'
+  import PipeFooter from '~/components/Footer'
+  import PipeHeader from '~/components/Header'
 
   export default {
     data () {
@@ -41,8 +41,8 @@
       }
     },
     components: {
-      SoloFooter,
-      SoloHeader
+      PipeFooter,
+      PipeHeader
     }
   }
 </script>

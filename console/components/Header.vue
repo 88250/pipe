@@ -56,11 +56,11 @@
     },
     methods: {
       toggleSide () {
-        const className = document.querySelector('#sologo').className
+        const className = document.querySelector('#pipe').className
         if (className === '') {
-          document.querySelector('#sologo').className = 'body--side'
+          document.querySelector('#pipe').className = 'body--side'
         } else {
-          document.querySelector('#sologo').className = ''
+          document.querySelector('#pipe').className = ''
         }
       },
       async switchBlog (item) {

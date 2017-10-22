@@ -26,7 +26,7 @@ import (
 )
 
 const (
-	testPlatformAdminName  = "sologo"
+	testPlatformAdminName  = "pipe"
 	testPlatformAdminEmail = "pipe@b3log.org"
 )
 

@@ -1,12 +1,12 @@
 <template>
-  <div data-app="true" :class="bodySide" id="sologo">
-    <solo-header from="admin"/>
+  <div data-app="true" :class="bodySide" id="pipe">
+    <pipe-header from="admin"/>
     <side/>
     <div class="main">
       <div class="content">
         <nuxt/>
       </div>
-      <solo-footer/>
+      <pipe-footer/>
     </div>
     <v-snackbar
       :top="true"
@@ -22,8 +22,8 @@
 
 <script>
   import Side from '~/components/Side'
-  import SoloHeader from '~/components/Header'
-  import SoloFooter from '~/components/Footer'
+  import PipeHeader from '~/components/Header'
+  import PipeFooter from '~/components/Footer'
 
   export default {
     data () {
@@ -47,8 +47,8 @@
     },
     components: {
       Side,
-      SoloHeader,
-      SoloFooter
+      PipeHeader,
+      PipeFooter
     },
     mounted () {
       if (document.documentElement.clientWidth < 721) {

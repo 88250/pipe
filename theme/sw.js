@@ -79,7 +79,7 @@ self.addEventListener('fetch', event => {
             if (event.request.url.indexOf('//img.hacpai.com/avatar/') > -1 ||
               event.request.url.indexOf('//static.hacpai.com/emoji/graphics/') > -1 ||
               event.request.url.indexOf('//static.hacpai.com/images/emotions/') > -1) {
-              // 对用户头像、emoji、solo emotion 进行缓存
+              // 对用户头像、emoji、emotion 进行缓存
               return caches.open('hacpai-avatar-emoji').then(function (cache) {
                 // 缓存没有指定的静态资源
                 cache.put(event.request, fetchResponse.clone())

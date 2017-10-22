@@ -57,7 +57,7 @@ func showArticlesAction(c *gin.Context) {
 
 		author := &ThemeAuthor{
 			Name:      authorModel.Name,
-			URL:       "http://localhost:5879/blogs/solo/vanessa",
+			URL:       "http://localhost:5879/blogs/pipe/vanessa",
 			AvatarURL: "https://img.hacpai.com/20170818zhixiaoyun.jpeg",
 		}
 
@@ -105,7 +105,7 @@ func showArticleAction(c *gin.Context) {
 	dataModel["Article"] = &ThemeArticle{
 		Author: &ThemeAuthor{
 			Name:      "Vanessa",
-			URL:       "http://localhost:5879/blogs/solo/vanessa",
+			URL:       "http://localhost:5879/blogs/pipe/vanessa",
 			AvatarURL: "https://img.hacpai.com/20170818zhixiaoyun.jpeg",
 		},
 		CreatedAt:    article.CreatedAt.Format("2006-01-02"),
@@ -140,7 +140,7 @@ func showArticleAction(c *gin.Context) {
 
 		author := &ThemeAuthor{
 			Name:      authorModel.Name,
-			URL:       "http://localhost:5879/blogs/solo/vanessa",
+			URL:       "http://localhost:5879/blogs/pipe/vanessa",
 			AvatarURL: "https://img.hacpai.com/20170818zhixiaoyun.jpeg",
 		}
 
@@ -171,7 +171,7 @@ func showArticleAction(c *gin.Context) {
 	for _, commentModel := range commentModels {
 		author := &ThemeAuthor{
 			Name:      "test name",
-			URL:       "http://localhost:5879/blogs/solo/vanessa",
+			URL:       "http://localhost:5879/blogs/pipe/vanessa",
 			AvatarURL: "https://img.hacpai.com/20170818zhixiaoyun.jpeg",
 		}
 

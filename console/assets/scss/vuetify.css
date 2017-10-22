@@ -5507,15 +5507,15 @@ p {
 }
 /** States */
 .input-group.input-group--single-line label,
-.input-group.input-group--solo label {
+.input-group.input-group--pipe label {
   -webkit-transform: translate3d(0, 0, 0);
           transform: translate3d(0, 0, 0);
 }
 .input-group.input-group--single-line.input-group--dirty label,
-.input-group.input-group--solo.input-group--dirty label {
+.input-group.input-group--pipe.input-group--dirty label {
   display: none;
 }
-.input-group.input-group--solo {
+.input-group.input-group--pipe {
   background: #fff;
   min-height: 46px;
   border-radius: 2px;
@@ -5523,19 +5523,19 @@ p {
   -webkit-box-shadow: 0 1px 5px rgba(0,0,0,0.2), 0 2px 2px rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12);
           box-shadow: 0 1px 5px rgba(0,0,0,0.2), 0 2px 2px rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12);
 }
-.input-group.input-group--solo label {
+.input-group.input-group--pipe label {
   top: 8px;
   padding-left: 16px;
   -webkit-transform: none !important;
           transform: none !important;
 }
-.input-group.input-group--solo .input-group__input {
+.input-group.input-group--pipe .input-group__input {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
   padding: 8px 16px;
 }
-.input-group.input-group--solo .input-group__details {
+.input-group.input-group--pipe .input-group__details {
   display: none;
 }
 .input-group--disabled .input-group__details:before {
@@ -7154,15 +7154,15 @@ table.table tfoot tr {
 }
 /** States */
 .input-group.input-group--single-line label,
-.input-group.input-group--solo label {
+.input-group.input-group--pipe label {
   -webkit-transform: translate3d(0, 0, 0);
           transform: translate3d(0, 0, 0);
 }
 .input-group.input-group--single-line.input-group--dirty label,
-.input-group.input-group--solo.input-group--dirty label {
+.input-group.input-group--pipe.input-group--dirty label {
   display: none;
 }
-.input-group.input-group--solo {
+.input-group.input-group--pipe {
   background: #fff;
   min-height: 46px;
   border-radius: 2px;
@@ -7170,19 +7170,19 @@ table.table tfoot tr {
   -webkit-box-shadow: 0 1px 5px rgba(0,0,0,0.2), 0 2px 2px rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12);
           box-shadow: 0 1px 5px rgba(0,0,0,0.2), 0 2px 2px rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12);
 }
-.input-group.input-group--solo label {
+.input-group.input-group--pipe label {
   top: 8px;
   padding-left: 16px;
   -webkit-transform: none !important;
           transform: none !important;
 }
-.input-group.input-group--solo .input-group__input {
+.input-group.input-group--pipe .input-group__input {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
   padding: 8px 16px;
 }
-.input-group.input-group--solo .input-group__details {
+.input-group.input-group--pipe .input-group__details {
   display: none;
 }
 .input-group--disabled .input-group__details:before {
@@ -12818,15 +12818,15 @@ table.table tfoot tr {
 }
 /** States */
 .input-group.input-group--single-line label,
-.input-group.input-group--solo label {
+.input-group.input-group--pipe label {
   -webkit-transform: translate3d(0, 0, 0);
           transform: translate3d(0, 0, 0);
 }
 .input-group.input-group--single-line.input-group--dirty label,
-.input-group.input-group--solo.input-group--dirty label {
+.input-group.input-group--pipe.input-group--dirty label {
   display: none;
 }
-.input-group.input-group--solo {
+.input-group.input-group--pipe {
   background: #fff;
   min-height: 46px;
   border-radius: 2px;
@@ -12834,19 +12834,19 @@ table.table tfoot tr {
   -webkit-box-shadow: 0 1px 5px rgba(0,0,0,0.2), 0 2px 2px rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12);
           box-shadow: 0 1px 5px rgba(0,0,0,0.2), 0 2px 2px rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12);
 }
-.input-group.input-group--solo label {
+.input-group.input-group--pipe label {
   top: 8px;
   padding-left: 16px;
   -webkit-transform: none !important;
           transform: none !important;
 }
-.input-group.input-group--solo .input-group__input {
+.input-group.input-group--pipe .input-group__input {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
   padding: 8px 16px;
 }
-.input-group.input-group--solo .input-group__details {
+.input-group.input-group--pipe .input-group__details {
   display: none;
 }
 .input-group--disabled .input-group__details:before {
@@ -14492,15 +14492,15 @@ table.table tfoot tr {
 }
 /** States */
 .input-group.input-group--single-line label,
-.input-group.input-group--solo label {
+.input-group.input-group--pipe label {
   -webkit-transform: translate3d(0, 0, 0);
           transform: translate3d(0, 0, 0);
 }
 .input-group.input-group--single-line.input-group--dirty label,
-.input-group.input-group--solo.input-group--dirty label {
+.input-group.input-group--pipe.input-group--dirty label {
   display: none;
 }
-.input-group.input-group--solo {
+.input-group.input-group--pipe {
   background: #fff;
   min-height: 46px;
   border-radius: 2px;
@@ -14508,19 +14508,19 @@ table.table tfoot tr {
   -webkit-box-shadow: 0 1px 5px rgba(0,0,0,0.2), 0 2px 2px rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12);
           box-shadow: 0 1px 5px rgba(0,0,0,0.2), 0 2px 2px rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12);
 }
-.input-group.input-group--solo label {
+.input-group.input-group--pipe label {
   top: 8px;
   padding-left: 16px;
   -webkit-transform: none !important;
           transform: none !important;
 }
-.input-group.input-group--solo .input-group__input {
+.input-group.input-group--pipe .input-group__input {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
   padding: 8px 16px;
 }
-.input-group.input-group--solo .input-group__details {
+.input-group.input-group--pipe .input-group__details {
   display: none;
 }
 .input-group--disabled .input-group__details:before {
@@ -15627,15 +15627,15 @@ table.table tfoot tr {
 }
 /** States */
 .input-group.input-group--single-line label,
-.input-group.input-group--solo label {
+.input-group.input-group--pipe label {
   -webkit-transform: translate3d(0, 0, 0);
           transform: translate3d(0, 0, 0);
 }
 .input-group.input-group--single-line.input-group--dirty label,
-.input-group.input-group--solo.input-group--dirty label {
+.input-group.input-group--pipe.input-group--dirty label {
   display: none;
 }
-.input-group.input-group--solo {
+.input-group.input-group--pipe {
   background: #fff;
   min-height: 46px;
   border-radius: 2px;
@@ -15643,19 +15643,19 @@ table.table tfoot tr {
   -webkit-box-shadow: 0 1px 5px rgba(0,0,0,0.2), 0 2px 2px rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12);
           box-shadow: 0 1px 5px rgba(0,0,0,0.2), 0 2px 2px rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12);
 }
-.input-group.input-group--solo label {
+.input-group.input-group--pipe label {
   top: 8px;
   padding-left: 16px;
   -webkit-transform: none !important;
           transform: none !important;
 }
-.input-group.input-group--solo .input-group__input {
+.input-group.input-group--pipe .input-group__input {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
   padding: 8px 16px;
 }
-.input-group.input-group--solo .input-group__details {
+.input-group.input-group--pipe .input-group__details {
   display: none;
 }
 .input-group--disabled .input-group__details:before {
@@ -16415,13 +16415,13 @@ table.table tfoot tr {
   -webkit-box-shadow: 0 2px 4px -1px rgba(0,0,0,0.2), 0 4px 5px rgba(0,0,0,0.14), 0 1px 10px rgba(0,0,0,0.12);
           box-shadow: 0 2px 4px -1px rgba(0,0,0,0.2), 0 4px 5px rgba(0,0,0,0.14), 0 1px 10px rgba(0,0,0,0.12);
 }
-.toolbar .input-group--solo .input-group__details {
+.toolbar .input-group--pipe .input-group__details {
   display: none;
 }
-.toolbar .input-group--single-line:not(.input-group--solo) {
+.toolbar .input-group--single-line:not(.input-group--pipe) {
   padding: 0;
 }
-.toolbar .input-group--single-line:not(.input-group--solo) label {
+.toolbar .input-group--single-line:not(.input-group--pipe) label {
   top: auto;
 }
 /** Children */
