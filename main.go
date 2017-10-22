@@ -64,7 +64,7 @@ func main() {
 
 	handleSignal(server)
 
-	log.Infof("pipe (v%s) is running [%s]", util.Version, util.Conf.Server)
+	log.Infof("Pipe (v%s) is running [%s]", util.Version, util.Conf.Server)
 
 	server.ListenAndServe()
 }

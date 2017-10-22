@@ -21,9 +21,9 @@ import (
 	"strconv"
 	"sync"
 
-	"github.com/b3log/solo.go/model"
-	"github.com/b3log/solo.go/theme"
-	"github.com/b3log/solo.go/util"
+	"github.com/b3log/pipe/model"
+	"github.com/b3log/pipe/theme"
+	"github.com/b3log/pipe/util"
 	"github.com/jinzhu/gorm"
 	log "github.com/sirupsen/logrus"
 )
@@ -194,18 +194,18 @@ func initNavigation(tx *gorm.DB, blogID uint) error {
 }
 
 func helloWorld(tx *gorm.DB, admin *model.User, blogID uint) error {
-	content := `欢迎使用 [Solo.go](https://github.com/b3log/solo.go) 博客系统。这是系统自动生成的演示文章，编辑或者删除它，然后开始你的独立博客之旅！
+	content := `欢迎使用 [Pipe](https://github.com/b3log/pipe) 博客平台。这是一篇自动生成的演示文章，编辑或者删除它，然后开始你的独立博客之旅！
 
 另外，欢迎你加入[黑客与画家的社区](https://hacpai.com)，你可以使用博客账号直接登录！
 
 ----
 
-Solo.go 博客系统是一个开源项目，如果你觉得它很赞，请到[项目首页](https://github.com/b3log/solo.go)给颗星鼓励一下 :heart:`
+Pipe 博客系统是一个开源项目，如果你觉得它很赞，请到[项目首页](https://github.com/b3log/pipe)给颗星鼓励一下 :heart:`
 
 	article := &model.Article{
 		AuthorID:     admin.ID,
 		Title:        "世界，你好！",
-		Tags:         "Solo.go",
+		Tags:         "Pipe",
 		Content:      content,
 		Path:         "/hello-world",
 		Status:       model.ArticleStatusPublished,
@@ -219,7 +219,7 @@ Solo.go 博客系统是一个开源项目，如果你觉得它很赞，请到[�
 	}
 
 	tag := &model.Tag{
-		Title:                 "Solo.go",
+		Title:                 "Pipe",
 		ArticleCount:          1,
 		PublishedArticleCount: 1,
 		BlogID:                blogID,
@@ -294,7 +294,7 @@ func initBasicSettings(tx *gorm.DB, blogID uint) error {
 	if err := tx.Create(&model.Setting{
 		Category: model.SettingCategoryBasic,
 		Name:     model.SettingNameBasicBlogTitle,
-		Value:    "Solo.go 示例",
+		Value:    "Pipe 示例",
 		BlogID:   blogID}).Error; nil != err {
 		return err
 	}
@@ -329,7 +329,7 @@ func initBasicSettings(tx *gorm.DB, blogID uint) error {
 	if err := tx.Create(&model.Setting{
 		Category: model.SettingCategoryBasic,
 		Name:     model.SettingNameBasicMetaKeywords,
-		Value:    "Solo.go,golang,博客,开源",
+		Value:    "Pipe,golang,博客,开源",
 		BlogID:   blogID}).Error; nil != err {
 		return err
 	}
