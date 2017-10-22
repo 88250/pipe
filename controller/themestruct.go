@@ -55,7 +55,7 @@ type ThemeCategory struct {
 type ThemeComment struct {
 	ID        uint
 	Title     string
-	Content   string
+	Content   template.HTML
 	URL       string
 	Author    *ThemeAuthor
 	CreatedAt string

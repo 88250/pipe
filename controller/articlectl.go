@@ -177,7 +177,7 @@ func showArticleAction(c *gin.Context) {
 
 		comment := &ThemeComment{
 			ID:        commentModel.ID,
-			Content:   commentModel.Content,
+			Content:   template.HTML(util.Markdown(commentModel.Content)),
 			Author:    author,
 			Removable: false,
 		}

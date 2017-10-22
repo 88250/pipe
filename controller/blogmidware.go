@@ -17,6 +17,7 @@
 package controller
 
 import (
+	"html/template"
 	"math"
 	"net/http"
 	"strconv"
@@ -208,7 +209,7 @@ func fillRecentComments(settingMap *map[string]string, dataModel *DataModel, blo
 	for _, comment := range recentComments {
 		themeComment := &ThemeComment{
 			Title:     comment.Content,
-			Content:   comment.Content,
+			Content:   template.HTML(util.Markdown(comment.Content)),
 			URL:       "todo",
 			CreatedAt: humanize.Time(comment.CreatedAt),
 			Author: &ThemeAuthor{
