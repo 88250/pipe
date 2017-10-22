@@ -22,8 +22,8 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/b3log/solo.go/model"
-	"github.com/b3log/solo.go/util"
+	"github.com/b3log/pipe/model"
+	"github.com/b3log/pipe/util"
 	"github.com/jinzhu/gorm"
 	log "github.com/sirupsen/logrus"
 )

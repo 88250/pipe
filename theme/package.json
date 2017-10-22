@@ -1,14 +1,14 @@
 {
-  "name": "solo.go",
+  "name": "Pipe",
   "version": "1.7.0",
-  "description": "solo.go theme",
-  "homepage": "https://github.com/b3log/solo.go",
+  "description": "Pipe theme",
+  "homepage": "https://github.com/b3log/pipe",
   "repository": {
     "type": "git",
-    "url": "git://github.com/b3log/solo.go.git"
+    "url": "git://github.com/b3log/pipe.git"
   },
   "bugs": {
-    "url": "https://github.com/b3log/solo.go/issues"
+    "url": "https://github.com/b3log/pipe/issues"
   },
   "license": "GPLv3",
   "private": true,

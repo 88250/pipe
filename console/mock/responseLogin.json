@@ -4,14 +4,14 @@
   "data": {
     "name": "Liyuan Li",
     "nickname": "Vanessa",
-    "blogTitle": "Solo",
-    "blogPath": "/solo",
+    "blogTitle": "Pipe",
+    "blogPath": "/pipe",
     "role": 0,
     "blogs": [
       {
-        "title": "Solo",
+        "title": "Pipe",
         "id": "1",
-        "path": "/solo"
+        "path": "/pipe"
       },
       {
         "title": "Wide",

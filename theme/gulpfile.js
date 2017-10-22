@@ -57,9 +57,9 @@ gulp.task('build', function () {
   fs.writeFileSync('./sw.js',
     fs.readFileSync('./sw.js', 'UTF-8')
       .replace(/const version = '\d{13}'/, `const version = '${newVersion}'`), 'UTF-8')
-  // set solo.json
-  fs.writeFileSync('../solo.json',
-    fs.readFileSync('../solo.json', 'UTF-8')
+  // set pipe.json
+  fs.writeFileSync('../pipe.json',
+    fs.readFileSync('../pipe.json', 'UTF-8')
       .replace(/"StaticResourceVersion": "\d{13}"/, `"StaticResourceVersion": "${newVersion}"`), 'UTF-8')
 
   const minify = composer(uglifyjs)

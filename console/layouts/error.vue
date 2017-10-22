@@ -15,7 +15,7 @@
         <h1>50X</h1>
         <div class="error__description">{{error.statusCode}}</div>
         <div class="fn-right">
-          <a href="https://github.com/b3log/solo.go/issues/new">{{ $t('reportIssue', $store.state.locale)}}</a> |
+          <a href="https://github.com/b3log/pipe/issues/new">{{ $t('reportIssue', $store.state.locale)}}</a> |
           <a href="https://hacpai.com">{{ $t('hacpai', $store.state.locale)}}</a>
         </div>
       </div>

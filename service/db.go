@@ -17,8 +17,8 @@
 package service
 
 import (
-	"github.com/b3log/solo.go/model"
-	"github.com/b3log/solo.go/util"
+	"github.com/b3log/pipe/model"
+	"github.com/b3log/pipe/util"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/sqlite"
 	log "github.com/sirupsen/logrus"

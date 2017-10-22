@@ -19,7 +19,7 @@ package service
 import (
 	"testing"
 
-	"github.com/b3log/solo.go/model"
+	"github.com/b3log/pipe/model"
 )
 
 func TestGetSetting(t *testing.T) {
@@ -30,8 +30,8 @@ func TestGetSetting(t *testing.T) {
 		return
 	}
 
-	if "Solo.go 示例" != setting.Value {
-		t.Errorf("expected is [%s], actual is [%s]", "Solo.go 示例", setting.Value)
+	if "Pipe 示例" != setting.Value {
+		t.Errorf("expected is [%s], actual is [%s]", "Pipe 示例", setting.Value)
 	}
 }
 
@@ -63,8 +63,8 @@ func TestGetSettings(t *testing.T) {
 		return
 	}
 
-	if "Solo.go 示例" != settings[model.SettingNameBasicBlogTitle].Value {
-		t.Errorf("expected is [%s], actual is [%s]", "Solo.go 示例", settings[model.SettingNameBasicBlogTitle].Value)
+	if "Pipe 示例" != settings[model.SettingNameBasicBlogTitle].Value {
+		t.Errorf("expected is [%s], actual is [%s]", "Pipe 示例", settings[model.SettingNameBasicBlogTitle].Value)
 	}
 }
 

@@ -21,13 +21,13 @@ import (
 	"os"
 	"testing"
 
-	"github.com/b3log/solo.go/model"
-	"github.com/b3log/solo.go/util"
+	"github.com/b3log/pipe/model"
+	"github.com/b3log/pipe/util"
 )
 
 const (
 	testPlatformAdminName  = "sologo"
-	testPlatformAdminEmail = "solo.go@b3log.org"
+	testPlatformAdminEmail = "pipe@b3log.org"
 )
 
 func TestMain(m *testing.M) {
@@ -44,7 +44,7 @@ func setup() {
 	}
 
 	util.Conf = &util.Configuration{}
-	util.Conf.DataFilePath = home + "/solo.go.test.db"
+	util.Conf.DataFilePath = home + "/pipe.test.db"
 
 	ConnectDB()
 

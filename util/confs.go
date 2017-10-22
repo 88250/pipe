@@ -30,10 +30,10 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
-// Solo.go version.
+// Pipe version.
 var Version = "1.0.0"
 
-// Solo.go configuration.
+// Pipe configuration.
 var Conf *Configuration
 
 // Configuration (solo.json).

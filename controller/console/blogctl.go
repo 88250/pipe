@@ -20,8 +20,8 @@ import (
 	"net/http"
 	"strconv"
 
-	"github.com/b3log/solo.go/service"
-	"github.com/b3log/solo.go/util"
+	"github.com/b3log/pipe/service"
+	"github.com/b3log/pipe/util"
 	"github.com/gin-gonic/gin"
 )
 

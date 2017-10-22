@@ -30,7 +30,7 @@
             <div class="card__body fn-flex">
               <img src="~/static/images/logo.jpg"/>
               <div class="fn-flex-1">
-                <h2>solo.go</h2>
+                <h2>Pipe</h2>
                 <div>{{ $t('onlineDemo', $store.state.locale) }}</div>
               </div>
             </div>
@@ -115,7 +115,7 @@
             <div class="card__body fn-flex">
               <img src="~/static/images/logo.jpg"/>
               <div class="fn-flex-1">
-                <h2>solo.go</h2>
+                <h2>Pipe</h2>
                 <div>{{ $t('welcome', $store.state.locale) }}</div>
               </div>
             </div>

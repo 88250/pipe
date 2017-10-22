@@ -21,9 +21,9 @@ import (
 	"html/template"
 	"strings"
 
-	"github.com/b3log/solo.go/controller/console"
-	"github.com/b3log/solo.go/theme"
-	"github.com/b3log/solo.go/util"
+	"github.com/b3log/pipe/controller/console"
+	"github.com/b3log/pipe/theme"
+	"github.com/b3log/pipe/util"
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
 	log "github.com/sirupsen/logrus"
@@ -58,7 +58,7 @@ func MapRoutes() *gin.Engine {
 		Secure:   strings.HasPrefix(util.Conf.Server, "https"),
 		HttpOnly: true,
 	})
-	ret.Use(sessions.Sessions("solo.go", store))
+	ret.Use(sessions.Sessions("pipe", store))
 
 	api := ret.Group(util.PathAPI)
 	api.POST("/init", initAction)

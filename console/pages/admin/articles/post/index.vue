@@ -80,7 +80,7 @@
         url: '',
         password: '',
         tags: [],
-        tagsItems: ['sologo'],
+        tagsItems: ['pipe'],
         commentable: false
       }
     },

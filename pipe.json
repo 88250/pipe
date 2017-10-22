@@ -2,11 +2,11 @@
     "Server": "http://localhost:5897",
     "StaticServer": "",
     "StaticResourceVersion": "1508395566741",
-    "LogFilePath": "${home}/solo.go.log",
+    "LogFilePath": "${home}/pipe.log",
     "LogLevel": "debug",
     "SessionSecret": "BEYOND",
     "SessionMaxAge": 86400,
     "RuntimeMode": "dev",
     "WD": "${pwd}",
-    "DataFilePath": "${home}/solo.go.db"
+    "DataFilePath": "${home}/pipe.db"
 }

@@ -1,4 +1,4 @@
-# Solo.go
+# Pipe
 
 ## 简介
 
@@ -27,7 +27,7 @@ TBD
 * [Hexo/Jekyll 导入](https://hacpai.com/article/1498490209748)
 * CDN 静态资源分离
 
-总得来说就是去除了 [Solo](https://github.com/b3log/solo) 中部分鸡肋的功能，并对一些特性进行了改进。另外最重要的一点是 Solo.go 是一个支持多博客的平台，超级管理员可以创建多个博客，每个博客都是独立的团队博客。
+总得来说就是去除了 [Solo](https://github.com/b3log/solo) 中部分鸡肋的功能，并对一些特性进行了改进。另外最重要的一点是 Pipe 是一个支持多博客的平台，超级管理员可以创建多个博客，每个博客都是独立的团队博客。
 
 ## 文档
 
@@ -37,16 +37,8 @@ TBD
 
 ## 构建
 
-因为目录名是 solo.go ，所以在不带 `-o` 指定输出文件名 build 时在非 Windows 上会有点小尴尬，这样会生成二进制 solo.go，而下次编译的时候就会被编译器当作源码，进而出现如下类似的报错：
-
 ```
-can't load package: package github.com/b3log/solo.go: read d:\gogogo\src\github.com\b3log\solo.go\solo.go: unexpected NUL in input
-```
-
-而 Windows 平台上不带 `-o` 编译后会生成 solo.go.exe，没毛病。总之，强烈建议在非 Windows 平台上构建时使用如下命令：
-
-```
-go build -o solo
+go build
 ```
 
 ## 技术栈
@@ -59,7 +51,7 @@ Vue.js, Nuxt, Vuetify
 ```
 cd console && npm install
 ```
-console/config/env.json 中 `clientBaseURL` 为 `/api` 时需启动 `./solo`，为 `/mock` 时需运行 
+console/config/env.json 中 `clientBaseURL` 为 `/api` 时需启动 `./pipe`，为 `/mock` 时需运行 
 ```
 npm run mock
 ```
@@ -86,23 +78,23 @@ TBD
 
 ## 作者
 
-Solo.go 的主要作者是 [Daniel](https://github.com/88250) 与 [Vanessa](https://github.com/Vanessa219)，所有贡献者可以在[这里](https://github.com/b3log/solo.go/graphs/contributors)看到。
+Pipe 的主要作者是 [Daniel](https://github.com/88250) 与 [Vanessa](https://github.com/Vanessa219)，所有贡献者可以在[这里](https://github.com/b3log/pipe/graphs/contributors)看到。
 
-我们非常期待你加入到这个项目中，无论是使用反馈还是代码补丁，都是对 Solo.go 一份满满的爱 :heart:
+我们非常期待你加入到这个项目中，无论是使用反馈还是代码补丁，都是对 Pipe 一份满满的爱 :heart:
 
 ## 社区
 
-* 到 Solo.go 官方[讨论区](https://hacpai.com/tag/Solo.go)发帖（推荐做法）
-* 来一发 [issue](https://github.com/b3log/solo.go/issues/new)
-* 加入 Solo.go 社区 Q 群 242561391
+* 到 Pipe 官方[讨论区](https://hacpai.com/tag/Pipe)发帖（推荐做法）
+* 来一发 [issue](https://github.com/b3log/pipe/issues/new)
+* 加入 Pipe 社区 Q 群 242561391
 
 ## 开源协议
 
-Solo.go 使用 GPLv3 作为开源授权协议，请尽量遵循，即使是在中国。
+Pipe 使用 GPLv3 作为开源授权协议，请尽量遵循，即使是在中国。
 
 ## 鸣谢
 
-Solo.go 的诞生离不开以下开源项目：
+Pipe 的诞生离不开以下开源项目：
 
 * [Vue.js](https://github.com/vuejs/vue)：渐进式 JavaScript 框架
 * [jQuery](https://github.com/jquery/jquery)：使用广泛的 JavaScript 工具库

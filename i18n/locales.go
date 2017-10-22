@@ -24,7 +24,7 @@ import (
 	"sort"
 	"strings"
 
-	"github.com/b3log/solo.go/util"
+	"github.com/b3log/pipe/util"
 	log "github.com/sirupsen/logrus"
 )
 

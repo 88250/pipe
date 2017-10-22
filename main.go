@@ -24,16 +24,16 @@ import (
 	"os/signal"
 	"syscall"
 
-	"github.com/b3log/solo.go/controller"
-	"github.com/b3log/solo.go/i18n"
-	"github.com/b3log/solo.go/service"
-	"github.com/b3log/solo.go/theme"
-	"github.com/b3log/solo.go/util"
+	"github.com/b3log/pipe/controller"
+	"github.com/b3log/pipe/i18n"
+	"github.com/b3log/pipe/service"
+	"github.com/b3log/pipe/theme"
+	"github.com/b3log/pipe/util"
 	"github.com/gin-gonic/gin"
 	log "github.com/sirupsen/logrus"
 )
 
-// The only one init function in Solo.go.
+// The only one init function in pipe.
 func init() {
 	util.LoadConf()
 	i18n.Load()
@@ -64,7 +64,7 @@ func main() {
 
 	handleSignal(server)
 
-	log.Infof("Solo.go (v%s) is running [%s]", util.Version, util.Conf.Server)
+	log.Infof("pipe (v%s) is running [%s]", util.Version, util.Conf.Server)
 
 	server.ListenAndServe()
 }
@@ -76,14 +76,14 @@ func handleSignal(server *http.Server) {
 
 	go func() {
 		s := <-c
-		log.Infof("got signal [%s], exiting Solo.go now", s)
+		log.Infof("got signal [%s], exiting pipe now", s)
 		if err := server.Close(); nil != err {
 			log.Error("server close failed: ", err)
 		}
 
 		service.DisconnectDB()
 
-		log.Info("Solo exited")
+		log.Info("Pipe exited")
 		os.Exit(0)
 	}()
 }

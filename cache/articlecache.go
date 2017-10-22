@@ -18,7 +18,7 @@
 package cache
 
 import (
-	"github.com/b3log/solo.go/model"
+	"github.com/b3log/pipe/model"
 	"github.com/bluele/gcache"
 )
 

@@ -20,7 +20,7 @@ import (
 	"strconv"
 	"sync"
 
-	"github.com/b3log/solo.go/model"
+	"github.com/b3log/pipe/model"
 	"github.com/jinzhu/gorm"
 	log "github.com/sirupsen/logrus"
 )
