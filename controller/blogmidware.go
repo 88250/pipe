@@ -90,14 +90,17 @@ func fillCommon(c *gin.Context, dataModel *DataModel) {
 	(*dataModel)["I18n"] = i18nMap
 
 	settings := service.Setting.GetAllSettings(blogID)
-	settingMap := map[string]string{}
+	settingMap := map[string]interface{}{}
 	for _, setting := range settings {
 		settingMap[strings.Title(setting.Name)] = setting.Value
 		settingMap[setting.Name] = setting.Value
 	}
-	settingMap[strings.Title(model.SettingNameSystemPath)] = util.PathBlogs + settingMap[strings.Title(model.SettingNameSystemPath)]
-	settingMap[model.SettingNameSystemPath] = util.PathBlogs + settingMap[model.SettingNameSystemPath]
-
+	settingMap[strings.Title(model.SettingNameSystemPath)] = util.PathBlogs + settingMap[strings.Title(model.SettingNameSystemPath)].(string)
+	settingMap[model.SettingNameSystemPath] = util.PathBlogs + settingMap[model.SettingNameSystemPath].(string)
+	settingMap[strings.Title(model.SettingNameBasicHeader)] = template.HTML(settingMap[model.SettingNameBasicHeader].(string))
+	settingMap[strings.Title(model.SettingNameBasicFooter)] = template.HTML(settingMap[model.SettingNameBasicFooter].(string))
+	settingMap[strings.Title(model.SettingNameBasicNoticeBoard)] = template.HTML(settingMap[model.SettingNameBasicNoticeBoard].(string))
+	settingMap[strings.Title(model.SettingNameArticleSign)] = template.HTML(settingMap[model.SettingNameArticleSign].(string))
 	(*dataModel)["Setting"] = settingMap
 
 	statistics := service.Statistic.GetAllStatistics(blogID)
@@ -117,7 +120,7 @@ func fillCommon(c *gin.Context, dataModel *DataModel) {
 	(*dataModel)["MetaDescription"] = settingMap["BasicMetaDescription"]
 	(*dataModel)["Conf"] = util.Conf
 	(*dataModel)["Year"] = time.Now().Year()
-	(*dataModel)["BlogURL"] = util.Conf.Server + settingMap[model.SettingNameSystemPath]
+	(*dataModel)["BlogURL"] = util.Conf.Server + settingMap[model.SettingNameSystemPath].(string)
 
 	(*dataModel)["Username"] = ""
 	session := util.GetSession(c)
@@ -138,21 +141,21 @@ func fillCommon(c *gin.Context, dataModel *DataModel) {
 	c.Set("dataModel", dataModel)
 }
 
-func fillMostUseCategories(settingMap *map[string]string, dataModel *DataModel, blogID uint) {
+func fillMostUseCategories(settingMap *map[string]interface{}, dataModel *DataModel, blogID uint) {
 	categories := service.Category.GetCategories(math.MaxInt8, blogID)
 	themeCategories := []*ThemeCategory{}
 	for _, category := range categories {
 		themeCategory := &ThemeCategory{
 			Title: category.Title,
-			URL:   util.Conf.Server + (*settingMap)[model.SettingNameSystemPath] + "/" + category.Title,
+			URL:   util.Conf.Server + (*settingMap)[model.SettingNameSystemPath].(string) + "/" + category.Title,
 		}
 		themeCategories = append(themeCategories, themeCategory)
 	}
 	(*dataModel)["MostUseCategories"] = themeCategories
 }
 
-func fillMostUseTags(settingMap *map[string]string, dataModel *DataModel, blogID uint) {
-	tagSize, err := strconv.Atoi((*settingMap)[model.SettingNamePreferenceMostUseTagListSize])
+func fillMostUseTags(settingMap *map[string]interface{}, dataModel *DataModel, blogID uint) {
+	tagSize, err := strconv.Atoi((*settingMap)[model.SettingNamePreferenceMostUseTagListSize].(string))
 	if nil != err {
 		log.Errorf("setting [%s] should be an integer, actual is [%v]", model.SettingNamePreferenceMostUseTagListSize,
 			(*settingMap)[model.SettingNamePreferenceMostUseTagListSize])
@@ -163,15 +166,15 @@ func fillMostUseTags(settingMap *map[string]string, dataModel *DataModel, blogID
 	for _, tag := range tags {
 		themeTag := &ThemeTag{
 			Title: tag.Title,
-			URL:   util.Conf.Server + (*settingMap)[model.SettingNameSystemPath] + "/" + tag.Title,
+			URL:   util.Conf.Server + (*settingMap)[model.SettingNameSystemPath].(string) + "/" + tag.Title,
 		}
 		themeTags = append(themeTags, themeTag)
 	}
 	(*dataModel)["MostUseTags"] = themeTags
 }
 
-func fillMostViewArticles(settingMap *map[string]string, dataModel *DataModel, blogID uint) {
-	mostViewArticleSize, err := strconv.Atoi((*settingMap)[model.SettingNamePreferenceMostViewArticleListSize])
+func fillMostViewArticles(settingMap *map[string]interface{}, dataModel *DataModel, blogID uint) {
+	mostViewArticleSize, err := strconv.Atoi((*settingMap)[model.SettingNamePreferenceMostViewArticleListSize].(string))
 	if nil != err {
 		log.Errorf("setting [%s] should be an integer, actual is [%v]", model.SettingNamePreferenceMostViewArticleListSize,
 			(*settingMap)[model.SettingNamePreferenceMostViewArticleListSize])
@@ -187,7 +190,7 @@ func fillMostViewArticles(settingMap *map[string]string, dataModel *DataModel, b
 		}
 		themeArticle := &ThemeArticle{
 			Title:     article.Title,
-			URL:       util.Conf.Server + (*settingMap)[model.SettingNameSystemPath] + article.Path,
+			URL:       util.Conf.Server + (*settingMap)[model.SettingNameSystemPath].(string) + article.Path,
 			CreatedAt: humanize.Time(article.CreatedAt),
 			Author:    author,
 		}
@@ -197,8 +200,8 @@ func fillMostViewArticles(settingMap *map[string]string, dataModel *DataModel, b
 	(*dataModel)["MostViewArticles"] = themeMostViewArticles
 }
 
-func fillRecentComments(settingMap *map[string]string, dataModel *DataModel, blogID uint) {
-	recentCommentSize, err := strconv.Atoi((*settingMap)[model.SettingNamePreferenceRecentCommentListSize])
+func fillRecentComments(settingMap *map[string]interface{}, dataModel *DataModel, blogID uint) {
+	recentCommentSize, err := strconv.Atoi((*settingMap)[model.SettingNamePreferenceRecentCommentListSize].(string))
 	if nil != err {
 		log.Errorf("setting [%s] should be an integer, actual is [%v]", model.SettingNamePreferenceRecentCommentListSize,
 			(*settingMap)[model.SettingNamePreferenceRecentCommentListSize])
@@ -224,8 +227,8 @@ func fillRecentComments(settingMap *map[string]string, dataModel *DataModel, blo
 	(*dataModel)["RecentComments"] = themeRecentComments
 }
 
-func fillMostCommentArticles(settingMap *map[string]string, dataModel *DataModel, blogID uint) {
-	mostCommentArticleSize, err := strconv.Atoi((*settingMap)[model.SettingNamePreferenceMostCommentArticleListSize])
+func fillMostCommentArticles(settingMap *map[string]interface{}, dataModel *DataModel, blogID uint) {
+	mostCommentArticleSize, err := strconv.Atoi((*settingMap)[model.SettingNamePreferenceMostCommentArticleListSize].(string))
 	if nil != err {
 		log.Errorf("setting [%s] should be an integer, actual is [%v]", model.SettingNamePreferenceMostCommentArticleListSize,
 			(*settingMap)[model.SettingNamePreferenceMostCommentArticleListSize])
@@ -241,7 +244,7 @@ func fillMostCommentArticles(settingMap *map[string]string, dataModel *DataModel
 		}
 		themeArticle := &ThemeArticle{
 			Title:     article.Title,
-			URL:       util.Conf.Server + (*settingMap)[model.SettingNameSystemPath] + article.Path,
+			URL:       util.Conf.Server + (*settingMap)[model.SettingNameSystemPath].(string) + article.Path,
 			CreatedAt: humanize.Time(article.CreatedAt),
 			Author:    author,
 		}
@@ -251,8 +254,8 @@ func fillMostCommentArticles(settingMap *map[string]string, dataModel *DataModel
 	(*dataModel)["MostCommentArticles"] = themeMostCommentArticles
 }
 
-func fillRandomArticles(settingMap *map[string]string, dataModel *DataModel, blogID uint) {
-	randomArticleSize, err := strconv.Atoi((*settingMap)[model.SettingNamePreferenceRandomArticleListSize])
+func fillRandomArticles(settingMap *map[string]interface{}, dataModel *DataModel, blogID uint) {
+	randomArticleSize, err := strconv.Atoi((*settingMap)[model.SettingNamePreferenceRandomArticleListSize].(string))
 	if nil != err {
 		log.Errorf("setting [%s] should be an integer, actual is [%v]", model.SettingNamePreferenceRandomArticleListSize,
 			(*settingMap)[model.SettingNamePreferenceRandomArticleListSize])
@@ -268,7 +271,7 @@ func fillRandomArticles(settingMap *map[string]string, dataModel *DataModel, blo
 		}
 		themeArticle := &ThemeArticle{
 			Title:     article.Title,
-			URL:       util.Conf.Server + (*settingMap)[model.SettingNameSystemPath] + article.Path,
+			URL:       util.Conf.Server + (*settingMap)[model.SettingNameSystemPath].(string) + article.Path,
 			CreatedAt: humanize.Time(article.CreatedAt),
 			Author:    author,
 		}
@@ -281,7 +284,7 @@ func fillRandomArticles(settingMap *map[string]string, dataModel *DataModel, blo
 func getSystemPath(c *gin.Context) string {
 	dataModel := getDataModel(c)
 
-	return dataModel["Setting"].(map[string]string)[model.SettingNameSystemPath]
+	return dataModel["Setting"].(map[string]interface{})[model.SettingNameSystemPath].(string)
 }
 
 func getBlogAdmin(c *gin.Context) *model.User {
