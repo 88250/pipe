@@ -6,7 +6,7 @@
  */
 
 import $ from 'jquery'
-import { AddComment, InitEditor, LocalStorageInput, ReomveComment, InitToc } from '../../../js/common'
+import {AddComment, InitEditor, InitToc, LocalStorageInput, ReomveComment} from '../../../js/common'
 import './common'
 import hljs from 'highlight.js'
 

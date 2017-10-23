@@ -64,7 +64,7 @@ const Common = {
             const qr = new QRious({
               element: $qrCode[0],
               value: shareURL,
-              size: 128
+              size: 128 
             })
             $qrCode.css('background-image', `url(${qr.toDataURL('image/jpeg')})`).hide()
           }

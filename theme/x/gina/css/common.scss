@@ -2,7 +2,7 @@
  * skin gina style
  *
  * @author <a href="http://vanessa.b3log.org">Liyuan Li</a>
- * @version 0.1.0.0, Oct 13, 2017
+ * @version 0.1.0.0, Oct 23, 2017
 */
 @import '../../../scss/basic';
 @import "github.css";
@@ -686,5 +686,29 @@ a {
 
   .article__action {
     margin-top: 0px;
+  }
+}
+
+// ToC
+.toc {
+  margin: 20px 0;
+  li.toc__item--active a {
+    background-color: $border-color;
+    color: $theme-accent;
+  }
+  a {
+    display: block;
+    line-height: 30px;
+    color: $gray;
+    &:hover {
+      text-decoration: none;
+      color: $theme-accent;
+    }
+
+  }
+  @for $i from 1 through 6 {
+    .toc__#{$i} a {
+      padding-left: 20px * $i
+    }
   }
 }
