@@ -4,6 +4,10 @@
 
       <v-form>
         <v-text-field
+          :label="$t('blogURL', $store.state.locale)"
+          v-model="blogURL"
+        ></v-text-field>
+        <v-text-field
           :label="$t('blogTitle', $store.state.locale)"
           v-model="blogTitle"
         ></v-text-field>
@@ -57,6 +61,7 @@
   export default {
     data () {
       return {
+        blogURL: '',
         blogTitle: '',
         blogSubtitle: '',
         faviconURL: '',
@@ -78,6 +83,7 @@
     methods: {
       async update () {
         const responseData = await this.axios.put('/console/settings/basic', {
+          basicBlogURL: this.blogURL,
           basicBlogTitle: this.blogTitle,
           basicBlogSubtitle: this.blogSubtitle,
           basicFaviconURL: this.faviconURL,
@@ -108,6 +114,7 @@
     async mounted () {
       const responseData = await this.axios.get('/console/settings/basic')
       if (responseData) {
+        this.$set(this, 'blogURL', responseData.basicBlogURL)
         this.$set(this, 'blogTitle', responseData.basicBlogTitle)
         this.$set(this, 'blogSubtitle', responseData.basicBlogSubtitle)
         this.$set(this, 'faviconURL', responseData.basicFaviconURL)

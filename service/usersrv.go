@@ -20,7 +20,6 @@ import (
 	"sync"
 
 	"github.com/b3log/pipe/model"
-	"github.com/b3log/pipe/util"
 	log "github.com/sirupsen/logrus"
 )
 
@@ -68,7 +67,7 @@ func (srv *userService) GetUserByNameOrEmail(nameOrEmail string) *model.User {
 type UserBlog struct {
 	ID       uint   `json:"id"`
 	Title    string `json:"title"`
-	Path     string `json:"path"`
+	URL      string `json:"url"`
 	UserID   uint   `json:"userId"`
 	UserRole int    `json:"userRole"`
 }
@@ -116,9 +115,9 @@ func (srv *userService) GetUserBlogs(userID uint) (ret []*UserBlog) {
 			continue
 		}
 
-		pathSetting := Setting.GetSetting(model.SettingCategorySystem, model.SettingNameSystemPath, rel.ID1)
-		if nil == pathSetting {
-			log.Errorf("not found path settings [blogID=%d]", rel.ID1)
+		blogURLSetting := Setting.GetSetting(model.SettingCategoryBasic, model.SettingNameBasicBlogURL, rel.ID1)
+		if nil == blogURLSetting {
+			log.Errorf("not found blog URL settings [blogID=%d]", rel.ID1)
 
 			continue
 		}
@@ -126,7 +125,7 @@ func (srv *userService) GetUserBlogs(userID uint) (ret []*UserBlog) {
 		blog := &UserBlog{
 			ID:       rel.ID1,
 			Title:    blogTitleSetting.Value,
-			Path:     util.PathBlogs + pathSetting.Value,
+			URL:      blogURLSetting.Value,
 			UserID:   userID,
 			UserRole: model.UserRoleBlogUser,
 		}

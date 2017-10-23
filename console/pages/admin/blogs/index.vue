@@ -11,7 +11,7 @@
           <div class="avatar avatar--mid avatar--space" :style="`background-image: url(${item.blogAdmin.avatarURL})`"></div>
           <div class="fn-flex-1">
             <div class="fn-flex">
-              <nuxt-link class="list__title fn-flex-1" target="_blank" :to="`/${item.blogPath}`">
+              <nuxt-link class="list__title fn-flex-1" target="_blank" :to="`${item.blogURL}`">
                 {{ item.blogTitle }}
               </nuxt-link>
               <v-menu

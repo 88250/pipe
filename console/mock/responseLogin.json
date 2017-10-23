@@ -5,23 +5,18 @@
     "name": "Liyuan Li",
     "nickname": "Vanessa",
     "blogTitle": "Pipe",
-    "blogPath": "/pipe",
+    "blogURL": "http://localhost:5897/blogs/pipe",
     "role": 0,
     "blogs": [
       {
-        "title": "Pipe",
-        "id": "1",
-        "path": "/pipe"
-      },
-      {
         "title": "Wide",
         "id": "2",
-        "path": "/wide"
+        "url": "http://localhost:5897/blogs/Wide"
       },
       {
         "title": "Sym",
         "id": "0",
-        "path": "/sym"
+        "url": "http://localhost:5897/blogs/Sym"
       }
     ]
   }

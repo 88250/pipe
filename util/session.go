@@ -28,7 +28,7 @@ type SessionData struct {
 	UName string // username
 	URole int    // user role
 	BID   uint   // blog ID
-	BPath string // blog path
+	BURL  string // blog url
 }
 
 func (sd *SessionData) Save(c *gin.Context) error {

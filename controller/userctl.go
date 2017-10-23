@@ -19,10 +19,11 @@ package controller
 import (
 	"net/http"
 
-	"github.com/gin-gonic/gin"
+	"strings"
+
 	"github.com/b3log/pipe/service"
 	"github.com/b3log/pipe/util"
-	"strings"
+	"github.com/gin-gonic/gin"
 	log "github.com/sirupsen/logrus"
 )
 
@@ -64,7 +65,7 @@ func showAuthorArticlesAction(c *gin.Context) {
 		for _, tagStr := range tagStrs {
 			themeTag := &ThemeTag{
 				Title: tagStr,
-				URL:   getSystemPath(c) + util.PathTags + "/" + tagStr,
+				URL:   getBlogURL(c) + util.PathTags + "/" + tagStr,
 			}
 			themeTags = append(themeTags, themeTag)
 		}
@@ -88,7 +89,7 @@ func showAuthorArticlesAction(c *gin.Context) {
 			CreatedAt:    articleModel.CreatedAt.Format("2006-01-02"),
 			Title:        articleModel.Title,
 			Tags:         themeTags,
-			URL:          getSystemPath(c) + articleModel.Path,
+			URL:          getBlogURL(c) + articleModel.Path,
 			Topped:       articleModel.Topped,
 			ViewCount:    articleModel.ViewCount,
 			CommentCount: articleModel.CommentCount,

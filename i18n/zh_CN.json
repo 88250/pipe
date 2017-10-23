@@ -120,7 +120,7 @@
   "removeData": "冗余数据",
   "clearData": "数据清理",
   "staticBlog": "静态博客",
-  "blogPath": "博客路径",
+  "blogURL": "博客地址",
   "internationalization": "国际化",
   "feed": "订阅",
   "faviconURL": "favicon 地址",

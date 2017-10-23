@@ -2,6 +2,7 @@
   "code": 0,
   "msg": "",
   "data": {
+    "basicBlogURL": "blogURL",
     "basicFooter": "footer",
     "basicHeader": "header",
     "basicBlogTitle": "blogTitle",

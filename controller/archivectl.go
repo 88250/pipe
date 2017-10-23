@@ -19,10 +19,11 @@ package controller
 import (
 	"net/http"
 
-	"github.com/gin-gonic/gin"
+	"strings"
+
 	"github.com/b3log/pipe/service"
 	"github.com/b3log/pipe/util"
-	"strings"
+	"github.com/gin-gonic/gin"
 	log "github.com/sirupsen/logrus"
 )
 
@@ -35,7 +36,7 @@ func showArchivesAction(c *gin.Context) {
 	for _, archiveModel := range archiveModels {
 		archive := &ThemeArchive{
 			Title: archiveModel,
-			URL:   getSystemPath(c) + "/" + archiveModel,
+			URL:   getBlogURL(c) + "/" + archiveModel,
 			Count: 13,
 		}
 		themeArchives = append(themeArchives, archive)
@@ -62,7 +63,7 @@ func showArchiveArticlesAction(c *gin.Context) {
 		for _, tagStr := range tagStrs {
 			themeTag := &ThemeTag{
 				Title: tagStr,
-				URL:   getSystemPath(c) + util.PathTags + "/" + tagStr,
+				URL:   getBlogURL(c) + util.PathTags + "/" + tagStr,
 			}
 			themeTags = append(themeTags, themeTag)
 		}
@@ -86,7 +87,7 @@ func showArchiveArticlesAction(c *gin.Context) {
 			CreatedAt:    articleModel.CreatedAt.Format("2006-01-02"),
 			Title:        articleModel.Title,
 			Tags:         themeTags,
-			URL:          getSystemPath(c) + articleModel.Path,
+			URL:          getBlogURL(c) + articleModel.Path,
 			Topped:       articleModel.Topped,
 			ViewCount:    articleModel.ViewCount,
 			CommentCount: articleModel.CommentCount,
@@ -101,9 +102,6 @@ func showArchiveArticlesAction(c *gin.Context) {
 
 	dataModel["ArchivesDate"] = "2012-12-12"
 	dataModel["ArchivesCount"] = 12
-
-
-
 
 	c.HTML(http.StatusOK, "archive-articles.html", dataModel)
 }

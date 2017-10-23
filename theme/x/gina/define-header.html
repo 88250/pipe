@@ -1,22 +1,22 @@
 {{define "header"}}
 <header class="header">
     <div class="wrapper">
-        <a href="{{.BlogURL}}">{{.Setting.BasicBlogTitle}}</a>
-        <a href="{{.BlogURL}}/categories">{{.I18n.Categories}}</a>
-        <a href="{{.BlogURL}}/tags">{{.I18n.TagsPanel}}</a>
-        <a href="{{.BlogURL}}/archives">{{.I18n.Archives}}</a>
+        <a href="{{.Setting.BasicBlogURL}}">{{.Setting.BasicBlogTitle}}</a>
+        <a href="{{.Setting.BasicBlogURL}}/categories">{{.I18n.Categories}}</a>
+        <a href="{{.Setting.BasicBlogURL}}/tags">{{.I18n.TagsPanel}}</a>
+        <a href="{{.Setting.BasicBlogURL}}/archives">{{.I18n.Archives}}</a>
         {{if gt .UserCount 1}}
-        <a href="{{.BlogURL}}/authors">
+        <a href="{{.Setting.BasicBlogURL}}/authors">
             {{.I18n.Team}}
         </a>
         {{end}}
-        <a href="{{.BlogURL}}/rss">TODORSS</a>
+        <a href="{{.Setting.BasicBlogURL}}/rss">TODORSS</a>
         {{range .Navigations}}
         <a href="{{.URL}}" target="{{.OpenMethod}}">{{.Title}}</a>
         {{end}}
         <form id="headerSearch"
               class="header__search"
-              action="{{.BlogURL}}/search">
+              action="{{.Setting.BasicBlogURL}}/search">
             <input type="text" name="keyword" placeholder="{{.I18n.EnterSearch}}">
             <svg>
                 <use xlink:href="#search"></use>

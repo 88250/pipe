@@ -68,10 +68,10 @@ func loginAction(c *gin.Context) {
 		return
 	}
 
-	pathSetting := service.Setting.GetSetting(model.SettingCategorySystem, model.SettingNameSystemPath, user.BlogID)
-	if nil == pathSetting {
+	blogURLSetting := service.Setting.GetSetting(model.SettingCategoryBasic, model.SettingNameBasicBlogURL, user.BlogID)
+	if nil == blogURLSetting {
 		result.Code = -1
-		result.Msg = fmt.Sprintf("not found path settings [blogID=%d]", user.BlogID)
+		result.Msg = fmt.Sprintf("not found blog URL settings [blogID=%d]", user.BlogID)
 
 		return
 	}
@@ -80,7 +80,7 @@ func loginAction(c *gin.Context) {
 	data["name"] = user.Name
 	data["nickname"] = user.Nickname
 	data["blogTitle"] = blogTitleSetting.Value
-	data["blogPath"] = util.PathBlogs + pathSetting.Value
+	data["blogURL"] = blogURLSetting.Value
 	data["role"] = user.Role
 	blogs := service.User.GetUserBlogs(user.ID)
 	if 1 > len(blogs) {
@@ -95,7 +95,7 @@ func loginAction(c *gin.Context) {
 		UName: user.Name,
 		URole: user.Role,
 		BID:   user.BlogID,
-		BPath: util.PathBlogs + pathSetting.Value,
+		BURL:  blogURLSetting.Value,
 	}
 	if err := sessionData.Save(c); nil != err {
 		result.Code = -1

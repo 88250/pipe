@@ -31,8 +31,7 @@ type Setting struct {
 const (
 	SettingCategorySystem = "system"
 
-	SettingNameSystemPath = "systemPath"
-	SettingNameSystemVer  = "systemVersion"
+	SettingNameSystemVer = "systemVersion"
 )
 
 // Setting names of category "theme".
@@ -46,6 +45,7 @@ const (
 const (
 	SettingCategoryBasic = "basic"
 
+	SettingNameBasicBlogURL         = "basicBlogURL"
 	SettingNameBasicBlogSubtitle    = "basicBlogSubtitle"
 	SettingNameBasicBlogTitle       = "basicBlogTitle"
 	SettingNameBasicCommentable     = "basicCommentable"

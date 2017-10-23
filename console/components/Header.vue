@@ -1,7 +1,7 @@
 <template>
   <header class="header fn-flex">
     <div class="header__logo" v-if="from === 'admin'">
-      <nuxt-link :to="$store.state.blogPath">
+      <nuxt-link :to="$store.state.blogURL">
         <img src="~static/images/logo.png"/>
         {{ $store.state.blogTitle }}
       </nuxt-link>
@@ -64,7 +64,7 @@
         }
       },
       async switchBlog (item) {
-        if (item.path === this.$store.state.blogPath) {
+        if (item.URL === this.$store.state.blogURL) {
           return
         }
         const responseData = await this.axios.post(`/console/blogs/switch/${item.id}`)

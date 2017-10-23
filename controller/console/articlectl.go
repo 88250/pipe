@@ -109,7 +109,7 @@ func GetArticlesAction(c *gin.Context) {
 		for _, tagStr := range tagStrs {
 			consoleTag := &ConsoleTag{
 				Title: tagStr,
-				URL:   sessionData.BPath + "/" + tagStr,
+				URL:   sessionData.BURL + "/" + tagStr,
 			}
 			consoleTags = append(consoleTags, consoleTag)
 		}
@@ -132,7 +132,7 @@ func GetArticlesAction(c *gin.Context) {
 			CreatedAt:    articleModel.CreatedAt.Format("2006-01-02"),
 			Title:        articleModel.Title,
 			Tags:         consoleTags,
-			URL:          sessionData.BPath + articleModel.Path,
+			URL:          sessionData.BURL + articleModel.Path,
 			Topped:       articleModel.Topped,
 			ViewCount:    articleModel.ViewCount,
 			CommentCount: articleModel.CommentCount,

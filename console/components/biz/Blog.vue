@@ -34,8 +34,8 @@
         v-model="noticeBoard"
       ></v-text-field>
       <v-text-field
-        :label="$t('blogPath', $store.state.locale)"
-        v-model="blogPath"
+        :label="$t('blogURL', $store.state.locale)"
+        v-model="blogURL"
       ></v-text-field>
       <v-text-field
         :label="$t('commonUser', $store.state.locale)"
@@ -84,7 +84,7 @@
         metaKeywords: '',
         metaDescription: '',
         noticeBoard: '',
-        blogPath: '',
+        blogURL: '',
         blogMembers: '',
         blogAdmin: '',
         commentable: true
@@ -110,7 +110,7 @@
           metaKeywords: this.metaKeywords,
           metaDescription: this.metaDescription,
           noticeBoard: this.noticeBoard,
-          blogPath: this.blogPath,
+          blogURL: this.blogURL,
           blogMembers: this.blogMembers,
           blogAdmin: this.blogAdmin,
           commentable: this.commentable
@@ -144,7 +144,7 @@
           this.$set(this, 'metaKeywords', responseData.metaKeywords)
           this.$set(this, 'metaDescription', responseData.metaDescription)
           this.$set(this, 'noticeBoard', responseData.noticeBoard)
-          this.$set(this, 'blogPath', responseData.blogPath)
+          this.$set(this, 'blogURL', responseData.blogURL)
           this.$set(this, 'blogMembers', responseData.blogMembers)
           this.$set(this, 'blogAdmin', responseData.blogAdmin)
           this.$set(this, 'commentable', responseData.commentable)

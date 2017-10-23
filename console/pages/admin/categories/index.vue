@@ -9,7 +9,7 @@
       <ul class="list">
         <li v-for="item in list" :key="item.id" class="fn-flex-1">
           <div class="fn-flex">
-            <nuxt-link class="list__title fn-flex-1" :to="`${$store.state.blogPath}/${item.url}`">
+            <nuxt-link class="list__title fn-flex-1" :to="`${$store.state.blogURL}/${item.url}`">
               {{ item.title }}
             </nuxt-link>
             <v-menu

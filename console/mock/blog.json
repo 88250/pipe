@@ -9,7 +9,7 @@
     "metaKeywords": "metaKeywords",
     "metaDescription": "metaDescription",
     "noticeBoard": "noticeBoard",
-    "blogPath": "blogPath",
+    "blogURL": "http://localhost:5897/blogs/pipe",
     "blogMembers": "blogMembers",
     "blogAdmin": "blogAdmin",
     "faviconURL": "https://static.hacpai.com/images/favicon.png",

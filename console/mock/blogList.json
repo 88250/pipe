@@ -7,7 +7,7 @@
         "id": 0,
         "blogTitle": "blogTitle",
         "blogSubtitle": "blogSubtitle",
-        "blogPath": "blogPath",
+        "blogURL": "http://localhost:5897/blogs/pipe",
         "blogAdmin": {
           "name": "Vanessa",
           "avatarURL": "https://img.hacpai.com/avatar/1476336494155_1476358182494.jpeg?imageView2/1/w/80/h/80/interlace/0/q/100"
@@ -17,7 +17,7 @@
         "id": 0,
         "blogTitle": "blogTitle",
         "blogSubtitle": "blogSubtitle",
-        "blogPath": "blogPath",
+        "blogURL": "http://localhost:5897/blogs/pipe",
         "blogAdmin": {
           "name": "Vanessa",
           "avatarURL": "https://img.hacpai.com/avatar/1476336494155_1476358182494.jpeg?imageView2/1/w/80/h/80/interlace/0/q/100"

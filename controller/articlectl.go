@@ -43,7 +43,7 @@ func showArticlesAction(c *gin.Context) {
 		for _, tagStr := range tagStrs {
 			themeTag := &ThemeTag{
 				Title: tagStr,
-				URL:   getSystemPath(c) + util.PathTags + "/" + tagStr,
+				URL:   getBlogURL(c) + util.PathTags + "/" + tagStr,
 			}
 			themeTags = append(themeTags, themeTag)
 		}
@@ -67,7 +67,7 @@ func showArticlesAction(c *gin.Context) {
 			CreatedAt:    articleModel.CreatedAt.Format("2006-01-02"),
 			Title:        articleModel.Title,
 			Tags:         themeTags,
-			URL:          getSystemPath(c) + articleModel.Path,
+			URL:          getBlogURL(c) + articleModel.Path,
 			Topped:       articleModel.Topped,
 			ViewCount:    articleModel.ViewCount,
 			CommentCount: articleModel.CommentCount,
@@ -97,7 +97,7 @@ func showArticleAction(c *gin.Context) {
 	for _, tagStr := range tagStrs {
 		themeTag := &ThemeTag{
 			Title: tagStr,
-			URL:   getSystemPath(c) + util.PathTags + "/" + tagStr,
+			URL:   getBlogURL(c) + util.PathTags + "/" + tagStr,
 		}
 		themeTags = append(themeTags, themeTag)
 	}
@@ -111,7 +111,7 @@ func showArticleAction(c *gin.Context) {
 		CreatedAt:    article.CreatedAt.Format("2006-01-02"),
 		Title:        article.Title,
 		Tags:         themeTags,
-		URL:          getSystemPath(c) + article.Path,
+		URL:          getBlogURL(c) + article.Path,
 		Topped:       article.Topped,
 		ViewCount:    article.ViewCount,
 		CommentCount: article.CommentCount,
@@ -126,7 +126,7 @@ func showArticleAction(c *gin.Context) {
 		for _, tagStr := range tagStrs {
 			themeTag := &ThemeTag{
 				Title: tagStr,
-				URL:   getSystemPath(c) + util.PathTags + "/" + tagStr,
+				URL:   getBlogURL(c) + util.PathTags + "/" + tagStr,
 			}
 			themeTags = append(themeTags, themeTag)
 		}
@@ -150,7 +150,7 @@ func showArticleAction(c *gin.Context) {
 			CreatedAt:    articleModel.CreatedAt.Format("2006-01-02"),
 			Title:        articleModel.Title,
 			Tags:         themeTags,
-			URL:          getSystemPath(c) + articleModel.Path,
+			URL:          getBlogURL(c) + articleModel.Path,
 			Topped:       articleModel.Topped,
 			ViewCount:    articleModel.ViewCount,
 			CommentCount: articleModel.CommentCount,
@@ -204,7 +204,7 @@ func fillPreviousArticle(c *gin.Context, article *model.Article, dataModel *Data
 
 	previousArticle := &ThemeArticle{
 		Title: previous.Title,
-		URL:   getSystemPath(c) + previous.Path,
+		URL:   getBlogURL(c) + previous.Path,
 	}
 	(*dataModel)["PreviousArticle"] = previousArticle
 }
@@ -217,7 +217,7 @@ func fillNextArticle(c *gin.Context, article *model.Article, dataModel *DataMode
 
 	nextArticle := &ThemeArticle{
 		Title: next.Title,
-		URL:   getSystemPath(c) + next.Path,
+		URL:   getBlogURL(c) + next.Path,
 	}
 	(*dataModel)["NextArticle"] = nextArticle
 }

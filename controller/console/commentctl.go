@@ -60,7 +60,7 @@ func GetCommentsAction(c *gin.Context) {
 			CreatedAt:     commentModel.CreatedAt.Format("2006-01-02"),
 			Title:         "article title",
 			Content:       commentModel.Content,
-			URL:           sessionData.BPath + "/todo comment path",
+			URL:           sessionData.BURL + "/todo comment path",
 		}
 
 		comments = append(comments, comment)

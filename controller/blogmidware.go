@@ -95,8 +95,6 @@ func fillCommon(c *gin.Context, dataModel *DataModel) {
 		settingMap[strings.Title(setting.Name)] = setting.Value
 		settingMap[setting.Name] = setting.Value
 	}
-	settingMap[strings.Title(model.SettingNameSystemPath)] = util.PathBlogs + settingMap[strings.Title(model.SettingNameSystemPath)].(string)
-	settingMap[model.SettingNameSystemPath] = util.PathBlogs + settingMap[model.SettingNameSystemPath].(string)
 	settingMap[strings.Title(model.SettingNameBasicHeader)] = template.HTML(settingMap[model.SettingNameBasicHeader].(string))
 	settingMap[strings.Title(model.SettingNameBasicFooter)] = template.HTML(settingMap[model.SettingNameBasicFooter].(string))
 	settingMap[strings.Title(model.SettingNameBasicNoticeBoard)] = template.HTML(settingMap[model.SettingNameBasicNoticeBoard].(string))
@@ -114,13 +112,12 @@ func fillCommon(c *gin.Context, dataModel *DataModel) {
 		statisticMap[statistic.Name] = count
 	}
 	(*dataModel)["Statistic"] = statisticMap
-	(*dataModel)["Title"] = settingMap["BasicBlogTitle"]
-	(*dataModel)["MetaKeywords"] = settingMap["BasicMetaKeywords"]
-	(*dataModel)["FaviconURL"] = settingMap["BasicFaviconURL"]
-	(*dataModel)["MetaDescription"] = settingMap["BasicMetaDescription"]
+	(*dataModel)["FaviconURL"] = settingMap[model.SettingNameBasicFaviconURL]
+	(*dataModel)["Title"] = settingMap[model.SettingNameBasicBlogTitle]
+	(*dataModel)["MetaKeywords"] = settingMap[model.SettingNameBasicMetaKeywords]
+	(*dataModel)["MetaDescription"] = settingMap[model.SettingNameBasicMetaDescription]
 	(*dataModel)["Conf"] = util.Conf
 	(*dataModel)["Year"] = time.Now().Year()
-	(*dataModel)["BlogURL"] = util.Conf.Server + settingMap[model.SettingNameSystemPath].(string)
 
 	(*dataModel)["Username"] = ""
 	session := util.GetSession(c)
@@ -147,7 +144,7 @@ func fillMostUseCategories(settingMap *map[string]interface{}, dataModel *DataMo
 	for _, category := range categories {
 		themeCategory := &ThemeCategory{
 			Title: category.Title,
-			URL:   util.Conf.Server + (*settingMap)[model.SettingNameSystemPath].(string) + "/" + category.Title,
+			URL:   (*settingMap)[model.SettingNameBasicBlogURL].(string) + "/" + category.Title,
 		}
 		themeCategories = append(themeCategories, themeCategory)
 	}
@@ -166,7 +163,7 @@ func fillMostUseTags(settingMap *map[string]interface{}, dataModel *DataModel, b
 	for _, tag := range tags {
 		themeTag := &ThemeTag{
 			Title: tag.Title,
-			URL:   util.Conf.Server + (*settingMap)[model.SettingNameSystemPath].(string) + "/" + tag.Title,
+			URL:   (*settingMap)[model.SettingNameBasicBlogURL].(string) + "/" + tag.Title,
 		}
 		themeTags = append(themeTags, themeTag)
 	}
@@ -190,7 +187,7 @@ func fillMostViewArticles(settingMap *map[string]interface{}, dataModel *DataMod
 		}
 		themeArticle := &ThemeArticle{
 			Title:     article.Title,
-			URL:       util.Conf.Server + (*settingMap)[model.SettingNameSystemPath].(string) + article.Path,
+			URL:       (*settingMap)[model.SettingNameBasicBlogURL].(string) + article.Path,
 			CreatedAt: humanize.Time(article.CreatedAt),
 			Author:    author,
 		}
@@ -244,7 +241,7 @@ func fillMostCommentArticles(settingMap *map[string]interface{}, dataModel *Data
 		}
 		themeArticle := &ThemeArticle{
 			Title:     article.Title,
-			URL:       util.Conf.Server + (*settingMap)[model.SettingNameSystemPath].(string) + article.Path,
+			URL:       (*settingMap)[model.SettingNameBasicBlogURL].(string) + article.Path,
 			CreatedAt: humanize.Time(article.CreatedAt),
 			Author:    author,
 		}
@@ -271,7 +268,7 @@ func fillRandomArticles(settingMap *map[string]interface{}, dataModel *DataModel
 		}
 		themeArticle := &ThemeArticle{
 			Title:     article.Title,
-			URL:       util.Conf.Server + (*settingMap)[model.SettingNameSystemPath].(string) + article.Path,
+			URL:       (*settingMap)[model.SettingNameBasicBlogURL].(string) + article.Path,
 			CreatedAt: humanize.Time(article.CreatedAt),
 			Author:    author,
 		}
@@ -281,10 +278,10 @@ func fillRandomArticles(settingMap *map[string]interface{}, dataModel *DataModel
 	(*dataModel)["RandomArticles"] = themeRandomArticles
 }
 
-func getSystemPath(c *gin.Context) string {
+func getBlogURL(c *gin.Context) string {
 	dataModel := getDataModel(c)
 
-	return dataModel["Setting"].(map[string]interface{})[model.SettingNameSystemPath].(string)
+	return dataModel["Setting"].(map[string]interface{})[model.SettingNameBasicBlogURL].(string)
 }
 
 func getBlogAdmin(c *gin.Context) *model.User {

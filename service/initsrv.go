@@ -96,7 +96,7 @@ func (srv *initService) InitPlatform(platformAdmin *model.User) error {
 
 		return err
 	}
-	if err := initSystemSettings(tx, platformAdmin, blogID); nil != err {
+	if err := initSystemSettings(tx, blogID); nil != err {
 		tx.Rollback()
 
 		return err
@@ -106,7 +106,7 @@ func (srv *initService) InitPlatform(platformAdmin *model.User) error {
 
 		return err
 	}
-	if err := initBasicSettings(tx, blogID); nil != err {
+	if err := initBasicSettings(tx, platformAdmin, blogID); nil != err {
 		tx.Rollback()
 
 		return err
@@ -252,14 +252,7 @@ Pipe 博客系统是一个开源项目，如果你觉得它很赞，请到[项�
 	return nil
 }
 
-func initSystemSettings(tx *gorm.DB, blogAdmin *model.User, blogID uint) error {
-	if err := tx.Create(&model.Setting{
-		Category: model.SettingCategorySystem,
-		Name:     model.SettingNameSystemPath,
-		Value:    "/" + blogAdmin.Name,
-		BlogID:   blogID}).Error; nil != err {
-		return err
-	}
+func initSystemSettings(tx *gorm.DB, blogID uint) error {
 	if err := tx.Create(&model.Setting{
 		Category: model.SettingCategorySystem,
 		Name:     model.SettingNameSystemVer,
@@ -283,7 +276,14 @@ func initThemeSettings(tx *gorm.DB, blogID uint) error {
 	return nil
 }
 
-func initBasicSettings(tx *gorm.DB, blogID uint) error {
+func initBasicSettings(tx *gorm.DB, blogAdmin *model.User, blogID uint) error {
+	if err := tx.Create(&model.Setting{
+		Category: model.SettingCategoryBasic,
+		Name:     model.SettingNameBasicBlogURL,
+		Value:    util.Conf.Server + util.PathBlogs + "/" + blogAdmin.Name,
+		BlogID:   blogID}).Error; nil != err {
+		return err
+	}
 	if err := tx.Create(&model.Setting{
 		Category: model.SettingCategoryBasic,
 		Name:     model.SettingNameBasicBlogSubtitle,
