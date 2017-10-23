@@ -192,7 +192,7 @@ func showArticleAction(c *gin.Context) {
 	dataModel["ExternalRelevantArticles"] = articles
 	fillPreviousArticle(c, article, &dataModel)
 	fillNextArticle(c, article, &dataModel)
-	dataModel["ToC"] = template.HTML("<ul id='toc' class='toc'><li class='toc__1'><a href='#toc_1_0'>ToC</a></li><li class='toc__2'><a href='#toc_2_0'>ToC</a></li><li class='toc__3'><a href='#toc_3_0'>ToC</a></li><li class='toc__4'><a href='#toc_4_0'>ToC</a></li><li class='toc__5'><a href='#toc_5_0'>ToC</a></li><li class='toc__6'><a href='#toc_6_0'>ToC</a></li><li class='toc__6'><a href='#toc_6_1'>ToC</a></li></ul>")
+	dataModel["ToC"] = "todo"
 	c.HTML(http.StatusOK, "article.html", dataModel)
 }
 

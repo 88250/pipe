@@ -1,0 +1,28 @@
+{
+  "code": 0,
+  "msg": "",
+  "data": {
+    "articles": [
+      {
+        "title": "世界，你好！",
+        "url": "/xxx/xxx/xxx",
+        "content": "safsdf"
+      },
+      {
+        "title": "世界，你好！",
+        "url": "/xxx/xxx/xxx",
+        "content": "safsdf"
+      }
+    ],
+    "pagination": {
+      "currentPageNum": 16,
+      "pageSize": 15,
+      "pageCount": 100,
+      "windowSize": 20,
+      "recordCount": 1,
+      "pageNums": [
+        1
+      ]
+    }
+  }
+}

@@ -15,6 +15,12 @@
       ],
       "mockFile": "base.json"
     },
+    "search": {
+      "verbs": [
+        "get"
+      ],
+      "mockFile": "searchList.json"
+    },
     "init": {
       "verbs": [
         "post"
