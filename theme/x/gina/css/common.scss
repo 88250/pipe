@@ -657,12 +657,10 @@ a {
 .editor {
   .emotion {
     &__item {
-      @include image-bg('../images/image-bg.svg');
       cursor: pointer;
       float: left;
-      height: 24px;
       margin: 10px 10px 5px 0;
-      width: 24px;
+      font-size: 24px;
       transition: $transition;
       background-color: transparent;
 
