@@ -84,9 +84,19 @@ const Common = {
     } else {
       $('#editor').width('100%')
     }
+  },
+  increase (max, time, id, count) {
+    if (count < max) {
+      setTimeout(() => {
+        increase(max, time, id, ++count)
+        document.getElementById(id).innerHTML = count;
+      }, time/max);
+    }
   }
 }
 
+
+window.increase = Common.increase
 Icon()
 Common.init()
 

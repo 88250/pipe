@@ -712,3 +712,35 @@ a {
     }
   }
 }
+
+// others pages
+.page {
+  margin: 50px auto;
+
+  &__title {
+    margin-top: 50px;
+  }
+}
+
+// archives
+.archives {
+  &__title {
+    margin-bottom: 30px;
+  }
+
+  &__item {
+    list-style: none;
+
+    a {
+      display: block;
+      line-height: 50px;
+      border-top: 1px dotted $border-color;
+      padding: 0 20px;
+      color: $black;
+      &:hover {
+        text-decoration: none;
+        color: $theme-accent;
+      }
+    }
+  }
+}

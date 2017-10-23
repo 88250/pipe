@@ -85,6 +85,8 @@
   "account": "账号",
   "avatarURL": "头像地址",
   "article": "文章",
+  "article2": "篇文章",
+  "space": "篇",
   "language": "语言",
   "timezone": "时区",
   "articleListStyle": "文章列表显示方式",
@@ -136,5 +138,6 @@
   "stayStep": "留下你的脚步",
   "VerificationCode": "验证码",
   "email": "邮箱",
-  "reply": "回复"
+  "reply": "回复",
+  "month2": "个月"
 }

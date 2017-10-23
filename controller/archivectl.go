@@ -20,16 +20,90 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"github.com/b3log/pipe/service"
+	"github.com/b3log/pipe/util"
+	"strings"
+	log "github.com/sirupsen/logrus"
 )
 
 func showArchivesAction(c *gin.Context) {
 	dm, _ := c.Get("dataModel")
 	dataModel := *(dm.(*DataModel))
+
+	themeArchives := []*ThemeArchive{}
+	archiveModels := strings.Split("a, g, c, d", ",")
+	for _, archiveModel := range archiveModels {
+		archive := &ThemeArchive{
+			Title: archiveModel,
+			URL:   getSystemPath(c) + "/" + archiveModel,
+			Count: 13,
+		}
+		themeArchives = append(themeArchives, archive)
+	}
+
+	dataModel["Archives"] = themeArchives
 	c.HTML(http.StatusOK, "archives.html", dataModel)
 }
 
 func showArchiveArticlesAction(c *gin.Context) {
 	dm, _ := c.Get("dataModel")
 	dataModel := *(dm.(*DataModel))
+
+	page := c.GetInt("p")
+	if 1 > page {
+		page = 1
+	}
+	blogAdmin := getBlogAdmin(c)
+	articleModels, pagination := service.Article.GetArticles(page, blogAdmin.BlogID)
+	articles := []*ThemeArticle{}
+	for _, articleModel := range articleModels {
+		themeTags := []*ThemeTag{}
+		tagStrs := strings.Split(articleModel.Tags, ",")
+		for _, tagStr := range tagStrs {
+			themeTag := &ThemeTag{
+				Title: tagStr,
+				URL:   getSystemPath(c) + util.PathTags + "/" + tagStr,
+			}
+			themeTags = append(themeTags, themeTag)
+		}
+
+		authorModel := service.User.GetUser(articleModel.AuthorID)
+		if nil == authorModel {
+			log.Errorf("not found author of article [id=%d, authorID=%d]", articleModel.ID, articleModel.AuthorID)
+
+			continue
+		}
+
+		author := &ThemeAuthor{
+			Name:      authorModel.Name,
+			URL:       "http://localhost:5879/blogs/pipe/vanessa",
+			AvatarURL: "https://img.hacpai.com/20170818zhixiaoyun.jpeg",
+		}
+
+		article := &ThemeArticle{
+			ID:           articleModel.ID,
+			Author:       author,
+			CreatedAt:    articleModel.CreatedAt.Format("2006-01-02"),
+			Title:        articleModel.Title,
+			Tags:         themeTags,
+			URL:          getSystemPath(c) + articleModel.Path,
+			Topped:       articleModel.Topped,
+			ViewCount:    articleModel.ViewCount,
+			CommentCount: articleModel.CommentCount,
+			ThumbnailURL: "https://img.hacpai.com/20170818zhixiaoyun.jpeg",
+			Editable:     false,
+		}
+
+		articles = append(articles, article)
+	}
+	dataModel["Articles"] = articles
+	dataModel["Pagination"] = pagination
+
+	dataModel["ArchivesDate"] = "2012-12-12"
+	dataModel["ArchivesCount"] = 12
+
+
+
+
 	c.HTML(http.StatusOK, "archive-articles.html", dataModel)
 }

@@ -41,6 +41,12 @@ type ThemeTag struct {
 	URL   string
 }
 
+type ThemeArchive struct {
+	Title string
+	URL   string
+	Count int
+}
+
 type ThemeAuthor struct {
 	Name      string
 	AvatarURL string
