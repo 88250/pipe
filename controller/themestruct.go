@@ -53,6 +53,14 @@ type ThemeAuthor struct {
 	URL       string
 }
 
+type ThemeAuthorDetail struct {
+	Name      string
+	AvatarURL string
+	URL       string
+	Count     int
+	CreatedAt string
+}
+
 type ThemeCategory struct {
 	Title string
 	URL   string

@@ -1,20 +1,23 @@
-<#include "macro-head.ftl">
 <!DOCTYPE html>
 <html>
-    <head>
-        <@head title="${authorName} - ${blogTitle}">
-        <meta name="keywords" content="${metaKeywords},${authorName}"/>
-        <meta name="description" content="<#list articles as article>${article.articleTitle}<#if article_has_next>,</#if></#list>"/>
-        </@head>
-    </head>
-    <body>
-        <#include "side.ftl">
-        <main>
-            <h2 class="classify-name">
-                ${author1Label}${authorName}
-            </h2>
-            <#include "article-list.ftl">
-            <#include "footer.ftl">
-        </main>
-    </body>
+<head>
+    {{template "head" .}}
+</head>
+<body>
+{{template "header" .}}
+<div class="wrapper page">
+    <h1 class="page__title">
+        {{.ArchivesDate}}
+        <span id="archiveArticleCount">0</span> <span class="ft-fade ft-13">{{.I18n.TeamMember2}}</span>
+    </h1>
+    <div>
+
+    </div>
+</div>
+{{template "side" .}}
+{{template "footer" .}}
+<script>
+  increase({{.ArchivesCount}}, 1000, 'archiveArticleCount', 0)
+</script>
+</body>
 </html>
