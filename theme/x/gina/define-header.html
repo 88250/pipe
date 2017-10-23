@@ -2,19 +2,18 @@
 <header class="header">
     <div class="wrapper">
         <a href="{{.BlogURL}}">{{.Setting.BasicBlogTitle}}</a>
-        <a href="{{.BlogURL}}/activities">{{.I18n.Activities}}</a>
+        <a href="{{.BlogURL}}/categories">{{.I18n.Categories}}</a>
         <a href="{{.BlogURL}}/tags">{{.I18n.TagsPanel}}</a>
         <a href="{{.BlogURL}}/archives">{{.I18n.Archives}}</a>
-        <a href="{{.BlogURL}}/categories">{{.I18n.Categories}}</a>
-        {{range .Navigations}}
-        <a href="{{.URL}}" target="{{.OpenMethod}}">{{.Title}}</a>
-        {{end}}
         {{if gt .UserCount 1}}
         <a href="{{.BlogURL}}/authors">
             {{.I18n.Team}}
         </a>
         {{end}}
         <a href="{{.BlogURL}}/rss">TODORSS</a>
+        {{range .Navigations}}
+        <a href="{{.URL}}" target="{{.OpenMethod}}">{{.Title}}</a>
+        {{end}}
         <form id="headerSearch"
               class="header__search"
               action="{{.BlogURL}}/search">
