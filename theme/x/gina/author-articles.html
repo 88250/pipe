@@ -5,19 +5,17 @@
 </head>
 <body>
 {{template "header" .}}
-<div class="wrapper page">
-    <h1 class="page__title">
-        {{.ArchivesDate}}
-        <span id="archiveArticleCount">0</span> <span class="ft-fade ft-13">{{.I18n.TeamMember2}}</span>
+<div class="wrapper">
+    <h1 class="page__headline">
+        {{.AuthorName}}
+        <span id="authorCount">0</span> <span class="ft-fade ft-13">{{.I18n.Article2}}</span>
     </h1>
-    <div>
-
-    </div>
 </div>
+{{template "article-list" .}}
 {{template "side" .}}
 {{template "footer" .}}
 <script>
-  increase({{.ArchivesCount}}, 1000, 'archiveArticleCount', 0)
+  increase({{.AuthorCount}}, 1000, 'authorCount', 0)
 </script>
 </body>
 </html>
