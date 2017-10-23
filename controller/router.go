@@ -135,10 +135,6 @@ func routePath(c *gin.Context) {
 		return
 	case util.PathArchives:
 		showArchivesAction(c)
-
-	case util.PathArchives + "/:id":
-    	showArchiveArticlesAction(c)
-
 		return
 	case util.PathAuthors:
 		showAuthorsAction(c)
@@ -170,6 +166,12 @@ func routePath(c *gin.Context) {
 	}
 	if strings.Contains(path, util.PathCategories+"/") {
 		showCategoryArticlesArticlesAction(c)
+
+		return
+	}
+
+	if strings.Contains(path, util.PathCategories+"/") {
+		showArchiveArticlesAction(c)
 
 		return
 	}
