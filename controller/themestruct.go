@@ -41,6 +41,12 @@ type ThemeTag struct {
 	URL   string
 }
 
+type ThemeTagDetail struct {
+	Title string
+	URL   string
+	Count int
+}
+
 type ThemeArchive struct {
 	Title string
 	URL   string

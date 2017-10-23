@@ -29,6 +29,20 @@ import (
 func showTagsAction(c *gin.Context) {
 	dm, _ := c.Get("dataModel")
 	dataModel := *(dm.(*DataModel))
+
+	themeTags := []*ThemeTagDetail{}
+	tagStrs := strings.Split("a, v, sd,adf , a", ",")
+	for _, tagStr := range tagStrs {
+		themeTag := &ThemeTagDetail{
+			Title: tagStr,
+			URL:   getSystemPath(c) + util.PathTags + "/" + tagStr,
+			Count: 1,
+		}
+		themeTags = append(themeTags, themeTag)
+	}
+
+	dataModel["Tags"] = themeTags
+
 	c.HTML(http.StatusOK, "tags.html", dataModel)
 }
 

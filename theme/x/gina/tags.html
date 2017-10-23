@@ -5,17 +5,21 @@
 </head>
 <body>
 {{template "header" .}}
-<div class="wrapper">
-    <h1 class="page__headline">
-        {{.ArchivesDate}}
-        <span id="archiveArticleCount">0</span> <span class="ft-fade ft-13">{{.I18n.Article2}}</span>
+<div class="wrapper page">
+    <h1 class="page__title">
+        <span id="tagArticleCount">0</span> <span class="ft-fade ft-13">{{.I18n.Tags2}}</span>
     </h1>
+    <div class="tags" id="tags">
+        {{range .Tags}}
+        <a href="{{.URL}}" data-count="{{.Count}}" class="tag">{{.Title}} ({{.Count}})</a>
+        {{end}}
+    </div>
 </div>
-{{template "article-list" .}}
 {{template "side" .}}
 {{template "footer" .}}
 <script>
-  increase({{.ArchivesCount}}, 1000, 'archiveArticleCount', 0)
+  increase({{len .Tags}}, 1000, 'tagArticleCount', 0)
+  addLevelToTag()
 </script>
 </body>
 </html>
