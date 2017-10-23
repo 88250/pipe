@@ -20,11 +20,39 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"github.com/b3log/pipe/util"
+	"strings"
 )
 
 func showCategoriesAction(c *gin.Context) {
 	dm, _ := c.Get("dataModel")
 	dataModel := *(dm.(*DataModel))
+
+	themeCategoryDetail := []*ThemeCategoryDetail{}
+	CategoriesModels := strings.Split("a, g, c, d", ",")
+	for _, categoriesModel := range CategoriesModels {
+
+		themeTags := []*ThemeTag{}
+		tagStrs := strings.Split("a, g, c, d", ",")
+		for _, tagStr := range tagStrs {
+			themeTag := &ThemeTag{
+				Title: tagStr,
+				URL:   getSystemPath(c) + util.PathTags + "/" + tagStr,
+			}
+			themeTags = append(themeTags, themeTag)
+		}
+
+		categoriesDetail := &ThemeCategoryDetail{
+			Title:       categoriesModel,
+			URL:         "/sss",
+			Description: "http://themedesigner.in/demo/admin-press/assets/images/users/2.jpg",
+			Tags:        themeTags,
+			Count:       23,
+		}
+		themeCategoryDetail = append(themeCategoryDetail, categoriesDetail)
+	}
+
+	dataModel["Categories"] = themeCategoryDetail
 	c.HTML(http.StatusOK, "categories.html", dataModel)
 }
 

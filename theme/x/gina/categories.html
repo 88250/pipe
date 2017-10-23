@@ -1,22 +1,40 @@
-<#include "macro-head.ftl">
 <!DOCTYPE html>
 <html>
-    <head>
-        <@head title="${category.categoryTitle} - ${blogTitle}">
-        <meta name="keywords" content="${metaKeywords},${category.categoryTitle}"/>
-        <meta name="description" content="<#list articles as article>${article.articleTitle}<#if article_has_next>,</#if></#list>"/>
-        </@head>
-    </head>
-    <body>
-        <#include "side.ftl">
-        <main>
-            <h2 class="classify-name">
-                ${categoryLabel}
-                ${category.categoryTitle}
-                (${category.categoryTagCnt})<small> ${category.categoryDescription}</small>
-            </h2>
-            <#include "article-list.ftl">
-            <#include "footer.ftl">
-        </main>
-    </body>
+<head>
+    {{template "head" .}}
+</head>
+<body>
+{{template "header" .}}
+<div class="wrapper page">
+    <h1 class="page__title">
+        <span id="categoriesCount">0</span> <span class="ft-fade ft-13">{{.I18n.Categories2}}</span>
+    </h1>
+    <ul>
+        {{range .Categories}}
+        <li class="categories__item">
+            <a href="{{.URL}}" class="categories__header">
+               <span class="categories__title">
+                   {{.Title}}
+               </span>
+                <span class="fn-13 ft-fade">
+                    {{.Count}} {{$.I18n.Article2}}
+                </span>
+            </a>
+            <div class="ft-gray ft-13">{{.Description}}</div>
+            <div>
+                {{range .Tags}}
+                <a href="{{.URL}}" class="tag">{{.Title}}</a>
+                {{end}}
+            </div>
+        </li>
+        {{end}}
+    </ul>
+
+</div>
+{{template "side" .}}
+{{template "footer" .}}
+<script>
+  increase({{len .Categories}}, 1000, 'categoriesCount', 0)
+</script>
+</body>
 </html>

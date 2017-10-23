@@ -66,6 +66,14 @@ type ThemeCategory struct {
 	URL   string
 }
 
+type ThemeCategoryDetail struct {
+	Title       string
+	URL         string
+	Description string
+	Tags        []*ThemeTag
+	Count       int
+}
+
 type ThemeComment struct {
 	ID        uint
 	Title     string
