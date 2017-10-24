@@ -27,6 +27,28 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
+func UpdateThemeAction(c *gin.Context) {
+	result := util.NewResult()
+	defer c.JSON(http.StatusOK, result)
+
+	theme := c.Param("id")
+
+	sessionData := util.GetSession(c)
+
+	settings := []*model.Setting{
+		&model.Setting{
+			Category: model.SettingCategoryTheme,
+			Name:     model.SettingNameThemeName,
+			Value:    theme,
+			BlogID:   sessionData.BID,
+		},
+	}
+	if err := service.Setting.UpdateSettings(model.SettingCategoryTheme, settings); nil != err {
+		result.Code = -1
+		result.Msg = err.Error()
+	}
+}
+
 func GetThemesAction(c *gin.Context) {
 	result := util.NewResult()
 	defer c.JSON(http.StatusOK, result)

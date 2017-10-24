@@ -71,6 +71,7 @@ func MapRoutes() *gin.Engine {
 	consoleGroup.Use(console.LoginCheck())
 
 	consoleGroup.GET("/themes", console.GetThemesAction)
+	consoleGroup.PUT("/themes/:id", console.UpdateThemeAction)
 	consoleGroup.GET("/tags", console.GetTagsAction)
 	consoleGroup.POST("/articles", console.AddArticleAction)
 	consoleGroup.GET("/articles", console.GetArticlesAction)
@@ -135,6 +136,7 @@ func routePath(c *gin.Context) {
 		return
 	case util.PathArchives:
 		showArchivesAction(c)
+
 		return
 	case util.PathAuthors:
 		showAuthorsAction(c)
