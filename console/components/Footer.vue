@@ -1,8 +1,6 @@
 <template>
   <footer class="footer">
-    Powered by <a href="http://b3log.org" target="_blank">B3log</a> •
-    <a href="https://hacpai.com/tag/Pipe" target="_blank">Pipe</a>
-    {{ $store.state.version }}
+    Powered by <a href="https://github.com/b3log/pipe" target="_blank">Pipe</a> {{$store.state.version}}
   </footer>
 </template>
 
