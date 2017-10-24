@@ -149,6 +149,20 @@ func TestUpdateArticle(t *testing.T) {
 	}
 }
 
+func TestIncArticleViewCount(t *testing.T) {
+	article := Article.ConsoleGetArticle(1)
+	oldCnt := article.ViewCount
+	if err := Article.IncArticleViewCount(article); nil != err {
+		t.Errorf("inc article view count failed: " + err.Error())
+
+		return
+	}
+
+	if oldCnt+1 != article.ViewCount {
+		t.Errorf("expected is [%d], actual is [%d]", oldCnt+1, article.ViewCount)
+	}
+}
+
 func TestNormalizeTagStr(t *testing.T) {
 	tagStr := normalizeTagStr("带 空 格1,分号2；顿号3、正常4")
 	if "带空格1,分号2,顿号3,正常4" != tagStr {

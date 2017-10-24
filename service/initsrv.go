@@ -256,7 +256,7 @@ func initSystemSettings(tx *gorm.DB, blogID uint) error {
 	if err := tx.Create(&model.Setting{
 		Category: model.SettingCategorySystem,
 		Name:     model.SettingNameSystemVer,
-		Value:    "1.0.0",
+		Value:    util.Version,
 		BlogID:   blogID}).Error; nil != err {
 		return err
 	}
@@ -287,7 +287,7 @@ func initBasicSettings(tx *gorm.DB, blogAdmin *model.User, blogID uint) error {
 	if err := tx.Create(&model.Setting{
 		Category: model.SettingCategoryBasic,
 		Name:     model.SettingNameBasicBlogSubtitle,
-		Value:    "小而美的 golang 博客平台",
+		Value:    "小而美的博客平台",
 		BlogID:   blogID}).Error; nil != err {
 		return err
 	}
