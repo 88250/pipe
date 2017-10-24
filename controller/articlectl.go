@@ -82,7 +82,7 @@ func showArticlesAction(c *gin.Context) {
 
 	dataModel["Articles"] = articles
 	dataModel["Pagination"] = pagination
-	c.HTML(http.StatusOK, "index.html", dataModel)
+	c.HTML(http.StatusOK, getTheme(c)+"/index.html", dataModel)
 }
 
 func showArticleAction(c *gin.Context) {

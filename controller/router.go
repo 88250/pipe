@@ -113,7 +113,7 @@ func MapRoutes() *gin.Engine {
 		ret.Static("/"+themePath+"/js", themePath+"/js")
 		ret.Static("/"+themePath+"/images", themePath+"/images")
 	}
-	ret.LoadHTMLGlob("theme/x/*/*.html")
+	ret.LoadHTMLGlob("theme/x/**/*.html")
 	themeGroup := ret.Group(util.PathBlogs + "/:username")
 	themeGroup.Use(resolveBlog())
 	themeGroup.GET("", showArticlesAction)

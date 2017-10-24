@@ -290,6 +290,12 @@ func getBlogAdmin(c *gin.Context) *model.User {
 	return blogAdminVal.(*model.User)
 }
 
+func getTheme(c *gin.Context) string {
+	dataModel := getDataModel(c)
+
+	return dataModel["Setting"].(map[string]interface{})[model.SettingNameThemeName].(string)
+}
+
 func getDataModel(c *gin.Context) DataModel {
 	dataModelVal, _ := c.Get("dataModel")
 
