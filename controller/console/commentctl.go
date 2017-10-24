@@ -17,12 +17,15 @@
 package console
 
 import (
+	"html/template"
 	"net/http"
 	"strconv"
 
 	"github.com/b3log/pipe/service"
 	"github.com/b3log/pipe/util"
 	"github.com/gin-gonic/gin"
+
+	log "github.com/sirupsen/logrus"
 )
 
 type ConsoleComment struct {
@@ -31,7 +34,7 @@ type ConsoleComment struct {
 	ArticleAuthor *ConsoleAuthor `json:"articleAuthor"`
 	CreatedAt     string         `json:"createdAt"`
 	Title         string         `json:"title"`
-	Content       string         `json:"content"`
+	Content       template.HTML  `json:"content"`
 	URL           string         `json:"url"`
 }
 
@@ -44,22 +47,35 @@ func GetCommentsAction(c *gin.Context) {
 
 	comments := []*ConsoleComment{}
 	for _, commentModel := range commentModels {
+		article := service.Article.ConsoleGetArticle(commentModel.ArticleID)
+		if nil == article {
+			log.Errorf("not found comment [id=%d]'s article", commentModel.ID)
+
+			continue
+		}
+		articleAuthor := service.User.GetUser(article.AuthorID)
+		if nil == articleAuthor {
+			log.Errorf("not found article [id=%d]'s author", article.ID)
+
+			continue
+		}
+		consoleArticleAuthor := &ConsoleAuthor{
+			Name:      articleAuthor.Name,
+			AvatarURL: articleAuthor.AvatarURL,
+		}
+
 		author := &ConsoleAuthor{
 			Name:      commentModel.AuthorName,
 			AvatarURL: commentModel.AuthorAvatarURL,
-		}
-		articleAuthor := &ConsoleAuthor{
-			Name:      "article author name",
-			AvatarURL: "article author avatar URL",
 		}
 
 		comment := &ConsoleComment{
 			ID:            commentModel.ID,
 			Author:        author,
-			ArticleAuthor: articleAuthor,
+			ArticleAuthor: consoleArticleAuthor,
 			CreatedAt:     commentModel.CreatedAt.Format("2006-01-02"),
-			Title:         "article title",
-			Content:       commentModel.Content,
+			Title:         article.Title,
+			Content:       template.HTML(util.Markdown(commentModel.Content)),
 			URL:           sessionData.BURL + "/todo comment path",
 		}
 
