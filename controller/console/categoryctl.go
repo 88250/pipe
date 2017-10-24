@@ -25,15 +25,6 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type ConsoleCategory struct {
-	ID          uint   `json:"id"`
-	Title       string `json:"title"`
-	URL         string `json:"url"`
-	Description string `json:"description"`
-	Number      int    `json:"number"`
-	Tags        string `json:"tags"`
-}
-
 func GetCategoriesAction(c *gin.Context) {
 	result := util.NewResult()
 	defer c.JSON(http.StatusOK, result)

@@ -25,9 +25,9 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
-const DefaultTheme = "gina"
+const DefaultTheme = "Gina"
 
-var themes = []string{}
+var Themes = []string{}
 
 // Load loads themes.
 func Load() {
@@ -40,8 +40,8 @@ func Load() {
 			continue
 		}
 
-		themes = append(themes, name)
+		Themes = append(Themes, name)
 	}
 
-	log.Debugf("loaded [%d] themes", len(themes))
+	log.Debugf("loaded [%d] themes", len(Themes))
 }

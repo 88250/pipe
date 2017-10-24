@@ -26,15 +26,6 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type ConsoleNavigation struct {
-	ID         uint   `json:"id"`
-	Title      string `gorm:"size:128" json:"title"`
-	URL        string `json:"url"`
-	IconURL    string `json:"iconURL"`
-	OpenMethod string `json:"openMethod"`
-	Number     int    `json:"number"`
-}
-
 func GetNavigationsAction(c *gin.Context) {
 	result := util.NewResult()
 	defer c.JSON(http.StatusOK, result)

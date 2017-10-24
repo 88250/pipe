@@ -28,16 +28,6 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
-type ConsoleComment struct {
-	ID            uint           `json:"id"`
-	Author        *ConsoleAuthor `json:"author"`
-	ArticleAuthor *ConsoleAuthor `json:"articleAuthor"`
-	CreatedAt     string         `json:"createdAt"`
-	Title         string         `json:"title"`
-	Content       template.HTML  `json:"content"`
-	URL           string         `json:"url"`
-}
-
 func GetCommentsAction(c *gin.Context) {
 	result := util.NewResult()
 	defer c.JSON(http.StatusOK, result)

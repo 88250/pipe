@@ -73,28 +73,6 @@ func GetArticleAction(c *gin.Context) {
 	result.Data = data
 }
 
-type ConsoleArticle struct {
-	ID           uint           `json:"id"`
-	Author       *ConsoleAuthor `json:"author"`
-	CreatedAt    string         `json:"createdAt"`
-	Title        string         `json:"title"`
-	Tags         []*ConsoleTag  `json:"tags"`
-	URL          string         `json:"url"`
-	Topped       bool           `json:"topped"`
-	ViewCount    int            `json:"viewCount"`
-	CommentCount int            `json:"commentCount"`
-}
-
-type ConsoleTag struct {
-	Title string `json:"title"`
-	URL   string `json:"url,omitempty"`
-}
-
-type ConsoleAuthor struct {
-	Name      string `json:"name"`
-	AvatarURL string `json:"avatarURL"`
-}
-
 func GetArticlesAction(c *gin.Context) {
 	result := util.NewResult()
 	defer c.JSON(http.StatusOK, result)

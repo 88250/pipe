@@ -70,25 +70,22 @@ func MapRoutes() *gin.Engine {
 	consoleGroup := api.Group("/console")
 	consoleGroup.Use(console.LoginCheck())
 
+	consoleGroup.GET("/themes", console.GetThemesAction)
+	consoleGroup.GET("/tags", console.GetTagsAction)
 	consoleGroup.POST("/articles", console.AddArticleAction)
 	consoleGroup.GET("/articles", console.GetArticlesAction)
 	consoleGroup.GET("/articles/:id", console.GetArticleAction)
 	consoleGroup.DELETE("/articles/:id", console.RemoveArticleAction)
 	consoleGroup.PUT("/articles/:id", console.UpdateArticleAction)
-
 	consoleGroup.GET("/comments", console.GetCommentsAction)
 	consoleGroup.DELETE("/comments/:id", console.RemoveCommentAction)
-
+	consoleGroup.GET("/categories", console.GetCategoriesAction)
+	consoleGroup.POST("/categories", console.AddCategoryAction)
 	consoleGroup.GET("/navigations", console.GetNavigationsAction)
 	consoleGroup.GET("/navigations/:id", console.GetNavigationAction)
 	consoleGroup.PUT("/navigations/:id", console.UpdateNavigationAction)
 	consoleGroup.POST("/navigations", console.AddNavigationAction)
 	consoleGroup.DELETE("/navigations/:id", console.RemoveNavigationAction)
-
-	consoleGroup.GET("/categories", console.GetCategoriesAction)
-	consoleGroup.POST("/categories", console.AddCategoryAction)
-
-	consoleGroup.GET("/tags", console.GetTagsAction)
 
 	consoleGroup.POST("/blogs/switch/:id", console.BlogSwitchAction)
 
@@ -106,13 +103,16 @@ func MapRoutes() *gin.Engine {
 
 	ret.StaticFile(util.PathFavicon, "console/static/favicon.ico")
 
-	themePath := "theme/x/" + theme.DefaultTheme
-	ret.Static("/"+themePath+"/css", themePath+"/css")
-	ret.Static("/"+themePath+"/js", themePath+"/js")
-	ret.Static("/"+themePath+"/images", themePath+"/images")
 	ret.Static(util.PathTheme+"/css", "theme/css")
 	ret.Static(util.PathTheme+"/js", "theme/js")
-	ret.LoadHTMLGlob(themePath + "/*.html")
+
+	for _, theme := range theme.Themes {
+		themePath := "theme/x/" + theme
+		ret.Static("/"+themePath+"/css", themePath+"/css")
+		ret.Static("/"+themePath+"/js", themePath+"/js")
+		ret.Static("/"+themePath+"/images", themePath+"/images")
+	}
+	ret.LoadHTMLGlob("theme/x/*/*.html")
 	themeGroup := ret.Group(util.PathBlogs + "/:username")
 	themeGroup.Use(resolveBlog())
 	themeGroup.GET("", showArticlesAction)
