@@ -252,6 +252,10 @@
       &.chip--selected {
         background: #82b1ff;
         color: #fff;
+
+        .icon {
+          color: #fff;
+        }
       }
 
       .icon {
@@ -479,14 +483,16 @@
   // select input
   .card > .list li {
     border-bottom-width: 0;
-    padding: 0 15px;
+    padding: 0;
     a {
+      padding: 0 15px;
+      display: block;
       line-height: 40px;
       color: $text-color;
       &:hover {
         text-decoration: none;
       }
-      .list__tile--active {
+      &.primary--text {
         color: $blue;
         background-color: rgba(0, 0, 0, 0.02);
       }
