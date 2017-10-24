@@ -7,7 +7,7 @@ export const state = () => ({
   name: '',
   nickname: '',
   blogTitle: '',
-  blogPath: '/',
+  blogURL: '/',
   role: 2,
   blogs: [{
     title: '',
@@ -39,7 +39,7 @@ export const mutations = {
       state.name = data.name
       state.nickname = data.nickname
       state.blogTitle = data.blogTitle
-      state.blogPath = data.blogPath
+      state.blogURL = data.blogURL
       state.role = data.role
       state.blogs = data.blogs
       localStorage.setItem('userInfo', JSON.stringify(data))
@@ -47,7 +47,7 @@ export const mutations = {
       state.name = ''
       state.nickname = ''
       state.blogTitle = ''
-      state.blogPath = '/'
+      state.blogURL = '/'
       state.role = 2
       state.blogs = [{
         title: '',
@@ -63,7 +63,7 @@ export const mutations = {
       state.name = userInfoJSON.name
       state.nickname = userInfoJSON.nickname
       state.blogTitle = userInfoJSON.blogTitle
-      state.blogPath = userInfoJSON.blogPath
+      state.blogURL = userInfoJSON.blogURL
       state.role = userInfoJSON.role
       state.blogs = userInfoJSON.blogs
       return userInfoJSON
@@ -71,7 +71,7 @@ export const mutations = {
       state.name = ''
       state.nickname = ''
       state.blogTitle = ''
-      state.blogPath = '/'
+      state.blogURL = '/'
       state.role = 2
       state.blogs = [{
         title: '',
@@ -87,16 +87,16 @@ export const mutations = {
     const userInfoJSON = JSON.parse(userInfo)
     if (data) {
       state.blogTitle = data.title
-      state.blogPath = data.path
+      state.blogURL = data.path
       state.role = data.role
-      userInfoJSON.blogPath = data.path
+      userInfoJSON.blogURL = data.path
       userInfoJSON.blogTitle = data.title
       userInfoJSON.role = data.role
     } else {
       state.blogTitle = ''
-      state.blogPath = '/'
+      state.blogURL = '/'
       state.role = 2
-      userInfoJSON.blogPath = '/'
+      userInfoJSON.blogURL = '/'
       userInfoJSON.blogTitle = ''
       userInfoJSON.role = 2
     }
