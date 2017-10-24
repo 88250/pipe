@@ -61,8 +61,14 @@
 <style lang="sass">
   @import '~assets/scss/_variables'
 
+  #__nuxt, #pipe, .main
+    height: 100%
+
   .main
     padding-top: 60px
+    display: flex
+    flex-direction: column
+    box-sizing: border-box
 
   .body--side .main
     margin-left: 240px
@@ -70,5 +76,5 @@
   .content
     background-color: $blue-lighter
     padding: 30px
-    min-height: 650px
+    flex: 1
 </style>
