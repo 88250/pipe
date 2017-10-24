@@ -27,7 +27,7 @@
     "particles.js": "^2.0.0",
     "vue-axios": "^2.0.2",
     "vue-i18n": "^7.2.0",
-    "vuetify": "^0.15.7"
+    "vuetify": "git+https://github.com/Vanessa219/vuetify.git#dev"
   },
   "devDependencies": {
     "apimocker": "^0.5.1",
