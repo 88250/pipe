@@ -119,6 +119,8 @@ func showArticleAction(c *gin.Context) {
 		Editable:     true,
 	}
 
+	service.Article.IncArticleViewCount(article)
+
 	articleModels, pagination := service.Article.GetArticles(1, blogAdmin.BlogID)
 	articles := []*ThemeArticle{}
 	for _, articleModel := range articleModels {

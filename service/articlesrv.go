@@ -288,6 +288,18 @@ func (srv *articleService) UpdateArticle(article *model.Article) error {
 	return nil
 }
 
+func (srv *articleService) IncArticleViewCount(article *model.Article) error {
+	srv.mutex.Lock()
+	defer srv.mutex.Unlock()
+
+	article.ViewCount = article.ViewCount + 1
+	if err := db.Model(&model.Article{}).Select("view_count").Updates(article).Error; nil != err {
+		return err
+	}
+
+	return nil
+}
+
 func normalizeTagStr(tagStr string) string {
 	reg := regexp.MustCompile(`\s+`)
 	tagStr = reg.ReplaceAllString(tagStr, "")
