@@ -16,12 +16,12 @@
               v-if="$store.state.name === item.author.name || $store.state.role < 2"
               :nudge-bottom="24"
               :nudge-width="60"
-              :nudge-right="60"
+              :nudge-left="60"
               :open-on-hover="true">
               <v-toolbar-title slot="activator">
                 <nuxt-link class="btn btn--small btn--info" :to="`/admin/articles/post?id=${item.id}`">
                   {{ $t('edit', $store.state.locale) }}
-                  <icon icon="chevron-down"/>
+                  <v-icon>arrow_drop_down</v-icon>
                 </nuxt-link>
               </v-toolbar-title>
               <v-list>
@@ -40,7 +40,7 @@
             </v-menu>
           </div>
           <div class="list__meta">
-            <nuxt-link class="fn-nowrap" :key="tag.title" v-for="tag in item.tags" :to="tag.url">{{ tag.title }}</nuxt-link>&nbsp;
+            <nuxt-link class="fn-nowrap tag" :key="tag.title" v-for="tag in item.tags" :to="tag.url">{{ tag.title }}</nuxt-link>&nbsp;
             <span class="fn-nowrap">{{ item.commentCount }} {{ $t('comment', $store.state.locale) }}</span> •
             <span class="fn-nowrap">{{ item.viewCount }} {{ $t('view', $store.state.locale) }}</span> •
             <time class="fn-nowrap">{{ item.createdAt }}</time>
@@ -57,8 +57,8 @@
       :total-visible="windowSize"
       class="fn-right"
       circle
-      next-icon=">"
-      prev-icon="<"
+      next-icon="angle-right"
+      prev-icon="angle-left"
       @input="getList"
     ></v-pagination>
   </div>

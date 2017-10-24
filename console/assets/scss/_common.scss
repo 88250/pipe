@@ -469,3 +469,16 @@ blockquote {
     margin-right: 15px;
   }
 }
+
+
+// tag
+.tag {
+  color: $black;
+  font-size: 12px;
+  white-space: nowrap;
+
+  &:hover {
+    text-decoration: none;
+    color: $gray;
+  }
+}

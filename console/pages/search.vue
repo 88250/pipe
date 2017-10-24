@@ -24,8 +24,8 @@
         :total-visible="windowSize"
         class="fn-right"
         circle
-        next-icon=">"
-        prev-icon="<"
+        next-icon="angle-right"
+        prev-icon="angle-left"
         @input="getList"
       ></v-pagination>
     </div>

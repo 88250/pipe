@@ -19,9 +19,7 @@
           tags
           :items="tagsItems"
           required
-          append-icon=""
           :rules="tagsRules"
-          min-width="200"
         ></v-select>
 
         <v-text-field
@@ -41,7 +39,7 @@
         </label>
       </v-form>
       <div class="alert alert--danger" v-show="error">
-        <icon icon="danger"/>
+        <v-icon>danger</v-icon>
         <span>{{ errorMsg }}</span>
       </div>
       <div class="fn-right">
