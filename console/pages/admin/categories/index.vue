@@ -16,12 +16,12 @@
               v-if="$store.state.role < 2"
               :nudge-bottom="24"
               :nudge-width="60"
-              :nudge-right="60"
+              :nudge-left="60"
               :open-on-hover="true">
               <v-toolbar-title slot="activator">
                 <v-btn class="btn btn--info btn--small" @click="edit(item.id)">
                   {{ $t('edit', $store.state.locale) }}
-                  <icon icon="chevron-down"/>
+                  <v-icon>arrow_drop_down</v-icon>
                 </v-btn>
               </v-toolbar-title>
               <v-list>

@@ -20,12 +20,12 @@
               <v-menu
                 :nudge-bottom="24"
                 :nudge-width="60"
-                :nudge-right="60"
+                :nudge-left="60"
                 :open-on-hover="true">
                 <v-toolbar-title slot="activator">
                   <v-btn class="btn btn--small btn--info" @click="edit(item.id)">
                     {{ $t('edit', $store.state.locale) }}
-                    <icon icon="chevron-down"/>
+                    <v-icon>arrow_drop_down</v-icon>
                   </v-btn>
                 </v-toolbar-title>
                 <v-list>
@@ -54,8 +54,8 @@
         :total-visible="windowSize"
         class="fn-right"
         circle
-        next-icon=">"
-        prev-icon="<"
+        next-icon="angle-right"
+        prev-icon="angle-left"
         @input="getList"
       ></v-pagination>
     </div>

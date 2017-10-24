@@ -160,10 +160,11 @@
     flex: 1 0 100%;
     min-width: 0;
     min-height: 30px;
+    align-items: center;
   }
 
   &__selections {
-    min-height: 40px;
+    flex: 1;
   }
 
   &--text-field {
@@ -220,15 +221,23 @@
       padding-right: 4px;
     }
 
+    .input-group__input > .icon {
+      transition: .3s cubic-bezier(0,0,.2,1);
+    }
+
+    &.input-group--focused .icon {
+      transform: rotate(-180deg);
+    }
+
     .chip {
       align-items: center;
       border-radius: 28px;
       color: rgba(0,0,0,0.87);
       cursor: default;
       display: inline-flex;
-      height: 32px;
+      height: 28px;
       font-size: 13px;
-      margin: 4px;
+      margin: 2px 4px;
       outline: none;
       padding: 0 12px;
       transition: 0.3s cubic-bezier(0.25, 0.8, 0.5, 1);
@@ -236,13 +245,21 @@
       white-space: nowrap;
       background: #e0e0e0;
 
-      &__close {
-        display: none;
+      &:hover .icon {
+        color: $fade;
       }
 
       &.chip--selected {
         background: #82b1ff;
         color: #fff;
+      }
+
+      .icon {
+        margin: 2px 0 0 5px;
+        cursor: pointer;
+        color: $gray;
+        height: 20px;
+        width: 20px;
       }
     }
   }
@@ -326,6 +343,15 @@
     display: flex
   }
 
+  &__navigation--disabled {
+    opacity: 0.5;
+    cursor: default;
+
+    &:hover {
+      box-shadow: none;
+    }
+  }
+
   a {
     color: $text-color;
     transition: .3s cubic-bezier(0, 0, .2, 1);
@@ -352,26 +378,6 @@
       color: #fff;
       background: $blue;
       box-shadow: 0 2px 4px -1px rgba(0, 0, 0, .2), 0 4px 5px rgba(0, 0, 0, .14), 0 1px 10px rgba(0, 0, 0, .12)
-    }
-
-    &__navigation {
-      position: relative;
-
-      .icon {
-        font-size: 20px;
-        transition: .2s cubic-bezier(.4, 0, .6, 1);
-        font-weight: 700;
-        display: block;
-        line-height: 32px;
-        position: absolute;
-        top: -1px;
-        left: 11px;
-      }
-
-      &--disabled {
-        pointer-events: none;
-        opacity: .6
-      }
     }
 
     &__more {
@@ -473,15 +479,17 @@
   // select input
   .card > .list li {
     border-bottom-width: 0;
-    padding: 0;
-    .list__tile {
-      cursor: pointer;
+    padding: 0 15px;
+    a {
       line-height: 40px;
-      padding: 0 15px;
-    }
-    .list__tile--active {
-      color: $blue;
-      background-color: rgba(0, 0, 0, 0.02);
+      color: $text-color;
+      &:hover {
+        text-decoration: none;
+      }
+      .list__tile--active {
+        color: $blue;
+        background-color: rgba(0, 0, 0, 0.02);
+      }
     }
   }
   .list  {

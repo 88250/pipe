@@ -30,7 +30,7 @@
         @keyup.enter="created"
       ></v-text-field>
       <div class="alert alert--danger" v-show="error">
-        <icon icon="danger"/>
+        <v-icon>danger</v-icon>
         <span>{{ errorMsg }}</span>
       </div>
     </v-form>

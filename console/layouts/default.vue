@@ -15,7 +15,7 @@
       :success="$store.state.snackModify === 'success'"
     >
       {{ $store.state.snackMsg }}
-      <span @click="snack = false"><icon icon="close"/></span>
+      <span @click="snack = false"><v-icon>close</v-icon></span>
     </v-snackbar>
   </div>
 </template>

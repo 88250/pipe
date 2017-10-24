@@ -16,7 +16,7 @@
       </div>
       <div v-else>
         <span class="header__bar" v-if="$route.path.indexOf('/admin') > -1" @click="toggleSide">
-          <icon icon="bars"/>
+          <v-icon>bars</v-icon>
         </span>
         {{ $store.state.nickname || $store.state.name }} &nbsp;
         <v-menu
@@ -26,7 +26,7 @@
           <v-toolbar-title slot="activator">
             <v-btn class="btn btn--success">
               {{ $store.state.blogTitle }}
-              <icon icon="chevron-down"/>
+              <v-icon>arrow_drop_down</v-icon>
             </v-btn>
           </v-toolbar-title>
           <v-list>

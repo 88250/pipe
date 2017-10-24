@@ -17,7 +17,7 @@
              href="https://hacpai.com/register?r=Vanessa"
              target="_blank">
             <div class="card__body fn-flex">
-              <icon icon="hacpai-logo"/>
+              <v-icon>hacpai-logo</v-icon>
               <div class="fn-flex-1">
                 <h2>{{ $t('hacpai', $store.state.locale) }}</h2>
                 <div>{{ $t('registerAccount', $store.state.locale) }}</div>
@@ -62,7 +62,7 @@
             @keyup.enter="checkHP"
           ></v-text-field>
           <div class="alert alert--danger" v-show="postError">
-            <icon icon="danger"/>
+            <v-icon>danger</v-icon>
             <span v-html="$t('hacpaiRule', $store.state.locale)"></span>
           </div>
         </v-form>
@@ -99,7 +99,7 @@
             @keyup.enter="init"
           ></v-text-field>
           <div class="alert alert--danger" v-show="postInitError">
-            <icon icon="danger"/>
+            <v-icon>danger</v-icon>
             <span>{{ postInitErrorMsg }}</span>
           </div>
         </v-form>

@@ -7,15 +7,15 @@
           v-if="$store.state.role <= item.role">
           <v-list-tile ripple slot="item">
             <nuxt-link :to="item.link" v-if="!item.items">
-              <icon :icon="item.icon"></icon>
+              <v-icon>{{item.icon}}</v-icon>
               {{ item.title }}
             </nuxt-link>
             <v-list-tile-content ripple v-else>
-              <icon :icon="item.icon"></icon>
+              <v-icon>{{item.icon}}</v-icon>
               {{ item.title }}
             </v-list-tile-content>
             <v-list-tile-action v-if="item.items">
-              <icon icon="angle-down"></icon>
+              <v-icon>angle-down</v-icon>
             </v-list-tile-action>
           </v-list-tile>
           <v-list-tile
