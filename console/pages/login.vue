@@ -25,7 +25,7 @@
             <span>{{ errorMsg }}</span>
           </div>
         </v-form>
-        <v-btn class="fn-right btn btn--margin-t30 btn--info btn--space" @click="login">
+        <v-btn class="fn-right btn btn--margin-t30 btn--info" @click="login">
           {{ $t('confirm', $store.state.locale) }}
         </v-btn>
       </div>
@@ -174,11 +174,11 @@
   @import '~assets/scss/_variables'
   .login
     background-color: $blue-lighter
-    padding: 50px 0
     position: relative
     flex: 1
     display: flex
     align-items: center
+    overflow: hidden
     .particles-js-canvas-el
       position: absolute
       top: 0
@@ -187,4 +187,7 @@
       margin: 0 auto
       position: relative
       z-index: 1
+  @media (max-width: 768px)
+    .login
+      padding: 0 15px
 </style>

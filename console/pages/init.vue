@@ -1,5 +1,5 @@
 <template>
-  <div class="init">
+  <div class="init fn-flex-1">
     <v-stepper v-model="step">
       <v-stepper-header>
         <v-stepper-step step="1">{{ $t('guide', $store.state.locale) }}</v-stepper-step>
@@ -19,7 +19,7 @@
             <div class="card__body fn-flex">
               <v-icon>hacpai-logo</v-icon>
               <div class="fn-flex-1">
-                <h2>{{ $t('hacpai', $store.state.locale) }}</h2>
+                <h3>{{ $t('hacpai', $store.state.locale) }}</h3>
                 <div>{{ $t('registerAccount', $store.state.locale) }}</div>
               </div>
             </div>
@@ -30,7 +30,7 @@
             <div class="card__body fn-flex">
               <img src="~/static/images/logo.jpg"/>
               <div class="fn-flex-1">
-                <h2>Pipe</h2>
+                <h3>Pipe</h3>
                 <div>{{ $t('onlineDemo', $store.state.locale) }}</div>
               </div>
             </div>
@@ -115,7 +115,7 @@
             <div class="card__body fn-flex">
               <img src="~/static/images/logo.jpg"/>
               <div class="fn-flex-1">
-                <h2>Pipe</h2>
+                <h3>Pipe</h3>
                 <div>{{ $t('welcome', $store.state.locale) }}</div>
               </div>
             </div>
@@ -178,6 +178,7 @@
         }
       },
       async init () {
+        this.$set(this, 'step', 4)
         if (!this.$refs.initForm.validate()) {
           return
         }
@@ -204,11 +205,12 @@
 <style lang="sass">
   @import '~assets/scss/_variables'
   .init
+    .stepper__wrapper
+      height: 460px
     &__center
-      width: 630px
-      margin: 14px auto
+      max-width: 630px
       height: 380px
-
+      margin: 0 auto
     &__card
       &-welcome.card.card--danger
         width: auto
@@ -227,10 +229,19 @@
           width: 63px
           margin-right: 15px
           border-radius: 50%
+          color: #fff
         img
           background-color: #fff
-        h2
+        h3
           line-height: 32px
           margin-bottom: 10px
           color: #fff
+
+  @media (max-width: 768px)
+    .init__center
+      height: auto
+    .init__card .card
+      margin-top: 0
+      width: 100%
+      margin-bottom: 15px
 </style>

@@ -51,6 +51,7 @@
       a
         display: block
         padding-right: 15px
+        word-break: break-all
         &:hover
           text-decoration: none
 </style>

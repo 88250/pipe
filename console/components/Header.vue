@@ -8,17 +8,15 @@
     </div>
     <div class="header__nav fn-flex-1 fn-flex">
       <div v-if="$store.state.name === ''" class="header__bar--theme">
-        <a :href="`/login?goto=${$route.path.indexOf('/login') > -1 ? '/' : $route.fullPath}`">{{ $t('login', $store.state.locale) }}</a>
-        &nbsp;
-        <nuxt-link to="/init">
-          {{ $t('register', $store.state.locale) }}
-        </nuxt-link>
+        <a :href="`/login?goto=${$route.path.indexOf('/login') > -1 ? '/' : $route.fullPath}`"
+          v-if="$route.path !== '/login'">{{ $t('login', $store.state.locale) }}</a>
+        <nuxt-link class="btn--space" to="/init" v-if="$route.path !== '/init'">{{ $t('register', $store.state.locale) }}</nuxt-link>
       </div>
       <template v-else>
-        <span class="header__bar fn-flex-1" v-if="$route.path.indexOf('/admin') > -1" @click="toggleSide">
-          <v-icon>bars</v-icon>
+        <span class="header__bar--icon fn-flex-1" v-if="$route.path.indexOf('/admin') > -1" >
+          <v-icon @click="toggleSide">bars</v-icon>
         </span>
-        <div :class="{'header__bar--theme': $route.path.indexOf('/admin') == -1}">
+        <div :class="$route.path.indexOf('/admin') == -1 ? 'header__bar--theme' : 'header__bar--admin'">
           {{ $store.state.nickname || $store.state.name }} &nbsp;
           <v-menu
             z-index="100"
@@ -41,7 +39,7 @@
 
           <nuxt-link v-if="$route.path.indexOf('/admin') === -1" to="/admin">{{ $t('manage', $store.state.locale) }}
           </nuxt-link>
-          <v-btn class="btn btn--danger btn--space" @click="logout">{{ $t('logout', $store.state.locale) }}</v-btn>
+          <v-btn class="btn--small btn--danger btn--space" @click="logout">{{ $t('logout', $store.state.locale) }}</v-btn>
         </div>
       </template>
     </div>
@@ -110,7 +108,6 @@
     z-index: 10
     top: 0
     color: #fff
-
     &__logo
       display: none
       background-color: $white
@@ -122,21 +119,25 @@
         font-size: 18px
         &:hover
           text-decoration: none
-
-    &__bar
-      float: left
-      margin: 9px 15px
-      cursor: pointer
-      .icon
-        height: 20px
-        width: 20px
-      &--theme
-        text-align: right
-        width: 100%
-        padding-right: 30px
     &__nav
       background-color: $blue
       align-items: center
       a
         color: #fff
+    &__bar--icon .icon
+      cursor: pointer
+      margin: 0 15px
+      height: 20px
+      width: 20px
+
+    &__bar--admin
+      padding-right: 30px
+    &__bar--theme
+      text-align: right
+      width: 100%
+      padding-right: 30px
+  @media (max-width: 768px)
+    .header__bar--theme,
+    .header__bar--admin
+      padding-right: 15px
 </style>

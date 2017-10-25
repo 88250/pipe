@@ -1,7 +1,7 @@
 <template>
-  <div class="default-content">
+  <h1 class="fn-flex-1">
     welcome
-  </div>
+  </h1>
 </template>
 
 <script>
@@ -16,8 +16,3 @@
     }
   }
 </script>
-
-<style lang="sass">
-  .default-content
-    margin-top: 60px
-</style>

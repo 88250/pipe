@@ -80,50 +80,15 @@ label.checkbox {
 
 // btn
 .btn {
-  display: inline-block;
-  font-weight: 400;
-  text-align: center;
-  white-space: nowrap;
-  vertical-align: middle;
-  user-select: none;
-  border: 1px solid transparent;
-  padding: .5rem .75rem;
-  font-size: 1rem;
-  line-height: 1.25;
-  border-radius: .25rem;
-  transition: all .15s ease-in-out;
-  cursor: pointer;
-  color: #fff;
-  box-shadow: $shadow;
-
-  &:hover {
+  &:hover,
+  &:active,
+  &:focus {
     box-shadow: $shadow-hover;
     text-decoration: none;
   }
 
-  &:active,
-  &:focus {
-    box-shadow: $shadow-hover;
-  }
-
-  &--small {
-    font-size: .8125rem;
-    padding: .2rem .4rem;
-
-    .icon {
-      float: right;
-      margin: 3px 0 0 5px;
-      height: 10px;
-      width: 10px;
-    }
-  }
-
   &--space {
     margin-left: 15px;
-  }
-
-  &--block {
-    display: block;
   }
 
   &--margin-t30 {
@@ -132,40 +97,13 @@ label.checkbox {
 
   &--info {
     background-color: #1976d2;
-    border: 1px solid #1976d2;
-
-    &:active,
-    &:focus {
-      background-color: #028ee1;
-      border: 1px solid #028ee1;
-    }
   }
 
   &--danger {
     background-color: #ef5350;
-    border: 1px solid #ef5350;
-
-    &:active,
-    &:focus {
-      background-color: #e6294b;
-      border: 1px solid #e6294b;
-    }
   }
 
   &--success {
     background-color: $success;
-    border: 1px solid $success;
-
-    &:active,
-    &:focus {
-      background-color: #1ec4d9;
-      border: 1px solid #1ec4d9;
-    }
   }
-}
-
-
-// text
-.input-group:not(.input-group--error) .input-group__details:before {
-  background-color: $gray;
 }
