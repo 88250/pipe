@@ -20,7 +20,10 @@ import (
 	"crypto/md5"
 	"regexp"
 	"strings"
+	"unicode"
+	"unicode/utf8"
 
+	"github.com/PuerkitoBio/goquery"
 	"github.com/bluele/gcache"
 	"github.com/hackebrot/turtle"
 	"github.com/microcosm-cc/bluemonday"
@@ -49,6 +52,37 @@ func Markdown(mdText string) string {
 	markdownCache.Set(key, ret)
 
 	return ret.(string)
+}
+
+func MarkdownAbstract(mdText string) string {
+	content := Markdown(mdText)
+	doc, _ := goquery.NewDocumentFromReader(strings.NewReader((content)))
+
+	text := doc.Text()
+	runes := []rune{}
+	for i, w := 0, 0; i < len(text); i += w {
+		runeValue, width := utf8.DecodeRuneInString(text[i:])
+		w = width
+
+		if unicode.IsSpace(runeValue) {
+			continue
+		}
+
+		runes = append(runes, runeValue)
+		if 200 < len(runes) {
+			break
+		}
+	}
+
+	return strings.TrimSpace(runesToString(runes))
+}
+
+func runesToString(runes []rune) (ret string) {
+	for _, v := range runes {
+		ret += string(v)
+	}
+
+	return
 }
 
 var emojiRegx = regexp.MustCompile(":[a-z_]+:")
