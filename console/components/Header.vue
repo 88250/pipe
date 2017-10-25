@@ -8,38 +8,49 @@
     </div>
     <div class="header__nav fn-flex-1 fn-flex">
       <div v-if="$store.state.name === ''" class="header__bar--theme">
-        <a :href="`/login?goto=${$route.path.indexOf('/login') > -1 ? '/' : $route.fullPath}`"
-          v-if="$route.path !== '/login'">{{ $t('login', $store.state.locale) }}</a>
-        <nuxt-link class="btn--space" to="/init" v-if="$route.path !== '/init'">{{ $t('register', $store.state.locale) }}</nuxt-link>
+        <nuxt-link class="btn--space" to="/init" v-if="$route.path !== '/init'">{{ $t('register', $store.state.locale)
+          }}
+        </nuxt-link>
+        <nuxt-link :to="`/login?goto=${$route.path.indexOf('/login') > -1 ? '/' : $route.fullPath}`"
+                   v-if="$route.path !== '/login'">{{ $t('login', $store.state.locale) }}
+        </nuxt-link>
       </div>
       <template v-else>
-        <span class="header__bar--icon fn-flex-1" v-if="$route.path.indexOf('/admin') > -1" >
-          <v-icon @click="toggleSide">bars</v-icon>
+        <span class="header__bar--icon fn-flex-1" v-if="$route.path.indexOf('/admin') > -1">
+          <div class="side__icon"  @click="toggleSide">
+            <span class="side__icon-line"></span>
+            <span class="side__icon-line side__icon-line--middle"></span>
+            <span class="side__icon-line"></span>
+          </div>
         </span>
         <div :class="$route.path.indexOf('/admin') == -1 ? 'header__bar--theme' : 'header__bar--admin'">
-          {{ $store.state.nickname || $store.state.name }} &nbsp;
+          <v-btn class="btn--small btn--danger btn--space" @click="logout">{{ $t('logout', $store.state.locale) }}
+          </v-btn>
+          <nuxt-link class="btn--space" v-if="$route.path.indexOf('/admin') === -1" to="/admin">
+            {{ $t('manage', $store.state.locale) }}
+          </nuxt-link>
           <v-menu
+            class="btn--space"
             z-index="100"
             v-if="$route.path.indexOf('/admin') > -1 && $store.state.blogs.length > 1"
-            :nudge-bottom="38">
+            :nudge-bottom="28">
             <v-toolbar-title slot="activator">
-              <v-btn class="btn btn--success">
+              <v-btn class="btn--small btn--success">
                 {{ $store.state.blogTitle }}
                 <v-icon>arrow_drop_down</v-icon>
               </v-btn>
             </v-toolbar-title>
             <v-list>
-              <v-list-tile>
-                <v-list-tile-title v-for="item in $store.state.blogs" :key="item.id">
-                  <div @click="switchBlog(item)">{{ item.title }}</div>
-                </v-list-tile-title>
+              <v-list-tile @click="switchBlog(item)"
+                           v-for="item in $store.state.blogs"
+                           :key="item.id" class="list__tile--link">
+                {{ item.title }}
               </v-list-tile>
             </v-list>
           </v-menu>
-
-          <nuxt-link v-if="$route.path.indexOf('/admin') === -1" to="/admin">{{ $t('manage', $store.state.locale) }}
-          </nuxt-link>
-          <v-btn class="btn--small btn--danger btn--space" @click="logout">{{ $t('logout', $store.state.locale) }}</v-btn>
+          <div class="avatar avatar--small tooltipped tooltipped--w"
+               :style="`background-image: url(${$store.state.avatarURL})`"
+               :aria-label="$store.state.nickname || $store.state.name"></div>
         </div>
       </template>
     </div>
@@ -98,8 +109,35 @@
 <style lang="sass">
   @import '~assets/scss/_variables'
 
-  .body--side .header__logo
-    display: flex
+  .body--side
+    .header
+      .side__icon
+        &-line:first-child
+          margin-top: 0
+          transform: none
+          top: auto
+          background-color: #fff
+        &-line:last-child
+          transform: none
+          top: auto
+          background-color: #fff
+        &-line--middle
+          opacity: 1
+
+        &:hover
+          .side__icon-line:first-child
+            width: 50%
+            transform: rotateZ(-45deg)
+            top: 4px
+          .side__icon-line--middle
+            width: 90%
+          .side__icon-line:last-child
+            width: 50%
+            transform: rotateZ(45deg)
+            top: -4px
+    .header__logo
+      width: 240px
+
 
   .header
     position: fixed
@@ -108,11 +146,45 @@
     z-index: 10
     top: 0
     color: #fff
+    .side__icon
+      width: 20px
+      height: 20px
+      padding: 0 30px
+      cursor: pointer
+
+      &-line
+        display: block
+        position: relative
+        vertical-align: top
+        height: 3px
+        width: 100%
+        background: #fff
+        margin-top: 5px
+        transition-duration: .2s
+        transition-timing-function: ease-in-out
+        transition-delay: 0s
+        border-radius: 1px
+        opacity: 1
+      &-line:first-child
+        width: 100%
+        transform: rotateZ(-45deg)
+        top: 6px
+        background-color: $theme-accent
+      &-line--middle
+        opacity: 0
+      &-line:last-child
+        width: 100%
+        transform: rotateZ(45deg)
+        top: -9px
+        background-color: $theme-accent
+
     &__logo
-      display: none
+      display: flex
       background-color: $white
-      width: 240px
+      width: 0
+      overflow: hidden
       align-items: center
+      transition: $transition
       a
         color: $text-title
         margin: 0 auto
@@ -124,18 +196,18 @@
       align-items: center
       a
         color: #fff
-    &__bar--icon .icon
-      cursor: pointer
-      margin: 0 15px
-      height: 20px
-      width: 20px
-
     &__bar--admin
       padding-right: 30px
+      display: flex
+      align-items: center
+      flex-direction: row-reverse
     &__bar--theme
-      text-align: right
       width: 100%
       padding-right: 30px
+      display: flex
+      align-items: center
+      flex-direction: row-reverse
+
   @media (max-width: 768px)
     .header__bar--theme,
     .header__bar--admin

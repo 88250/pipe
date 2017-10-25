@@ -45,9 +45,11 @@
 </script>
 
 <style lang="sass">
+  @import '~assets/scss/_variables'
   .admin__index
     li
       line-height: 20px
+      color: $text-color
       a
         display: block
         padding-right: 15px

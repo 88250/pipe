@@ -1,7 +1,7 @@
 <template>
   <div class="login" id="login">
     <div class="card">
-      <h3 class="card__title">{{ $t('login', $store.state.locale) }}</h3>
+      <h2 class="card__title">{{ $t('login', $store.state.locale) }}</h2>
       <div class="card__body fn-clear">
         <v-form class="init__center" ref="form">
           <v-text-field

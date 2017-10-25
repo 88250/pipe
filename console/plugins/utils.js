@@ -47,12 +47,12 @@ export const genMenuData = (app, locale) => [
         title: app.$t('userList', locale),
         link: '/admin/users',
         role: 2
-      },
+      } /*,
       {
         title: app.$t('blogManage', locale),
         link: '/admin/blogs',
         role: 2
-      }
+      } */
     ]
   },
   {

@@ -46,3 +46,6 @@ $theme-info: $blue-lighter;
 $theme-warning: undefined;
 $theme-error: $red-light;
 $theme-success: $blue-light;
+
+// transition
+$transition: all .15s ease-in-out !default;
