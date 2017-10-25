@@ -10,7 +10,7 @@
           <div>
             <v-btn
               v-show="item.id !== currentId"
-              class="btn btn--info"
+              class="btn--info"
               @click="setup(item.id)">{{ $t('setup', $store.state.locale) }}</v-btn>
             <a
               class="btn btn--danger btn--space"

@@ -107,3 +107,12 @@ label.checkbox {
     background-color: $success;
   }
 }
+
+a.btn {
+  padding: 0 10px;
+}
+
+// vuetify
+.list__tile__action--select-multi {
+  display: none;
+}
