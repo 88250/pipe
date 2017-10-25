@@ -1,7 +1,7 @@
 <template>
   <div class="card">
-    <div class="card__body">
-      <h1>{{ $t('communityRecommend', $store.state.locale)}}</h1>
+    <div class="card__title">
+      <h3>{{ $t('communityRecommend', $store.state.locale)}}</h3>
     </div>
     <ul class="list admin__index">
       <li v-for="item in list" :key="item.articleCreateTime" class="fn-flex">
@@ -51,4 +51,6 @@
       a
         display: block
         padding-right: 15px
+        &:hover
+          text-decoration: none
 </style>

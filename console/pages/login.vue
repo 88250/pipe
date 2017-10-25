@@ -1,8 +1,8 @@
 <template>
   <div class="login" id="login">
     <div class="card">
+      <h3 class="card__title">{{ $t('login', $store.state.locale) }}</h3>
       <div class="card__body fn-clear">
-        <h2>{{ $t('login', $store.state.locale) }}</h2>
         <v-form class="init__center" ref="form">
           <v-text-field
             :label="$t('accountOrEmail', $store.state.locale)"
@@ -176,6 +176,9 @@
     background-color: $blue-lighter
     padding: 50px 0
     position: relative
+    flex: 1
+    display: flex
+    align-items: center
     .particles-js-canvas-el
       position: absolute
       top: 0

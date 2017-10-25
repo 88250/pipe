@@ -1,10 +1,10 @@
 <template>
-  <div class="default">
-    <pipe-header from="default"/>
-    <div class="default__content">
+  <div class="console__panel">
+    <pipe-header from="console"/>
+    <div class="console__content">
       <nuxt/>
+      <pipe-footer/>
     </div>
-    <pipe-footer/>
     <v-snackbar
       :top="true"
       v-model="snack"
@@ -48,7 +48,13 @@
 </script>
 
 <style lang="sass">
-  .default
+  .console
+    &__panel
+      height: 100%
     &__content
-      margin-top: 60px
+      height: 100%
+      box-sizing: border-box
+      padding-top: 60px
+      display: flex
+      flex-direction: column
 </style>

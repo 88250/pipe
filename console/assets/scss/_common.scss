@@ -399,6 +399,10 @@ blockquote {
   box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.05);
   border-radius: 4px;
 
+  &__title {
+    padding: 15px 15px 0;
+  }
+
   &__body {
     padding: 1.25rem;
   }

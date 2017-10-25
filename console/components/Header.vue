@@ -6,42 +6,44 @@
         {{ $store.state.blogTitle }}
       </nuxt-link>
     </div>
-    <div class="header__nav fn-flex-1">
-      <div v-if="$store.state.name === ''" class="header__bar--unlogin">
+    <div class="header__nav fn-flex-1 fn-flex">
+      <div v-if="$store.state.name === ''" class="header__bar--theme">
         <a :href="`/login?goto=${$route.path.indexOf('/login') > -1 ? '/' : $route.fullPath}`">{{ $t('login', $store.state.locale) }}</a>
         &nbsp;
         <nuxt-link to="/init">
           {{ $t('register', $store.state.locale) }}
         </nuxt-link>
       </div>
-      <div v-else>
-        <span class="header__bar" v-if="$route.path.indexOf('/admin') > -1" @click="toggleSide">
+      <template v-else>
+        <span class="header__bar fn-flex-1" v-if="$route.path.indexOf('/admin') > -1" @click="toggleSide">
           <v-icon>bars</v-icon>
         </span>
-        {{ $store.state.nickname || $store.state.name }} &nbsp;
-        <v-menu
-          z-index="100"
-          v-if="$route.path.indexOf('/admin') > -1 && $store.state.blogs.length > 1"
-          :nudge-bottom="38">
-          <v-toolbar-title slot="activator">
-            <v-btn class="btn btn--success">
-              {{ $store.state.blogTitle }}
-              <v-icon>arrow_drop_down</v-icon>
-            </v-btn>
-          </v-toolbar-title>
-          <v-list>
-            <v-list-tile>
-              <v-list-tile-title v-for="item in $store.state.blogs" :key="item.id">
-                <div @click="switchBlog(item)">{{ item.title }}</div>
-              </v-list-tile-title>
-            </v-list-tile>
-          </v-list>
-        </v-menu>
+        <div :class="{'header__bar--theme': $route.path.indexOf('/admin') == -1}">
+          {{ $store.state.nickname || $store.state.name }} &nbsp;
+          <v-menu
+            z-index="100"
+            v-if="$route.path.indexOf('/admin') > -1 && $store.state.blogs.length > 1"
+            :nudge-bottom="38">
+            <v-toolbar-title slot="activator">
+              <v-btn class="btn btn--success">
+                {{ $store.state.blogTitle }}
+                <v-icon>arrow_drop_down</v-icon>
+              </v-btn>
+            </v-toolbar-title>
+            <v-list>
+              <v-list-tile>
+                <v-list-tile-title v-for="item in $store.state.blogs" :key="item.id">
+                  <div @click="switchBlog(item)">{{ item.title }}</div>
+                </v-list-tile-title>
+              </v-list-tile>
+            </v-list>
+          </v-menu>
 
-        <nuxt-link v-if="$route.path.indexOf('/admin') === -1" to="/admin">{{ $t('manage', $store.state.locale) }}
-        </nuxt-link>
-        <v-btn class="btn btn--danger btn--space" @click="logout">{{ $t('logout', $store.state.locale) }}</v-btn>
-      </div>
+          <nuxt-link v-if="$route.path.indexOf('/admin') === -1" to="/admin">{{ $t('manage', $store.state.locale) }}
+          </nuxt-link>
+          <v-btn class="btn btn--danger btn--space" @click="logout">{{ $t('logout', $store.state.locale) }}</v-btn>
+        </div>
+      </template>
     </div>
   </header>
 </template>
@@ -128,12 +130,13 @@
       .icon
         height: 20px
         width: 20px
-      &--unlogin
-        margin-top: 8px
+      &--theme
+        text-align: right
+        width: 100%
+        padding-right: 30px
     &__nav
       background-color: $blue
-      padding: 11px 15px 0 0
-      text-align: right
+      align-items: center
       a
         color: #fff
 </style>

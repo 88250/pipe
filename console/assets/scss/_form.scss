@@ -163,3 +163,9 @@ label.checkbox {
     }
   }
 }
+
+
+// text
+.input-group:not(.input-group--error) .input-group__details:before {
+  background-color: $gray;
+}

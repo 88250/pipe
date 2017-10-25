@@ -1,9 +1,11 @@
 .card > .list {
-  list-style: none;
-
   & > li {
     border-bottom: 1px solid rgba(120, 130, 140, 0.13);
     padding: 15px;
+
+    &:last-child {
+      border-bottom-width: 0;
+    }
 
     &:hover {
       background-color: $list-hover;
@@ -15,6 +17,7 @@
       font-weight: 400;
       color: $text-title;
     }
+
     a.list__title:hover {
       text-decoration: none;
       color: $text-color;
