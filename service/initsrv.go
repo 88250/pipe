@@ -336,7 +336,7 @@ func initBasicSettings(tx *gorm.DB, blogAdmin *model.User, blogID uint) error {
 	if err := tx.Create(&model.Setting{
 		Category: model.SettingCategoryBasic,
 		Name:     model.SettingNameBasicNoticeBoard,
-		Value:    "<!-- 支持 HTML、脚本 -->",
+		Value:    "<!-- 支持 HTML、脚本 -->本博客由 <a href=\"https://github.com/b3log/pipe\" target=\"_blank\">Pipe</a> 强力驱动，你也来试试吧~",
 		BlogID:   blogID}).Error; nil != err {
 		return err
 	}
