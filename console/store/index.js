@@ -7,6 +7,7 @@ export const state = () => ({
   name: '',
   nickname: '',
   blogTitle: '',
+  avatarURL: '',
   blogURL: '/',
   role: 2,
   blogs: [{
@@ -42,6 +43,7 @@ export const mutations = {
       state.blogURL = data.blogURL
       state.role = data.role
       state.blogs = data.blogs
+      state.avatarURL = data.avatarURL
       localStorage.setItem('userInfo', JSON.stringify(data))
     } else {
       state.name = ''
@@ -49,6 +51,7 @@ export const mutations = {
       state.blogTitle = ''
       state.blogURL = '/'
       state.role = 2
+      state.avatarURL = ''
       state.blogs = [{
         title: '',
         id: ''

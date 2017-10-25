@@ -68,6 +68,7 @@
     padding-top: 60px
     display: flex
     flex-direction: column
+    transition: $transition
     box-sizing: border-box
 
   .body--side .main
