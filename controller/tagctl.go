@@ -44,7 +44,7 @@ func showTagsAction(c *gin.Context) {
 
 	dataModel["Tags"] = themeTags
 
-	c.HTML(http.StatusOK, "tags.html", dataModel)
+	c.HTML(http.StatusOK, getTheme(c)+"/tags.html", dataModel)
 }
 
 func showTagArticlesAction(c *gin.Context) {
@@ -104,5 +104,5 @@ func showTagArticlesAction(c *gin.Context) {
 	dataModel["TagName"] = "Vanessa"
 	dataModel["TagArticlesCount"] = 12
 
-	c.HTML(http.StatusOK, "tag-articles.html", dataModel)
+	c.HTML(http.StatusOK, getTheme(c)+"/tag-articles.html", dataModel)
 }

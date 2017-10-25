@@ -45,7 +45,7 @@ func showAuthorsAction(c *gin.Context) {
 	}
 
 	dataModel["Authors"] = themeAuthorDetail
-	c.HTML(http.StatusOK, "authors.html", dataModel)
+	c.HTML(http.StatusOK, getTheme(c)+"/authors.html", dataModel)
 }
 
 func showAuthorArticlesAction(c *gin.Context) {
@@ -105,5 +105,5 @@ func showAuthorArticlesAction(c *gin.Context) {
 	dataModel["AuthorName"] = "Vanessa"
 	dataModel["AuthorCount"] = 12
 
-	c.HTML(http.StatusOK, "author-articles.html", dataModel)
+	c.HTML(http.StatusOK, getTheme(c)+"/author-articles.html", dataModel)
 }

@@ -56,7 +56,7 @@ func showCategoriesAction(c *gin.Context) {
 	}
 
 	dataModel["Categories"] = themeCategoryDetail
-	c.HTML(http.StatusOK, "categories.html", dataModel)
+	c.HTML(http.StatusOK, getTheme(c)+"/categories.html", dataModel)
 }
 
 func showCategoryArticlesArticlesAction(c *gin.Context) {
@@ -116,5 +116,5 @@ func showCategoryArticlesArticlesAction(c *gin.Context) {
 	dataModel["CategoryName"] = "JavaScript"
 	dataModel["CategoryCount"] = 12
 
-	c.HTML(http.StatusOK, "category-articles.html", dataModel)
+	c.HTML(http.StatusOK, getTheme(c)+"/category-articles.html", dataModel)
 }

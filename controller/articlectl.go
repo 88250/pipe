@@ -195,7 +195,7 @@ func showArticleAction(c *gin.Context) {
 	fillPreviousArticle(c, article, &dataModel)
 	fillNextArticle(c, article, &dataModel)
 	dataModel["ToC"] = "todo"
-	c.HTML(http.StatusOK, "article.html", dataModel)
+	c.HTML(http.StatusOK, getTheme(c)+"/article.html", dataModel)
 }
 
 func fillPreviousArticle(c *gin.Context, article *model.Article, dataModel *DataModel) {
