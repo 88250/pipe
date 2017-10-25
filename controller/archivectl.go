@@ -43,7 +43,7 @@ func showArchivesAction(c *gin.Context) {
 	}
 
 	dataModel["Archives"] = themeArchives
-	c.HTML(http.StatusOK, "archives.html", dataModel)
+	c.HTML(http.StatusOK, getTheme(c)+"/archives.html", dataModel)
 }
 
 func showArchiveArticlesAction(c *gin.Context) {
@@ -103,5 +103,5 @@ func showArchiveArticlesAction(c *gin.Context) {
 	dataModel["ArchivesDate"] = "2012-12-12"
 	dataModel["ArchivesCount"] = 12
 
-	c.HTML(http.StatusOK, "archive-articles.html", dataModel)
+	c.HTML(http.StatusOK, getTheme(c)+"/archive-articles.html", dataModel)
 }
