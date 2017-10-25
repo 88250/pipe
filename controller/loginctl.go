@@ -82,6 +82,7 @@ func loginAction(c *gin.Context) {
 	data["blogTitle"] = blogTitleSetting.Value
 	data["blogURL"] = blogURLSetting.Value
 	data["role"] = user.Role
+	data["avatarURL"] = user.AvatarURL
 	blogs := service.User.GetUserBlogs(user.ID)
 	if 1 > len(blogs) {
 		result.Code = -1
