@@ -9,7 +9,7 @@
           <div class="fn-right">
             <nuxt-link to="/">{{ $t('index', $store.state.locale)}}</nuxt-link>
             |
-            <a href="https://hacpai.com">{{ $t('hacpai', $store.state.locale)}}</a>
+            <a href="https://hacpai.com">{{ $t('hacpai', x$store.state.locale)}}</a>
           </div>
         </div>
       </div>

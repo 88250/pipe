@@ -19,7 +19,6 @@ const Common = {
     KillBrowser()
     LazyLoadCSSImage('.avatar, .article__thumb')
     LazyLoadImage()
-    syncCookie($('#side').data('uid') !== 0)
     Common._header()
     Common._share()
     $('#sidebarIcon').click(() => {

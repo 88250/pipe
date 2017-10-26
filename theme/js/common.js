@@ -261,25 +261,3 @@ export const InitToc = (tocId, articleId, articleOffset = 0, activeClass = 'toc_
 
   $(window).scroll()
 }
-
-/**
- * @description 同步 hacpai cookie
- * @param {boolean} isLogin 是否登录
- */
-export const syncCookie = function (isLogin) {
-  if (isLogin) {
-    return
-  }
-  $.ajax({
-    url: 'https://hacpai.com/apis/b3-identity',
-    type: 'GET',
-    success: (result) => {
-      console.log(result)
-      if (result.code === 0) {
-        succCB && succCB()
-      } else {
-        errorCB && errorCB(result.msg)
-      }
-    }
-  })
-}
