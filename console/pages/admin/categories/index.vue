@@ -19,7 +19,7 @@
             </a>
             <v-menu
               v-if="$store.state.role < 2"
-              :nudge-bottom="24"
+              :nudge-bottom="28"
               :nudge-width="60"
               :nudge-left="60"
               :open-on-hover="true">
@@ -30,13 +30,11 @@
                 </v-btn>
               </v-toolbar-title>
               <v-list>
-                <v-list-tile>
-                  <v-list-tile-title>
-                    <div @click="edit(item.id)">{{ $t('edit', $store.state.locale) }}</div>
-                  </v-list-tile-title>
-                  <v-list-tile-title>
-                    <div @click="remove(item.id)">{{ $t('delete', $store.state.locale) }}</div>
-                  </v-list-tile-title>
+                <v-list-tile @click="edit(item.id)" class="list__tile--link">
+                  {{ $t('edit', $store.state.locale) }}
+                </v-list-tile>
+                <v-list-tile @click="remove(item.id)" class="list__tile--link">
+                  {{ $t('delete', $store.state.locale) }}
                 </v-list-tile>
               </v-list>
             </v-menu>

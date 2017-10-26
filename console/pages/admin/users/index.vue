@@ -18,7 +18,7 @@
                 <small>{{ item.nickname }}</small>
               </div>
               <v-menu
-                :nudge-bottom="24"
+                :nudge-bottom="28"
                 :nudge-width="60"
                 :nudge-left="60"
                 :open-on-hover="true">
