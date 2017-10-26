@@ -99,7 +99,15 @@ func GetArticlesAction(c *gin.Context) {
 			continue
 		}
 
+		blogURLSetting := service.Setting.GetSetting(model.SettingCategoryBasic, model.SettingNameBasicBlogURL, authorModel.BlogID)
+		if nil == blogURLSetting {
+			log.Errorf("not found blog URL setting [blogID=%d]", authorModel.BlogID)
+
+			continue
+		}
+
 		author := &ConsoleAuthor{
+			URL:       blogURLSetting.Value + util.PathAuthors,
 			Name:      authorModel.Name,
 			AvatarURL: authorModel.AvatarURL,
 		}
