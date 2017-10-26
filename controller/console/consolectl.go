@@ -24,11 +24,11 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
-func ShowPageAction(c *gin.Context) {
+func ShowAdminPagesAction(c *gin.Context) {
 	t, err := template.ParseFiles("console/dist/admin" + c.Param("path") + "/index.html")
 	if nil != err {
-		log.Error("loads console page [" + c.Param("path") + "] failed: " + err.Error())
-		c.String(http.StatusNotFound, "loads console page failed")
+		log.Error("load console page [" + c.Param("path") + "] failed: " + err.Error())
+		c.String(http.StatusNotFound, "load console page failed")
 
 		return
 	}

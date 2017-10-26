@@ -43,7 +43,20 @@ type PlatformStatus struct {
 	Inited  bool   `json:"inited"`
 }
 
-func (srv *initService) Inited() (platformStatus *PlatformStatus, err error) {
+func (srv *initService) Inited() bool {
+	if srv.inited {
+		return true
+	}
+
+	status, err := srv.Status()
+	if err != nil {
+		return false
+	}
+
+	return status.Inited
+}
+
+func (srv *initService) Status() (platformStatus *PlatformStatus, err error) {
 	platformStatus = &PlatformStatus{
 		Version: util.Version,
 		Locale:  "zh_CN",

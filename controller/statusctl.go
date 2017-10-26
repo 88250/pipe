@@ -28,7 +28,7 @@ func getStatusAction(c *gin.Context) {
 	result := util.NewResult()
 	defer c.JSON(http.StatusOK, result)
 
-	platformStatus, err := service.Init.Inited()
+	platformStatus, err := service.Init.Status()
 	if nil != err {
 		result.Code = -1
 		result.Msg = err.Error()
