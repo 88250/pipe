@@ -23,7 +23,6 @@ type User struct {
 	Name                  string `gorm:"size:32" json:"name"`
 	Nickname              string `gorm:"size:32" json:"nickname"`
 	Email                 string `gorm:"size:64" json:"email"`
-	Password              string `gorm:"size:64" json:"password"`
 	Role                  int    `json:"role"`
 	AvatarURL             string `gorm:"size:255" json:"avatarURL"`
 	B3Key                 string `gorm:"size:32" json:"b3Key"`

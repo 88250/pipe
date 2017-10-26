@@ -17,92 +17,89 @@
 package controller
 
 import (
-	"fmt"
 	"net/http"
 
-	"github.com/b3log/pipe/model"
-	"github.com/b3log/pipe/service"
 	"github.com/b3log/pipe/util"
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
 	log "github.com/sirupsen/logrus"
 )
 
-type loginRequest struct {
-	NameOrEmail    string `json:"nameOrEmail" binding:"required"`
-	PasswordHashed string `json:"passwordHashed" binding:"required"`
-}
+//type loginRequest struct {
+//	NameOrEmail    string `json:"nameOrEmail" binding:"required"`
+//	PasswordHashed string `json:"passwordHashed" binding:"required"`
+//}
 
-func loginAction(c *gin.Context) {
-	result := util.NewResult()
-	defer c.JSON(http.StatusOK, result)
+//func loginAction(c *gin.Context) {
+//	result := util.NewResult()
+//	defer c.JSON(http.StatusOK, result)
 
-	reqData := &loginRequest{}
-	if err := c.BindJSON(reqData); nil != err {
-		result.Code = -1
-		result.Msg = "parses login request failed"
+//	reqData := &loginRequest{}
+//	if err := c.BindJSON(reqData); nil != err {
+//		result.Code = -1
+//		result.Msg = "parses login request failed"
 
-		return
-	}
+//		return
+//	}
 
-	user := service.User.GetUserByNameOrEmail(reqData.NameOrEmail)
-	if nil == user {
-		result.Code = -1
-		result.Msg = "login failed"
+//	user := service.User.GetUserByNameOrEmail(reqData.NameOrEmail)
+//	if nil == user {
+//		result.Code = -1
+//		result.Msg = "login failed"
 
-		return
-	}
+//		return
+//	}
 
-	if user.Password != reqData.PasswordHashed {
-		result.Code = -1
-		result.Msg = "login failed"
+//	if user.Password != reqData.PasswordHashed {
+//		result.Code = -1
+//		result.Msg = "login failed"
 
-		return
-	}
+//		return
+//	}
 
-	blogTitleSetting := service.Setting.GetSetting(model.SettingCategoryBasic, model.SettingNameBasicBlogTitle, user.BlogID)
-	if nil == blogTitleSetting {
-		result.Code = -1
-		result.Msg = fmt.Sprintf("not found blog title settings [blogID=%d]", user.BlogID)
+//	blogTitleSetting := service.Setting.GetSetting(model.SettingCategoryBasic, model.SettingNameBasicBlogTitle, user.BlogID)
+//	if nil == blogTitleSetting {
+//		result.Code = -1
+//		result.Msg = fmt.Sprintf("not found blog title settings [blogID=%d]", user.BlogID)
 
-		return
-	}
+//		return
+//	}
 
-	blogURLSetting := service.Setting.GetSetting(model.SettingCategoryBasic, model.SettingNameBasicBlogURL, user.BlogID)
-	if nil == blogURLSetting {
-		result.Code = -1
-		result.Msg = fmt.Sprintf("not found blog URL settings [blogID=%d]", user.BlogID)
+//	blogURLSetting := service.Setting.GetSetting(model.SettingCategoryBasic, model.SettingNameBasicBlogURL, user.BlogID)
+//	if nil == blogURLSetting {
+//		result.Code = -1
+//		result.Msg = fmt.Sprintf("not found blog URL settings [blogID=%d]", user.BlogID)
 
-		return
-	}
+//		return
+//	}
 
-	data := map[string]interface{}{}
-	data["name"] = user.Name
-	data["nickname"] = user.Nickname
-	data["blogTitle"] = blogTitleSetting.Value
-	data["blogURL"] = blogURLSetting.Value
-	data["role"] = user.Role
-	data["avatarURL"] = user.AvatarURL
-	blogs := service.User.GetUserBlogs(user.ID)
-	if 1 > len(blogs) {
-		result.Code = -1
-		result.Msg = fmt.Sprint("not found blog [userID=%d]", user.ID)
-	}
-	data["blogs"] = blogs
-	result.Data = data
+//	data := map[string]interface{}{}
+//	data["name"] = user.Name
+//	data["nickname"] = user.Nickname
+//	data["blogTitle"] = blogTitleSetting.Value
+//	data["blogURL"] = blogURLSetting.Value
+//	data["role"] = user.Role
+//	data["avatarURL"] = user.AvatarURL
+//	blogs := service.User.GetUserBlogs(user.ID)
+//	if 1 > len(blogs) {
+//		result.Code = -1
+//		result.Msg = fmt.Sprint("not found blog [userID=%d]", user.ID)
+//	}
+//	data["blogs"] = blogs
+//	result.Data = data
 
-	sessionData := &util.SessionData{
-		UID:   user.ID,
-		UName: user.Name,
-		URole: user.Role,
-		BID:   user.BlogID,
-		BURL:  blogURLSetting.Value,
-	}
-	if err := sessionData.Save(c); nil != err {
-		result.Code = -1
-		result.Msg = "saves session failed: " + err.Error()
-	}
-}
+//	sessionData := &util.SessionData{
+//		UID:   user.ID,
+//		UName: user.Name,
+//		URole: user.Role,
+//		BID:   user.BlogID,
+//		BURL:  blogURLSetting.Value,
+//	}
+//	if err := sessionData.Save(c); nil != err {
+//		result.Code = -1
+//		result.Msg = "saves session failed: " + err.Error()
+//	}
+//}
 
 func logoutAction(c *gin.Context) {
 	result := util.NewResult()

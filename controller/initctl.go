@@ -46,10 +46,9 @@ func initAction(c *gin.Context) {
 	}
 
 	platformAdmin := &model.User{
-		Name:     reqData.Name,
-		Email:    reqData.Email,
-		Password: reqData.PasswordHashed,
-		B3Key:    reqData.B3Key,
+		Name:  reqData.Name,
+		Email: reqData.Email,
+		B3Key: reqData.B3Key,
 	}
 
 	if err := service.Init.InitPlatform(platformAdmin); nil != err {
