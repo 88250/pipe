@@ -5978,9 +5978,9 @@ vue@~2.4.2:
   version "2.4.4"
   resolved "http://registry.npm.taobao.org/vue/download/vue-2.4.4.tgz#ea9550b96a71465fd2b8b17b61673b3561861789"
 
-"vuetify@git+https://github.com/Vanessa219/vuetify.git#dev":
+"vuetify@git+https://github.com/Vanessa219/vuetify.git#1.0.1":
   version "0.16.9"
-  resolved "git+https://github.com/Vanessa219/vuetify.git#589667f3971f28d8eeb8a61eef666bcc6cd49b74"
+  resolved "git+https://github.com/Vanessa219/vuetify.git#ab36cdcd8a4814529cc641681f254ab41b249f49"
 
 vuex@^2.4.0:
   version "2.4.0"
