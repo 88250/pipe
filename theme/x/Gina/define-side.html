@@ -1,5 +1,5 @@
 {{define "side"}}
-<aside class="side">
+<aside class="side" id="side" data-uid="{{.User.UID}}">
     <div class="side__nav">
         {{.Setting.blogSubtitle}}
         {{if eq .User.UID 0}}

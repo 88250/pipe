@@ -9,7 +9,7 @@ import $ from 'jquery'
 import hljs from 'highlight.js'
 import QRious from 'qrious'
 import Icon from './symbol'
-import {KillBrowser, LazyLoadCSSImage, LazyLoadImage} from '../../../js/common'
+import {KillBrowser, LazyLoadCSSImage, LazyLoadImage, syncCookie} from '../../../js/common'
 
 const Common = {
   /**
@@ -19,6 +19,7 @@ const Common = {
     KillBrowser()
     LazyLoadCSSImage('.avatar, .article__thumb')
     LazyLoadImage()
+    syncCookie($('#side').data('uid') !== 0)
     Common._header()
     Common._share()
     $('#sidebarIcon').click(() => {

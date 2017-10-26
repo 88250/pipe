@@ -2,7 +2,7 @@
  * @fileoverview common tool for every theme
  *
  * @author <a href="http://vanessa.b3log.org">Liyuan Li</a>
- * @version 0.1.0.0, Oct 19, 2017
+ * @version 0.2.0.0, Oct 19, 2017
  */
 
 import $ from 'jquery'
@@ -260,4 +260,26 @@ export const InitToc = (tocId, articleId, articleOffset = 0, activeClass = 'toc_
   })
 
   $(window).scroll()
+}
+
+/**
+ * @description 同步 hacpai cookie
+ * @param {boolean} isLogin 是否登录
+ */
+export const syncCookie = function (isLogin) {
+  if (isLogin) {
+    return
+  }
+  $.ajax({
+    url: 'https://hacpai.com/apis/b3-identity',
+    type: 'GET',
+    success: (result) => {
+      console.log(result)
+      if (result.code === 0) {
+        succCB && succCB()
+      } else {
+        errorCB && errorCB(result.msg)
+      }
+    }
+  })
 }
