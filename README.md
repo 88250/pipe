@@ -72,10 +72,23 @@ npm run build
 
 ### 主题
 
-jQuery
+jQuery, Gulp
 
-TBD
+theme/js 和 theme/scss 下为基础方法和样式，可按需引入使用。主题开发可参照 theme/x/Gina。
 
+安装依赖
+```
+cd theme && npm install && npm install --global gulp
+```
+开发
+```
+gulp watch
+```
+
+打包
+```
+gulp build
+```
 ## 作者
 
 Pipe 的主要作者是 [Daniel](https://github.com/88250) 与 [Vanessa](https://github.com/Vanessa219)，所有贡献者可以在[这里](https://github.com/b3log/pipe/graphs/contributors)看到。
