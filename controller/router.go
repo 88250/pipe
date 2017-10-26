@@ -60,6 +60,8 @@ func MapRoutes() *gin.Engine {
 	})
 	ret.Use(sessions.Sessions("pipe", store))
 
+	ret.Use(b3IdCheck())
+
 	api := ret.Group(util.PathAPI)
 	api.POST("/init", initAction)
 	api.POST("/login", loginAction)
