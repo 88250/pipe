@@ -90,6 +90,11 @@ body {
 
 
 // tag
+.tags {
+  .tag {
+    margin-right: 10px;
+  }
+}
 .tag {
   color: $black;
   font-size: 12px;

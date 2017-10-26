@@ -69,12 +69,14 @@ export const mutations = {
       state.blogURL = userInfoJSON.blogURL
       state.role = userInfoJSON.role
       state.blogs = userInfoJSON.blogs
+      state.avatarURL = userInfoJSON.avatarURL
       return userInfoJSON
     } else {
       state.name = ''
       state.nickname = ''
       state.blogTitle = ''
       state.blogURL = '/'
+      state.avatarURL = ''
       state.role = 2
       state.blogs = [{
         title: '',

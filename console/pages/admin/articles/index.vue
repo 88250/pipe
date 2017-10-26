@@ -1,7 +1,13 @@
 <template>
-  <div class="card fn-clear">
-    <div class="fn-clear card__body">
-      <nuxt-link to="/admin/articles/post" class="btn btn--success fn-right">{{ $t('new', $store.state.locale) }}
+  <div class="card">
+    <div class="fn-clear card__body fn-flex">
+      <v-text-field
+        @keyup.enter="getList(1)"
+        class="fn-flex-1"
+        :label="$t('enterSearch', $store.state.locale)"
+        v-model="keyword">
+      </v-text-field>
+      <nuxt-link to="/admin/articles/post" class="btn btn--success fn-right btn--new">{{ $t('new', $store.state.locale) }}
       </nuxt-link>
     </div>
     <ul class="list">
@@ -14,7 +20,7 @@
             <nuxt-link class="fn-flex-1 list__title" :to="item.url">{{ item.title }}</nuxt-link>
             <v-menu
               v-if="$store.state.name === item.author.name || $store.state.role < 2"
-              :nudge-bottom="24"
+              :nudge-bottom="28"
               :nudge-width="60"
               :nudge-left="60"
               :open-on-hover="true">
@@ -25,22 +31,23 @@
                 </nuxt-link>
               </v-toolbar-title>
               <v-list>
-                <v-list-tile>
-                  <v-list-tile-title>
-                    <nuxt-link :to="`/admin/articles/post?id=${item.id}`">{{ $t('edit', $store.state.locale) }}</nuxt-link>
-                  </v-list-tile-title>
-                  <v-list-tile-title>
-                    <div @click="remove(item.id)">{{ $t('delete', $store.state.locale) }}</div>
-                  </v-list-tile-title>
-                  <v-list-tile-title>
-                    <div @click="top(item.id)">{{ $t('top', $store.state.locale) }}</div>
-                  </v-list-tile-title>
+                <v-list-tile class="list__tile--link" @click="goEdit(item.id)">
+                  {{ $t('edit', $store.state.locale) }}
+                </v-list-tile>
+                <v-list-tile class="list__tile--link" @click="remove(item.id)">
+                  {{ $t('delete', $store.state.locale) }}
+                </v-list-tile>
+                <v-list-tile class="list__tile--link" @click="top(item.id)">
+                  {{ $t('top', $store.state.locale) }}
                 </v-list-tile>
               </v-list>
             </v-menu>
           </div>
           <div class="list__meta">
-            <nuxt-link class="fn-nowrap tag" :key="tag.title" v-for="tag in item.tags" :to="tag.url">{{ tag.title }}</nuxt-link>&nbsp;
+            <span class="tags">
+              <nuxt-link class="fn-nowrap tag" :key="tag.title" v-for="tag in item.tags" :to="tag.url">{{ tag.title
+                }}</nuxt-link>
+            </span>
             <span class="fn-nowrap">{{ item.commentCount }} {{ $t('comment', $store.state.locale) }}</span> •
             <span class="fn-nowrap">{{ item.viewCount }} {{ $t('view', $store.state.locale) }}</span> •
             <time class="fn-nowrap">{{ item.createdAt }}</time>
@@ -51,16 +58,18 @@
         </div>
       </li>
     </ul>
-    <v-pagination
-      :length="pageCount"
-      v-model="currentPageNum"
-      :total-visible="windowSize"
-      class="fn-right"
-      circle
-      next-icon="angle-right"
-      prev-icon="angle-left"
-      @input="getList"
-    ></v-pagination>
+    <div class="pagination--wrapper fn-clear">
+      <v-pagination
+        :length="pageCount"
+        v-model="currentPageNum"
+        :total-visible="windowSize"
+        class="fn-right"
+        circle
+        next-icon="angle-right"
+        prev-icon="angle-left"
+        @input="getList"
+      ></v-pagination>
+    </div>
   </div>
 </template>
 
@@ -72,7 +81,8 @@
         pageCount: 1,
         windowSize: 1,
         list: [],
-        userCount: 1
+        userCount: 1,
+        keyword: ''
       }
     },
     head () {
@@ -82,7 +92,7 @@
     },
     methods: {
       async getList (currentPage) {
-        const responseData = await this.axios.get(`/console/articles?p=${currentPage}`)
+        const responseData = await this.axios.get(`/console/articles?p=${currentPage}&key=${this.keyword}`)
         if (responseData) {
           this.$set(this, 'userCount', responseData.userCount)
           this.$set(this, 'list', responseData.articles)
@@ -117,6 +127,9 @@
             snackMsg: responseData.msg
           })
         }
+      },
+      goEdit (id) {
+        this.$router.push(`/admin/articles/post?id=${id}`)
       }
     },
     mounted () {

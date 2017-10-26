@@ -82,6 +82,7 @@
 
         .list__tile__content
           border-left: 3px solid transparent
+          padding-left: 18px
         a
           border-left: 3px solid transparent
           color: #607d8b

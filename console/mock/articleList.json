@@ -10,13 +10,17 @@
         "title": "世界，你好！",
         "tags": [{
           "title": "Pipe",
-          "url": "/xxx/xxx/xxx"
+          "url": "http://vanessa.b3log.org/xxx/xxx/xxx"
+        }, {
+          "title": "B3log",
+          "url": "http://vanessa.b3log.org/xxx/xxx/xxx"
         }],
-        "url": "/xxx/xxx/xxx",
+        "url": "http://vanessa.b3log.org/xxx/xxx/xxx",
         "topped": false,
         "viewCount": 0,
         "commentCount": 1,
         "author": {
+          "url": "http://vanessa.b3log.org",
           "name": "Vanessa",
           "avatarURL": "https://img.hacpai.com/avatar/1476336494155_1476358182494.jpeg?imageView2/1/w/80/h/80/interlace/0/q/100"
         }
@@ -27,13 +31,14 @@
         "title": "世界，你好222！",
         "tags": [{
           "title": "Pipe",
-          "url": "/xxx/xxx/xxx"
+          "url": "http://vanessa.b3log.org/xxx/xxx/xxx"
         }],
-        "url": "/xxx/xxx/xxx",
+        "url": "http://vanessa.b3log.org/xxx/xxx/xxx",
         "topped": false,
         "viewCount": 0,
         "commentCount": 1,
         "author": {
+          "url": "http://vanessa.b3log.org",
           "name": "Daniel",
           "avatarURL": "https://img.hacpai.com/avatar/1479719556412_1479827406034.png?imageView2/1/w/80/h/80/interlace/0/q/100"
         }

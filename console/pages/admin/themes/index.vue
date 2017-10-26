@@ -83,7 +83,7 @@
 
       .theme__img-wrap
         overflow: hidden
-        margin-bottom: 15px
+        margin-bottom: 10px
         position: relative
         min-height: 250px
         &:hover
@@ -112,6 +112,6 @@
         width: 100%
         transition: all .4s linear
       h3
-        margin-bottom: 25px
+        margin-bottom: 10px
         text-align: center
 </style>

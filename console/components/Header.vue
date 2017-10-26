@@ -33,7 +33,8 @@
             class="btn--space"
             z-index="100"
             v-if="$route.path.indexOf('/admin') > -1 && $store.state.blogs.length > 1"
-            :nudge-bottom="28">
+            :nudge-bottom="28"
+            :open-on-hover="true">
             <v-toolbar-title slot="activator">
               <v-btn class="btn--small btn--success">
                 {{ $store.state.blogTitle }}
@@ -175,7 +176,7 @@
       &-line:last-child
         width: 100%
         transform: rotateZ(45deg)
-        top: -9px
+        top: -10px
         background-color: $theme-accent
 
     &__logo
