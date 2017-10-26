@@ -31,7 +31,7 @@ func fillUser(c *gin.Context) {
 	if nil == session {
 		session = &util.SessionData{}
 	}
-	(*dataModel)["user"] = session
+	(*dataModel)["User"] = session
 
 	c.Next()
 }
