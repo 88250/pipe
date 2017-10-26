@@ -36,7 +36,7 @@
             </div>
           </a>
         </div>
-        <v-btn class="btn--info fn-right" @click="step = 2">{{ $t('nextStep', $store.state.locale) }}</v-btn>
+        <v-btn class="btn--info fn-right btn--margin-t30" @click="step = 2">{{ $t('nextStep', $store.state.locale) }}</v-btn>
       </v-stepper-content>
 
       <v-stepper-content step="2" class="fn-clear">
@@ -67,8 +67,8 @@
           </div>
         </v-form>
         <div class="fn-right">
-          <v-btn class="btn--info" @click="step = 1">{{ $t('preStep', $store.state.locale) }}</v-btn>
-          <v-btn class="btn--success btn--space" @click="checkHP">{{ $t('confirm', $store.state.locale) }}</v-btn>
+          <v-btn class="btn--info btn--margin-t30" @click="step = 1">{{ $t('preStep', $store.state.locale) }}</v-btn>
+          <v-btn class="btn--success btn--space btn--margin-t30" @click="checkHP">{{ $t('confirm', $store.state.locale) }}</v-btn>
         </div>
       </v-stepper-content>
 
@@ -89,23 +89,14 @@
             v-model="userB3Key"
             :readonly="true"
           ></v-text-field>
-          <v-text-field
-            :label="$t('password', $store.state.locale)"
-            v-model="password"
-            :rules="userNameRules"
-            :counter="16"
-            required
-            type="password"
-            @keyup.enter="init"
-          ></v-text-field>
           <div class="alert alert--danger" v-show="postInitError">
             <v-icon>danger</v-icon>
             <span>{{ postInitErrorMsg }}</span>
           </div>
         </v-form>
         <div class="fn-right">
-          <v-btn class="btn--info" @click="step = 2">{{ $t('preStep', $store.state.locale) }}</v-btn>
-          <v-btn class="btn--success btn--space" @click="init">{{ $t('confirm', $store.state.locale) }}</v-btn>
+          <v-btn class="btn--info btn--margin-t30" @click="step = 2">{{ $t('preStep', $store.state.locale) }}</v-btn>
+          <v-btn class="btn--success btn--space btn--margin-t30" @click="init">{{ $t('init', $store.state.locale) }}</v-btn>
         </div>
       </v-stepper-content>
 
@@ -127,7 +118,6 @@
 </template>
 
 <script>
-  import md5 from 'blueimp-md5'
   import { required, maxSize, email } from '~/plugins/validate'
 
   export default {
@@ -151,8 +141,7 @@
         ],
         postError: false,
         postInitError: false,
-        postInitErrorMsg: '',
-        password: ''
+        postInitErrorMsg: ''
       }
     },
     head () {
@@ -185,7 +174,6 @@
         const responseData = await this.axios.post('/init', {
           name: this.userName,
           email: this.userEmail,
-          passwordHashed: md5(this.password),
           b3key: this.userB3Key
         })
         if (responseData.code === 0) {
@@ -206,10 +194,10 @@
   @import '~assets/scss/_variables'
   .init
     .stepper__wrapper
-      height: 460px
+      height: 366px
     &__center
       max-width: 630px
-      height: 380px
+      height: 300px
       margin: 0 auto
     &__card
       &-welcome.card.card--danger
@@ -218,7 +206,7 @@
         display: block
         width: 280px
         color: #fff
-        margin-top: 138px
+        margin-top: 116px
         &:hover
           text-decoration: none
           opacity: .9

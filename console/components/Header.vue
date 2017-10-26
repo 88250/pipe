@@ -12,7 +12,7 @@
           }}
         </nuxt-link>
         <nuxt-link :to="`/login?goto=${$route.path.indexOf('/login') > -1 ? '/' : $route.fullPath}`"
-                   v-if="$route.path !== '/login'">{{ $t('login', $store.state.locale) }}
+                   v-if="$route.path !== '/login' && $route.path !== '/init'">{{ $t('login', $store.state.locale) }}
         </nuxt-link>
       </div>
       <template v-else>

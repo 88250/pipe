@@ -1,7 +1,7 @@
 <template>
   <div class="console__panel">
-    <pipe-header from="console"/>
-    <div class="console__content">
+    <pipe-header from="console" v-if="$store.state.isInit"/>
+    <div class="console__content" :class="{'console__content--header': $store.state.isInit}">
       <nuxt/>
       <pipe-footer/>
     </div>
@@ -54,7 +54,8 @@
     &__content
       height: 100%
       box-sizing: border-box
-      padding-top: 60px
       display: flex
       flex-direction: column
+      &--header
+        padding-top: 60px
 </style>

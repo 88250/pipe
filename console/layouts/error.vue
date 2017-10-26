@@ -1,8 +1,8 @@
 <template>
   <div class="error">
     <pipe-header from="error"/>
-    <div class="error__content fn-clear">
-      <div v-if="error.statusCode === 404">
+    <div class="error__content">
+      <div class="fn-clear fn-flex-1" v-if="error.statusCode === 404">
         <h1>404</h1>
         <div class="error__description">Page not found</div>
         <div class="fn-right">
@@ -11,7 +11,7 @@
           <a href="https://hacpai.com">{{ $t('hacpai', $store.state.locale)}}</a>
         </div>
       </div>
-      <div v-else>
+      <div class="fn-clear fn-flex-1" v-else>
         <h1>50X</h1>
         <div class="error__description">{{error.statusCode}}</div>
         <div class="fn-right">
@@ -19,8 +19,8 @@
           <a href="https://hacpai.com">{{ $t('hacpai', $store.state.locale)}}</a>
         </div>
       </div>
+      <pipe-footer/>
     </div>
-    <pipe-footer/>
   </div>
 </template>
 
@@ -51,11 +51,19 @@
   @import '~assets/scss/_variables'
   .error
     background-color: $blue-lighter
+    height: 100%
 
     &__content
-      width: 600px
-      margin: 60px auto 0
-      padding: 80px 0
+      height: 100%
+      padding-top: 60px
+      display: flex
+      flex-direction: column
+      box-sizing: border-box
+
+      & > .fn-flex-1
+        max-width: 630px
+        width: 630px
+        margin: 50px auto
 
       h1
         font-size: 4.5rem
