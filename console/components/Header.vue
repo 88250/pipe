@@ -7,12 +7,12 @@
       </a>
     </div>
     <div class="header__nav fn-flex-1 fn-flex">
-      <div v-if="$store.state.name === ''" class="header__bar--theme">
-        <nuxt-link class="btn--space" to="/init" v-if="$route.path !== '/init'">{{ $t('register', $store.state.locale)
-          }}
-        </nuxt-link>
-        <a href="https://hacpai.com/login"
-           v-if="$route.path !== '/login' && $route.path !== '/init'">{{ $t('login', $store.state.locale) }}
+      <div class="header__bar--theme" v-if="$store.state.name === ''">
+        <a class="btn--space" href="https://hacpai.com/register?r=Vanessa">
+          {{ $t('register', $store.state.locale) }}
+        </a>
+        <a href="https://hacpai.com/login">
+          {{ $t('login', $store.state.locale) }}
         </a>
       </div>
       <template v-else>
