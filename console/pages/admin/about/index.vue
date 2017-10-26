@@ -8,7 +8,7 @@
              target="_blank"
              href="http://b3log.org/donate.html">{{ $t('becomeSponsor', $store.state.locale) }}</a>
         </div>
-        <div class="fn-flex-1 content-reset">
+        <div class="fn-flex-1 content__reset">
           <h2 v-if="isLatest">
             {{ $t('about1', $store.state.locale) }}
             <a :href="download" target="_blank">{{ version }}</a>

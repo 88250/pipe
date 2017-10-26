@@ -32,7 +32,7 @@
               </v-btn>
             </div>
           </div>
-          <div class="content-reset" v-html="item.content"></div>
+          <div class="content__reset" v-html="item.content"></div>
           <div class="list__meta">
             <time class="fn-nowrap">{{ item.createdAt }}</time>
           </div>

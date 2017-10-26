@@ -1,53 +1,59 @@
 <template>
-  <div>
-    <div class="card fn-clear">
-      <user v-if="showForm" :show.sync="showForm" @addSuccess="addSuccess" :id="editId"></user>
+  <div class="card">
+    <user v-if="showForm" :show.sync="showForm" @addSuccess="addSuccess" :id="editId"></user>
 
-      <div v-show="!showForm" class="card__body fn-clear">
-        <v-btn class="btn--success fn-right" @click="edit('')">{{ $t('new', $store.state.locale) }}</v-btn>
-      </div>
+    <div v-show="!showForm" class="card__body fn-flex">
+      <v-text-field
+        @keyup.enter="getList(1)"
+        class="fn-flex-1"
+        :label="$t('enterSearch', $store.state.locale)"
+        v-model="keyword">
+      </v-text-field>
+      <v-btn class="btn--success btn--new" @click="edit('')">{{ $t('new', $store.state.locale) }}</v-btn>
+    </div>
 
-      <ul class="list">
-        <li v-for="item in list" :key="item.id" class="fn-flex"
-            v-if="($store.state.role === 2 && item.name === $store.state.name) || $store.state.role < 2">
-          <div class="avatar avatar--mid avatar--space" :style="`background-image: url(${item.avatarURL})`"></div>
-          <div class="fn-flex-1">
-            <div class="fn-flex">
-              <div class="list__title fn-flex-1">
-                {{ item.name }} /
-                <small>{{ item.nickname }}</small>
-              </div>
-              <v-menu
-                :nudge-bottom="28"
-                :nudge-width="60"
-                :nudge-left="60"
-                :open-on-hover="true">
-                <v-toolbar-title slot="activator">
-                  <v-btn class="btn--small btn--info" @click="edit(item.id)">
-                    {{ $t('edit', $store.state.locale) }}
-                    <v-icon>arrow_drop_down</v-icon>
-                  </v-btn>
-                </v-toolbar-title>
-                <v-list>
-                  <v-list-tile>
-                    <v-list-tile-title>
-                      <div @click="edit(item.id)">{{ $t('edit', $store.state.locale) }}</div>
-                    </v-list-tile-title>
-                    <v-list-tile-title>
-                      <div @click="remove(item.id)">{{ $t('delete', $store.state.locale) }}</div>
-                    </v-list-tile-title>
-                  </v-list-tile>
-                </v-list>
-              </v-menu>
-            </div>
-            <div class="list__meta">
-              <span class="fn-nowrap">{{ item.email }}</span> •
-              <span class="fn-nowrap">{{ item.PublishedArticleCount }} {{ $t('article', $store.state.locale) }}</span> •
-              <span class="fn-nowrap">{{ getRoleName(item.role) }}</span>
-            </div>
+    <ul class="list">
+      <li v-for="item in list" :key="item.id" class="fn-flex"
+          v-if="($store.state.role === 2 && item.name === $store.state.name) || $store.state.role < 2">
+        <a :href="item.url"
+           :aria-label="item.name"
+           class="avatar avatar--mid avatar--space tooltipped tooltipped--s"
+           :style="`background-image: url(${item.avatarURL})`"></a>
+        <div class="fn-flex-1">
+          <div class="fn-flex">
+            <a class="list__title fn-flex-1" :href="item.url">
+              {{ item.nickname || item.name }}
+            </a>
+            <v-menu
+              :nudge-bottom="28"
+              :nudge-width="60"
+              :nudge-left="60"
+              :open-on-hover="true">
+              <v-toolbar-title slot="activator">
+                <v-btn class="btn--small btn--info" @click="edit(item.id)">
+                  {{ $t('edit', $store.state.locale) }}
+                  <v-icon>arrow_drop_down</v-icon>
+                </v-btn>
+              </v-toolbar-title>
+              <v-list>
+                <v-list-tile @click="edit(item.id)">
+                  {{ $t('edit', $store.state.locale) }}
+                </v-list-tile>
+                <v-list-tile @click="remove(item.id)">
+                  {{ $t('delete', $store.state.locale) }}
+                </v-list-tile>
+              </v-list>
+            </v-menu>
           </div>
-        </li>
-      </ul>
+          <div class="list__meta">
+            <span class="fn-nowrap">{{ item.email }}</span> •
+            <span class="fn-nowrap">{{ item.PublishedArticleCount }} {{ $t('article', $store.state.locale) }}</span> •
+            <span class="fn-nowrap">{{ getRoleName(item.role) }}</span>
+          </div>
+        </div>
+      </li>
+    </ul>
+    <div class="pagination--wrapper fn-clear">
       <v-pagination
         :length="pageCount"
         v-model="currentPageNum"
@@ -76,7 +82,8 @@
         currentPageNum: 1,
         pageCount: 1,
         windowSize: 1,
-        list: []
+        list: [],
+        keyword: ''
       }
     },
     head () {
@@ -100,7 +107,7 @@
         return roleName
       },
       async getList (currentPage) {
-        const responseData = await this.axios.get(`/console/users?p=${currentPage}`)
+        const responseData = await this.axios.get(`/console/users?p=${currentPage}&key=${this.keyword}`)
         if (responseData) {
           this.$set(this, 'list', responseData.navigation)
           this.$set(this, 'currentPageNum', responseData.pagination.currentPageNum)

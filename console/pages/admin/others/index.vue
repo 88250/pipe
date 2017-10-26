@@ -1,26 +1,94 @@
 <template>
   <div>
-    <div class="card fn-clear card__body card--space" v-if="$store.state.role <= 1">
-      <h1>{{ $t('import', $store.state.locale) }}</h1>
-      <v-btn class="btn--info">JSON</v-btn>
-      <v-btn class="btn--info btn--space">{{ $t('staticBlog', $store.state.locale) }}</v-btn>
+    <div class="card card--space">
+      <ul class="list">
+        <li class="fn-flex" v-if="$store.state.role <= 1">
+          <div class="fn-flex-1">
+            {{ $t('import', $store.state.locale) }}
+          </div>
+          <v-menu
+            v-if="$store.state.role < 2"
+            :nudge-bottom="28"
+            :nudge-width="60"
+            :nudge-left="60"
+            :open-on-hover="true">
+            <v-toolbar-title slot="activator">
+              <v-btn class="btn--small btn--info" @click="">
+                JSON
+                <v-icon>arrow_drop_down</v-icon>
+              </v-btn>
+            </v-toolbar-title>
+            <v-list>
+              <v-list-tile @click="">
+                JSON
+              </v-list-tile>
+              <v-list-tile @click="">
+                {{ $t('staticBlog', $store.state.locale) }}
+              </v-list-tile>
+            </v-list>
+          </v-menu>
+        </li>
+        <li class="fn-flex">
+          <div class="fn-flex-1">
+            {{ $t('export', $store.state.locale) }}
+          </div>
+          <v-menu
+            v-if="$store.state.role < 2"
+            :nudge-bottom="28"
+            :nudge-width="60"
+            :nudge-left="60"
+            :open-on-hover="true">
+            <v-toolbar-title slot="activator">
+              <v-btn class="btn--small btn--info" @click="">
+                JSON
+                <v-icon>arrow_drop_down</v-icon>
+              </v-btn>
+            </v-toolbar-title>
+            <v-list>
+              <v-list-tile @click="">
+                JSON
+              </v-list-tile>
+              <v-list-tile @click="">
+                {{ $t('staticBlog', $store.state.locale) }}
+              </v-list-tile>
+              <v-list-tile @click="">
+                SQL
+              </v-list-tile>
+            </v-list>
+          </v-menu>
+        </li>
+        <li class="fn-flex" v-if="$store.state.role <= 1">
+          <div class="fn-flex-1">
+            {{ $t('clearData', $store.state.locale) }}
+          </div>
+          <v-menu
+            v-if="$store.state.role < 2"
+            :nudge-bottom="28"
+            :nudge-width="60"
+            :nudge-left="60"
+            :open-on-hover="true">
+            <v-toolbar-title slot="activator">
+              <v-btn class="btn--small btn--info" @click="">
+                {{ $t('removeUnusedTags', $store.state.locale) }}
+                <v-icon>arrow_drop_down</v-icon>
+              </v-btn>
+            </v-toolbar-title>
+            <v-list>
+              <v-list-tile @click="">
+                {{ $t('removeUnusedTags', $store.state.locale) }}
+              </v-list-tile>
+              <v-list-tile @click="">
+                {{ $t('removeData', $store.state.locale) }}
+              </v-list-tile>
+            </v-list>
+          </v-menu>
+        </li>
+      </ul>
     </div>
 
-    <div class="card fn-clear card__body card--space">
-      <h1>{{ $t('export', $store.state.locale) }}</h1>
-      <v-btn class="btn--info">JSON</v-btn>
-      <v-btn class="btn--info btn--space">HTML</v-btn>
-    </div>
-
-    <div class="card fn-clear card__body card--space">
-      <h1>{{ $t('clearData', $store.state.locale) }}</h1>
-      <v-btn class="btn--danger">{{ $t('removeUnusedTags', $store.state.locale) }}</v-btn>
-      <v-btn class="btn--danger btn--space">{{ $t('removeData', $store.state.locale) }}</v-btn>
-    </div>
-
-    <div class="card fn-clear card__body">
-      <h1>B3log key</h1>
-      {{ key }}
+    <div class="card">
+      <div class="card__title">B3log key</div>
+      <div class="card__body">{{ key }}</div>
     </div>
   </div>
 </template>

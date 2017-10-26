@@ -8,7 +8,9 @@
       </div>
       <ul class="list">
         <li v-for="item in list" :key="item.id" class="fn-flex">
-          <div class="avatar avatar--mid avatar--space" :style="`background-image: url(${item.iconURL})`"></div>
+          <a class="avatar avatar--mid avatar--space"
+             :href="`${item.url}`"
+             :style="`background-image: url(${item.iconURL})`"></a>
           <div class="fn-flex-1">
             <div class="fn-flex">
               <a target="_blank" class="list__title fn-flex-1" :href="`${item.url}`">
@@ -27,13 +29,11 @@
                   </v-btn>
                 </v-toolbar-title>
                 <v-list>
-                  <v-list-tile>
-                    <v-list-tile-title>
-                      <div @click="edit(item.id)">{{ $t('edit', $store.state.locale) }}</div>
-                    </v-list-tile-title>
-                    <v-list-tile-title>
-                      <div @click="remove(item.id)">{{ $t('delete', $store.state.locale) }}</div>
-                    </v-list-tile-title>
+                  <v-list-tile class="list__tile--link" @click="edit(item.id)">
+                    {{ $t('edit', $store.state.locale) }}
+                  </v-list-tile>
+                  <v-list-tile class="list__tile--link" @click="remove(item.id)">
+                    {{ $t('delete', $store.state.locale) }}
                   </v-list-tile>
                 </v-list>
               </v-menu>
