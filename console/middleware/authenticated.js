@@ -1,20 +1,19 @@
 export default function ({ redirect, store, route }) {
-  const userInfo = localStorage.getItem('userInfo')
-  if (userInfo) {
-    const userInfoJSON = JSON.parse(userInfo)
-    if (userInfoJSON.name === '') {
-      // logout
-      store.commit('setUserInfo', null)
+  const isLogin = store.state.name !== ''
+
+  if (route.path.indexOf('/admin') > -1) {
+    if (!isLogin) {
       redirect('/login')
-    } else {
-      store.commit('getUserInfo')
-      if (route.path === '/login' || route.path === '/init') {
-        redirect('/')
-      }
     }
-  } else if (route.path.indexOf('/admin') > -1) {
-    // logout
-    redirect('/login')
-    store.commit('getUserInfo')
+  } else if (route.path === '/login') {
+    if (isLogin) {
+      redirect('/')
+    }
+    window.location.href = 'https://hacpai.com/login'
+  } else if (route.path === '/init') {
+    if (isLogin) {
+      redirect('/')
+    }
+    window.location.href = 'https://hacpai.com/register?r=Vanessa'
   }
 }

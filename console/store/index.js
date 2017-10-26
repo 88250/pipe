@@ -60,31 +60,6 @@ export const mutations = {
       localStorage.removeItem('userInfo')
     }
   },
-  getUserInfo (state) {
-    const userInfo = localStorage.getItem('userInfo')
-    if (userInfo) {
-      const userInfoJSON = JSON.parse(userInfo)
-      state.name = userInfoJSON.name
-      state.nickname = userInfoJSON.nickname
-      state.blogTitle = userInfoJSON.blogTitle
-      state.blogURL = userInfoJSON.blogURL
-      state.role = userInfoJSON.role
-      state.blogs = userInfoJSON.blogs
-      state.avatarURL = userInfoJSON.avatarURL
-      return userInfoJSON
-    } else {
-      state.name = ''
-      state.nickname = ''
-      state.blogTitle = ''
-      state.blogURL = '/'
-      state.avatarURL = ''
-      state.role = 2
-      state.blogs = [{
-        title: '',
-        id: ''
-      }]
-    }
-  },
   setBlog (state, data) {
     const userInfo = localStorage.getItem('userInfo')
     if (!userInfo) {

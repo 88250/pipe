@@ -84,4 +84,5 @@
     .error__content > .fn-flex-1
       width: 100%
       padding: 0 15px
+      box-sizing: border-box
 </style>
