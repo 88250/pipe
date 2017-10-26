@@ -2,10 +2,9 @@
 <aside class="side">
     <div class="side__nav">
         {{.Setting.blogSubtitle}}
-
-        {{if eq .Username ""}}
-        <a href="/login">{{.I18n.Login}}</a>
-        <a href="/init">{{.I18n.Register}}</a>
+        {{if eq .User.UID 0}}
+        <a href="https://hacpai.com/login">{{.I18n.Login}}</a>
+        <a href="https://hacpai.com/register">{{.I18n.Register}}</a>
         {{else}}
         TODO 头像
         <a href="/admin">{{.I18n.Manage}}</a>

@@ -3,20 +3,24 @@
     <pipe-header from="error"/>
     <div class="error__content">
       <div class="fn-clear fn-flex-1" v-if="error.statusCode === 404">
-        <h1>404</h1>
-        <div class="error__description">Page not found</div>
-        <div class="fn-right">
-          <nuxt-link to="/">{{ $t('index', $store.state.locale)}}</nuxt-link>
-          |
-          <a href="https://hacpai.com">{{ $t('hacpai', $store.state.locale)}}</a>
+        <div class="fn-flex-1">
+          <h1>404</h1>
+          <div class="error__description">Page not found</div>
+          <div class="fn-right">
+            <nuxt-link to="/">{{ $t('index', $store.state.locale)}}</nuxt-link>
+            |
+            <a href="https://hacpai.com">{{ $t('hacpai', $store.state.locale)}}</a>
+          </div>
         </div>
       </div>
       <div class="fn-clear fn-flex-1" v-else>
-        <h1>50X</h1>
-        <div class="error__description">{{error.statusCode}}</div>
-        <div class="fn-right">
-          <a href="https://github.com/b3log/pipe/issues/new">{{ $t('reportIssue', $store.state.locale)}}</a> |
-          <a href="https://hacpai.com">{{ $t('hacpai', $store.state.locale)}}</a>
+        <div class="fn-flex-1">
+          <h1>50X</h1>
+          <div class="error__description">{{error.statusCode}}</div>
+          <div class="fn-right">
+            <a href="https://github.com/b3log/pipe/issues/new">{{ $t('reportIssue', $store.state.locale)}}</a> |
+            <a href="https://hacpai.com">{{ $t('hacpai', $store.state.locale)}}</a>
+          </div>
         </div>
       </div>
       <pipe-footer/>
@@ -63,7 +67,9 @@
       & > .fn-flex-1
         max-width: 630px
         width: 630px
-        margin: 50px auto
+        margin: 0 auto
+        align-items: center
+        display: flex
 
       h1
         font-size: 4.5rem
@@ -74,4 +80,8 @@
       margin: 50px 0
       font-size: 1.25rem
       font-weight: 300
+  @media (max-width: 768px)
+    .error__content > .fn-flex-1
+      width: 100%
+      padding: 0 15px
 </style>

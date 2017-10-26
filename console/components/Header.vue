@@ -11,13 +11,13 @@
         <nuxt-link class="btn--space" to="/init" v-if="$route.path !== '/init'">{{ $t('register', $store.state.locale)
           }}
         </nuxt-link>
-        <nuxt-link :to="`/login?goto=${$route.path.indexOf('/login') > -1 ? '/' : $route.fullPath}`"
-                   v-if="$route.path !== '/login' && $route.path !== '/init'">{{ $t('login', $store.state.locale) }}
-        </nuxt-link>
+        <a href="https://hacpai.com/login"
+           v-if="$route.path !== '/login' && $route.path !== '/init'">{{ $t('login', $store.state.locale) }}
+        </a>
       </div>
       <template v-else>
         <span class="header__bar--icon fn-flex-1" v-if="$route.path.indexOf('/admin') > -1">
-          <div class="side__icon"  @click="toggleSide">
+          <div class="side__icon" @click="toggleSide">
             <span class="side__icon-line"></span>
             <span class="side__icon-line side__icon-line--middle"></span>
             <span class="side__icon-line"></span>
@@ -138,7 +138,6 @@
             top: -4px
     .header__logo
       width: 240px
-
 
   .header
     position: fixed

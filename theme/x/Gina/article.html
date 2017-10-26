@@ -102,7 +102,7 @@
                 <span id="commentsCnt">{{len .Comments}}</span> {{.I18n.Comment}}
             </div>
             {{range .Comments}}
-            {{template "comment" dict "Item" . "I18n" $.I18n "Username" $.Username "ArticleID" $.Article.ID}}
+            {{template "comment" dict "Item" . "I18n" $.I18n "Username" $.User.UName "ArticleID" $.Article.ID}}
             {{end}}
         </div>
         <div class="fn-bottom">
@@ -224,7 +224,7 @@
 {{end}}
 </div>
 
-{{if ne .Username ""}}
+{{if ne .User.UID 0}}
 <div class="editor" id="editor">
     <div class="wrapper">
         <div id="replyObject"></div>
