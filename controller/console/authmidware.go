@@ -23,18 +23,16 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func LoginCheck() gin.HandlerFunc {
-	return func(c *gin.Context) {
-		session := util.GetSession(c)
-		if nil == session {
-			result := util.NewResult()
-			result.Code = -2
-			result.Msg = "unauthenticated request"
-			c.AbortWithStatusJSON(http.StatusOK, result)
+func LoginCheck(c *gin.Context) {
+	session := util.GetSession(c)
+	if nil == session {
+		result := util.NewResult()
+		result.Code = -2
+		result.Msg = "unauthenticated request"
+		c.AbortWithStatusJSON(http.StatusOK, result)
 
-			return
-		}
-
-		c.Next()
+		return
 	}
+
+	c.Next()
 }
