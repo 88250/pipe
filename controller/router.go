@@ -114,12 +114,12 @@ func MapRoutes() *gin.Engine {
 	}
 	ret.LoadHTMLGlob("theme/x/**/*.html")
 	themeGroup := ret.Group(util.PathBlogs + "/:username")
-	themeGroup.Use(fillUser, b3IdCheck, resolveBlog)
+	themeGroup.Use(fillUser, b3idCheck, resolveBlog)
 	themeGroup.GET("", showArticlesAction)
 	themeGroup.Any("/*path", routePath)
 
 	adminPagesGroup := ret.Group(util.PathAdmin)
-	adminPagesGroup.Use(fillUser, b3IdCheck)
+	adminPagesGroup.Use(fillUser, b3idCheck)
 	adminPagesGroup.GET("/*path", console.ShowAdminPagesAction)
 
 	ret.GET(util.PathInit, showInitPageAction)

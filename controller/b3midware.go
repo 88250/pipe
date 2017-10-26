@@ -3,6 +3,7 @@ package controller
 import (
 	"encoding/json"
 	"net/http"
+	"strings"
 	"time"
 
 	"github.com/b3log/pipe/model"
@@ -14,11 +15,12 @@ import (
 
 type DataModel map[string]interface{}
 
+const nilB3id = "H9oxzSym"
+
 func fillUser(c *gin.Context) {
 	inited := service.Init.Inited()
 	if !inited && util.PathInit != c.Request.URL.Path {
 		c.Redirect(http.StatusSeeOther, util.Conf.Server+util.PathInit)
-
 		c.Abort()
 
 		return
@@ -26,19 +28,48 @@ func fillUser(c *gin.Context) {
 
 	dataModel := &DataModel{}
 	c.Set("dataModel", dataModel)
-
 	session := util.GetSession(c)
+	if nil != session {
+		(*dataModel)["User"] = session
+		c.Next()
+
+		return
+	}
+	b3id := c.Request.URL.Query().Get("b3id")
+
+	if nilB3id == b3id {
+		if nil == session {
+			session = &util.SessionData{}
+			(*dataModel)["User"] = session
+		}
+
+		c.Next()
+
+		return
+	}
+
+	if nil == session && "" == b3id {
+		redirectURL := strings.TrimSpace(c.Request.Referer())
+		if "" == redirectURL {
+			redirectURL = util.Conf.Server + c.Request.URL.Path
+		}
+		c.Redirect(http.StatusSeeOther, "https://hacpai.com/apis/b3-identity?goto="+redirectURL)
+		c.Abort()
+
+		return
+	}
+
 	if nil == session {
 		session = &util.SessionData{}
+		(*dataModel)["User"] = session
 	}
-	(*dataModel)["User"] = session
 
 	c.Next()
 }
 
-func b3IdCheck(c *gin.Context) {
-	b3id := c.Request.URL.Query().Get("b3id")
-	if "" == b3id {
+func b3idCheck(c *gin.Context) {
+	b3id := c.Query("b3id")
+	if nilB3id == b3id {
 		c.Next()
 
 		return
