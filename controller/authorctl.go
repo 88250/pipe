@@ -52,6 +52,16 @@ func showAuthorArticlesAction(c *gin.Context) {
 	dm, _ := c.Get("dataModel")
 	dataModel := *(dm.(*DataModel))
 
+	url := c.Request.URL.String()
+
+	authorName := url[strings.LastIndex(url, "/")+1:]
+	author := service.User.GetUserByName(authorName)
+	if nil == author {
+		c.Status(404)
+
+		return
+	}
+
 	page := c.GetInt("p")
 	if 1 > page {
 		page = 1
