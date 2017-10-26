@@ -60,8 +60,6 @@ func MapRoutes() *gin.Engine {
 	})
 	ret.Use(sessions.Sessions("pipe", store))
 
-	ret.Use(fillUser, b3IdCheck)
-
 	api := ret.Group(util.PathAPI)
 	api.POST("/init", initAction)
 	api.POST("/logout", logoutAction)
@@ -116,11 +114,14 @@ func MapRoutes() *gin.Engine {
 	}
 	ret.LoadHTMLGlob("theme/x/**/*.html")
 	themeGroup := ret.Group(util.PathBlogs + "/:username")
-	themeGroup.Use(resolveBlog())
+	themeGroup.Use(fillUser, b3IdCheck, resolveBlog)
 	themeGroup.GET("", showArticlesAction)
 	themeGroup.Any("/*path", routePath)
 
-	ret.GET(util.PathAdmin+"/*path", console.ShowAdminPagesAction)
+	adminPagesGroup := ret.Group(util.PathAdmin)
+	adminPagesGroup.Use(fillUser, b3IdCheck)
+	adminPagesGroup.GET("/*path", console.ShowAdminPagesAction)
+
 	ret.GET(util.PathInit, showInitPageAction)
 	ret.GET(util.PathSearch, showSearchPageAction)
 	ret.Static(util.PathAssets, "./console/dist")

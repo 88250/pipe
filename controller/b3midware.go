@@ -12,6 +12,8 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
+type DataModel map[string]interface{}
+
 func fillUser(c *gin.Context) {
 	inited := service.Init.Inited()
 	if !inited && util.PathInit != c.Request.URL.Path {

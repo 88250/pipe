@@ -33,43 +33,39 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
-func resolveBlog() gin.HandlerFunc {
-	return func(c *gin.Context) {
-		username := c.Param("username")
-		if "" == username {
-			c.AbortWithStatus(http.StatusNotFound)
+func resolveBlog(c *gin.Context) {
+	username := c.Param("username")
+	if "" == username {
+		c.AbortWithStatus(http.StatusNotFound)
 
-			return
-		}
-		blogAdmin := service.User.GetUserByName(username)
-		if nil == blogAdmin {
-			c.AbortWithStatus(http.StatusNotFound)
-
-			return
-		}
-		c.Set("blogAdmin", blogAdmin)
-
-		fillCommon(c)
-
-		path := strings.Split(c.Request.RequestURI, username)[1]
-		path = strings.TrimSpace(path)
-		if end := strings.Index(path, "?"); 0 < end {
-			path = path[:end]
-		}
-		article := service.Article.GetArticleByPath(path)
-		if nil == article {
-			c.Next()
-
-			return
-		}
-
-		c.Set("article", article)
-		showArticleAction(c)
-		c.Abort()
+		return
 	}
-}
+	blogAdmin := service.User.GetUserByName(username)
+	if nil == blogAdmin {
+		c.AbortWithStatus(http.StatusNotFound)
 
-type DataModel map[string]interface{}
+		return
+	}
+	c.Set("blogAdmin", blogAdmin)
+
+	fillCommon(c)
+
+	path := strings.Split(c.Request.RequestURI, username)[1]
+	path = strings.TrimSpace(path)
+	if end := strings.Index(path, "?"); 0 < end {
+		path = path[:end]
+	}
+	article := service.Article.GetArticleByPath(path)
+	if nil == article {
+		c.Next()
+
+		return
+	}
+
+	c.Set("article", article)
+	showArticleAction(c)
+	c.Abort()
+}
 
 func fillCommon(c *gin.Context) {
 	if "dev" == util.Conf.RuntimeMode {
