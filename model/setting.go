@@ -55,6 +55,13 @@ const (
 	SettingNameBasicMetaDescription = "basicMetaDescription"
 	SettingNameBasicMetaKeywords    = "basicMetaKeywords"
 	SettingNameBasicFaviconURL      = "basicFaviconURL"
+	SettingNameBasicBlogStatus      = "basicBlogStatus"
+)
+
+// Setting values of category "basic".
+const (
+	SettingBasicBlogStatusOK       = "0"
+	SettingBasicBlogStatusInactive = "1"
 )
 
 // Setting names of category "preference".
