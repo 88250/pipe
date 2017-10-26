@@ -41,8 +41,6 @@ func b3IdCheck() gin.HandlerFunc {
 			return
 		}
 
-		log.Info(result)
-
 		if 0 != result.Code {
 			c.Next()
 
