@@ -60,7 +60,7 @@ func MapRoutes() *gin.Engine {
 	})
 	ret.Use(sessions.Sessions("pipe", store))
 
-	ret.Use(b3IdCheck())
+	ret.Use(fillUser, b3IdCheck)
 
 	api := ret.Group(util.PathAPI)
 	api.POST("/init", initAction)
@@ -121,7 +121,6 @@ func MapRoutes() *gin.Engine {
 	themeGroup.Any("/*path", routePath)
 
 	ret.GET(util.PathAdmin+"/*path", console.ShowPageAction)
-	ret.GET("/login", console.ShowLoginAction)
 	ret.Static(util.PathAssets, "./console/dist")
 
 	return ret

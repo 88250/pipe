@@ -49,8 +49,7 @@ func resolveBlog() gin.HandlerFunc {
 		}
 		c.Set("blogAdmin", blogAdmin)
 
-		dataModel := &DataModel{}
-		fillCommon(c, dataModel)
+		fillCommon(c)
 
 		path := strings.Split(c.Request.RequestURI, username)[1]
 		path = strings.TrimSpace(path)
@@ -72,14 +71,18 @@ func resolveBlog() gin.HandlerFunc {
 
 type DataModel map[string]interface{}
 
-func fillCommon(c *gin.Context, dataModel *DataModel) {
+func fillCommon(c *gin.Context) {
+	if "dev" == util.Conf.RuntimeMode {
+		i18n.Load()
+	}
+
 	blogAdminVal, _ := c.Get("blogAdmin")
 	blogAdmin := blogAdminVal.(*model.User)
 	blogID := blogAdmin.BlogID
 
-	if "dev" == util.Conf.RuntimeMode {
-		i18n.Load()
-	}
+	dataModelVal, _ := c.Get("dataModel")
+	dataModel := dataModelVal.(*DataModel)
+
 	localeSetting := service.Setting.GetSetting(model.SettingCategoryI18n, model.SettingNameI18nLocale, blogID)
 	i18ns := i18n.GetMessages(localeSetting.Value)
 	i18nMap := map[string]interface{}{}
@@ -118,13 +121,7 @@ func fillCommon(c *gin.Context, dataModel *DataModel) {
 	(*dataModel)["MetaDescription"] = settingMap[model.SettingNameBasicMetaDescription]
 	(*dataModel)["Conf"] = util.Conf
 	(*dataModel)["Year"] = time.Now().Year()
-
-	(*dataModel)["Username"] = ""
-	session := util.GetSession(c)
-	if nil != session {
-		(*dataModel)["Username"] = session.UName
-	}
-	(*dataModel)["UserCount"] = len(service.User.GetBlogUsers(blogID)) + 2
+	(*dataModel)["UserCount"] = len(service.User.GetBlogUsers(blogID))
 
 	(*dataModel)["Navigations"] = service.Navigation.GetNavigations(blogID)
 

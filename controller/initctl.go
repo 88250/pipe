@@ -27,10 +27,9 @@ import (
 )
 
 type initRequest struct {
-	Name           string `json:"name" binding:"required"`
-	Email          string `json:"email" binding:"required"`
-	PasswordHashed string `json:"passwordHashed" binding:"required"`
-	B3Key          string `json:"b3key" binding:"required"`
+	Name  string `json:"name" binding:"required"`
+	Email string `json:"email" binding:"required"`
+	B3Key string `json:"b3key" binding:"required"`
 }
 
 func initAction(c *gin.Context) {
