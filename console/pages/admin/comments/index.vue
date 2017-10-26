@@ -1,9 +1,19 @@
 <template>
-  <div class="card fn-clear">
+  <div class="card">
+    <div class="card__body">
+      <v-text-field
+        @keyup.enter="getList(1)"
+        class="fn-flex-1"
+        :label="$t('enterSearch', $store.state.locale)"
+        v-model="keyword">
+      </v-text-field>
+    </div>
     <ul class="list">
       <li v-for="item in list" :key="item.id" class="fn-flex">
-        <div class="avatar avatar--mid avatar--space"
-             :style="`background-image: url(${item.author.avatarURL})`"></div>
+        <a class="avatar avatar--mid avatar--space tooltipped tooltipped--s"
+           :aria-label="item.author.name"
+           :href="item.author.url"
+           :style="`background-image: url(${item.author.avatarURL})`"></a>
         <div class="fn-flex-1">
           <div class="fn-flex">
             <div class="fn-flex-1">
@@ -11,7 +21,7 @@
                 {{ item.title }}
               </nuxt-link>
               <small class="fn-nowrap" v-if="userCount > 1">
-                By {{ item.articleAuthor.name }}
+                By <a :href="item.articleAuthor.url">{{ item.articleAuthor.name }}</a>
               </small>
             </div>
             <div>
@@ -24,22 +34,23 @@
           </div>
           <div class="content-reset" v-html="item.content"></div>
           <div class="list__meta">
-            <time class="fn-nowrap">{{ item.createdAt }}</time> •
-            <span class="fn-nowrap">{{ item.author.name }}</span>
+            <time class="fn-nowrap">{{ item.createdAt }}</time>
           </div>
         </div>
       </li>
     </ul>
-    <v-pagination
-      :length="pageCount"
-      v-model="currentPageNum"
-      :total-visible="windowSize"
-      class="fn-right"
-      circle
-      next-icon="angle-right"
-      prev-icon="angle-left"
-      @input="getList"
-    ></v-pagination>
+    <div class="pagination--wrapper fn-clear">
+      <v-pagination
+        :length="pageCount"
+        v-model="currentPageNum"
+        :total-visible="windowSize"
+        class="fn-right"
+        circle
+        next-icon="angle-right"
+        prev-icon="angle-left"
+        @input="getList"
+      ></v-pagination>
+    </div>
   </div>
 </template>
 
@@ -51,7 +62,8 @@
         pageCount: 1,
         windowSize: 1,
         list: [],
-        userCount: 1
+        userCount: 1,
+        keyword: ''
       }
     },
     head () {
@@ -61,7 +73,7 @@
     },
     methods: {
       async getList (currentPage) {
-        const responseData = await this.axios.get(`/console/comments?p=${currentPage}`)
+        const responseData = await this.axios.get(`/console/comments?p=${currentPage}&key=${this.keyword}`)
         if (responseData) {
           this.$set(this, 'userCount', responseData.userCount)
           this.$set(this, 'list', responseData.comments)
