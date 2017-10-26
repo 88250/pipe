@@ -1,10 +1,10 @@
 <template>
   <header class="header fn-flex">
     <div class="header__logo" v-if="from === 'admin'">
-      <nuxt-link :to="$store.state.blogURL">
+      <a :href="$store.state.blogURL">
         <img src="~static/images/logo.png"/>
         {{ $store.state.blogTitle }}
-      </nuxt-link>
+      </a>
     </div>
     <div class="header__nav fn-flex-1 fn-flex">
       <div v-if="$store.state.name === ''" class="header__bar--theme">
