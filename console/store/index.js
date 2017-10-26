@@ -17,7 +17,8 @@ export const state = () => ({
   snackMsg: '',
   snackBar: false,
   snackModify: 'error',
-  menu: []
+  menu: [],
+  tagsItems: []
 })
 
 export const mutations = {
@@ -115,6 +116,9 @@ export const mutations = {
     } else {
       state.snackModify = 'error'
     }
+  },
+  setTagsItems (state, data) {
+    state.tagsItems = data
   }
 }
 
@@ -143,5 +147,18 @@ export const actions = {
       this.app.i18n.setLocaleMessage(locale, message)
     }
     commit('setLocale', locale)
+  },
+  async getTags ({ commit, state }) {
+    if (state.tagsItems.length > 0) {
+      return
+    }
+    const tagResponseData = await vueAxios().get('/console/tags/')
+    if (tagResponseData) {
+      let tagList = []
+      tagResponseData.map((v) => {
+        tagList.push(v.title)
+      })
+      commit('setTagsItems', tagList)
+    }
   }
 }

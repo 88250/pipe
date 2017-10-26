@@ -17,7 +17,7 @@
           :label="$t('tags', $store.state.locale)"
           chips
           tags
-          :items="tagsItems"
+          :items="$store.state.tagsItems"
           required
           :rules="tagsRules"
         ></v-select>
@@ -78,7 +78,6 @@
         url: '',
         password: '',
         tags: [],
-        tagsItems: ['pipe'],
         commentable: false
       }
     },
@@ -157,14 +156,7 @@
       }
 
       // get tags
-      const tagResponseData = await this.axios.get('/console/tags/')
-      if (tagResponseData) {
-        let tagList = []
-        tagResponseData.map((v) => {
-          tagList.push(v.title)
-        })
-        this.$set(this, 'tagsItems', tagList)
-      }
+      this.$store.dispatch('getTags')
     }
   }
 </script>

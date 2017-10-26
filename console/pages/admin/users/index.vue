@@ -2,17 +2,20 @@
   <div class="card">
     <user v-if="showForm" :show.sync="showForm" @addSuccess="addSuccess" :id="editId"></user>
 
-    <div v-show="!showForm" class="card__body fn-flex">
+    <div v-show="!showForm" class="card__body" >
       <v-text-field
+        v-if="list.length > 0"
         @keyup.enter="getList(1)"
         class="fn-flex-1"
         :label="$t('enterSearch', $store.state.locale)"
         v-model="keyword">
       </v-text-field>
-      <v-btn class="btn--success btn--new" @click="edit('')">{{ $t('new', $store.state.locale) }}</v-btn>
+      <template v-else>
+        {{ $t('noData', $store.state.locale) }}
+      </template>
     </div>
 
-    <ul class="list">
+    <ul class="list" v-if="list.length > 0">
       <li v-for="item in list" :key="item.id" class="fn-flex"
           v-if="($store.state.role === 2 && item.name === $store.state.name) || $store.state.role < 2">
         <a :href="item.url"
@@ -53,7 +56,7 @@
         </div>
       </li>
     </ul>
-    <div class="pagination--wrapper fn-clear">
+    <div class="pagination--wrapper fn-clear" v-if="list.length > 0">
       <v-pagination
         :length="pageCount"
         v-model="currentPageNum"

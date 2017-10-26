@@ -1,17 +1,17 @@
 <template>
   <div class="card">
     <div class="card__body fn-flex">
-      <v-text-field
+      <v-text-field v-if="list.length > 0"
         @keyup.enter="getList(1)"
         class="fn-flex-1"
         :label="$t('enterSearch', $store.state.locale)"
         v-model="keyword">
       </v-text-field>
-      <nuxt-link to="/admin/articles/post" class="btn btn--success btn--new">{{ $t('new', $store.state.locale)
+      <nuxt-link to="/admin/articles/post" class="btn btn--success" :class="{'btn--new': list.length > 0}">{{ $t('new', $store.state.locale)
         }}
       </nuxt-link>
     </div>
-    <ul class="list">
+    <ul class="list" v-if="list.length > 0">
       <li v-for="item in list" :key="item.id" class="fn-flex">
         <a class="avatar avatar--mid avatar--space tooltipped tooltipped--s"
            v-if="userCount > 1"
@@ -58,7 +58,7 @@
         </div>
       </li>
     </ul>
-    <div class="pagination--wrapper fn-clear">
+    <div class="pagination--wrapper fn-clear" v-if="list.length !== 0">
       <v-pagination
         :length="pageCount"
         v-model="currentPageNum"

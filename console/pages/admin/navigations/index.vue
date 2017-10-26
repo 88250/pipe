@@ -4,9 +4,9 @@
       <navigation v-if="showForm" :show.sync="showForm" @addSuccess="addSuccess" :id="editId"></navigation>
 
       <div v-show="!showForm" class="card__body fn-clear">
-        <v-btn class="btn--success fn-right" @click="edit('')">{{ $t('new', $store.state.locale) }}</v-btn>
+        <v-btn class="btn--success" :class="{'fn-right': list.length > 0}" @click="edit(0)">{{ $t('new', $store.state.locale) }}</v-btn>
       </div>
-      <ul class="list">
+      <ul class="list" v-if="list.length > 0">
         <li v-for="item in list" :key="item.id" class="fn-flex">
           <a class="avatar avatar--mid avatar--space"
              :href="`${item.url}`"
@@ -44,7 +44,7 @@
           </div>
         </li>
       </ul>
-      <div class="pagination--wrapper fn-clear">
+      <div class="pagination--wrapper fn-clear" v-if="list.length > 0">
         <v-pagination
           :length="pageCount"
           v-model="currentPageNum"

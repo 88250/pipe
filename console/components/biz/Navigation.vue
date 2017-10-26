@@ -47,7 +47,7 @@
   export default {
     props: {
       id: {
-        type: String,
+        type: Number,
         required: true
       }
     },
@@ -103,7 +103,7 @@
           iconURL: this.iconURL,
           openMethod: this.openMethod
         }
-        if (this.id === '') {
+        if (this.id === 0) {
           responseData = await this.axios.post('/console/navigations', requestData)
         } else {
           responseData = await this.axios.put(`/console/navigations/${this.id}`, requestData)
@@ -119,7 +119,7 @@
         }
       },
       async init () {
-        if (this.id === '') {
+        if (this.id === 0) {
           return
         }
         const responseData = await this.axios.get(`/console/navigations/${this.id}`)

@@ -21,14 +21,15 @@
         :rules="descriptionRules"
         :counter="32"
       ></v-text-field>
-      <v-text-field
-        :label="$t('tags', $store.state.locale)"
+      <v-select
         v-model="tags"
-        :rules="titleRules"
-        :counter="32"
+        :label="$t('tags', $store.state.locale)"
+        chips
+        tags
+        :items="$store.state.tagsItems"
         required
-        @keyup.enter="created"
-      ></v-text-field>
+        :rules="tagsRules"
+      ></v-select>
       <div class="alert alert--danger" v-show="error">
         <v-icon>danger</v-icon>
         <span>{{ errorMsg }}</span>
@@ -49,7 +50,7 @@
   export default {
     props: {
       id: {
-        type: String,
+        type: Number,
         required: true
       }
     },
@@ -67,6 +68,9 @@
         ],
         descriptionRules: [
           (v) => maxSize.call(this, v, 32)
+        ],
+        tagsRules: [
+          (v) => this.tags.length > 0 || this.$t('required', this.$store.state.locale)
         ]
       }
     },
@@ -87,7 +91,7 @@
           description: this.description,
           tags: this.tags
         }
-        if (this.id === '') {
+        if (this.id === 0) {
           responseData = await this.axios.post('/console/categories', requestData)
         } else {
           responseData = await this.axios.put(`/console/categories/${this.id}`, requestData)
@@ -103,7 +107,7 @@
         }
       },
       async init () {
-        if (this.id === '') {
+        if (this.id === 0) {
           return
         }
         const responseData = await this.axios.get(`/console/categories/${this.id}`)
@@ -117,6 +121,8 @@
     },
     mounted () {
       this.init()
+      // get tags
+      this.$store.dispatch('getTags')
     }
   }
 </script>

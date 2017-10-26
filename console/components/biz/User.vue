@@ -54,7 +54,7 @@
   export default {
     props: {
       id: {
-        type: String,
+        type: Number,
         required: true
       }
     },
@@ -90,7 +90,7 @@
           password: md5(this.password),
           avatarURL: this.avatarURL
         }
-        if (this.id === '') {
+        if (this.id === 0) {
           responseData = await this.axios.post('/console/users', requestData)
         } else {
           responseData = await this.axios.put(`/console/users/${this.id}`, requestData)
@@ -106,7 +106,7 @@
         }
       },
       async init () {
-        if (this.id === '') {
+        if (this.id === 0) {
           return
         }
         const responseData = await this.axios.get(`/console/users/${this.id}`)

@@ -2,13 +2,17 @@
   <div class="card">
     <div class="card__body">
       <v-text-field
+        v-if="list.length > 0"
         @keyup.enter="getList(1)"
         class="fn-flex-1"
         :label="$t('enterSearch', $store.state.locale)"
         v-model="keyword">
       </v-text-field>
+      <div v-else>
+        {{ $t('noData', $store.state.locale) }}
+      </div>
     </div>
-    <ul class="list">
+    <ul class="list" v-if="list.length > 0">
       <li v-for="item in list" :key="item.id" class="fn-flex">
         <a class="avatar avatar--mid avatar--space tooltipped tooltipped--s"
            :aria-label="item.author.name"
@@ -39,7 +43,7 @@
         </div>
       </li>
     </ul>
-    <div class="pagination--wrapper fn-clear">
+    <div class="pagination--wrapper fn-clear" v-if="list.length !== 0">
       <v-pagination
         :length="pageCount"
         v-model="currentPageNum"

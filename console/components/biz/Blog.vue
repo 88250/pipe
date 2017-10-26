@@ -68,7 +68,7 @@
   export default {
     props: {
       id: {
-        type: String,
+        type: Number,
         required: true
       }
     },
@@ -115,7 +115,7 @@
           blogAdmin: this.blogAdmin,
           commentable: this.commentable
         }
-        if (this.id === '') {
+        if (this.id === 0) {
           responseData = await this.axios.post('/console/blogs', requestData)
         } else {
           responseData = await this.axios.put(`/console/blogs/${this.id}`, requestData)
@@ -131,7 +131,7 @@
         }
       },
       async init () {
-        if (this.id === '') {
+        if (this.id === 0) {
           return
         }
         const responseData = await this.axios.get(`/console/blogs/${this.id}`)
