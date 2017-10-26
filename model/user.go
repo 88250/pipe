@@ -29,7 +29,6 @@ type User struct {
 	Locale                string `gorm:"size:32 json:"locale"`
 	ArticleCount          int    `json:"articleCount"`          // including drafts and published articles
 	PublishedArticleCount int    `json:"publishedArticleCount"` // just including published articles
-	Status                int    `json:"status"`
 
 	BlogID uint `json:"blogID"`
 }
@@ -40,10 +39,4 @@ const (
 	UserRoleBlogAdmin
 	UserRoleBlogUser
 	UserRoleBlogVisitor
-)
-
-// User status.
-const (
-	UserStatusOK = iota
-	UserStatusLoginRestricted
 )
