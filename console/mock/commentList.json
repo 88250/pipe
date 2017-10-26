@@ -9,12 +9,14 @@
         "createdAt": "2017-05-32",
         "title": "世界，你好！",
         "content": "世界，你好！世界，你好！世界，你好！世界，你好！世界，你好！世界，你好！世界，你好！",
-        "url": "/xxx/xxx/xxx#id",
+        "url": "http://vanessa.b3log.org/xxx/xxx/xxx#id",
         "author": {
+          "url": "http://vanessa.b3log.org",
           "name": "Vanessa",
           "avatarURL": "https://img.hacpai.com/avatar/1476336494155_1476358182494.jpeg?imageView2/1/w/80/h/80/interlace/0/q/100"
         },
         "articleAuthor": {
+          "url": "http://vanessa.b3log.org",
           "name": "Vanessa",
           "avatarURL": "https://img.hacpai.com/avatar/1476336494155_1476358182494.jpeg?imageView2/1/w/80/h/80/interlace/0/q/100"
         }
@@ -26,10 +28,12 @@
         "content": "世界，你好！世界，你好！世界，你好！世界，你好！世界，你好！世界，你好！世界，你好！",
         "url": "/xxx/xxx/xxx#id",
         "author": {
+          "url": "http://vanessa.b3log.org",
           "name": "Vanessa",
           "avatarURL": "https://img.hacpai.com/avatar/1476336494155_1476358182494.jpeg?imageView2/1/w/80/h/80/interlace/0/q/100"
         },
         "articleAuthor": {
+          "url": "http://vanessa.b3log.org",
           "name": "Vanessa",
           "avatarURL": "https://img.hacpai.com/avatar/1476336494155_1476358182494.jpeg?imageView2/1/w/80/h/80/interlace/0/q/100"
         }

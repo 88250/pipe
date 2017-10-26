@@ -1,23 +1,26 @@
 <template>
   <div class="card">
-    <div class="fn-clear card__body fn-flex">
+    <div class="card__body fn-flex">
       <v-text-field
         @keyup.enter="getList(1)"
         class="fn-flex-1"
         :label="$t('enterSearch', $store.state.locale)"
         v-model="keyword">
       </v-text-field>
-      <nuxt-link to="/admin/articles/post" class="btn btn--success fn-right btn--new">{{ $t('new', $store.state.locale) }}
+      <nuxt-link to="/admin/articles/post" class="btn btn--success btn--new">{{ $t('new', $store.state.locale)
+        }}
       </nuxt-link>
     </div>
     <ul class="list">
       <li v-for="item in list" :key="item.id" class="fn-flex">
-        <div class="avatar avatar--mid avatar--space"
-             v-if="userCount > 1"
-             :style="`background-image: url(${item.author.avatarURL})`"></div>
+        <a class="avatar avatar--mid avatar--space tooltipped tooltipped--s"
+           v-if="userCount > 1"
+           :aria-label="item.author.name"
+           :href="item.author.url"
+           :style="`background-image: url(${item.author.avatarURL})`"></a>
         <div class="fn-flex-1">
           <div class="fn-flex">
-            <nuxt-link class="fn-flex-1 list__title" :to="item.url">{{ item.title }}</nuxt-link>
+            <a class="fn-flex-1 list__title" :href="item.url">{{ item.title }}</a>
             <v-menu
               v-if="$store.state.name === item.author.name || $store.state.role < 2"
               :nudge-bottom="28"
@@ -45,15 +48,12 @@
           </div>
           <div class="list__meta">
             <span class="tags">
-              <nuxt-link class="fn-nowrap tag" :key="tag.title" v-for="tag in item.tags" :to="tag.url">{{ tag.title
-                }}</nuxt-link>
+              <a class="tag" :key="tag.title" v-for="tag in item.tags" :href="tag.url">{{ tag.title
+                }}</a>
             </span>
             <span class="fn-nowrap">{{ item.commentCount }} {{ $t('comment', $store.state.locale) }}</span> •
             <span class="fn-nowrap">{{ item.viewCount }} {{ $t('view', $store.state.locale) }}</span> •
             <time class="fn-nowrap">{{ item.createdAt }}</time>
-            <span v-if="userCount > 1" class="fn-nowrap">
-               • {{ item.author.name }}
-            </span>
           </div>
         </div>
       </li>
