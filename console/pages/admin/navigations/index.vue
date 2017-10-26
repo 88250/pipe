@@ -44,16 +44,18 @@
           </div>
         </li>
       </ul>
-      <v-pagination
-        :length="pageCount"
-        v-model="currentPageNum"
-        :total-visible="windowSize"
-        class="fn-right"
-        circle
-        next-icon="angle-right"
-        prev-icon="angle-left"
-        @input="getList"
-      ></v-pagination>
+      <div class="pagination--wrapper fn-clear">
+        <v-pagination
+          :length="pageCount"
+          v-model="currentPageNum"
+          :total-visible="windowSize"
+          class="fn-right"
+          circle
+          next-icon="angle-right"
+          prev-icon="angle-left"
+          @input="getList"
+        ></v-pagination>
+      </div>
     </div>
   </div>
 </template>
