@@ -14,14 +14,24 @@
         {{range .Navigations}}
         <a href="{{.URL}}" target="{{.OpenMethod}}">{{.Title}}</a>
         {{end}}
-        <form id="headerSearch"
-              class="header__search"
-              action="{{.Setting.BasicBlogURL}}/search">
-            <input type="text" name="keyword" placeholder="{{.I18n.EnterSearch}}">
-            <svg>
-                <use xlink:href="#search"></use>
-            </svg>
-        </form>
+        <div class="header__tool">
+            {{.Setting.blogSubtitle}}
+            {{if eq .User.UID 0}}
+            <a href="https://hacpai.com/register" class="fn-right">{{.I18n.Register}}</a>
+            <a href="https://hacpai.com/login" class="fn-right">{{.I18n.Login}}</a>
+            {{else}}
+            TODO 头像
+            <a href="/admin">{{.I18n.Manage}}</a>
+            {{end}}
+            <form id="headerSearch"
+                  class="header__search"
+                  action="{{.Setting.BasicBlogURL}}/search">
+                <input type="text" name="keyword" placeholder="{{.I18n.EnterSearch}}">
+                <svg>
+                    <use xlink:href="#search"></use>
+                </svg>
+            </form>
+        </div>
     </div>
 </header>
 {{end}}

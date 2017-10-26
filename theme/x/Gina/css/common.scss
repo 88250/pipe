@@ -159,6 +159,11 @@ a {
 .body--side {
   padding-right: 340px;
 
+  .header__tool {
+    position: fixed;
+    width: 339px;
+  }
+
   .side {
     right: 0;
   }
@@ -190,6 +195,7 @@ a {
   height: 64px;
   border-bottom: 1px solid $border-color;
   line-height: 64px;
+  position: relative;
 
   a {
     color: $gray;
@@ -206,10 +212,21 @@ a {
     }
   }
 
+  &__tool {
+    position: absolute;
+    right: 0;
+    top: 0;
+    padding-right: 10px;
+    z-index: 100;
+    background-color: #fff;
+    border-bottom: 1px solid $border-color;
+    height: 65px;
+    box-sizing: border-box;
+  }
+
   &__search {
-    border-left: 1px solid $border-color;
     float: right;
-    padding-left: 10px;
+    padding: 0 10px 0 10px;
     height: 64px;
     cursor: pointer;
     &:hover svg {
@@ -264,24 +281,7 @@ a {
   box-sizing: border-box;
   z-index: 99;
   background-color: #fff;
-
-  &__nav {
-    line-height: 63px;
-    border-bottom: 1px solid $border-color;
-    text-align: right;
-    padding-right: 20px;
-
-    a {
-      color: $gray;
-      padding: 0 10px;
-      font-size: 16px;
-
-      &:hover {
-        text-decoration: none;
-        color: $black;
-      }
-    }
-  }
+  padding-top: 65px;
 
   &__sub-title {
     font-size: 18px;
