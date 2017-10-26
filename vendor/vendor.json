@@ -3,6 +3,18 @@
 	"ignore": "test",
 	"package": [
 		{
+			"checksumSHA1": "69q4K85KCjqPDg4HznrUb4j3Kds=",
+			"path": "github.com/PuerkitoBio/goquery",
+			"revision": "1a71cc719d0d5b9e4f14ae072bef08b576b0bab5",
+			"revisionTime": "2017-10-07T14:12:28Z"
+		},
+		{
+			"checksumSHA1": "Bgs5fKx4V8jxL/m/krOLmhS4az4=",
+			"path": "github.com/andybalholm/cascadia",
+			"revision": "349dd0209470eabd9514242c688c403c0926d266",
+			"revisionTime": "2016-12-24T14:14:13Z"
+		},
+		{
 			"checksumSHA1": "8h/fIS0pW/0bkpDKfnWvat4fw7g=",
 			"path": "github.com/bluele/gcache",
 			"revision": "472614239ac7e5bc6461e237c798a6ebd5aff8c1",
