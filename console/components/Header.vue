@@ -213,4 +213,6 @@
     .header__bar--theme,
     .header__bar--admin
       padding-right: 15px
+    .header .side__icon
+      padding: 0 15px
 </style>

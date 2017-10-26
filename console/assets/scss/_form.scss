@@ -120,3 +120,9 @@ a.btn {
 .list__tile__action--select-multi {
   display: none;
 }
+
+@media (max-width: 768px) {
+  .btn--new {
+    margin-left: 40%;
+  }
+}
