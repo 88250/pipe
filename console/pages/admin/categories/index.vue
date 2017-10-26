@@ -1,17 +1,22 @@
 <template>
-  <div>
-    <div class="card fn-clear">
-      <category v-if="showForm" :show.sync="showForm" @addSuccess="addSuccess" :id="editId"></category>
-
-      <div v-show="!showForm" class="card__body fn-clear">
-        <v-btn class="btn btn--success fn-right" @click="edit('')">{{ $t('new', $store.state.locale) }}</v-btn>
-      </div>
-      <ul class="list">
-        <li v-for="item in list" :key="item.id" class="fn-flex-1">
+  <div class="card">
+    <category v-if="showForm" :show.sync="showForm" @addSuccess="addSuccess" :id="editId"></category>
+    <div v-show="!showForm" class="card__body fn-flex">
+      <v-text-field
+        @keyup.enter="getList(1)"
+        class="fn-flex-1"
+        :label="$t('enterSearch', $store.state.locale)"
+        v-model="keyword">
+      </v-text-field>
+      <v-btn class="btn--success btn--new" @click="edit('')">{{ $t('new', $store.state.locale) }}</v-btn>
+    </div>
+    <ul class="list">
+      <li v-for="item in list" :key="item.id" class="fn-flex">
+        <div class="fn-flex-1">
           <div class="fn-flex">
-            <nuxt-link class="list__title fn-flex-1" :to="`${$store.state.blogURL}/${item.url}`">
+            <a class="list__title fn-flex-1" :href="`${$store.state.blogURL}/${item.url}`">
               {{ item.title }}
-            </nuxt-link>
+            </a>
             <v-menu
               v-if="$store.state.role < 2"
               :nudge-bottom="24"
@@ -19,7 +24,7 @@
               :nudge-left="60"
               :open-on-hover="true">
               <v-toolbar-title slot="activator">
-                <v-btn class="btn btn--info btn--small" @click="edit(item.id)">
+                <v-btn class="btn--info btn--small" @click="edit(item.id)">
                   {{ $t('edit', $store.state.locale) }}
                   <v-icon>arrow_drop_down</v-icon>
                 </v-btn>
@@ -39,16 +44,18 @@
           <div class="list__meta">
             {{ item.description }}
           </div>
-        </li>
-      </ul>
+        </div>
+      </li>
+    </ul>
+    <div class="pagination--wrapper fn-clear">
       <v-pagination
         :length="pageCount"
         v-model="currentPageNum"
         :total-visible="windowSize"
         class="fn-right"
         circle
-        next-icon=">"
-        prev-icon="<"
+        next-icon="angle-right"
+        prev-icon="angle-left"
         @input="getList"
       ></v-pagination>
     </div>
@@ -69,7 +76,8 @@
         currentPageNum: 1,
         pageCount: 1,
         windowSize: 1,
-        list: []
+        list: [],
+        keyword: ''
       }
     },
     head () {
@@ -79,7 +87,7 @@
     },
     methods: {
       async getList (currentPage) {
-        const responseData = await this.axios.get(`/console/categories?p=${currentPage}`)
+        const responseData = await this.axios.get(`/console/categories?p=${currentPage}&key=${this.keyword}`)
         if (responseData) {
           this.$set(this, 'list', responseData.categories)
           this.$set(this, 'currentPageNum', responseData.pagination.currentPageNum)

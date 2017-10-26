@@ -32,10 +32,10 @@
         <span>{{ errorMsg }}</span>
       </div>
     </v-form>
-    <v-btn class="fn-right btn btn--margin-t30 btn--info btn--space" @click="created">
+    <v-btn class="fn-right btn--margin-t30 btn--info btn--space" @click="created">
       {{ $t('confirm', $store.state.locale) }}
     </v-btn>
-    <v-btn class="fn-right btn btn--margin-t30 btn--danger btn--space" @click="$emit('update:show', false)">
+    <v-btn class="fn-right btn--margin-t30 btn--danger btn--space" @click="$emit('update:show', false)">
       {{ $t('cancel', $store.state.locale) }}
     </v-btn>
   </div>

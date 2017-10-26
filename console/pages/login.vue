@@ -25,7 +25,7 @@
             <span>{{ errorMsg }}</span>
           </div>
         </v-form>
-        <v-btn class="fn-right btn btn--margin-t30 btn--info" @click="login">
+        <v-btn class="fn-right btn--margin-t30 btn--info" @click="login">
           {{ $t('confirm', $store.state.locale) }}
         </v-btn>
       </div>

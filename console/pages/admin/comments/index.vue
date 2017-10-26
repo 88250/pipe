@@ -17,9 +17,9 @@
         <div class="fn-flex-1">
           <div class="fn-flex">
             <div class="fn-flex-1">
-              <nuxt-link :to="item.url" class="list__title">
+              <a :href="item.url" class="list__title">
                 {{ item.title }}
-              </nuxt-link>
+              </a>
               <small class="fn-nowrap" v-if="userCount > 1">
                 By <a :href="item.articleAuthor.url">{{ item.articleAuthor.name }}</a>
               </small>

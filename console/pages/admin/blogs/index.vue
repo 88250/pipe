@@ -4,7 +4,7 @@
       <blog v-if="showForm" :show.sync="showForm" @addSuccess="addSuccess" :id="editId"></blog>
 
       <div v-show="!showForm" class="card__body fn-clear">
-        <v-btn class="btn btn--success fn-right" @click="edit('')">{{ $t('new', $store.state.locale) }}</v-btn>
+        <v-btn class="btn--success fn-right" @click="edit('')">{{ $t('new', $store.state.locale) }}</v-btn>
       </div>
       <ul class="list">
         <li v-for="item in list" :key="item.id" class="fn-flex">
@@ -21,7 +21,7 @@
                 :nudge-left="60"
                 :open-on-hover="true">
                 <v-toolbar-title slot="activator">
-                  <v-btn class="btn btn--small btn--info" @click="edit(item.id)">
+                  <v-btn class="btn--small btn--info" @click="edit(item.id)">
                     {{ $t('edit', $store.state.locale) }}
                     <v-icon>arrow_drop_down</v-icon>
                   </v-btn>
