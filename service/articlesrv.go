@@ -337,6 +337,23 @@ func normalizeTagStr(tagStr string) string {
 }
 
 func removeTagArticleRels(tx *gorm.DB, article *model.Article) error {
+	rels := []*model.Correlation{}
+	if err := tx.Where("id1 = ? AND type = ?", article.ID, model.CorrelationArticleTag).Find(&rels).Error; nil != err {
+		return err
+	}
+	for _, rel := range rels {
+		tag := &model.Tag{}
+		if err := tx.Where("id = ?", rel.ID2).First(tag).Error; nil != err {
+			continue
+		}
+		log.Info(tag)
+		tag.ArticleCount = tag.ArticleCount - 1
+		tag.PublishedArticleCount = tag.PublishedArticleCount - 1
+		if err := tx.Save(tag).Error; nil != err {
+			continue
+		}
+	}
+
 	if err := tx.Where("id1 = ? AND type = ?", article.ID, model.CorrelationArticleTag).Delete(&model.Correlation{}).Error; nil != err {
 		return err
 	}
