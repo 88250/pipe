@@ -19,12 +19,26 @@ package controller
 
 import (
 	"net/http"
+	"text/template"
 
 	"github.com/b3log/pipe/model"
 	"github.com/b3log/pipe/service"
 	"github.com/b3log/pipe/util"
 	"github.com/gin-gonic/gin"
+	log "github.com/sirupsen/logrus"
 )
+
+func showInitPageAction(c *gin.Context) {
+	t, err := template.ParseFiles("console/dist/init/index.html")
+	if nil != err {
+		log.Error("load init page failed: " + err.Error())
+		c.String(http.StatusNotFound, "load init page failed")
+
+		return
+	}
+
+	t.Execute(c.Writer, nil)
+}
 
 type initRequest struct {
 	Name  string `json:"name" binding:"required"`

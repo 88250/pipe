@@ -14,8 +14,8 @@ import (
 
 func fillUser(c *gin.Context) {
 	inited := service.Init.Inited()
-	if !inited && util.PathAdmin+"/init" != c.Request.URL.Path {
-		c.Redirect(http.StatusSeeOther, util.Conf.Server+util.PathAdmin+"/init")
+	if !inited && util.PathInit != c.Request.URL.Path {
+		c.Redirect(http.StatusSeeOther, util.Conf.Server+util.PathInit)
 
 		c.Abort()
 

@@ -120,7 +120,9 @@ func MapRoutes() *gin.Engine {
 	themeGroup.GET("", showArticlesAction)
 	themeGroup.Any("/*path", routePath)
 
-	ret.GET(util.PathAdmin+"/*path", console.ShowPageAction)
+	ret.GET(util.PathAdmin+"/*path", console.ShowAdminPagesAction)
+	ret.GET(util.PathInit, showInitPageAction)
+	ret.GET(util.PathSearch, showSearchPageAction)
 	ret.Static(util.PathAssets, "./console/dist")
 
 	return ret

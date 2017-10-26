@@ -22,6 +22,8 @@ import (
 
 // Path prefixes.
 const (
+	PathInit       = "/init"
+	PathSearch     = "/search"
 	PathBlogs      = "/blogs"
 	PathAssets     = "/assets"
 	PathAdmin      = "/admin"
@@ -38,8 +40,9 @@ const (
 )
 
 var reservedPaths = []string{
-	PathBlogs, PathAssets, PathAdmin, PathAPI, PathFavicon, PathTheme, PathActivities, PathArchives, PathArticles,
-	PathAuthors, PathCategories, PathTags, PathComments,
+	PathInit, PathSearch, PathBlogs, PathAssets, PathAdmin, PathAPI, PathFavicon,
+	PathTheme, PathActivities, PathArchives, PathArticles, PathAuthors,
+	PathCategories, PathTags, PathComments,
 }
 
 func IsReservedPath(path string) bool {
