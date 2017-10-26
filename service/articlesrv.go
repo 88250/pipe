@@ -19,7 +19,6 @@ package service
 
 import (
 	"errors"
-	"fmt"
 	"math"
 	"regexp"
 	"strconv"
@@ -232,7 +231,7 @@ func (srv *articleService) RemoveArticle(id uint) error {
 
 		return err
 	}
-	if err := tx.Where("id1 = ? AND type = ?", article.ID, model.CorrelationArticleTag).Delete(model.Correlation{}).Error; nil != err {
+	if err := removeTagArticleRels(tx, article); nil != err {
 		tx.Rollback()
 
 		return err
@@ -272,13 +271,24 @@ func (srv *articleService) UpdateArticle(article *model.Article) error {
 	srv.mutex.Lock()
 	defer srv.mutex.Unlock()
 
-	count := 0
-	if db.Model(&model.Article{}).Where("id = ?", article.ID).Count(&count); 1 > count {
-		return errors.New(fmt.Sprintf("not found article [id=%d] to update", article.ID))
+	oldArticle := &model.Article{}
+	if err := db.Model(&model.Article{}).Where("id = ?", article.ID).Find(oldArticle).Error; nil != err {
+		return err
 	}
+	article.BlogID = oldArticle.BlogID
 
 	tx := db.Begin()
 	if err := tx.Model(article).Updates(article).Error; nil != err {
+		tx.Rollback()
+
+		return err
+	}
+	if err := removeTagArticleRels(tx, article); nil != err {
+		tx.Rollback()
+
+		return err
+	}
+	if err := tagArticle(tx, article); nil != err {
 		tx.Rollback()
 
 		return err
@@ -326,6 +336,14 @@ func normalizeTagStr(tagStr string) string {
 	return strings.Join(retTags, ",")
 }
 
+func removeTagArticleRels(tx *gorm.DB, article *model.Article) error {
+	if err := tx.Where("id1 = ? AND type = ?", article.ID, model.CorrelationArticleTag).Delete(&model.Correlation{}).Error; nil != err {
+		return err
+	}
+
+	return nil
+}
+
 func tagArticle(tx *gorm.DB, article *model.Article) error {
 	tags := strings.Split(article.Tags, ",")
 	for _, tagTitle := range tags {
@@ -335,6 +353,7 @@ func tagArticle(tx *gorm.DB, article *model.Article) error {
 			tag.Title = tagTitle
 			tag.ArticleCount = 1
 			tag.PublishedArticleCount = 1
+			tag.BlogID = article.BlogID
 			if err := tx.Create(tag).Error; nil != err {
 				return err
 			}
