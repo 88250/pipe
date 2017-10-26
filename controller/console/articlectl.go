@@ -107,7 +107,7 @@ func GetArticlesAction(c *gin.Context) {
 		}
 
 		author := &ConsoleAuthor{
-			URL:       blogURLSetting.Value + util.PathAuthors,
+			URL:       blogURLSetting.Value + util.PathAuthors + "/" + authorModel.Name,
 			Name:      authorModel.Name,
 			AvatarURL: authorModel.AvatarURL,
 		}

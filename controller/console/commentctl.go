@@ -21,6 +21,7 @@ import (
 	"net/http"
 	"strconv"
 
+	"github.com/b3log/pipe/model"
 	"github.com/b3log/pipe/service"
 	"github.com/b3log/pipe/util"
 	"github.com/gin-gonic/gin"
@@ -49,12 +50,32 @@ func GetCommentsAction(c *gin.Context) {
 
 			continue
 		}
+		blogURLSetting := service.Setting.GetSetting(model.SettingCategoryBasic, model.SettingNameBasicBlogURL, articleAuthor.BlogID)
+		if nil == blogURLSetting {
+			log.Errorf("not found blog URL setting [blogID=%d]", articleAuthor.BlogID)
+
+			continue
+		}
 		consoleArticleAuthor := &ConsoleAuthor{
+			URL:       blogURLSetting.Value + util.PathAuthors + "/" + articleAuthor.Name,
 			Name:      articleAuthor.Name,
 			AvatarURL: articleAuthor.AvatarURL,
 		}
 
+		commentAuthor := service.User.GetUser(commentModel.AuthorID)
+		if nil == commentAuthor {
+			log.Errorf("not found comment author [userID=%d]", commentModel.AuthorID)
+
+			continue
+		}
+		blogURLSetting = service.Setting.GetSetting(model.SettingCategoryBasic, model.SettingNameBasicBlogURL, commentAuthor.BlogID)
+		if nil == blogURLSetting {
+			log.Errorf("not found blog URL setting [blogID=%d]", commentAuthor.BlogID)
+
+			continue
+		}
 		author := &ConsoleAuthor{
+			URL:       blogURLSetting.Value + util.PathAuthors + "/" + commentAuthor.Name,
 			Name:      commentModel.AuthorName,
 			AvatarURL: commentModel.AuthorAvatarURL,
 		}
