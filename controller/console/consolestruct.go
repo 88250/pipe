@@ -20,6 +20,7 @@ type ConsoleTag struct {
 }
 
 type ConsoleAuthor struct {
+	URL       string `json:"url"`
 	Name      string `json:"name"`
 	AvatarURL string `json:"avatarURL"`
 }

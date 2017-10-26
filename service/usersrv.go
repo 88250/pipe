@@ -34,8 +34,6 @@ type userService struct {
 func (srv *userService) GetUserByName(name string) *model.User {
 	ret := &model.User{}
 	if err := db.Where("name = ?", name).First(ret).Error; nil != err {
-		log.Errorf("get user by name failed: " + err.Error())
-
 		return nil
 	}
 
