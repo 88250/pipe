@@ -39,4 +39,5 @@ const (
 	UserRolePlatformAdmin = iota
 	UserRoleBlogAdmin
 	UserRoleBlogUser
+	UserRoleBlogVisitor
 )
