@@ -128,8 +128,14 @@ func MapRoutes() *gin.Engine {
 	indexGroup.Use(fillUser)
 	indexGroup.GET("", showIndexAction)
 
-	ret.GET(util.PathInit, showInitPageAction)
-	ret.GET(util.PathSearch, showSearchPageAction)
+	initGroup := ret.Group(util.PathInit)
+	initGroup.Use(fillUser)
+	initGroup.GET("", showInitPageAction)
+
+	searchGroup := ret.Group(util.PathSearch)
+	searchGroup.Use(fillUser)
+	searchGroup.GET("", showSearchPageAction)
+
 	ret.Static(util.PathAssets, "./console/dist")
 
 	return ret
