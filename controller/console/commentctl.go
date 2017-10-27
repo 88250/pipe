@@ -76,8 +76,8 @@ func GetCommentsAction(c *gin.Context) {
 		}
 		author := &ConsoleAuthor{
 			URL:       blogURLSetting.Value + util.PathAuthors + "/" + commentAuthor.Name,
-			Name:      commentModel.AuthorName,
-			AvatarURL: commentModel.AuthorAvatarURL,
+			Name:      commentAuthor.Name,
+			AvatarURL: commentAuthor.AvatarURL,
 		}
 
 		comment := &ConsoleComment{

@@ -252,11 +252,10 @@ Pipe 博客系统是一个开源项目，如果你觉得它很赞，请到[项�
 	}
 
 	comment := &model.Comment{
-		ArticleID:       article.ID,
-		AuthorName:      "Daniel",
-		AuthorAvatarURL: "https://img.hacpai.com/avatar/1353745196354_1500432853138.png?imageView2/1/w/80/h/80/interlace/0/q/100",
-		Content:         "写博客需要坚持，相信积累后必然会有收获，我们一起努力加油 :smile:",
-		BlogID:          blogID,
+		ArticleID: article.ID,
+		AuthorID:  admin.ID,
+		Content:   "相信积累后必然会有收获，加油 :smile:",
+		BlogID:    blogID,
 	}
 	if err := tx.Create(comment).Error; nil != err {
 		return err
