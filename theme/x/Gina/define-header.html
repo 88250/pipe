@@ -15,13 +15,14 @@
         <a href="{{.URL}}" target="{{.OpenMethod}}">{{.Title}}</a>
         {{end}}
         <div class="header__tool">
-            {{.Setting.blogSubtitle}}{{.User}}
-            {{if eq .User.UID 0}}
+            {{if eq .User.URole 0}}
             <a href="https://hacpai.com/register" class="fn-right">{{.I18n.Register}}</a>
             <a href="https://hacpai.com/login" class="fn-right">{{.I18n.Login}}</a>
             {{else}}
-            TODO 头像
+            <div class="avatar" data-src="{{.AvatarURL}}"></div>
+            {{if ne .User.URole 4}}
             <a href="/admin">{{.I18n.Manage}}</a>
+            {{end}}
             {{end}}
             <form id="headerSearch"
                   class="header__search"

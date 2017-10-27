@@ -74,6 +74,7 @@
 
       <v-stepper-content step="3" class="fn-clear">
         <v-form class="init__center" ref="initForm">
+          <img class="avatar" :src="userAvatarURL"/>
           <v-text-field
             :label="$t('hacpaiEmail', $store.state.locale)"
             v-model="userEmail"
@@ -141,7 +142,8 @@
         ],
         postError: false,
         postInitError: false,
-        postInitErrorMsg: ''
+        postInitErrorMsg: '',
+        userAvatarURL: ''
       }
     },
     head () {
@@ -162,6 +164,9 @@
         if (responseData.code === 0) {
           this.$set(this, 'step', 3)
           this.$set(this, 'postError', false)
+          this.$set(this, 'userAvatarURL', responseData.data.userAvatarURL)
+
+          console.log(this.userAvatarURL)
         } else {
           this.$set(this, 'postError', true)
         }
@@ -199,6 +204,12 @@
       max-width: 630px
       height: 300px
       margin: 0 auto
+
+      .avatar
+        margin: 0 auto
+        display: block
+        height: 89px
+        width: 89px
     &__card
       &-welcome.card.card--danger
         width: auto

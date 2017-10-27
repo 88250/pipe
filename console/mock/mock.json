@@ -310,7 +310,7 @@
       "verbs": [
         "post"
       ],
-      "mockFile": "success.json"
+      "mockFile": "responseCheckAccount.json"
     },
     "hp/apis/articles": {
       "verbs": [
