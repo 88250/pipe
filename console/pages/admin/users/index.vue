@@ -112,7 +112,7 @@
       async getList (currentPage) {
         const responseData = await this.axios.get(`/console/users?p=${currentPage}&key=${this.keyword}`)
         if (responseData) {
-          this.$set(this, 'list', responseData.navigation)
+          this.$set(this, 'list', responseData.users)
           this.$set(this, 'currentPageNum', responseData.pagination.currentPageNum)
           this.$set(this, 'pageCount', responseData.pagination.pageCount)
           this.$set(this, 'windowSize', document.documentElement.clientWidth < 721 ? 5 : responseData.pagination.windowSize)

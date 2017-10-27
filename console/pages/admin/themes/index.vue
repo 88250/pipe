@@ -3,15 +3,15 @@
     <div class="card"
          v-for="item in list"
          :key="item.previewURL"
-         :class="{ 'theme--current': item.id === currentId }">
+         :class="{ 'theme--current': item.name === currentName }">
       <div class="theme__img-wrap">
         <img :src="item.previewURL"/>
         <div class="theme__overlay">
           <div>
             <v-btn
-              v-show="item.id !== currentId"
+              v-show="item.name !== currentName"
               class="btn--info"
-              @click="setup(item.id)">{{ $t('setup', $store.state.locale) }}</v-btn>
+              @click="setup(item.name)">{{ $t('setup', $store.state.locale) }}</v-btn>
             <a
               class="btn btn--danger btn--space"
               target="_blank"
@@ -19,7 +19,7 @@
           </div>
         </div>
       </div>
-      <h3>{{ item.title }}</h3>
+      <h3>{{ item.name }}</h3>
     </div>
   </div>
 </template>
@@ -29,7 +29,7 @@
     data () {
       return {
         list: [],
-        currentId: ''
+        currentName: ''
       }
     },
     head () {
@@ -38,8 +38,8 @@
       }
     },
     methods: {
-      async setup (id) {
-        const responseData = await this.axios.put(`/console/themes/${id}`)
+      async setup (name) {
+        const responseData = await this.axios.put(`/console/themes/${name}`)
         if (responseData.code === 0) {
           this.$store.commit('setSnackBar', {
             snackBar: true,
@@ -47,7 +47,7 @@
             snackModify: 'success'
           })
 
-          this.$set(this, 'currentId', id)
+          this.$set(this, 'currentName', name)
         } else {
           this.$store.commit('setSnackBar', {
             snackBar: true,
@@ -60,7 +60,7 @@
       const responseData = await this.axios.get('/console/themes')
       if (responseData) {
         this.$set(this, 'list', responseData.themes)
-        this.$set(this, 'currentId', responseData.currentId)
+        this.$set(this, 'currentName', responseData.currentName)
       }
     }
   }
