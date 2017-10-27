@@ -18,6 +18,7 @@
 package controller
 
 import (
+	"fmt"
 	"net/http"
 	"text/template"
 
@@ -68,5 +69,25 @@ func initAction(c *gin.Context) {
 		result.Msg = err.Error()
 
 		return
+	}
+
+	blogURLSetting := service.Setting.GetSetting(model.SettingCategoryBasic, model.SettingNameBasicBlogURL, platformAdmin.BlogID)
+	if nil == blogURLSetting {
+		result.Code = -1
+		result.Msg = fmt.Sprintf("not found blog URL settings [blogID=%d]", platformAdmin.BlogID)
+
+		return
+	}
+	sessionData := &util.SessionData{
+		UID:     platformAdmin.ID,
+		UName:   platformAdmin.Name,
+		URole:   platformAdmin.Role,
+		UAvatar: platformAdmin.AvatarURL,
+		BID:     platformAdmin.BlogID,
+		BURL:    blogURLSetting.Value,
+	}
+	if err := sessionData.Save(c); nil != err {
+		result.Code = -1
+		result.Msg = "saves session failed: " + err.Error()
 	}
 }

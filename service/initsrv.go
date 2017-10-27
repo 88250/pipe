@@ -173,6 +173,9 @@ func initPlatformAdmin(tx *gorm.DB, admin *model.User, blogID uint) error {
 	admin.ArticleCount, admin.PublishedArticleCount = 1, 1 // article "Hello, World!"
 	admin.BlogID = blogID
 	admin.Locale = "zh_CN"
+
+	tx.Where("name = ?", admin.Name).Delete(&model.User{}) // remove b3-id created if exists
+
 	if err := tx.Create(admin).Error; nil != err {
 		return err
 	}
