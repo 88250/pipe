@@ -63,7 +63,7 @@ export const mutations = {
 }
 
 export const actions = {
-  async nuxtClientInit ({commit}, {app}) {
+  async nuxtClientInit ({commit, state}, {app}) {
     try {
       const responseData = await vueAxios().get('/status')
       if (responseData) {
@@ -77,6 +77,8 @@ export const actions = {
       }
     } catch (e) {
       console.error(e)
+      const message = require(`../../i18n/${state.locale}.json`)
+      app.i18n.setLocaleMessage(state.locale, message)
     }
   },
   setLocaleMessage ({commit}, locale) {
