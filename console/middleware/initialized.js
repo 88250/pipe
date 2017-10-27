@@ -5,7 +5,7 @@ export default function ({ redirect, store, route }) {
     }
   } else {
     if (route.path === '/init') {
-      return redirect('/admin')
+      return redirect('/')
     }
   }
 }
