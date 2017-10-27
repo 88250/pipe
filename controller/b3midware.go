@@ -128,7 +128,6 @@ func fillUser(c *gin.Context) {
 				log.Errorf("add user [name=%s] failed: %s", username, err.Error())
 			}
 			session.UID = user.ID
-			log.Infof("%+v", session)
 		}
 
 		if err := session.Save(c); nil != err {
