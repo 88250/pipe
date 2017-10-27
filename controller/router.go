@@ -124,6 +124,10 @@ func MapRoutes() *gin.Engine {
 	adminPagesGroup.Use(fillUser)
 	adminPagesGroup.GET("/*path", console.ShowAdminPagesAction)
 
+	indexGroup := ret.Group("")
+	indexGroup.Use(fillUser)
+	indexGroup.GET("", showIndexAction)
+
 	ret.GET(util.PathInit, showInitPageAction)
 	ret.GET(util.PathSearch, showSearchPageAction)
 	ret.Static(util.PathAssets, "./console/dist")
