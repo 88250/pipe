@@ -14,7 +14,7 @@
       <v-stepper-content step="1" class="init__card fn-clear">
         <div class="fn-clear init__center">
           <a class="card card--dark fn-left"
-             href="https://hacpai.com/register?r=Vanessa"
+             href="https://hacpai.com/register"
              target="_blank">
             <div class="card__body fn-flex">
               <v-icon>hacpai-logo</v-icon>
