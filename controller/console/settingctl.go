@@ -32,8 +32,8 @@ func GetBasicSettingsAction(c *gin.Context) {
 	result := util.NewResult()
 	defer c.JSON(http.StatusOK, result)
 
-	sessionData := util.GetSession(c)
-	settings := service.Setting.GetCategorySettings(sessionData.BID, model.SettingCategoryBasic)
+	session := util.GetSession(c)
+	settings := service.Setting.GetCategorySettings(session.BID, model.SettingCategoryBasic)
 	data := map[string]interface{}{}
 	for _, setting := range settings {
 		if model.SettingNameBasicCommentable == setting.Name {
@@ -64,7 +64,7 @@ func UpdateBasicSettingsAction(c *gin.Context) {
 		return
 	}
 
-	sessionData := util.GetSession(c)
+	session := util.GetSession(c)
 	basics := []*model.Setting{}
 	for k, v := range args {
 		var value interface{}
@@ -77,7 +77,7 @@ func UpdateBasicSettingsAction(c *gin.Context) {
 
 		basic := &model.Setting{
 			Category: model.SettingCategoryBasic,
-			BlogID:   sessionData.BID,
+			BlogID:   session.BID,
 			Name:     k,
 			Value:    value.(string),
 		}
@@ -94,8 +94,8 @@ func GetPreferenceSettingsAction(c *gin.Context) {
 	result := util.NewResult()
 	defer c.JSON(http.StatusOK, result)
 
-	sessionData := util.GetSession(c)
-	settings := service.Setting.GetCategorySettings(sessionData.BID, model.SettingCategoryPreference)
+	session := util.GetSession(c)
+	settings := service.Setting.GetCategorySettings(session.BID, model.SettingCategoryPreference)
 	data := map[string]interface{}{}
 	for _, setting := range settings {
 		if model.SettingNamePreferenceArticleListStyle != setting.Name {
@@ -126,7 +126,7 @@ func UpdatePreferenceSettingsAction(c *gin.Context) {
 		return
 	}
 
-	sessionData := util.GetSession(c)
+	session := util.GetSession(c)
 	prefs := []*model.Setting{}
 	for k, v := range args {
 		var value interface{}
@@ -139,7 +139,7 @@ func UpdatePreferenceSettingsAction(c *gin.Context) {
 
 		pref := &model.Setting{
 			Category: model.SettingCategoryPreference,
-			BlogID:   sessionData.BID,
+			BlogID:   session.BID,
 			Name:     k,
 			Value:    value.(string),
 		}
@@ -156,8 +156,8 @@ func GetSignSettingsAction(c *gin.Context) {
 	result := util.NewResult()
 	defer c.JSON(http.StatusOK, result)
 
-	sessionData := util.GetSession(c)
-	signSetting := service.Setting.GetSetting(model.SettingCategorySign, model.SettingNameArticleSign, sessionData.BID)
+	session := util.GetSession(c)
+	signSetting := service.Setting.GetSetting(model.SettingCategorySign, model.SettingNameArticleSign, session.BID)
 	result.Data = signSetting.Value
 }
 
@@ -173,11 +173,11 @@ func UpdateSignSettingsAction(c *gin.Context) {
 		return
 	}
 
-	sessionData := util.GetSession(c)
+	session := util.GetSession(c)
 	signs := []*model.Setting{}
 	sign := &model.Setting{
 		Category: model.SettingCategorySign,
-		BlogID:   sessionData.BID,
+		BlogID:   session.BID,
 		Name:     model.SettingNameArticleSign,
 		Value:    args["sign"].(string),
 	}
@@ -193,8 +193,8 @@ func GetI18nSettingsAction(c *gin.Context) {
 	result := util.NewResult()
 	defer c.JSON(http.StatusOK, result)
 
-	sessionData := util.GetSession(c)
-	settings := service.Setting.GetCategorySettings(sessionData.BID, model.SettingCategoryI18n)
+	session := util.GetSession(c)
+	settings := service.Setting.GetCategorySettings(session.BID, model.SettingCategoryI18n)
 	data := map[string]interface{}{}
 	for _, setting := range settings {
 		data[setting.Name] = setting.Value
@@ -214,12 +214,12 @@ func UpdateI18nSettingsAction(c *gin.Context) {
 		return
 	}
 
-	sessionData := util.GetSession(c)
+	session := util.GetSession(c)
 	i18ns := []*model.Setting{}
 	for k, v := range args {
 		i18n := &model.Setting{
 			Category: model.SettingCategoryI18n,
-			BlogID:   sessionData.BID,
+			BlogID:   session.BID,
 			Name:     k,
 			Value:    v.(string),
 		}
@@ -236,8 +236,8 @@ func GetFeedSettingsAction(c *gin.Context) {
 	result := util.NewResult()
 	defer c.JSON(http.StatusOK, result)
 
-	sessionData := util.GetSession(c)
-	settings := service.Setting.GetCategorySettings(sessionData.BID, model.SettingCategoryFeed)
+	session := util.GetSession(c)
+	settings := service.Setting.GetCategorySettings(session.BID, model.SettingCategoryFeed)
 	data := map[string]interface{}{}
 	for _, setting := range settings {
 		if model.SettingNameFeedOutputSize == setting.Name {
@@ -267,7 +267,7 @@ func UpdateFeedSettingsAction(c *gin.Context) {
 		return
 	}
 
-	sessionData := util.GetSession(c)
+	session := util.GetSession(c)
 	feeds := []*model.Setting{}
 	for k, v := range args {
 		var value interface{}
@@ -280,7 +280,7 @@ func UpdateFeedSettingsAction(c *gin.Context) {
 
 		feed := &model.Setting{
 			Category: model.SettingCategoryFeed,
-			BlogID:   sessionData.BID,
+			BlogID:   session.BID,
 			Name:     k,
 			Value:    value.(string),
 		}

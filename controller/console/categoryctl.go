@@ -29,14 +29,14 @@ func GetCategoriesAction(c *gin.Context) {
 	result := util.NewResult()
 	defer c.JSON(http.StatusOK, result)
 
-	sessionData := util.GetSession(c)
-	categoryModels, pagination := service.Category.ConsoleGetCategories(c.GetInt("p"), sessionData.BID)
+	session := util.GetSession(c)
+	categoryModels, pagination := service.Category.ConsoleGetCategories(c.GetInt("p"), session.BID)
 
 	categories := []*ConsoleCategory{}
 	for _, categoryModel := range categoryModels {
 		categories = append(categories, &ConsoleCategory{
 			Title:       categoryModel.Title,
-			URL:         sessionData.BURL + categoryModel.Path,
+			URL:         session.BURL + categoryModel.Path,
 			Description: categoryModel.Description,
 			Number:      categoryModel.Number,
 			Tags:        categoryModel.Tags,
@@ -53,7 +53,7 @@ func AddCategoryAction(c *gin.Context) {
 	result := util.NewResult()
 	defer c.JSON(http.StatusOK, result)
 
-	sessionData := util.GetSession(c)
+	session := util.GetSession(c)
 
 	category := &model.Category{}
 	if err := c.BindJSON(category); nil != err {
@@ -63,7 +63,7 @@ func AddCategoryAction(c *gin.Context) {
 		return
 	}
 
-	category.BlogID = sessionData.BID
+	category.BlogID = session.BID
 	if err := service.Category.AddCategory(category); nil != err {
 		result.Code = -1
 		result.Msg = err.Error()

@@ -35,7 +35,8 @@ type User struct {
 
 // User roles.
 const (
-	UserRolePlatformAdmin = iota
+	UserRoleNoLogin = iota
+	UserRolePlatformAdmin
 	UserRoleBlogAdmin
 	UserRoleBlogUser
 	UserRoleBlogVisitor

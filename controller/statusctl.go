@@ -17,12 +17,26 @@
 package controller
 
 import (
+	"fmt"
 	"net/http"
 
+	"github.com/b3log/pipe/model"
 	"github.com/b3log/pipe/service"
 	"github.com/b3log/pipe/util"
 	"github.com/gin-gonic/gin"
 )
+
+type Status struct {
+	*service.PlatformStatus
+
+	Name      string              `json:"name"`
+	Nickname  string              `json:"nickname"`
+	AvatarURL string              `json:"avatarURL"`
+	BlogTitle string              `json:"blogTitle"`
+	BlogURL   string              `json:"blogURL"`
+	Role      int                 `json:"role"`
+	Blogs     []*service.UserBlog `json:"blogs"`
+}
 
 func getStatusAction(c *gin.Context) {
 	result := util.NewResult()
@@ -36,5 +50,43 @@ func getStatusAction(c *gin.Context) {
 		return
 	}
 
-	result.Data = platformStatus
+	data := &Status{
+		PlatformStatus: platformStatus,
+	}
+
+	session := util.GetSession(c)
+	if nil != session {
+		user := service.User.GetUser(session.UID)
+		if nil == user {
+			result.Code = -1
+			result.Msg = fmt.Sprintf("not found user [userID=%d]", user.ID)
+
+			return
+		}
+		data.Name = user.Name
+		data.Nickname = user.Nickname
+		data.AvatarURL = user.AvatarURL
+		data.Role = user.Role
+
+		blogTitleSetting := service.Setting.GetSetting(model.SettingCategoryBasic, model.SettingNameBasicBlogTitle, user.BlogID)
+		if nil == blogTitleSetting {
+			result.Code = -1
+			result.Msg = fmt.Sprintf("not found blog title settings [blogID=%d]", user.BlogID)
+
+			return
+		}
+		data.BlogTitle = blogTitleSetting.Value
+
+		blogURLSetting := service.Setting.GetSetting(model.SettingCategoryBasic, model.SettingNameBasicBlogURL, user.BlogID)
+		if nil == blogURLSetting {
+			result.Code = -1
+			result.Msg = fmt.Sprintf("not found blog URL settings [blogID=%d]", user.BlogID)
+
+			return
+		}
+		data.BlogURL = blogURLSetting.Value
+		data.Blogs = service.User.GetUserBlogs(user.ID)
+	}
+
+	result.Data = data
 }

@@ -32,8 +32,8 @@ func addCommentAction(c *gin.Context) {
 	blogAdminVal, _ := c.Get("blogAdmin")
 	blogAdmin := blogAdminVal.(*model.User)
 
-	sessionData := util.GetSession(c)
-	if nil == sessionData {
+	session := util.GetSession(c)
+	if nil == session {
 		result.Code = -1
 		result.Msg = "Please login before comment"
 
@@ -41,7 +41,7 @@ func addCommentAction(c *gin.Context) {
 	}
 
 	comment := &model.Comment{
-		AuthorID: sessionData.UID,
+		AuthorID: session.UID,
 		BlogID:   blogAdmin.BlogID,
 	}
 	if err := c.BindJSON(comment); nil != err {

@@ -30,8 +30,8 @@ func GetNavigationsAction(c *gin.Context) {
 	result := util.NewResult()
 	defer c.JSON(http.StatusOK, result)
 
-	sessionData := util.GetSession(c)
-	navigationModels, pagination := service.Navigation.ConsoleGetNavigations(c.GetInt("p"), sessionData.BID)
+	session := util.GetSession(c)
+	navigationModels, pagination := service.Navigation.ConsoleGetNavigations(c.GetInt("p"), session.BID)
 
 	navigations := []*ConsoleNavigation{}
 	for _, navigationModel := range navigationModels {
@@ -125,7 +125,7 @@ func AddNavigationAction(c *gin.Context) {
 	result := util.NewResult()
 	defer c.JSON(http.StatusOK, result)
 
-	sessionData := util.GetSession(c)
+	session := util.GetSession(c)
 
 	navigation := &model.Navigation{}
 	if err := c.BindJSON(navigation); nil != err {
@@ -135,7 +135,7 @@ func AddNavigationAction(c *gin.Context) {
 		return
 	}
 
-	navigation.BlogID = sessionData.BID
+	navigation.BlogID = session.BID
 	if err := service.Navigation.AddNavigation(navigation); nil != err {
 		result.Code = -1
 		result.Msg = err.Error()
