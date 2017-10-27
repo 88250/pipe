@@ -22,7 +22,7 @@
           <div class="fn-flex">
             <a class="fn-flex-1 list__title" :href="item.url">{{ item.title }}</a>
             <v-menu
-              v-if="$store.state.name === item.author.name || $store.state.role < 2"
+              v-if="$store.state.name === item.author.name || $store.state.role < 3"
               :nudge-bottom="28"
               :nudge-width="60"
               :nudge-left="60"

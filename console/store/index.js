@@ -9,7 +9,7 @@ export const state = () => ({
   blogTitle: '',
   avatarURL: '',
   blogURL: '/',
-  role: 2,
+  role: 3, // 0-no login, 1-admin, 2-blog admin, 3-blog user, 4-visitor
   blogs: [{
     title: '',
     id: ''
@@ -31,7 +31,7 @@ export const mutations = {
       state.nickname = ''
       state.blogTitle = ''
       state.blogURL = '/'
-      state.role = 2
+      state.role = 3
       state.avatarURL = ''
       state.blogs = [{
         title: '',
@@ -59,7 +59,7 @@ export const mutations = {
       state.nickname = ''
       state.blogTitle = ''
       state.blogURL = '/'
-      state.role = 2
+      state.role = 3
       state.avatarURL = ''
       state.blogs = [{
         title: '',
@@ -90,10 +90,10 @@ export const mutations = {
     } else {
       state.blogTitle = ''
       state.blogURL = '/'
-      state.role = 2
+      state.role = 3
       userInfoJSON.blogURL = '/'
       userInfoJSON.blogTitle = ''
-      userInfoJSON.role = 2
+      userInfoJSON.role = 3
     }
     localStorage.setItem('userInfo', JSON.stringify(userInfoJSON))
   },

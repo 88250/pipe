@@ -26,7 +26,10 @@
         <div :class="$route.path.indexOf('/admin') == -1 ? 'header__bar--theme' : 'header__bar--admin'">
           <v-btn class="btn--small btn--danger btn--space" @click="logout">{{ $t('logout', $store.state.locale) }}
           </v-btn>
-          <nuxt-link class="btn--space" v-if="$route.path.indexOf('/admin') === -1" to="/admin">
+          <nuxt-link
+            class="btn--space"
+            v-if="$route.path.indexOf('/admin') === -1 && $store.state.role !== 0 && $store.state.role !== 4"
+            to="/admin">
             {{ $t('manage', $store.state.locale) }}
           </nuxt-link>
           <v-menu

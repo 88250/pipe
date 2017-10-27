@@ -2,7 +2,7 @@
   <div>
     <div class="card card--space">
       <ul class="list">
-        <li class="fn-flex" v-if="$store.state.role <= 1">
+        <li class="fn-flex" v-if="$store.state.role <= 3">
           <div class="fn-flex-1">
             {{ $t('import', $store.state.locale) }}
           </div>
@@ -33,7 +33,7 @@
             {{ $t('export', $store.state.locale) }}
           </div>
           <v-menu
-            v-if="$store.state.role < 2"
+            v-if="$store.state.role < 3"
             :nudge-bottom="28"
             :nudge-width="60"
             :nudge-left="60"
@@ -57,12 +57,12 @@
             </v-list>
           </v-menu>
         </li>
-        <li class="fn-flex" v-if="$store.state.role <= 1">
+        <li class="fn-flex" v-if="$store.state.role <= 3">
           <div class="fn-flex-1">
             {{ $t('clearData', $store.state.locale) }}
           </div>
           <v-menu
-            v-if="$store.state.role < 2"
+            v-if="$store.state.role < 3"
             :nudge-bottom="28"
             :nudge-width="60"
             :nudge-left="60"

@@ -30,7 +30,7 @@
             </div>
             <div>
               <v-btn
-                v-if="$store.state.name === item.author.name || $store.state.role < 2"
+                v-if="$store.state.name === item.author.name || $store.state.role < 3"
                 class="btn btn--danger btn--small"
                 @click="remove(item.id)">{{ $t('delete', $store.state.locale) }}
               </v-btn>

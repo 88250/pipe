@@ -10,7 +10,7 @@
     "avatarURL": "https://img.hacpai.com/avatar/1353745196544_1501644090048.png?imageView2/1/w/80/h/80/interlace/0/q/100",
     "blogTitle": "Pipe",
     "blogURL": "http://localhost:5897/blogs/pipe",
-    "role": 0,
+    "role": 3,
     "blogs": [
       {
         "title": "Wide",

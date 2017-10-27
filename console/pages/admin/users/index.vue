@@ -17,7 +17,7 @@
 
     <ul class="list" v-if="list.length > 0">
       <li v-for="item in list" :key="item.id" class="fn-flex"
-          v-if="($store.state.role === 2 && item.name === $store.state.name) || $store.state.role < 2">
+          v-if="($store.state.role === 3 && item.name === $store.state.name) || $store.state.role < 3">
         <a :href="item.url"
            :aria-label="item.name"
            class="avatar avatar--mid avatar--space tooltipped tooltipped--s"

@@ -19,7 +19,7 @@
               {{ item.title }}
             </a>
             <v-menu
-              v-if="$store.state.role < 2"
+              v-if="$store.state.role < 3"
               :nudge-bottom="28"
               :nudge-width="60"
               :nudge-left="60"
