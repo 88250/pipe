@@ -25,19 +25,27 @@ export const mutations = {
   setMenu (state, data) {
     state.menu = data
   },
-  setBaseInfo (state, data) {
+  setStatus (state, data) {
+    if (data === null) {
+      state.name = ''
+      state.nickname = ''
+      state.blogTitle = ''
+      state.blogURL = '/'
+      state.role = 2
+      state.avatarURL = ''
+      state.blogs = [{
+        title: '',
+        id: ''
+      }]
+      localStorage.removeItem('userInfo')
+      return
+    }
+
     state.locale = data.locale
     state.version = data.version
     state.isInit = data.inited
-  },
-  setLocale (state, locale) {
-    state.locale = locale
-  },
-  setIsInit (state, isInit) {
-    state.isInit = isInit
-  },
-  setUserInfo (state, data) {
-    if (data) {
+
+    if (data.name !== '' && data.inited) {
       state.name = data.name
       state.nickname = data.nickname
       state.blogTitle = data.blogTitle
@@ -59,6 +67,12 @@ export const mutations = {
       }]
       localStorage.removeItem('userInfo')
     }
+  },
+  setLocale (state, locale) {
+    state.locale = locale
+  },
+  setIsInit (state, isInit) {
+    state.isInit = isInit
   },
   setBlog (state, data) {
     const userInfo = localStorage.getItem('userInfo')
@@ -98,7 +112,7 @@ export const mutations = {
 }
 
 export const actions = {
-  async nuxtClientInit ({ commit }, { app }) {
+  async nuxtClientInit ({commit}, {app}) {
     try {
       const responseData = await vueAxios().get('/status')
       if (responseData) {
@@ -108,13 +122,13 @@ export const actions = {
           const message = require(`../../i18n/${responseData.locale}.json`)
           app.i18n.setLocaleMessage(responseData.locale, message)
         }
-        commit('setBaseInfo', responseData)
+        commit('setStatus', responseData)
       }
     } catch (e) {
       console.error(e)
     }
   },
-  setLocaleMessage ({ commit }, locale) {
+  setLocaleMessage ({commit}, locale) {
     if (this.app.i18n.messages[locale]) {
       this.app.i18n.locale = locale
     } else {
@@ -123,7 +137,7 @@ export const actions = {
     }
     commit('setLocale', locale)
   },
-  async getTags ({ commit, state }) {
+  async getTags ({commit, state}) {
     if (state.tagsItems.length > 0) {
       return
     }

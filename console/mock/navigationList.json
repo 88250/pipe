@@ -4,7 +4,7 @@
   "data": {
     "navigations": [
       {
-        "id": "0",
+        "id": 3,
         "title": "世界，你好！",
         "url": "https://hacpai.com/member/Vanessa",
         "iconURL": "https://static.hacpai.com/images/tags/b3log.png",
@@ -12,7 +12,7 @@
         "number": 1
       },
       {
-        "id": "0",
+        "id": 3,
         "title": "世界，你好！",
         "url": "https://hacpai.com/member/Vanessa",
         "iconURL": "https://static.hacpai.com/images/tags/b3log.png",

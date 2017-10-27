@@ -13,7 +13,7 @@
       "verbs": [
         "get"
       ],
-      "mockFile": "base.json"
+      "mockFile": "status.json"
     },
     "search": {
       "verbs": [

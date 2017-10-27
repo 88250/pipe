@@ -69,7 +69,7 @@
         if (responseData.code === 0) {
           this.$set(this, 'error', false)
           this.$set(this, 'errorMsg', '')
-          this.$store.commit('setUserInfo', responseData.data)
+          this.$store.commit('setStatus', responseData.data)
           this.$router.push(this.$route.query.goto || '/admin')
         } else {
           this.$set(this, 'error', true)

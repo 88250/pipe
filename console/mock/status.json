@@ -2,6 +2,9 @@
   "code": 0,
   "msg": "",
   "data": {
+    "version": "1.0.0",
+    "locale": "zh_CN",
+    "inited": false,
     "name": "Liyuan Li",
     "nickname": "Vanessa",
     "avatarURL": "https://img.hacpai.com/avatar/1353745196544_1501644090048.png?imageView2/1/w/80/h/80/interlace/0/q/100",

@@ -4,7 +4,7 @@
   "data": {
     "navigation": [
       {
-        "id": "0",
+        "id": 3,
         "name": "Liyuan Li",
         "nickname": "Vanessa",
         "email": "lly219@gmail.com",
@@ -14,7 +14,7 @@
         "PublishedArticleCount": 20
       },
       {
-        "id": "0",
+        "id": 3,
         "name": "Liyuan Li2",
         "nickname": "Vanessa",
         "email": "lly219@gmail.com",
