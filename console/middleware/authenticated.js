@@ -1,5 +1,5 @@
 export default function ({ redirect, store, route }) {
-  const isLogin = store.state.name !== ''
+  const isLogin = store.state.name !== '' && store.state.isInit
 
   if (route.path.indexOf('/admin') > -1) {
     if (!isLogin) {
@@ -8,11 +8,13 @@ export default function ({ redirect, store, route }) {
   } else if (route.path === '/login') {
     if (isLogin) {
       redirect('/')
+      return
     }
     window.location.href = 'https://hacpai.com/login'
-  } else if (route.path === '/init') {
+  } else if (route.path === '/init' && store.state.isInit) {
     if (isLogin) {
       redirect('/')
+      return
     }
     window.location.href = 'https://hacpai.com/register?r=Vanessa'
   }
