@@ -50,7 +50,7 @@
           </div>
           <div class="list__meta">
             <span class="fn-nowrap">{{ item.email }}</span> •
-            <span class="fn-nowrap">{{ item.PublishedArticleCount }} {{ $t('article', $store.state.locale) }}</span> •
+            <span class="fn-nowrap">{{ item.publishedArticleCount }} {{ $t('article', $store.state.locale) }}</span> •
             <span class="fn-nowrap">{{ getRoleName(item.role) }}</span>
           </div>
         </div>
