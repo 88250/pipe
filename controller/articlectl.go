@@ -171,10 +171,23 @@ func showArticleAction(c *gin.Context) {
 	commentModels, pagination := service.Comment.GetArticleComments(article.ID, page, blogAdmin.BlogID)
 	comments := []*ThemeComment{}
 	for _, commentModel := range commentModels {
+		commentAuthor := service.User.GetUser(commentModel.AuthorID)
+		if nil == commentAuthor {
+			log.Errorf("not found comment author [userID=%d]", commentModel.AuthorID)
+
+			continue
+		}
+		blogURLSetting := service.Setting.GetSetting(model.SettingCategoryBasic, model.SettingNameBasicBlogURL, commentAuthor.BlogID)
+		if nil == blogURLSetting {
+			log.Errorf("not found blog URL setting [blogID=%d]", commentAuthor.BlogID)
+
+			continue
+		}
+
 		author := &ThemeAuthor{
-			Name:      "test name",
-			URL:       "http://localhost:5879/blogs/pipe/vanessa",
-			AvatarURL: "https://img.hacpai.com/20170818zhixiaoyun.jpeg",
+			Name:      commentAuthor.Name,
+			URL:       blogURLSetting.Value + util.PathAuthors + "/" + commentAuthor.Name,
+			AvatarURL: commentAuthor.AvatarURL,
 		}
 
 		comment := &ThemeComment{
