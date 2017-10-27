@@ -34,21 +34,17 @@ func fillUser(c *gin.Context) {
 		c.Next()
 
 		return
+	} else {
+		(*dataModel)["User"] = &util.SessionData{}
 	}
+
 	b3id := c.Request.URL.Query().Get("b3id")
-
-	if nilB3id == b3id {
-		if nil == session {
-			session = &util.SessionData{}
-			(*dataModel)["User"] = session
-		}
-
+	switch b3id {
+	case nilB3id:
 		c.Next()
 
 		return
-	}
-
-	if nil == session && "" == b3id {
+	case "":
 		redirectURL := strings.TrimSpace(c.Request.Referer())
 		if "" == redirectURL {
 			redirectURL = util.Conf.Server + c.Request.URL.Path
@@ -57,71 +53,56 @@ func fillUser(c *gin.Context) {
 		c.Abort()
 
 		return
-	}
+	default:
+		httpClient := &http.Client{
+			Timeout: time.Duration(30 * time.Second),
+		}
+		res, err := httpClient.Get("https://hacpai.com/apis/check-b3-identity?b3id=" + b3id)
+		if nil != err {
+			log.Error("check b3 identity failed: " + err.Error())
+			c.Next()
 
-	if nil == session {
-		session = &util.SessionData{}
+			return
+		}
+		defer res.Body.Close()
+
+		result := util.NewResult()
+		if err := json.NewDecoder(res.Body).Decode(result); nil != err {
+			log.Error("parse b3 identity check result failed: " + err.Error())
+			c.Next()
+
+			return
+		}
+
+		if 0 != result.Code {
+			c.Next()
+
+			return
+		}
+
+		data := result.Data.(map[string]interface{})
+		username := data["userName"].(string)
+
+		session = &util.SessionData{
+			UName: username,
+			URole: model.UserRoleBlogVisitor,
+		}
+
+		user := service.User.GetUserByName(username)
+		if nil != user {
+			session.BID = user.BlogID
+			blogURLSetting := service.Setting.GetSetting(model.SettingCategoryBasic, model.SettingNameBasicBlogURL, user.BlogID)
+			session.BURL = blogURLSetting.Value
+			session.UID = user.ID
+			session.URole = user.Role
+		}
+
+		if err := session.Save(c); nil != err {
+			result.Code = -1
+			result.Msg = "saves session failed: " + err.Error()
+		}
+
 		(*dataModel)["User"] = session
-	}
-
-	c.Next()
-}
-
-func b3idCheck(c *gin.Context) {
-	b3id := c.Query("b3id")
-	if nilB3id == b3id {
 		c.Next()
-
-		return
 	}
-
-	httpClient := &http.Client{
-		Timeout: time.Duration(30 * time.Second),
-	}
-	res, err := httpClient.Get("https://hacpai.com/apis/check-b3-identity?b3id=" + b3id)
-	if nil != err {
-		log.Error("check b3 identity failed: " + err.Error())
-		c.Next()
-
-		return
-	}
-	defer res.Body.Close()
-
-	result := util.NewResult()
-	if err := json.NewDecoder(res.Body).Decode(result); nil != err {
-		log.Error("parse b3 identity check result failed: " + err.Error())
-		c.Next()
-
-		return
-	}
-
-	if 0 != result.Code {
-		c.Next()
-
-		return
-	}
-
-	data := result.Data.(map[string]interface{})
-	username := data["userName"].(string)
-
-	sessionData := &util.SessionData{
-		UName: username,
-		URole: model.UserRoleBlogVisitor,
-	}
-
-	user := service.User.GetUserByName(username)
-	if nil != user {
-		sessionData.BID = user.BlogID
-		blogURLSetting := service.Setting.GetSetting(model.SettingCategoryBasic, model.SettingNameBasicBlogURL, user.BlogID)
-		sessionData.BURL = blogURLSetting.Value
-		sessionData.UID = user.ID
-		sessionData.URole = user.Role
-	}
-
-	if err := sessionData.Save(c); nil != err {
-		result.Code = -1
-		result.Msg = "saves session failed: " + err.Error()
-	}
-
-	c.Next()
 }
