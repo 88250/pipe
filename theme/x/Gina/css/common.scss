@@ -222,6 +222,10 @@ a {
     border-bottom: 1px solid $border-color;
     height: 65px;
     box-sizing: border-box;
+
+    .avatar {
+      margin: 7px 0 0 10px;
+    }
   }
 
   &__search {
