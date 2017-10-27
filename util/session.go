@@ -49,13 +49,13 @@ func GetSession(c *gin.Context) *SessionData {
 		return nil
 	}
 
-	sessionData := &SessionData{}
-	err := json.Unmarshal([]byte(sessionDataStr.(string)), sessionData)
+	ret := &SessionData{}
+	err := json.Unmarshal([]byte(sessionDataStr.(string)), ret)
 	if nil != err {
 		return nil
 	}
 
-	c.Set("session", sessionData)
+	c.Set("session", ret)
 
-	return sessionData
+	return ret
 }
