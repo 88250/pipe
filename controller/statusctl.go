@@ -57,18 +57,14 @@ func getStatusAction(c *gin.Context) {
 	session := util.GetSession(c)
 	if nil != session {
 		user := service.User.GetUser(session.UID)
-		if nil == user {
-			result.Code = -1
-			result.Msg = fmt.Sprintf("not found user [userID=%d]", session.UID)
-
-			return
+		if nil != user {
+			data.Name = user.Name
+			data.Nickname = user.Nickname
+			data.AvatarURL = user.AvatarURL
+			data.Role = user.Role
 		}
-		data.Name = user.Name
-		data.Nickname = user.Nickname
-		data.AvatarURL = user.AvatarURL
-		data.Role = user.Role
 
-		if model.UserRoleBlogVisitor != user.Role {
+		if model.UserRoleBlogVisitor != session.URole {
 			blogTitleSetting := service.Setting.GetSetting(model.SettingCategoryBasic, model.SettingNameBasicBlogTitle, user.BlogID)
 			if nil == blogTitleSetting {
 				result.Code = -1
