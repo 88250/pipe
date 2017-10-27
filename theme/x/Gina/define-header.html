@@ -15,7 +15,7 @@
         <a href="{{.URL}}" target="{{.OpenMethod}}">{{.Title}}</a>
         {{end}}
         <div class="header__tool">
-            {{.Setting.blogSubtitle}}
+            {{.Setting.blogSubtitle}}{{.User}}
             {{if eq .User.UID 0}}
             <a href="https://hacpai.com/register" class="fn-right">{{.I18n.Register}}</a>
             <a href="https://hacpai.com/login" class="fn-right">{{.I18n.Login}}</a>
