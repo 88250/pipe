@@ -122,8 +122,6 @@ func (srv *navigationService) GetNavigations(blogID uint) (ret []*model.Navigati
 func (srv *navigationService) ConsoleGetNavigation(id uint) *model.Navigation {
 	ret := &model.Navigation{}
 	if err := db.First(ret, id).Error; nil != err {
-		log.Errorf("get navigation failed: " + err.Error())
-
 		return nil
 	}
 

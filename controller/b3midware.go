@@ -110,10 +110,25 @@ func fillUser(c *gin.Context) {
 		if nil != user {
 			session.UAvatar = user.AvatarURL
 			session.BID = user.BlogID
+			blogURL := ""
 			blogURLSetting := service.Setting.GetSetting(model.SettingCategoryBasic, model.SettingNameBasicBlogURL, user.BlogID)
-			session.BURL = blogURLSetting.Value
+			if nil != blogURLSetting {
+				blogURL = blogURLSetting.Value
+			}
+			session.BURL = blogURL
 			session.UID = user.ID
 			session.URole = user.Role
+		} else {
+			user = &model.User{
+				Name:      session.UName,
+				AvatarURL: session.UAvatar,
+				Role:      session.URole,
+			}
+			if err := service.User.AddUser(user); nil != err {
+				log.Errorf("add user [name=%s] failed: %s", username, err.Error())
+			}
+			session.UID = user.ID
+			log.Infof("%+v", session)
 		}
 
 		if err := session.Save(c); nil != err {

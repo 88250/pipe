@@ -20,7 +20,6 @@ import (
 	"sync"
 
 	"github.com/b3log/pipe/model"
-	log "github.com/sirupsen/logrus"
 )
 
 var User = &userService{
@@ -29,6 +28,21 @@ var User = &userService{
 
 type userService struct {
 	mutex *sync.Mutex
+}
+
+func (srv *userService) AddUser(user *model.User) error {
+	srv.mutex.Lock()
+	defer srv.mutex.Unlock()
+
+	tx := db.Begin()
+	if err := tx.Create(user).Error; nil != err {
+		tx.Rollback()
+
+		return err
+	}
+	tx.Commit()
+
+	return nil
 }
 
 func (srv *userService) GetUserByName(name string) *model.User {
@@ -43,8 +57,6 @@ func (srv *userService) GetUserByName(name string) *model.User {
 func (srv *userService) GetUser(userID uint) *model.User {
 	ret := &model.User{}
 	if err := db.First(ret, userID).Error; nil != err {
-		log.Errorf("get user failed: " + err.Error())
-
 		return nil
 	}
 
@@ -54,8 +66,6 @@ func (srv *userService) GetUser(userID uint) *model.User {
 func (srv *userService) GetUserByNameOrEmail(nameOrEmail string) *model.User {
 	ret := &model.User{}
 	if err := db.Where("name = ? OR email = ?", nameOrEmail, nameOrEmail).Find(ret).Error; nil != err {
-		log.Errorf("get user by name or email failed: " + err.Error())
-
 		return nil
 	}
 
@@ -73,16 +83,12 @@ type UserBlog struct {
 func (srv *userService) GetBlogUsers(blogID uint) (ret []*model.User) {
 	correlations := []*model.Correlation{}
 	if err := db.Where("id1 = ? AND type = ?", blogID, model.CorrelationBlogUser).Find(&correlations).Error; nil != err {
-		log.Errorf("get blog users failed: " + err.Error())
-
 		return
 	}
 
 	for _, rel := range correlations {
 		user := &model.User{}
 		if err := db.Where("id = ?", rel.ID2).Find(user).Error; nil != err {
-			log.Errorf("not found user [id=%d]", rel.ID2)
-
 			return
 		}
 
@@ -95,8 +101,6 @@ func (srv *userService) GetBlogUsers(blogID uint) (ret []*model.User) {
 func (srv *userService) GetUserBlogs(userID uint) (ret []*UserBlog) {
 	correlations := []*model.Correlation{}
 	if err := db.Where("id2 = ? AND type = ?", userID, model.CorrelationBlogUser).Find(&correlations).Error; nil != err {
-		log.Errorf("get user blogs failed: " + err.Error())
-
 		return
 	}
 
@@ -108,15 +112,11 @@ func (srv *userService) GetUserBlogs(userID uint) (ret []*UserBlog) {
 	for _, rel := range correlations {
 		blogTitleSetting := Setting.GetSetting(model.SettingCategoryBasic, model.SettingNameBasicBlogTitle, rel.ID1)
 		if nil == blogTitleSetting {
-			log.Errorf("not found blog title settings [blogID=%d]", rel.ID1)
-
 			continue
 		}
 
 		blogURLSetting := Setting.GetSetting(model.SettingCategoryBasic, model.SettingNameBasicBlogURL, rel.ID1)
 		if nil == blogURLSetting {
-			log.Errorf("not found blog URL settings [blogID=%d]", rel.ID1)
-
 			continue
 		}
 

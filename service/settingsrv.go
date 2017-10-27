@@ -20,7 +20,6 @@ import (
 	"sync"
 
 	"github.com/b3log/pipe/model"
-	log "github.com/sirupsen/logrus"
 )
 
 var Setting = &settingService{
@@ -34,8 +33,6 @@ type settingService struct {
 func (srv *settingService) GetSetting(category, name string, blogID uint) *model.Setting {
 	ret := &model.Setting{}
 	if err := db.Where("category = ? AND name = ? AND blog_id = ?", category, name, blogID).Find(ret).Error; nil != err {
-		log.Errorf("get setting failed: " + err.Error())
-
 		return nil
 	}
 
@@ -46,8 +43,6 @@ func (srv *settingService) GetCategorySettings(blogID uint, category string) []*
 	ret := []*model.Setting{}
 
 	if err := db.Where("category = ? AND blog_id = ?", category, blogID).Find(&ret).Error; nil != err {
-		log.Errorf("get category settings failed: " + err.Error())
-
 		return nil
 	}
 
@@ -58,8 +53,6 @@ func (srv *settingService) GetAllSettings(blogID uint) []*model.Setting {
 	ret := []*model.Setting{}
 
 	if err := db.Where("category != ? AND blog_id = ?", model.SettingCategoryStatistic, blogID).Find(&ret).Error; nil != err {
-		log.Errorf("get all settings failed: " + err.Error())
-
 		return nil
 	}
 
@@ -70,8 +63,6 @@ func (srv *settingService) GetSettings(blogID uint, category string, names []str
 	ret := map[string]*model.Setting{}
 	settings := []*model.Setting{}
 	if err := db.Where("category = ? AND name IN (?) AND blog_id = ?", category, names, blogID).Find(&settings).Error; nil != err {
-		log.Errorf("get settings failed: " + err.Error())
-
 		return nil
 	}
 

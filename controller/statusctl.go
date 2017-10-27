@@ -68,24 +68,26 @@ func getStatusAction(c *gin.Context) {
 		data.AvatarURL = user.AvatarURL
 		data.Role = user.Role
 
-		blogTitleSetting := service.Setting.GetSetting(model.SettingCategoryBasic, model.SettingNameBasicBlogTitle, user.BlogID)
-		if nil == blogTitleSetting {
-			result.Code = -1
-			result.Msg = fmt.Sprintf("not found blog title settings [blogID=%d]", user.BlogID)
+		if model.UserRoleBlogVisitor != user.Role {
+			blogTitleSetting := service.Setting.GetSetting(model.SettingCategoryBasic, model.SettingNameBasicBlogTitle, user.BlogID)
+			if nil == blogTitleSetting {
+				result.Code = -1
+				result.Msg = fmt.Sprintf("not found blog title settings [blogID=%d]", user.BlogID)
 
-			return
+				return
+			}
+			data.BlogTitle = blogTitleSetting.Value
+
+			blogURLSetting := service.Setting.GetSetting(model.SettingCategoryBasic, model.SettingNameBasicBlogURL, user.BlogID)
+			if nil == blogURLSetting {
+				result.Code = -1
+				result.Msg = fmt.Sprintf("not found blog URL settings [blogID=%d]", user.BlogID)
+
+				return
+			}
+			data.BlogURL = blogURLSetting.Value
+			data.Blogs = service.User.GetUserBlogs(user.ID)
 		}
-		data.BlogTitle = blogTitleSetting.Value
-
-		blogURLSetting := service.Setting.GetSetting(model.SettingCategoryBasic, model.SettingNameBasicBlogURL, user.BlogID)
-		if nil == blogURLSetting {
-			result.Code = -1
-			result.Msg = fmt.Sprintf("not found blog URL settings [blogID=%d]", user.BlogID)
-
-			return
-		}
-		data.BlogURL = blogURLSetting.Value
-		data.Blogs = service.User.GetUserBlogs(user.ID)
 	}
 
 	result.Data = data
