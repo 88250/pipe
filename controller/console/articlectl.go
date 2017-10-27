@@ -33,7 +33,7 @@ func AddArticleAction(c *gin.Context) {
 	result := util.NewResult()
 	defer c.JSON(http.StatusOK, result)
 
-	sessionData := util.GetSession(c)
+	session := util.GetSession(c)
 
 	article := &model.Article{}
 	if err := c.BindJSON(article); nil != err {
@@ -43,8 +43,8 @@ func AddArticleAction(c *gin.Context) {
 		return
 	}
 
-	article.BlogID = sessionData.BID
-	article.AuthorID = sessionData.UID
+	article.BlogID = session.BID
+	article.AuthorID = session.UID
 	if err := service.Article.AddArticle(article); nil != err {
 		result.Code = -1
 		result.Msg = err.Error()
@@ -77,8 +77,8 @@ func GetArticlesAction(c *gin.Context) {
 	result := util.NewResult()
 	defer c.JSON(http.StatusOK, result)
 
-	sessionData := util.GetSession(c)
-	articleModels, pagination := service.Article.ConsoleGetArticles(c.GetInt("p"), sessionData.BID)
+	session := util.GetSession(c)
+	articleModels, pagination := service.Article.ConsoleGetArticles(c.GetInt("p"), session.BID)
 
 	articles := []*ConsoleArticle{}
 	for _, articleModel := range articleModels {
@@ -87,7 +87,7 @@ func GetArticlesAction(c *gin.Context) {
 		for _, tagStr := range tagStrs {
 			consoleTag := &ConsoleTag{
 				Title: tagStr,
-				URL:   sessionData.BURL + "/" + tagStr,
+				URL:   session.BURL + "/" + tagStr,
 			}
 			consoleTags = append(consoleTags, consoleTag)
 		}
@@ -118,7 +118,7 @@ func GetArticlesAction(c *gin.Context) {
 			CreatedAt:    articleModel.CreatedAt.Format("2006-01-02"),
 			Title:        articleModel.Title,
 			Tags:         consoleTags,
-			URL:          sessionData.BURL + articleModel.Path,
+			URL:          session.BURL + articleModel.Path,
 			Topped:       articleModel.Topped,
 			ViewCount:    articleModel.ViewCount,
 			CommentCount: articleModel.CommentCount,

@@ -33,8 +33,8 @@ func GetCommentsAction(c *gin.Context) {
 	result := util.NewResult()
 	defer c.JSON(http.StatusOK, result)
 
-	sessionData := util.GetSession(c)
-	commentModels, pagination := service.Comment.ConsoleGetComments(c.GetInt("p"), sessionData.BID)
+	session := util.GetSession(c)
+	commentModels, pagination := service.Comment.ConsoleGetComments(c.GetInt("p"), session.BID)
 
 	comments := []*ConsoleComment{}
 	for _, commentModel := range commentModels {
@@ -87,7 +87,7 @@ func GetCommentsAction(c *gin.Context) {
 			CreatedAt:     commentModel.CreatedAt.Format("2006-01-02"),
 			Title:         article.Title,
 			Content:       template.HTML(util.Markdown(commentModel.Content)),
-			URL:           sessionData.BURL + "/todo comment path",
+			URL:           session.BURL + "/todo comment path",
 		}
 
 		comments = append(comments, comment)

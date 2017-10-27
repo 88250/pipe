@@ -33,14 +33,14 @@ func UpdateThemeAction(c *gin.Context) {
 
 	theme := c.Param("id")
 
-	sessionData := util.GetSession(c)
+	session := util.GetSession(c)
 
 	settings := []*model.Setting{
 		&model.Setting{
 			Category: model.SettingCategoryTheme,
 			Name:     model.SettingNameThemeName,
 			Value:    theme,
-			BlogID:   sessionData.BID,
+			BlogID:   session.BID,
 		},
 	}
 	if err := service.Setting.UpdateSettings(model.SettingCategoryTheme, settings); nil != err {
@@ -53,10 +53,10 @@ func GetThemesAction(c *gin.Context) {
 	result := util.NewResult()
 	defer c.JSON(http.StatusOK, result)
 
-	sessionData := util.GetSession(c)
+	session := util.GetSession(c)
 
 	currentID := theme.Themes[0]
-	themeNameSetting := service.Setting.GetSetting(model.SettingCategoryTheme, model.SettingNameThemeName, sessionData.BID)
+	themeNameSetting := service.Setting.GetSetting(model.SettingCategoryTheme, model.SettingNameThemeName, session.BID)
 	if nil == themeNameSetting {
 		log.Error("not found theme name setting")
 	} else {

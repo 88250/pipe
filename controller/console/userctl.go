@@ -30,16 +30,16 @@ func GetUsersAction(c *gin.Context) {
 	result := util.NewResult()
 	defer c.JSON(http.StatusOK, result)
 
-	sessionData := util.GetSession(c)
+	session := util.GetSession(c)
 
 	users := []*ConsoleUser{}
-	blogURLSetting := service.Setting.GetSetting(model.SettingCategoryBasic, model.SettingNameBasicBlogURL, sessionData.BID)
+	blogURLSetting := service.Setting.GetSetting(model.SettingCategoryBasic, model.SettingNameBasicBlogURL, session.BID)
 	if nil == blogURLSetting {
-		log.Errorf("not found blog URL setting [blogID=%d]", sessionData.BID)
+		log.Errorf("not found blog URL setting [blogID=%d]", session.BID)
 
 		return
 	}
-	userModels := service.User.GetBlogUsers(sessionData.BID)
+	userModels := service.User.GetBlogUsers(session.BID)
 	for _, userModel := range userModels {
 		users = append(users, &ConsoleUser{
 			ID:                    userModel.ID,
