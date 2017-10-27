@@ -24,11 +24,12 @@ import (
 )
 
 type SessionData struct {
-	UID   uint   // user ID
-	UName string // username
-	URole int    // user role
-	BID   uint   // blog ID
-	BURL  string // blog url
+	UID     uint   // user ID
+	UName   string // username
+	URole   int    // user role
+	UAvatar string // user avatar URL
+	BID     uint   // blog ID
+	BURL    string // blog url
 }
 
 func (sd *SessionData) Save(c *gin.Context) error {
