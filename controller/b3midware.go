@@ -17,7 +17,6 @@
 package controller
 
 import (
-	"encoding/json"
 	"net/http"
 	"strings"
 	"time"
@@ -26,6 +25,7 @@ import (
 	"github.com/b3log/pipe/service"
 	"github.com/b3log/pipe/util"
 	"github.com/gin-gonic/gin"
+	"github.com/parnurzeal/gorequest"
 	log "github.com/sirupsen/logrus"
 )
 
@@ -70,21 +70,12 @@ func fillUser(c *gin.Context) {
 
 		return
 	default:
-		httpClient := &http.Client{
-			Timeout: time.Duration(30 * time.Second),
-		}
-		res, err := httpClient.Get("https://hacpai.com/apis/check-b3-identity?b3id=" + b3id)
-		if nil != err {
-			log.Error("check b3 identity failed: " + err.Error())
-			c.Next()
-
-			return
-		}
-		defer res.Body.Close()
-
 		result := util.NewResult()
-		if err := json.NewDecoder(res.Body).Decode(result); nil != err {
-			log.Error("parse b3 identity check result failed: " + err.Error())
+		request := gorequest.New()
+		_, _, errs := request.Get("https://hacpai.com/apis/check-b3-identity?b3id="+b3id).
+			Set("user-agent", util.UserAgent).Timeout(30 * time.Second).EndStruct(result)
+		if nil != errs {
+			log.Errorf("check b3 identity failed: %s", errs)
 			c.Next()
 
 			return

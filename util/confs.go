@@ -36,6 +36,9 @@ var Version = "1.0.0"
 // Pipe configuration.
 var Conf *Configuration
 
+// HTTP client user agent.
+var UserAgent = "Mozilla/5.0 (compatible; Pipe" + Version + "; +https://hacpai.com)"
+
 // Configuration (pipe.json).
 type Configuration struct {
 	Server                string // server scheme, host and port
