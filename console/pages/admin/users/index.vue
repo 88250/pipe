@@ -28,6 +28,7 @@
               {{ item.nickname || item.name }}
             </a>
             <v-menu
+              v-if="false"
               :nudge-bottom="28"
               :nudge-width="60"
               :nudge-left="60"
