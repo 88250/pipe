@@ -59,7 +59,7 @@ func getStatusAction(c *gin.Context) {
 		user := service.User.GetUser(session.UID)
 		if nil == user {
 			result.Code = -1
-			result.Msg = fmt.Sprintf("not found user [userID=%d]", user.ID)
+			result.Msg = fmt.Sprintf("not found user [userID=%d]", session.UID)
 
 			return
 		}
