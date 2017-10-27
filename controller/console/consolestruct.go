@@ -70,8 +70,18 @@ type ConsoleNavigation struct {
 }
 
 type ConsoleTheme struct {
-	ID           string `json:"id"`
-	Title        string `json:"title"`
+	Name         string `json:"name"`
 	PreviewURL   string `json:"previewURL"`
 	ThumbnailURL string `json:"thumbnailURL"`
+}
+
+type ConsoleUser struct {
+	ID                    uint   `json:"id"`
+	Name                  string `json:"name"`
+	Nickname              string `json:"nickname"`
+	Email                 string `json:"email"`
+	Role                  int    `json:"role"`
+	URL                   string `json:"url"`
+	AvatarURL             string `json:"avatarURL"`
+	PublishedArticleCount int    `json:"publishedArticleCount"`
 }

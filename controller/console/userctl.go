@@ -15,3 +15,43 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 package console
+
+import (
+	"net/http"
+
+	"github.com/b3log/pipe/model"
+	"github.com/b3log/pipe/service"
+	"github.com/b3log/pipe/util"
+	"github.com/gin-gonic/gin"
+	log "github.com/sirupsen/logrus"
+)
+
+func GetUsersAction(c *gin.Context) {
+	result := util.NewResult()
+	defer c.JSON(http.StatusOK, result)
+
+	sessionData := util.GetSession(c)
+
+	users := []*ConsoleUser{}
+	blogURLSetting := service.Setting.GetSetting(model.SettingCategoryBasic, model.SettingNameBasicBlogURL, sessionData.BID)
+	if nil == blogURLSetting {
+		log.Errorf("not found blog URL setting [blogID=%d]", sessionData.BID)
+
+		return
+	}
+	userModels := service.User.GetBlogUsers(sessionData.BID)
+	for _, userModel := range userModels {
+		users = append(users, &ConsoleUser{
+			ID:                    userModel.ID,
+			Name:                  userModel.Name,
+			Nickname:              userModel.Nickname,
+			Email:                 userModel.Email,
+			Role:                  userModel.Role,
+			URL:                   blogURLSetting.Value + util.PathAuthors + "/" + userModel.Name,
+			AvatarURL:             userModel.AvatarURL,
+			PublishedArticleCount: userModel.PublishedArticleCount,
+		})
+	}
+
+	result.Data = users
+}

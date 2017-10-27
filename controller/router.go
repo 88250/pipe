@@ -86,6 +86,7 @@ func MapRoutes() *gin.Engine {
 	consoleGroup.PUT("/navigations/:id", console.UpdateNavigationAction)
 	consoleGroup.POST("/navigations", console.AddNavigationAction)
 	consoleGroup.DELETE("/navigations/:id", console.RemoveNavigationAction)
+	consoleGroup.GET("/users", console.GetUsersAction)
 
 	consoleGroup.POST("/blogs/switch/:id", console.BlogSwitchAction)
 
