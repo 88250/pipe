@@ -1,21 +1,13 @@
-export default function ({ redirect, store, route }) {
-  const isLogin = store.state.name !== '' && store.state.isInit
-
+export default function ({redirect, store, route}) {
+  if (!store.state.isInit) {
+    return
+  }
+  const isLogin = store.state.role !== 0
   if (route.path.indexOf('/admin') > -1) {
-    if (!isLogin) {
-      redirect('/login')
-    }
-  } else if (route.path === '/login') {
-    if (isLogin) {
+    if (!isLogin || store.state.role === 4) {
       redirect('/')
-      return
     }
-    window.location.href = 'https://hacpai.com/login'
-  } else if (route.path === '/init' && store.state.isInit) {
-    if (isLogin) {
-      redirect('/')
-      return
-    }
-    window.location.href = 'https://hacpai.com/register?r=Vanessa'
+  } else if (route.path === '/login' || route.path === '/init') {
+    redirect('/')
   }
 }

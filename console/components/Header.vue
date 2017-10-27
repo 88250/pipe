@@ -7,7 +7,7 @@
       </a>
     </div>
     <div class="header__nav fn-flex-1 fn-flex">
-      <div class="header__bar--theme" v-if="$store.state.name === ''">
+      <div class="header__bar--theme" v-if="$store.state.role === 0">
         <a class="btn--space" href="https://hacpai.com/register?r=Vanessa">
           {{ $t('register', $store.state.locale) }}
         </a>
