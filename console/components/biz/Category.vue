@@ -89,7 +89,7 @@
           title: this.title,
           url: this.url,
           description: this.description,
-          tags: this.tags
+          tags: this.tags.join(',')
         }
         if (this.id === 0) {
           responseData = await this.axios.post('/console/categories', requestData)
@@ -115,7 +115,7 @@
           this.$set(this, 'title', responseData.title)
           this.$set(this, 'url', responseData.url)
           this.$set(this, 'description', responseData.description)
-          this.$set(this, 'tags', responseData.tags)
+          this.$set(this, 'tags', responseData.tags.split(','))
         }
       }
     },
