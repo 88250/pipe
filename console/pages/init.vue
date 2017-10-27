@@ -103,7 +103,7 @@
 
       <v-stepper-content step="4" class="init__card fn-clear">
         <div class="fn-clear init__center">
-          <a href="/" class="card card--danger init__card-welcome">
+          <a :href="`/blogs/${userName}`" class="card card--danger init__card-welcome">
             <div class="card__body fn-flex">
               <img src="~/static/images/logo.jpg"/>
               <div class="fn-flex-1">

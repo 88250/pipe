@@ -26,47 +26,16 @@ export const mutations = {
     state.menu = data
   },
   setStatus (state, data) {
-    if (data === null) {
-      state.name = ''
-      state.nickname = ''
-      state.blogTitle = ''
-      state.blogURL = '/'
-      state.role = 3
-      state.avatarURL = ''
-      state.blogs = [{
-        title: '',
-        id: ''
-      }]
-      localStorage.removeItem('userInfo')
-      return
-    }
-
     state.locale = data.locale
     state.version = data.version
     state.isInit = data.inited
-
-    if (data.name !== '' && data.inited) {
-      state.name = data.name
-      state.nickname = data.nickname
-      state.blogTitle = data.blogTitle
-      state.blogURL = data.blogURL
-      state.role = data.role
-      state.blogs = data.blogs
-      state.avatarURL = data.avatarURL
-      localStorage.setItem('userInfo', JSON.stringify(data))
-    } else {
-      state.name = ''
-      state.nickname = ''
-      state.blogTitle = ''
-      state.blogURL = '/'
-      state.role = 3
-      state.avatarURL = ''
-      state.blogs = [{
-        title: '',
-        id: ''
-      }]
-      localStorage.removeItem('userInfo')
-    }
+    state.role = data.role
+    state.name = data.name
+    state.nickname = data.nickname
+    state.blogTitle = data.blogTitle
+    state.blogURL = data.blogURL
+    state.blogs = data.blogs
+    state.avatarURL = data.avatarURL
   },
   setLocale (state, locale) {
     state.locale = locale
@@ -75,27 +44,9 @@ export const mutations = {
     state.isInit = isInit
   },
   setBlog (state, data) {
-    const userInfo = localStorage.getItem('userInfo')
-    if (!userInfo) {
-      return
-    }
-    const userInfoJSON = JSON.parse(userInfo)
-    if (data) {
-      state.blogTitle = data.title
-      state.blogURL = data.path
-      state.role = data.role
-      userInfoJSON.blogURL = data.path
-      userInfoJSON.blogTitle = data.title
-      userInfoJSON.role = data.role
-    } else {
-      state.blogTitle = ''
-      state.blogURL = '/'
-      state.role = 3
-      userInfoJSON.blogURL = '/'
-      userInfoJSON.blogTitle = ''
-      userInfoJSON.role = 3
-    }
-    localStorage.setItem('userInfo', JSON.stringify(userInfoJSON))
+    state.blogTitle = data.title
+    state.blogURL = data.path
+    state.role = data.role
   },
   setSnackBar (state, data) {
     state.snackBar = data.snackBar
