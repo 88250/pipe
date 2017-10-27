@@ -3,13 +3,13 @@ import vueAxios from '~/plugins/axios'
 export const state = () => ({
   locale: 'zh_CN',
   version: '1.0.0',
-  isInit: true,
+  isInit: false,
   name: '',
   nickname: '',
   blogTitle: '',
   avatarURL: '',
   blogURL: '/',
-  role: 3, // 0-no login, 1-admin, 2-blog admin, 3-blog user, 4-visitor
+  role: 0, // 0-no login, 1-admin, 2-blog admin, 3-blog user, 4-visitor
   blogs: [{
     title: '',
     id: ''
