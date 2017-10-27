@@ -2,7 +2,7 @@
   "code": 0,
   "msg": "",
   "data": {
-    "navigation": [
+    "users": [
       {
         "id": 3,
         "name": "Liyuan Li",
