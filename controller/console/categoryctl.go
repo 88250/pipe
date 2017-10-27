@@ -18,6 +18,7 @@ package console
 
 import (
 	"net/http"
+	"strconv"
 
 	"github.com/b3log/pipe/model"
 	"github.com/b3log/pipe/service"
@@ -35,6 +36,7 @@ func GetCategoriesAction(c *gin.Context) {
 	categories := []*ConsoleCategory{}
 	for _, categoryModel := range categoryModels {
 		categories = append(categories, &ConsoleCategory{
+			ID:          categoryModel.ID,
 			Title:       categoryModel.Title,
 			URL:         session.BURL + categoryModel.Path,
 			Description: categoryModel.Description,
@@ -65,6 +67,25 @@ func AddCategoryAction(c *gin.Context) {
 
 	category.BlogID = session.BID
 	if err := service.Category.AddCategory(category); nil != err {
+		result.Code = -1
+		result.Msg = err.Error()
+	}
+}
+
+func RemoveCategoryAction(c *gin.Context) {
+	result := util.NewResult()
+	defer c.JSON(http.StatusOK, result)
+
+	idArg := c.Param("id")
+	id, err := strconv.Atoi(idArg)
+	if nil != err {
+		result.Code = -1
+		result.Msg = err.Error()
+
+		return
+	}
+
+	if err := service.Category.RemoveCategory(uint(id)); nil != err {
 		result.Code = -1
 		result.Msg = err.Error()
 	}
