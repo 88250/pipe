@@ -98,14 +98,17 @@ func fillUser(c *gin.Context) {
 
 		data := result.Data.(map[string]interface{})
 		username := data["userName"].(string)
+		userAvatar := data["userAvatarURL"].(string)
 
 		session = &util.SessionData{
-			UName: username,
-			URole: model.UserRoleBlogVisitor,
+			UName:   username,
+			UAvatar: userAvatar,
+			URole:   model.UserRoleBlogVisitor,
 		}
 
 		user := service.User.GetUserByName(username)
 		if nil != user {
+			session.UAvatar = user.AvatarURL
 			session.BID = user.BlogID
 			blogURLSetting := service.Setting.GetSetting(model.SettingCategoryBasic, model.SettingNameBasicBlogURL, user.BlogID)
 			session.BURL = blogURLSetting.Value

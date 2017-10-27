@@ -45,7 +45,6 @@ func GetUsersAction(c *gin.Context) {
 			ID:                    userModel.ID,
 			Name:                  userModel.Name,
 			Nickname:              userModel.Nickname,
-			Email:                 userModel.Email,
 			Role:                  userModel.Role,
 			URL:                   blogURLSetting.Value + util.PathAuthors + "/" + userModel.Name,
 			AvatarURL:             userModel.AvatarURL,

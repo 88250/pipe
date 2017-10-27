@@ -60,7 +60,6 @@ func initAction(c *gin.Context) {
 
 	platformAdmin := &model.User{
 		Name:  reqData.Name,
-		Email: reqData.Email,
 		B3Key: reqData.B3Key,
 	}
 

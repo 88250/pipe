@@ -79,7 +79,6 @@ type ConsoleUser struct {
 	ID                    uint   `json:"id"`
 	Name                  string `json:"name"`
 	Nickname              string `json:"nickname"`
-	Email                 string `json:"email"`
 	Role                  int    `json:"role"`
 	URL                   string `json:"url"`
 	AvatarURL             string `json:"avatarURL"`
