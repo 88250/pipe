@@ -44,28 +44,6 @@ func TestGetUser(t *testing.T) {
 	}
 }
 
-func TestGetUserByNameOrEmail(t *testing.T) {
-	user := User.GetUserByNameOrEmail(testPlatformAdminName)
-	if nil == user {
-		t.Errorf("user is nil")
-
-		return
-	}
-	if testPlatformAdminName != user.Name {
-		t.Errorf("name is not [%s]", testPlatformAdminName)
-	}
-
-	user = User.GetUserByNameOrEmail(testPlatformAdminEmail)
-	if nil == user {
-		t.Errorf("user is nil")
-
-		return
-	}
-	if testPlatformAdminEmail != user.Email {
-		t.Errorf("email is not [%s]", testPlatformAdminEmail)
-	}
-}
-
 func TestGetBlogUsers(t *testing.T) {
 	users := User.GetBlogUsers(1)
 	if 1 > len(users) {

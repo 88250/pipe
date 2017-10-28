@@ -346,7 +346,6 @@ func removeTagArticleRels(tx *gorm.DB, article *model.Article) error {
 		if err := tx.Where("id = ?", rel.ID2).First(tag).Error; nil != err {
 			continue
 		}
-		log.Info(tag)
 		tag.ArticleCount = tag.ArticleCount - 1
 		tag.PublishedArticleCount = tag.PublishedArticleCount - 1
 		if err := tx.Save(tag).Error; nil != err {

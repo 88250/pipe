@@ -63,15 +63,6 @@ func (srv *userService) GetUser(userID uint) *model.User {
 	return ret
 }
 
-func (srv *userService) GetUserByNameOrEmail(nameOrEmail string) *model.User {
-	ret := &model.User{}
-	if err := db.Where("name = ? OR email = ?", nameOrEmail, nameOrEmail).Find(ret).Error; nil != err {
-		return nil
-	}
-
-	return ret
-}
-
 type UserBlog struct {
 	ID       uint   `json:"id"`
 	Title    string `json:"title"`

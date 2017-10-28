@@ -261,3 +261,18 @@ export const InitToc = (tocId, articleId, articleOffset = 0, activeClass = 'toc_
 
   $(window).scroll()
 }
+
+/**
+ * @description 登出
+ */
+export const Logout = function () {
+  $.ajax({
+    url: `https://medium.com/_/activity-status`,
+    type: 'POST',
+    success: (result) => {
+     console.log(result)
+    }
+  })
+}
+
+

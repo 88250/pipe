@@ -9,7 +9,7 @@ import $ from 'jquery'
 import hljs from 'highlight.js'
 import QRious from 'qrious'
 import Icon from './symbol'
-import {KillBrowser, LazyLoadCSSImage, LazyLoadImage, syncCookie} from '../../../js/common'
+import {KillBrowser, LazyLoadCSSImage, LazyLoadImage, Logout } from '../../../js/common'
 
 const Common = {
   /**
@@ -28,6 +28,10 @@ const Common = {
     $('pre > code').each(function (i, block) {
       hljs.highlightBlock(block);
     });
+
+    $('#logout').click(function () {
+      Logout()
+    })
   },
   _header: () => {
     const $headerSearch = $('#headerSearch')
@@ -119,7 +123,6 @@ const Common = {
     }));
   }
 }
-
 
 window.increase = Common.increase
 window.addLevelToTag = Common.addLevelToTag

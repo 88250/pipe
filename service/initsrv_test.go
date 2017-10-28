@@ -49,11 +49,9 @@ func setup() {
 	ConnectDB()
 
 	Init.InitPlatform(&model.User{
-		Name:     testPlatformAdminName,
-		Email:    testPlatformAdminEmail,
-		Password: "c4ca4238a0b923820dcc509a6f75849b",
-		B3Key:    "beyond",
-		Locale:   "zh_CN",
+		Name:   testPlatformAdminName,
+		B3Key:  "beyond",
+		Locale: "zh_CN",
 	})
 
 	log.Println("setup tests")

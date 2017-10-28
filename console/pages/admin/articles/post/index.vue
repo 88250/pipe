@@ -27,11 +27,6 @@
           v-model="url"
         ></v-text-field>
 
-        <v-text-field
-          :label="$t('visitPassword', $store.state.locale)"
-          v-model="password"
-        ></v-text-field>
-
         <label class="checkbox">
           <input type="checkbox" :checked="commentable" @click="commentable = !commentable"/><span
           class="checkbox__icon"></span>

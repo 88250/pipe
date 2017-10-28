@@ -31,7 +31,6 @@
   "hacpaiRule": "认证错误，请登录<a target='_blank' href='https://hacpai.com/login?goto=https%3A%2F%2Fhacpai.com%2F'>黑客派</a>后进行查看",
   "tags": "标签",
   "links": "链接",
-  "visitPassword": "访问密码",
   "allowComment": "允许评论",
   "useSign": "启用签名档",
   "guide": "向导",

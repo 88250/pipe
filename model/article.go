@@ -29,7 +29,6 @@ type Article struct {
 	Status       int    `json:"status"`
 	Topped       bool   `json:"topped"`
 	Commentable  bool   `json:"commentable"`
-	Password     string `gorm:"size:16" json:"password"`
 	ViewCount    int    `json:"viewCount"`
 	CommentCount int    `json:"commentCount"`
 	IP           string `gorm:"size:128" json:"ip"`
