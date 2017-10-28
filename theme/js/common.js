@@ -268,7 +268,7 @@ export const InitToc = (tocId, articleId, articleOffset = 0, activeClass = 'toc_
 export const Logout = function () {
   $.ajax({
     url: `https://hacpai.com/apis/s2h`,
-    type: 'GET',
+    type: 'POST',
     success: (result) => {
      console.log(result)
     }
