@@ -124,6 +124,7 @@ const Common = {
   }
 }
 
+
 window.increase = Common.increase
 window.addLevelToTag = Common.addLevelToTag
 Icon()
