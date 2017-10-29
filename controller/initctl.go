@@ -42,9 +42,9 @@ func showInitPageAction(c *gin.Context) {
 }
 
 type initRequest struct {
-	Name  string `json:"name" binding:"required"`
-	Email string `json:"email" binding:"required"`
-	B3Key string `json:"b3key" binding:"required"`
+	Name      string `json:"name" binding:"required"`
+	B3Key     string `json:"b3key" binding:"required"`
+	AvatarURL string `json:"avatarURL" binding:"required"`
 }
 
 func initAction(c *gin.Context) {
@@ -60,8 +60,9 @@ func initAction(c *gin.Context) {
 	}
 
 	platformAdmin := &model.User{
-		Name:  reqData.Name,
-		B3Key: reqData.B3Key,
+		Name:      reqData.Name,
+		B3Key:     reqData.B3Key,
+		AvatarURL: reqData.AvatarURL,
 	}
 
 	if err := service.Init.InitPlatform(platformAdmin); nil != err {
