@@ -18,7 +18,6 @@ package controller
 
 import (
 	"net/http"
-	"strings"
 	"time"
 
 	"github.com/b3log/pipe/model"
@@ -61,10 +60,7 @@ func fillUser(c *gin.Context) {
 
 		return
 	case "":
-		redirectURL := strings.TrimSpace(c.Request.Referer())
-		if "" == redirectURL {
-			redirectURL = util.Conf.Server + c.Request.URL.Path
-		}
+		redirectURL := util.Conf.Server + c.Request.URL.Path
 		c.Redirect(http.StatusSeeOther, "https://hacpai.com/apis/b3-identity?goto="+redirectURL)
 		c.Abort()
 
