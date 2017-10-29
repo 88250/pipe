@@ -128,5 +128,4 @@ window.increase = Common.increase
 window.addLevelToTag = Common.addLevelToTag
 Icon()
 Common.init()
-
 export default Common
