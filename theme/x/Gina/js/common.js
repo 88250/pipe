@@ -9,13 +9,14 @@ import $ from 'jquery'
 import hljs from 'highlight.js'
 import QRious from 'qrious'
 import Icon from './symbol'
-import {KillBrowser, LazyLoadCSSImage, LazyLoadImage, Logout } from '../../../js/common'
+import {KillBrowser, LazyLoadCSSImage, LazyLoadImage, Logout, TrimB3Id} from '../../../js/common'
 
 const Common = {
   /**
    * @description 页面初始化
    */
   init: () => {
+    TrimB3Id()
     KillBrowser()
     LazyLoadCSSImage('.avatar, .article__thumb')
     LazyLoadImage()

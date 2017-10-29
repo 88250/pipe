@@ -165,8 +165,6 @@
           this.$set(this, 'step', 3)
           this.$set(this, 'postError', false)
           this.$set(this, 'userAvatarURL', responseData.data.userAvatarURL)
-
-          console.log(this.userAvatarURL)
         } else {
           this.$set(this, 'postError', true)
         }
@@ -178,8 +176,8 @@
         }
         const responseData = await this.axios.post('/init', {
           name: this.userName,
-          email: this.userEmail,
-          b3key: this.userB3Key
+          b3key: this.userB3Key,
+          avatarURL: this.userAvatarURL
         })
         if (responseData.code === 0) {
           this.$set(this, 'step', 4)

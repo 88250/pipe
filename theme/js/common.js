@@ -265,7 +265,7 @@ export const InitToc = (tocId, articleId, articleOffset = 0, activeClass = 'toc_
 /**
  * @description 登出
  */
-export const Logout = function () {
+export const Logout = () => {
   $.ajax({
     url: `${location.origin}/api/logout`,
     type: 'POST',
@@ -275,4 +275,13 @@ export const Logout = function () {
   })
 }
 
-
+/**
+ * @description 去除查询字符串中的 'b3id=xxx' 参数
+ */
+export const TrimB3Id = () => {
+  const search = location.search
+  if (search.indexOf('b3id') === -1) {
+    return
+  }
+  history.replaceState('', '', window.location.href.replace(/(&b3id=\w{8})|(b3id=\w{8}&)|(\?b3id=\w{8}$)/, ''))
+}

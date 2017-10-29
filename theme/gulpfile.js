@@ -29,7 +29,7 @@ gulp.task('dev', function () {
   const theme = gulpUtil.env.theme || 'gina'
   const files = [`./x/${theme}/js/common.js`, `./x/${theme}/js/article.js`]
 
-  var tasks = files.map(function (entry) {
+  const tasks = files.map(function (entry) {
     return browserify({entries: [entry]})
       .transform('babelify', {presets: ['es2015']})
       .bundle()
@@ -46,7 +46,7 @@ gulp.task('dev', function () {
 
 gulp.task('watch', function () {
   livereload.listen()
-  gulp.watch(['./x/*/js/article.js', './x/*/js/common.js', './x/*/js/symbol.js'], ['dev'])
+  gulp.watch(['./js/common.js', './x/*/js/article.js', './x/*/js/common.js', './x/*/js/symbol.js'], ['dev'])
   gulp.watch('./x/*/css/*.scss', ['sass'])
 })
 

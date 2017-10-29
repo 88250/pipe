@@ -6,7 +6,7 @@
  * @since 2.2.0
  */
 
-const version = '1508395566741'
+const version = '1509268981664'
 const staticServePath = 'https://static.hacpai.com'
 
 /**
