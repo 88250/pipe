@@ -84,11 +84,6 @@ const Common = {
   toggleSide: () => {
     const $body = $('body')
     $body.toggleClass('body--side')
-    if ($body.hasClass('body--side')) {
-      $('#editor').width($(window).width() - 340)
-    } else {
-      $('#editor').width('100%')
-    }
   },
   increase(max, time, id, count) {
     if (count < max) {

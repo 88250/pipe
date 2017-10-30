@@ -695,8 +695,9 @@ a {
     }
   }
   position: fixed;
-  bottom: -210px;
+  bottom: -240px;
   width: 100%;
+  opacity: 0;
   background-color: #fff;
   border-top: 1px solid $border-color;
   padding: 30px 0;

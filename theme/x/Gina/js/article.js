@@ -93,13 +93,19 @@ const Article = {
     } else {
       $editor.removeData('commentid')
     }
-    $editor.css('bottom', '0').data('id', id)
+    if ($('body').hasClass('body--side')) {
+      $editor.width($(window).width() - 340)
+    } else {
+      $editor.width('100%')
+    }
+
+    $editor.css({'bottom': '0', 'opacity': 1}).data('id', id)
     $('body').css('padding-bottom', $editor.outerHeight() + 'px')
     $('#replyObject').text(reply)
   },
   hideComment: () => {
     const $editor = $('#editor')
-    $editor.css('bottom', `-${$editor.outerHeight()}px`)
+    $editor.css({'bottom': `-${$editor.outerHeight()}px`, 'opacity': 0})
     $('body').css('padding-bottom', 0)
   },
   addComment: (label) => {
