@@ -22,6 +22,7 @@ import (
 
 // Path prefixes.
 const (
+	PathRoot       = "/"
 	PathInit       = "/init"
 	PathSearch     = "/search"
 	PathBlogs      = "/blogs"
@@ -40,12 +41,17 @@ const (
 )
 
 var reservedPaths = []string{
-	PathInit, PathSearch, PathBlogs, PathAssets, PathAdmin, PathAPI, PathFavicon,
-	PathTheme, PathActivities, PathArchives, PathArticles, PathAuthors,
+	PathInit, PathSearch, PathBlogs, PathAssets, PathAdmin, PathAPI,
+	PathFavicon, PathTheme, PathActivities, PathArchives, PathArticles, PathAuthors,
 	PathCategories, PathTags, PathComments,
 }
 
 func IsReservedPath(path string) bool {
+	path = strings.TrimSpace(path)
+	if PathRoot == path {
+		return true
+	}
+
 	for _, reservedPath := range reservedPaths {
 		if strings.HasPrefix(path, reservedPath) {
 			return true
