@@ -19,13 +19,12 @@
             <a href="https://hacpai.com/register" class="fn-right">{{.I18n.Register}}</a>
             <a href="https://hacpai.com/login" class="fn-right">{{.I18n.Login}}</a>
             {{else}}
-            <div class="avatar fn-right tooltipped tooltipped--w"
-                 aria-label="{{.User.UName}}"
-                 data-src="{{.User.UAvatar}}"></div>
+            <a id="logout" href="javascript:void(0)" class="fn-right">{{.I18n.Logout}}</a>
             {{if ne .User.URole 4}}
-            <a href="/admin">{{.I18n.Manage}}</a>
+            <a href="/admin" class="fn-right">{{.I18n.Manage}}</a>
             {{end}}
-            <a id="logout" href="#">{{.I18n.Logout}}</a>
+            <div class="avatar fn-right"
+                 data-src="{{.User.UAvatar}}"></div>
             {{end}}
             <form id="headerSearch"
                   class="header__search"

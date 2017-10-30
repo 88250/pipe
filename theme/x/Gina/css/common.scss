@@ -223,14 +223,23 @@ a {
     height: 65px;
     box-sizing: border-box;
 
+    a {
+      padding: 0 0 0 20px;
+
+      &:first-child {
+        margin-left: 0;
+      }
+    }
+
     .avatar {
-      margin: 7px 0 0 10px;
+      margin: 17px 0 0 20px;
+      height: 30px;
+      width: 30px;
     }
   }
 
   &__search {
     float: right;
-    padding: 0 10px 0 10px;
     height: 64px;
     cursor: pointer;
     &:hover svg {
@@ -241,6 +250,7 @@ a {
       width: 0;
       border: 0;
       transition: $transition;
+      border-bottom: 1px solid $border-color;
     }
     svg {
       color: $gray;

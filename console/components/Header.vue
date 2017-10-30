@@ -97,8 +97,7 @@
       async logout () {
         const responseData = await this.axios.post('/logout')
         if (responseData.code === 0) {
-          this.$store.commit('setStatus', null)
-          this.$router.push('/')
+          window.location.href = 'https://hacpai.com/logout'
         } else {
           this.commit('setSnackBar', {
             snackBar: true,
