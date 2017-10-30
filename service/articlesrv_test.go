@@ -164,7 +164,12 @@ func TestIncArticleViewCount(t *testing.T) {
 }
 
 func TestNormalizeTagStr(t *testing.T) {
-	tagStr := normalizeTagStr("带 空 格1,分号2；顿号3、正常4")
+	tagStr, err := normalizeTagStr("带 空 格1,分号2；顿号3、正常4")
+	if nil != err {
+		t.Error(err)
+
+		return
+	}
 	if "带空格1,分号2,顿号3,正常4" != tagStr {
 		t.Error("exptected is [%s], actual is [%s]", "带空格1,分号2,顿号3,正常4", tagStr)
 	}
@@ -191,5 +196,30 @@ func TestRemoveArticle(t *testing.T) {
 	article := Article.ConsoleGetArticle(1)
 	if nil != article {
 		t.Error("remove article failed")
+	}
+}
+
+func TestNormalizeArticlePath(t *testing.T) {
+	article := &model.Article{
+		Path: "/aaa",
+	}
+
+	if err := normalizeArticlePath(article); nil != err {
+		t.Error(err)
+
+		return
+	}
+	if "/aaa" != article.Path {
+		t.Errorf("expected is [%s], actual is [%s]", "/aaa", article.Path)
+	}
+
+	article.Path = ""
+	if err := normalizeArticlePath(article); nil != err {
+		t.Error(err)
+
+		return
+	}
+	if 34 != len(article.Path) {
+		t.Errorf(article.Path)
 	}
 }
