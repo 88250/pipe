@@ -183,7 +183,7 @@
     {{end}}
 
     {{if .NextArticle}}
-    <a href="{{.NextArticle.URL}}" rel="next" class="near__next">
+    <a href="{{.NextArticle.URL}}" rel="next" class="near__next {{if .PreviousArticle}}{{else}}near__next--single{{end}}">
         <svg class="fn-absolute near__svg">
             <use xlink:href="#chevron-right"></use>
         </svg>
@@ -212,7 +212,7 @@
 
     {{if .NextArticle}}
     <a href="{{.NextArticle.URL}}" rel="next"
-       class="tooltipped tooltipped--e ft-right"
+       class="tooltipped tooltipped--e fn-two--next {{if .PreviousArticle}}{{else}}near__next--single{{end}}"
        aria-label="{{.I18n.NextArticle}}">
         <b class="ft-break">{{.NextArticle.Title}}</b>
         <svg class="near__icon-last">

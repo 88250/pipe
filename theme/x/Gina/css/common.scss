@@ -14,8 +14,10 @@
 // side bar icon 200
 
 // variable
-$border-color: #f1f1f1;
+$border-color: #e1e4e8;
 $theme-accent: #f47e00;
+$text-color: #24292e;
+$text-hover-color: #586069;
 
 // reset
 html {
@@ -25,7 +27,7 @@ html {
 
 body {
   font-size: 14px;
-  color: $black;
+  color: $text-color;
   background-color: #fff;
   letter-spacing: 0.01rem;
   line-height: 1.75em;
@@ -75,6 +77,9 @@ a {
       margin-right: 4%;
     }
   }
+  &--next {
+    text-align: right;
+  }
 }
 
 .fn-three {
@@ -118,10 +123,10 @@ a {
     }
 
     &-title {
-      color: $black;
+      color: $text-color;
       word-break: break-all;
       &:hover {
-        color: $gray;
+        color: $text-hover-color;
         text-decoration: none;
       }
     }
@@ -131,7 +136,7 @@ a {
 // tag
 .tag {
   background-color: #f6f6f6;
-  color: $black;
+  color: $text-color;
   padding: 3px 10px;
   line-height: 13px;
   font-weight: 400;
@@ -142,7 +147,7 @@ a {
   &:hover {
     text-decoration: none;
     background-color: $border-color;
-    color: $gray;
+    color: $text-hover-color;
   }
 }
 
@@ -198,7 +203,7 @@ a {
   position: relative;
 
   a {
-    color: $gray;
+    color: $text-color;
     padding: 0 10px;
     font-size: 16px;
 
@@ -207,7 +212,7 @@ a {
     }
 
     &:hover {
-      color: $black;
+      color: $text-hover-color;
       text-decoration: none;
     }
   }
@@ -243,7 +248,7 @@ a {
     height: 64px;
     cursor: pointer;
     &:hover svg {
-      color: $black;
+      color: $text-color;
     }
     input {
       font-size: 13px;
@@ -253,7 +258,7 @@ a {
       border-bottom: 1px solid $border-color;
     }
     svg {
-      color: $gray;
+      color: $text-hover-color;
       float: right;
       margin-top: 26px;
     }
@@ -389,14 +394,14 @@ a {
     }
     a {
       font-size: 22px;
-      color: $black;
+      color: $text-color;
       &:hover {
-        color: $gray;
+        color: $text-hover-color;
         text-decoration: none;
       }
 
       &:visited {
-        color: #666;
+        color: $text-hover-color;
       }
     }
   }
@@ -558,6 +563,11 @@ a {
         text-align: right;
         padding: 0 84px 0 0;
       }
+
+      &--single {
+        margin-right: 0;
+        float: right;
+      }
     }
 
     .near__icon {
@@ -572,7 +582,7 @@ a {
 
     &:hover {
       text-decoration: none;
-      color: $gray;
+      color: $text-hover-color;
       svg {
         color: $theme-accent;
       }
