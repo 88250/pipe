@@ -1,7 +1,12 @@
 <template>
   <div class="welcome" id="index">
-    <div class="card card__body">
-      <h2>{{ $t('welcome', $store.state.locale) }}</h2>
+    <div class="card">
+      <h2 class="card__title">{{ $t('welcome', $store.state.locale) }}</h2>
+      <ul class="list" v-if="$store.state.role !== 0 && $store.state.role !== 4">
+        <li class="fn-flex" v-for="item in $store.state.blogs">
+          <a class="fn-flex-1" :href="item.url">{{ item.title }}</a>
+        </li>
+      </ul>
     </div>
   </div>
 </template>
@@ -124,6 +129,7 @@
       margin: 0 auto
       position: relative
       z-index: 1
+
   @media (max-width: 768px)
     .welcome
       padding: 0 15px
