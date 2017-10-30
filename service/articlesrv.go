@@ -19,11 +19,13 @@ package service
 
 import (
 	"errors"
+	"fmt"
 	"math"
 	"regexp"
 	"strconv"
 	"strings"
 	"sync"
+	"time"
 
 	"github.com/b3log/pipe/model"
 	"github.com/b3log/pipe/util"
@@ -76,11 +78,19 @@ func (srv *articleService) AddArticle(article *model.Article) error {
 	srv.mutex.Lock()
 	defer srv.mutex.Unlock()
 
-	tagStr := normalizeTagStr(article.Tags)
-	if "" == tagStr {
-		return errors.New("invalid tags [" + article.Tags + "]")
+	if util.IsReservedPath(article.Path) {
+		return errors.New("invalid path [" + article.Path + "]")
+	}
+
+	tagStr, err := normalizeTagStr(article.Tags)
+	if nil != err {
+		return err
 	}
 	article.Tags = tagStr
+
+	if err := normalizeArticlePath(article); nil != err {
+		return err
+	}
 
 	tx := db.Begin()
 	if err := tx.Create(article).Error; nil != err {
@@ -277,6 +287,16 @@ func (srv *articleService) UpdateArticle(article *model.Article) error {
 	}
 	article.BlogID = oldArticle.BlogID
 
+	tagStr, err := normalizeTagStr(article.Tags)
+	if nil != err {
+		return err
+	}
+	article.Tags = tagStr
+
+	if err := normalizeArticlePath(article); nil != err {
+		return err
+	}
+
 	tx := db.Begin()
 	if err := tx.Model(article).Updates(article).Error; nil != err {
 		tx.Rollback()
@@ -310,16 +330,16 @@ func (srv *articleService) IncArticleViewCount(article *model.Article) error {
 	return nil
 }
 
-func normalizeTagStr(tagStr string) string {
+func normalizeTagStr(tagStr string) (string, error) {
 	reg := regexp.MustCompile(`\s+`)
-	tagStr = reg.ReplaceAllString(tagStr, "")
-	tagStr = strings.Replace(tagStr, "，", ",", -1)
-	tagStr = strings.Replace(tagStr, "、", ",", -1)
-	tagStr = strings.Replace(tagStr, "；", ",", -1)
-	tagStr = strings.Replace(tagStr, ";", ",", -1)
+	tagStrTmp := reg.ReplaceAllString(tagStr, "")
+	tagStrTmp = strings.Replace(tagStrTmp, "，", ",", -1)
+	tagStrTmp = strings.Replace(tagStrTmp, "、", ",", -1)
+	tagStrTmp = strings.Replace(tagStrTmp, "；", ",", -1)
+	tagStrTmp = strings.Replace(tagStrTmp, ";", ",", -1)
 
 	reg = regexp.MustCompile(`[\\u4e00-\\u9fa5,\\w,&,\\+,-,\\.]+`)
-	tags := strings.Split(tagStr, ",")
+	tags := strings.Split(tagStrTmp, ",")
 	retTags := []string{}
 	for _, tag := range tags {
 		if contains(retTags, tag) {
@@ -333,7 +353,11 @@ func normalizeTagStr(tagStr string) string {
 		retTags = append(retTags, tag)
 	}
 
-	return strings.Join(retTags, ",")
+	if "" == tagStrTmp {
+		return "", errors.New("invalid tags [" + tagStrTmp + "]")
+	}
+
+	return tagStrTmp, nil
 }
 
 func removeTagArticleRels(tx *gorm.DB, article *model.Article) error {
@@ -403,4 +427,26 @@ func contains(strs []string, str string) bool {
 	}
 
 	return false
+}
+
+func normalizeArticlePath(article *model.Article) error {
+	path := strings.TrimSpace(article.Path)
+	if "" == path {
+		now := time.Now()
+		path = util.PathArticles + now.Format("/2006/01/02/") +
+			fmt.Sprintf("%d", now.UnixNano()/int64(time.Millisecond))
+	}
+
+	if !strings.HasPrefix(path, "/") {
+		path = "/" + path
+	}
+
+	count := 0
+	if db.Model(&model.Article{}).Where("path = ? AND id != ?", path, article.ID).Count(&count); 0 < count {
+		return errors.New("path is reduplicated")
+	}
+
+	article.Path = path
+
+	return nil
 }

@@ -17,7 +17,6 @@
 package service
 
 import (
-	"errors"
 	"math"
 	"strings"
 	"sync"
@@ -46,9 +45,9 @@ func (srv *categoryService) AddCategory(category *model.Category) error {
 	srv.mutex.Lock()
 	defer srv.mutex.Unlock()
 
-	tagStr := normalizeTagStr(category.Tags)
-	if "" == tagStr {
-		return errors.New("invalid tags [" + category.Tags + "]")
+	tagStr, err := normalizeTagStr(category.Tags)
+	if nil != err {
+		return err
 	}
 	category.Tags = tagStr
 
