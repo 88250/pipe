@@ -41,28 +41,22 @@ func showInitPageAction(c *gin.Context) {
 	t.Execute(c.Writer, nil)
 }
 
-type initRequest struct {
-	Name      string `json:"name" binding:"required"`
-	B3Key     string `json:"b3key" binding:"required"`
-	AvatarURL string `json:"avatarURL" binding:"required"`
-}
-
 func initAction(c *gin.Context) {
 	result := util.NewResult()
 	defer c.JSON(http.StatusOK, result)
 
-	reqData := &initRequest{}
-	if err := c.BindJSON(reqData); nil != err {
+	session := util.GetSession(c)
+	if nil == session {
 		result.Code = -1
-		result.Msg = "parses init request failed"
+		result.Msg = "session is nil"
 
 		return
 	}
 
 	platformAdmin := &model.User{
-		Name:      reqData.Name,
-		B3Key:     reqData.B3Key,
-		AvatarURL: reqData.AvatarURL,
+		Name:      session.UName,
+		B3Key:     session.UB3Key,
+		AvatarURL: session.UAvatar,
 	}
 
 	if err := service.Init.InitPlatform(platformAdmin); nil != err {
@@ -82,6 +76,7 @@ func initAction(c *gin.Context) {
 	sessionData := &util.SessionData{
 		UID:     platformAdmin.ID,
 		UName:   platformAdmin.Name,
+		UB3Key:  platformAdmin.B3Key,
 		URole:   platformAdmin.Role,
 		UAvatar: platformAdmin.AvatarURL,
 		BID:     platformAdmin.BlogID,

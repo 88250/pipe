@@ -85,10 +85,12 @@ func fillUser(c *gin.Context) {
 
 		data := result.Data.(map[string]interface{})
 		username := data["userName"].(string)
+		b3Key := data["userB3Key"].(string)
 		userAvatar := data["userAvatarURL"].(string)
 
 		session = &util.SessionData{
 			UName:   username,
+			UB3Key:  b3Key,
 			UAvatar: userAvatar,
 			URole:   model.UserRoleBlogVisitor,
 		}
