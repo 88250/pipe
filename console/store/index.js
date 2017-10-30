@@ -80,6 +80,9 @@ export const actions = {
           app.i18n.setLocaleMessage(responseData.locale, message)
         }
         commit('setStatus', responseData)
+      } else {
+        const message = require(`../../i18n/${state.locale}.json`)
+        app.i18n.setLocaleMessage(state.locale, message)
       }
     } catch (e) {
       console.error(e)
