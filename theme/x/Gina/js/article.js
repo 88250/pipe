@@ -115,14 +115,13 @@ const Article = {
     const $editor = $('#editor')
     let requestData = {
       'articleID': $editor.data('id'),
-      'content': $('#commentContent').val(),
-      'blogURL': $('#commentContent').data('blogurl')
+      'content': $('#commentContent').val()
     }
     if ($editor.data('commentid')) {
       requestData.parentCommentID = $editor.data('commentid')
     }
 
-    AddComment(requestData, (data) => {
+    AddComment($('#commentContent').data('blogurl'), requestData, (data) => {
       Article.hideComment()
       const $commentsCnt = $('#commentsCnt')
       const $comments = $('#comments')

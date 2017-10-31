@@ -117,20 +117,18 @@ export const ReomveComment = (id, succCB, errorCB) => {
 
 /**
  * @description 添加评论
+ * @param {string} blogURL 博客原始地址
  * @param {string} data 评论内容
  * @param {function} succCB 成功回调
  * @param {function} errorCB 失败回调
  */
-export const AddComment = (data, succCB, errorCB) => {
+export const AddComment = (blogURL, data, succCB, errorCB) => {
   $.ajax({
-    url: `${location.origin}/comments`,
+    url: `${blogURL}/comments`,
     data,
     type: 'POST',
     success: (result) => {
       if (result.code === 0) {
-        localStorage.removeItem('themeCommentName')
-        localStorage.removeItem('themeCommentEmail')
-        localStorage.removeItem('themeCommentURL')
         localStorage.removeItem('themeCommentContent')
         succCB && succCB(result.data)
       } else {
