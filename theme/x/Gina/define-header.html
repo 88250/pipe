@@ -10,7 +10,7 @@
             {{.I18n.Team}}
         </a>
         {{end}}
-        <a href="{{.Setting.BasicBlogURL}}/rss">TODORSS</a>
+        <a href="{{.Setting.BasicBlogURL}}/atom">{{.I18n.Feed}}</a>
         {{range .Navigations}}
         <a href="{{.URL}}" target="{{.OpenMethod}}">{{.Title}}</a>
         {{end}}

@@ -115,7 +115,8 @@ const Article = {
     const $editor = $('#editor')
     let requestData = {
       'articleID': $editor.data('id'),
-      'content': $('#commentContent').val()
+      'content': $('#commentContent').val(),
+      'blogURL': $('#commentContent').data('blogurl')
     }
     if ($editor.data('commentid')) {
       requestData.parentCommentID = $editor.data('commentid')
