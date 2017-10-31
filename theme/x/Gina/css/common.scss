@@ -969,4 +969,11 @@ a {
   .pagination__item {
     margin: 0;
   }
+
+  .footer__info {
+    text-align: right;
+    .fn-right {
+      float: none;
+    }
+  }
 }
