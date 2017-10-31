@@ -24,6 +24,9 @@ const Article = {
     if ($('#toc').length === 1) {
       $('#editor').width($(window).width() - 340)
       InitToc('toc', 'articleContent')
+      if ($('body').width() > 768) {
+        $('body').addClass('body--side')
+      }
     }
   },
   _initEvent: () => {

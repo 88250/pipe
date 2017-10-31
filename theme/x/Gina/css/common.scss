@@ -157,8 +157,10 @@ a {
 
 // framework
 .wrapper {
-  width: 910px;
+  max-width: 910px;
   margin: 0 auto;
+  padding: 0 20px;
+  box-sizing: border-box;
 }
 
 .content {
@@ -205,6 +207,7 @@ a {
   border-bottom: 1px solid $border-color;
   line-height: 64px;
   position: relative;
+  overflow: hidden;
 
   a {
     color: $text-color;
@@ -377,6 +380,10 @@ a {
 
 // article
 .article {
+  &__item:last-child {
+    border-bottom-width: 0;
+    margin-bottom: 0;
+  }
   &__thumb {
     height: 180px;
     border-radius: 10px;
@@ -597,6 +604,9 @@ a {
 // pagination
 .pagination {
   line-height: 30px;
+  line-height: 30px;
+  border-top: 1px dotted $border-color;
+  padding-top: 50px;
   &__item {
     border: 1px solid $border-color;
     padding: 0 11px;
@@ -874,5 +884,92 @@ a {
   &__level4 {
     font-size: 30px;
     color: #000
+  }
+}
+
+@media (max-width: 768px) {
+  .wrapper {
+    width: auto;
+  }
+
+  .side,
+  .body--side .header__tool,
+  .fn-three > div {
+    width: 100%;
+  }
+
+  .body--side .sidebar__icon {
+    position: fixed;
+  }
+
+  .side {
+    right: -100%;
+  }
+
+  .fn-three > div {
+    margin-bottom: 50px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  .fn-three--mid {
+    margin-left: 0;
+  }
+
+  .editor .emotion__item {
+    margin: 5px 5px 5px 0;
+    font-size: 16px;
+  }
+
+  .header__tool {
+    display: none;
+  }
+
+  .body--side {
+    .side {
+      right: 1px;
+    }
+
+    .header__tool {
+      display: block;
+    }
+  }
+
+  .sidebar__icon {
+    top: 12px;
+    border-color: transparent;
+    left: 10px;
+    position: absolute;
+  }
+
+  .header > .wrapper {
+    text-align: center;
+    & > a {
+      display: none;
+      &:first-child {
+        display: block;
+      }
+    }
+  }
+
+  .side > .fn-none {
+    display: block;
+    &.module__list li {
+      border-bottom: 1px dotted $border-color;
+      a {
+        display: block;
+        color: $text-color;
+      }
+    }
+  }
+
+  .side__sub-title {
+    padding-top: 0;
+  }
+
+  .pagination__item {
+    margin: 0;
   }
 }

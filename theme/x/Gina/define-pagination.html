@@ -1,4 +1,5 @@
 {{define "pagination"}}
+{{if $.Pagination}}
 <nav class="pagination">
     {{range $.Pagination.PageNums}}
     {{if eq . $.Pagination.CurrentPageNum}}
@@ -19,4 +20,5 @@
 
     {{end}}
 </nav>
+{{end}}
 {{end}}
