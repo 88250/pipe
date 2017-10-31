@@ -38,12 +38,13 @@ const (
 	PathCategories = "/categories"
 	PathTags       = "/tags"
 	PathComments   = "/comments"
+	PathAtom       = "/atom"
 )
 
 var reservedPaths = []string{
 	PathInit, PathSearch, PathBlogs, PathAssets, PathAdmin, PathAPI,
 	PathFavicon, PathTheme, PathActivities, PathArchives, PathArticles, PathAuthors,
-	PathCategories, PathTags, PathComments,
+	PathCategories, PathTags, PathComments, PathAtom,
 }
 
 func IsReservedPath(path string) bool {

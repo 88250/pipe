@@ -170,6 +170,10 @@ func routePath(c *gin.Context) {
 		addCommentAction(c)
 
 		return
+	case util.PathAtom:
+		outputAtomAction(c)
+
+		return
 	}
 
 	if strings.Contains(path, util.PathArchives+"/") {
