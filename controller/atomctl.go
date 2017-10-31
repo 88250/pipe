@@ -17,43 +17,39 @@
 package controller
 
 import (
-	"time"
-
+	"github.com/b3log/pipe/model"
+	"github.com/b3log/pipe/service"
+	"github.com/b3log/pipe/util"
 	"github.com/gin-gonic/gin"
 	"github.com/gorilla/feeds"
 )
 
 func outputAtomAction(c *gin.Context) {
-	now := time.Now()
+	blogAdmin := getBlogAdmin(c)
+
+	blogTitleSetting := service.Setting.GetSetting(model.SettingCategoryBasic, model.SettingNameBasicBlogTitle, blogAdmin.BlogID)
+	blogURLSetting := service.Setting.GetSetting(model.SettingCategoryBasic, model.SettingNameBasicBlogURL, blogAdmin.BlogID)
+	blogSubtitleSetting := service.Setting.GetSetting(model.SettingCategoryBasic, model.SettingNameBasicBlogSubtitle, blogAdmin.BlogID)
 	feed := &feeds.Feed{
-		Title:       "jmoiron.net blog",
-		Link:        &feeds.Link{Href: "http://jmoiron.net/blog"},
-		Description: "discussion about tech, footie, photos",
-		Author:      &feeds.Author{Name: "Jason Moiron", Email: "jmoiron@jmoiron.net"},
-		Created:     now,
+		Title:       blogTitleSetting.Value,
+		Link:        &feeds.Link{Href: blogURLSetting.Value},
+		Description: blogSubtitleSetting.Value,
+		Author:      &feeds.Author{Name: blogAdmin.Name},
 	}
 
-	feed.Items = []*feeds.Item{
-		&feeds.Item{
-			Title:       "Limiting Concurrency in Go",
-			Link:        &feeds.Link{Href: "http://jmoiron.net/blog/limiting-concurrency-in-go/"},
-			Description: "A discussion on controlled parallelism in golang",
-			Author:      &feeds.Author{Name: "Jason Moiron", Email: "jmoiron@jmoiron.net"},
-			Created:     now,
-		},
-		&feeds.Item{
-			Title:       "Logic-less Template Redux",
-			Link:        &feeds.Link{Href: "http://jmoiron.net/blog/logicless-template-redux/"},
-			Description: "More thoughts on logicless templates",
-			Created:     now,
-		},
-		&feeds.Item{
-			Title:       "Idiomatic Code Reuse in Go",
-			Link:        &feeds.Link{Href: "http://jmoiron.net/blog/idiomatic-code-reuse-in-go/"},
-			Description: "How to use interfaces <em>高效地</em>",
-			Created:     now,
-		},
+	items := []*feeds.Item{}
+	articles, _ := service.Article.GetArticles(1, blogAdmin.BlogID)
+	for _, article := range articles {
+		user := service.User.GetUser(article.AuthorID)
+		items = append(items, &feeds.Item{
+			Title:       article.Title,
+			Link:        &feeds.Link{Href: blogURLSetting.Value + article.Path},
+			Description: util.MarkdownAbstract(article.Content),
+			Author:      &feeds.Author{Name: user.Name},
+			Created:     article.CreatedAt,
+		})
 	}
+	feed.Items = items
 
 	feed.WriteAtom(c.Writer)
 }

@@ -63,6 +63,7 @@ func showArticlesAction(c *gin.Context) {
 
 		article := &ThemeArticle{
 			ID:           articleModel.ID,
+			Abstract:     util.MarkdownAbstract(articleModel.Content),
 			Author:       author,
 			CreatedAt:    articleModel.CreatedAt.Format("2006-01-02"),
 			Title:        articleModel.Title,

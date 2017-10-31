@@ -155,7 +155,7 @@ func (srv *articleService) GetArticles(page int, blogID uint) (ret []*model.Arti
 
 	offset := (page - 1) * pageSize
 	count := 0
-	if err := db.Model(model.Article{}).Select("id, created_at, author_id, title, tags, path, topped, view_count, comment_count").
+	if err := db.Model(model.Article{}).Select("id, created_at, author_id, title, content, tags, path, topped, view_count, comment_count").
 		Where(model.Article{Status: model.ArticleStatusPublished, BlogID: blogID}).
 		Order("topped DESC, id DESC").Count(&count).
 		Offset(offset).Limit(pageSize).
