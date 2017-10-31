@@ -23,7 +23,9 @@ import (
 	"github.com/b3log/pipe/model"
 	"github.com/b3log/pipe/service"
 	"github.com/b3log/pipe/util"
+	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
+	log "github.com/sirupsen/logrus"
 )
 
 type Status struct {
@@ -57,12 +59,24 @@ func getStatusAction(c *gin.Context) {
 	session := util.GetSession(c)
 	if nil != session {
 		user := service.User.GetUser(session.UID)
-		if nil != user {
-			data.Name = user.Name
-			data.Nickname = user.Nickname
-			data.AvatarURL = user.AvatarURL
-			data.Role = user.Role
+		if nil == user {
+			session := sessions.Default(c)
+			session.Options(sessions.Options{
+				Path:   "/",
+				MaxAge: -1,
+			})
+			session.Clear()
+			if err := session.Save(); nil != err {
+				log.Errorf("saves session failed: " + err.Error())
+			}
+
+			return
 		}
+
+		data.Name = user.Name
+		data.Nickname = user.Nickname
+		data.AvatarURL = user.AvatarURL
+		data.Role = user.Role
 
 		if model.UserRoleBlogVisitor != session.URole {
 			blogTitleSetting := service.Setting.GetSetting(model.SettingCategoryBasic, model.SettingNameBasicBlogTitle, user.BlogID)
