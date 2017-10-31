@@ -65,6 +65,7 @@ func MapRoutes() *gin.Engine {
 	api.POST("/logout", logoutAction)
 	api.Any("/hp/*apis", util.HacPaiAPI())
 	api.GET("/status", getStatusAction)
+	api.GET("/check-version", console.CheckVersion)
 
 	consoleGroup := api.Group("/console")
 	consoleGroup.Use(console.LoginCheck)

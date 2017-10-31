@@ -39,7 +39,7 @@
       }
     },
     async mounted () {
-      const responseData = await this.axios.get(`/hp/apis/check-version`)
+      const responseData = await this.axios.get(`check-version`)
       if (responseData) {
         this.$set(this, 'isLatest', this.$store.state.version === responseData.version)
         this.$set(this, 'download', responseData.download)

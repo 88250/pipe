@@ -19,10 +19,12 @@ package console
 import (
 	"net/http"
 	"strconv"
+	"time"
 
 	"github.com/b3log/pipe/service"
 	"github.com/b3log/pipe/util"
 	"github.com/gin-gonic/gin"
+	"github.com/parnurzeal/gorequest"
 )
 
 func BlogSwitchAction(c *gin.Context) {
@@ -69,4 +71,25 @@ func BlogSwitchAction(c *gin.Context) {
 	session.URole = role
 	session.BID = uint(blogID)
 	session.Save(c)
+}
+
+func CheckVersion(c *gin.Context) {
+	result := util.NewResult()
+	defer c.JSON(http.StatusOK, result)
+
+	rhyResult := map[string]interface{}{}
+	request := gorequest.New()
+	_, _, errs := request.Get("http://rhythm.b3log.org/version/pipe/latest/"+util.Version).
+		Set("user-agent", util.UserAgent).Timeout(30 * time.Second).EndStruct(&rhyResult)
+	if nil != errs {
+		result.Code = -1
+		result.Msg = errs[0].Error()
+
+		return
+	}
+
+	data := map[string]interface{}{}
+	data["version"] = rhyResult["pipeVersion"]
+	data["download"] = rhyResult["pipeDownload"]
+	result.Data = data
 }

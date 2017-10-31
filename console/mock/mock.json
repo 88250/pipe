@@ -318,7 +318,7 @@
       ],
       "mockFile": "hacpaiArticleList.json"
     },
-    "hp/apis/check-version": {
+    "check-version": {
       "verbs": [
         "get"
       ],
