@@ -123,7 +123,7 @@ export const ReomveComment = (id, succCB, errorCB) => {
  */
 export const AddComment = (data, succCB, errorCB) => {
   $.ajax({
-    url: `${location.origin}/api/console/comments`,
+    url: `${location.origin}/comments`,
     data,
     type: 'POST',
     success: (result) => {
