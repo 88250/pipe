@@ -430,20 +430,18 @@ a {
     .action {
       &__btn {
         border-radius: 20px;
-        height: 40px;
+        height: 30px;
         display: inline-block;
         border: 1px solid $border-color;
-        padding: 0 10px;
-        line-height: 38px;
+        padding: 0 7px;
+        line-height: 28px;
         text-align: center;
         cursor: pointer;
         box-sizing: border-box;
         transition: transform 0.35s ease-in, background .15s ease-in-out;
         color: $black;
         svg {
-          margin-top: 9px;
-          height: 18px;
-          width: 18px;
+          margin-top: 7px;
           transition: $transition;
         }
         &:hover {
@@ -603,13 +601,12 @@ a {
 
 // pagination
 .pagination {
-  line-height: 30px;
-  line-height: 30px;
+  line-height: 24px;
   border-top: 1px dotted $border-color;
   padding-top: 50px;
   &__item {
     border: 1px solid $border-color;
-    padding: 0 11px;
+    padding: 0 8px;
     display: inline-block;
     border-radius: 15px;
     color: $black;
@@ -676,7 +673,8 @@ a {
     float: right;
     margin-left: 20px;
     svg {
-      margin-top: 4px;
+      margin: 5px 0 0 5px;
+      float: right;
     }
     &:hover {
       color: $theme-accent;
@@ -699,7 +697,7 @@ a {
       cursor: pointer;
       float: left;
       margin: 10px 10px 5px 0;
-      font-size: 24px;
+      font-size: 16px;
       transition: $transition;
       background-color: transparent;
 
@@ -721,7 +719,7 @@ a {
 
   input,
   textarea {
-    margin-bottom: 10px;
+    margin-bottom: 30px;
   }
 
   .article__action {
@@ -920,7 +918,6 @@ a {
 
   .editor .emotion__item {
     margin: 5px 5px 5px 0;
-    font-size: 16px;
   }
 
   .header__tool {
