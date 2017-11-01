@@ -6,7 +6,15 @@
  */
 
 import $ from 'jquery'
-import {AddComment, InitEditor, InitToc, LocalStorageInput, ReomveComment} from '../../../js/common'
+import {
+  AddComment,
+  InitEditor,
+  InitToc,
+  LocalStorageInput,
+  ReomveComment,
+  LazyLoadCSSImage,
+  LazyLoadImage
+} from '../../../js/common'
 import './common'
 import hljs from 'highlight.js'
 
@@ -35,18 +43,19 @@ const Article = {
       Article.showComment($this.data('title'), $this.data('id'))
     })
 
-    $('.comment__item').each(function () {
+    $('#comments').on('click', '.comment__btn', function () {
       const $this = $(this)
-      $this.find('.commentDelete').click(function () {
+      if ($this.hasClass('commentDelete')) {
         // remove comment
         const $firstBtn = $(this)
         Article.removeComment($firstBtn.data('id'), $firstBtn.data('label'), $firstBtn.data('label2'))
-      })
-      $this.find('.commentAdd').click(function () {
+      }
+
+      if ($this.hasClass('commentAdd')) {
         // add reply comment
         const $lastBtn = $(this)
         Article.showComment($lastBtn.data('title'), $lastBtn.data('id'), $lastBtn.data('commentid'))
-      })
+      }
     })
 
     $('#comments.comment__null').click(function () {
@@ -55,8 +64,18 @@ const Article = {
     })
 
     $('#editorAdd').click(function () {
-      Article.addComment($(this).data('label'))
+      Article.addComment($(this).data('label'), $(this).data('label2'))
     })
+
+    $('#commentContent').keydown(function (event) {
+      if (event.metaKey && 13 === event.keyCode) {
+        Article.addComment($('#editorAdd').data('label'), $('#editorAdd').data('label2'))
+      }
+    }).keypress(function (event) {
+      if (event.ctrlKey && 10 === event.charCode) {
+        Article.addComment($('#editorAdd').data('label'), $('#editorAdd').data('label2'))
+      }
+    });
 
     $('#editorCancel').click(function () {
       Article.hideComment()
@@ -111,17 +130,30 @@ const Article = {
     $editor.css({'bottom': `-${$editor.outerHeight()}px`, 'opacity': 0})
     $('body').css('padding-bottom', 0)
   },
-  addComment: (label) => {
+  addComment: (label, label2) => {
     const $editor = $('#editor')
+    const $editorAdd = $('#editorAdd')
+    const $commentContent = $('#commentContent')
+
+    if ($editorAdd.hasClass('disabled')) {
+      return;
+    }
+    if ($.trim($commentContent.val()).length === 0) {
+      alert(label2)
+      return;
+    }
+
     let requestData = {
       'articleID': $editor.data('id'),
-      'content': $('#commentContent').val()
+      'content': $commentContent.val()
     }
     if ($editor.data('commentid')) {
       requestData.parentCommentID = $editor.data('commentid')
     }
 
-    AddComment($('#commentContent').data('blogurl'), requestData, (data) => {
+    $editorAdd.addClass('disabled')
+
+    AddComment($commentContent.data('blogurl'), requestData, (data) => {
       Article.hideComment()
       const $commentsCnt = $('#commentsCnt')
       const $comments = $('#comments')
@@ -137,8 +169,14 @@ const Article = {
       $comments.find('pre > code').each(function (i, block) {
         hljs.highlightBlock(block)
       })
+      LazyLoadCSSImage('.avatar, .article__thumb')
+      LazyLoadImage()
+      $commentContent.val('')
+      localStorage.removeItem('commentContent')
+      $editorAdd.removeClass('disabled')
     }, (msg) => {
       alert(msg)
+      $editorAdd.removeClass('disabled')
     })
   }
 }

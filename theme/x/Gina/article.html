@@ -102,9 +102,11 @@
         <div class="module__header">
             <span id="commentsCnt">{{len .Comments}}</span> {{.I18n.Comment}}
         </div>
+        <div>
         {{range .Comments}}
         {{template "Gina/comment" dict "Item" . "I18n" $.I18n "Username" $.User.UName "ArticleID" $.Article.ID}}
         {{end}}
+        </div>
         {{template "Gina/pagination" .}}
     </div>
     {{else}}
@@ -250,8 +252,9 @@
             </div>
             <textarea id="commentContent" data-blogurl="{{.Setting.BasicBlogURL}}" placeholder="{{.I18n.Content}}" rows="3"></textarea>
             <div class="article__action fn-clear">
-                <span class="fn-right action__btn action__btn--space"
+                <span class="fn-right action__btn action__btn--space action__btn--active"
                       id="editorAdd"
+                      data-label2="{{.I18n.Required}}"
                       data-label="{{.I18n.Comment}}">
                     {{.I18n.Confirm}}&nbsp;<svg class="fn-right"><use xlink:href="#comment"></use></svg>
                 </span>

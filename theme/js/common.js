@@ -129,7 +129,6 @@ export const AddComment = (blogURL, data, succCB, errorCB) => {
     type: 'POST',
     success: (result) => {
       if (result.code === 0) {
-        localStorage.removeItem('themeCommentContent')
         succCB && succCB(result.data)
       } else {
         errorCB && errorCB(result.msg)
@@ -163,8 +162,8 @@ export const KillBrowser = () => {
  * @param {string} id 输入框 id
  */
 export const LocalStorageInput = (id) => {
-  $(`#${id}`).val(localStorage.getItem(`input${id}`) || '').keyup(function () {
-    localStorage.setItem(`input${id}`, $(this).val())
+  $(`#${id}`).val(localStorage.getItem(id) || '').keyup(function () {
+    localStorage.setItem(id, $(this).val())
   })
 }
 

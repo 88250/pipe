@@ -444,6 +444,7 @@ a {
           margin-top: 7px;
           transition: $transition;
         }
+        &--active,
         &:hover {
           color: #fff;
           background-color: $theme-accent;
