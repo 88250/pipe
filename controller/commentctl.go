@@ -17,12 +17,17 @@
 package controller
 
 import (
+	"bytes"
+	"html/template"
 	"net/http"
+	"strings"
 
+	"github.com/b3log/pipe/i18n"
 	"github.com/b3log/pipe/model"
 	"github.com/b3log/pipe/service"
 	"github.com/b3log/pipe/util"
 	"github.com/gin-gonic/gin"
+	log "github.com/sirupsen/logrus"
 )
 
 func addCommentAction(c *gin.Context) {
@@ -55,4 +60,40 @@ func addCommentAction(c *gin.Context) {
 		result.Code = -1
 		result.Msg = err.Error()
 	}
+
+	dataModel := DataModel{}
+	author := &ThemeAuthor{
+		Name:      session.UName,
+		URL:       "https://hacpai.com/member/" + session.UName,
+		AvatarURL: session.UAvatar,
+	}
+	themeComment := ThemeComment{
+		ID:        comment.ID,
+		Content:   template.HTML(util.Markdown(comment.Content)),
+		Author:    author,
+		CreatedAt: comment.CreatedAt.Format("2006-01-02"),
+		Removable: false,
+	}
+	dataModel["Item"] = themeComment
+	dataModel["ArticleID"] = comment.ArticleID
+
+	localeSetting := service.Setting.GetSetting(model.SettingCategoryI18n, model.SettingNameI18nLocale, blogAdmin.BlogID)
+	i18ns := i18n.GetMessages(localeSetting.Value)
+	i18nMap := map[string]interface{}{}
+	for key, value := range i18ns {
+		i18nMap[strings.Title(key)] = value
+		i18nMap[key] = value
+	}
+	dataModel["I18n"] = i18nMap
+
+	t := template.Must(template.New("").ParseFiles("theme/x/" + getTheme(c) + "/define-comment.html"))
+
+	htmlBuilder := bytes.Buffer{}
+	if err := t.ExecuteTemplate(&htmlBuilder, getTheme(c)+"/comment", dataModel); nil != err {
+		log.Errorf("execute comment template failed: " + err.Error())
+
+		return
+	}
+
+	result.Data = htmlBuilder.String()
 }

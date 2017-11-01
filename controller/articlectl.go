@@ -196,6 +196,7 @@ func showArticleAction(c *gin.Context) {
 			ID:        commentModel.ID,
 			Content:   template.HTML(util.Markdown(commentModel.Content)),
 			Author:    author,
+			CreatedAt: commentModel.CreatedAt.Format("2006-01-02"),
 			Removable: false,
 		}
 
