@@ -125,7 +125,7 @@ export const ReomveComment = (id, succCB, errorCB) => {
 export const AddComment = (blogURL, data, succCB, errorCB) => {
   $.ajax({
     url: `${blogURL}/comments`,
-    data,
+    data: JSON.stringify(data),
     type: 'POST',
     success: (result) => {
       if (result.code === 0) {

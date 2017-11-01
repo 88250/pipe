@@ -1,0 +1,71 @@
+{{define "footer"}}
+<footer class="footer">
+    <div class="wrapper">
+        <div class="footer__side fn-clear fn-three">
+            <div>
+                {{if eq .Setting.BasicNoticeBoard ""}}
+                {{template "module-list"  dict "List" .MostUseCategories "Title" .I18n.Categories "UserCount" .UserCount}}
+                {{else}}
+                <div class="module__header">
+                    {{.I18n.NoticeBoard}}
+                </div>
+                <div>
+                    {{.Setting.BasicNoticeBoard}}
+                </div>
+                {{end}}
+            </div>
+            <div class="fn-three--mid">
+                <div class="module__header">
+                    {{.I18n.Tags}}
+                </div>
+                <div>
+                    {{range .MostUseTags}}
+                    <a class="tag" href="{{.URL}}">{{.Title}}</a>
+                    {{end}}
+                </div>
+            </div>
+            <div>
+                {{template "module-list"  dict "List" .RandomArticles "Title" .I18n.RandomArticle "UserCount" .UserCount}}
+            </div>
+        </div>
+        <div class="footer__info">
+            <div class="fn-clear">
+                {{.Setting.BasicBlogSubtitle}}
+                <div class="fn-right">
+                    <a href="{{.Setting.BasicBlogURL}}">{{.Setting.BasicBlogTitle}}</a> &copy; {{.Year}}
+                    {{.Setting.BasicFooter}}
+                </div>
+            </div>
+            <div class="fn-clear">
+                <span class="ft-gray">{{.Statistic.StatisticViewCount}}</span>
+                {{.I18n.View}}
+                &nbsp;
+                <span class="ft-gray">{{.Statistic.StatisticPublishedArticleCount}}</span>
+                {{.I18n.Article}}
+                &nbsp;
+                <span class="ft-gray">{{.Statistic.StatisticCommentCount}}</span>
+                {{.I18n.Comment}}
+                <div class="fn-right ft-gray">
+                    Powered by <a href="http://b3log.org/" target="_blank">B3log 开源</a> •
+                    <a href="https://github.com/b3log/pipe" target="_blank">Pipe</a> •
+                    Theme <a href="https://github.com/b3log/pipe-themes" target="_blank">Gina</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+<div class="sidebar__icon" id="sidebarIcon">
+    <span class="sidebar__icon-line"></span>
+    <span class="sidebar__icon-line sidebar__icon-line--middle"></span>
+    <span class="sidebar__icon-line"></span>
+</div>
+
+{{if .Article}}
+<script type="text/javascript"
+        src="{{.Conf.StaticServer}}/theme/x/{{.Setting.ThemeName}}/js/article.min.js?{{.Conf.StaticResourceVersion}}"></script>
+{{else}}
+<script type="text/javascript"
+        src="{{.Conf.StaticServer}}/theme/x/{{.Setting.ThemeName}}/js/common.min.js?{{.Conf.StaticResourceVersion}}"></script>
+{{end}}
+
+{{end}}

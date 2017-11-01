@@ -1,3 +1,14 @@
-{{define "Koma/index.html"}}
-Placeholder
+{{define "Gina/index.html"}}
+<!DOCTYPE html>
+<html>
+<head>
+    {{template "head" .}}
+</head>
+<body>
+{{template "header" .}}
+{{template "article-list" .}}
+{{template "side" .}}
+{{template "footer" .}}
+</body>
+</html>
 {{end}}

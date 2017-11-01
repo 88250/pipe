@@ -1,3 +1,272 @@
-{{define "Koma/article.html"}}
-Article
+{{define "Gina/article.html"}}
+<!DOCTYPE html>
+<html>
+<head>
+    {{template "head" .}}
+    {{if .PreviousArticle}}
+    <link rel="prev" title="{{.PreviousArticle.Title}}" href="{{.PreviousArticle.URL}}">
+    {{end}}
+    {{if .NextArticle}}
+    <link rel="next" title="{{.NextArticle.Title}}" href="{{.NextArticle.URL}}">
+    {{end}}
+</head>
+<body>
+{{template "header" .}}
+{{template "side" .}}
+<div class="wrapper content">
+    <article class="fn-bottom">
+        <header class="fn-relative article__header">
+            {{if gt .UserCount 1}}
+            <a rel="nofollow"
+               href="{{.Article.Author.URL}}"
+               class="avatar tooltipped tooltipped--w fn-absolute"
+               aria-label="{{.Article.Author.Name}}"
+               data-src="{{.Article.Author.AvatarURL}}">
+            </a>
+            {{end}}
+            <div {{if gt .UserCount 1}} class="fn-padding80" {{end}}>
+                <h2 class="article__title">
+                    {{if .Article.Topped}}
+                    <svg>
+                        <use xlink:href="#focus"></use>
+                    </svg>
+                    {{end}}
+                    <a rel="bookmark" href="{{.Article.URL}}">
+                        {{.Article.Title}}
+                    </a>
+                </h2>
+                <div class="ft-gray ft-12">
+                    {{range .Article.Tags}}
+                    <a class="tag" rel="tag" href="{{.URL}}">{{.Title}}</a>
+                    {{end}} &nbsp;
+                    <time class="ft-nowrap">{{.Article.CreatedAt}}</time>
+                    •
+                    <span class="ft-nowrap">{{.Article.ViewCount}} {{$.I18n.View}}</span> •
+                    <a href="{{.URL}}#comments" class="ft-nowrap ft-gray">{{.Article.CommentCount}}
+                        {{$.I18n.Comment}}</a>
+                </div>
+            </div>
+        </header>
+        <section class="content__reset article__abstract" id="articleContent">
+            {{.Article.Content}}
+        </section>
+        <div class="article__action fn-clear">
+            <span class="action__share fn-left">
+                <span class="action__btn action__btn--share fn-left">
+                    {{$.I18n.Share}} &nbsp; <svg class="fn-right"><use xlink:href="#reply"></use></svg>
+                </span>
+                <span class="action__btns fn-left">
+                    <span class="action__btn action__btn--wechat" data-type="wechat">
+                        <svg><use xlink:href="#wechat"></use></svg>
+                    </span>
+                    <span class="action__btn action__btn--weibo" data-type="weibo">
+                        <svg><use xlink:href="#weibo"></use></svg>
+                    </span>
+                    <span class="action__btn action__btn--twitter" data-type="twitter">
+                        <svg><use xlink:href="#twitter"></use></svg>
+                    </span>
+                    <span class="action__btn action__btn--google" data-type="google">
+                        <svg><use xlink:href="#google"></use></svg>
+                    </span>
+                    <div class="action__code"
+                         data-title="{{.Article.Title}}"
+                         data-blogtitle="{{$.Setting.BasicBlogTitle}}"
+                         data-url="{{.Article.URL}}"
+                         data-avatar="{{.Article.Author.AvatarURL}}"></div>
+                </span>
+            </span>
+            <span class="fn-right">
+                {{if .Article.Editable}}
+            <a class="fn-right action__btn action__btn--space"
+               href="{{$.Conf.Server}}/admin/articles/post?id={{.Article.ID}}">
+                <svg>
+                    <use xlink:href="#edit"></use>
+                </svg>
+            </a>
+            {{end}}
+            <span class="fn-right action__btn action__btn--space fn-clear"
+                  data-title="{{.I18n.Comment}}{{.Article.Title}}"
+                  id="articleCommentBtn"
+                  data-id="{{.Article.ID}}">
+                {{$.I18n.Comment}} &nbsp;
+                <svg class="fn-right">
+                    <use xlink:href="#comment"></use>
+                </svg>
+            </span>
+            </span>
+        </div>
+    </article>
+
+    {{if gt (len .Comments) 0}}
+    <div id="comments" {{if or (ne (len .RelevantArticles) 0) (ne (len .ExternalRelevantArticles) 0)}}class="fn-bottom"{{end}}>
+        <div class="module__header">
+            <span id="commentsCnt">{{len .Comments}}</span> {{.I18n.Comment}}
+        </div>
+        {{range .Comments}}
+        {{template "comment" dict "Item" . "I18n" $.I18n "Username" $.User.UName "ArticleID" $.Article.ID}}
+        {{end}}
+        {{template "pagination" .}}
+    </div>
+    {{else}}
+    <div class="{{if or (ne (len .RelevantArticles) 0) (ne (len .ExternalRelevantArticles) 0)}}fn-bottom{{end}} ft-center comment__null"
+         data-title="{{.I18n.Comment}}{{.Article.Title}}"
+         data-id="{{.Article.ID}}"
+         id="comments">
+        {{.I18n.StayStep}}
+        <svg>
+            <use xlink:href="#comment"></use>
+        </svg>
+    </div>
+    {{end}}
+
+    {{if or (ne (len .RelevantArticles) 0) (ne (len .ExternalRelevantArticles) 0)}}
+    <div class="{{if or .PreviousArticle .NextArticle}}fn-bottom{{end}} fn-three fn-clear">
+        {{if ne (len .RelevantArticles) 0}}
+        {{range $index, $item := .RelevantArticles}}
+        {{if lt $index 2}}
+        <div
+        {{if eq $index 1}} class="fn-three--mid"{{end}}>
+        <div class="module__header">
+            {{if eq $index 0}}
+            {{$.I18n.RelevantArticle}}
+            {{else}}
+            &nbsp;
+            {{end}}
+        </div>
+        <a class="article__thumb article__thumb--relevant" data-src="{{$item.Author.AvatarURL}}"
+           href="{{$item.URL}}"></a>
+        <a class="module__list-title" href="{{$item.URL}}">{{$item.Title}}</a>
+    </div>
+    {{end}}
+    {{end}}
+    {{end}}
+
+    {{if ne (len .ExternalRelevantArticles) 0}}
+    {{range $index, $item := .ExternalRelevantArticles}}
+    {{if or (or (and (eq (len $.RelevantArticles) 0) (lt $index 3)) (and (eq (len $.RelevantArticles) 1) (lt $index 2))) (and (eq (len $.RelevantArticles) 2) (lt $index 1))}}
+    <div
+    {{if or (and (eq (len $.RelevantArticles) 0) (eq $index 1)) (and (eq (len $.RelevantArticles) 1) (eq $index 0))}}
+    class="fn-three--mid"{{end}}>
+    <div class="module__header">
+        {{if eq $index 0}}
+        {{$.I18n.ExternalRelevantArticle}}
+        {{else}}
+        &nbsp;
+        {{end}}
+    </div>
+    <a class="article__thumb article__thumb--relevant" data-src="{{$item.Author.AvatarURL}}" href="{{$item.URL}}"></a>
+    <a class="module__list-title" href="{{$item.URL}}">{{$item.Title}}</a>
+</div>
+{{end}}
+{{end}}
+{{end}}
+</div>
+{{end}}
+
+
+{{if or .PreviousArticle .NextArticle}}
+{{if gt .UserCount 1}}
+<div class="fn-clear article__near fn-two">
+    {{if .PreviousArticle}}
+    <a href="{{.PreviousArticle.URL}}" rel="prev">
+        <svg class="fn-absolute near__svg">
+            <use xlink:href="#chevron-left"></use>
+        </svg>
+        <span class="avatar tooltipped tooltipped--n fn-absolute"
+              aria-label="{{.PreviousArticle.Author.Name}}"
+              data-src="{{.PreviousArticle.Author.AvatarURL}}"></span>
+        <span class="near__title">
+                 {{.I18n.PreArticle}}<br>
+                <b class="ft-break">{{.PreviousArticle.Title}}</b>
+            </span>
+    </a>
+    {{end}}
+
+    {{if .NextArticle}}
+    <a href="{{.NextArticle.URL}}" rel="next" class="near__next {{if .PreviousArticle}}{{else}}near__next--single{{end}}">
+        <svg class="fn-absolute near__svg">
+            <use xlink:href="#chevron-right"></use>
+        </svg>
+        <span class="avatar tooltipped tooltipped--n fn-absolute"
+              aria-label="{{.NextArticle.Author.Name}}"
+              data-src="{{.NextArticle.Author.AvatarURL}}"></span>
+        <span class="near__title">
+                {{.I18n.NextArticle}}<br>
+                <b class="ft-break">{{.NextArticle.Title}}</b>
+            </span>
+    </a>
+    {{end}}
+</div>
+{{else}}
+<div class="fn-clear article__near fn-two">
+    {{if .PreviousArticle}}
+    <a href="{{.PreviousArticle.URL}}"
+       class="tooltipped tooltipped--w"
+       rel="prev" aria-label="{{.I18n.PreArticle}}">
+        <svg class="near__icon">
+            <use xlink:href="#chevron-left"></use>
+        </svg>
+        <b class="ft-break">{{.PreviousArticle.Title}}</b>
+    </a>
+    {{end}}
+
+    {{if .NextArticle}}
+    <a href="{{.NextArticle.URL}}" rel="next"
+       class="tooltipped tooltipped--e fn-two--next {{if .PreviousArticle}}{{else}}near__next--single{{end}}"
+       aria-label="{{.I18n.NextArticle}}">
+        <b class="ft-break">{{.NextArticle.Title}}</b>
+        <svg class="near__icon-last">
+            <use xlink:href="#chevron-right"></use>
+        </svg>
+    </a>
+    {{end}}
+</div>
+{{end}}
+{{end}}
+
+</div>
+
+
+{{if ne .User.UID 0}}
+<div class="editor" id="editor">
+    <div class="wrapper">
+        <div id="replyObject"></div>
+        <div class="form">
+            <div id="emotions">
+                <span class="emotion__item" title="😁">😁</span>
+                <span class="emotion__item" title="😂">😂</span>
+                <span class="emotion__item" title="😜">😜</span>
+                <span class="emotion__item" title="😫">😫</span>
+                <span class="emotion__item" title="😭">😭</span>
+                <span class="emotion__item" title="😰">😰</span>
+                <span class="emotion__item" title="😡">😡</span>
+                <span class="emotion__item" title="😤">😤</span>
+                <span class="emotion__item" title="👀">👀</span>
+                <span class="emotion__item" title="😱">😱</span>
+                <span class="emotion__item" title="😎">😎</span>
+                <span class="emotion__item" title="😋">😋</span>
+                <span class="emotion__item" title="💕">💕</span>
+                <span class="emotion__item" title="💔">💔</span>
+                <span class="emotion__item" title="😈">😈</span>
+            </div>
+            <textarea id="commentContent" data-blogurl="{{.Setting.BasicBlogURL}}" placeholder="{{.I18n.Content}}" rows="3"></textarea>
+            <div class="article__action fn-clear">
+                <span class="fn-right action__btn action__btn--space"
+                      id="editorAdd"
+                      data-label="{{.I18n.Comment}}">
+                    {{.I18n.Confirm}}&nbsp;<svg class="fn-right"><use xlink:href="#comment"></use></svg>
+                </span>
+                <span class="fn-right action__btn action__btn--space"
+                      id="editorCancel">
+                    {{.I18n.Cancel}}&nbsp;<svg class="fn-right"><use xlink:href="#chevron-up"></use></svg>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+{{end}}
+
+{{template "footer" .}}
+</body>
+</html>
 {{end}}

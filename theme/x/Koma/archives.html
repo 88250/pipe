@@ -1,0 +1,34 @@
+{{define "Gina/archives.html"}}
+<!DOCTYPE html>
+<html>
+<head>
+    {{template "head" .}}
+</head>
+<body>
+{{template "header" .}}
+<div class="wrapper page">
+    <h1 class="page__title">
+        <span id="archiveMonthCount">0</span> <span class="ft-fade ft-13">{{.I18n.Month2}}</span>
+        <span id="archiveArticleCount">0</span> <span class="ft-fade ft-13">{{.I18n.Article2}}</span>
+    </h1>
+    <ul>
+        {{range .Archives}}
+        <li class="archives__item">
+            <a href="{{.URL}}">
+                {{.Title}}
+                <span class="ft-fade ft-13">{{.Count}} {{$.I18n.Space}}</span>
+            </a>
+            {{end}}
+        </li>
+    </ul>
+
+</div>
+{{template "side" .}}
+{{template "footer" .}}
+<script>
+  increase({{len .Archives}}, 1000, 'archiveMonthCount', 0)
+  increase({{.Statistic.StatisticPublishedArticleCount}}, 1000, 'archiveArticleCount', 0)
+</script>
+</body>
+</html>
+{{end}}

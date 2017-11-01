@@ -1,0 +1,32 @@
+{{define "comment"}}
+<section class="comment__item" id="comment{{.Item.ID}}">
+    <a rel="nofollow"
+       class="avatar fn-absolute"
+       data-src="{{.Item.Author.AvatarURL}}"
+       href="{{.Item.Author.URL}}">
+    </a>
+    <div class="fn-padding60">
+        <div>
+            <a href="{{.Item.Author.AvatarURL}}" class="module__list-title">{{.Item.Author.Name}}</a> •
+            <span class="ft-nowrap ft-12 ft-gray">{{.Item.CreatedAt}}</span>
+            {{if .Item.Removable}}
+            <span class="comment__btn commentDelete"
+                  data-id="{{.Item.ID}}"
+                  data-label="{{.I18n.ConfirmDelete}}"
+                  data-label2="{{.I18n.StayStep}}">
+                <svg><use xlink:href="#remove"></use></svg>
+            </span>
+            {{end}}
+            <span class="comment__btn commentAdd"
+                  data-title="{{.I18n.Reply}}{{.Item.Author.Name}}"
+                  data-id="{{.ArticleID}}"
+                  data-commentid="{{.Item.ID}}">
+                {{.I18n.Reply}} <svg><use xlink:href="#comment"></use></svg>
+            </span>
+        </div>
+        <div class="content__reset">
+            {{.Item.Content}}
+        </div>
+    </div>
+</section>
+{{end}}

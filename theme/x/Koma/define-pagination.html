@@ -1,0 +1,24 @@
+{{define "pagination"}}
+{{if $.Pagination}}
+<nav class="pagination">
+    {{range $.Pagination.PageNums}}
+    {{if eq . $.Pagination.CurrentPageNum}}
+    <span class="pagination__item pagination__item--active">{{$.Pagination.CurrentPageNum}}</span>
+    {{else if eq . 0}}
+    <span class="pagination__omit">...</span>
+    {{else if eq . -1}}
+    <a class="pagination__near" href="{{$.Pagination.PageURL}}{{$.Pagination.PreviousPageNum}}">
+        <svg><use xlink:href="#chevron-left"></use></svg>
+    </a>
+    {{else if eq . -2}}
+    <a class="pagination__near" href="{{$.Pagination.PageURL}}{{$.Pagination.NextPageNum}}">
+        <svg><use xlink:href="#chevron-right"></use></svg>
+    </a>
+    {{else}}
+    <a class="pagination__item" href="{{$.Pagination.PageURL}}{{.}}">{{.}}</a>
+    {{end}}
+
+    {{end}}
+</nav>
+{{end}}
+{{end}}

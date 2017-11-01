@@ -1,0 +1,40 @@
+{{define "header"}}
+<header class="header">
+    <div class="wrapper">
+        <a href="{{.Setting.BasicBlogURL}}">{{.Setting.BasicBlogTitle}}</a>
+        <a href="{{.Setting.BasicBlogURL}}/categories">{{.I18n.Categories}}</a>
+        <a href="{{.Setting.BasicBlogURL}}/tags">{{.I18n.Tags}}</a>
+        <a href="{{.Setting.BasicBlogURL}}/archives">{{.I18n.Archives}}</a>
+        {{if gt .UserCount 1}}
+        <a href="{{.Setting.BasicBlogURL}}/authors">
+            {{.I18n.Team}}
+        </a>
+        {{end}}
+        <a href="{{.Setting.BasicBlogURL}}/atom">{{.I18n.Feed}}</a>
+        {{range .Navigations}}
+        <a href="{{.URL}}" target="{{.OpenMethod}}">{{.Title}}</a>
+        {{end}}
+        <div class="header__tool">
+            {{if eq .User.URole 0}}
+            <a href="https://hacpai.com/register" class="fn-right ft-orange">{{.I18n.Register}}</a>
+            <a href="https://hacpai.com/login" class="fn-right">{{.I18n.Login}}</a>
+            {{else}}
+            <a id="logout" href="javascript:void(0)" class="fn-right ft-orange">{{.I18n.Logout}}</a>
+            {{if ne .User.URole 4}}
+            <a href="/admin" class="fn-right">{{.I18n.Manage}}</a>
+            {{end}}
+            <div class="avatar fn-right"
+                 data-src="{{.User.UAvatar}}"></div>
+            {{end}}
+            <form id="headerSearch"
+                  class="header__search"
+                  action="{{.Setting.BasicBlogURL}}/search">
+                <input type="text" name="keyword" placeholder="{{.I18n.EnterSearch}}">
+                <svg>
+                    <use xlink:href="#search"></use>
+                </svg>
+            </form>
+        </div>
+    </div>
+</header>
+{{end}}
