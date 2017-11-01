@@ -2,19 +2,19 @@
 <!DOCTYPE html>
 <html>
 <head>
-    {{template "head" .}}
+    {{template "Gina/head" .}}
 </head>
 <body>
-{{template "header" .}}
+{{template "Gina/header" .}}
 <div class="wrapper">
     <h1 class="page__headline">
         {{.AuthorName}}
         <span id="authorCount">0</span> <span class="ft-fade ft-13">{{.I18n.Article2}}</span>
     </h1>
 </div>
-{{template "article-list" .}}
-{{template "side" .}}
-{{template "footer" .}}
+{{template "Gina/article-list" .}}
+{{template "Gina/side" .}}
+{{template "Gina/footer" .}}
 <script>
   increase({{.AuthorCount}}, 1000, 'authorCount', 0)
 </script>
