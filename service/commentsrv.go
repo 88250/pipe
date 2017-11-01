@@ -48,7 +48,7 @@ const (
 func (srv *commentService) ConsoleGetComments(page int, blogID uint) (ret []*model.Comment, pagination *util.Pagination) {
 	offset := (page - 1) * adminConsoleCommentListPageSize
 	count := 0
-	if err := db.Model(model.Comment{}).Order("id DESC").
+	if err := db.Model(model.Comment{}).Order("id ASC").
 		Where(model.Comment{BlogID: blogID}).
 		Count(&count).Offset(offset).Limit(adminConsoleCommentListPageSize).Find(&ret).Error; nil != err {
 		log.Errorf("get comments failed: " + err.Error())
@@ -73,7 +73,7 @@ func (srv *commentService) GetRecentComments(size int, blogID uint) (ret []*mode
 func (srv *commentService) GetArticleComments(articleID uint, page int, blogID uint) (ret []*model.Comment, pagination *util.Pagination) {
 	offset := (page - 1) * themeCommentListPageSize
 	count := 0
-	if err := db.Model(model.Comment{}).Order("id DESC").
+	if err := db.Model(model.Comment{}).Order("id ASC").
 		Where(model.Comment{ArticleID: articleID, BlogID: blogID}).
 		Count(&count).Offset(offset).Limit(themeCommentListPageSize).Find(&ret).Error; nil != err {
 		log.Errorf("get comments failed: " + err.Error())
