@@ -1,8 +1,8 @@
-{{define "Gina/article.html"}}
+{{define "Koma/article.html"}}
 <!DOCTYPE html>
 <html>
 <head>
-    {{template "head" .}}
+    {{template "Koma/head" .}}
     {{if .PreviousArticle}}
     <link rel="prev" title="{{.PreviousArticle.Title}}" href="{{.PreviousArticle.URL}}">
     {{end}}
@@ -11,8 +11,8 @@
     {{end}}
 </head>
 <body>
-{{template "header" .}}
-{{template "side" .}}
+{{template "Koma/header" .}}
+{{template "Koma/side" .}}
 <div class="wrapper content">
     <article class="fn-bottom">
         <header class="fn-relative article__header">
@@ -103,9 +103,9 @@
             <span id="commentsCnt">{{len .Comments}}</span> {{.I18n.Comment}}
         </div>
         {{range .Comments}}
-        {{template "comment" dict "Item" . "I18n" $.I18n "Username" $.User.UName "ArticleID" $.Article.ID}}
+        {{template "Koma/comment" dict "Item" . "I18n" $.I18n "Username" $.User.UName "ArticleID" $.Article.ID}}
         {{end}}
-        {{template "pagination" .}}
+        {{template "Koma/pagination" .}}
     </div>
     {{else}}
     <div class="{{if or (ne (len .RelevantArticles) 0) (ne (len .ExternalRelevantArticles) 0)}}fn-bottom{{end}} ft-center comment__null"
@@ -266,7 +266,7 @@
 </div>
 {{end}}
 
-{{template "footer" .}}
+{{template "Koma/footer" .}}
 </body>
 </html>
 {{end}}

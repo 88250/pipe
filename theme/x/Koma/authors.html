@@ -1,11 +1,11 @@
-{{define "Gina/authors.html"}}
+{{define "Koma/authors.html"}}
 <!DOCTYPE html>
 <html>
 <head>
-    {{template "head" .}}
+    {{template "Koma/head" .}}
 </head>
 <body>
-{{template "header" .}}
+{{template "Koma/header" .}}
 <div class="wrapper page">
     <h1 class="page__title">
         <span id="authorCount">0</span> <span class="ft-fade ft-13">{{.I18n.TeamMember2}}</span>
@@ -22,8 +22,8 @@
     {{end}}
     </div>
 </div>
-{{template "side" .}}
-{{template "footer" .}}
+{{template "Koma/side" .}}
+{{template "Koma/footer" .}}
 <script>
   increase({{len .Authors}}, 1000, 'authorCount', 0)
 </script>

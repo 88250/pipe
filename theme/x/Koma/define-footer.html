@@ -4,7 +4,7 @@
         <div class="footer__side fn-clear fn-three">
             <div>
                 {{if eq .Setting.BasicNoticeBoard ""}}
-                {{template "module-list"  dict "List" .MostUseCategories "Title" .I18n.Categories "UserCount" .UserCount}}
+                {{template "Koma/module-list"  dict "List" .MostUseCategories "Title" .I18n.Categories "UserCount" .UserCount}}
                 {{else}}
                 <div class="module__header">
                     {{.I18n.NoticeBoard}}
@@ -25,7 +25,7 @@
                 </div>
             </div>
             <div>
-                {{template "module-list"  dict "List" .RandomArticles "Title" .I18n.RandomArticle "UserCount" .UserCount}}
+                {{template "Koma/module-list"  dict "List" .RandomArticles "Title" .I18n.RandomArticle "UserCount" .UserCount}}
             </div>
         </div>
         <div class="footer__info">

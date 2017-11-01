@@ -2,19 +2,19 @@
 <!DOCTYPE html>
 <html>
 <head>
-    {{template "head" .}}
+    {{template "Koma/head" .}}
 </head>
 <body>
-{{template "header" .}}
+{{template "Koma/header" .}}
 <div class="wrapper">
     <h1 class="page__headline">
         {{.TagName}}
         <span id="tagArticlesCount">0</span> <span class="ft-fade ft-13">{{.I18n.Article2}}</span>
     </h1>
 </div>
-{{template "article-list" .}}
-{{template "side" .}}
-{{template "footer" .}}
+{{template "Koma/article-list" .}}
+{{template "Koma/side" .}}
+{{template "Koma/footer" .}}
 <script>
   increase({{.TagArticlesCount}}, 1000, 'tagArticlesCount', 0)
 </script>
