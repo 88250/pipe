@@ -109,6 +109,7 @@ func showArticleAction(c *gin.Context) {
 			URL:       "http://localhost:5879/blogs/pipe/vanessa",
 			AvatarURL: "https://img.hacpai.com/20170818zhixiaoyun.jpeg",
 		},
+		ID:           article.ID,
 		CreatedAt:    article.CreatedAt.Format("2006-01-02"),
 		Title:        article.Title,
 		Tags:         themeTags,
