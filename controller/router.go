@@ -177,7 +177,7 @@ func routePath(c *gin.Context) {
 	}
 
 	if strings.Contains(path, util.PathArchives+"/") {
-		showArchivesAction(c)
+		showArchiveArticlesAction(c)
 
 		return
 	}
@@ -192,11 +192,6 @@ func routePath(c *gin.Context) {
 		return
 	}
 
-	if strings.Contains(path, util.PathCategories+"/") {
-		showArchiveArticlesAction(c)
-
-		return
-	}
 	if strings.Contains(path, util.PathTags+"/") {
 		showTagArticlesAction(c)
 
