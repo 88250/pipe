@@ -282,3 +282,32 @@ export const TrimB3Id = () => {
   }
   history.replaceState('', '', window.location.href.replace(/(&b3id=\w{8})|(b3id=\w{8}&)|(\?b3id=\w{8}$)/, ''))
 }
+
+/**
+ * @description 图片预览
+ */
+export const PreviewImg = (it) => {
+  const $it = $(it);
+  var top = it.offsetTop,
+    left = it.offsetLeft;
+  if ($it.closest('.comments').length === 1) {
+    top = top + $it.closest('li')[0].offsetTop;
+    left = left + $('.comments')[0].offsetLeft + 15;
+  }
+
+  $('body').append('<div class="preview__img" onclick="this.remove()"><img style="transform: translate3d(' +
+    Math.max(0, left) + 'px, ' + Math.max(0, (top - $(window).scrollTop())) + 'px, 0)" src="' +
+    ($it.attr('src').split('?imageView2')[0]) + '"></div>');
+
+  $('.preview__img').css({
+    'background-color': '#fff',
+    'position': 'fixed'
+  });
+
+  $('.preview__img img')[0].onload = function () {
+    const $previewImage =  $('.preview__img');
+    $previewImage.find('img').css('transform', 'translate3d(' +
+      (Math.max(0, $(window).width() - $previewImage.find('img').width()) / 2) + 'px, ' +
+      (Math.max(0, $(window).height() - $previewImage.find('img').height()) / 2) + 'px, 0)');
+  }
+}

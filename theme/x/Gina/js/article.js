@@ -13,7 +13,8 @@ import {
   LocalStorageInput,
   ReomveComment,
   LazyLoadCSSImage,
-  LazyLoadImage
+  LazyLoadImage,
+  PreviewImg
 } from '../../../js/common'
 import './common'
 import hljs from 'highlight.js'
@@ -27,6 +28,10 @@ const Article = {
     Article._initToc()
     LocalStorageInput('commentContent')
     InitEditor('emotions', 'commentContent')
+
+    $('.content__reset img').click(function () {
+      PreviewImg(this)
+    });
   },
   _initToc: () => {
     if ($('#toc').length === 1) {
