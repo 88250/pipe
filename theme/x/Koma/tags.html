@@ -1,11 +1,11 @@
-{{define "Gina/tags.html"}}
+{{define "Koma/tags.html"}}
 <!DOCTYPE html>
 <html>
 <head>
-    {{template "Gina/head" .}}
+    {{template "Koma/head" .}}
 </head>
 <body>
-{{template "Gina/header" .}}
+{{template "Koma/header" .}}
 <div class="wrapper page">
     <h1 class="page__title">
         <span id="tagArticleCount">0</span> <span class="ft-fade ft-13">{{.I18n.Tags2}}</span>
@@ -16,8 +16,8 @@
         {{end}}
     </div>
 </div>
-{{template "Gina/side" .}}
-{{template "Gina/footer" .}}
+{{template "Koma/side" .}}
+{{template "Koma/footer" .}}
 <script>
   increase({{len .Tags}}, 1000, 'tagArticleCount', 0)
   addLevelToTag()
