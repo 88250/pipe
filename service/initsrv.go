@@ -362,6 +362,13 @@ func initBasicSettings(tx *gorm.DB, blogAdmin *model.User, blogID uint) error {
 		BlogID:   blogID}).Error; nil != err {
 		return err
 	}
+	if err := tx.Create(&model.Setting{
+		Category: model.SettingCategoryBasic,
+		Name:     model.SettingNameBasicLogoURL,
+		Value:    "https://img.hacpai.com/solo-mid.png",
+		BlogID:   blogID}).Error; nil != err {
+		return err
+	}
 
 	return nil
 }

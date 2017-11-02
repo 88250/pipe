@@ -6,23 +6,23 @@
     <div class="fn-none side__module module__list">
         <ul>
             <li>
-                <a href="{{.Setting.BasicBlogURL}}/categories">{{.I18n.Categories}}</a>
+                <a href="{{.BlogURL}}/categories">{{.I18n.Categories}}</a>
             </li>
             <li>
-                <a href="{{.Setting.BasicBlogURL}}/tags">{{.I18n.Tags}}</a>
+                <a href="{{.BlogURL}}/tags">{{.I18n.Tags}}</a>
             </li>
             <li>
-                <a href="{{.Setting.BasicBlogURL}}/archives">{{.I18n.Archives}}</a>
+                <a href="{{.BlogURL}}/archives">{{.I18n.Archives}}</a>
             </li>
             {{if gt .UserCount 1}}
             <li>
-                <a href="{{.Setting.BasicBlogURL}}/authors">
+                <a href="{{.BlogURL}}/authors">
                     {{.I18n.Team}}
                 </a>
             </li>
             {{end}}
             <li>
-                <a href="{{.Setting.BasicBlogURL}}/atom">{{.I18n.Feed}}</a>
+                <a href="{{.BlogURL}}/atom">{{.I18n.Feed}}</a>
             </li>
             {{range .Navigations}}
             <li>
