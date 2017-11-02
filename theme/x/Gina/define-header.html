@@ -1,16 +1,16 @@
 {{define "Gina/header"}}
 <header class="header">
     <div class="wrapper">
-        <a href="{{.Setting.BasicBlogURL}}">{{.Setting.BasicBlogTitle}}</a>
-        <a href="{{.Setting.BasicBlogURL}}/categories">{{.I18n.Categories}}</a>
-        <a href="{{.Setting.BasicBlogURL}}/tags">{{.I18n.Tags}}</a>
-        <a href="{{.Setting.BasicBlogURL}}/archives">{{.I18n.Archives}}</a>
+        <a href="{{.BlogURL}}">{{.Setting.BasicBlogTitle}}</a>
+        <a href="{{.BlogURL}}/categories">{{.I18n.Categories}}</a>
+        <a href="{{.BlogURL}}/tags">{{.I18n.Tags}}</a>
+        <a href="{{.BlogURL}}/archives">{{.I18n.Archives}}</a>
         {{if gt .UserCount 1}}
-        <a href="{{.Setting.BasicBlogURL}}/authors">
+        <a href="{{.BlogURL}}/authors">
             {{.I18n.Team}}
         </a>
         {{end}}
-        <a href="{{.Setting.BasicBlogURL}}/atom">{{.I18n.Feed}}</a>
+        <a href="{{.BlogURL}}/atom">{{.I18n.Feed}}</a>
         {{range .Navigations}}
         <a href="{{.URL}}" target="{{.OpenMethod}}">{{.Title}}</a>
         {{end}}
@@ -28,7 +28,7 @@
             {{end}}
             <form id="headerSearch"
                   class="header__search"
-                  action="{{.Setting.BasicBlogURL}}/search">
+                  action="{{.BlogURL}}/search">
                 <input type="text" name="keyword" placeholder="{{.I18n.EnterSearch}}">
                 <svg>
                     <use xlink:href="#search"></use>
