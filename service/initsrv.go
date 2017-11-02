@@ -21,6 +21,7 @@ import (
 	"math/rand"
 	"strconv"
 	"sync"
+	"time"
 
 	"github.com/b3log/pipe/model"
 	"github.com/b3log/pipe/theme"
@@ -211,6 +212,8 @@ func initNavigation(tx *gorm.DB, blogID uint) error {
 }
 
 func helloWorld(tx *gorm.DB, admin *model.User, blogID uint) error {
+	rand.Seed(time.Now().UnixNano())
+
 	content := `欢迎使用 [Pipe](https://github.com/b3log/pipe) 博客平台。这是一篇自动生成的演示文章，编辑或者删除它，然后开始你的独立博客之旅！
 
 另外，欢迎你加入[黑客与画家的社区](https://hacpai.com)，你可以使用博客账号直接登录！
