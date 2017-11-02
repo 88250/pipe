@@ -1,20 +1,20 @@
-{{define "Gina/archive-articles.html"}}
+{{define "Koma/archive-articles.html"}}
 <!DOCTYPE html>
 <html>
 <head>
-    {{template "Gina/head" .}}
+    {{template "Koma/head" .}}
 </head>
 <body>
-{{template "Gina/header" .}}
+{{template "Koma/header" .}}
 <div class="wrapper">
     <h1 class="page__headline">
         {{.ArchivesDate}}
         <span id="archiveArticleCount">0</span> <span class="ft-fade ft-13">{{.I18n.Article2}}</span>
     </h1>
 </div>
-{{template "Gina/article-list" .}}
-{{template "Gina/side" .}}
-{{template "Gina/footer" .}}
+{{template "Koma/article-list" .}}
+{{template "Koma/side" .}}
+{{template "Koma/footer" .}}
 <script>
   increase({{.ArchivesCount}}, 1000, 'archiveArticleCount', 0)
 </script>
