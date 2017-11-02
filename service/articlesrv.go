@@ -88,6 +88,7 @@ func (srv *articleService) AddArticle(article *model.Article) error {
 	}
 	article.Tags = tagStr
 
+	article.ID = util.CurrentMillisecond()
 	if err := normalizeArticlePath(article); nil != err {
 		return err
 	}
@@ -286,6 +287,7 @@ func (srv *articleService) UpdateArticle(article *model.Article) error {
 		return err
 	}
 	article.BlogID = oldArticle.BlogID
+	article.ID = oldArticle.ID
 
 	tagStr, err := normalizeTagStr(article.Tags)
 	if nil != err {
@@ -432,9 +434,8 @@ func contains(strs []string, str string) bool {
 func normalizeArticlePath(article *model.Article) error {
 	path := strings.TrimSpace(article.Path)
 	if "" == path {
-		now := time.Now()
-		path = util.PathArticles + now.Format("/2006/01/02/") +
-			fmt.Sprintf("%d", now.UnixNano()/int64(time.Millisecond))
+		path = util.PathArticles + time.Now().Format("/2006/01/02/") +
+			fmt.Sprintf("%d", article.ID)
 	}
 
 	if !strings.HasPrefix(path, "/") {

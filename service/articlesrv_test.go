@@ -203,6 +203,7 @@ func TestNormalizeArticlePath(t *testing.T) {
 	article := &model.Article{
 		Path: "/aaa",
 	}
+	article.ID = 1
 
 	if err := normalizeArticlePath(article); nil != err {
 		t.Error(err)
@@ -219,7 +220,7 @@ func TestNormalizeArticlePath(t *testing.T) {
 
 		return
 	}
-	if 34 != len(article.Path) {
+	if len("/articles/2017/11/02/1") != len(article.Path) {
 		t.Errorf(article.Path)
 	}
 }
