@@ -76,8 +76,6 @@ func MarkdownAbstract(mdText string) (abstract string, thumbnailURL string) {
 
 	selection := doc.Find("img").First()
 	thumbnailURL, _ = selection.Attr("src")
-	log.Info(thumbnailURL)
-
 	abstract = strings.TrimSpace(runesToString(runes))
 
 	return
