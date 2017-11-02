@@ -209,6 +209,12 @@ a {
   position: relative;
   overflow: hidden;
 
+  &__logo {
+    height: 45px;
+    width: 45px;
+    position: absolute;
+    margin: 10px;
+  }
   a {
     color: $text-color;
     padding: 0 10px;
@@ -942,6 +948,13 @@ a {
     position: absolute;
   }
 
+  .header__logo {
+    margin: 15px 0 0 55px;
+    height: 35px;
+    width: 35px;
+    border-radius: 20px;
+  }
+
   .header > .wrapper {
     text-align: center;
     & > a {
@@ -949,7 +962,7 @@ a {
       &:first-child {
         display: block;
         float: left;
-        margin-left: 30px;
+        margin-left: 75px;
       }
     }
   }
