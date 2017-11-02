@@ -111,6 +111,7 @@
   @media (max-width: 768px)
     .side
       width: 100%
+      left: -100%
     .side__mobile
       background-color: $fade
       display: none

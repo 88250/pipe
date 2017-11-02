@@ -70,6 +70,7 @@
   "setup": "启用",
   "preview": "预览",
   "logout": "登出",
+  "logoURL": "Logo 地址",
   "blogManage": "博客管理",
   "new": "新建",
   "description": "描述",

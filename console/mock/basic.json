@@ -11,6 +11,7 @@
     "basicMetaDescription": "metaDescription",
     "basicNoticeBoard": "noticeBoard",
     "basicFaviconURL": "https://static.hacpai.com/images/favicon.png",
+    "basicLogoURL": "https://img.hacpai.com/solo-mid.png",
     "basicCommentable": false
   }
 }

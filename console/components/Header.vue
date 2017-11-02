@@ -2,7 +2,7 @@
   <header class="header fn-flex">
     <div class="header__logo" v-if="from === 'admin'">
       <a :href="$store.state.blogURL">
-        <img src="~static/images/logo.png"/>
+        <img class="header__logo-img" src="~static/images/logo.png"/>
         {{ $store.state.blogTitle }}
       </a>
     </div>
@@ -17,11 +17,14 @@
       </div>
       <template v-else>
         <span class="header__bar--icon fn-flex-1" v-if="$route.path.indexOf('/admin') > -1">
-          <div class="side__icon" @click="toggleSide">
+          <div class="side__icon fn-left" @click="toggleSide">
             <span class="side__icon-line"></span>
             <span class="side__icon-line side__icon-line--middle"></span>
             <span class="side__icon-line"></span>
           </div>
+          <a :href="$store.state.blogURL">
+            <img class="header__logo-img fn-none" src="~static/images/logo.png"/>
+          </a>
         </span>
         <div :class="$route.path.indexOf('/admin') == -1 ? 'header__bar--theme' : 'header__bar--admin'">
           <v-btn class="btn--small btn--danger btn--space" @click="logout">{{ $t('logout', $store.state.locale) }}
@@ -170,14 +173,14 @@
       &-line:first-child
         width: 100%
         transform: rotateZ(-45deg)
-        top: 6px
+        top: 4px
         background-color: $theme-accent
       &-line--middle
         opacity: 0
       &-line:last-child
         width: 100%
         transform: rotateZ(45deg)
-        top: -10px
+        top: -12px
         background-color: $theme-accent
 
     &__logo
@@ -187,6 +190,11 @@
       overflow: hidden
       align-items: center
       transition: $transition
+
+      &-img
+        height: 30px
+        width: 30px
+        background-color: #fff
       a
         color: $text-title
         margin: 0 auto
@@ -214,6 +222,35 @@
     .header__bar--theme,
     .header__bar--admin
       padding-right: 15px
+    .header__bar--icon .fn-none
+      display: block
+      float: left
     .header .side__icon
       padding: 0 15px
+      margin-top: 6px
+      &-line:first-child
+        margin-top: 0
+        transform: none
+        top: auto
+        background-color: #fff
+      &-line:last-child
+        transform: none
+        top: auto
+        background-color: #fff
+      &-line--middle
+        opacity: 1
+    .body--side .header .side__icon,
+    .body--side .header .side__icon:hover
+      .side__icon-line:first-child
+        width: 100%
+        transform: rotateZ(-45deg)
+        top: 6px
+        background-color: $theme-accent
+      .side__icon-line--middle
+        opacity: 0
+      .side__icon-line:last-child
+        width: 100%
+        transform: rotateZ(45deg)
+        top: -10px
+        background-color: $theme-accent
 </style>

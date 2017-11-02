@@ -16,6 +16,10 @@
           v-model="blogSubtitle"
         ></v-text-field>
         <v-text-field
+          :label="$t('logoURL', $store.state.locale)"
+          v-model="logoURL"
+        ></v-text-field>
+        <v-text-field
           :label="$t('faviconURL', $store.state.locale)"
           v-model="faviconURL"
         ></v-text-field>
@@ -64,6 +68,7 @@
         blogURL: '',
         blogTitle: '',
         blogSubtitle: '',
+        logoURL: '',
         faviconURL: '',
         header: '',
         footer: '',
@@ -86,6 +91,7 @@
           basicBlogURL: this.blogURL,
           basicBlogTitle: this.blogTitle,
           basicBlogSubtitle: this.blogSubtitle,
+          basicLogoURL: this.logoURL,
           basicFaviconURL: this.faviconURL,
           basicHeader: this.header,
           basicFooter: this.footer,
@@ -117,6 +123,7 @@
         this.$set(this, 'blogURL', responseData.basicBlogURL)
         this.$set(this, 'blogTitle', responseData.basicBlogTitle)
         this.$set(this, 'blogSubtitle', responseData.basicBlogSubtitle)
+        this.$set(this, 'logoURL', responseData.basicLogoURL)
         this.$set(this, 'faviconURL', responseData.basicFaviconURL)
         this.$set(this, 'header', responseData.basicHeader)
         this.$set(this, 'footer', responseData.basicFooter)
