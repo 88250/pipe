@@ -74,6 +74,8 @@
       background-color: $white
       box-shadow: 1px 0px 20px rgba(0, 0, 0, 0.08)
       overflow: auto
+      &::-webkit-scrollbar
+        display: none
 
     .list
       padding: 0
