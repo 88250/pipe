@@ -948,6 +948,8 @@ a {
       display: none;
       &:first-child {
         display: block;
+        float: left;
+        margin-left: 30px;
       }
     }
   }
