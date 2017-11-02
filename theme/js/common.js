@@ -309,5 +309,10 @@ export const PreviewImg = (it) => {
     $previewImage.find('img').css('transform', 'translate3d(' +
       (Math.max(0, $(window).width() - $previewImage.find('img').width()) / 2) + 'px, ' +
       (Math.max(0, $(window).height() - $previewImage.find('img').height()) / 2) + 'px, 0)');
+
+    // fixed chrome render transform bug
+    setTimeout(function () {
+      $previewImage.width($(window).width());
+    }, 300);
   }
 }
