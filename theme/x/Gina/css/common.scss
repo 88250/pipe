@@ -243,7 +243,7 @@ a {
     height: 65px;
     box-sizing: border-box;
 
-    a {
+    a.fn-right {
       padding: 0 0 0 20px;
 
       &:first-child {
@@ -284,7 +284,7 @@ a {
 .footer {
   border-top: 1px solid $border-color;
   &__side {
-    padding: 50px 0;
+    padding: 50px 0 30px;
     .tag {
       margin: 0 10px 10px 0;
       display: inline-block;
@@ -319,14 +319,14 @@ a {
 
   &__sub-title {
     font-size: 18px;
-    padding: 30px 30px 0;
+    padding: 30px 20px 0;
   }
 
   &__module {
-    margin: 30px;
+    margin: 20px;
 
     .module__list {
-      margin-bottom: 50px;
+      margin-bottom: 30px;
     }
   }
 
@@ -433,7 +433,7 @@ a {
   }
 
   &__action {
-    margin-top: 30px;
+    margin-top: 20px;
 
     .action {
       &__btn {
@@ -506,7 +506,7 @@ a {
       }
 
       &__share {
-        height: 40px;
+        height: 30px;
 
         &:hover {
           .action__btn--share {
@@ -643,7 +643,7 @@ a {
 // comment
 .comment {
   &__item {
-    margin-bottom: 50px;
+    margin-bottom: 30px;
     position: relative;
 
     .avatar {
@@ -764,7 +764,8 @@ a {
 .page {
   margin: 50px auto;
   &__title {
-    margin-bottom: 30px;
+    padding-bottom: 30px;
+    border-bottom: 1px dotted $border-color;
   }
   &__headline {
     margin-top: 50px;
@@ -778,14 +779,18 @@ a {
 
     a {
       display: block;
-      line-height: 50px;
-      border-top: 1px dotted $border-color;
-      padding: 0 20px;
+      line-height: 74px;
+      border-bottom: 1px dotted $border-color;
+      padding: 0 30px;
       color: $black;
       &:hover {
         text-decoration: none;
         color: $theme-accent;
       }
+    }
+
+    &:last-child a {
+      border-bottom-width: 0;
     }
   }
 }
@@ -834,9 +839,14 @@ a {
 .categories {
   &__item {
     list-style: none;
-    border-top: 1px dotted $border-color;
-    padding: 20px 20px 10px 20px;
+    border-bottom: 1px dotted $border-color;
+    padding: 30px 30px 20px 30px;
     color: $black;
+
+    &:last-child {
+      padding-bottom: 0;
+      border-bottom-width: 0;
+    }
 
     .tag {
       margin: 0 10px 10px 0;
@@ -863,6 +873,7 @@ a {
 
 // tags
 .tags {
+  padding: 20px;
   .tag {
     display: inline-block;
     line-height: 1.3;
@@ -914,7 +925,7 @@ a {
   }
 
   .fn-three > div {
-    margin-bottom: 50px;
+    margin-bottom: 30px;
 
     &:last-child {
       margin-bottom: 0;
@@ -946,12 +957,12 @@ a {
   .sidebar__icon {
     top: 12px;
     border-color: transparent;
-    left: 10px;
+    left: 5px;
     position: absolute;
   }
 
   .header__logo {
-    margin-left: 55px;
+    margin-left: 50px;
     height: 35px;
     width: 35px;
     border-radius: 20px;
@@ -964,7 +975,7 @@ a {
       &:first-child {
         display: block;
         float: left;
-        margin-left: 75px;
+        margin-left: 70px;
       }
     }
   }
