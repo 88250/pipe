@@ -1,5 +1,6 @@
-{{define "header"}}
+{{define "Koma/header"}}
 <header class="header">
+    <a href="{{.BlogURL}}" class="header__logo"><img src="{{.LogoURL}}"></a>
     <div class="wrapper">
         <a href="{{.BlogURL}}">{{.Setting.BasicBlogTitle}}</a>
         <a href="{{.BlogURL}}/categories">{{.I18n.Categories}}</a>
@@ -14,6 +15,14 @@
         {{range .Navigations}}
         <a href="{{.URL}}" target="{{.OpenMethod}}">{{.Title}}</a>
         {{end}}
+        <form id="headerSearch"
+              class="header__search"
+              action="{{.BlogURL}}/search">
+            <input type="text" name="keyword" placeholder="{{.I18n.EnterSearch}}">
+            <svg>
+                <use xlink:href="#search"></use>
+            </svg>
+        </form>
         <div class="header__tool">
             {{if eq .User.URole 0}}
             <a href="https://hacpai.com/register" class="fn-right ft-orange">{{.I18n.Register}}</a>
@@ -26,14 +35,6 @@
             <div class="avatar fn-right"
                  data-src="{{.User.UAvatar}}"></div>
             {{end}}
-            <form id="headerSearch"
-                  class="header__search"
-                  action="{{.BlogURL}}/search">
-                <input type="text" name="keyword" placeholder="{{.I18n.EnterSearch}}">
-                <svg>
-                    <use xlink:href="#search"></use>
-                </svg>
-            </form>
         </div>
     </div>
 </header>

@@ -1,11 +1,11 @@
-{{define "Koma/archives.html"}}
+{{define "Gina/archives.html"}}
 <!DOCTYPE html>
 <html>
 <head>
-    {{template "Koma/head" .}}
+    {{template "Gina/head" .}}
 </head>
 <body>
-{{template "Koma/header" .}}
+{{template "Gina/header" .}}
 <div class="wrapper page">
     <h1 class="page__title">
         <span id="archiveMonthCount">0</span> <span class="ft-fade ft-13">{{.I18n.Month2}}</span>
@@ -23,8 +23,8 @@
     </ul>
 
 </div>
-{{template "Koma/side" .}}
-{{template "Koma/footer" .}}
+{{template "Gina/side" .}}
+{{template "Gina/footer" .}}
 <script>
   increase({{len .Archives}}, 1000, 'archiveMonthCount', 0)
   increase({{.Statistic.StatisticPublishedArticleCount}}, 1000, 'archiveArticleCount', 0)

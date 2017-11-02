@@ -85,7 +85,7 @@
             </a>
             {{end}}
             <span class="fn-right action__btn action__btn--space fn-clear"
-                  data-title="{{.I18n.Comment}}{{.Article.Title}}"
+                  data-title="{{.I18n.Comment}}{{.I18n.Colon}}{{.Article.Title}}"
                   id="articleCommentBtn"
                   data-id="{{.Article.ID}}">
                 {{$.I18n.Comment}} &nbsp;
@@ -102,14 +102,16 @@
         <div class="module__header">
             <span id="commentsCnt">{{len .Comments}}</span> {{.I18n.Comment}}
         </div>
+        <div>
         {{range .Comments}}
         {{template "Koma/comment" dict "Item" . "I18n" $.I18n "Username" $.User.UName "ArticleID" $.Article.ID}}
         {{end}}
+        </div>
         {{template "Koma/pagination" .}}
     </div>
     {{else}}
     <div class="{{if or (ne (len .RelevantArticles) 0) (ne (len .ExternalRelevantArticles) 0)}}fn-bottom{{end}} ft-center comment__null"
-         data-title="{{.I18n.Comment}}{{.Article.Title}}"
+         data-title="{{.I18n.Comment}}{{.I18n.Colon}}{{.Article.Title}}"
          data-id="{{.Article.ID}}"
          id="comments">
         {{.I18n.StayStep}}
@@ -250,8 +252,9 @@
             </div>
             <textarea id="commentContent" data-blogurl="{{.BlogURL}}" placeholder="{{.I18n.Content}}" rows="3"></textarea>
             <div class="article__action fn-clear">
-                <span class="fn-right action__btn action__btn--space"
+                <span class="fn-right action__btn action__btn--space action__btn--active"
                       id="editorAdd"
+                      data-label2="{{.I18n.Required}}"
                       data-label="{{.I18n.Comment}}">
                     {{.I18n.Confirm}}&nbsp;<svg class="fn-right"><use xlink:href="#comment"></use></svg>
                 </span>

@@ -1,4 +1,4 @@
-{{define "comment"}}
+{{define "Koma/comment"}}
 <section class="comment__item" id="comment{{.Item.ID}}">
     <a rel="nofollow"
        class="avatar fn-absolute"
@@ -18,7 +18,7 @@
             </span>
             {{end}}
             <span class="comment__btn commentAdd"
-                  data-title="{{.I18n.Reply}}{{.Item.Author.Name}}"
+                  data-title="{{.I18n.Reply}}{{.I18n.Colon}}{{.Item.Author.Name}}"
                   data-id="{{.ArticleID}}"
                   data-commentid="{{.Item.ID}}">
                 {{.I18n.Reply}} <svg><use xlink:href="#comment"></use></svg>

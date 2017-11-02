@@ -60,7 +60,7 @@
       const responseData = await this.axios.get('/console/themes')
       if (responseData) {
         this.$set(this, 'list', responseData.themes)
-        this.$set(this, 'currentName', responseData.currentName)
+        this.$set(this, 'currentName', responseData.currentId)
       }
     }
   }
