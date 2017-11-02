@@ -68,6 +68,11 @@ a {
   padding-left: 80px;
 }
 
+.fn-padding30 {
+  padding-left: 30px;
+  padding-right: 30px;
+}
+
 .fn-two {
   & > a,
   & > div {
@@ -441,7 +446,7 @@ a {
         height: 30px;
         display: inline-block;
         border: 1px solid $border-color;
-        padding: 0 7px;
+        padding: 0 10px;
         line-height: 28px;
         text-align: center;
         cursor: pointer;
@@ -452,7 +457,9 @@ a {
           margin-top: 7px;
           transition: $transition;
         }
-        &--active,
+        &--active {
+          border-color: $theme-accent;
+        }
         &:hover {
           color: #fff;
           background-color: $theme-accent;
@@ -503,6 +510,12 @@ a {
             border-color: #dc4A3d;
           }
         }
+
+        &--article {
+          padding: 3px 10px;
+          height: 36px;
+          margin-right: 5px;
+        }
       }
 
       &__share {
@@ -520,23 +533,24 @@ a {
               display: block;
             }
             .action__btn {
+              padding: 0 7px;
               opacity: 1;
               visibility: visible;
               transform: translate(0);
             }
           }
         }
+        .action__code {
+          display: none;
+          position: absolute;
+          top: 36px;
+          left: 0;
+          height: 128px;
+          width: 128px;
+        }
         .action__btns {
           margin-left: 10px;
           position: relative;
-          .action__code {
-            display: none;
-            position: absolute;
-            top: 48px;
-            left: 0;
-            height: 128px;
-            width: 128px;
-          }
           .action__btn {
             opacity: 0;
             transform: translate(20px);
@@ -1004,5 +1018,10 @@ a {
     .fn-right {
       float: none;
     }
+  }
+
+  .fn-padding30 {
+    padding-left: 0;
+    padding-right: 0;
   }
 }

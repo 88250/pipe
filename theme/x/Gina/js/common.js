@@ -61,8 +61,12 @@ const Common = {
       urls.google = 'https://plus.google.com/share?url=' + url
       urls.twitter = 'https://twitter.com/intent/tweet?status=' + title + ' ' + url
 
-      $this.find('.action__btns span').click(function () {
+      $this.find('.action__btn').click(function () {
         const key = $(this).data('type')
+
+        if (!key) {
+          return;
+        }
 
         if (key === 'wechat') {
           if ($qrCode.css('background-image') === 'none') {

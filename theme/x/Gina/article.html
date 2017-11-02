@@ -14,7 +14,7 @@
 {{template "Gina/header" .}}
 {{template "Gina/side" .}}
 <div class="wrapper content">
-    <article class="fn-bottom">
+    <article class="fn-bottom fn-padding30">
         <header class="fn-relative article__header">
             {{if gt .UserCount 1}}
             <a rel="nofollow"
@@ -51,29 +51,24 @@
             {{.Article.Content}}
         </section>
         <div class="article__action fn-clear">
-            <span class="action__share fn-left">
-                <span class="action__btn action__btn--share fn-left">
-                    {{$.I18n.Share}} &nbsp; <svg class="fn-right"><use xlink:href="#reply"></use></svg>
+            <span class="action__share fn-relative action__btns fn-left">
+                <span class="action__btn action__btn--wechat action__btn--article" data-type="wechat">
+                    <svg><use xlink:href="#wechat"></use></svg>
                 </span>
-                <span class="action__btns fn-left">
-                    <span class="action__btn action__btn--wechat" data-type="wechat">
-                        <svg><use xlink:href="#wechat"></use></svg>
-                    </span>
-                    <span class="action__btn action__btn--weibo" data-type="weibo">
-                        <svg><use xlink:href="#weibo"></use></svg>
-                    </span>
-                    <span class="action__btn action__btn--twitter" data-type="twitter">
-                        <svg><use xlink:href="#twitter"></use></svg>
-                    </span>
-                    <span class="action__btn action__btn--google" data-type="google">
-                        <svg><use xlink:href="#google"></use></svg>
-                    </span>
-                    <div class="action__code"
-                         data-title="{{.Article.Title}}"
-                         data-blogtitle="{{$.Setting.BasicBlogTitle}}"
-                         data-url="{{.Article.URL}}"
-                         data-avatar="{{.Article.Author.AvatarURL}}"></div>
+                <span class="action__btn action__btn--weibo action__btn--article" data-type="weibo">
+                    <svg><use xlink:href="#weibo"></use></svg>
                 </span>
+                <span class="action__btn action__btn--twitter action__btn--article" data-type="twitter">
+                    <svg><use xlink:href="#twitter"></use></svg>
+                </span>
+                <span class="action__btn action__btn--google action__btn--article" data-type="google">
+                    <svg><use xlink:href="#google"></use></svg>
+                </span>
+                <div class="action__code"
+                     data-title="{{.Article.Title}}"
+                     data-blogtitle="{{$.Setting.BasicBlogTitle}}"
+                     data-url="{{.Article.URL}}"
+                     data-avatar="{{.Article.Author.AvatarURL}}"></div>
             </span>
             <span class="fn-right">
                 {{if .Article.Editable}}
@@ -84,7 +79,7 @@
                 </svg>
             </a>
             {{end}}
-            <span class="fn-right action__btn action__btn--space fn-clear"
+            <span class="fn-right action__btn action__btn--space action__btn--active fn-clear"
                   data-title="{{.I18n.Comment}}{{.I18n.Colon}}{{.Article.Title}}"
                   id="articleCommentBtn"
                   data-id="{{.Article.ID}}">
