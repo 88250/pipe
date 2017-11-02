@@ -32,29 +32,47 @@ import (
 )
 
 var markdownCache = gcache.New(1024).LRU().Build()
+var markdownAbstractCache = gcache.New(1024).LRU().Build()
 
 func Markdown(mdText string) string {
-	mdText = emojify(mdText)
-	mdTextBytes := []byte(mdText)
-
 	digest := md5.New()
-	digest.Write(mdTextBytes)
+	digest.Write([]byte(mdText))
 	key := string(digest.Sum(nil))
 
-	ret, err := markdownCache.Get(key)
+	cached, err := markdownCache.Get(key)
 	if nil == err {
-		return ret.(string)
+		return cached.(string)
 	}
 
+	mdText = emojify(mdText)
+	mdTextBytes := []byte(mdText)
 	unsafe := blackfriday.MarkdownCommon(mdTextBytes)
-	ret = string(bluemonday.UGCPolicy().SanitizeBytes(unsafe))
+	ret := string(bluemonday.UGCPolicy().SanitizeBytes(unsafe))
+
+	doc, _ := goquery.NewDocumentFromReader(strings.NewReader(ret))
+	doc.Find("img").Each(func(i int, s *goquery.Selection) {
+		src, _ := s.Attr("src")
+		s.SetAttr("data-src", src)
+	})
+	ret, _ = doc.Html()
 
 	markdownCache.Set(key, ret)
 
-	return ret.(string)
+	return ret
 }
 
 func MarkdownAbstract(mdText string) (abstract string, thumbnailURL string) {
+	digest := md5.New()
+	digest.Write([]byte(mdText))
+	key := string(digest.Sum(nil))
+
+	cached, err := markdownAbstractCache.Get(key)
+	if nil == err {
+		data := cached.(map[string]string)
+
+		return data["abstract"], data["thumb"]
+	}
+
 	content := Markdown(mdText)
 	doc, _ := goquery.NewDocumentFromReader(strings.NewReader((content)))
 
@@ -77,6 +95,12 @@ func MarkdownAbstract(mdText string) (abstract string, thumbnailURL string) {
 	selection := doc.Find("img").First()
 	thumbnailURL, _ = selection.Attr("src")
 	abstract = strings.TrimSpace(runesToString(runes))
+
+	data := map[string]string{
+		"abstract": abstract,
+		"thumb":    thumbnailURL,
+	}
+	markdownAbstractCache.Set(key, data)
 
 	return
 }
