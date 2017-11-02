@@ -55,6 +55,7 @@ const (
 	SettingNameBasicMetaDescription = "basicMetaDescription"
 	SettingNameBasicMetaKeywords    = "basicMetaKeywords"
 	SettingNameBasicFaviconURL      = "basicFaviconURL"
+	SettingNameBasicLogoURL         = "basicLogoURL"
 )
 
 // Setting names of category "preference".

@@ -112,6 +112,7 @@ func fillCommon(c *gin.Context) {
 	}
 	(*dataModel)["Statistic"] = statisticMap
 	(*dataModel)["FaviconURL"] = settingMap[model.SettingNameBasicFaviconURL]
+	(*dataModel)["LogoURL"] = settingMap[model.SettingNameBasicLogoURL]
 	(*dataModel)["Title"] = settingMap[model.SettingNameBasicBlogTitle]
 	(*dataModel)["MetaKeywords"] = settingMap[model.SettingNameBasicMetaKeywords]
 	(*dataModel)["MetaDescription"] = settingMap[model.SettingNameBasicMetaDescription]
