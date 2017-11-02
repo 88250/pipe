@@ -41,10 +41,11 @@ func outputAtomAction(c *gin.Context) {
 	articles, _ := service.Article.GetArticles(1, blogAdmin.BlogID)
 	for _, article := range articles {
 		user := service.User.GetUser(article.AuthorID)
+		abstract, _ := util.MarkdownAbstract(article.Content)
 		items = append(items, &feeds.Item{
 			Title:       article.Title,
 			Link:        &feeds.Link{Href: blogURLSetting.Value + article.Path},
-			Description: util.MarkdownAbstract(article.Content),
+			Description: abstract,
 			Author:      &feeds.Author{Name: user.Name},
 			Created:     article.CreatedAt,
 		})

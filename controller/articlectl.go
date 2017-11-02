@@ -34,6 +34,7 @@ func showArticlesAction(c *gin.Context) {
 	if 1 > page {
 		page = 1
 	}
+	dataModel := getDataModel(c)
 	blogAdmin := getBlogAdmin(c)
 	articleModels, pagination := service.Article.GetArticles(page, blogAdmin.BlogID)
 	articles := []*ThemeArticle{}
@@ -57,13 +58,14 @@ func showArticlesAction(c *gin.Context) {
 
 		author := &ThemeAuthor{
 			Name:      authorModel.Name,
-			URL:       "http://localhost:5879/blogs/pipe/vanessa",
-			AvatarURL: "https://img.hacpai.com/20170818zhixiaoyun.jpeg",
+			URL:       getBlogURL(c) + util.PathAuthors + "/" + authorModel.Name,
+			AvatarURL: authorModel.AvatarURL,
 		}
 
+		abstract, thumb := util.MarkdownAbstract(articleModel.Content)
 		article := &ThemeArticle{
 			ID:           articleModel.ID,
-			Abstract:     util.MarkdownAbstract(articleModel.Content),
+			Abstract:     abstract,
 			Author:       author,
 			CreatedAt:    articleModel.CreatedAt.Format("2006-01-02"),
 			Title:        articleModel.Title,
@@ -72,14 +74,12 @@ func showArticlesAction(c *gin.Context) {
 			Topped:       articleModel.Topped,
 			ViewCount:    articleModel.ViewCount,
 			CommentCount: articleModel.CommentCount,
-			ThumbnailURL: "https://img.hacpai.com/20170818zhixiaoyun.jpeg",
+			ThumbnailURL: thumb,
 			Editable:     false,
 		}
 
 		articles = append(articles, article)
 	}
-
-	dataModel := getDataModel(c)
 
 	dataModel["Articles"] = articles
 	dataModel["Pagination"] = pagination
@@ -89,6 +89,7 @@ func showArticlesAction(c *gin.Context) {
 func showArticleAction(c *gin.Context) {
 	dataModel := getDataModel(c)
 	blogAdmin := getBlogAdmin(c)
+	session := util.GetSession(c)
 
 	a, _ := c.Get("article")
 	article := a.(*model.Article)
@@ -103,11 +104,12 @@ func showArticleAction(c *gin.Context) {
 		themeTags = append(themeTags, themeTag)
 	}
 
+	authorModel := service.User.GetUser(article.AuthorID)
 	dataModel["Article"] = &ThemeArticle{
 		Author: &ThemeAuthor{
-			Name:      "Vanessa",
-			URL:       "http://localhost:5879/blogs/pipe/vanessa",
-			AvatarURL: "https://img.hacpai.com/20170818zhixiaoyun.jpeg",
+			Name:      authorModel.Name,
+			URL:       getBlogURL(c) + util.PathAuthors + "/" + authorModel.Name,
+			AvatarURL: authorModel.AvatarURL,
 		},
 		ID:           article.ID,
 		CreatedAt:    article.CreatedAt.Format("2006-01-02"),
@@ -118,7 +120,7 @@ func showArticleAction(c *gin.Context) {
 		ViewCount:    article.ViewCount,
 		CommentCount: article.CommentCount,
 		Content:      template.HTML(util.Markdown(article.Content)),
-		Editable:     true,
+		Editable:     session.UID == authorModel.ID,
 	}
 
 	service.Article.IncArticleViewCount(article)

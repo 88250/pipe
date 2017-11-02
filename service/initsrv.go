@@ -214,6 +214,8 @@ func helloWorld(tx *gorm.DB, admin *model.User, blogID uint) error {
 
 另外，欢迎你加入[黑客与画家的社区](https://hacpai.com)，你可以使用博客账号直接登录！
 
+![Hello](https://www.google.com/logos/doodles/2017/day-of-the-dead-2017-6241959625621504-l.png)
+
 ----
 
 Pipe 博客系统是一个开源项目，如果你觉得它很赞，请到[项目首页](https://github.com/b3log/pipe)给颗星鼓励一下 :heart:`

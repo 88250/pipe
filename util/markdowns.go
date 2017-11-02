@@ -54,7 +54,7 @@ func Markdown(mdText string) string {
 	return ret.(string)
 }
 
-func MarkdownAbstract(mdText string) string {
+func MarkdownAbstract(mdText string) (abstract string, thumbnailURL string) {
 	content := Markdown(mdText)
 	doc, _ := goquery.NewDocumentFromReader(strings.NewReader((content)))
 
@@ -74,7 +74,13 @@ func MarkdownAbstract(mdText string) string {
 		}
 	}
 
-	return strings.TrimSpace(runesToString(runes))
+	selection := doc.Find("img").First()
+	thumbnailURL, _ = selection.Attr("src")
+	log.Info(thumbnailURL)
+
+	abstract = strings.TrimSpace(runesToString(runes))
+
+	return
 }
 
 func runesToString(runes []rune) (ret string) {
