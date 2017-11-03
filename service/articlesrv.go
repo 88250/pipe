@@ -196,16 +196,6 @@ func (srv *articleService) GetMostCommentArticles(size int, blogID uint) (ret []
 	return
 }
 
-func (srv *articleService) GetRandomArticles(size int, blogID uint) (ret []*model.Article) {
-	if err := db.Model(model.Article{}).Select("id, created_at, author_id, title, path").
-		Where(model.Article{Status: model.ArticleStatusPublished, BlogID: blogID}).
-		Order("RANDOM()").Limit(size).Find(&ret).Error; nil != err {
-		log.Errorf("get random articles failed: " + err.Error())
-	}
-
-	return
-}
-
 func (srv *articleService) ConsoleGetArticle(id uint) *model.Article {
 	ret := &model.Article{}
 	if err := db.First(ret, id).Error; nil != err {

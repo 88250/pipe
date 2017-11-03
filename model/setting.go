@@ -69,7 +69,6 @@ const (
 	SettingNamePreferenceMostCommentArticleListSize = "preferenceMostCommentArticleListSize"
 	SettingNamePreferenceMostUseTagListSize         = "preferenceMostUseTagListSize"
 	SettingNamePreferenceMostViewArticleListSize    = "preferenceMostViewArticleListSize"
-	SettingNamePreferenceRandomArticleListSize      = "preferenceRandomArticleListSize"
 	SettingNamePreferenceRecentCommentListSize      = "preferenceRecentCommentListSize"
 	SettingNamePreferenceRelevantArticleListSize    = "preferenceRelevantArticleListSize"
 )
@@ -126,7 +125,6 @@ const (
 	SettingPreferenceMostCommentArticleListSizeDefault = 7
 	SettingPreferenceMostUseTagListSizeDefault         = 15
 	SettingPreferenceMostViewArticleListSizeDefault    = 15
-	SettingPreferenceRandomArticleListSizeDefault      = 7
 	SettingPreferenceRecentCommentListSizeDefault      = 7
 	SettingPreferenceRelevantArticleListSizeDefault    = 7
 )

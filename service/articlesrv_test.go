@@ -114,13 +114,6 @@ func TestGetMostCommentArticles(t *testing.T) {
 	}
 }
 
-func TestGetRandomArticles(t *testing.T) {
-	articles := Article.GetRandomArticles(10, 1)
-	if 10 != len(articles) {
-		t.Errorf("expected is [%d], actual is [%d]", 10, len(articles))
-	}
-}
-
 func TestConsoleGetArticle(t *testing.T) {
 	article := Article.ConsoleGetArticle(1)
 	if nil == article {
