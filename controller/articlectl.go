@@ -209,7 +209,6 @@ func showArticleAction(c *gin.Context) {
 	dataModel["Pagination"] = pagination
 
 	dataModel["RelevantArticles"] = articles
-	dataModel["ExternalRelevantArticles"] = articles
 	fillPreviousArticle(c, article, &dataModel)
 	fillNextArticle(c, article, &dataModel)
 	dataModel["ToC"] = "todo"

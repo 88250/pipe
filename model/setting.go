@@ -65,7 +65,6 @@ const (
 	SettingNamePreferenceArticleListPageSize        = "preferenceArticleListPageSize"
 	SettingNamePreferenceArticleListWindowSize      = "preferenceArticleListWindowSize"
 	SettingNamePreferenceArticleListStyle           = "preferenceArticleListStyle"
-	SettingNamePreferenceExternalArticleListSize    = "preferenceExternalRelevantArticleListSize"
 	SettingNamePreferenceMostCommentArticleListSize = "preferenceMostCommentArticleListSize"
 	SettingNamePreferenceMostUseTagListSize         = "preferenceMostUseTagListSize"
 	SettingNamePreferenceMostViewArticleListSize    = "preferenceMostViewArticleListSize"
@@ -121,7 +120,6 @@ const (
 	SettingPreferenceArticleListPageSizeDefault        = 20
 	SettingPreferenceArticleListWindowSizeDefault      = 20
 	SettingPreferenceArticleListStyleDefault           = SettingPreferenceArticleListStyleValueTitleAbstract
-	SettingPreferenceExternalArticleListSizeDefault    = 7
 	SettingPreferenceMostCommentArticleListSizeDefault = 7
 	SettingPreferenceMostUseTagListSizeDefault         = 15
 	SettingPreferenceMostViewArticleListSizeDefault    = 15

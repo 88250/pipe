@@ -403,13 +403,6 @@ func initPreferenceSettings(tx *gorm.DB, blogID uint) error {
 	}
 	if err := tx.Create(&model.Setting{
 		Category: model.SettingCategoryPreference,
-		Name:     model.SettingNamePreferenceExternalArticleListSize,
-		Value:    strconv.Itoa(model.SettingPreferenceExternalArticleListSizeDefault),
-		BlogID:   blogID}).Error; nil != err {
-		return err
-	}
-	if err := tx.Create(&model.Setting{
-		Category: model.SettingCategoryPreference,
 		Name:     model.SettingNamePreferenceMostCommentArticleListSize,
 		Value:    strconv.Itoa(model.SettingPreferenceMostCommentArticleListSizeDefault),
 		BlogID:   blogID}).Error; nil != err {

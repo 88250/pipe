@@ -93,7 +93,7 @@
     </article>
 
     {{if gt (len .Comments) 0}}
-    <div id="comments" {{if or (ne (len .RelevantArticles) 0) (ne (len .ExternalRelevantArticles) 0)}}class="fn-bottom"{{end}}>
+    <div id="comments" {{if ne (len .RelevantArticles) 0}}class="fn-bottom"{{end}}>
         <div class="module__header">
             <span id="commentsCnt">{{len .Comments}}</span> {{.I18n.Comment}}
         </div>
@@ -105,7 +105,7 @@
         {{template "Gina/pagination" .}}
     </div>
     {{else}}
-    <div class="{{if or (ne (len .RelevantArticles) 0) (ne (len .ExternalRelevantArticles) 0)}}fn-bottom{{end}} ft-center comment__null"
+    <div class="{{if ne (len .RelevantArticles) 0}}fn-bottom{{end}} ft-center comment__null"
          data-title="{{.I18n.Comment}}{{.I18n.Colon}}{{.Article.Title}}"
          data-id="{{.Article.ID}}"
          id="comments">
@@ -116,7 +116,7 @@
     </div>
     {{end}}
 
-    {{if or (ne (len .RelevantArticles) 0) (ne (len .ExternalRelevantArticles) 0)}}
+    {{if ne (len .RelevantArticles) 0}}
     <div class="{{if or .PreviousArticle .NextArticle}}fn-bottom{{end}} fn-three fn-clear">
         {{if ne (len .RelevantArticles) 0}}
         {{range $index, $item := .RelevantArticles}}
@@ -138,8 +138,7 @@
     {{end}}
     {{end}}
 
-    {{if ne (len .ExternalRelevantArticles) 0}}
-    {{range $index, $item := .ExternalRelevantArticles}}
+    {{range $index, $item := .RelevantArticles}}
     {{if or (or (and (eq (len $.RelevantArticles) 0) (lt $index 3)) (and (eq (len $.RelevantArticles) 1) (lt $index 2))) (and (eq (len $.RelevantArticles) 2) (lt $index 1))}}
     <div
     {{if or (and (eq (len $.RelevantArticles) 0) (eq $index 1)) (and (eq (len $.RelevantArticles) 1) (eq $index 0))}}
@@ -154,7 +153,6 @@
     <a class="article__thumb article__thumb--relevant" data-src="{{$item.Author.AvatarURL}}" href="{{$item.URL}}"></a>
     <a class="module__list-title" href="{{$item.URL}}">{{$item.Title}}</a>
 </div>
-{{end}}
 {{end}}
 {{end}}
 </div>
