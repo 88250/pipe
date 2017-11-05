@@ -51,8 +51,14 @@ func showTagArticlesAction(c *gin.Context) {
 		page = 1
 	}
 	dataModel := getDataModel(c)
-	tagTitle := strings.SplitAfter(c.Request.URL.Path, util.PathTags+"/")[1]
 	blogAdmin := getBlogAdmin(c)
+	tagTitle := strings.SplitAfter(c.Request.URL.Path, util.PathTags+"/")[1]
+	tag := service.Tag.GetTagByTitle(tagTitle, blogAdmin.BlogID)
+	if nil == tag {
+		c.Status(http.StatusNotFound)
+
+		return
+	}
 	articleModels, pagination := service.Article.GetTagArticles(tagTitle, page, blogAdmin.BlogID)
 	articles := []*ThemeArticle{}
 	for _, articleModel := range articleModels {
@@ -97,9 +103,7 @@ func showTagArticlesAction(c *gin.Context) {
 	}
 	dataModel["Articles"] = articles
 	dataModel["Pagination"] = pagination
-
-	dataModel["TagName"] = "Vanessa"
-	dataModel["TagArticlesCount"] = 12
+	dataModel["Tag"] = tag
 
 	c.HTML(http.StatusOK, getTheme(c)+"/tag-articles.html", dataModel)
 }
