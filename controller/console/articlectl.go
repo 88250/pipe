@@ -178,3 +178,30 @@ func UpdateArticleAction(c *gin.Context) {
 		result.Msg = err.Error()
 	}
 }
+
+func GetArticleThumbsAction(c *gin.Context) {
+	result := util.NewResult()
+	defer c.JSON(http.StatusOK, result)
+
+	n, _ := strconv.Atoi(c.Query("n"))
+	urls := util.RandImages(n)
+
+	// original: 1920*1080
+
+	w, _ := strconv.Atoi(c.Query("w"))
+	if w < 1 {
+		w = 960
+	}
+	h, _ := strconv.Atoi(c.Query("h"))
+	if h < 1 {
+		h = 520
+	}
+
+	styledURLs := []string{}
+	for _, url := range urls {
+		styledURLs = append(styledURLs, url+"?imageView2/1/w/"+strconv.Itoa(w)+
+			"/h/"+strconv.Itoa(h)+"/interlace/1/q/100")
+	}
+
+	result.Data = styledURLs
+}
