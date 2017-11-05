@@ -27,6 +27,7 @@ import (
 	"github.com/b3log/pipe/util"
 	"github.com/gin-gonic/gin"
 	log "github.com/sirupsen/logrus"
+	"github.com/vinta/pangu"
 )
 
 func showArticlesAction(c *gin.Context) {
@@ -68,7 +69,7 @@ func showArticlesAction(c *gin.Context) {
 			Abstract:     abstract,
 			Author:       author,
 			CreatedAt:    articleModel.CreatedAt.Format("2006-01-02"),
-			Title:        articleModel.Title,
+			Title:        pangu.SpacingText(articleModel.Title),
 			Tags:         themeTags,
 			URL:          getBlogURL(c) + articleModel.Path,
 			Topped:       articleModel.Topped,
@@ -113,7 +114,7 @@ func showArticleAction(c *gin.Context) {
 		},
 		ID:           article.ID,
 		CreatedAt:    article.CreatedAt.Format("2006-01-02"),
-		Title:        article.Title,
+		Title:        pangu.SpacingText(article.Title),
 		Tags:         themeTags,
 		URL:          getBlogURL(c) + article.Path,
 		Topped:       article.Topped,
