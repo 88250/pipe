@@ -157,7 +157,7 @@ func fillMostUseTags(settingMap *map[string]interface{}, dataModel *DataModel, b
 	for _, tag := range tags {
 		themeTag := &ThemeTag{
 			Title: tag.Title,
-			URL:   (*settingMap)[model.SettingNameBasicBlogURL].(string) + "/" + tag.Title,
+			URL:   (*settingMap)[model.SettingNameBasicBlogURL].(string) + "/tags/" + tag.Title,
 		}
 		themeTags = append(themeTags, themeTag)
 	}

@@ -55,8 +55,10 @@ func showTagArticlesAction(c *gin.Context) {
 	if 1 > page {
 		page = 1
 	}
+
+	tagTitle := strings.SplitAfter(c.Request.URL.Path, util.PathTags+"/")[1]
 	blogAdmin := getBlogAdmin(c)
-	articleModels, pagination := service.Article.GetArticles(page, blogAdmin.BlogID)
+	articleModels, pagination := service.Article.GetTagArticles(tagTitle, page, blogAdmin.BlogID)
 	articles := []*ThemeArticle{}
 	for _, articleModel := range articleModels {
 		themeTags := []*ThemeTag{}

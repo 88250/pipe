@@ -226,7 +226,7 @@ Pipe 博客系统是一个开源项目，如果你觉得它很赞，请到[项�
 		Tags:         "Pipe",
 		Content:      content,
 		Path:         "/hello-world",
-		Status:       model.ArticleStatusPublished,
+		Status:       model.ArticleStatusOK,
 		Topped:       false,
 		Commentable:  true,
 		CommentCount: 1,

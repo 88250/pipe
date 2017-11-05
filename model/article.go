@@ -39,5 +39,5 @@ type Article struct {
 
 // Article statuses.
 const (
-	ArticleStatusPublished = iota
+	ArticleStatusOK = iota
 )
