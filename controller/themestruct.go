@@ -39,11 +39,6 @@ type ThemeArticle struct {
 type ThemeTag struct {
 	Title string
 	URL   string
-}
-
-type ThemeTagDetail struct {
-	Title string
-	URL   string
 	Count int
 }
 

@@ -28,34 +28,29 @@ import (
 )
 
 func showTagsAction(c *gin.Context) {
-	dm, _ := c.Get("dataModel")
-	dataModel := *(dm.(*DataModel))
-
-	themeTags := []*ThemeTagDetail{}
-	tagStrs := strings.Split("a, v, sd,adf , a", ",")
-	for _, tagStr := range tagStrs {
-		themeTag := &ThemeTagDetail{
-			Title: tagStr,
-			URL:   getBlogURL(c) + util.PathTags + "/" + tagStr,
-			Count: 1,
+	dataModel := getDataModel(c)
+	blogAdmin := getBlogAdmin(c)
+	tags := service.Tag.ConsoleGetTags(blogAdmin.BlogID)
+	themeTags := []*ThemeTag{}
+	for _, tag := range tags {
+		themeTag := &ThemeTag{
+			Title: tag.Title,
+			URL:   getBlogURL(c) + util.PathTags + "/" + tag.Title,
+			Count: tag.ArticleCount,
 		}
 		themeTags = append(themeTags, themeTag)
 	}
-
 	dataModel["Tags"] = themeTags
 
 	c.HTML(http.StatusOK, getTheme(c)+"/tags.html", dataModel)
 }
 
 func showTagArticlesAction(c *gin.Context) {
-	dm, _ := c.Get("dataModel")
-	dataModel := *(dm.(*DataModel))
-
 	page := c.GetInt("p")
 	if 1 > page {
 		page = 1
 	}
-
+	dataModel := getDataModel(c)
 	tagTitle := strings.SplitAfter(c.Request.URL.Path, util.PathTags+"/")[1]
 	blogAdmin := getBlogAdmin(c)
 	articleModels, pagination := service.Article.GetTagArticles(tagTitle, page, blogAdmin.BlogID)
