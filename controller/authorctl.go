@@ -28,17 +28,17 @@ import (
 )
 
 func showAuthorsAction(c *gin.Context) {
-	dm, _ := c.Get("dataModel")
-	dataModel := *(dm.(*DataModel))
+	blogAdmin := getBlogAdmin(c)
+	dataModel := getDataModel(c)
 
 	themeAuthors := []*ThemeAuthor{}
-	AuthorDetailModels := strings.Split("a, g, c, d", ",")
-	for _, authorDetailModel := range AuthorDetailModels {
+	authorModels := service.User.GetBlogUsers(blogAdmin.BlogID)
+	for _, authorModel := range authorModels {
 		author := &ThemeAuthor{
-			Name:         authorDetailModel,
-			URL:          "/sss",
-			ArticleCount: 13,
-			AvatarURL:    "http://themedesigner.in/demo/admin-press/assets/images/users/2.jpg",
+			Name:         authorModel.Name,
+			URL:          getBlogURL(c) + util.PathAuthors + "/" + authorModel.Name,
+			ArticleCount: authorModel.ArticleCount,
+			AvatarURL:    authorModel.AvatarURL,
 		}
 		themeAuthors = append(themeAuthors, author)
 	}
