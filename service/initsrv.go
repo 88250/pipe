@@ -170,7 +170,7 @@ func (srv *initService) InitPlatform(platformAdmin *model.User) error {
 
 func initPlatformAdmin(tx *gorm.DB, admin *model.User, blogID uint) error {
 	admin.Role = model.UserRolePlatformAdmin
-	admin.ArticleCount, admin.PublishedArticleCount = 1, 1 // article "Hello, World!"
+	admin.ArticleCount = 1 // article "Hello, World!"
 	admin.BlogID = blogID
 	admin.Locale = "zh_CN"
 
@@ -237,10 +237,9 @@ Pipe 博客系统是一个开源项目，如果你觉得它很赞，请到[项�
 	}
 
 	tag := &model.Tag{
-		Title:                 "Pipe",
-		ArticleCount:          1,
-		PublishedArticleCount: 1,
-		BlogID:                blogID,
+		Title:        "Pipe",
+		ArticleCount: 1,
+		BlogID:       blogID,
 	}
 	if err := tx.Create(tag).Error; nil != err {
 		return err
@@ -490,13 +489,6 @@ func initStatisticSettings(tx *gorm.DB, blogID uint) error {
 	if err := tx.Create(&model.Setting{
 		Category: model.SettingCategoryStatistic,
 		Name:     model.SettingNameStatisticArticleCount,
-		Value:    "1", // article "Hello, World!"
-		BlogID:   blogID}).Error; nil != err {
-		return err
-	}
-	if err := tx.Create(&model.Setting{
-		Category: model.SettingCategoryStatistic,
-		Name:     model.SettingNameStatisticPublishedArticleCount,
 		Value:    "1", // article "Hello, World!"
 		BlogID:   blogID}).Error; nil != err {
 		return err

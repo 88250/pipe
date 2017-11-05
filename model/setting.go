@@ -105,10 +105,9 @@ const (
 const (
 	SettingCategoryStatistic = "statistic"
 
-	SettingNameStatisticArticleCount          = "statisticArticleCount"
-	SettingNameStatisticPublishedArticleCount = "statisticPublishedArticleCount"
-	SettingNameStatisticCommentCount          = "statisticCommentCount"
-	SettingNameStatisticViewCount             = "statisticViewCount"
+	SettingNameStatisticArticleCount = "statisticArticleCount"
+	SettingNameStatisticCommentCount = "statisticCommentCount"
+	SettingNameStatisticViewCount    = "statisticViewCount"
 )
 
 // Setting values of category "preference".

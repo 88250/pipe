@@ -120,11 +120,6 @@ func (srv *articleService) AddArticle(article *model.Article) error {
 
 		return err
 	}
-	if err := Statistic.IncPublishedArticleCountWithoutTx(tx, article.BlogID); nil != err {
-		tx.Rollback()
-
-		return err
-	}
 	tx.Commit()
 
 	return nil
@@ -222,7 +217,6 @@ func (srv *articleService) RemoveArticle(id uint) error {
 		return err
 	}
 	author.ArticleCount = author.ArticleCount - 1
-	author.PublishedArticleCount = author.PublishedArticleCount - 1
 	if err := tx.Model(author).Updates(author).Error; nil != err {
 		tx.Rollback()
 
@@ -239,11 +233,6 @@ func (srv *articleService) RemoveArticle(id uint) error {
 		return err
 	}
 	if err := Statistic.DecArticleCountWithoutTx(tx, author.BlogID); nil != err {
-		tx.Rollback()
-
-		return err
-	}
-	if err := Statistic.DecPublishedArticleCountWithoutTx(tx, author.BlogID); nil != err {
 		tx.Rollback()
 
 		return err
@@ -364,7 +353,6 @@ func removeTagArticleRels(tx *gorm.DB, article *model.Article) error {
 			continue
 		}
 		tag.ArticleCount = tag.ArticleCount - 1
-		tag.PublishedArticleCount = tag.PublishedArticleCount - 1
 		if err := tx.Save(tag).Error; nil != err {
 			continue
 		}
@@ -385,14 +373,12 @@ func tagArticle(tx *gorm.DB, article *model.Article) error {
 		if "" == tag.Title {
 			tag.Title = tagTitle
 			tag.ArticleCount = 1
-			tag.PublishedArticleCount = 1
 			tag.BlogID = article.BlogID
 			if err := tx.Create(tag).Error; nil != err {
 				return err
 			}
 		} else {
 			tag.ArticleCount = tag.ArticleCount + 1
-			tag.PublishedArticleCount = tag.PublishedArticleCount + 1
 			if err := tx.Model(tag).Updates(tag).Error; nil != err {
 				return err
 			}

@@ -40,5 +40,4 @@ type Article struct {
 // Article statuses.
 const (
 	ArticleStatusPublished = iota
-	ArticleStatusDraft
 )

@@ -20,14 +20,13 @@ package model
 type User struct {
 	Model
 
-	Name                  string `gorm:"size:32" json:"name"`
-	Nickname              string `gorm:"size:32" json:"nickname"`
-	Role                  int    `json:"role"`
-	AvatarURL             string `gorm:"size:255" json:"avatarURL"`
-	B3Key                 string `gorm:"size:32" json:"b3Key"`
-	Locale                string `gorm:"size:32 json:"locale"`
-	ArticleCount          int    `json:"articleCount"`          // including drafts and published articles
-	PublishedArticleCount int    `json:"publishedArticleCount"` // just including published articles
+	Name         string `gorm:"size:32" json:"name"`
+	Nickname     string `gorm:"size:32" json:"nickname"`
+	Role         int    `json:"role"`
+	AvatarURL    string `gorm:"size:255" json:"avatarURL"`
+	B3Key        string `gorm:"size:32" json:"b3Key"`
+	Locale       string `gorm:"size:32 json:"locale"`
+	ArticleCount int    `json:"articleCount"`
 
 	BlogID uint `json:"blogID"`
 }

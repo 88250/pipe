@@ -20,9 +20,8 @@ package model
 type Tag struct {
 	Model
 
-	Title                 string `gorm:"size:128" json:"title"`
-	ArticleCount          int    `json:"articleCount"`          // including drafts and published articles
-	PublishedArticleCount int    `json:"publishedArticleCount"` // just including published articles
+	Title        string `gorm:"size:128" json:"title"`
+	ArticleCount int    `json:"articleCount"`
 
 	BlogID uint `json:"blogID"`
 }
