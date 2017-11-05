@@ -101,9 +101,7 @@ func showAuthorArticlesAction(c *gin.Context) {
 	}
 	dataModel["Articles"] = articles
 	dataModel["Pagination"] = pagination
-
-	dataModel["AuthorName"] = "Vanessa"
-	dataModel["AuthorCount"] = 12
+	dataModel["Author"] = author
 
 	c.HTML(http.StatusOK, getTheme(c)+"/author-articles.html", dataModel)
 }
