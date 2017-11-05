@@ -28,9 +28,9 @@ import (
 )
 
 func showArchivesAction(c *gin.Context) {
-	dm, _ := c.Get("dataModel")
-	dataModel := *(dm.(*DataModel))
-
+	dataModel := getDataModel(c)
+	blogAdmin := getBlogAdmin(c)
+	_ = blogAdmin
 	themeArchives := []*ThemeArchive{}
 	archiveModels := strings.Split("a, g, c, d", ",")
 	for _, archiveModel := range archiveModels {
