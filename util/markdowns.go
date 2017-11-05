@@ -29,6 +29,7 @@ import (
 	"github.com/microcosm-cc/bluemonday"
 	"github.com/russross/blackfriday"
 	log "github.com/sirupsen/logrus"
+	"github.com/vinta/pangu"
 )
 
 var markdownCache = gcache.New(1024).LRU().Build()
@@ -50,11 +51,20 @@ func Markdown(mdText string) string {
 	ret := string(bluemonday.UGCPolicy().SanitizeBytes(unsafe))
 
 	doc, _ := goquery.NewDocumentFromReader(strings.NewReader(ret))
-	doc.Find("img").Each(func(i int, s *goquery.Selection) {
-		src, _ := s.Attr("src")
-		s.SetAttr("data-src", src)
+	doc.Find("img").Each(func(i int, ele *goquery.Selection) {
+		src, _ := ele.Attr("src")
+		ele.SetAttr("data-src", src)
 	})
-	ret, _ = doc.Html()
+
+	doc.Find("*").Contents().FilterFunction(func(i int, ele *goquery.Selection) bool {
+		return "#text" == goquery.NodeName(ele)
+	}).Each(func(i int, ele *goquery.Selection) {
+		text := ele.Text()
+		text = pangu.SpacingText(text)
+		ele.ReplaceWithHtml(text)
+	})
+
+	ret, _ = doc.Find("body").Html()
 
 	markdownCache.Set(key, ret)
 
@@ -95,6 +105,7 @@ func MarkdownAbstract(mdText string) (abstract string, thumbnailURL string) {
 	selection := doc.Find("img").First()
 	thumbnailURL, _ = selection.Attr("src")
 	abstract = strings.TrimSpace(runesToString(runes))
+	abstract = pangu.SpacingText(abstract)
 
 	data := map[string]string{
 		"abstract": abstract,
