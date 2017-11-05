@@ -37,29 +37,22 @@ type ThemeArticle struct {
 }
 
 type ThemeTag struct {
-	Title string
-	URL   string
-	Count int
+	Title        string
+	URL          string
+	ArticleCount int
 }
 
 type ThemeArchive struct {
-	Title string
-	URL   string
-	Count int
+	Title        string
+	URL          string
+	ArticleCount int
 }
 
 type ThemeAuthor struct {
-	Name      string
-	AvatarURL string
-	URL       string
-}
-
-type ThemeAuthorDetail struct {
-	Name      string
-	AvatarURL string
-	URL       string
-	Count     int
-	CreatedAt string
+	Name         string
+	AvatarURL    string
+	URL          string
+	ArticleCount int
 }
 
 type ThemeCategory struct {

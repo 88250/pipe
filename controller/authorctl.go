@@ -31,20 +31,19 @@ func showAuthorsAction(c *gin.Context) {
 	dm, _ := c.Get("dataModel")
 	dataModel := *(dm.(*DataModel))
 
-	themeAuthorDetail := []*ThemeAuthorDetail{}
+	themeAuthors := []*ThemeAuthor{}
 	AuthorDetailModels := strings.Split("a, g, c, d", ",")
 	for _, authorDetailModel := range AuthorDetailModels {
-		authorDetail := &ThemeAuthorDetail{
-			Name:      authorDetailModel,
-			URL:       "/sss",
-			Count:     13,
-			AvatarURL: "http://themedesigner.in/demo/admin-press/assets/images/users/2.jpg",
-			CreatedAt: "2012-12-12",
+		author := &ThemeAuthor{
+			Name:         authorDetailModel,
+			URL:          "/sss",
+			ArticleCount: 13,
+			AvatarURL:    "http://themedesigner.in/demo/admin-press/assets/images/users/2.jpg",
 		}
-		themeAuthorDetail = append(themeAuthorDetail, authorDetail)
+		themeAuthors = append(themeAuthors, author)
 	}
 
-	dataModel["Authors"] = themeAuthorDetail
+	dataModel["Authors"] = themeAuthors
 	c.HTML(http.StatusOK, getTheme(c)+"/authors.html", dataModel)
 }
 

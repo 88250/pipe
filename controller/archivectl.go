@@ -35,9 +35,9 @@ func showArchivesAction(c *gin.Context) {
 	archiveModels := strings.Split("a, g, c, d", ",")
 	for _, archiveModel := range archiveModels {
 		archive := &ThemeArchive{
-			Title: archiveModel,
-			URL:   getBlogURL(c) + "/" + archiveModel,
-			Count: 13,
+			Title:        archiveModel,
+			URL:          getBlogURL(c) + "/" + archiveModel,
+			ArticleCount: 13,
 		}
 		themeArchives = append(themeArchives, archive)
 	}

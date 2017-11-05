@@ -34,9 +34,9 @@ func showTagsAction(c *gin.Context) {
 	themeTags := []*ThemeTag{}
 	for _, tag := range tags {
 		themeTag := &ThemeTag{
-			Title: tag.Title,
-			URL:   getBlogURL(c) + util.PathTags + "/" + tag.Title,
-			Count: tag.ArticleCount,
+			Title:        tag.Title,
+			URL:          getBlogURL(c) + util.PathTags + "/" + tag.Title,
+			ArticleCount: tag.ArticleCount,
 		}
 		themeTags = append(themeTags, themeTag)
 	}
