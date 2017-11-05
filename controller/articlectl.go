@@ -37,6 +37,7 @@ func showArticlesAction(c *gin.Context) {
 	}
 	dataModel := getDataModel(c)
 	blogAdmin := getBlogAdmin(c)
+	session := util.GetSession(c)
 	articleModels, pagination := service.Article.GetArticles(page, blogAdmin.BlogID)
 	articles := []*ThemeArticle{}
 	for _, articleModel := range articleModels {
@@ -76,7 +77,7 @@ func showArticlesAction(c *gin.Context) {
 			ViewCount:    articleModel.ViewCount,
 			CommentCount: articleModel.CommentCount,
 			ThumbnailURL: thumb,
-			Editable:     false,
+			Editable:     session.UID == authorModel.ID,
 		}
 
 		articles = append(articles, article)

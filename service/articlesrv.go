@@ -195,6 +195,25 @@ func (src *articleService) GetTagArticles(tagTitle string, page int, blogID uint
 	return
 }
 
+func (src *articleService) GetAuthorArticles(authorID uint, page int, blogID uint) (ret []*model.Article, pagination *util.Pagination) {
+	pageSize, windowSize := getPageWindowSize(blogID)
+	offset := (page - 1) * pageSize
+	count := 0
+
+	if err := db.Model(model.Article{}).
+		Where("author_id = ? AND status = ?", authorID, model.ArticleStatusOK).
+		Order("topped DESC, id DESC").Count(&count).
+		Offset(offset).Limit(pageSize).
+		Find(&ret).Error; nil != err {
+		log.Errorf("get author articles failed: " + err.Error())
+	}
+
+	pageCount := int(math.Ceil(float64(count) / float64(pageSize)))
+	pagination = util.NewPagination(page, pageSize, pageCount, windowSize, count)
+
+	return
+}
+
 func (srv *articleService) GetMostViewArticles(size int, blogID uint) (ret []*model.Article) {
 	if err := db.Model(model.Article{}).Select("id, created_at, author_id, title, path").
 		Where(model.Article{Status: model.ArticleStatusOK, BlogID: blogID}).

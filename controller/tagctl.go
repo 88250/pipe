@@ -25,6 +25,7 @@ import (
 	"github.com/b3log/pipe/util"
 	"github.com/gin-gonic/gin"
 	log "github.com/sirupsen/logrus"
+	"github.com/vinta/pangu"
 )
 
 func showTagsAction(c *gin.Context) {
@@ -52,6 +53,7 @@ func showTagArticlesAction(c *gin.Context) {
 	}
 	dataModel := getDataModel(c)
 	blogAdmin := getBlogAdmin(c)
+	session := util.GetSession(c)
 	tagTitle := strings.SplitAfter(c.Request.URL.Path, util.PathTags+"/")[1]
 	tag := service.Tag.GetTagByTitle(tagTitle, blogAdmin.BlogID)
 	if nil == tag {
@@ -89,14 +91,14 @@ func showTagArticlesAction(c *gin.Context) {
 			ID:           articleModel.ID,
 			Author:       author,
 			CreatedAt:    articleModel.CreatedAt.Format("2006-01-02"),
-			Title:        articleModel.Title,
+			Title:        pangu.SpacingText(articleModel.Title),
 			Tags:         themeTags,
 			URL:          getBlogURL(c) + articleModel.Path,
 			Topped:       articleModel.Topped,
 			ViewCount:    articleModel.ViewCount,
 			CommentCount: articleModel.CommentCount,
 			ThumbnailURL: "https://img.hacpai.com/20170818zhixiaoyun.jpeg",
-			Editable:     false,
+			Editable:     session.UID == authorModel.ID,
 		}
 
 		articles = append(articles, article)

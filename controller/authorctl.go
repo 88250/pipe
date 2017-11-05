@@ -24,7 +24,7 @@ import (
 	"github.com/b3log/pipe/service"
 	"github.com/b3log/pipe/util"
 	"github.com/gin-gonic/gin"
-	log "github.com/sirupsen/logrus"
+	"github.com/vinta/pangu"
 )
 
 func showAuthorsAction(c *gin.Context) {
@@ -48,9 +48,6 @@ func showAuthorsAction(c *gin.Context) {
 }
 
 func showAuthorArticlesAction(c *gin.Context) {
-	dm, _ := c.Get("dataModel")
-	dataModel := *(dm.(*DataModel))
-
 	authorName := strings.SplitAfter(c.Request.URL.Path, util.PathAuthors+"/")[1]
 	author := service.User.GetUserByName(authorName)
 	if nil == author {
@@ -64,7 +61,9 @@ func showAuthorArticlesAction(c *gin.Context) {
 		page = 1
 	}
 	blogAdmin := getBlogAdmin(c)
-	articleModels, pagination := service.Article.GetArticles(page, blogAdmin.BlogID)
+	dataModel := getDataModel(c)
+	session := util.GetSession(c)
+	articleModels, pagination := service.Article.GetAuthorArticles(author.ID, page, blogAdmin.BlogID)
 	articles := []*ThemeArticle{}
 	for _, articleModel := range articleModels {
 		themeTags := []*ThemeTag{}
@@ -78,12 +77,6 @@ func showAuthorArticlesAction(c *gin.Context) {
 		}
 
 		authorModel := service.User.GetUser(articleModel.AuthorID)
-		if nil == authorModel {
-			log.Errorf("not found author of article [id=%d, authorID=%d]", articleModel.ID, articleModel.AuthorID)
-
-			continue
-		}
-
 		author := &ThemeAuthor{
 			Name:      authorModel.Name,
 			URL:       "http://localhost:5879/blogs/pipe/vanessa",
@@ -94,14 +87,14 @@ func showAuthorArticlesAction(c *gin.Context) {
 			ID:           articleModel.ID,
 			Author:       author,
 			CreatedAt:    articleModel.CreatedAt.Format("2006-01-02"),
-			Title:        articleModel.Title,
+			Title:        pangu.SpacingText(articleModel.Title),
 			Tags:         themeTags,
 			URL:          getBlogURL(c) + articleModel.Path,
 			Topped:       articleModel.Topped,
 			ViewCount:    articleModel.ViewCount,
 			CommentCount: articleModel.CommentCount,
 			ThumbnailURL: "https://img.hacpai.com/20170818zhixiaoyun.jpeg",
-			Editable:     false,
+			Editable:     session.UID == authorModel.ID,
 		}
 
 		articles = append(articles, article)
