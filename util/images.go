@@ -21,7 +21,8 @@ import (
 	"time"
 )
 
-// RandImage returns an image URL randomly for article thumbnail. https://github.com/b3log/bing
+// RandImage returns an image URL randomly for article thumbnail.
+// https://github.com/b3log/bing
 func RandImage() string {
 	min := time.Date(2017, 11, 04, 0, 0, 0, 0, time.UTC).Unix()
 	max := time.Now().Unix()
@@ -29,4 +30,38 @@ func RandImage() string {
 	sec := rand.Int63n(delta) + min
 
 	return time.Unix(sec, 0).Format("https://img.hacpai.com/bing/20060102.jpg")
+}
+
+func RandImages(n int) []string {
+	ret := []string{}
+
+	i := 0
+	for {
+		if i >= n*2 {
+			break
+		}
+
+		url := RandImage()
+		if !contains(url, ret) {
+			ret = append(ret, url)
+		}
+
+		if len(ret) >= n {
+			return ret
+		}
+
+		i++
+	}
+
+	return ret
+}
+
+func contains(str string, slice []string) bool {
+	for _, s := range slice {
+		if str == s {
+			return true
+		}
+	}
+
+	return false
 }
