@@ -6,7 +6,7 @@
     </div>
     <div>
         {{range .Comments}}
-        {{template "Comments/comment" dict "Item" . "I18n" $.I18n "Username" $.User.UName "ArticleID" $.Article.ID}}
+        {{template "comment/comment" dict "Item" . "I18n" $.I18n "Username" $.User.UName "ArticleID" $.Article.ID}}
         {{end}}
     </div>
     pagination
