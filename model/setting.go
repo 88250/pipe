@@ -65,11 +65,9 @@ const (
 	SettingNamePreferenceArticleListPageSize        = "preferenceArticleListPageSize"
 	SettingNamePreferenceArticleListWindowSize      = "preferenceArticleListWindowSize"
 	SettingNamePreferenceArticleListStyle           = "preferenceArticleListStyle"
-	SettingNamePreferenceExternalArticleListSize    = "preferenceExternalRelevantArticleListSize"
 	SettingNamePreferenceMostCommentArticleListSize = "preferenceMostCommentArticleListSize"
 	SettingNamePreferenceMostUseTagListSize         = "preferenceMostUseTagListSize"
 	SettingNamePreferenceMostViewArticleListSize    = "preferenceMostViewArticleListSize"
-	SettingNamePreferenceRandomArticleListSize      = "preferenceRandomArticleListSize"
 	SettingNamePreferenceRecentCommentListSize      = "preferenceRecentCommentListSize"
 	SettingNamePreferenceRelevantArticleListSize    = "preferenceRelevantArticleListSize"
 )
@@ -107,10 +105,9 @@ const (
 const (
 	SettingCategoryStatistic = "statistic"
 
-	SettingNameStatisticArticleCount          = "statisticArticleCount"
-	SettingNameStatisticPublishedArticleCount = "statisticPublishedArticleCount"
-	SettingNameStatisticCommentCount          = "statisticCommentCount"
-	SettingNameStatisticViewCount             = "statisticViewCount"
+	SettingNameStatisticArticleCount = "statisticArticleCount"
+	SettingNameStatisticCommentCount = "statisticCommentCount"
+	SettingNameStatisticViewCount    = "statisticViewCount"
 )
 
 // Setting values of category "preference".
@@ -122,11 +119,9 @@ const (
 	SettingPreferenceArticleListPageSizeDefault        = 20
 	SettingPreferenceArticleListWindowSizeDefault      = 20
 	SettingPreferenceArticleListStyleDefault           = SettingPreferenceArticleListStyleValueTitleAbstract
-	SettingPreferenceExternalArticleListSizeDefault    = 7
 	SettingPreferenceMostCommentArticleListSizeDefault = 7
 	SettingPreferenceMostUseTagListSizeDefault         = 15
 	SettingPreferenceMostViewArticleListSizeDefault    = 15
-	SettingPreferenceRandomArticleListSizeDefault      = 7
 	SettingPreferenceRecentCommentListSizeDefault      = 7
 	SettingPreferenceRelevantArticleListSizeDefault    = 7
 )

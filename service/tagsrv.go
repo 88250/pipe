@@ -46,3 +46,12 @@ func (srv *tagService) GetTags(size int, blogID uint) (ret []*model.Tag) {
 
 	return
 }
+
+func (srv *tagService) GetTagByTitle(title string, blogID uint) *model.Tag {
+	ret := &model.Tag{}
+	if err := db.Where(model.Tag{Title: title, BlogID: blogID}).First(ret).Error; nil != err {
+		return nil
+	}
+
+	return ret
+}

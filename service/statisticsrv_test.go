@@ -24,8 +24,8 @@ import (
 
 func TestGetAllStatistics(t *testing.T) {
 	settings := Statistic.GetAllStatistics(1)
-	if 4 != len(settings) {
-		t.Errorf("expected is [%d], actual is [%d]", 4, len(settings))
+	if 3 != len(settings) {
+		t.Errorf("expected is [%d], actual is [%d]", 3, len(settings))
 	}
 }
 

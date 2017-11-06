@@ -42,13 +42,12 @@ func GetUsersAction(c *gin.Context) {
 	userModels := service.User.GetBlogUsers(session.BID)
 	for _, userModel := range userModels {
 		users = append(users, &ConsoleUser{
-			ID:                    userModel.ID,
-			Name:                  userModel.Name,
-			Nickname:              userModel.Nickname,
-			Role:                  userModel.Role,
-			URL:                   blogURLSetting.Value + util.PathAuthors + "/" + userModel.Name,
-			AvatarURL:             userModel.AvatarURL,
-			PublishedArticleCount: userModel.PublishedArticleCount,
+			ID:        userModel.ID,
+			Name:      userModel.Name,
+			Nickname:  userModel.Nickname,
+			Role:      userModel.Role,
+			URL:       blogURLSetting.Value + util.PathAuthors + "/" + userModel.Name,
+			AvatarURL: userModel.AvatarURL,
 		})
 	}
 

@@ -27,6 +27,7 @@ import (
 	"github.com/b3log/pipe/util"
 	"github.com/gin-gonic/gin"
 	log "github.com/sirupsen/logrus"
+	"github.com/vinta/pangu"
 )
 
 func showArticlesAction(c *gin.Context) {
@@ -36,6 +37,7 @@ func showArticlesAction(c *gin.Context) {
 	}
 	dataModel := getDataModel(c)
 	blogAdmin := getBlogAdmin(c)
+	session := util.GetSession(c)
 	articleModels, pagination := service.Article.GetArticles(page, blogAdmin.BlogID)
 	articles := []*ThemeArticle{}
 	for _, articleModel := range articleModels {
@@ -68,14 +70,14 @@ func showArticlesAction(c *gin.Context) {
 			Abstract:     abstract,
 			Author:       author,
 			CreatedAt:    articleModel.CreatedAt.Format("2006-01-02"),
-			Title:        articleModel.Title,
+			Title:        pangu.SpacingText(articleModel.Title),
 			Tags:         themeTags,
 			URL:          getBlogURL(c) + articleModel.Path,
 			Topped:       articleModel.Topped,
 			ViewCount:    articleModel.ViewCount,
 			CommentCount: articleModel.CommentCount,
 			ThumbnailURL: thumb,
-			Editable:     false,
+			Editable:     session.UID == authorModel.ID,
 		}
 
 		articles = append(articles, article)
@@ -113,7 +115,7 @@ func showArticleAction(c *gin.Context) {
 		},
 		ID:           article.ID,
 		CreatedAt:    article.CreatedAt.Format("2006-01-02"),
-		Title:        article.Title,
+		Title:        pangu.SpacingText(article.Title),
 		Tags:         themeTags,
 		URL:          getBlogURL(c) + article.Path,
 		Topped:       article.Topped,
@@ -209,7 +211,6 @@ func showArticleAction(c *gin.Context) {
 	dataModel["Pagination"] = pagination
 
 	dataModel["RelevantArticles"] = articles
-	dataModel["ExternalRelevantArticles"] = articles
 	fillPreviousArticle(c, article, &dataModel)
 	fillNextArticle(c, article, &dataModel)
 	dataModel["ToC"] = "todo"

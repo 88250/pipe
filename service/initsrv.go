@@ -18,7 +18,6 @@ package service
 
 import (
 	"errors"
-	"math/rand"
 	"strconv"
 	"sync"
 
@@ -171,7 +170,7 @@ func (srv *initService) InitPlatform(platformAdmin *model.User) error {
 
 func initPlatformAdmin(tx *gorm.DB, admin *model.User, blogID uint) error {
 	admin.Role = model.UserRolePlatformAdmin
-	admin.ArticleCount, admin.PublishedArticleCount = 1, 1 // article "Hello, World!"
+	admin.ArticleCount = 1 // article "Hello, World!"
 	admin.BlogID = blogID
 	admin.Locale = "zh_CN"
 
@@ -215,7 +214,7 @@ func helloWorld(tx *gorm.DB, admin *model.User, blogID uint) error {
 
 另外，欢迎你加入[黑客与画家的社区](https://hacpai.com)，你可以使用博客账号直接登录！
 
-![Hello](https://img.hacpai.com/pipe/hello` + strconv.Itoa(rand.Intn(10)) + `.jpg)
+![Hello](` + util.RandImage() + `?imageView2/1/w/960/h/520/interlace/1/q/100)
 
 ----
 
@@ -227,7 +226,7 @@ Pipe 博客系统是一个开源项目，如果你觉得它很赞，请到[项�
 		Tags:         "Pipe",
 		Content:      content,
 		Path:         "/hello-world",
-		Status:       model.ArticleStatusPublished,
+		Status:       model.ArticleStatusOK,
 		Topped:       false,
 		Commentable:  true,
 		CommentCount: 1,
@@ -238,10 +237,9 @@ Pipe 博客系统是一个开源项目，如果你觉得它很赞，请到[项�
 	}
 
 	tag := &model.Tag{
-		Title:                 "Pipe",
-		ArticleCount:          1,
-		PublishedArticleCount: 1,
-		BlogID:                blogID,
+		Title:        "Pipe",
+		ArticleCount: 1,
+		BlogID:       blogID,
 	}
 	if err := tx.Create(tag).Error; nil != err {
 		return err
@@ -400,13 +398,6 @@ func initPreferenceSettings(tx *gorm.DB, blogID uint) error {
 	}
 	if err := tx.Create(&model.Setting{
 		Category: model.SettingCategoryPreference,
-		Name:     model.SettingNamePreferenceExternalArticleListSize,
-		Value:    strconv.Itoa(model.SettingPreferenceExternalArticleListSizeDefault),
-		BlogID:   blogID}).Error; nil != err {
-		return err
-	}
-	if err := tx.Create(&model.Setting{
-		Category: model.SettingCategoryPreference,
 		Name:     model.SettingNamePreferenceMostCommentArticleListSize,
 		Value:    strconv.Itoa(model.SettingPreferenceMostCommentArticleListSizeDefault),
 		BlogID:   blogID}).Error; nil != err {
@@ -423,13 +414,6 @@ func initPreferenceSettings(tx *gorm.DB, blogID uint) error {
 		Category: model.SettingCategoryPreference,
 		Name:     model.SettingNamePreferenceMostViewArticleListSize,
 		Value:    strconv.Itoa(model.SettingPreferenceMostViewArticleListSizeDefault),
-		BlogID:   blogID}).Error; nil != err {
-		return err
-	}
-	if err := tx.Create(&model.Setting{
-		Category: model.SettingCategoryPreference,
-		Name:     model.SettingNamePreferenceRandomArticleListSize,
-		Value:    strconv.Itoa(model.SettingPreferenceRandomArticleListSizeDefault),
 		BlogID:   blogID}).Error; nil != err {
 		return err
 	}
@@ -505,13 +489,6 @@ func initStatisticSettings(tx *gorm.DB, blogID uint) error {
 	if err := tx.Create(&model.Setting{
 		Category: model.SettingCategoryStatistic,
 		Name:     model.SettingNameStatisticArticleCount,
-		Value:    "1", // article "Hello, World!"
-		BlogID:   blogID}).Error; nil != err {
-		return err
-	}
-	if err := tx.Create(&model.Setting{
-		Category: model.SettingCategoryStatistic,
-		Name:     model.SettingNameStatisticPublishedArticleCount,
 		Value:    "1", // article "Hello, World!"
 		BlogID:   blogID}).Error; nil != err {
 		return err

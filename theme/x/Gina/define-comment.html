@@ -7,9 +7,11 @@
     </a>
     <div class="fn-padding60">
         <div>
-            <a href="{{.Item.Author.AvatarURL}}" class="module__list-title">{{.Item.Author.Name}}</a> •
-            <span class="ft-nowrap ft-12 ft-gray">{{.Item.CreatedAt}}</span> •
-            <a class="ft-nowrap ft-12 ft-orange" href="">{{.I18n.Reply}} Vanessa</a>
+            <a href="{{.Item.Author.AvatarURL}}" class="module__list-title">{{.Item.Author.Name}}</a>
+            <span class="ft-nowrap ft-12 ft-gray"> • {{.Item.CreatedAt}} •</span>
+            <a class="ft-nowrap ft-12 ft-orange" href="#123">
+                <svg><use xlink:href="#reply"></use></svg>{{.I18n.Reply}} Vanessa
+            </a>
             <span class="comment__btn commentAdd"
                   data-title="{{.I18n.Reply}}{{.I18n.Colon}}{{.Item.Author.Name}}"
                   data-id="{{.ArticleID}}"
@@ -29,10 +31,27 @@
             {{.Item.Content}}
         </div>
         <div>
-            <span class="ft-gray ft-12">
+            <span class="ft-gray ft-12 fn-pointer module__list-title comment__reply-btn" data-id="{{.Item.ID}}">
                 2 {{.I18n.Reply}}
-                <svg><use xlink:href="#chevron-up"></use></svg>
+                <svg class="chevron-down"><use xlink:href="#chevron-up"></use></svg>
             </span>
+            <div class="comment__reply-panel fn-none">
+                <section class="comment__reply-item">
+                    <a rel="nofollow"
+                       class="avatar fn-absolute"
+                       data-src="{{.Item.Author.AvatarURL}}"
+                       href="{{.Item.Author.URL}}">
+                    </a>
+                    <div class="fn-padding60">
+                        <a href="{{.Item.Author.AvatarURL}}" class="module__list-title">{{.Item.Author.Name}}</a>
+                        <span class="ft-12 ft-gray"> • </span>
+                        <span class="ft-nowrap ft-12 ft-gray">{{.Item.CreatedAt}}</span>
+                        <div class="content__reset">
+                            {{.Item.Content}}
+                        </div>
+                    </div>
+                </section>
+            </div>
         </div>
     </div>
 </section>

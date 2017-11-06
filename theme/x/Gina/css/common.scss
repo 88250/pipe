@@ -98,12 +98,18 @@ a {
   color: $theme-accent !important;
 }
 
+// icon
+.chevron-down {
+  transform: rotate(180deg);
+}
+
 // avatar
 .avatar {
   height: 50px;
   width: 50px;
   border-radius: 50%;
   display: inline-block;
+  z-index: 10;
   @include image-bg('../images/image-bg.svg');
 
   &--space {
@@ -619,6 +625,7 @@ a {
   line-height: 24px;
   border-top: 1px dotted $border-color;
   padding-top: 50px;
+  text-align: center;
   &__item {
     border: 1px solid $border-color;
     padding: 0 8px;
@@ -666,7 +673,7 @@ a {
       height: 0;
       width: 2px;
       background-color: $theme-accent;
-      top: 52px;
+      top: 32px;
       left: 25px;
       z-index: 1;
       transition: $transition;
@@ -702,6 +709,20 @@ a {
     &:hover {
       color: $theme-accent;
     }
+  }
+
+  &__reply {
+    &-btn svg {
+      transition: $transition;
+    }
+    &-item {
+      margin-top: 30px;
+
+      &:first-child {
+        margin-top: 20px;
+      }
+    }
+
   }
 }
 
@@ -803,14 +824,15 @@ a {
 
 // author
 .author {
+  padding: 0 0 30px 30px;
   &__item {
     float: left;
-    height: 360px;
-    width: 260px;
+    height: 265px;
+    width: 202px;
     border-radius: 4px;
     background-color: $theme-accent;
     box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.05);
-    margin: 0 30px 30px 0;
+    margin: 30px 30px 0 0;
     display: block;
     text-align: center;
     color: #fff;
@@ -825,7 +847,7 @@ a {
   }
 
   &__header {
-    height: 260px;
+    height: 202px;
     overflow: hidden;
     .avatar {
       transition: all .4s linear;
@@ -837,7 +859,7 @@ a {
 
   &__name {
     font-size: 20px;
-    margin: 20px 0 10px;
+    margin-top: 10px;
   }
 }
 

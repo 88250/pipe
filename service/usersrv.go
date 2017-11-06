@@ -73,7 +73,8 @@ type UserBlog struct {
 
 func (srv *userService) GetBlogUsers(blogID uint) (ret []*model.User) {
 	correlations := []*model.Correlation{}
-	if err := db.Where("id1 = ? AND type = ?", blogID, model.CorrelationBlogUser).Find(&correlations).Error; nil != err {
+	if err := db.Where("id1 = ? AND type = ?", blogID, model.CorrelationBlogUser).
+		Find(&correlations).Error; nil != err {
 		return
 	}
 
@@ -91,7 +92,8 @@ func (srv *userService) GetBlogUsers(blogID uint) (ret []*model.User) {
 
 func (srv *userService) GetUserBlogs(userID uint) (ret []*UserBlog) {
 	correlations := []*model.Correlation{}
-	if err := db.Where("id2 = ? AND type = ?", userID, model.CorrelationBlogUser).Find(&correlations).Error; nil != err {
+	if err := db.Where("id2 = ? AND type = ?", userID, model.CorrelationBlogUser).
+		Find(&correlations).Error; nil != err {
 		return
 	}
 

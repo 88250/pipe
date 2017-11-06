@@ -128,7 +128,6 @@ func fillCommon(c *gin.Context) {
 	fillMostViewArticles(&settingMap, dataModel, blogID)
 	fillRecentComments(&settingMap, dataModel, blogID)
 	fillMostCommentArticles(&settingMap, dataModel, blogID)
-	fillRandomArticles(&settingMap, dataModel, blogID)
 
 	c.Set("dataModel", dataModel)
 }
@@ -158,7 +157,7 @@ func fillMostUseTags(settingMap *map[string]interface{}, dataModel *DataModel, b
 	for _, tag := range tags {
 		themeTag := &ThemeTag{
 			Title: tag.Title,
-			URL:   (*settingMap)[model.SettingNameBasicBlogURL].(string) + "/" + tag.Title,
+			URL:   (*settingMap)[model.SettingNameBasicBlogURL].(string) + "/tags/" + tag.Title,
 		}
 		themeTags = append(themeTags, themeTag)
 	}
@@ -203,7 +202,7 @@ func fillRecentComments(settingMap *map[string]interface{}, dataModel *DataModel
 	themeRecentComments := []*ThemeComment{}
 	for _, comment := range recentComments {
 		themeComment := &ThemeComment{
-			Title:     comment.Content,
+			Title:     "",
 			Content:   template.HTML(util.Markdown(comment.Content)),
 			URL:       "todo",
 			CreatedAt: humanize.Time(comment.CreatedAt),
@@ -244,33 +243,6 @@ func fillMostCommentArticles(settingMap *map[string]interface{}, dataModel *Data
 	}
 
 	(*dataModel)["MostCommentArticles"] = themeMostCommentArticles
-}
-
-func fillRandomArticles(settingMap *map[string]interface{}, dataModel *DataModel, blogID uint) {
-	randomArticleSize, err := strconv.Atoi((*settingMap)[model.SettingNamePreferenceRandomArticleListSize].(string))
-	if nil != err {
-		log.Errorf("setting [%s] should be an integer, actual is [%v]", model.SettingNamePreferenceRandomArticleListSize,
-			(*settingMap)[model.SettingNamePreferenceRandomArticleListSize])
-		randomArticleSize = model.SettingPreferenceRandomArticleListSizeDefault
-	}
-	randomArticles := service.Article.GetRandomArticles(randomArticleSize, blogID)
-	themeRandomArticles := []*ThemeArticle{}
-	for _, article := range randomArticles {
-		author := &ThemeAuthor{
-			Name:      "Vanessa",
-			URL:       "http://localhost:5879/blogs/pipe/vanessa",
-			AvatarURL: "https://img.hacpai.com/20170818zhixiaoyun.jpeg",
-		}
-		themeArticle := &ThemeArticle{
-			Title:     article.Title,
-			URL:       (*settingMap)[model.SettingNameBasicBlogURL].(string) + article.Path,
-			CreatedAt: humanize.Time(article.CreatedAt),
-			Author:    author,
-		}
-		themeRandomArticles = append(themeRandomArticles, themeArticle)
-	}
-
-	(*dataModel)["RandomArticles"] = themeRandomArticles
 }
 
 func getBlogURL(c *gin.Context) string {

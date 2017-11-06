@@ -88,6 +88,8 @@ func (srv *articleService) AddArticle(article *model.Article) error {
 	}
 	article.Tags = tagStr
 
+	article.ID = util.CurrentMillisecond()
+
 	if err := normalizeArticlePath(article); nil != err {
 		return err
 	}
@@ -118,11 +120,6 @@ func (srv *articleService) AddArticle(article *model.Article) error {
 
 		return err
 	}
-	if err := Statistic.IncPublishedArticleCountWithoutTx(tx, article.BlogID); nil != err {
-		tx.Rollback()
-
-		return err
-	}
 	tx.Commit()
 
 	return nil
@@ -132,7 +129,7 @@ func (srv *articleService) ConsoleGetArticles(page int, blogID uint) (ret []*mod
 	offset := (page - 1) * adminConsoleArticleListPageSize
 	count := 0
 	if err := db.Model(model.Article{}).Select("id, created_at, author_id, title, tags, path, topped, view_count, comment_count").
-		Where(model.Article{Status: model.ArticleStatusPublished, BlogID: blogID}).
+		Where(model.Article{Status: model.ArticleStatusOK, BlogID: blogID}).
 		Order("topped DESC, id DESC").Count(&count).
 		Offset(offset).Limit(adminConsoleArticleListPageSize).
 		Find(&ret).Error; nil != err {
@@ -146,17 +143,11 @@ func (srv *articleService) ConsoleGetArticles(page int, blogID uint) (ret []*mod
 }
 
 func (srv *articleService) GetArticles(page int, blogID uint) (ret []*model.Article, pagination *util.Pagination) {
-	settings := Setting.GetSettings(blogID, model.SettingCategoryPreference, []string{model.SettingNamePreferenceArticleListPageSize, model.SettingNamePreferenceArticleListWindowSize})
-	pageSize, err := strconv.Atoi(settings[model.SettingNamePreferenceArticleListPageSize].Value)
-	if nil != err {
-		log.Errorf("value of setting [%s] is not an integer, actual is [%v]", model.SettingNamePreferenceArticleListPageSize, settings[model.SettingNamePreferenceArticleListPageSize].Value)
-		pageSize = adminConsoleArticleListPageSize
-	}
-
+	pageSize, windowSize := getPageWindowSize(blogID)
 	offset := (page - 1) * pageSize
 	count := 0
 	if err := db.Model(model.Article{}).Select("id, created_at, author_id, title, content, tags, path, topped, view_count, comment_count").
-		Where(model.Article{Status: model.ArticleStatusPublished, BlogID: blogID}).
+		Where(model.Article{Status: model.ArticleStatusOK, BlogID: blogID}).
 		Order("topped DESC, id DESC").Count(&count).
 		Offset(offset).Limit(pageSize).
 		Find(&ret).Error; nil != err {
@@ -164,11 +155,60 @@ func (srv *articleService) GetArticles(page int, blogID uint) (ret []*model.Arti
 	}
 
 	pageCount := int(math.Ceil(float64(count) / float64(pageSize)))
-	windowSize, err := strconv.Atoi(settings[model.SettingNamePreferenceArticleListWindowSize].Value)
-	if nil != err {
-		log.Errorf("value of setting [%s] is not an integer, actual is [%v]", model.SettingNamePreferenceArticleListWindowSize, settings[model.SettingNamePreferenceArticleListWindowSize].Value)
-		windowSize = adminConsoleArticleListWindowSize
+	pagination = util.NewPagination(page, pageSize, pageCount, windowSize, count)
+
+	return
+}
+
+func (src *articleService) GetTagArticles(tagTitle string, page int, blogID uint) (ret []*model.Article, pagination *util.Pagination) {
+	tag := &model.Tag{}
+	if err := db.Where(model.Tag{Title: tagTitle}).First(tag).Error; nil != err {
+		return
 	}
+
+	pageSize, windowSize := getPageWindowSize(blogID)
+	offset := (page - 1) * pageSize
+	count := 0
+
+	rels := []*model.Correlation{}
+	if err := db.Model(model.Correlation{}).Where(model.Correlation{ID2: tag.ID, Type: model.CorrelationArticleTag}).
+		Find(&rels).Error; nil != err {
+		return
+	}
+
+	articleIDs := []uint{}
+	for _, articleTagRel := range rels {
+		articleIDs = append(articleIDs, articleTagRel.ID1)
+	}
+
+	if err := db.Model(model.Article{}).
+		Where("ID in (?) AND status = ?", articleIDs, model.ArticleStatusOK).
+		Order("topped DESC, id DESC").Count(&count).
+		Offset(offset).Limit(pageSize).
+		Find(&ret).Error; nil != err {
+		log.Errorf("get tag articles failed: " + err.Error())
+	}
+
+	pageCount := int(math.Ceil(float64(count) / float64(pageSize)))
+	pagination = util.NewPagination(page, pageSize, pageCount, windowSize, count)
+
+	return
+}
+
+func (src *articleService) GetAuthorArticles(authorID uint, page int, blogID uint) (ret []*model.Article, pagination *util.Pagination) {
+	pageSize, windowSize := getPageWindowSize(blogID)
+	offset := (page - 1) * pageSize
+	count := 0
+
+	if err := db.Model(model.Article{}).
+		Where("author_id = ? AND status = ?", authorID, model.ArticleStatusOK).
+		Order("topped DESC, id DESC").Count(&count).
+		Offset(offset).Limit(pageSize).
+		Find(&ret).Error; nil != err {
+		log.Errorf("get author articles failed: " + err.Error())
+	}
+
+	pageCount := int(math.Ceil(float64(count) / float64(pageSize)))
 	pagination = util.NewPagination(page, pageSize, pageCount, windowSize, count)
 
 	return
@@ -176,7 +216,7 @@ func (srv *articleService) GetArticles(page int, blogID uint) (ret []*model.Arti
 
 func (srv *articleService) GetMostViewArticles(size int, blogID uint) (ret []*model.Article) {
 	if err := db.Model(model.Article{}).Select("id, created_at, author_id, title, path").
-		Where(model.Article{Status: model.ArticleStatusPublished, BlogID: blogID}).
+		Where(model.Article{Status: model.ArticleStatusOK, BlogID: blogID}).
 		Order("view_count DESC, id DESC").Limit(size).Find(&ret).Error; nil != err {
 		log.Errorf("get most view articles failed: " + err.Error())
 	}
@@ -186,19 +226,9 @@ func (srv *articleService) GetMostViewArticles(size int, blogID uint) (ret []*mo
 
 func (srv *articleService) GetMostCommentArticles(size int, blogID uint) (ret []*model.Article) {
 	if err := db.Model(model.Article{}).Select("id, created_at, author_id, title, path").
-		Where(model.Article{Status: model.ArticleStatusPublished, BlogID: blogID}).
+		Where(model.Article{Status: model.ArticleStatusOK, BlogID: blogID}).
 		Order("comment_count DESC, id DESC").Limit(size).Find(&ret).Error; nil != err {
 		log.Errorf("get most comment articles failed: " + err.Error())
-	}
-
-	return
-}
-
-func (srv *articleService) GetRandomArticles(size int, blogID uint) (ret []*model.Article) {
-	if err := db.Model(model.Article{}).Select("id, created_at, author_id, title, path").
-		Where(model.Article{Status: model.ArticleStatusPublished, BlogID: blogID}).
-		Order("RANDOM()").Limit(size).Find(&ret).Error; nil != err {
-		log.Errorf("get random articles failed: " + err.Error())
 	}
 
 	return
@@ -230,7 +260,6 @@ func (srv *articleService) RemoveArticle(id uint) error {
 		return err
 	}
 	author.ArticleCount = author.ArticleCount - 1
-	author.PublishedArticleCount = author.PublishedArticleCount - 1
 	if err := tx.Model(author).Updates(author).Error; nil != err {
 		tx.Rollback()
 
@@ -247,11 +276,6 @@ func (srv *articleService) RemoveArticle(id uint) error {
 		return err
 	}
 	if err := Statistic.DecArticleCountWithoutTx(tx, author.BlogID); nil != err {
-		tx.Rollback()
-
-		return err
-	}
-	if err := Statistic.DecPublishedArticleCountWithoutTx(tx, author.BlogID); nil != err {
 		tx.Rollback()
 
 		return err
@@ -286,6 +310,7 @@ func (srv *articleService) UpdateArticle(article *model.Article) error {
 		return err
 	}
 	article.BlogID = oldArticle.BlogID
+	article.ID = oldArticle.ID
 
 	tagStr, err := normalizeTagStr(article.Tags)
 	if nil != err {
@@ -371,7 +396,6 @@ func removeTagArticleRels(tx *gorm.DB, article *model.Article) error {
 			continue
 		}
 		tag.ArticleCount = tag.ArticleCount - 1
-		tag.PublishedArticleCount = tag.PublishedArticleCount - 1
 		if err := tx.Save(tag).Error; nil != err {
 			continue
 		}
@@ -392,14 +416,12 @@ func tagArticle(tx *gorm.DB, article *model.Article) error {
 		if "" == tag.Title {
 			tag.Title = tagTitle
 			tag.ArticleCount = 1
-			tag.PublishedArticleCount = 1
 			tag.BlogID = article.BlogID
 			if err := tx.Create(tag).Error; nil != err {
 				return err
 			}
 		} else {
 			tag.ArticleCount = tag.ArticleCount + 1
-			tag.PublishedArticleCount = tag.PublishedArticleCount + 1
 			if err := tx.Model(tag).Updates(tag).Error; nil != err {
 				return err
 			}
@@ -432,9 +454,8 @@ func contains(strs []string, str string) bool {
 func normalizeArticlePath(article *model.Article) error {
 	path := strings.TrimSpace(article.Path)
 	if "" == path {
-		now := time.Now()
-		path = util.PathArticles + now.Format("/2006/01/02/") +
-			fmt.Sprintf("%d", now.UnixNano()/int64(time.Millisecond))
+		path = util.PathArticles + time.Now().Format("/2006/01/02/") +
+			fmt.Sprintf("%d", article.ID)
 	}
 
 	if !strings.HasPrefix(path, "/") {
@@ -449,4 +470,21 @@ func normalizeArticlePath(article *model.Article) error {
 	article.Path = path
 
 	return nil
+}
+
+func getPageWindowSize(blogID uint) (pageSize, windowSize int) {
+	settings := Setting.GetSettings(blogID, model.SettingCategoryPreference, []string{model.SettingNamePreferenceArticleListPageSize, model.SettingNamePreferenceArticleListWindowSize})
+	pageSize, err := strconv.Atoi(settings[model.SettingNamePreferenceArticleListPageSize].Value)
+	if nil != err {
+		log.Errorf("value of setting [%s] is not an integer, actual is [%v]", model.SettingNamePreferenceArticleListPageSize, settings[model.SettingNamePreferenceArticleListPageSize].Value)
+		pageSize = adminConsoleArticleListPageSize
+	}
+
+	windowSize, err = strconv.Atoi(settings[model.SettingNamePreferenceArticleListWindowSize].Value)
+	if nil != err {
+		log.Errorf("value of setting [%s] is not an integer, actual is [%v]", model.SettingNamePreferenceArticleListWindowSize, settings[model.SettingNamePreferenceArticleListWindowSize].Value)
+		windowSize = adminConsoleArticleListWindowSize
+	}
+
+	return
 }

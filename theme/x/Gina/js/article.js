@@ -26,11 +26,26 @@ const Article = {
   init: () => {
     Article._initEvent()
     Article._initToc()
+    Article._initShowReplyComment()
     LocalStorageInput('commentContent')
     InitEditor('emotions', 'commentContent')
 
     $('.content__reset img').click(function () {
       PreviewImg(this)
+    });
+  },
+  _initShowReplyComment: () => {
+    $('#comments').on('click', '.comment__item .fn-pointer', function () {
+      const $it = $(this)
+      const $svg = $it.find('svg')
+      if ($svg.hasClass('chevron-down')) {
+        $svg.removeClass('chevron-down')
+      } else {
+        $svg.addClass('chevron-down')
+      }
+      $it.next().slideToggle({
+        queue: false
+      })
     });
   },
   _initToc: () => {

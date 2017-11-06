@@ -14,14 +14,12 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-package model
+package util
 
-// Tag model.
-type Tag struct {
-	Model
+import (
+	"time"
+)
 
-	Title        string `gorm:"size:128" json:"title"`
-	ArticleCount int    `json:"articleCount"`
-
-	BlogID uint `json:"blogID"`
+func CurrentMillisecond() uint {
+	return uint(time.Now().UnixNano() / int64(time.Millisecond))
 }

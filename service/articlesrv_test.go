@@ -114,13 +114,6 @@ func TestGetMostCommentArticles(t *testing.T) {
 	}
 }
 
-func TestGetRandomArticles(t *testing.T) {
-	articles := Article.GetRandomArticles(10, 1)
-	if 10 != len(articles) {
-		t.Errorf("expected is [%d], actual is [%d]", 10, len(articles))
-	}
-}
-
 func TestConsoleGetArticle(t *testing.T) {
 	article := Article.ConsoleGetArticle(1)
 	if nil == article {
@@ -203,6 +196,7 @@ func TestNormalizeArticlePath(t *testing.T) {
 	article := &model.Article{
 		Path: "/aaa",
 	}
+	article.ID = 1
 
 	if err := normalizeArticlePath(article); nil != err {
 		t.Error(err)
@@ -219,7 +213,7 @@ func TestNormalizeArticlePath(t *testing.T) {
 
 		return
 	}
-	if 34 != len(article.Path) {
+	if len("/articles/2017/11/02/1") != len(article.Path) {
 		t.Errorf(article.Path)
 	}
 }

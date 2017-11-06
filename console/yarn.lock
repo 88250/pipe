@@ -900,10 +900,6 @@ bluebird@^3.0.5, bluebird@^3.1.1, bluebird@^3.4.7:
   version "3.5.0"
   resolved "http://registry.npm.taobao.org/bluebird/download/bluebird-3.5.0.tgz#791420d7f551eea2897453a8a77653f96606d67c"
 
-blueimp-md5@^2.10.0:
-  version "2.10.0"
-  resolved "http://registry.npm.taobao.org/blueimp-md5/download/blueimp-md5-2.10.0.tgz#02f0843921f90dca14f5b8920a38593201d6964d"
-
 bn.js@^4.0.0, bn.js@^4.1.0, bn.js@^4.1.1, bn.js@^4.4.0:
   version "4.11.8"
   resolved "http://registry.npm.taobao.org/bn.js/download/bn.js-4.11.8.tgz#2cde09eb5ee341f484746bb0309b3253b1b1442f"
@@ -3461,9 +3457,9 @@ math-expression-evaluator@^1.2.14:
   version "1.2.17"
   resolved "http://registry.npm.taobao.org/math-expression-evaluator/download/math-expression-evaluator-1.2.17.tgz#de819fdbcd84dccd8fae59c6aeb79615b9d266ac"
 
-mavon-editor@^2.2.6:
-  version "2.2.6"
-  resolved "https://registry.yarnpkg.com/mavon-editor/-/mavon-editor-2.2.6.tgz#079796db4f66b0a3eea06122ace46715f363e33f"
+mavon-editor@^2.3.0:
+  version "2.3.0"
+  resolved "http://registry.npm.taobao.org/mavon-editor/download/mavon-editor-2.3.0.tgz#ea641b6ccb90b2ede4741479bb5bec35d71e7db5"
   dependencies:
     highlight.js "^9.11.0"
     highlight.js-async-webpack "^1.0.4"
@@ -5978,9 +5974,9 @@ vue@~2.4.2:
   version "2.4.4"
   resolved "http://registry.npm.taobao.org/vue/download/vue-2.4.4.tgz#ea9550b96a71465fd2b8b17b61673b3561861789"
 
-"vuetify@git+https://git@github.com/Vanessa219/vuetify.git#1.0.1":
-  version "0.16.9"
-  resolved "git+https://git@github.com/Vanessa219/vuetify.git#ab36cdcd8a4814529cc641681f254ab41b249f49"
+"vuetify@git+https://github.com/Vanessa219/vuetify.git#dev":
+  version "1.0.0"
+  resolved "git+https://github.com/Vanessa219/vuetify.git#37f8ee91a6315f4c9f4bb452a34cf188f7de1f31"
 
 vuex@^2.4.0:
   version "2.4.0"

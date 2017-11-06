@@ -34,20 +34,8 @@
           :rules="requiredRules"
         ></v-text-field>
         <v-text-field
-          :label="$t('randomArticleListSize', $store.state.locale)"
-          v-model="preferenceRandomArticleListSize"
-          required
-          :rules="requiredRules"
-        ></v-text-field>
-        <v-text-field
           :label="$t('relevantArticleListSize', $store.state.locale)"
           v-model="preferenceRelevantArticleListSize"
-          required
-          :rules="requiredRules"
-        ></v-text-field>
-        <v-text-field
-          :label="$t('externalRelevantArticleListSize', $store.state.locale)"
-          v-model="preferenceExternalRelevantArticleListSize"
           required
           :rules="requiredRules"
         ></v-text-field>
@@ -102,9 +90,7 @@
         preferenceMostViewArticleListSize: 10,
         preferenceArticleListPageSize: 15,
         preferenceArticleListWindowSize: 20,
-        preferenceRandomArticleListSize: 10,
         preferenceRelevantArticleListSize: 10,
-        preferenceExternalRelevantArticleListSize: 10,
         error: false,
         errorMsg: ''
       }
@@ -127,9 +113,7 @@
           preferenceMostViewArticleListSize: this.preferenceMostViewArticleListSize,
           preferenceArticleListPageSize: this.preferenceArticleListPageSize,
           preferenceArticleListWindowSize: this.preferenceArticleListWindowSize,
-          preferenceRandomArticleListSize: this.preferenceRandomArticleListSize,
-          preferenceRelevantArticleListSize: this.preferenceRelevantArticleListSize,
-          preferenceExternalRelevantArticleListSize: this.preferenceExternalRelevantArticleListSize
+          preferenceRelevantArticleListSize: this.preferenceRelevantArticleListSize
         })
 
         if (responseData.code === 0) {
@@ -158,9 +142,7 @@
         this.$set(this, 'preferenceMostViewArticleListSize', responseData.preferenceMostViewArticleListSize)
         this.$set(this, 'preferenceArticleListPageSize', responseData.preferenceArticleListPageSize)
         this.$set(this, 'preferenceArticleListWindowSize', responseData.preferenceArticleListWindowSize)
-        this.$set(this, 'preferenceRandomArticleListSize', responseData.preferenceRandomArticleListSize)
         this.$set(this, 'preferenceRelevantArticleListSize', responseData.preferenceRelevantArticleListSize)
-        this.$set(this, 'preferenceExternalRelevantArticleListSize', responseData.preferenceExternalRelevantArticleListSize)
       }
     }
   }

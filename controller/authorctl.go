@@ -24,37 +24,31 @@ import (
 	"github.com/b3log/pipe/service"
 	"github.com/b3log/pipe/util"
 	"github.com/gin-gonic/gin"
-	log "github.com/sirupsen/logrus"
+	"github.com/vinta/pangu"
 )
 
 func showAuthorsAction(c *gin.Context) {
-	dm, _ := c.Get("dataModel")
-	dataModel := *(dm.(*DataModel))
+	blogAdmin := getBlogAdmin(c)
+	dataModel := getDataModel(c)
 
-	themeAuthorDetail := []*ThemeAuthorDetail{}
-	AuthorDetailModels := strings.Split("a, g, c, d", ",")
-	for _, authorDetailModel := range AuthorDetailModels {
-		authorDetail := &ThemeAuthorDetail{
-			Name:      authorDetailModel,
-			URL:       "/sss",
-			Count:     13,
-			AvatarURL: "http://themedesigner.in/demo/admin-press/assets/images/users/2.jpg",
-			CreatedAt: "2012-12-12",
+	themeAuthors := []*ThemeAuthor{}
+	authorModels := service.User.GetBlogUsers(blogAdmin.BlogID)
+	for _, authorModel := range authorModels {
+		author := &ThemeAuthor{
+			Name:         authorModel.Name,
+			URL:          getBlogURL(c) + util.PathAuthors + "/" + authorModel.Name,
+			ArticleCount: authorModel.ArticleCount,
+			AvatarURL:    authorModel.AvatarURL,
 		}
-		themeAuthorDetail = append(themeAuthorDetail, authorDetail)
+		themeAuthors = append(themeAuthors, author)
 	}
 
-	dataModel["Authors"] = themeAuthorDetail
+	dataModel["Authors"] = themeAuthors
 	c.HTML(http.StatusOK, getTheme(c)+"/authors.html", dataModel)
 }
 
 func showAuthorArticlesAction(c *gin.Context) {
-	dm, _ := c.Get("dataModel")
-	dataModel := *(dm.(*DataModel))
-
-	url := c.Request.URL.String()
-
-	authorName := url[strings.LastIndex(url, "/")+1:]
+	authorName := strings.SplitAfter(c.Request.URL.Path, util.PathAuthors+"/")[1]
 	author := service.User.GetUserByName(authorName)
 	if nil == author {
 		c.Status(404)
@@ -67,7 +61,9 @@ func showAuthorArticlesAction(c *gin.Context) {
 		page = 1
 	}
 	blogAdmin := getBlogAdmin(c)
-	articleModels, pagination := service.Article.GetArticles(page, blogAdmin.BlogID)
+	dataModel := getDataModel(c)
+	session := util.GetSession(c)
+	articleModels, pagination := service.Article.GetAuthorArticles(author.ID, page, blogAdmin.BlogID)
 	articles := []*ThemeArticle{}
 	for _, articleModel := range articleModels {
 		themeTags := []*ThemeTag{}
@@ -81,12 +77,6 @@ func showAuthorArticlesAction(c *gin.Context) {
 		}
 
 		authorModel := service.User.GetUser(articleModel.AuthorID)
-		if nil == authorModel {
-			log.Errorf("not found author of article [id=%d, authorID=%d]", articleModel.ID, articleModel.AuthorID)
-
-			continue
-		}
-
 		author := &ThemeAuthor{
 			Name:      authorModel.Name,
 			URL:       "http://localhost:5879/blogs/pipe/vanessa",
@@ -97,23 +87,21 @@ func showAuthorArticlesAction(c *gin.Context) {
 			ID:           articleModel.ID,
 			Author:       author,
 			CreatedAt:    articleModel.CreatedAt.Format("2006-01-02"),
-			Title:        articleModel.Title,
+			Title:        pangu.SpacingText(articleModel.Title),
 			Tags:         themeTags,
 			URL:          getBlogURL(c) + articleModel.Path,
 			Topped:       articleModel.Topped,
 			ViewCount:    articleModel.ViewCount,
 			CommentCount: articleModel.CommentCount,
 			ThumbnailURL: "https://img.hacpai.com/20170818zhixiaoyun.jpeg",
-			Editable:     false,
+			Editable:     session.UID == authorModel.ID,
 		}
 
 		articles = append(articles, article)
 	}
 	dataModel["Articles"] = articles
 	dataModel["Pagination"] = pagination
-
-	dataModel["AuthorName"] = "Vanessa"
-	dataModel["AuthorCount"] = 12
+	dataModel["Author"] = author
 
 	c.HTML(http.StatusOK, getTheme(c)+"/author-articles.html", dataModel)
 }

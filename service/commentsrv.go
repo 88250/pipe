@@ -89,6 +89,8 @@ func (srv *commentService) AddComment(comment *model.Comment) error {
 	srv.mutex.Lock()
 	defer srv.mutex.Unlock()
 
+	comment.ID = util.CurrentMillisecond()
+
 	tx := db.Begin()
 	if err := tx.Create(comment).Error; nil != err {
 		tx.Rollback()
