@@ -36,7 +36,6 @@ const Article = {
   },
   _initShowReplyComment: () => {
     $('#comments').on('click', '.comment__item .fn-pointer', function () {
-      console.log(11)
       const $it = $(this)
       const $svg = $it.find('svg')
       if ($svg.hasClass('chevron-down')) {

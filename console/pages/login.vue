@@ -34,7 +34,6 @@
 </template>
 
 <script>
-  import md5 from 'blueimp-md5'
   import 'particles.js'
   import { required, maxSize } from '~/plugins/validate'
 
@@ -64,7 +63,7 @@
         }
         const responseData = await this.axios.post('/login', {
           nameOrEmail: this.accountOrEmail,
-          passwordHashed: md5(this.password)
+          passwordHashed: this.password
         })
         if (responseData.code === 0) {
           this.$set(this, 'error', false)

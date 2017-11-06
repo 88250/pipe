@@ -11,7 +11,7 @@
           @change="setLocalstorage('title')"
         ></v-text-field>
 
-        <mavon-editor v-model="content" @change="setLocalstorage('content')"/>
+        <mavon-editor v-model="content" @change="setLocalstorage"/>
 
         <v-select
           v-model="tags"
@@ -21,7 +21,7 @@
           :items="$store.state.tagsItems"
           required
           :rules="tagsRules"
-          @change="setLocalstorage('tags')"
+          @change="setLocalstorage"
         ></v-select>
 
         <v-text-field
@@ -116,15 +116,18 @@
         if (this.$route.query.id) {
           return
         }
+        if (arguments.length === 2) {
+          localStorage.setItem('article-content', arguments[0])
+          return
+        }
+
+        if (typeof arguments[0] === 'object') {
+          localStorage.setItem('article-tags', arguments[0])
+          return
+        }
         switch (type) {
           case 'title':
             localStorage.setItem('article-title', this.title)
-            break
-          case 'content':
-            localStorage.setItem('article-content', this.content)
-            break
-          case 'tags':
-            localStorage.setItem('article-tags', this.tags.toString())
             break
           case 'url':
             localStorage.setItem('article-url', this.url)

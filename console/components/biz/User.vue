@@ -48,7 +48,6 @@
 </template>
 
 <script>
-  import md5 from 'blueimp-md5'
   import { required } from '~/plugins/validate'
 
   export default {
@@ -87,7 +86,7 @@
           name: this.name,
           nickname: this.nickname,
           email: this.email,
-          password: md5(this.password),
+          password: this.password,
           avatarURL: this.avatarURL
         }
         if (this.id === 0) {
