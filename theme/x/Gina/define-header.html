@@ -1,8 +1,10 @@
 {{define "Gina/header"}}
 <header class="header">
-    <a href="{{.BlogURL}}" class="header__logo"><img src="{{.LogoURL}}"></a>
     <div class="wrapper">
-        <a href="{{.BlogURL}}">{{.Setting.BasicBlogTitle}}</a>
+        <a href="{{.BlogURL}}">
+            <img src="{{.LogoURL}}" class="header__logo">
+            {{.Setting.BasicBlogTitle}}
+        </a>
         <a href="{{.BlogURL}}/categories">{{.I18n.Categories}}</a>
         <a href="{{.BlogURL}}/tags">{{.I18n.Tags}}</a>
         <a href="{{.BlogURL}}/archives">{{.I18n.Archives}}</a>

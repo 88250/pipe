@@ -211,12 +211,8 @@ a {
   overflow: hidden;
 
   &__logo {
-    img {
-      height: 35px;
-      width: 35px;
-    }
-    position: absolute;
-    margin: 0 0 0 20px;
+    height: 35px;
+    width: 35px;
   }
   .wrapper a {
     color: $text-color;
@@ -972,9 +968,6 @@ a {
   }
 
   .header__logo {
-    margin-left: 50px;
-    height: 35px;
-    width: 35px;
     border-radius: 20px;
   }
 
@@ -985,7 +978,7 @@ a {
       &:first-child {
         display: block;
         float: left;
-        margin-left: 70px;
+        margin-left: 20px;
       }
     }
   }
