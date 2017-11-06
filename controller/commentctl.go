@@ -86,10 +86,10 @@ func addCommentAction(c *gin.Context) {
 	}
 	dataModel["I18n"] = i18nMap
 
-	t := template.Must(template.New("").ParseFiles("theme/x/" + getTheme(c) + "/define-comment.html"))
+	t := template.Must(template.New("").ParseFiles("theme/comment/comment.html"))
 
 	htmlBuilder := bytes.Buffer{}
-	if err := t.ExecuteTemplate(&htmlBuilder, getTheme(c)+"/comment", dataModel); nil != err {
+	if err := t.ExecuteTemplate(&htmlBuilder, "comment/comment", dataModel); nil != err {
 		log.Errorf("execute comment template failed: " + err.Error())
 
 		return

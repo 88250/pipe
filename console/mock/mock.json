@@ -306,12 +306,6 @@
       ],
       "mockFile": "sign.json"
     },
-    "hp/apis/check-account": {
-      "verbs": [
-        "post"
-      ],
-      "mockFile": "responseCheckAccount.json"
-    },
     "hp/apis/articles": {
       "verbs": [
         "get"
