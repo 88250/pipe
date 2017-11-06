@@ -8,9 +8,10 @@
           :rules="titleRules"
           :counter="128"
           required
+          @change="setLocalstorage('title')"
         ></v-text-field>
 
-        <mavon-editor v-model="content"/>
+        <mavon-editor v-model="content" @change="setLocalstorage('content')"/>
 
         <v-select
           v-model="tags"
@@ -20,21 +21,31 @@
           :items="$store.state.tagsItems"
           required
           :rules="tagsRules"
+          @change="setLocalstorage('tags')"
         ></v-select>
 
         <v-text-field
           :label="$t('links', $store.state.locale)"
           v-model="url"
+          @change="setLocalstorage('url')"
         ></v-text-field>
 
         <label class="checkbox">
-          <input type="checkbox" :checked="commentable" @click="commentable = !commentable"/><span
+          <input
+            type="checkbox"
+            :checked="commentable"
+            @change="setLocalstorage('commentable')"
+            @click="commentable = !commentable"/><span
           class="checkbox__icon"></span>
           {{ $t('allowComment', $store.state.locale) }}
         </label>
 
         <label class="checkbox btn--space">
-          <input type="checkbox" :checked="useThumbs" @click="useThumbs = !useThumbs"/><span
+          <input
+            type="checkbox"
+            :checked="useThumbs"
+            @change="setLocalstorage('useThumbs')"
+            @click="useThumbs = !useThumbs"/><span
           class="checkbox__icon"></span>
           {{ $t('useThumb', $store.state.locale) }}
         </label>
@@ -101,6 +112,33 @@
       }
     },
     methods: {
+      setLocalstorage (type) {
+        if (this.$route.query.id) {
+          return
+        }
+        switch (type) {
+          case 'title':
+            localStorage.setItem('article-title', this.title)
+            break
+          case 'content':
+            localStorage.setItem('article-content', this.content)
+            break
+          case 'tags':
+            localStorage.setItem('article-tags', this.tags.toString())
+            break
+          case 'url':
+            localStorage.setItem('article-url', this.url)
+            break
+          case 'commentable':
+            localStorage.setItem('article-commentable', this.commentable)
+            break
+          case 'useThumbs':
+            localStorage.setItem('article-useThumbs', this.useThumbs)
+            break
+          default:
+            break
+        }
+      },
       async getThumbs () {
         const responseData = await this.axios.get(`console/thumbs?n=5&w=768&h=180`)
         if (responseData) {
@@ -120,7 +158,7 @@
             }
           })
         }
-        const responseData = await this.axios.put(`/console/articles${id ? '/' + id : ''}`, {
+        const responseData = await this.axios[id ? 'put' : 'post'](`/console/articles${id ? '/' + id : ''}`, {
           title: this.title,
           content: content,
           path: this.url,
@@ -129,6 +167,14 @@
           commentable: this.commentable
         })
         if (responseData.code === 0) {
+          if (!id) {
+            localStorage.removeItem('article-title')
+            localStorage.removeItem('article-content')
+            localStorage.removeItem('article-tags')
+            localStorage.removeItem('article-url')
+            localStorage.removeItem('article-commentable')
+            localStorage.removeItem('article-useThumbs')
+          }
           this.$set(this, 'error', false)
           this.$set(this, 'errorMsg', '')
           this.$router.push('/admin/articles')
@@ -161,6 +207,30 @@
           this.$set(this, 'tags', responseData.tags.split(','))
           this.$set(this, 'commentable', responseData.commentable)
         }
+      } else {
+        // set storage
+        setTimeout(() => {
+          if (localStorage.getItem('article-title')) {
+            this.title = localStorage.getItem('article-title')
+            this.$set(this, 'title', localStorage.getItem('article-title'))
+            console.log(this.title)
+          }
+          if (localStorage.getItem('article-content')) {
+            this.$set(this, 'content', localStorage.getItem('article-content'))
+          }
+          if (localStorage.getItem('article-tags')) {
+            this.$set(this, 'tags', localStorage.getItem('article-tags').split(','))
+          }
+          if (localStorage.getItem('article-url')) {
+            this.$set(this, 'url', localStorage.getItem('article-url'))
+          }
+          if (localStorage.getItem('article-commentable')) {
+            this.$set(this, 'commentable', localStorage.getItem('article-commentable'))
+          }
+          if (localStorage.getItem('article-useThumbs')) {
+            this.$set(this, 'useThumbs', localStorage.getItem('article-useThumbs'))
+          }
+        })
       }
 
       // get tags
