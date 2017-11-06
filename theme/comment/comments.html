@@ -1,8 +1,8 @@
 {{define "comment/comments"}}
 {{if gt (len .Comments) 0}}
-<div id="comments" {{if ne (len .RelevantArticles) 0}}class="fn-bottom"{{end}}>
+<div id="comments">
     <div class="module__header">
-        <span id="commentsCnt">{{len .Comments}}</span> {{.I18n.Comment}}
+        <span id="commentsCnt">{{len $.Comments}}</span> {{$.I18n.Comment}}
     </div>
     <div>
         {{range .Comments}}

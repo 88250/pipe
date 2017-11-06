@@ -92,7 +92,7 @@
         </div>
     </article>
 
-    {{template "comment/comments" dict "$" . "theme" "dark"}}
+    {{template "comment/comments" .}}
 
     {{if ne (len .RelevantArticles) 0}}
     <div class="{{if or .PreviousArticle .NextArticle}}fn-bottom{{end}}">
@@ -175,7 +175,7 @@
 
 </div>
 
-{{template "comment/editor" dict "$" .}}
+{{template "comment/editor" .}}
 
 {{template "Gina/footer" .}}
 </body>
