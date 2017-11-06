@@ -213,7 +213,6 @@
           if (localStorage.getItem('article-title')) {
             this.title = localStorage.getItem('article-title')
             this.$set(this, 'title', localStorage.getItem('article-title'))
-            console.log(this.title)
           }
           if (localStorage.getItem('article-content')) {
             this.$set(this, 'content', localStorage.getItem('article-content'))
