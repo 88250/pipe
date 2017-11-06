@@ -19,6 +19,7 @@ package controller
 import (
 	"errors"
 	"html/template"
+	"path/filepath"
 	"strings"
 
 	"github.com/b3log/pipe/controller/console"
@@ -116,7 +117,16 @@ func MapRoutes() *gin.Engine {
 		ret.Static("/"+themePath+"/js", themePath+"/js")
 		ret.Static("/"+themePath+"/images", themePath+"/images")
 	}
-	ret.LoadHTMLGlob("theme/x/**/*.html")
+	themeTemplates, err := filepath.Glob("theme/x/*/*.html")
+	if nil != err {
+		log.Fatal("load theme templates failed: " + err.Error())
+	}
+	commentTemplates, err := filepath.Glob("theme/comments/*.html")
+	if nil != err {
+		log.Fatal("load comment templates failed: " + err.Error())
+	}
+	templates := append(themeTemplates, commentTemplates...)
+	ret.LoadHTMLFiles(templates...)
 	themeGroup := ret.Group(util.PathBlogs + "/:username")
 	themeGroup.Use(fillUser, resolveBlog)
 	themeGroup.GET("", showArticlesAction)
