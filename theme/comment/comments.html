@@ -9,7 +9,21 @@
         {{template "comment/comment" dict "Item" . "I18n" $.I18n "Username" $.User.UName "ArticleID" $.Article.ID}}
         {{end}}
     </div>
-    pagination
+    {{if $.Pagination}}
+    <nav class="comment__pagination">
+        {{range $.Pagination.PageNums}}
+        {{if eq . -1}}
+        <a href="{{$.Pagination.PageURL}}{{$.Pagination.PreviousPageNum}}">
+            <svg><use xlink:href="#chevron-left"></use></svg>
+        </a>
+        {{else if eq . -2}}
+        <a href="{{$.Pagination.PageURL}}{{$.Pagination.NextPageNum}}">
+            <svg><use xlink:href="#chevron-right"></use></svg>
+        </a>
+        {{end}}
+        {{end}}
+    </nav>
+    {{end}}
 </div>
 {{else}}
 <div class="{{if ne (len .RelevantArticles) 0}}fn-bottom{{end}} ft-center comment__null"

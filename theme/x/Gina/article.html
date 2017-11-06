@@ -95,7 +95,8 @@
     {{template "comment/comments" .}}
 
     {{if ne (len .RelevantArticles) 0}}
-    <div class="{{if or .PreviousArticle .NextArticle}}fn-bottom{{end}}">
+    <div class="fn-bottom"></div>
+    <div>
         <div class="module__header">
             {{$.I18n.RelevantArticle}}
         </div>
@@ -114,6 +115,7 @@
     {{end}}
 
     {{if or .PreviousArticle .NextArticle}}
+    <div class="fn-bottom"></div>
     {{if gt .UserCount 1}}
     <div class="fn-clear article__near fn-two">
         {{if .PreviousArticle}}

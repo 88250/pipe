@@ -1,0 +1,117 @@
+/**
+ * comment.
+ *
+ * @author <a href="http://vanessa.b3log.org">Liyuan Li</a>
+ * @version 0.1.0.0, Nov 6, 2017
+ */
+
+@import "variables";
+// comment
+.comment {
+  &__item {
+    margin-bottom: 30px;
+    position: relative;
+
+    .avatar {
+      border: 2px solid #fff;
+
+      &:hover {
+        border-color: $black;
+      }
+    }
+
+    &:after {
+      content: " ";
+      position: absolute;
+      height: 0;
+      width: 2px;
+      background-color: $black;
+      top: 32px;
+      left: 25px;
+      z-index: 1;
+      transition: $transition;
+    }
+
+    &:last-child:after {
+      display: none;
+    }
+
+    &:hover {
+      &:after {
+        height: 100%;
+      }
+    }
+  }
+
+  &__btn {
+    cursor: pointer;
+    float: right;
+    margin-left: 20px;
+    svg {
+      margin: 5px 0 0 5px;
+      float: right;
+    }
+    &:hover {
+      color: $gray;
+    }
+  }
+
+  &__null {
+    cursor: pointer;
+    transition: $transition;
+    &:hover {
+      color: $gray;
+    }
+  }
+
+  &__reply {
+    &-btn svg {
+      transition: $transition;
+    }
+    &-item {
+      margin-top: 30px;
+
+      &:first-child {
+        margin-top: 20px;
+      }
+    }
+
+  }
+}
+
+// editor
+.editor {
+  .emotion {
+    &__item {
+      cursor: pointer;
+      float: left;
+      margin: 10px 10px 5px 0;
+      font-size: 16px;
+      transition: $transition;
+      background-color: transparent;
+
+      &:hover {
+        transform: scale(1.2) rotate(360deg);
+      }
+    }
+  }
+  position: fixed;
+  bottom: -240px;
+  width: 100%;
+  opacity: 0;
+  background-color: #fff;
+  border-top: 1px solid $fade;
+  padding: 30px 0;
+  transition: $transition;
+  z-index: 100;
+  left: 0;
+
+  input,
+  textarea {
+    margin-bottom: 30px;
+  }
+
+  .article__action {
+    margin-top: 0px;
+  }
+}
