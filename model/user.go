@@ -16,6 +16,10 @@
 
 package model
 
+import (
+	"strconv"
+)
+
 // User model.
 type User struct {
 	Model
@@ -39,3 +43,7 @@ const (
 	UserRoleBlogUser
 	UserRoleBlogVisitor
 )
+
+func (u *User) AvatarURLWithSize(size int) string {
+	return u.AvatarURL + "?imageView2/1/w/" + strconv.Itoa(size) + "/h/" + strconv.Itoa(size) + "/interlace/1/q/100"
+}

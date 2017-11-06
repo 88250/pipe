@@ -44,7 +44,7 @@
 
       <v-stepper-content step="2">
         <div class="init__center fn-clear">
-          <img class="avatar" :src="$store.state.avatarURL"/>
+          <img class="avatar" :src="`${$store.state.avatarURL}?imageView2/1/w/128/h/128/interlace/1/q/100`"/>
           <h1 class="ft-center init__name">{{ $store.state.name }}</h1>
           <div class="alert alert--danger" v-show="postInitError">
             <v-icon>danger</v-icon>
