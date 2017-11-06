@@ -316,3 +316,7 @@ export const PreviewImg = (it) => {
     }, 300);
   }
 }
+
+(function () {
+  console.log(1)
+})();
