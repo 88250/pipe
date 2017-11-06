@@ -98,12 +98,18 @@ a {
   color: $theme-accent !important;
 }
 
+// icon
+.chevron-down {
+  transform: rotate(180deg);
+}
+
 // avatar
 .avatar {
   height: 50px;
   width: 50px;
   border-radius: 50%;
   display: inline-block;
+  z-index: 10;
   @include image-bg('../images/image-bg.svg');
 
   &--space {
@@ -670,7 +676,7 @@ a {
       height: 0;
       width: 2px;
       background-color: $theme-accent;
-      top: 52px;
+      top: 32px;
       left: 25px;
       z-index: 1;
       transition: $transition;
@@ -706,6 +712,20 @@ a {
     &:hover {
       color: $theme-accent;
     }
+  }
+
+  &__reply {
+    &-btn svg {
+      transition: $transition;
+    }
+    &-item {
+      margin-top: 30px;
+
+      &:first-child {
+        margin-top: 20px;
+      }
+    }
+
   }
 }
 
