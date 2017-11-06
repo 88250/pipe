@@ -32,19 +32,36 @@
           class="checkbox__icon"></span>
           {{ $t('allowComment', $store.state.locale) }}
         </label>
+
+        <label class="checkbox btn--space">
+          <input type="checkbox" :checked="useThumbs" @click="useThumbs = !useThumbs"/><span
+          class="checkbox__icon"></span>
+          {{ $t('useThumb', $store.state.locale) }}
+        </label>
       </v-form>
       <div class="alert alert--danger" v-show="error">
         <v-icon>danger</v-icon>
         <span>{{ errorMsg }}</span>
       </div>
+
+      <div class="article-post__carousel" v-show="useThumbs">
+        <v-carousel
+          :cycle="false"
+          icon="circle"
+          left-control-icon="angle-left"
+          right-control-icon="angle-right">
+          <v-carousel-item v-for="(item,i) in thumbs" v-bind:src="item" :key="i"></v-carousel-item>
+        </v-carousel>
+      </div>
+
       <div class="fn-right">
         <v-btn @click="remove" class="btn--danger btn--margin-t30" v-if="$route.query.id">
           {{ $t('delete', $store.state.locale) }}
         </v-btn>
-        <v-btn @click="edit" class="btn--info btn--space btn--margin-t30" v-if="$route.query.id">
+        <v-btn @click="edit($route.query.id)" class="btn--info btn--space btn--margin-t30" v-if="$route.query.id">
           {{ $t('edit', $store.state.locale) }}
         </v-btn>
-        <v-btn @click="publish" class="btn--info btn--margin-t30" v-else>{{ $t('publish', $store.state.locale)
+        <v-btn @click="edit()" class="btn--info btn--margin-t30" v-else>{{ $t('publish', $store.state.locale)
           }}
         </v-btn>
       </div>
@@ -54,7 +71,7 @@
 
 <script>
   import 'mavon-editor/dist/css/index.css'
-  import { required, maxSize } from '~/plugins/validate'
+  import {required, maxSize} from '~/plugins/validate'
 
   export default {
     data () {
@@ -73,7 +90,9 @@
         url: '',
         password: '',
         tags: [],
-        commentable: false
+        commentable: false,
+        useThumbs: false,
+        thumbs: ['', '', '', '', '', '']
       }
     },
     head () {
@@ -82,13 +101,28 @@
       }
     },
     methods: {
-      async edit () {
+      async getThumbs () {
+        const responseData = await this.axios.get(`console/thumbs?n=5&w=768&h=180`)
+        if (responseData) {
+          this.$set(this, 'thumbs', responseData)
+        }
+      },
+      async edit (id) {
         if (!this.$refs.form.validate()) {
           return
         }
-        const responseData = await this.axios.put(`/console/articles/${this.$route.query.id}`, {
+
+        let content = this.content
+        if (this.useThumbs) {
+          document.querySelectorAll('.carousel__item').forEach((item, index) => {
+            if (item.style.display !== 'none') {
+              content = `![](${this.thumbs[index]})` + content
+            }
+          })
+        }
+        const responseData = await this.axios.put(`/console/articles${id ? '/' + id : ''}`, {
           title: this.title,
-          content: this.content,
+          content: content,
           path: this.url,
           password: this.password,
           tags: this.tags.toString(),
@@ -113,27 +147,6 @@
           })
           this.$router.push('/admin/articles')
         }
-      },
-      async publish () {
-        if (!this.$refs.form.validate()) {
-          return
-        }
-        const responseData = await this.axios.post(`/console/articles`, {
-          title: this.title,
-          content: this.content,
-          path: this.url,
-          password: this.password,
-          tags: this.tags.toString(),
-          commentable: this.commentable
-        })
-        if (responseData.code === 0) {
-          this.$set(this, 'error', false)
-          this.$set(this, 'errorMsg', '')
-          this.$router.push('/admin/articles')
-        } else {
-          this.$set(this, 'error', true)
-          this.$set(this, 'errorMsg', responseData.msg)
-        }
       }
     },
     async mounted () {
@@ -152,6 +165,13 @@
 
       // get tags
       this.$store.dispatch('getTags')
+
+      this.getThumbs()
     }
   }
 </script>
+<style lang="sass">
+  .article-post__carousel
+    margin: 0 auto
+    width: 720px
+</style>
