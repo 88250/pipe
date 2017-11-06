@@ -120,43 +120,20 @@
     <div class="{{if or .PreviousArticle .NextArticle}}fn-bottom{{end}} fn-three fn-clear">
         {{if ne (len .RelevantArticles) 0}}
         {{range $index, $item := .RelevantArticles}}
-        {{if lt $index 2}}
-        <div
-        {{if eq $index 1}} class="fn-three--mid"{{end}}>
+        {{if lt $index 3}}
+        <div {{if eq $index 1}} class="fn-three--mid"{{end}}>
         <div class="module__header">
-            {{if eq $index 0}}
             {{$.I18n.RelevantArticle}}
-            {{else}}
-            &nbsp;
-            {{end}}
         </div>
         <a class="article__thumb article__thumb--relevant" data-src="{{$item.Author.AvatarURL}}"
            href="{{$item.URL}}"></a>
         <a class="module__list-title" href="{{$item.URL}}">{{$item.Title}}</a>
-    </div>
-    {{end}}
-    {{end}}
-    {{end}}
-
-    {{range $index, $item := .RelevantArticles}}
-    {{if or (or (and (eq (len $.RelevantArticles) 0) (lt $index 3)) (and (eq (len $.RelevantArticles) 1) (lt $index 2))) (and (eq (len $.RelevantArticles) 2) (lt $index 1))}}
-    <div
-    {{if or (and (eq (len $.RelevantArticles) 0) (eq $index 1)) (and (eq (len $.RelevantArticles) 1) (eq $index 0))}}
-    class="fn-three--mid"{{end}}>
-    <div class="module__header">
-        {{if eq $index 0}}
-        {{$.I18n.ExternalRelevantArticle}}
-        {{else}}
-        &nbsp;
+        {{end}}
         {{end}}
     </div>
-    <a class="article__thumb article__thumb--relevant" data-src="{{$item.Author.AvatarURL}}" href="{{$item.URL}}"></a>
-    <a class="module__list-title" href="{{$item.URL}}">{{$item.Title}}</a>
+    {{end}}
 </div>
-{{end}}
-{{end}}
-</div>
-{{end}}
+{{end}}`
 
 
 {{if or .PreviousArticle .NextArticle}}
