@@ -1,0 +1,25 @@
+{{define "comments/comments"}}
+{{if gt (len .Comments) 0}}
+<div id="comments" {{if ne (len .RelevantArticles) 0}}class="fn-bottom"{{end}}>
+    <div class="module__header">
+        <span id="commentsCnt">{{len .Comments}}</span> {{.I18n.Comment}}
+    </div>
+    <div>
+        {{range .Comments}}
+        {{template "Comments/comment" dict "Item" . "I18n" $.I18n "Username" $.User.UName "ArticleID" $.Article.ID}}
+        {{end}}
+    </div>
+    pagination
+</div>
+{{else}}
+<div class="{{if ne (len .RelevantArticles) 0}}fn-bottom{{end}} ft-center comment__null"
+     data-title="{{.I18n.Comment}}{{.I18n.Colon}}{{.Article.Title}}"
+     data-id="{{.Article.ID}}"
+     id="comments">
+    {{.I18n.StayStep}}
+    <svg>
+        <use xlink:href="#comment"></use>
+    </svg>
+</div>
+{{end}}
+{{end}}

@@ -92,29 +92,7 @@
         </div>
     </article>
 
-    {{if gt (len .Comments) 0}}
-    <div id="comments" {{if ne (len .RelevantArticles) 0}}class="fn-bottom"{{end}}>
-        <div class="module__header">
-            <span id="commentsCnt">{{len .Comments}}</span> {{.I18n.Comment}}
-        </div>
-        <div>
-        {{range .Comments}}
-        {{template "Gina/comment" dict "Item" . "I18n" $.I18n "Username" $.User.UName "ArticleID" $.Article.ID}}
-        {{end}}
-        </div>
-        {{template "Gina/pagination" .}}
-    </div>
-    {{else}}
-    <div class="{{if ne (len .RelevantArticles) 0}}fn-bottom{{end}} ft-center comment__null"
-         data-title="{{.I18n.Comment}}{{.I18n.Colon}}{{.Article.Title}}"
-         data-id="{{.Article.ID}}"
-         id="comments">
-        {{.I18n.StayStep}}
-        <svg>
-            <use xlink:href="#comment"></use>
-        </svg>
-    </div>
-    {{end}}
+    {{template "Comments/comments" .}}
 
     {{if ne (len .RelevantArticles) 0}}
     <div class="{{if or .PreviousArticle .NextArticle}}fn-bottom{{end}}">
@@ -197,45 +175,7 @@
 
 </div>
 
-{{if ne .User.UID 0}}
-<div class="editor" id="editor">
-    <div class="wrapper">
-        <div id="replyObject"></div>
-        <div class="form">
-            <div id="emotions">
-                <span class="emotion__item" title="😁">😁</span>
-                <span class="emotion__item" title="😂">😂</span>
-                <span class="emotion__item" title="😜">😜</span>
-                <span class="emotion__item" title="😫">😫</span>
-                <span class="emotion__item" title="😭">😭</span>
-                <span class="emotion__item" title="😰">😰</span>
-                <span class="emotion__item" title="😡">😡</span>
-                <span class="emotion__item" title="😤">😤</span>
-                <span class="emotion__item" title="👀">👀</span>
-                <span class="emotion__item" title="😱">😱</span>
-                <span class="emotion__item" title="😎">😎</span>
-                <span class="emotion__item" title="😋">😋</span>
-                <span class="emotion__item" title="💕">💕</span>
-                <span class="emotion__item" title="💔">💔</span>
-                <span class="emotion__item" title="😈">😈</span>
-            </div>
-            <textarea id="commentContent" data-blogurl="{{.BlogURL}}" placeholder="{{.I18n.Content}}" rows="3"></textarea>
-            <div class="article__action fn-clear">
-                <span class="fn-right action__btn action__btn--space action__btn--active"
-                      id="editorAdd"
-                      data-label2="{{.I18n.Required}}"
-                      data-label="{{.I18n.Comment}}">
-                    {{.I18n.Confirm}}&nbsp;<svg class="fn-right"><use xlink:href="#comment"></use></svg>
-                </span>
-                <span class="fn-right action__btn action__btn--space"
-                      id="editorCancel">
-                    {{.I18n.Cancel}}&nbsp;<svg class="fn-right"><use xlink:href="#chevron-up"></use></svg>
-                </span>
-            </div>
-        </div>
-    </div>
-</div>
-{{end}}
+{{template "Comments/editor" .}}
 
 {{template "Gina/footer" .}}
 </body>
