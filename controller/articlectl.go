@@ -193,7 +193,7 @@ func showArticleAction(c *gin.Context) {
 		author := &ThemeAuthor{
 			Name:      commentAuthor.Name,
 			URL:       blogURLSetting.Value + util.PathAuthors + "/" + commentAuthor.Name,
-			AvatarURL: commentAuthor.AvatarURL,
+			AvatarURL: commentAuthor.AvatarURLWithSize(64),
 		}
 
 		comment := &ThemeComment{

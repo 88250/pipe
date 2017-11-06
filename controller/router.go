@@ -20,6 +20,7 @@ import (
 	"errors"
 	"html/template"
 	"path/filepath"
+	"strconv"
 	"strings"
 
 	"github.com/b3log/pipe/controller/console"
@@ -36,7 +37,7 @@ func MapRoutes() *gin.Engine {
 	ret.SetFuncMap(template.FuncMap{
 		"dict": func(values ...interface{}) (map[string]interface{}, error) {
 			if len(values)%2 != 0 {
-				return nil, errors.New("Unable to connect to local syslog daemon")
+				return nil, errors.New("len(values) is " + strconv.Itoa(len(values)%2))
 			}
 			dict := make(map[string]interface{}, len(values)/2)
 			for i := 0; i < len(values); i += 2 {
