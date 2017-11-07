@@ -211,29 +211,8 @@ export const ShowEditor = (reply, id, commentId) => {
   $editor.css({'bottom': '0', 'opacity': 1}).data('id', id)
   $('body').css('padding-bottom', $editor.outerHeight() + 'px')
   $('#pipeEditorReplyTarget').text(reply)
+  $('#pipeEditorComment').focus()
 };
-
-// TODO
-
-/**
- * @description 删除评论
- * @param {string} id 评论 id
- * @param {function} succCB 成功回调
- * @param {function} errorCB 失败回调
- */
-export const ReomveComment = (id, succCB, errorCB) => {
-  $.ajax({
-    url: `${location.origin}/api/console/comments/${id}`,
-    type: 'DELETE',
-    success: (result) => {
-      if (result.code === 0) {
-        succCB && succCB()
-      } else {
-        errorCB && errorCB(result.msg)
-      }
-    }
-  })
-}
 
 export const InitComment = () => {
   /**
@@ -322,6 +301,56 @@ export const InitComment = () => {
     ShowEditor($commentNull.data('title'), $commentNull.data('id'))
   })
 
+  // comment show reply
+  $('body').on('click', '#pipeComments .fn-pointer', function () {
+    const $it = $(this)
+    const $svg = $it.find('svg')
+    if ($svg.hasClass('pipe-comment__chevron-down')) {
+      $svg.removeClass('pipe-comment__chevron-down')
+    } else {
+      $svg.addClass('pipe-comment__chevron-down')
+    }
+    $it.next().slideToggle({
+      queue: false
+    })
+  });
+
+  // comment remove
+  $('body').on('click', '#pipeComments .pipe-comment__btn--danger', function () {
+    const $it = $(this)
+    if (confirm($it.data('label'))) {
+      $.ajax({
+        url: `${location.origin}/api/console/comments/${$it.data('id')}`,
+        type: 'DELETE',
+        success: (result) => {
+          if (result.code === 0) {
+            const $commentsCnt = $('#pipeCommentsCnt')
+            const $comments = $('#pipeComments')
+            const $item = $(`#pipeComment${$it.data('id')}`)
+
+            if ($('#pipeComments > div > section').length === 1) {
+              $comments.addClass('pipe-comment__null')
+                .html(`${$it.data('label2')} <svg><use xlink:href="#comment"></use></svg>`).click(function () {
+                ShowEditor($comments.data('title'), $comments.data('id'))
+              })
+            } else {
+              $item.remove()
+              $commentsCnt.text(parseInt($commentsCnt.text()) - 1)
+            }
+          } else {
+            alert(result.msg)
+          }
+        }
+      })
+    }
+  })
+
+  // comment remove
+  $('body').on('click', '#pipeComments .pipe-comment__btn--reply', function () {
+    const $it = $(this)
+    ShowEditor($it.data('title'), $it.data('id'), $it.data('commentid'))
+  })
+
   // editor emoji
   $('.pipe-editor__emotion').find('span').click(function () {
     const comment = document.getElementById('pipeEditorComment')
@@ -331,6 +360,21 @@ export const InitComment = () => {
     textValue = textValue.substring(0, endPosition) + key + textValue.substring(endPosition, textValue.length)
     comment.value = textValue
   })
+
+  // editor hot key
+  $('#pipeEditorComment').keydown(function (event) {
+    if (event.metaKey && 13 === event.keyCode) {
+      $('#pipeEditorAdd').click()
+    }
+
+    if (27 === event.keyCode) {
+      _hideEditor()
+    }
+  }).keypress(function (event) {
+    if (event.ctrlKey && 10 === event.charCode) {
+      $('#pipeEditorAdd').click()
+    }
+  });
 
   // editor cancel
   $('#pipeEditorCancel').click(function () {
@@ -386,7 +430,7 @@ export const InitComment = () => {
           $comments.find('pre > code').each(function (i, block) {
             hljs.highlightBlock(block)
           })
-          LazyLoadCSSImage('.avatar, .article__thumb')
+          LazyLoadCSSImage('.avatar, .pipe-comment__avatar, .article__thumb')
           LazyLoadImage()
           $commentContent.val('')
           localStorage.removeItem('pipeEditorComment')
@@ -398,76 +442,3 @@ export const InitComment = () => {
     })
   })
 }
-
-/*
-(function () {
-
-
-  _initShowReplyComment: () => {
-    $('#comments').on('click', '.comment__item .fn-pointer', function () {
-      const $it = $(this)
-      const $svg = $it.find('svg')
-      if ($svg.hasClass('chevron-down')) {
-        $svg.removeClass('chevron-down')
-      } else {
-        $svg.addClass('chevron-down')
-      }
-      $it.next().slideToggle({
-        queue: false
-      })
-    });
-  },
-  // comment
-
-
-    removeComment: (id, label, label2) => {
-    if (confirm(label)) {
-      ReomveComment(id, () => {
-        const $commentsCnt = $('#commentsCnt')
-        const $comments = $('#comments')
-        const $item = $('#comment' + id)
-
-        if ($comments.find('section').length === 1) {
-          $comments.addClass('ft-center comment__null fn-bottom')
-            .html(`${label2} <svg><use xlink:href="#comment"></use></svg>`).click(function () {
-            const $itemReplyBtn = $item.find('.comment__btn:last')
-            Article.showComment($itemReplyBtn.data('title'), $itemReplyBtn.data('id'))
-          })
-        } else {
-          $item.remove()
-          $commentsCnt.text(parseInt($commentsCnt.text()) - 1)
-        }
-      }, (msg) => {
-        alert(msg)
-      })
-    }
-  },
-
-  $('#comments').on('click', '.comment__btn', function () {
-    const $this = $(this)
-    if ($this.hasClass('commentDelete')) {
-      // remove comment
-      const $firstBtn = $(this)
-      Article.removeComment($firstBtn.data('id'), $firstBtn.data('label'), $firstBtn.data('label2'))
-    }
-
-    if ($this.hasClass('commentAdd')) {
-      // add reply comment
-      const $lastBtn = $(this)
-      Article.showComment($lastBtn.data('title'), $lastBtn.data('id'), $lastBtn.data('commentid'))
-    }
-  })
-
-
-
-
-  $('#commentContent').keydown(function (event) {
-    if (event.metaKey && 13 === event.keyCode) {
-      Article.addComment($('#editorAdd').data('label'), $('#editorAdd').data('label2'))
-    }
-  }).keypress(function (event) {
-    if (event.ctrlKey && 10 === event.charCode) {
-      Article.addComment($('#editorAdd').data('label'), $('#editorAdd').data('label2'))
-    }
-  });
-})();*/

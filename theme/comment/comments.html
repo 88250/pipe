@@ -1,6 +1,8 @@
 {{define "comment/comments"}}
 {{if gt (len .Comments) 0}}
-<div id="pipeComments" class="fn-clear">
+<div id="pipeComments" class="fn-clear"
+     data-title="{{.I18n.Comment}}{{.I18n.Colon}}{{.Article.Title}}"
+     data-id="{{.Article.ID}}">
     <div class="pipe-comment__header">
         <span id="pipeCommentsCnt">{{len $.Comments}}</span> {{$.I18n.Comment}}
     </div>
@@ -13,11 +15,11 @@
     <nav class="pipe-comment__pagination fn-right">
         {{range $.Pagination.PageNums}}
         {{if eq . -1}}
-        <a class="btn fn-left" href="{{$.Pagination.PageURL}}{{$.Pagination.PreviousPageNum}}">
+        <a class="pipe-comment__btn" href="{{$.Pagination.PageURL}}{{$.Pagination.PreviousPageNum}}">
             <svg class="fn-left"><use xlink:href="#chevron-left"></use></svg> {{$.I18n.prePage}}
         </a>
         {{else if eq . -2}}
-        <a class="btn btn--space fn-left" href="{{$.Pagination.PageURL}}{{$.Pagination.NextPageNum}}">
+        <a class="pipe-comment__btn" href="{{$.Pagination.PageURL}}{{$.Pagination.NextPageNum}}">
             {{$.I18n.nextPage}}  <svg class="fn-right"><use xlink:href="#chevron-right"></use></svg>
         </a>
         {{end}}

@@ -26,32 +26,6 @@
 
   &__item {
     margin-bottom: 30px;
-    position: relative;
-
-    &:after {
-      content: " ";
-      position: absolute;
-      height: 0;
-      width: 2px;
-      background-color: $black;
-      top: 32px;
-      left: 25px;
-      z-index: 1;
-      transition: $transition;
-    }
-
-    &:last-child:after {
-      display: none;
-    }
-
-    &:hover {
-      .pipe-comment__avatar {
-        border-color: $black;
-      }
-      &:after {
-        height: 100%;
-      }
-    }
   }
 
   &__avatar {
@@ -63,37 +37,39 @@
     display: inline-block;
     z-index: 10;
     @include image-bg('../images/image-bg.svg');
+    &:hover {
+      border-color: $gray;
+    }
   }
 
   &__body {
     padding-left: 74px;
   }
 
-  &__btn {
-    cursor: pointer;
-    float: right;
-    margin-left: 20px;
-    svg {
-      margin: 5px 0 0 5px;
-      float: right;
-    }
-    &:hover {
-      color: $gray;
-    }
+  &__chevron-down {
+    transform: rotate(180deg);
   }
 
   &__reply {
-    &-btn svg {
-      transition: $transition;
-    }
-    &-item {
-      margin-top: 30px;
+    margin-top: 20px;
+  }
 
-      &:first-child {
-        margin-top: 20px;
-      }
+  &__btn {
+    cursor: pointer;
+    display: inline-block;
+    padding-left: 10px;
+    color: $black;
+    &--danger {
+      color: $red;
+    }
+    svg {
+      margin-top: 4px;
     }
 
+    &:hover {
+      text-decoration: none;
+      opacity: 0.8;
+    }
   }
 }
 

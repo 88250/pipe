@@ -8,29 +8,29 @@
     <div class="pipe-comment__body">
         <div class="fn-clear">
             <a href="{{.Item.Author.AvatarURL}}" class="ft-gray">{{.Item.Author.Name}}</a>
-            <span class="ft-nowrap ft-12 ft-fade"> • {{.Item.CreatedAt}} •</span>
+            <span class="ft-nowrap ft-12 ft-fade"> • {{.Item.CreatedAt}} • </span>
             <a class="ft-nowrap ft-12 ft-gray" href="#123">
-                <svg><use xlink:href="#reply"></use></svg>{{.I18n.Reply}} Vanessa
+                <svg><use xlink:href="#reply"></use></svg> {{.I18n.Reply}} Vanessa
             </a>
             <div class="fn-right">
-                <button class="btn"
+                <span class="pipe-comment__btn pipe-comment__btn--reply"
                       data-title="{{.I18n.Reply}}{{.I18n.Colon}}{{.Item.Author.Name}}"
                       data-id="{{.ArticleID}}"
                       data-commentid="{{.Item.ID}}">
                     {{.I18n.Reply}} <svg class="fn-right"><use xlink:href="#comment"></use></svg>
-                </button>
-                <button class="btn btn--danger btn--space"
+                </span>
+                <span class="pipe-comment__btn pipe-comment__btn--danger"
                       data-id="{{.Item.ID}}"
                       data-label="{{.I18n.ConfirmDelete}}"
                       data-label2="{{.I18n.StayStep}}">
                     {{.I18n.Delete}} <svg class="fn-right"><use xlink:href="#remove"></use></svg>
-                </button>
+                </span>
                 {{if .Item.Removable}}
-                <span class="btn"
-                      data-id="{{.Item.ID}}"
-                      data-label="{{.I18n.ConfirmDelete}}"
-                      data-label2="{{.I18n.StayStep}}">
-                    <svg><use xlink:href="#remove"></use></svg>
+                <span class="pipe-comment__btn"
+                        data-id="{{.Item.ID}}"
+                        data-label="{{.I18n.ConfirmDelete}}"
+                        data-label2="{{.I18n.StayStep}}">
+                    {{.I18n.Delete}} <svg class="fn-right"><use xlink:href="#remove"></use></svg>
                 </span>
                 {{end}}
             </div>
@@ -39,21 +39,34 @@
             {{.Item.Content}}
         </div>
         <div>
-            <span class="ft-gray ft-12 fn-pointer module__list-title comment__reply-btn" data-id="{{.Item.ID}}">
+            <span class="ft-gray ft-12 fn-pointer" data-id="{{.Item.ID}}">
                 2 {{.I18n.Reply}}
-                <svg class="chevron-down"><use xlink:href="#chevron-up"></use></svg>
+                <svg class="pipe-comment__chevron-down"><use xlink:href="#chevron-up"></use></svg>
             </span>
-            <div class="comment__reply-panel fn-none">
-                <section class="comment__reply-item">
+            <div class="pipe-comment__reply fn-none">
+                <section class="pipe-comment__item">
                     <a rel="nofollow"
-                       class="avatar fn-absolute"
+                       class="pipe-comment__avatar"
                        data-src="{{.Item.Author.AvatarURL}}"
                        href="{{.Item.Author.URL}}">
                     </a>
-                    <div class="fn-padding60">
-                        <a href="{{.Item.Author.AvatarURL}}" class="module__list-title">{{.Item.Author.Name}}</a>
-                        <span class="ft-12 ft-gray"> • </span>
-                        <span class="ft-nowrap ft-12 ft-gray">{{.Item.CreatedAt}}</span>
+                    <div class="pipe-comment__body">
+                        <a href="{{.Item.Author.AvatarURL}}" class="ft-gray">{{.Item.Author.Name}}</a>
+                        <span class="ft-nowrap ft-12 ft-gray"> • {{.Item.CreatedAt}}</span>
+                        <div class="content__reset">
+                            {{.Item.Content}}
+                        </div>
+                    </div>
+                </section>
+                <section class="pipe-comment__item">
+                    <a rel="nofollow"
+                       class="pipe-comment__avatar"
+                       data-src="{{.Item.Author.AvatarURL}}"
+                       href="{{.Item.Author.URL}}">
+                    </a>
+                    <div class="pipe-comment__body">
+                        <a href="{{.Item.Author.AvatarURL}}" class="ft-gray">{{.Item.Author.Name}}</a>
+                        <span class="ft-nowrap ft-12 ft-gray"> • {{.Item.CreatedAt}}</span>
                         <div class="content__reset">
                             {{.Item.Content}}
                         </div>
