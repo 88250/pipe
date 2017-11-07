@@ -6,6 +6,7 @@
  */
 
 import $ from 'jquery'
+import hljs from 'highlight.js'
 
 /**
  * @description 图片延迟加载
@@ -96,48 +97,6 @@ export const LazyLoadCSSImage = (classes) => {
 }
 
 /**
- * @description 删除评论
- * @param {string} id 评论 id
- * @param {function} succCB 成功回调
- * @param {function} errorCB 失败回调
- */
-export const ReomveComment = (id, succCB, errorCB) => {
-  $.ajax({
-    url: `${location.origin}/api/console/comments/${id}`,
-    type: 'DELETE',
-    success: (result) => {
-      if (result.code === 0) {
-        succCB && succCB()
-      } else {
-        errorCB && errorCB(result.msg)
-      }
-    }
-  })
-}
-
-/**
- * @description 添加评论
- * @param {string} blogURL 博客原始地址
- * @param {string} data 评论内容
- * @param {function} succCB 成功回调
- * @param {function} errorCB 失败回调
- */
-export const AddComment = (blogURL, data, succCB, errorCB) => {
-  $.ajax({
-    url: `${blogURL}/comments`,
-    data: JSON.stringify(data),
-    type: 'POST',
-    success: (result) => {
-      if (result.code === 0) {
-        succCB && succCB(result.data)
-      } else {
-        errorCB && errorCB(result.msg)
-      }
-    }
-  })
-}
-
-/**
  * @description 不兼容 IE 9 以下
  */
 export const KillBrowser = () => {
@@ -155,60 +114,6 @@ export const KillBrowser = () => {
         </ul>`
     }
   }
-}
-
-/**
- * @description 对输入内容进行本地存储
- * @param {string} id 输入框 id
- */
-export const LocalStorageInput = (id) => {
-  $(`#${id}`).val(localStorage.getItem(id) || '').keyup(function () {
-    localStorage.setItem(id, $(this).val())
-  })
-}
-
-/**
- * @description 评论框初始化
- * @param {string} emojiId 表情 id
- * @param {string} commentId 评论框 id
- */
-export const InitEditor = (emojiId, commentId) => {
-  const _getCursorEndPosition = (textarea) => {
-    textarea.focus()
-    if (textarea.setSelectionRange) { // W3C
-      return textarea.selectionEnd
-    } else if (document.selection) { // IE
-      let i = 0
-      const oS = document.selection.createRange()
-      const oR = document.body.createTextRange()
-      oR.moveToElementText(textarea)
-      oS.getBookmark()
-      for (i = 0; oR.compareEndPoints('StartToStart', oS) < 0 && oS.moveStart("character", -1) !== 0; i++) {
-        if (textarea.value.charAt(i) === '\n') {
-          i++
-        }
-      }
-      return i
-    }
-  }
-
-  $(`#${emojiId}`).find('span').click(function () {
-    const comment = document.getElementById(commentId)
-    let endPosition = _getCursorEndPosition(comment)
-    const key = this.title + ' '
-    let textValue = comment.value
-    textValue = textValue.substring(0, endPosition) + key + textValue.substring(endPosition, textValue.length)
-    comment.value = textValue
-    if (document.selection) {
-      endPosition -= textValue.split('\n').length - 1
-      const oR = comment.createTextRange()
-      oR.collapse(true)
-      oR.moveStart('character', endPosition + key.length)
-      oR.select()
-    } else {
-      comment.setSelectionRange(endPosition + key.length, endPosition + key.length)
-    }
-  })
 }
 
 /**
@@ -283,40 +188,286 @@ export const TrimB3Id = () => {
   history.replaceState('', '', window.location.href.replace(/(&b3id=\w{8})|(b3id=\w{8}&)|(\?b3id=\w{8}$)/, ''))
 }
 
+
 /**
- * @description 图片预览
+ * @description 展开编辑器
+ * @param {String} reply 回复对象的名称
+ * @param {String} id 文章 id
+ * @param {String} commentId 回复 id
+ * @private
  */
-export const PreviewImg = (it) => {
-  const $it = $(it);
-  var top = it.offsetTop,
-    left = it.offsetLeft;
-  if ($it.closest('.comments').length === 1) {
-    top = top + $it.closest('li')[0].offsetTop;
-    left = left + $('.comments')[0].offsetLeft + 15;
+export const ShowEditor = (reply, id, commentId) => {
+  const $editor = $('#pipeEditor')
+  if ($editor.length === 0) {
+    location.href = 'https://hacpai.com/login'
+    return
+  }
+  if (commentId) {
+    $editor.data('commentid', commentId)
+  } else {
+    $editor.removeData('commentid')
   }
 
-  $('body').append('<div class="preview__img" onclick="this.remove()"><img style="transform: translate3d(' +
-    Math.max(0, left) + 'px, ' + Math.max(0, (top - $(window).scrollTop())) + 'px, 0)" src="' +
-    ($it.attr('src').split('?imageView2')[0]) + '"></div>');
+  $editor.css({'bottom': '0', 'opacity': 1}).data('id', id)
+  $('body').css('padding-bottom', $editor.outerHeight() + 'px')
+  $('#pipeEditorReplyTarget').text(reply)
+};
 
-  $('.preview__img').css({
-    'background-color': '#fff',
-    'position': 'fixed'
-  });
+// TODO
 
-  $('.preview__img img')[0].onload = function () {
-    const $previewImage =  $('.preview__img');
-    $previewImage.find('img').css('transform', 'translate3d(' +
-      (Math.max(0, $(window).width() - $previewImage.find('img').width()) / 2) + 'px, ' +
-      (Math.max(0, $(window).height() - $previewImage.find('img').height()) / 2) + 'px, 0)');
-
-    // fixed chrome render transform bug
-    setTimeout(function () {
-      $previewImage.width($(window).width());
-    }, 300);
-  }
+/**
+ * @description 删除评论
+ * @param {string} id 评论 id
+ * @param {function} succCB 成功回调
+ * @param {function} errorCB 失败回调
+ */
+export const ReomveComment = (id, succCB, errorCB) => {
+  $.ajax({
+    url: `${location.origin}/api/console/comments/${id}`,
+    type: 'DELETE',
+    success: (result) => {
+      if (result.code === 0) {
+        succCB && succCB()
+      } else {
+        errorCB && errorCB(result.msg)
+      }
+    }
+  })
 }
 
+export const InitComment = () => {
+  /**
+   * @description 图片预览
+   * @private
+   */
+    // TODO
+  const _previewImg = (it) => {
+      const $it = $(it);
+      var top = it.offsetTop,
+        left = it.offsetLeft;
+      if ($it.closest('.comments').length === 1) {
+        top = top + $it.closest('li')[0].offsetTop;
+        left = left + $('.comments')[0].offsetLeft + 15;
+      }
+
+      $('body').append('<div class="preview__img" onclick="this.remove()"><img style="transform: translate3d(' +
+        Math.max(0, left) + 'px, ' + Math.max(0, (top - $(window).scrollTop())) + 'px, 0)" src="' +
+        ($it.attr('src').split('?imageView2')[0]) + '"></div>');
+
+      $('.preview__img').css({
+        'background-color': '#fff',
+        'position': 'fixed'
+      });
+
+      $('.preview__img img')[0].onload = function () {
+        const $previewImage = $('.preview__img');
+        $previewImage.find('img').css('transform', 'translate3d(' +
+          (Math.max(0, $(window).width() - $previewImage.find('img').width()) / 2) + 'px, ' +
+          (Math.max(0, $(window).height() - $previewImage.find('img').height()) / 2) + 'px, 0)');
+
+        // fixed chrome render transform bug
+        setTimeout(function () {
+          $previewImage.width($(window).width());
+        }, 300);
+      }
+    }
+
+  /**
+   * @description 获取 textarea 光标位置
+   * @param {Bom} textarea textarea 对象
+   * @private
+   */
+  const _getCursorEndPosition = (textarea) => {
+    textarea.focus()
+    if (textarea.setSelectionRange) { // W3C
+      return textarea.selectionEnd
+    } else if (document.selection) { // IE
+      let i
+      const oS = document.selection.createRange()
+      const oR = document.body.createTextRange()
+      oR.moveToElementText(textarea)
+      oS.getBookmark()
+      for (i = 0; oR.compareEndPoints('StartToStart', oS) < 0 && oS.moveStart("character", -1) !== 0; i++) {
+        if (textarea.value.charAt(i) === '\n') {
+          i++
+        }
+      }
+      return i
+    }
+  }
+
+  /**
+   * @description 隐藏编辑器
+   * @private
+   */
+  const _hideEditor = () => {
+    const $editor = $('#pipeEditor')
+    $editor.css({'bottom': `-${$editor.outerHeight()}px`, 'opacity': 0})
+    $('body').css('padding-bottom', 0)
+  }
+
+  // preview image
+  $('body').on('click', '.content__reset img', function () {
+    _previewImg(this)
+  });
+
+  // comment local storage
+  $('#pipeEditorComment').val(localStorage.getItem('pipeEditorComment') || '').keyup(function () {
+    localStorage.setItem('pipeEditorComment', $(this).val())
+  })
+
+  // comment null reply
+  $('.pipe-comment__null').click(function () {
+    const $commentNull = $(this)
+    ShowEditor($commentNull.data('title'), $commentNull.data('id'))
+  })
+
+  // editor emoji
+  $('.pipe-editor__emotion').find('span').click(function () {
+    const comment = document.getElementById('pipeEditorComment')
+    const endPosition = _getCursorEndPosition(comment)
+    const key = this.title + ' '
+    let textValue = comment.value
+    textValue = textValue.substring(0, endPosition) + key + textValue.substring(endPosition, textValue.length)
+    comment.value = textValue
+  })
+
+  // editor cancel
+  $('#pipeEditorCancel').click(function () {
+    _hideEditor()
+  })
+
+  // editor add
+  $('#pipeEditorAdd').click(function () {
+    const label = $(this).data('label')
+    const label2 = $(this).data('label2')
+    const $editor = $('#pipeEditor')
+    const $editorAdd = $(this)
+    const $commentContent = $('#pipeEditorComment')
+
+    if ($editorAdd.hasClass('disabled')) {
+      return;
+    }
+
+    if ($.trim($commentContent.val()).length === 0) {
+      alert(label2)
+      return;
+    }
+
+    let requestData = {
+      'articleID': $editor.data('id'),
+      'content': $commentContent.val()
+    }
+
+    if ($editor.data('commentid')) {
+      requestData.parentCommentID = $editor.data('commentid')
+    }
+
+    $editorAdd.addClass('disabled')
+
+    $.ajax({
+      url: `${$commentContent.data('blogurl')}/comments`,
+      data: JSON.stringify(requestData),
+      type: 'POST',
+      success: (result) => {
+        if (result.code === 0) {
+          _hideEditor()
+          const $commentsCnt = $('#pipeCommentsCnt')
+          const $comments = $('#pipeComments')
+
+          if ($commentsCnt.length === 0) {
+            $comments.removeClass('pipe-comment__null').unbind('click')
+              .html(`<div class="pipe-comment__header"><span id="pipeCommentsCnt">1</span>${label}</div><div>${result.data}</div>`)
+          } else {
+            $commentsCnt.text(parseInt($commentsCnt.text()) + 1)
+            $('#pipeComments > div > section').last().after(result.data)
+          }
+
+          $comments.find('pre > code').each(function (i, block) {
+            hljs.highlightBlock(block)
+          })
+          LazyLoadCSSImage('.avatar, .article__thumb')
+          LazyLoadImage()
+          $commentContent.val('')
+          localStorage.removeItem('pipeEditorComment')
+        } else {
+          alert(result.msg)
+        }
+        $editorAdd.removeClass('disabled')
+      }
+    })
+  })
+}
+
+/*
 (function () {
-  console.log(1)
-})();
+
+
+  _initShowReplyComment: () => {
+    $('#comments').on('click', '.comment__item .fn-pointer', function () {
+      const $it = $(this)
+      const $svg = $it.find('svg')
+      if ($svg.hasClass('chevron-down')) {
+        $svg.removeClass('chevron-down')
+      } else {
+        $svg.addClass('chevron-down')
+      }
+      $it.next().slideToggle({
+        queue: false
+      })
+    });
+  },
+  // comment
+
+
+    removeComment: (id, label, label2) => {
+    if (confirm(label)) {
+      ReomveComment(id, () => {
+        const $commentsCnt = $('#commentsCnt')
+        const $comments = $('#comments')
+        const $item = $('#comment' + id)
+
+        if ($comments.find('section').length === 1) {
+          $comments.addClass('ft-center comment__null fn-bottom')
+            .html(`${label2} <svg><use xlink:href="#comment"></use></svg>`).click(function () {
+            const $itemReplyBtn = $item.find('.comment__btn:last')
+            Article.showComment($itemReplyBtn.data('title'), $itemReplyBtn.data('id'))
+          })
+        } else {
+          $item.remove()
+          $commentsCnt.text(parseInt($commentsCnt.text()) - 1)
+        }
+      }, (msg) => {
+        alert(msg)
+      })
+    }
+  },
+
+  $('#comments').on('click', '.comment__btn', function () {
+    const $this = $(this)
+    if ($this.hasClass('commentDelete')) {
+      // remove comment
+      const $firstBtn = $(this)
+      Article.removeComment($firstBtn.data('id'), $firstBtn.data('label'), $firstBtn.data('label2'))
+    }
+
+    if ($this.hasClass('commentAdd')) {
+      // add reply comment
+      const $lastBtn = $(this)
+      Article.showComment($lastBtn.data('title'), $lastBtn.data('id'), $lastBtn.data('commentid'))
+    }
+  })
+
+
+
+
+  $('#commentContent').keydown(function (event) {
+    if (event.metaKey && 13 === event.keyCode) {
+      Article.addComment($('#editorAdd').data('label'), $('#editorAdd').data('label2'))
+    }
+  }).keypress(function (event) {
+    if (event.ctrlKey && 10 === event.charCode) {
+      Article.addComment($('#editorAdd').data('label'), $('#editorAdd').data('label2'))
+    }
+  });
+})();*/

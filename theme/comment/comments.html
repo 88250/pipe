@@ -1,8 +1,8 @@
 {{define "comment/comments"}}
 {{if gt (len .Comments) 0}}
-<div id="comments">
-    <div class="module__header">
-        <span id="commentsCnt">{{len $.Comments}}</span> {{$.I18n.Comment}}
+<div id="pipeComments" class="fn-clear">
+    <div class="pipe-comment__header">
+        <span id="pipeCommentsCnt">{{len $.Comments}}</span> {{$.I18n.Comment}}
     </div>
     <div>
         {{range .Comments}}
@@ -10,15 +10,15 @@
         {{end}}
     </div>
     {{if $.Pagination}}
-    <nav class="comment__pagination">
+    <nav class="pipe-comment__pagination fn-right">
         {{range $.Pagination.PageNums}}
         {{if eq . -1}}
-        <a href="{{$.Pagination.PageURL}}{{$.Pagination.PreviousPageNum}}">
-            <svg><use xlink:href="#chevron-left"></use></svg>
+        <a class="btn fn-left" href="{{$.Pagination.PageURL}}{{$.Pagination.PreviousPageNum}}">
+            <svg class="fn-left"><use xlink:href="#chevron-left"></use></svg> {{$.I18n.prePage}}
         </a>
         {{else if eq . -2}}
-        <a href="{{$.Pagination.PageURL}}{{$.Pagination.NextPageNum}}">
-            <svg><use xlink:href="#chevron-right"></use></svg>
+        <a class="btn btn--space fn-left" href="{{$.Pagination.PageURL}}{{$.Pagination.NextPageNum}}">
+            {{$.I18n.nextPage}}  <svg class="fn-right"><use xlink:href="#chevron-right"></use></svg>
         </a>
         {{end}}
         {{end}}
@@ -26,10 +26,10 @@
     {{end}}
 </div>
 {{else}}
-<div class="{{if ne (len .RelevantArticles) 0}}fn-bottom{{end}} ft-center comment__null"
+<div class="pipe-comment__null fn-clear"
      data-title="{{.I18n.Comment}}{{.I18n.Colon}}{{.Article.Title}}"
      data-id="{{.Article.ID}}"
-     id="comments">
+     id="pipeComments">
     {{.I18n.StayStep}}
     <svg>
         <use xlink:href="#comment"></use>

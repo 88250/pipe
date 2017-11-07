@@ -18,7 +18,7 @@ const Common = {
   init: () => {
     TrimB3Id()
     KillBrowser()
-    LazyLoadCSSImage('.avatar, .article__thumb')
+    LazyLoadCSSImage('.avatar, .pipe-comment__avatar, .article__thumb')
     LazyLoadImage()
     Common._header()
     Common._share()
