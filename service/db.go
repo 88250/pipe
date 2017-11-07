@@ -41,7 +41,7 @@ func ConnectDB() {
 
 	tables := []interface{}{
 		&model.User{}, &model.Article{}, &model.Comment{}, &model.Navigation{}, &model.Tag{},
-		&model.Category{}, &model.Setting{}, &model.Correlation{},
+		&model.Category{}, &model.Archive{}, &model.Setting{}, &model.Correlation{},
 	}
 
 	// TODO: D, remove it after release 1.0.0
