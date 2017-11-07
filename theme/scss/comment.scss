@@ -4,7 +4,6 @@
  * @author <a href="http://vanessa.b3log.org">Liyuan Li</a>
  * @version 0.1.0.0, Nov 6, 2017
  */
-
 @import "variables";
 // comment
 .comment {
@@ -80,38 +79,41 @@
 }
 
 // editor
-.editor {
-  .emotion {
-    &__item {
-      cursor: pointer;
-      float: left;
-      margin: 10px 10px 5px 0;
-      font-size: 16px;
-      transition: $transition;
-      background-color: transparent;
+.pipe-editor {
+  &__wrap {
+    max-width: 768px;
+    margin: 0 auto;
+  }
 
-      &:hover {
-        transform: scale(1.2) rotate(360deg);
-      }
+  &__emotion span {
+    cursor: pointer;
+    float: left;
+    margin: 10px 10px 5px 0;
+    font-size: 16px;
+    transition: $transition;
+    background-color: transparent;
+
+    &:hover {
+      transform: scale(1.2) rotate(360deg);
     }
   }
+
   position: fixed;
   bottom: -240px;
   width: 100%;
   opacity: 0;
   background-color: #fff;
-  border-top: 1px solid $fade;
+  box-shadow: 0 0px 2px $fade;
   padding: 30px 0;
   transition: $transition;
   z-index: 100;
   left: 0;
 
+  bottom: 0;
+  opacity: 1;
+
   input,
   textarea {
     margin-bottom: 30px;
-  }
-
-  .article__action {
-    margin-top: 0px;
   }
 }

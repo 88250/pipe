@@ -76,7 +76,6 @@
 
 <script>
   export default {
-    layout: 'console',
     data () {
       return {
         step: this.$store.state.name === '' ? 1 : 2,

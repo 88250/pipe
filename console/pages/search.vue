@@ -1,6 +1,6 @@
 <template>
-  <div class="search">
-    <div class="card fn-clear">
+  <div class="content">
+    <div class="card card__body fn-clear">
       <v-form ref="form" class="search__form" @submit.prevent="goSearch">
         <v-text-field
           :label="$t('enterSearch', $store.state.locale)"
@@ -12,13 +12,14 @@
       </v-form>
       <ul class="list">
         <li v-for="item in list" :key="item.id">
-          <nuxt-link class="search__title" :to="item.url"><b>{{ item.title }}</b></nuxt-link>
+          <a class="search__title" :href="item.url"><b>{{ item.title }}</b></a>
           <div>
             {{item.content}}
           </div>
         </li>
       </ul>
       <v-pagination
+        v-if="currentPageNum > 1"
         :length="pageCount"
         v-model="currentPageNum"
         :total-visible="windowSize"
@@ -33,10 +34,9 @@
 </template>
 
 <script>
-  import { required } from '~/plugins/validate'
+  import {required} from '~/plugins/validate'
 
   export default {
-    layout: 'console',
     head () {
       return {
         title: this.$t('search', this.$store.state.locale)
@@ -73,18 +73,9 @@
     },
     mounted () {
       this.getList(1)
-      this.$set(this, 'keyword', this.$route.query.k)
+      setTimeout(() => {
+        this.$set(this, 'keyword', this.$route.query.k)
+      })
     }
   }
 </script>
-
-<style lang="sass">
-  @import '~assets/scss/_variables'
-  .search
-    padding: 50px
-    background-color: $blue-lighter
-
-    &__form
-      margin: 30px 100px 0
-
-</style>

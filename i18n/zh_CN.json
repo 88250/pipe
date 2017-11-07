@@ -57,6 +57,7 @@
   "top": "置顶",
   "requestError": "请求错误",
   "comment": "评论",
+  "commentPlaceholder": "评论内容，支持 Markdown 语法",
   "view": "浏览",
   "deleteSuccess": "删除成功",
   "topSuccess": "置顶成功",

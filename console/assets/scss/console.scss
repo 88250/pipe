@@ -1,0 +1,25 @@
+.console {
+  background-color: $blue-lighter;
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+
+  .card {
+    width: 650px;
+    margin: 0 auto;
+    z-index: 1;
+  }
+}
+.particles-js-canvas-el {
+  position: absolute;
+  top: 0;
+}
+
+@media (max-width: 768px) {
+  .console {
+    padding: 0 15px
+  }
+}
+

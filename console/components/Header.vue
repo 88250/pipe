@@ -1,13 +1,13 @@
 <template>
   <header class="header fn-flex">
-    <div class="header__logo" v-if="from === 'admin'">
-      <a :href="$store.state.blogURL">
+    <div :class="$route.path.indexOf('/admin') > -1 ? 'header__logo' : 'header__logo header__logo--theme'">
+      <a :href="$store.state.blogURL || '/'">
         <img class="header__logo-img" src="~static/images/logo.png"/>
-        {{ $store.state.blogTitle }}
+        {{ $store.state.blogTitle || 'Pipe' }}
       </a>
     </div>
     <div class="header__nav fn-flex-1 fn-flex">
-      <div class="header__bar--theme" v-if="$store.state.role === 0">
+      <div v-if="$store.state.role === 0">
         <a class="btn--space btn--radius btn" href="https://hacpai.com/register">
           {{ $t('register', $store.state.locale) }}
         </a>
@@ -16,49 +16,50 @@
         </a>
       </div>
       <template v-else>
-        <span class="header__bar--icon fn-flex-1" v-if="$route.path.indexOf('/admin') > -1">
-          <div class="side__icon fn-left" @click="toggleSide">
-            <span class="side__icon-line"></span>
-            <span class="side__icon-line side__icon-line--middle"></span>
-            <span class="side__icon-line"></span>
-          </div>
-          <a :href="$store.state.blogURL">
-            <img class="header__logo-img fn-none" src="~static/images/logo.png"/>
-          </a>
+        <span class="header__bar--icon fn-flex-1">
+          <span v-if="$route.path.indexOf('/admin') > -1 && from !== 'error'">
+            <div class="side__icon fn-left" @click="toggleSide">
+              <span class="side__icon-line"></span>
+              <span class="side__icon-line side__icon-line--middle"></span>
+              <span class="side__icon-line"></span>
+            </div>
+            <a :href="$store.state.blogURL">
+              <img class="header__logo-img fn-none" src="~static/images/logo.png"/>
+            </a>
+          </span>
+          <template v-else>&nbsp;</template>
         </span>
-        <div :class="$route.path.indexOf('/admin') == -1 ? 'header__bar--theme' : 'header__bar--admin'">
-          <v-btn class="btn--small btn--danger btn--space" @click="logout">{{ $t('logout', $store.state.locale) }}
-          </v-btn>
-          <nuxt-link
-            class="btn--space"
-            v-if="$route.path.indexOf('/admin') === -1 && $store.state.role !== 0 && $store.state.role !== 4"
-            to="/admin">
-            {{ $t('manage', $store.state.locale) }}
-          </nuxt-link>
-          <v-menu
-            class="btn--space"
-            z-index="100"
-            v-if="$route.path.indexOf('/admin') > -1 && $store.state.blogs.length > 1"
-            :nudge-bottom="28"
-            :open-on-hover="true">
-            <v-toolbar-title slot="activator">
-              <v-btn class="btn--small btn--success">
-                {{ $store.state.blogTitle }}
-                <v-icon>arrow_drop_down</v-icon>
-              </v-btn>
-            </v-toolbar-title>
-            <v-list>
-              <v-list-tile @click="switchBlog(item)"
-                           v-for="item in $store.state.blogs"
-                           :key="item.id" class="list__tile--link">
-                {{ item.title }}
-              </v-list-tile>
-            </v-list>
-          </v-menu>
-          <div class="avatar avatar--small tooltipped tooltipped--w"
-               :style="`background-image: url(${$store.state.avatarURL})`"
-               :aria-label="$store.state.nickname || $store.state.name"></div>
-        </div>
+        <v-menu
+          z-index="100"
+          :nudge-bottom="30"
+          :nudge-right="30">
+          <v-toolbar-title slot="activator">
+            <div class="avatar avatar--small tooltipped tooltipped--w"
+                       :style="`background-image: url(${$store.state.avatarURL})`"
+                       :aria-label="$store.state.nickname || $store.state.name"></div>
+          </v-toolbar-title>
+          <v-list>
+            <v-list-tile @click="switchBlog(item)"
+                         v-if="$store.state.blogs.length === 1"
+                         v-for="item in $store.state.blogs"
+                         :key="item.id" class="list__tile--link">
+              {{ item.title }}
+            </v-list-tile>
+            <v-list-tile
+              @click="$router.push('/')"
+              v-if="$route.path.indexOf('/admin') > -1">
+              {{ $t('index', $store.state.locale) }}
+            </v-list-tile>
+            <v-list-tile
+              @click="$router.push('/admin')"
+              v-if="$route.path.indexOf('/admin') === -1 && $store.state.role !== 0 && $store.state.role !== 4">
+                {{ $t('manage', $store.state.locale) }}
+            </v-list-tile>
+            <v-list-tile @click="logout">
+              {{ $t('logout', $store.state.locale) }}
+            </v-list-tile>
+          </v-list>
+        </v-menu>
       </template>
     </div>
   </header>
@@ -66,12 +67,6 @@
 
 <script>
   export default {
-    props: {
-      from: {
-        type: String,
-        required: true
-      }
-    },
     methods: {
       toggleSide () {
         const className = document.querySelector('#pipe').className
@@ -201,27 +196,24 @@
         font-size: 18px
         &:hover
           text-decoration: none
+      &--theme
+        width: auto
+        padding-left: 30px
+        background-color: $blue
+        a
+          color: #fff
     &__nav
       background-color: $blue
       align-items: center
+      padding-right: 30px
       a
         color: #fff
-    &__bar--admin
-      padding-right: 30px
-      display: flex
-      align-items: center
-      flex-direction: row-reverse
-    &__bar--theme
-      width: 100%
-      padding-right: 30px
-      display: flex
-      align-items: center
-      flex-direction: row-reverse
 
   @media (max-width: 768px)
-    .header__bar--theme,
-    .header__bar--admin
+    .header__nav
       padding-right: 15px
+    .header__logo--theme
+      padding-left: 15px
     .header__bar--icon .fn-none
       display: block
       float: left
@@ -253,4 +245,6 @@
         transform: rotateZ(45deg)
         top: -10px
         background-color: $theme-accent
+    .body--side .header__logo
+      width: 0
 </style>

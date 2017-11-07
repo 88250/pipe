@@ -1,36 +1,36 @@
 {{define "comment/editor"}}
 {{if ne .User.UID 0}}
-<div class="editor" id="editor">
-    <div class="wrapper">
-        <div id="replyObject"></div>
+<div class="pipe-editor" id="pipeEditor">
+    <div class="pipe-editor__wrap">
+        <div id="pipeEditorReplyTarget"></div>
         <div class="form">
-            <div id="emotions">
-                <span class="emotion__item" title="😁">😁</span>
-                <span class="emotion__item" title="😂">😂</span>
-                <span class="emotion__item" title="😜">😜</span>
-                <span class="emotion__item" title="😫">😫</span>
-                <span class="emotion__item" title="😭">😭</span>
-                <span class="emotion__item" title="😰">😰</span>
-                <span class="emotion__item" title="😡">😡</span>
-                <span class="emotion__item" title="😤">😤</span>
-                <span class="emotion__item" title="👀">👀</span>
-                <span class="emotion__item" title="😱">😱</span>
-                <span class="emotion__item" title="😎">😎</span>
-                <span class="emotion__item" title="😋">😋</span>
-                <span class="emotion__item" title="💕">💕</span>
-                <span class="emotion__item" title="💔">💔</span>
-                <span class="emotion__item" title="😈">😈</span>
+            <div class="pipe-editor__emotion">
+                <span title="😁">😁</span>
+                <span title="😂">😂</span>
+                <span title="😜">😜</span>
+                <span title="😫">😫</span>
+                <span title="😭">😭</span>
+                <span title="😰">😰</span>
+                <span title="😡">😡</span>
+                <span title="😤">😤</span>
+                <span title="👀">👀</span>
+                <span title="😱">😱</span>
+                <span title="😎">😎</span>
+                <span title="😋">😋</span>
+                <span title="💕">💕</span>
+                <span title="💔">💔</span>
+                <span title="😈">😈</span>
             </div>
-            <textarea id="commentContent" data-blogurl="{{.BlogURL}}" placeholder="{{.I18n.Content}}" rows="3"></textarea>
-            <div class="article__action fn-clear">
-                <span class="fn-right action__btn action__btn--space action__btn--active"
-                      id="editorAdd"
+            <textarea id="pipeEditorComment" data-blogurl="{{.BlogURL}}" placeholder="{{.I18n.CommentPlaceholder}}" rows="3"></textarea>
+            <div class="fn-clear">
+                <span class="fn-right btn btn--space btn--green"
+                      id="pipeEditorAdd"
                       data-label2="{{.I18n.Required}}"
                       data-label="{{.I18n.Comment}}">
                     {{.I18n.Confirm}}&nbsp;<svg class="fn-right"><use xlink:href="#comment"></use></svg>
                 </span>
-                <span class="fn-right action__btn action__btn--space"
-                      id="editorCancel">
+                <span class="fn-right btn"
+                      id="pipeEditorCancel">
                     {{.I18n.Cancel}}&nbsp;<svg class="fn-right"><use xlink:href="#chevron-up"></use></svg>
                 </span>
             </div>

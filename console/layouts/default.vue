@@ -1,11 +1,14 @@
 <template>
   <div data-app="true" :class="bodySide" id="pipe">
-    <pipe-header from="admin"/>
-    <side/>
+    <pipe-header/>
+    <side v-if="$route.path.indexOf('/admin') > -1"/>
     <div class="main">
-      <div class="content">
+      <div class="content" v-if="$route.path.indexOf('/admin') > -1">
         <nuxt/>
       </div>
+      <template v-else>
+        <nuxt/>
+      </template>
       <pipe-footer/>
     </div>
     <v-snackbar
@@ -51,7 +54,7 @@
       PipeFooter
     },
     mounted () {
-      if (document.documentElement.clientWidth < 721) {
+      if (document.documentElement.clientWidth < 721 || this.$route.path.indexOf('/admin') === -1) {
         this.$set(this, 'bodySide', '')
       }
     }

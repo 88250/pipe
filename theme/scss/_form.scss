@@ -60,6 +60,10 @@
   line-height: 19px;
   white-space: nowrap;
 
+  svg {
+    margin-top: 1px;
+  }
+
   &:disabled {
     opacity: 0.3;
   }
@@ -77,10 +81,11 @@
   &--green {
     color: #fff;
     background-color: #60b044;
-    border-color: $green;
+    border-color: #60b044;
   }
 
   &--green:hover {
+    border-color: $green;
     background-color: $green;
   }
 
@@ -109,5 +114,9 @@
     font-size: 13px;
     line-height: 20px;
     height: 28px;
+  }
+
+  &--space {
+    margin-left: 10px;
   }
 }
