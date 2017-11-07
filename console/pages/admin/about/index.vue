@@ -90,4 +90,12 @@
         margin: 0 10px 0 0
         height: 18px
         width: 18px
+
+  @media (max-width: 768px)
+    .admin__about
+      display: block
+      .about__side
+        text-align: center
+        margin: 15px
+        width: auto
 </style>

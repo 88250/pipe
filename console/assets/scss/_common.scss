@@ -41,6 +41,11 @@ body {
   }
 }
 
+@media (max-width: 768px) {
+  .card--space {
+    margin-bottom: 15px;
+  }
+}
 // alert
 .alert {
   border-top: 4px solid rgba(0,0,0,.12);
@@ -88,6 +93,14 @@ body {
     margin-right: 15px;
   }
 }
+@media (max-width: 768px) {
+  .avatar--mid {
+    height: 24px;
+    width: 24px;
+    margin-right: 10px;
+  }
+}
+
 
 
 // tag

@@ -114,4 +114,7 @@
       h3
         margin-bottom: 10px
         text-align: center
+  @media (max-width: 768px)
+    .admin__themes .card
+      width: 100%
 </style>

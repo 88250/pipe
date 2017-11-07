@@ -1,6 +1,6 @@
 <template>
   <div data-app="true" :class="bodySide" id="pipe">
-    <pipe-header/>
+    <pipe-header  from="default"/>
     <side v-if="$route.path.indexOf('/admin') > -1"/>
     <div class="main">
       <div class="content" v-if="$route.path.indexOf('/admin') > -1">
@@ -81,4 +81,8 @@
     background-color: $blue-lighter
     padding: 30px
     flex: 1
+
+  @media (max-width: 768px)
+    .content
+      padding: 15px
 </style>

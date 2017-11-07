@@ -1,6 +1,6 @@
 <template>
   <div id="pipe" data-app="true">
-    <pipe-header/>
+    <pipe-header from="error"/>
     <div class="main">
       <div class="console" id="particles">
         <div class="card" v-if="error.statusCode === 404">

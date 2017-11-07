@@ -7,14 +7,17 @@
       </a>
     </div>
     <div class="header__nav fn-flex-1 fn-flex">
-      <div v-if="$store.state.role === 0">
-        <a class="btn--space btn--radius btn" href="https://hacpai.com/register">
+      <template v-if="$store.state.role === 0">
+        <span class="fn-flex-1"> &nbsp;</span>
+        <span>
+          <a href="https://hacpai.com/login">
+            {{ $t('login', $store.state.locale) }}
+          </a>
+          <a class="btn--space btn--success btn btn--small" href="https://hacpai.com/register">
           {{ $t('register', $store.state.locale) }}
-        </a>
-        <a href="https://hacpai.com/login">
-          {{ $t('login', $store.state.locale) }}
-        </a>
-      </div>
+          </a>
+        </span>
+      </template>
       <template v-else>
         <span class="header__bar--icon fn-flex-1">
           <span v-if="$route.path.indexOf('/admin') > -1 && from !== 'error'">
@@ -40,7 +43,7 @@
           </v-toolbar-title>
           <v-list>
             <v-list-tile @click="switchBlog(item)"
-                         v-if="$store.state.blogs.length === 1"
+                         v-if="$store.state.blogs.length > 1"
                          v-for="item in $store.state.blogs"
                          :key="item.id" class="list__tile--link">
               {{ item.title }}
@@ -67,6 +70,12 @@
 
 <script>
   export default {
+    props: {
+      from: {
+        type: String,
+        required: true
+      }
+    },
     methods: {
       toggleSide () {
         const className = document.querySelector('#pipe').className
