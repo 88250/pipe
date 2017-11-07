@@ -47,7 +47,7 @@ const (
 
 func (srv *commentService) GetRepliesCount(parentCommentID uint, blogID uint) int {
 	ret := 0
-	if err := db.Where(&model.Comment{ParentCommentID: parentCommentID, BlogID: blogID}).Count(&ret).Error; nil != err {
+	if err := db.Model(&model.Comment{}).Where(&model.Comment{ParentCommentID: parentCommentID, BlogID: blogID}).Count(&ret).Error; nil != err {
 		log.Errorf("count comment [id=%d]'s replies failed: "+err.Error(), parentCommentID)
 	}
 

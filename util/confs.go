@@ -37,7 +37,7 @@ var Version = "1.0.0"
 var Conf *Configuration
 
 // HTTP client user agent.
-var UserAgent = "Mozilla/5.0 (compatible; Pipe" + Version + "; +https://hacpai.com)"
+var UserAgent = "Mozilla/5.0 (compatible; Pipe" + Version + "; +" + HacPaiURL + ")"
 
 // Configuration (pipe.json).
 type Configuration struct {

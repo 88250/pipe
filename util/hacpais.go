@@ -26,6 +26,8 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+const HacPaiURL = "https://hacpai.com"
+
 // HacPaiAPI is a reverse proxy for https://hacpai.com.
 func HacPaiAPI() gin.HandlerFunc {
 	return func(c *gin.Context) {

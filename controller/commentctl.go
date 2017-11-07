@@ -48,16 +48,15 @@ func getRepliesAction(c *gin.Context) {
 
 			continue
 		}
+		commentAuthorURL := util.HacPaiURL + "/member/" + commentAuthor.Name
 		blogURLSetting := service.Setting.GetSetting(model.SettingCategoryBasic, model.SettingNameBasicBlogURL, commentAuthor.BlogID)
-		if nil == blogURLSetting {
-			log.Errorf("not found blog URL setting [blogID=%d]", commentAuthor.BlogID)
-
-			continue
+		if nil != blogURLSetting {
+			commentAuthorURL = blogURLSetting.Value + util.PathAuthors + "/" + commentAuthor.Name
 		}
 
 		author := &ThemeAuthor{
 			Name:      commentAuthor.Name,
-			URL:       blogURLSetting.Value + util.PathAuthors + "/" + commentAuthor.Name,
+			URL:       commentAuthorURL,
 			AvatarURL: commentAuthor.AvatarURLWithSize(64),
 		}
 
@@ -103,9 +102,15 @@ func addCommentAction(c *gin.Context) {
 	}
 
 	dataModel := getDataModel(c)
+
+	commentAuthorURL := util.HacPaiURL + "/member/" + session.UName
+	blogURLSetting := service.Setting.GetSetting(model.SettingCategoryBasic, model.SettingNameBasicBlogURL, session.BID)
+	if nil != blogURLSetting {
+		commentAuthorURL = blogURLSetting.Value + util.PathAuthors + "/" + session.UName
+	}
 	author := &ThemeAuthor{
 		Name:      session.UName,
-		URL:       "https://hacpai.com/member/" + session.UName,
+		URL:       commentAuthorURL,
 		AvatarURL: session.UAvatar,
 	}
 	themeComment := ThemeComment{
