@@ -26,6 +26,11 @@
 
   &__item {
     margin-bottom: 30px;
+    &:hover {
+      .pipe-comment__btn {
+        display: inline-block;
+      }
+    }
   }
 
   &__avatar {
@@ -56,7 +61,7 @@
 
   &__btn {
     cursor: pointer;
-    display: inline-block;
+    display: none;
     padding-left: 10px;
     color: $black;
     &--danger {
