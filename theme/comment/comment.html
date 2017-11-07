@@ -19,17 +19,11 @@
                       data-commentid="{{.Item.ID}}">
                     {{.I18n.Reply}} <svg class="fn-right"><use xlink:href="#comment"></use></svg>
                 </span>
+                {{if .Item.Removable}}
                 <span class="pipe-comment__btn pipe-comment__btn--danger"
                       data-id="{{.Item.ID}}"
                       data-label="{{.I18n.ConfirmDelete}}"
                       data-label2="{{.I18n.StayStep}}">
-                    {{.I18n.Delete}} <svg class="fn-right"><use xlink:href="#remove"></use></svg>
-                </span>
-                {{if .Item.Removable}}
-                <span class="pipe-comment__btn"
-                        data-id="{{.Item.ID}}"
-                        data-label="{{.I18n.ConfirmDelete}}"
-                        data-label2="{{.I18n.StayStep}}">
                     {{.I18n.Delete}} <svg class="fn-right"><use xlink:href="#remove"></use></svg>
                 </span>
                 {{end}}
