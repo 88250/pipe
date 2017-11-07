@@ -61,7 +61,7 @@
   white-space: nowrap;
 
   svg {
-    margin-top: 1px;
+    margin-top: 2px;
   }
 
   &:disabled {
@@ -78,42 +78,23 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25) inset;
   }
 
-  &--green {
+  &--success {
     color: #fff;
     background-color: #60b044;
     border-color: #60b044;
+    &:hover {
+      border-color: $green;
+      background-color: $green;
+    }
   }
 
-  &--green:hover {
-    border-color: $green;
-    background-color: $green;
-  }
-
-  &--red {
-    color: $black;
-  }
-
-  &--red:hover {
-    color: #FFF;
-    border-color: $red;
-    background-color: $black;
-  }
-
-  &--small {
-    padding: 0 5px;
-    font-size: 12px;
-    font-weight: normal;
-    display: inline-block;
-    line-height: 19px;
-    height: 20px;
-    text-shadow: initial;
-  }
-
-  &--mid {
-    padding: 3px 8px;
-    font-size: 13px;
-    line-height: 20px;
-    height: 28px;
+  &--danger {
+    color: $red;
+    &:hover {
+      color: #FFF;
+      border-color: $red;
+      background-color: $red;
+    }
   }
 
   &--space {

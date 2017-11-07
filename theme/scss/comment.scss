@@ -6,18 +6,27 @@
  */
 @import "variables";
 // comment
-.comment {
+.pipe-comment {
+  &__null {
+    cursor: pointer;
+    transition: $transition;
+    text-align: center;
+    &:hover {
+      color: $gray;
+    }
+  }
+
+  &__header {
+    margin-bottom: 20px;
+  }
+
+  &__pagination {
+    margin-top: 20px;
+  }
+
   &__item {
     margin-bottom: 30px;
     position: relative;
-
-    .avatar {
-      border: 2px solid #fff;
-
-      &:hover {
-        border-color: $black;
-      }
-    }
 
     &:after {
       content: " ";
@@ -36,10 +45,28 @@
     }
 
     &:hover {
+      .pipe-comment__avatar {
+        border-color: $black;
+      }
       &:after {
         height: 100%;
       }
     }
+  }
+
+  &__avatar {
+    position: absolute;
+    border: 2px solid #fff;
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    display: inline-block;
+    z-index: 10;
+    @include image-bg('../images/image-bg.svg');
+  }
+
+  &__body {
+    padding-left: 74px;
   }
 
   &__btn {
@@ -50,14 +77,6 @@
       margin: 5px 0 0 5px;
       float: right;
     }
-    &:hover {
-      color: $gray;
-    }
-  }
-
-  &__null {
-    cursor: pointer;
-    transition: $transition;
     &:hover {
       color: $gray;
     }
@@ -108,9 +127,6 @@
   transition: $transition;
   z-index: 100;
   left: 0;
-
-  bottom: 0;
-  opacity: 1;
 
   input,
   textarea {

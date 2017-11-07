@@ -1,31 +1,39 @@
 {{define "comment/comment"}}
-<section class="comment__item" id="comment{{.Item.ID}}">
+<section class="pipe-comment__item" id="pipeComment{{.Item.ID}}">
     <a rel="nofollow"
-       class="avatar fn-absolute"
+       class="pipe-comment__avatar"
        data-src="{{.Item.Author.AvatarURL}}"
        href="{{.Item.Author.URL}}">
     </a>
-    <div class="fn-padding60">
-        <div>
-            <a href="{{.Item.Author.AvatarURL}}" class="module__list-title">{{.Item.Author.Name}}</a>
+    <div class="pipe-comment__body">
+        <div class="fn-clear">
+            <a href="{{.Item.Author.AvatarURL}}" class="ft-gray">{{.Item.Author.Name}}</a>
             <span class="ft-nowrap ft-12 ft-fade"> • {{.Item.CreatedAt}} •</span>
             <a class="ft-nowrap ft-12 ft-gray" href="#123">
                 <svg><use xlink:href="#reply"></use></svg>{{.I18n.Reply}} Vanessa
             </a>
-            <span class="comment__btn commentAdd"
-                  data-title="{{.I18n.Reply}}{{.I18n.Colon}}{{.Item.Author.Name}}"
-                  data-id="{{.ArticleID}}"
-                  data-commentid="{{.Item.ID}}">
-                {{.I18n.Reply}} <svg><use xlink:href="#comment"></use></svg>
-            </span>
-            {{if .Item.Removable}}
-            <span class="comment__btn commentDelete"
-                  data-id="{{.Item.ID}}"
-                  data-label="{{.I18n.ConfirmDelete}}"
-                  data-label2="{{.I18n.StayStep}}">
-                <svg><use xlink:href="#remove"></use></svg>
-            </span>
-            {{end}}
+            <div class="fn-right">
+                <button class="btn"
+                      data-title="{{.I18n.Reply}}{{.I18n.Colon}}{{.Item.Author.Name}}"
+                      data-id="{{.ArticleID}}"
+                      data-commentid="{{.Item.ID}}">
+                    {{.I18n.Reply}} <svg class="fn-right"><use xlink:href="#comment"></use></svg>
+                </button>
+                <button class="btn btn--danger btn--space"
+                      data-id="{{.Item.ID}}"
+                      data-label="{{.I18n.ConfirmDelete}}"
+                      data-label2="{{.I18n.StayStep}}">
+                    {{.I18n.Delete}} <svg class="fn-right"><use xlink:href="#remove"></use></svg>
+                </button>
+                {{if .Item.Removable}}
+                <span class="btn"
+                      data-id="{{.Item.ID}}"
+                      data-label="{{.I18n.ConfirmDelete}}"
+                      data-label2="{{.I18n.StayStep}}">
+                    <svg><use xlink:href="#remove"></use></svg>
+                </span>
+                {{end}}
+            </div>
         </div>
         <div class="content__reset">
             {{.Item.Content}}
