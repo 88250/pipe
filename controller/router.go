@@ -203,9 +203,13 @@ func routePath(c *gin.Context) {
 
 		return
 	}
-
 	if strings.Contains(path, util.PathTags+"/") {
 		showTagArticlesAction(c)
+
+		return
+	}
+	if strings.Contains(path, util.PathComments+"/") {
+		getRepliesAction(c)
 
 		return
 	}

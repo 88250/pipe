@@ -69,11 +69,20 @@ type ThemeCategoryDetail struct {
 }
 
 type ThemeComment struct {
+	ID         uint
+	Title      string
+	Content    template.HTML
+	URL        string
+	Author     *ThemeAuthor
+	CreatedAt  string
+	Removable  bool
+	ReplyCount int
+}
+
+type ThemeReply struct {
 	ID        uint
-	Title     string
 	Content   template.HTML
 	URL       string
 	Author    *ThemeAuthor
 	CreatedAt string
-	Removable bool
 }

@@ -202,8 +202,8 @@ func fillRecentComments(settingMap *map[string]interface{}, dataModel *DataModel
 	themeRecentComments := []*ThemeComment{}
 	for _, comment := range recentComments {
 		themeComment := &ThemeComment{
-			Title:     "",
-			Content:   template.HTML(util.Markdown(comment.Content)),
+			Title:     util.Markdown(comment.Content),
+			Content:   "",
 			URL:       "todo",
 			CreatedAt: humanize.Time(comment.CreatedAt),
 			Author: &ThemeAuthor{

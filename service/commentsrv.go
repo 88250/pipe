@@ -45,11 +45,28 @@ const (
 	themeCommentListWindowSize = 20
 )
 
+func (srv *commentService) GetRepliesCount(parentCommentID uint, blogID uint) int {
+	ret := 0
+	if err := db.Where(&model.Comment{ParentCommentID: parentCommentID, BlogID: blogID}).Count(&ret).Error; nil != err {
+		log.Errorf("count comment [id=%d]'s replies failed: "+err.Error(), parentCommentID)
+	}
+
+	return ret
+}
+
+func (srv *commentService) GetReplies(parentCommentID uint, blogID uint) (ret []*model.Comment) {
+	if err := db.Where(&model.Comment{ParentCommentID: parentCommentID, BlogID: blogID}).Find(&ret).Error; nil != err {
+		log.Errorf("get comment [id=%d]'s replies failed: "+err.Error(), parentCommentID)
+	}
+
+	return
+}
+
 func (srv *commentService) ConsoleGetComments(page int, blogID uint) (ret []*model.Comment, pagination *util.Pagination) {
 	offset := (page - 1) * adminConsoleCommentListPageSize
 	count := 0
 	if err := db.Model(model.Comment{}).Order("id ASC").
-		Where(model.Comment{BlogID: blogID}).
+		Where(&model.Comment{BlogID: blogID}).
 		Count(&count).Offset(offset).Limit(adminConsoleCommentListPageSize).Find(&ret).Error; nil != err {
 		log.Errorf("get comments failed: " + err.Error())
 	}

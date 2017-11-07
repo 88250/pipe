@@ -20,9 +20,9 @@ import (
 	"bytes"
 	"html/template"
 	"net/http"
+	"strconv"
 	"strings"
 
-	"github.com/b3log/pipe/i18n"
 	"github.com/b3log/pipe/model"
 	"github.com/b3log/pipe/service"
 	"github.com/b3log/pipe/util"
@@ -30,13 +30,54 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
+func getRepliesAction(c *gin.Context) {
+	result := util.NewResult()
+	defer c.JSON(http.StatusOK, result)
+
+	blogAdmin := getBlogAdmin(c)
+	parentCmtIDArg := strings.SplitAfter(c.Request.URL.Path, util.PathComments+"/")[1]
+	parentCmtIDArg = strings.Split(parentCmtIDArg, "/replies")[0]
+	parentCmtID, _ := strconv.Atoi(parentCmtIDArg)
+
+	replyComments := service.Comment.GetReplies(uint(parentCmtID), blogAdmin.BlogID)
+	replies := []*ThemeReply{}
+	for _, replyComment := range replyComments {
+		commentAuthor := service.User.GetUser(replyComment.AuthorID)
+		if nil == commentAuthor {
+			log.Errorf("not found comment author [userID=%d]", replyComment.AuthorID)
+
+			continue
+		}
+		blogURLSetting := service.Setting.GetSetting(model.SettingCategoryBasic, model.SettingNameBasicBlogURL, commentAuthor.BlogID)
+		if nil == blogURLSetting {
+			log.Errorf("not found blog URL setting [blogID=%d]", commentAuthor.BlogID)
+
+			continue
+		}
+
+		author := &ThemeAuthor{
+			Name:      commentAuthor.Name,
+			URL:       blogURLSetting.Value + util.PathAuthors + "/" + commentAuthor.Name,
+			AvatarURL: commentAuthor.AvatarURLWithSize(64),
+		}
+
+		reply := &ThemeReply{
+			ID:        replyComment.ID,
+			Content:   template.HTML(util.Markdown(replyComment.Content)),
+			Author:    author,
+			CreatedAt: replyComment.CreatedAt.Format("2006-01-02"),
+		}
+		replies = append(replies, reply)
+	}
+
+	result.Data = replies
+}
+
 func addCommentAction(c *gin.Context) {
 	result := util.NewResult()
 	defer c.JSON(http.StatusOK, result)
 
-	blogAdminVal, _ := c.Get("blogAdmin")
-	blogAdmin := blogAdminVal.(*model.User)
-
+	blogAdmin := getBlogAdmin(c)
 	session := util.GetSession(c)
 	if nil == session {
 		result.Code = -1
@@ -61,7 +102,7 @@ func addCommentAction(c *gin.Context) {
 		result.Msg = err.Error()
 	}
 
-	dataModel := DataModel{}
+	dataModel := getDataModel(c)
 	author := &ThemeAuthor{
 		Name:      session.UName,
 		URL:       "https://hacpai.com/member/" + session.UName,
@@ -76,15 +117,6 @@ func addCommentAction(c *gin.Context) {
 	}
 	dataModel["Item"] = themeComment
 	dataModel["ArticleID"] = comment.ArticleID
-
-	localeSetting := service.Setting.GetSetting(model.SettingCategoryI18n, model.SettingNameI18nLocale, blogAdmin.BlogID)
-	i18ns := i18n.GetMessages(localeSetting.Value)
-	i18nMap := map[string]interface{}{}
-	for key, value := range i18ns {
-		i18nMap[strings.Title(key)] = value
-		i18nMap[key] = value
-	}
-	dataModel["I18n"] = i18nMap
 
 	t := template.Must(template.New("").ParseFiles("theme/comment/comment.html"))
 

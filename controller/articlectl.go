@@ -125,7 +125,46 @@ func showArticleAction(c *gin.Context) {
 		Editable:     session.UID == authorModel.ID,
 	}
 
-	service.Article.IncArticleViewCount(article)
+	page := c.GetInt("p")
+	if 1 > page {
+		page = 1
+	}
+	commentModels, pagination := service.Comment.GetArticleComments(article.ID, page, blogAdmin.BlogID)
+	comments := []*ThemeComment{}
+	for _, commentModel := range commentModels {
+		commentAuthor := service.User.GetUser(commentModel.AuthorID)
+		if nil == commentAuthor {
+			log.Errorf("not found comment author [userID=%d]", commentModel.AuthorID)
+
+			continue
+		}
+		blogURLSetting := service.Setting.GetSetting(model.SettingCategoryBasic, model.SettingNameBasicBlogURL, commentAuthor.BlogID)
+		if nil == blogURLSetting {
+			log.Errorf("not found blog URL setting [blogID=%d]", commentAuthor.BlogID)
+
+			continue
+		}
+
+		author := &ThemeAuthor{
+			Name:      commentAuthor.Name,
+			URL:       blogURLSetting.Value + util.PathAuthors + "/" + commentAuthor.Name,
+			AvatarURL: commentAuthor.AvatarURLWithSize(64),
+		}
+
+		comment := &ThemeComment{
+			ID:         commentModel.ID,
+			Content:    template.HTML(util.Markdown(commentModel.Content)),
+			Author:     author,
+			CreatedAt:  commentModel.CreatedAt.Format("2006-01-02"),
+			Removable:  session.UID == authorModel.ID,
+			ReplyCount: service.Comment.GetRepliesCount(commentModel.ID, commentModel.BlogID),
+		}
+
+		comments = append(comments, comment)
+	}
+
+	dataModel["Comments"] = comments
+	dataModel["Pagination"] = pagination
 
 	articleModels, pagination := service.Article.GetArticles(1, blogAdmin.BlogID)
 	articles := []*ThemeArticle{}
@@ -169,52 +208,13 @@ func showArticleAction(c *gin.Context) {
 
 		articles = append(articles, article)
 	}
-
-	page := c.GetInt("p")
-	if 1 > page {
-		page = 1
-	}
-	commentModels, pagination := service.Comment.GetArticleComments(article.ID, page, blogAdmin.BlogID)
-	comments := []*ThemeComment{}
-	for _, commentModel := range commentModels {
-		commentAuthor := service.User.GetUser(commentModel.AuthorID)
-		if nil == commentAuthor {
-			log.Errorf("not found comment author [userID=%d]", commentModel.AuthorID)
-
-			continue
-		}
-		blogURLSetting := service.Setting.GetSetting(model.SettingCategoryBasic, model.SettingNameBasicBlogURL, commentAuthor.BlogID)
-		if nil == blogURLSetting {
-			log.Errorf("not found blog URL setting [blogID=%d]", commentAuthor.BlogID)
-
-			continue
-		}
-
-		author := &ThemeAuthor{
-			Name:      commentAuthor.Name,
-			URL:       blogURLSetting.Value + util.PathAuthors + "/" + commentAuthor.Name,
-			AvatarURL: commentAuthor.AvatarURLWithSize(64),
-		}
-
-		comment := &ThemeComment{
-			ID:        commentModel.ID,
-			Content:   template.HTML(util.Markdown(commentModel.Content)),
-			Author:    author,
-			CreatedAt: commentModel.CreatedAt.Format("2006-01-02"),
-			Removable: false,
-		}
-
-		comments = append(comments, comment)
-	}
-
-	dataModel["Comments"] = comments
-	dataModel["Pagination"] = pagination
-
 	dataModel["RelevantArticles"] = articles
 	fillPreviousArticle(c, article, &dataModel)
 	fillNextArticle(c, article, &dataModel)
 	dataModel["ToC"] = "todo"
 	c.HTML(http.StatusOK, getTheme(c)+"/article.html", dataModel)
+
+	service.Article.IncArticleViewCount(article)
 }
 
 func fillPreviousArticle(c *gin.Context, article *model.Article, dataModel *DataModel) {

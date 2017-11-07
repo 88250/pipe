@@ -20,13 +20,12 @@ package model
 type Comment struct {
 	Model
 
-	ArticleID               uint   `json:"articleID"`
-	AuthorID                uint   `json:"authorID"`
-	Content                 string `gorm:"type:text" json:"content"`
-	ParentCommentID         uint   `json:"parentCommentID"` // ID of replied comment
-	ParentCommentAuthorName string `gorm:"size:32" json:"parentCommentAuthorName"`
-	IP                      string `gorm:"size:128" json:"ip"`
-	UserAgent               string `gorm:"size:255" json:"userAgent"`
+	ArticleID       uint   `json:"articleID"`
+	AuthorID        uint   `json:"authorID"`
+	Content         string `gorm:"type:text" json:"content"`
+	ParentCommentID uint   `json:"parentCommentID"` // ID of replied comment
+	IP              string `gorm:"size:128" json:"ip"`
+	UserAgent       string `gorm:"size:255" json:"userAgent"`
 
 	BlogID uint `json:"blogID"`
 }
