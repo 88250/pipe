@@ -207,6 +207,12 @@
 			"revisionTime": "2017-10-18T22:09:16Z"
 		},
 		{
+			"checksumSHA1": "2t69sGCk/VeWx0rEhN5ejjeoPtA=",
+			"path": "github.com/vinta/pangu",
+			"revision": "f1cdb73eaf33f9057f38302f610a021bbca5b46a",
+			"revisionTime": "2016-01-23T16:33:02Z"
+		},
+		{
 			"checksumSHA1": "9jjO5GjLa0XF/nfWihF02RoH4qc=",
 			"path": "golang.org/x/net/context",
 			"revision": "f2499483f923065a842d38eb4c7f1927e6fc6e6d",
