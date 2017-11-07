@@ -304,15 +304,65 @@ export const InitComment = () => {
   // comment show reply
   $('body').on('click', '#pipeComments .fn-pointer', function () {
     const $it = $(this)
+    if ($it.hasClass('disabled')) {
+      return
+    }
+    $it.addClass('disabled')
     const $svg = $it.find('svg')
     if ($svg.hasClass('pipe-comment__chevron-down')) {
       $svg.removeClass('pipe-comment__chevron-down')
+      if  ($it.next().find('.pipe-comment__item').length > 0) {
+        $it.next().slideToggle({
+          queue: false,
+          complete: () => {
+            $it.removeClass('disabled')
+          }
+        })
+        return
+      }
+      $.ajax({
+        url: `${$('#pipeEditorComment').data('blogurl')}/comments/${$it.data('id')}/replies`,
+        type: 'GET',
+        success: (result) => {
+          if (result.code === 0) {
+            let commentHTML = ''
+            result.data.forEach((item) => {
+              commentHTML += `<section class="pipe-comment__item">
+                    <a rel="nofollow"
+                       class="pipe-comment__avatar"
+                       style="background-image: url(${item.Author.AvatarURL})"
+                       href="${item.Author.URL}">
+                    </a>
+                    <div class="pipe-comment__body">
+                        <a href="${item.Author.URL}" class="ft-gray">${item.Author.Name}</a>
+                        <span class="ft-nowrap ft-12 ft-gray"> • ${item.CreatedAt}</span>
+                        <div class="content__reset">
+                             ${item.Content}
+                        </div>
+                    </div>
+                </section>`
+            })
+            $it.next().html(commentHTML).slideToggle({
+              queue: false,
+              complete: () => {
+                $it.removeClass('disabled')
+              }
+            })
+          } else {
+            alert(result.msg)
+            $it.removeClass('disabled')
+          }
+        }
+      })
     } else {
       $svg.addClass('pipe-comment__chevron-down')
+      $it.next().slideToggle({
+        queue: false,
+        complete: () => {
+          $it.removeClass('disabled')
+        }
+      })
     }
-    $it.next().slideToggle({
-      queue: false
-    })
   });
 
   // comment remove
@@ -320,7 +370,7 @@ export const InitComment = () => {
     const $it = $(this)
     if (confirm($it.data('label'))) {
       $.ajax({
-        url: `${location.origin}/api/console/comments/${$it.data('id')}`,
+        url: `${$('#pipeEditorComment').data('blogurl')}/api/console/comments/${$it.data('id')}`,
         type: 'DELETE',
         success: (result) => {
           if (result.code === 0) {

@@ -55,8 +55,13 @@
     transform: rotate(180deg);
   }
 
+  &__icon {
+    transition: $transition;
+  }
+
   &__reply {
     margin-top: 20px;
+    position: relative;
   }
 
   &__btn {
@@ -64,6 +69,7 @@
     display: none;
     padding-left: 10px;
     color: $black;
+    transition: $transition;
     &--danger {
       color: $red;
     }

@@ -44,6 +44,14 @@
                     <span class="ft-nowrap">{{.Article.ViewCount}} {{$.I18n.View}}</span> •
                     <a href="{{.URL}}#comments" class="ft-nowrap ft-gray">{{.Article.CommentCount}}
                         {{$.I18n.Comment}}</a>
+                    {{if .Article.Editable}}
+                    <span>•</span>
+                    <a class="ft-orange" href="{{$.Conf.Server}}/admin/articles/post?id={{.Article.ID}}">
+                        <svg>
+                            <use xlink:href="#edit"></use>
+                        </svg> {{$.I18n.Edit}}
+                    </a>
+                    {{end}}
                 </div>
             </div>
         </header>
@@ -70,15 +78,6 @@
                      data-url="{{.Article.URL}}"
                      data-avatar="{{.Article.Author.AvatarURL}}"></div>
             </span>
-            <span class="fn-right">
-                {{if .Article.Editable}}
-            <a class="fn-right action__btn action__btn--space"
-               href="{{$.Conf.Server}}/admin/articles/post?id={{.Article.ID}}">
-                <svg>
-                    <use xlink:href="#edit"></use>
-                </svg>
-            </a>
-            {{end}}
             <span class="fn-right action__btn action__btn--space action__btn--active fn-clear"
                   data-title="{{.I18n.Comment}}{{.I18n.Colon}}{{.Article.Title}}"
                   id="articleCommentBtn"
@@ -87,7 +86,6 @@
                 <svg class="fn-right">
                     <use xlink:href="#comment"></use>
                 </svg>
-            </span>
             </span>
         </div>
     </article>

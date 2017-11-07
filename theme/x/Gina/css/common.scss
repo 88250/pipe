@@ -146,7 +146,7 @@ a {
   padding: 3px 10px;
   line-height: 13px;
   font-weight: 400;
-  border-radius: 4px;
+  border-radius: 3px;
   font-size: 12px;
   white-space: nowrap;
 
@@ -392,7 +392,7 @@ a {
   }
   &__thumb {
     height: 180px;
-    border-radius: 10px;
+    border-radius: 5px;
     margin-bottom: 30px;
     display: block;
     @include image-bg('../images/image-bg.svg');
@@ -425,9 +425,6 @@ a {
 
   &__abstract {
     margin-top: 10px;
-    & > p {
-      margin: 0;
-    }
   }
 
   &__action {
@@ -622,8 +619,7 @@ a {
   padding-top: 50px;
   text-align: center;
   &__item {
-    border: 1px solid $border-color;
-    padding: 0 8px;
+    padding: 2px 10px;
     display: inline-block;
     border-radius: 15px;
     color: $black;
@@ -640,6 +636,7 @@ a {
   }
 
   &__near {
+    vertical-align: sub;
     color: $black;
     &:hover {
       text-decoration: none;

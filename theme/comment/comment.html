@@ -8,10 +8,12 @@
     <div class="pipe-comment__body">
         <div class="fn-clear">
             <a href="{{.Item.Author.AvatarURL}}" class="ft-gray">{{.Item.Author.Name}}</a>
-            <span class="ft-nowrap ft-12 ft-fade"> • {{.Item.CreatedAt}} • </span>
+
             <a class="ft-nowrap ft-12 ft-gray" href="#123">
                 <svg><use xlink:href="#reply"></use></svg> {{.I18n.Reply}} Vanessa
             </a>
+
+            <span class="ft-nowrap ft-12 ft-fade"> • {{.Item.CreatedAt}} </span>
             <div class="fn-right">
                 <span class="pipe-comment__btn pipe-comment__btn--reply"
                       data-title="{{.I18n.Reply}}{{.I18n.Colon}}{{.Item.Author.Name}}"
@@ -32,42 +34,16 @@
         <div class="content__reset">
             {{.Item.Content}}
         </div>
+        {{if ne .Item.ReplyCount 0}}
         <div>
             <span class="ft-gray ft-12 fn-pointer" data-id="{{.Item.ID}}">
-                2 {{.I18n.Reply}}
-                <svg class="pipe-comment__chevron-down"><use xlink:href="#chevron-up"></use></svg>
+                {{.Item.ReplyCount}} {{.I18n.Reply}}
+                <svg class="pipe-comment__chevron-down pipe-comment__icon"><use xlink:href="#chevron-up"></use></svg>
             </span>
             <div class="pipe-comment__reply fn-none">
-                <section class="pipe-comment__item">
-                    <a rel="nofollow"
-                       class="pipe-comment__avatar"
-                       data-src="{{.Item.Author.AvatarURL}}"
-                       href="{{.Item.Author.URL}}">
-                    </a>
-                    <div class="pipe-comment__body">
-                        <a href="{{.Item.Author.AvatarURL}}" class="ft-gray">{{.Item.Author.Name}}</a>
-                        <span class="ft-nowrap ft-12 ft-gray"> • {{.Item.CreatedAt}}</span>
-                        <div class="content__reset">
-                            {{.Item.Content}}
-                        </div>
-                    </div>
-                </section>
-                <section class="pipe-comment__item">
-                    <a rel="nofollow"
-                       class="pipe-comment__avatar"
-                       data-src="{{.Item.Author.AvatarURL}}"
-                       href="{{.Item.Author.URL}}">
-                    </a>
-                    <div class="pipe-comment__body">
-                        <a href="{{.Item.Author.AvatarURL}}" class="ft-gray">{{.Item.Author.Name}}</a>
-                        <span class="ft-nowrap ft-12 ft-gray"> • {{.Item.CreatedAt}}</span>
-                        <div class="content__reset">
-                            {{.Item.Content}}
-                        </div>
-                    </div>
-                </section>
             </div>
         </div>
+        {{end}}
     </div>
 </section>
 {{end}}
