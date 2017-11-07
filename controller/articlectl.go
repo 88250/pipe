@@ -138,16 +138,15 @@ func showArticleAction(c *gin.Context) {
 
 			continue
 		}
+		commentAuthorURL := util.HacPaiURL + "/member/" + commentAuthor.Name
 		blogURLSetting := service.Setting.GetSetting(model.SettingCategoryBasic, model.SettingNameBasicBlogURL, commentAuthor.BlogID)
-		if nil == blogURLSetting {
-			log.Errorf("not found blog URL setting [blogID=%d]", commentAuthor.BlogID)
-
-			continue
+		if nil != blogURLSetting {
+			commentAuthorURL = blogURLSetting.Value + util.PathAuthors + "/" + commentAuthor.Name
 		}
 
 		author := &ThemeAuthor{
 			Name:      commentAuthor.Name,
-			URL:       blogURLSetting.Value + util.PathAuthors + "/" + commentAuthor.Name,
+			URL:       commentAuthorURL,
 			AvatarURL: commentAuthor.AvatarURLWithSize(64),
 		}
 

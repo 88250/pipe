@@ -196,7 +196,7 @@ func initPlatformAdmin(tx *gorm.DB, admin *model.User, blogID uint) error {
 func initNavigation(tx *gorm.DB, blogID uint) error {
 	navigation := &model.Navigation{
 		Title:      "黑客派",
-		URL:        "https://hacpai.com",
+		URL:        util.HacPaiURL,
 		IconURL:    "",
 		OpenMethod: model.NavigationOpenMethodBlank,
 		Number:     0,

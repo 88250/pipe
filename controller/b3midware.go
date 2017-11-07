@@ -61,14 +61,14 @@ func fillUser(c *gin.Context) {
 		return
 	case "":
 		redirectURL := util.Conf.Server + c.Request.URL.Path
-		c.Redirect(http.StatusSeeOther, "https://hacpai.com/apis/b3-identity?goto="+redirectURL)
+		c.Redirect(http.StatusSeeOther, util.HacPaiURL+"/apis/b3-identity?goto="+redirectURL)
 		c.Abort()
 
 		return
 	default:
 		result := util.NewResult()
 		request := gorequest.New()
-		_, _, errs := request.Get("https://hacpai.com/apis/check-b3-identity?b3id="+b3id).
+		_, _, errs := request.Get(util.HacPaiURL+"/apis/check-b3-identity?b3id="+b3id).
 			Set("user-agent", util.UserAgent).Timeout(30 * time.Second).EndStruct(result)
 		if nil != errs {
 			log.Errorf("check b3 identity failed: %s", errs)
