@@ -210,11 +210,11 @@ func initNavigation(tx *gorm.DB, blogID uint) error {
 }
 
 func helloWorld(tx *gorm.DB, admin *model.User, blogID uint) error {
-	content := `欢迎使用 [Pipe](https://github.com/b3log/pipe) 博客平台。这是一篇自动生成的演示文章，编辑或者删除它，然后开始你的独立博客之旅！
+	content := `![Hello](` + util.RandImage() + `?imageView2/1/w/960/h/520/interlace/1/q/100)
+
+欢迎使用 [Pipe](https://github.com/b3log/pipe) 博客平台。这是一篇自动生成的演示文章，编辑或者删除它，然后开始你的独立博客之旅！
 
 另外，欢迎你加入[黑客与画家的社区](https://hacpai.com)，你可以使用博客账号直接登录！
-
-![Hello](` + util.RandImage() + `?imageView2/1/w/960/h/520/interlace/1/q/100)
 
 ----
 
@@ -252,6 +252,27 @@ Pipe 博客系统是一个开源项目，如果你觉得它很赞，请到[项�
 		BlogID: blogID,
 	}
 	if err := tx.Create(articleTagRel).Error; nil != err {
+		return err
+	}
+
+	created := article.CreatedAt
+	archive := &model.Archive{
+		Year:         created.Format("2006"),
+		Month:        created.Format("01"),
+		ArticleCount: 1,
+		BlogID:       blogID,
+	}
+	if err := tx.Create(archive).Error; nil != err {
+		return err
+	}
+
+	articleArchiveRel := &model.Correlation{
+		ID1:    article.ID,
+		ID2:    tag.ID,
+		Type:   model.CorrelationArticleArchive,
+		BlogID: blogID,
+	}
+	if err := tx.Create(articleArchiveRel).Error; nil != err {
 		return err
 	}
 

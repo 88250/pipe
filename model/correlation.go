@@ -21,6 +21,7 @@ const (
 	CorrelationCategoryTag = iota
 	CorrelationArticleTag
 	CorrelationBlogUser
+	CorrelationArticleArchive
 )
 
 // Correlation model.
