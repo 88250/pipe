@@ -18,7 +18,7 @@
             <a class="ft-danger" :href="download" target="_blank">{{ version }}</a>
           </h2>
           <p><a href='https://hacpai.com/tag/Pipe' target='_blank'>Pipe</a> 是一款开源（<a
-            href='http://www.gnu.org/licenses/gpl-3.0.html' target='_blank'>GPLv3</a>）的博客程序，双击即可运行。</p>
+            href='http://www.gnu.org/licenses/gpl-3.0.html' target='_blank'>GPLv3</a>）的博客平台，双击即可运行。</p>
           <p><a href='http://b3log.org' target='_blank'>B3log</a> 提倡平等、自由、奔放，并正在尝试构建个人博客 +
             <a href='https://hacpai.com' target='_blank'>论坛</a>的互动体验。如果您有兴趣，<a
               href='https://hacpai.com/article/1463025124998' target='_blank'>加入我们</a>吧！</p>
