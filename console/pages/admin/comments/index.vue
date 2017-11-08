@@ -1,6 +1,6 @@
 <template>
   <div class="card">
-    <div class="card__body">
+    <div class="card__body" v-show="!isBatch">
       <v-text-field
         v-if="list.length > 0"
         @keyup.enter="getList()"
@@ -12,8 +12,31 @@
         {{ $t('noData', $store.state.locale) }}
       </div>
     </div>
+    <div class="card__batch-action fn-flex" v-show="isBatch">
+      <label class="checkbox fn-flex-1">
+        <input
+          type="checkbox"
+          :checked="isSelectAll"
+          @click="selectAll"/>
+        <span class="checkbox__icon"></span>
+        {{ $t('hasChoose', $store.state.locale) }}
+        {{selectedIds.length}}
+        {{ $t('cntContent', $store.state.locale) }}
+      </label>
+      <div>
+        <v-btn class="btn--danger" @click="batchAction">
+          {{ $t('delete', $store.state.locale) }}
+        </v-btn>
+        <v-btn class="btn--success btn--space" @click="isBatch = false; selectedIds = []">
+          {{ $t('cancel', $store.state.locale) }}
+        </v-btn>
+      </div>
+    </div>
     <ul class="list" v-if="list.length > 0">
-      <li v-for="item in list" :key="item.id" class="fn-flex">
+      <li
+        :class="{'selected': isSelected(item.id)}"
+        @click="setSelectedId(item.id)"
+        v-for="item in list" :key="item.id" class="fn-flex">
         <a class="avatar avatar--mid avatar--space tooltipped tooltipped--s"
            :aria-label="item.author.name"
            :href="item.author.url"
@@ -30,6 +53,7 @@
             </div>
             <div>
               <v-btn
+                v-show="!isBatch"
                 v-if="$store.state.name === item.author.name || $store.state.role < 3"
                 class="btn btn--danger btn--small"
                 @click="remove(item.id)">{{ $t('delete', $store.state.locale) }}
@@ -62,6 +86,9 @@
   export default {
     data () {
       return {
+        isSelectAll: false,
+        isBatch: false,
+        selectedIds: [],
         currentPageNum: 1,
         pageCount: 1,
         windowSize: 1,
@@ -76,6 +103,59 @@
       }
     },
     methods: {
+      selectAll () {
+        this.$set(this, 'isSelectAll', !this.isSelectAll)
+        if (!this.isSelectAll) {
+          this.$set(this, 'selectedIds', [])
+          return
+        }
+
+        const selectedIds = []
+        this.list.forEach((data) => {
+          selectedIds.push(data.id)
+        })
+        this.$set(this, 'selectedIds', selectedIds)
+      },
+      isSelected (id) {
+        let isSelected = false
+        this.selectedIds.forEach((data) => {
+          if (data === id) {
+            isSelected = true
+          }
+        })
+        return isSelected
+      },
+      async batchAction () {
+        const responseData = await this.axios.post('/console/comments/batch-delete', {
+          ids: this.selectedIds
+        })
+        if (responseData.code === 0) {
+          this.$set(this, 'error', false)
+          this.$set(this, 'errorMsg', '')
+          this.getList()
+        } else {
+          this.$set(this, 'error', true)
+          this.$set(this, 'errorMsg', responseData.msg)
+        }
+      },
+      setSelectedId (id) {
+        let isSelected = false
+        this.selectedIds.forEach((data) => {
+          if (data === id) {
+            isSelected = true
+          }
+        })
+
+        if (isSelected) {
+          this.$set(this, 'selectedIds', this.selectedIds.filter((data) => id !== data))
+          if (this.selectedIds.length < 1) {
+            this.$set(this, 'isBatch', false)
+          }
+        } else {
+          this.$set(this, 'isBatch', true)
+          this.selectedIds.push(id)
+        }
+      },
       async getList (currentPage = 1) {
         const responseData = await this.axios.get(`/console/comments?p=${currentPage}&key=${this.keyword}`)
         if (responseData) {

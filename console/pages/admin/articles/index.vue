@@ -145,7 +145,7 @@
         return isSelected
       },
       async batchAction () {
-        const responseData = await this.axios.post('/articles/batch-delete', {
+        const responseData = await this.axios.post('/console/articles/batch-delete', {
           ids: this.selectedIds
         })
         if (responseData.code === 0) {
