@@ -24,7 +24,10 @@
         {{ $t('cntContent', $store.state.locale) }}
       </label>
       <div>
-        <v-btn class="btn--danger" @click="batchAction">
+        <v-btn
+          :class="{'btn--disabled': selectedIds.length === 0}"
+          class="btn--danger"
+          @click="batchAction">
           {{ $t('delete', $store.state.locale) }}
         </v-btn>
         <v-btn class="btn--success btn--space" @click="isBatch = false; selectedIds = []">
@@ -126,6 +129,9 @@
         return isSelected
       },
       async batchAction () {
+        if (this.selectedIds.length === 0) {
+          return
+        }
         const responseData = await this.axios.post('/console/comments/batch-delete', {
           ids: this.selectedIds
         })
