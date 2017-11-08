@@ -40,14 +40,14 @@
           :rules="requiredRules"
         ></v-text-field>
         <v-text-field
-          :label="$t('articleListWindowSize', $store.state.locale)"
-          v-model="preferenceArticleListWindowSize"
+          :label="$t('articleListPageSize', $store.state.locale)"
+          v-model="preferenceArticleListPageSize"
           required
           :rules="requiredRules"
         ></v-text-field>
         <v-text-field
-          :label="$t('articleListPageSize', $store.state.locale)"
-          v-model="preferenceArticleListPageSize"
+          :label="$t('articleListWindowSize', $store.state.locale)"
+          v-model="preferenceArticleListWindowSize"
           required
           :rules="requiredRules"
         ></v-text-field>
