@@ -149,5 +149,7 @@
   "categories2": "个分类",
   "noData": "净土一片",
   "prohibit": "禁止",
-  "unProhibit": "解除禁止"
+  "unProhibit": "解除禁止",
+  "hasChoose": "已选择",
+  "cntContent": "项内容"
 }

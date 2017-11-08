@@ -1,6 +1,6 @@
 <template>
   <div class="card">
-    <div class="card__body fn-flex">
+    <div class="card__body fn-flex" v-show="!isBatch">
       <v-text-field v-if="list.length > 0"
         @keyup.enter="getList()"
         class="fn-flex-1"
@@ -11,13 +11,25 @@
         }}
       </nuxt-link>
     </div>
-    <div class="card__body" v-show="isBatch">
-      <v-btn class="btn--danger" @click="batchAction('delete')">
-        {{ $t('delete', $store.state.locale) }}
-      </v-btn>
-      <v-btn class="btn--success btn--space" @click="batchAction('top')">
-        {{ $t('top', $store.state.locale) }}
-      </v-btn>
+    <div class="card__batch-action fn-flex" v-show="isBatch">
+      <label class="checkbox fn-flex-1">
+        <input
+          type="checkbox"
+          :checked="isSelectAll"
+          @click="selectAll"/>
+        <span class="checkbox__icon"></span>
+        {{ $t('hasChoose', $store.state.locale) }}
+        {{selectedIds.length}}
+        {{ $t('cntContent', $store.state.locale) }}
+      </label>
+      <div>
+        <v-btn class="btn--danger" @click="batchAction">
+          {{ $t('delete', $store.state.locale) }}
+        </v-btn>
+        <v-btn class="btn--success btn--space" @click="isBatch = false; selectedIds = []">
+          {{ $t('cancel', $store.state.locale) }}
+        </v-btn>
+      </div>
     </div>
     <ul class="list" v-if="list.length > 0">
       <li
@@ -37,6 +49,7 @@
               <a class="list__title" :href="item.url">{{ item.title }}</a>
             </span>
             <v-menu
+              v-show="!isBatch"
               v-if="$store.state.name === item.author.name || $store.state.role < 3"
               :nudge-bottom="28"
               :nudge-width="60"
@@ -92,6 +105,7 @@
   export default {
     data () {
       return {
+        isSelectAll: false,
         isBatch: false,
         selectedIds: [],
         currentPageNum: 1,
@@ -108,6 +122,19 @@
       }
     },
     methods: {
+      selectAll () {
+        this.$set(this, 'isSelectAll', !this.isSelectAll)
+        if (!this.isSelectAll) {
+          this.$set(this, 'selectedIds', [])
+          return
+        }
+
+        const selectedIds = []
+        this.list.forEach((data) => {
+          selectedIds.push(data.id)
+        })
+        this.$set(this, 'selectedIds', selectedIds)
+      },
       isSelected (id) {
         let isSelected = false
         this.selectedIds.forEach((data) => {
@@ -117,8 +144,18 @@
         })
         return isSelected
       },
-      batchAction (type) {
-        console.log(type, this.selectedIds)
+      async batchAction () {
+        const responseData = await this.axios.post('/articles/batch-delete', {
+          ids: this.selectedIds
+        })
+        if (responseData.code === 0) {
+          this.$set(this, 'error', false)
+          this.$set(this, 'errorMsg', '')
+          this.getList()
+        } else {
+          this.$set(this, 'error', true)
+          this.$set(this, 'errorMsg', responseData.msg)
+        }
       },
       setSelectedId (id) {
         let isSelected = false
