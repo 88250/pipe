@@ -58,7 +58,7 @@ func NewPagination(currentPageNum, pageSize, pageCount, windowSize, recordCount 
 	pageNums := paginate(currentPageNum, pageSize, pageCount, windowSize)
 	firstPageNum := 0
 	lastPageNum := 0
-	if 1 < len(pageNums) {
+	if 0 < len(pageNums) {
 		firstPageNum = pageNums[0]
 		lastPageNum = pageNums[len(pageNums)-1]
 	}
