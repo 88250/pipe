@@ -133,6 +133,17 @@ func (srv *commentService) AddComment(comment *model.Comment) error {
 
 		return err
 	}
+	article := &model.Article{}
+	if err := tx.First(article, comment.ArticleID).Error; nil != err {
+		tx.Rollback()
+
+		return err
+	}
+	if err := tx.Model(article).Update("comment_count", article.CommentCount+1).Error; nil != err {
+		tx.Rollback()
+
+		return err
+	}
 	Statistic.IncCommentCountWithoutTx(tx, comment.BlogID)
 	tx.Commit()
 
@@ -147,9 +158,22 @@ func (srv *commentService) RemoveComment(id uint) error {
 
 	tx := db.Begin()
 	if err := tx.First(comment, id).Error; nil != err {
+		tx.Rollback()
+
 		return err
 	}
 	if err := tx.Delete(comment).Error; nil != err {
+		tx.Rollback()
+
+		return err
+	}
+	article := &model.Article{}
+	if err := tx.First(article, comment.ArticleID).Error; nil != err {
+		tx.Rollback()
+
+		return err
+	}
+	if err := tx.Model(article).Update("comment_count", article.CommentCount-1).Error; nil != err {
 		tx.Rollback()
 
 		return err
