@@ -152,6 +152,26 @@ func RemoveArticleAction(c *gin.Context) {
 	}
 }
 
+func RemoveArticlesAction(c *gin.Context) {
+	result := util.NewResult()
+	defer c.JSON(http.StatusOK, result)
+
+	arg := map[string]interface{}{}
+	if err := c.BindJSON(&arg); nil != err {
+		result.Code = -1
+		result.Msg = "parses add article request failed"
+
+		return
+	}
+
+	ids := arg["ids"].([]interface{})
+	for _, id := range ids {
+		if err := service.Article.RemoveArticle(uint(id.(float64))); nil != err {
+			log.Errorf("remove article failed: " + err.Error())
+		}
+	}
+}
+
 func UpdateArticleAction(c *gin.Context) {
 	result := util.NewResult()
 	defer c.JSON(http.StatusOK, result)
