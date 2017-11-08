@@ -71,7 +71,6 @@ func NewPagination(currentPageNum, pageSize, pageCount, windowSize, recordCount 
 		PageCount:       pageCount,
 		WindowSize:      windowSize,
 		RecordCount:     recordCount,
-		PageURL:         "http://localhost:5897/blogs/pipe",
 		PageNums:        pageNums,
 		FirstPageNum:    firstPageNum,
 		LastPageNum:     lastPageNum,
