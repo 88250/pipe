@@ -2,21 +2,18 @@
 {{if $.Pagination}}
 <nav class="pagination">
     {{if gt $.Pagination.PreviousPageNum 0}}
-    <a class="pagination__near" href="{{$.Pagination.PreviousPageNum}}">
+    <a class="pagination__near" href="?p={{$.Pagination.PreviousPageNum}}">
         <svg><use xlink:href="#chevron-left"></use></svg>
     </a>
     {{end}}
-    {{$.Pagination.PageNums}}
-    {{if gt (index $.Pagination.PageNums 0) 1}}
-    <span class="pagination__omit">...</span>
+    {{if gt $.Pagination.FirstPageNum 1}}
+    <a class="pagination__item" href="?p=1">1</a><span class="pagination__omit">...</span>
     {{end}}
     {{range $.Pagination.PageNums}}
-    {{if eq . $.Pagination.CurrentPageNum}}
-    <span class="pagination__item pagination__item--active">{{$.Pagination.CurrentPageNum}}</span>
+    <a href="?p={{.}}" class="pagination__item {{if eq . $.Pagination.CurrentPageNum}}pagination__item--active{{end}}">{{.}}</a>
     {{end}}
-    <a class="pagination__item" href="?p={{.}}">{{.}}</a>
-    {{end}}
-    {{if lt (len $.Pagination.PageNums) $.Pagination.NextPageNum}}
+    {{if lt $.Pagination.LastPageNum $.Pagination.PageCount}}
+    <span class="pagination__omit">...</span><a class="pagination__item" href="?p={{$.Pagination.PageCount}}">{{$.Pagination.PageCount}}</a>
     <a class="pagination__near" href="{{$.Pagination.NextPageNum}}">
         <svg><use xlink:href="#chevron-right"></use></svg>
     </a>

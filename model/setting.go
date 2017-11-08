@@ -117,7 +117,7 @@ const (
 	SettingPreferenceArticleListStyleValueTitleContent  = "titleContent"
 
 	SettingPreferenceArticleListPageSizeDefault        = 20
-	SettingPreferenceArticleListWindowSizeDefault      = 20
+	SettingPreferenceArticleListWindowSizeDefault      = 7
 	SettingPreferenceArticleListStyleDefault           = SettingPreferenceArticleListStyleValueTitleAbstract
 	SettingPreferenceMostCommentArticleListSizeDefault = 7
 	SettingPreferenceMostUseTagListSizeDefault         = 15
