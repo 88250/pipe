@@ -132,6 +132,8 @@
         if (responseData.code === 0) {
           this.$set(this, 'error', false)
           this.$set(this, 'errorMsg', '')
+          this.$set(this, 'isSelectAll', false)
+          this.$set(this, 'selectedIds', [])
           this.getList()
         } else {
           this.$set(this, 'error', true)
