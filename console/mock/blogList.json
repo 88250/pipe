@@ -2,26 +2,22 @@
   "code": 0,
   "msg": "",
   "data": {
-    "navigation": [
+    "blogs": [
       {
         "id": 3,
         "blogTitle": "blogTitle",
-        "blogSubtitle": "blogSubtitle",
         "blogURL": "http://localhost:5897/blogs/pipe",
-        "blogAdmin": {
-          "name": "Vanessa",
-          "avatarURL": "https://img.hacpai.com/avatar/1476336494155_1476358182494.jpeg?imageView2/1/w/80/h/80/interlace/0/q/100"
-        }
+        "blogLogo": "https://img.hacpai.com/avatar/1476336494155_1476358182494.jpeg?imageView2/1/w/80/h/80/interlace/0/q/100",
+        "blogAdmin": "Vanessa",
+        "status": 0
       },
       {
         "id": 3,
         "blogTitle": "blogTitle",
-        "blogSubtitle": "blogSubtitle",
         "blogURL": "http://localhost:5897/blogs/pipe",
-        "blogAdmin": {
-          "name": "Vanessa",
-          "avatarURL": "https://img.hacpai.com/avatar/1476336494155_1476358182494.jpeg?imageView2/1/w/80/h/80/interlace/0/q/100"
-        }
+        "blogLogo": "https://img.hacpai.com/avatar/1476336494155_1476358182494.jpeg?imageView2/1/w/80/h/80/interlace/0/q/100",
+        "blogAdmin": "Vanessa",
+        "status": 1
       }
     ],
     "pagination": {
