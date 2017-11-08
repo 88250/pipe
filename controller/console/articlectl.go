@@ -159,7 +159,7 @@ func RemoveArticlesAction(c *gin.Context) {
 	arg := map[string]interface{}{}
 	if err := c.BindJSON(&arg); nil != err {
 		result.Code = -1
-		result.Msg = "parses add article request failed"
+		result.Msg = "parses batch remove articles request failed"
 
 		return
 	}

@@ -117,3 +117,23 @@ func RemoveCommentAction(c *gin.Context) {
 		result.Msg = err.Error()
 	}
 }
+
+func RemoveCommentsAction(c *gin.Context) {
+	result := util.NewResult()
+	defer c.JSON(http.StatusOK, result)
+
+	arg := map[string]interface{}{}
+	if err := c.BindJSON(&arg); nil != err {
+		result.Code = -1
+		result.Msg = "parses batch remove comments request failed"
+
+		return
+	}
+
+	ids := arg["ids"].([]interface{})
+	for _, id := range ids {
+		if err := service.Comment.RemoveComment(uint(id.(float64))); nil != err {
+			log.Errorf("remove comment failed: " + err.Error())
+		}
+	}
+}
