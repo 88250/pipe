@@ -72,6 +72,10 @@ func MapRoutes() *gin.Engine {
 	consoleGroup := api.Group("/console")
 	consoleGroup.Use(console.LoginCheck)
 
+	if "dev" == util.Conf.RuntimeMode {
+		consoleGroup.GET("/dev/articles/gen", console.GenArticlesAction)
+	}
+
 	consoleGroup.GET("/themes", console.GetThemesAction)
 	consoleGroup.PUT("/themes/:id", console.UpdateThemeAction)
 	consoleGroup.GET("/tags", console.GetTagsAction)

@@ -31,6 +31,8 @@ type Pagination struct {
 	PageNums        []int  `json:"pageNums"`
 	NextPageNum     int    `json:"nextPageNum"`
 	PreviousPageNum int    `json:"previousPageNum"`
+	FirstPageNum    int    `josn:"firstPageNum"`
+	LastPageNum     int    `json:"lastPageNum"`
 	PageURL         string `json:"pageURL"`
 }
 
@@ -53,6 +55,14 @@ func NewPagination(currentPageNum, pageSize, pageCount, windowSize, recordCount 
 		nextPageNum = 0
 	}
 
+	pageNums := paginate(currentPageNum, pageSize, pageCount, windowSize)
+	firstPageNum := 0
+	lastPageNum := 0
+	if 1 < len(pageNums) {
+		firstPageNum = pageNums[0]
+		lastPageNum = pageNums[len(pageNums)-1]
+	}
+
 	return &Pagination{
 		CurrentPageNum:  currentPageNum,
 		NextPageNum:     nextPageNum,
@@ -62,7 +72,9 @@ func NewPagination(currentPageNum, pageSize, pageCount, windowSize, recordCount 
 		WindowSize:      windowSize,
 		RecordCount:     recordCount,
 		PageURL:         "http://localhost:5897/blogs/pipe",
-		PageNums:        paginate(currentPageNum, pageSize, pageCount, windowSize),
+		PageNums:        pageNums,
+		FirstPageNum:    firstPageNum,
+		LastPageNum:     lastPageNum,
 	}
 }
 
