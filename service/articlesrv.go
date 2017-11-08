@@ -105,6 +105,11 @@ func (srv *articleService) AddArticle(article *model.Article) error {
 
 		return err
 	}
+	if err := Archive.ArchiveArticleWithoutTx(tx, article); nil != err {
+		tx.Rollback()
+
+		return err
+	}
 	author := &model.User{}
 	if err := tx.First(author, article.AuthorID).Error; nil != err {
 		return err
@@ -275,6 +280,11 @@ func (srv *articleService) RemoveArticle(id uint) error {
 
 		return err
 	}
+	if err := Archive.UnarchiveArticleWithoutTx(tx, article); nil != err {
+		tx.Rollback()
+
+		return err
+	}
 	if err := Statistic.DecArticleCountWithoutTx(tx, author.BlogID); nil != err {
 		tx.Rollback()
 
@@ -401,7 +411,8 @@ func removeTagArticleRels(tx *gorm.DB, article *model.Article) error {
 		}
 	}
 
-	if err := tx.Where("id1 = ? AND type = ?", article.ID, model.CorrelationArticleTag).Delete(&model.Correlation{}).Error; nil != err {
+	if err := tx.Where("id1 = ? AND type = ? AND blog_id = ?", article.ID, model.CorrelationArticleTag, article.BlogID).
+		Delete(&model.Correlation{}).Error; nil != err {
 		return err
 	}
 

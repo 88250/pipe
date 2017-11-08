@@ -251,31 +251,14 @@ Pipe 博客平台是一个开源项目，如果你觉得它很赞，请到[项�
 		return err
 	}
 
-	created := article.CreatedAt
-	archive := &model.Archive{
-		Year:         created.Format("2006"),
-		Month:        created.Format("01"),
-		ArticleCount: 1,
-		BlogID:       blogID,
-	}
-	if err := tx.Create(archive).Error; nil != err {
-		return err
-	}
-
-	articleArchiveRel := &model.Correlation{
-		ID1:    article.ID,
-		ID2:    tag.ID,
-		Type:   model.CorrelationArticleArchive,
-		BlogID: blogID,
-	}
-	if err := tx.Create(articleArchiveRel).Error; nil != err {
+	if err := Archive.ArchiveArticleWithoutTx(tx, article); nil != err {
 		return err
 	}
 
 	comment := &model.Comment{
 		ArticleID: article.ID,
 		AuthorID:  admin.ID,
-		Content:   "相信积累后必然会有收获，加油 :smile:",
+		Content:   "相信积累后必然会有收获 :smile:",
 		BlogID:    blogID,
 	}
 	if err := tx.Create(comment).Error; nil != err {
