@@ -11,8 +11,21 @@
         }}
       </nuxt-link>
     </div>
+    <div class="card__body" v-show="isBatch">
+      <v-btn class="btn--danger" @click="batchAction('delete')">
+        {{ $t('delete', $store.state.locale) }}
+      </v-btn>
+      <v-btn class="btn--success btn--space" @click="batchAction('top')">
+        {{ $t('top', $store.state.locale) }}
+      </v-btn>
+    </div>
     <ul class="list" v-if="list.length > 0">
-      <li v-for="item in list" :key="item.id" class="fn-flex">
+      <li
+        v-for="item in list"
+        :key="item.id"
+        class="fn-flex"
+        :class="{'selected': isSelected(item.id)}"
+        @click="setSelectedId(item.id)">
         <a class="avatar avatar--mid avatar--space tooltipped tooltipped--s"
            v-if="userCount > 1"
            :aria-label="item.author.name"
@@ -20,7 +33,9 @@
            :style="`background-image: url(${item.author.avatarURL})`"></a>
         <div class="fn-flex-1">
           <div class="fn-flex">
-            <a class="fn-flex-1 list__title" :href="item.url">{{ item.title }}</a>
+            <span class="fn-flex-1">
+              <a class="list__title" :href="item.url">{{ item.title }}</a>
+            </span>
             <v-menu
               v-if="$store.state.name === item.author.name || $store.state.role < 3"
               :nudge-bottom="28"
@@ -77,6 +92,8 @@
   export default {
     data () {
       return {
+        isBatch: false,
+        selectedIds: [],
         currentPageNum: 1,
         pageCount: 1,
         windowSize: 1,
@@ -91,6 +108,36 @@
       }
     },
     methods: {
+      isSelected (id) {
+        let isSelected = false
+        this.selectedIds.forEach((data) => {
+          if (data === id) {
+            isSelected = true
+          }
+        })
+        return isSelected
+      },
+      batchAction (type) {
+        console.log(type, this.selectedIds)
+      },
+      setSelectedId (id) {
+        let isSelected = false
+        this.selectedIds.forEach((data) => {
+          if (data === id) {
+            isSelected = true
+          }
+        })
+
+        if (isSelected) {
+          this.$set(this, 'selectedIds', this.selectedIds.filter((data) => id !== data))
+          if (this.selectedIds.length < 1) {
+            this.$set(this, 'isBatch', false)
+          }
+        } else {
+          this.$set(this, 'isBatch', true)
+          this.selectedIds.push(id)
+        }
+      },
       async getList (currentPage = 1) {
         const responseData = await this.axios.get(`/console/articles?p=${currentPage}&key=${this.keyword}`)
         if (responseData) {

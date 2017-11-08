@@ -101,7 +101,7 @@
         url: '',
         password: '',
         tags: [],
-        commentable: false,
+        commentable: true,
         useThumbs: false,
         thumbs: ['', '', '', '', '', '']
       }

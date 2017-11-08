@@ -11,6 +11,10 @@
       background-color: $list-hover;
     }
 
+    &.selected {
+      background-color: $red;
+    }
+
     .list__title {
       line-height: 24px;
       font-size: 16px;

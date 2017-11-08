@@ -50,7 +50,7 @@
                 <img src="~/static/images/logo.jpg"/>
             </a>
             <div>
-              <nuxt-link to="/admin">{{ $t('openPipeTravel', $store.state.locale) }}</nuxt-link>
+              <a href="/admin">{{ $t('openPipeTravel', $store.state.locale) }}</a>
             </div>
           </div>
         </v-stepper-content>
