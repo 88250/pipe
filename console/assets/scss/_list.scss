@@ -32,6 +32,7 @@
 
 .card .pagination--wrapper {
   border-top: 1px solid $border-color;
-  padding: 15px 10px 15px 15px;
+  padding: 20px 10px 20px 10px;
   margin-top: -10px;
+  overflow: auto;
 }

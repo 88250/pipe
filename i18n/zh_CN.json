@@ -89,6 +89,8 @@
   "superAdmin": "超级管理员",
   "blogAdmin": "博客管理员",
   "commonUser": "普通用户",
+  "prohibitUser": "被禁用户",
+  "blogUser": "博客用户",
   "account": "账号",
   "avatarURL": "头像地址",
   "article": "文章",
@@ -145,5 +147,7 @@
   "teamMember2": "个团队成员",
   "tags2": "个标签",
   "categories2": "个分类",
-  "noData": "净土一片"
+  "noData": "净土一片",
+  "prohibit": "禁止",
+  "unProhibit": "解除禁止"
 }

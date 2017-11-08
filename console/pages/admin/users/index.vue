@@ -1,18 +1,16 @@
 <template>
   <div class="card">
-    <user v-if="showForm" :show.sync="showForm" @addSuccess="addSuccess" :id="editId"></user>
+    <user v-if="showForm" :show.sync="showForm" @addSuccess="addSuccess"></user>
 
-    <div v-show="!showForm" class="card__body" >
+    <div v-show="!showForm" class="card__body fn-flex">
       <v-text-field
         v-if="list.length > 0"
-        @keyup.enter="getList(1)"
+        @keyup.enter="getList()"
         class="fn-flex-1"
         :label="$t('enterSearch', $store.state.locale)"
         v-model="keyword">
       </v-text-field>
-      <template v-else>
-        {{ $t('noData', $store.state.locale) }}
-      </template>
+      <v-btn class="btn--success" :class="{'btn--new': list.length > 0}" @click="edit">{{ $t('new', $store.state.locale) }}</v-btn>
     </div>
 
     <ul class="list" v-if="list.length > 0">
@@ -20,39 +18,23 @@
           v-if="($store.state.role === 3 && item.name === $store.state.name) || $store.state.role < 3">
         <a :href="item.url"
            :aria-label="item.name"
-           class="avatar avatar--mid avatar--space tooltipped tooltipped--s"
+           class="avatar avatar--mid avatar--space tooltipped tooltipped--n"
            :style="`background-image: url(${item.avatarURL})`"></a>
         <div class="fn-flex-1">
           <div class="fn-flex">
             <a class="list__title fn-flex-1" :href="item.url">
               {{ item.nickname || item.name }}
             </a>
-            <v-menu
-              v-if="false"
-              :nudge-bottom="28"
-              :nudge-width="60"
-              :nudge-left="60"
-              :open-on-hover="true">
-              <v-toolbar-title slot="activator">
-                <v-btn class="btn--small btn--info" @click="edit(item.id)">
-                  {{ $t('edit', $store.state.locale) }}
-                  <v-icon>arrow_drop_down</v-icon>
-                </v-btn>
-              </v-toolbar-title>
-              <v-list>
-                <v-list-tile @click="edit(item.id)">
-                  {{ $t('edit', $store.state.locale) }}
-                </v-list-tile>
-                <v-list-tile @click="remove(item.id)">
-                  {{ $t('delete', $store.state.locale) }}
-                </v-list-tile>
-              </v-list>
-            </v-menu>
+            <v-btn class="btn--small btn--info" @click="prohibit(item.id, 'unprohibit')" v-if="item.role === 4">
+              {{ $t('unProhibit', $store.state.locale) }}
+            </v-btn>
+            <v-btn class="btn--small btn--danger" @click="prohibit(item.id, 'prohibit')" v-else>
+              {{ $t('prohibit', $store.state.locale) }}
+            </v-btn>
           </div>
           <div class="list__meta">
-            <span class="fn-nowrap">{{ item.email }}</span> •
             <span class="fn-nowrap">{{ item.publishedArticleCount }} {{ $t('article', $store.state.locale) }}</span> •
-            <span class="fn-nowrap">{{ getRoleName(item.role) }}</span>
+            <span class="fn-nowrap" :class="{'ft-danger': item.role === 4}">{{ getRoleName(item.role) }}</span>
           </div>
         </div>
       </li>
@@ -81,7 +63,6 @@
     },
     data () {
       return {
-        editId: '',
         showForm: false,
         currentPageNum: 1,
         pageCount: 1,
@@ -97,20 +78,26 @@
     },
     methods: {
       getRoleName (role) {
-        let roleName = this.$t('commonUser', this.$store.state.locale)
+        let roleName = this.$t('blogUser', this.$store.state.locale)
         switch (role) {
-          case 0:
+          case 1:
             roleName = this.$t('superAdmin', this.$store.state.locale)
             break
-          case 1:
+          case 2:
             roleName = this.$t('blogAdmin', this.$store.state.locale)
+            break
+          case 3:
+            roleName = this.$t('blogUser', this.$store.state.locale)
+            break
+          case 4:
+            roleName = this.$t('prohibitUser', this.$store.state.locale)
             break
           default:
             break
         }
         return roleName
       },
-      async getList (currentPage) {
+      async getList (currentPage = 1) {
         const responseData = await this.axios.get(`/console/users?p=${currentPage}&key=${this.keyword}`)
         if (responseData) {
           this.$set(this, 'list', responseData.users)
@@ -119,29 +106,27 @@
           this.$set(this, 'windowSize', document.documentElement.clientWidth < 721 ? 5 : responseData.pagination.windowSize)
         }
       },
-      async remove (id) {
-        const responseData = await this.axios.delete(`/console/users/${id}`)
-        if (responseData === null) {
-          this.$store.commit('setSnackBar', {
-            snackBar: true,
-            snackMsg: this.$t('deleteSuccess', this.$store.state.locale),
-            snackModify: 'success'
-          })
-          this.getList(1)
-          this.$set(this, 'showForm', false)
+      async prohibit (id, type) {
+        const responseData = await this.axios.put(`/console/users/${id}/${type}`)
+        if (responseData.code === 0) {
+          this.$set(this, 'error', false)
+          this.$set(this, 'errorMsg', '')
+          this.getList()
+        } else {
+          this.$set(this, 'error', true)
+          this.$set(this, 'errorMsg', responseData.msg)
         }
       },
       addSuccess () {
-        this.getList(1)
+        this.getList()
         this.$set(this, 'showForm', false)
       },
-      edit (id) {
+      edit () {
         this.$set(this, 'showForm', true)
-        this.$set(this, 'editId', id)
       }
     },
     mounted () {
-      this.getList(1)
+      this.getList()
     }
   }
 </script>

@@ -8,31 +8,6 @@
         :rules="requiredRules"
         required
       ></v-text-field>
-      <v-text-field
-        :label="$t('nickname', $store.state.locale)"
-        v-model="nickname"
-        :rules="requiredRules"
-        :counter="32"
-        required
-      ></v-text-field>
-      <v-text-field
-        :label="$t('hacpaiEmail', $store.state.locale)"
-        v-model="email"
-        :rules="requiredRules"
-        :counter="32"
-        required
-      ></v-text-field>
-      <v-text-field
-        :label="$t('password', $store.state.locale)"
-        v-model="password"
-        :counter="32"
-        type="password"
-        required
-      ></v-text-field>
-      <v-text-field
-        :label="$t('avatarURL', $store.state.locale)"
-        v-model="avatarURL"
-      ></v-text-field>
       <div class="alert alert--danger" v-show="error">
         <v-icon>danger</v-icon>
         <span>{{ errorMsg }}</span>
@@ -48,32 +23,18 @@
 </template>
 
 <script>
-  import { required } from '~/plugins/validate'
+  import {required, maxSize} from '~/plugins/validate'
 
   export default {
-    props: {
-      id: {
-        type: Number,
-        required: true
-      }
-    },
     data () {
       return {
         errorMsg: '',
         error: false,
         name: '',
-        nickname: '',
-        avatarURL: '',
-        password: '',
-        email: '',
         requiredRules: [
-          (v) => required.call(this, v)
+          (v) => required.call(this, v),
+          (v) => maxSize.call(this, v, 32)
         ]
-      }
-    },
-    watch: {
-      id: function () {
-        this.init()
       }
     },
     methods: {
@@ -81,19 +42,9 @@
         if (!this.$refs.form.validate()) {
           return
         }
-        let responseData = {}
-        const requestData = {
-          name: this.name,
-          nickname: this.nickname,
-          email: this.email,
-          password: this.password,
-          avatarURL: this.avatarURL
-        }
-        if (this.id === 0) {
-          responseData = await this.axios.post('/console/users', requestData)
-        } else {
-          responseData = await this.axios.put(`/console/users/${this.id}`, requestData)
-        }
+        const responseData = await this.axios.post('/console/users', {
+          name: this.name
+        })
 
         if (responseData.code === 0) {
           this.$set(this, 'error', false)
@@ -103,23 +54,7 @@
           this.$set(this, 'error', true)
           this.$set(this, 'errorMsg', responseData.msg)
         }
-      },
-      async init () {
-        if (this.id === 0) {
-          return
-        }
-        const responseData = await this.axios.get(`/console/users/${this.id}`)
-        if (responseData) {
-          this.$set(this, 'name', responseData.name)
-          this.$set(this, 'nickname', responseData.nickname)
-          this.$set(this, 'email', responseData.email)
-          this.$set(this, 'avatarURL', responseData.avatarURL)
-          this.$set(this, 'password', responseData.password)
-        }
       }
-    },
-    mounted () {
-      this.init()
     }
   }
 </script>

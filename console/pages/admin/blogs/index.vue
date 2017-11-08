@@ -81,7 +81,7 @@
       }
     },
     methods: {
-      async getList (currentPage) {
+      async getList (currentPage = 1) {
         const responseData = await this.axios.get(`/console/blogs?p=${currentPage}`)
         if (responseData) {
           this.$set(this, 'list', responseData.navigation)
@@ -98,12 +98,12 @@
             snackMsg: this.$t('deleteSuccess', this.$store.state.locale),
             snackModify: 'success'
           })
-          this.getList(1)
+          this.getList()
           this.$set(this, 'showForm', false)
         }
       },
       addSuccess () {
-        this.getList(1)
+        this.getList()
         this.$set(this, 'showForm', false)
       },
       edit (id) {
@@ -112,7 +112,7 @@
       }
     },
     mounted () {
-      this.getList(1)
+      this.getList()
     }
   }
 </script>

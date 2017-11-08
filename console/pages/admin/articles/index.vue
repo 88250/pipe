@@ -2,7 +2,7 @@
   <div class="card">
     <div class="card__body fn-flex">
       <v-text-field v-if="list.length > 0"
-        @keyup.enter="getList(1)"
+        @keyup.enter="getList()"
         class="fn-flex-1"
         :label="$t('enterSearch', $store.state.locale)"
         v-model="keyword">
@@ -91,7 +91,7 @@
       }
     },
     methods: {
-      async getList (currentPage) {
+      async getList (currentPage = 1) {
         const responseData = await this.axios.get(`/console/articles?p=${currentPage}&key=${this.keyword}`)
         if (responseData) {
           this.$set(this, 'userCount', responseData.userCount)
@@ -109,7 +109,7 @@
             snackMsg: this.$t('deleteSuccess', this.$store.state.locale),
             snackModify: 'success'
           })
-          this.getList(1)
+          this.getList()
         }
       },
       async top (id) {
@@ -120,7 +120,7 @@
             snackMsg: this.$t('topSuccess', this.$store.state.locale),
             snackModify: 'success'
           })
-          this.getList(1)
+          this.getList()
         } else {
           this.$store.commit('setSnackBar', {
             snackBar: true,
@@ -133,7 +133,7 @@
       }
     },
     mounted () {
-      this.getList(1)
+      this.getList()
     }
   }
 </script>

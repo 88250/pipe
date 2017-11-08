@@ -55,7 +55,7 @@
       }
     },
     methods: {
-      async getList (currentPage) {
+      async getList (currentPage = 1) {
         const responseData = await this.axios.get(`/search?key=${this.$route.query.k}&p=${currentPage}`)
         if (responseData) {
           this.$set(this, 'list', responseData.articles)
@@ -72,7 +72,7 @@
       }
     },
     mounted () {
-      this.getList(1)
+      this.getList()
       setTimeout(() => {
         this.$set(this, 'keyword', this.$route.query.k)
       })
