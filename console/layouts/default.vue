@@ -1,5 +1,5 @@
 <template>
-  <div data-app="true" :class="bodySide" id="pipe">
+  <div data-app="true" :class="$store.state.bodySide" id="pipe">
     <pipe-header  from="default"/>
     <side v-if="$route.path.indexOf('/admin') > -1"/>
     <div class="main">
@@ -31,7 +31,6 @@
   export default {
     data () {
       return {
-        bodySide: 'body--side',
         snack: false
       }
     },
@@ -55,7 +54,9 @@
     },
     mounted () {
       if (document.documentElement.clientWidth < 721 || this.$route.path.indexOf('/admin') === -1) {
-        this.$set(this, 'bodySide', '')
+        this.$store.commit('setBodySide', '')
+      } else {
+        this.$store.commit('setBodySide', 'body--side')
       }
     }
   }

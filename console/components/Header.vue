@@ -49,12 +49,12 @@
               {{ item.title }}
             </v-list-tile>
             <v-list-tile
-              @click="$router.push('/')"
+              @click="$router.push('/');$store.commit('setBodySide', '')"
               v-if="$route.path.indexOf('/admin') > -1">
               {{ $t('index', $store.state.locale) }}
             </v-list-tile>
             <v-list-tile
-              @click="$router.push('/admin')"
+              @click="$router.push('/admin');$store.commit('setBodySide', 'body--side')"
               v-if="$route.path.indexOf('/admin') === -1 && $store.state.role !== 0 && $store.state.role !== 4">
                 {{ $t('manage', $store.state.locale) }}
             </v-list-tile>

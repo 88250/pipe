@@ -18,12 +18,16 @@ export const state = () => ({
   snackBar: false,
   snackModify: 'error',
   menu: [],
-  tagsItems: []
+  tagsItems: [],
+  bodySide: 'body--side'
 })
 
 export const mutations = {
   setMenu (state, data) {
     state.menu = data
+  },
+  setBodySide (state, data) {
+    state.bodySide = data
   },
   setStatus (state, data) {
     state.locale = data.locale
