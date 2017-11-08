@@ -14,7 +14,7 @@
     {{end}}
     {{if lt $.Pagination.LastPageNum $.Pagination.PageCount}}
     <span class="pagination__omit">...</span><a class="pagination__item" href="?p={{$.Pagination.PageCount}}">{{$.Pagination.PageCount}}</a>
-    <a class="pagination__near" href="{{$.Pagination.NextPageNum}}">
+    <a class="pagination__near" href="?p={{$.Pagination.NextPageNum}}">
         <svg><use xlink:href="#chevron-right"></use></svg>
     </a>
     {{end}}
