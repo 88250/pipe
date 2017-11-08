@@ -45,6 +45,25 @@ const (
 	themeCommentListWindowSize = 20
 )
 
+func (srv *commentService) GetComment(commentID uint) *model.Comment {
+	ret := &model.Comment{}
+	if err := db.First(ret, commentID).Error; nil != err {
+		return nil
+	}
+
+	return ret
+}
+
+func (srv *commentService) GetCommentPage(articleID, commentID uint, blogID uint) int {
+	count := 0
+	if err := db.Model(&model.Comment{}).Where("article_id = ? AND id < ? AND blog_id = ?", articleID, commentID, blogID).
+		Count(&count).Error; nil != err {
+		return 1
+	}
+
+	return (count / adminConsoleCommentListPageSize) + 1
+}
+
 func (srv *commentService) GetRepliesCount(parentCommentID uint, blogID uint) int {
 	ret := 0
 	if err := db.Model(&model.Comment{}).Where(&model.Comment{ParentCommentID: parentCommentID, BlogID: blogID}).Count(&ret).Error; nil != err {

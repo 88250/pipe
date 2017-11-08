@@ -77,6 +77,7 @@ type ThemeComment struct {
 	CreatedAt  string
 	Removable  bool
 	ReplyCount int
+	Parent     *ThemeComment
 }
 
 type ThemeReply struct {

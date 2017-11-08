@@ -16,38 +16,59 @@
 
 package util
 
+import (
+	"strconv"
+
+	"github.com/gin-gonic/gin"
+)
+
 type Pagination struct {
-	CurrentPageNum int   `json:"currentPageNum"`
-	PageSize       int   `json:"pageSize"`
-	PageCount      int   `json:"pageCount"`
-	WindowSize     int   `json:"windowSize"`
-	RecordCount    int   `json:"recordCount"`
-	PageNums       []int `json:"pageNums"`
-	NextPageNum    int `json:"nextPageNum"`
-	PreviousPageNum    int `json:"previousPageNum"`
-	PageURL  string `json:"pageURL"`
+	CurrentPageNum  int    `json:"currentPageNum"`
+	PageSize        int    `json:"pageSize"`
+	PageCount       int    `json:"pageCount"`
+	WindowSize      int    `json:"windowSize"`
+	RecordCount     int    `json:"recordCount"`
+	PageNums        []int  `json:"pageNums"`
+	NextPageNum     int    `json:"nextPageNum"`
+	PreviousPageNum int    `json:"previousPageNum"`
+	PageURL         string `json:"pageURL"`
+}
+
+func GetPage(c *gin.Context) int {
+	ret, _ := strconv.Atoi(c.Query("p"))
+	if 1 > ret {
+		ret = 1
+	}
+
+	return ret
 }
 
 func NewPagination(currentPageNum, pageSize, pageCount, windowSize, recordCount int) *Pagination {
+	previousPageNum := currentPageNum - 1
+	if 1 > previousPageNum {
+		previousPageNum = 0
+	}
+	nextPageNum := currentPageNum + 1
+	if nextPageNum > pageCount {
+		nextPageNum = 0
+	}
+
 	return &Pagination{
-		CurrentPageNum: currentPageNum,
-		NextPageNum:    currentPageNum + 1,
-		PreviousPageNum:currentPageNum - 1,
-		PageSize:       pageSize,
-		PageCount:      pageCount,
-		WindowSize:     windowSize,
-		RecordCount:    recordCount,
-		PageURL:        "http://localhost:5897/blogs/pipe",
-		PageNums:       paginate(currentPageNum, pageSize, pageCount, windowSize),
+		CurrentPageNum:  currentPageNum,
+		NextPageNum:     nextPageNum,
+		PreviousPageNum: previousPageNum,
+		PageSize:        pageSize,
+		PageCount:       pageCount,
+		WindowSize:      windowSize,
+		RecordCount:     recordCount,
+		PageURL:         "http://localhost:5897/blogs/pipe",
+		PageNums:        paginate(currentPageNum, pageSize, pageCount, windowSize),
 	}
 }
 
 func paginate(currentPageNum, pageSize, pageCount, windowSize int) []int {
 	ret := []int{}
 
-    ret = append(ret, -1) // eq -1 <
-    ret = append(ret, 1)
-    ret = append(ret, 0)    // eq 0 ...
 	if pageCount < windowSize {
 		for i := 0; i < pageCount; i++ {
 			ret = append(ret, i+1)
@@ -64,13 +85,6 @@ func paginate(currentPageNum, pageSize, pageCount, windowSize int) []int {
 			ret = append(ret, first+i)
 		}
 	}
-
-    ret = append(ret, 2)
-    ret = append(ret, 3)
-    ret = append(ret, 4)
-	ret = append(ret, 0)// eq 0 ...
-    ret = append(ret, 100)
-    ret = append(ret, -2)// eq -2 >
 
 	return ret
 }

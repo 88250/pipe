@@ -20,6 +20,7 @@ package controller
 import (
 	"html/template"
 	"net/http"
+	"strconv"
 	"strings"
 
 	"github.com/b3log/pipe/model"
@@ -31,10 +32,7 @@ import (
 )
 
 func showArticlesAction(c *gin.Context) {
-	page := c.GetInt("p")
-	if 1 > page {
-		page = 1
-	}
+	page := util.GetPage(c)
 	dataModel := getDataModel(c)
 	blogAdmin := getBlogAdmin(c)
 	session := util.GetSession(c)
@@ -125,10 +123,7 @@ func showArticleAction(c *gin.Context) {
 		Editable:     session.UID == authorModel.ID,
 	}
 
-	page := c.GetInt("p")
-	if 1 > page {
-		page = 1
-	}
+	page := util.GetPage(c)
 	commentModels, pagination := service.Comment.GetArticleComments(article.ID, page, blogAdmin.BlogID)
 	comments := []*ThemeComment{}
 	for _, commentModel := range commentModels {
@@ -157,6 +152,20 @@ func showArticleAction(c *gin.Context) {
 			CreatedAt:  commentModel.CreatedAt.Format("2006-01-02"),
 			Removable:  session.UID == authorModel.ID,
 			ReplyCount: service.Comment.GetRepliesCount(commentModel.ID, commentModel.BlogID),
+		}
+		if 0 != commentModel.ParentCommentID {
+			parentCommentModel := service.Comment.GetComment(commentModel.ParentCommentID)
+			parentCommentAuthorModel := service.User.GetUser(parentCommentModel.AuthorID)
+			page := service.Comment.GetCommentPage(commentModel.ArticleID, commentModel.ID, commentModel.BlogID)
+
+			parentComment := &ThemeComment{
+				ID: parentCommentModel.ID,
+				Author: &ThemeAuthor{
+					Name: parentCommentAuthorModel.Name,
+				},
+				URL: getBlogURL(c) + article.Path + "?p=" + strconv.Itoa(page) + "#pipeComment" + strconv.Itoa(int(parentCommentModel.ID)),
+			}
+			comment.Parent = parentComment
 		}
 
 		comments = append(comments, comment)

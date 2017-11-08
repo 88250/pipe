@@ -47,10 +47,7 @@ func showTagsAction(c *gin.Context) {
 }
 
 func showTagArticlesAction(c *gin.Context) {
-	page := c.GetInt("p")
-	if 1 > page {
-		page = 1
-	}
+	page := util.GetPage(c)
 	dataModel := getDataModel(c)
 	blogAdmin := getBlogAdmin(c)
 	session := util.GetSession(c)

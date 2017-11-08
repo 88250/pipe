@@ -50,10 +50,7 @@ func showArchiveArticlesAction(c *gin.Context) {
 	dm, _ := c.Get("dataModel")
 	dataModel := *(dm.(*DataModel))
 
-	page := c.GetInt("p")
-	if 1 > page {
-		page = 1
-	}
+	page := util.GetPage(c)
 	blogAdmin := getBlogAdmin(c)
 	articleModels, pagination := service.Article.GetArticles(page, blogAdmin.BlogID)
 	articles := []*ThemeArticle{}

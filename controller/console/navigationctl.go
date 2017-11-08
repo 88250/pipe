@@ -31,7 +31,7 @@ func GetNavigationsAction(c *gin.Context) {
 	defer c.JSON(http.StatusOK, result)
 
 	session := util.GetSession(c)
-	navigationModels, pagination := service.Navigation.ConsoleGetNavigations(c.GetInt("p"), session.BID)
+	navigationModels, pagination := service.Navigation.ConsoleGetNavigations(util.GetPage(c), session.BID)
 
 	navigations := []*ConsoleNavigation{}
 	for _, navigationModel := range navigationModels {

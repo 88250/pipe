@@ -31,7 +31,7 @@ func GetCategoriesAction(c *gin.Context) {
 	defer c.JSON(http.StatusOK, result)
 
 	session := util.GetSession(c)
-	categoryModels, pagination := service.Category.ConsoleGetCategories(c.GetInt("p"), session.BID)
+	categoryModels, pagination := service.Category.ConsoleGetCategories(util.GetPage(c), session.BID)
 
 	categories := []*ConsoleCategory{}
 	for _, categoryModel := range categoryModels {

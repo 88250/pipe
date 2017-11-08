@@ -1,23 +1,25 @@
 {{define "Gina/pagination"}}
 {{if $.Pagination}}
 <nav class="pagination">
+    {{if gt $.Pagination.PreviousPageNum 0}}
+    <a class="pagination__near" href="{{$.Pagination.PreviousPageNum}}">
+        <svg><use xlink:href="#chevron-left"></use></svg>
+    </a>
+    {{end}}
+    {{$.Pagination.PageNums}}
+    {{if gt (index $.Pagination.PageNums 0) 1}}
+    <span class="pagination__omit">...</span>
+    {{end}}
     {{range $.Pagination.PageNums}}
     {{if eq . $.Pagination.CurrentPageNum}}
     <span class="pagination__item pagination__item--active">{{$.Pagination.CurrentPageNum}}</span>
-    {{else if eq . 0}}
-    <span class="pagination__omit">...</span>
-    {{else if eq . -1}}
-    <a class="pagination__near" href="{{$.Pagination.PageURL}}{{$.Pagination.PreviousPageNum}}">
-        <svg><use xlink:href="#chevron-left"></use></svg>
-    </a>
-    {{else if eq . -2}}
-    <a class="pagination__near" href="{{$.Pagination.PageURL}}{{$.Pagination.NextPageNum}}">
+    {{end}}
+    <a class="pagination__item" href="?p={{.}}">{{.}}</a>
+    {{end}}
+    {{if lt (len $.Pagination.PageNums) $.Pagination.NextPageNum}}
+    <a class="pagination__near" href="{{$.Pagination.NextPageNum}}">
         <svg><use xlink:href="#chevron-right"></use></svg>
     </a>
-    {{else}}
-    <a class="pagination__item" href="{{$.Pagination.PageURL}}{{.}}">{{.}}</a>
-    {{end}}
-
     {{end}}
 </nav>
 {{end}}

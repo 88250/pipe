@@ -34,7 +34,7 @@ func GetCommentsAction(c *gin.Context) {
 	defer c.JSON(http.StatusOK, result)
 
 	session := util.GetSession(c)
-	commentModels, pagination := service.Comment.ConsoleGetComments(c.GetInt("p"), session.BID)
+	commentModels, pagination := service.Comment.ConsoleGetComments(util.GetPage(c), session.BID)
 
 	comments := []*ConsoleComment{}
 	for _, commentModel := range commentModels {

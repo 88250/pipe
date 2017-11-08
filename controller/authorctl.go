@@ -18,7 +18,6 @@ package controller
 
 import (
 	"net/http"
-
 	"strings"
 
 	"github.com/b3log/pipe/service"
@@ -56,10 +55,7 @@ func showAuthorArticlesAction(c *gin.Context) {
 		return
 	}
 
-	page := c.GetInt("p")
-	if 1 > page {
-		page = 1
-	}
+	page := util.GetPage(c)
 	blogAdmin := getBlogAdmin(c)
 	dataModel := getDataModel(c)
 	session := util.GetSession(c)

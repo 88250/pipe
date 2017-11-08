@@ -8,11 +8,11 @@
     <div class="pipe-comment__body">
         <div class="fn-clear">
             <a href="{{.Item.Author.AvatarURL}}" class="ft-gray">{{.Item.Author.Name}}</a>
-
-            <a class="ft-nowrap ft-12 ft-gray" href="#123">
+            {{if .Item.Parent}}
+            <a class="ft-nowrap ft-12 ft-gray" href="{{.Item.Parent.URL}}">
                 <svg><use xlink:href="#reply"></use></svg> {{.I18n.Reply}} Vanessa
             </a>
-
+            {{end}}
             <span class="ft-nowrap ft-12 ft-fade"> • {{.Item.CreatedAt}} </span>
             <div class="fn-right">
                 <span class="pipe-comment__btn pipe-comment__btn--reply"
