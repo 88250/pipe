@@ -25,18 +25,35 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+func AddUserAction(c *gin.Context) {
+	result := util.NewResult()
+	defer c.JSON(http.StatusOK, result)
+
+	arg := map[string]interface{}{}
+	if err := c.BindJSON(&arg); nil != err {
+		result.Code = -1
+		result.Msg = "parses add user request failed"
+
+		return
+	}
+
+	name := arg["name"].(string)
+	user := service.User.GetUserByName(name)
+	if nil == user {
+		result.Code = -1
+		result.Msg = "the user should login first"
+
+		return
+	}
+
+}
+
 func GetUsersAction(c *gin.Context) {
 	result := util.NewResult()
 	defer c.JSON(http.StatusOK, result)
 
 	session := util.GetSession(c)
-
 	blogURLSetting := service.Setting.GetSetting(model.SettingCategoryBasic, model.SettingNameBasicBlogURL, session.BID)
-	if nil == blogURLSetting {
-		logger.Errorf("not found blog URL setting [blogID=%d]", session.BID)
-
-		return
-	}
 
 	users := []*ConsoleUser{}
 	userModels, pagination := service.User.GetBlogUsers(util.GetPage(c), session.BID)
@@ -45,7 +62,7 @@ func GetUsersAction(c *gin.Context) {
 			ID:        userModel.ID,
 			Name:      userModel.Name,
 			Nickname:  userModel.Nickname,
-			Role:      userModel.Role,
+			Role:      service.User.GetRole(userModel.ID, session.BID),
 			URL:       blogURLSetting.Value + util.PathAuthors + "/" + userModel.Name,
 			AvatarURL: userModel.AvatarURL,
 		})

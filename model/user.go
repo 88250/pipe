@@ -24,15 +24,12 @@ import (
 type User struct {
 	Model
 
-	Name         string `gorm:"size:32" json:"name"`
-	Nickname     string `gorm:"size:32" json:"nickname"`
-	Role         int    `json:"role"`
-	AvatarURL    string `gorm:"size:255" json:"avatarURL"`
-	B3Key        string `gorm:"size:32" json:"b3Key"`
-	Locale       string `gorm:"size:32 json:"locale"`
-	ArticleCount int    `json:"articleCount"`
-
-	BlogID uint `json:"blogID"`
+	Name              string `gorm:"size:32" json:"name"`
+	Nickname          string `gorm:"size:32" json:"nickname"`
+	AvatarURL         string `gorm:"size:255" json:"avatarURL"`
+	B3Key             string `gorm:"size:32" json:"b3Key"`
+	Locale            string `gorm:"size:32 json:"locale"`
+	TotalArticleCount int    `json:"totalArticleCount"`
 }
 
 // User roles.
@@ -41,7 +38,6 @@ const (
 	UserRolePlatformAdmin
 	UserRoleBlogAdmin
 	UserRoleBlogUser
-	UserRoleBlogVisitor
 )
 
 func (u *User) AvatarURLWithSize(size int) string {

@@ -27,16 +27,15 @@ import (
 )
 
 func showAuthorsAction(c *gin.Context) {
-	blogAdmin := getBlogAdmin(c)
 	dataModel := getDataModel(c)
-
+	blogID := getBlogID(c)
 	themeAuthors := []*ThemeAuthor{}
-	authorModels, _ := service.User.GetBlogUsers(1, blogAdmin.BlogID)
+	authorModels, _ := service.User.GetBlogUsers(1, blogID)
 	for _, authorModel := range authorModels {
 		author := &ThemeAuthor{
 			Name:         authorModel.Name,
 			URL:          getBlogURL(c) + util.PathAuthors + "/" + authorModel.Name,
-			ArticleCount: authorModel.ArticleCount,
+			ArticleCount: 11, // TODO PIPE
 			AvatarURL:    authorModel.AvatarURLWithSize(210),
 		}
 		themeAuthors = append(themeAuthors, author)
@@ -56,10 +55,10 @@ func showAuthorArticlesAction(c *gin.Context) {
 	}
 
 	page := util.GetPage(c)
-	blogAdmin := getBlogAdmin(c)
+	blogID := getBlogID(c)
 	dataModel := getDataModel(c)
 	session := util.GetSession(c)
-	articleModels, pagination := service.Article.GetAuthorArticles(author.ID, page, blogAdmin.BlogID)
+	articleModels, pagination := service.Article.GetAuthorArticles(author.ID, page, blogID)
 	articles := []*ThemeArticle{}
 	for _, articleModel := range articleModels {
 		themeTags := []*ThemeTag{}

@@ -65,10 +65,10 @@ func initAction(c *gin.Context) {
 		return
 	}
 
-	blogURLSetting := service.Setting.GetSetting(model.SettingCategoryBasic, model.SettingNameBasicBlogURL, platformAdmin.BlogID)
+	blogURLSetting := service.Setting.GetSetting(model.SettingCategoryBasic, model.SettingNameBasicBlogURL, 1)
 	if nil == blogURLSetting {
 		result.Code = -1
-		result.Msg = fmt.Sprintf("not found blog URL settings [blogID=%d]", platformAdmin.BlogID)
+		result.Msg = fmt.Sprintf("not found blog URL settings [blogID=%d]", 1)
 
 		return
 	}
@@ -76,9 +76,9 @@ func initAction(c *gin.Context) {
 		UID:     platformAdmin.ID,
 		UName:   platformAdmin.Name,
 		UB3Key:  platformAdmin.B3Key,
-		URole:   platformAdmin.Role,
+		URole:   model.UserRolePlatformAdmin,
 		UAvatar: platformAdmin.AvatarURL,
-		BID:     platformAdmin.BlogID,
+		BID:     1,
 		BURL:    blogURLSetting.Value,
 	}
 	if err := sessionData.Save(c); nil != err {

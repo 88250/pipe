@@ -25,15 +25,23 @@ const (
 )
 
 // Correlation model.
-//   category_id - tag_id
-//   article_id - tag_id
-//   blog_id - user_id
+//   id1(category_id) - id2(tag_id)
+//   id1(article_id) - id2(tag_id)
+//   id1(blog_id) - id2(user_id) - int1(role) - int2(article_count)
 type Correlation struct {
 	Model
 
-	ID1  uint `json:"id1"`
-	ID2  uint `json:"id2"`
-	Type int  `json:"type"`
+	ID1  uint   `json:"id1"`
+	ID2  uint   `json:"id2"`
+	Str1 string `gorm:"size:255" json:"str1"`
+	Str2 string `gorm:"size:255" json:"str2"`
+	Str3 string `gorm:"size:255" json:"str3"`
+	Str4 string `gorm:"size:255" json:"str4"`
+	Int1 int    `json:"int1"`
+	Int2 int    `json:"int2"`
+	Int3 int    `json:"int3"`
+	Int4 int    `json:int4`
+	Type int    `json:"type"`
 
 	BlogID uint `json:"blogID"`
 }

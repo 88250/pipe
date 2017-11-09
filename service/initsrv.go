@@ -92,15 +92,14 @@ func (srv *initService) InitPlatform(platformAdmin *model.User) error {
 	blogID := uint(1)
 
 	saCount := 0
-	db.Model(&model.User{}).Where(&model.User{BlogID: blogID}).Count(&saCount)
+	db.Model(&model.Correlation{}).Where(&model.Correlation{ID1: blogID, Type: model.CorrelationBlogUser, Int1: model.UserRolePlatformAdmin, BlogID: blogID}).Count(&saCount)
 	if 0 < saCount {
 		srv.inited = true
 
 		return nil
 	}
 
-	logger.Trace("Initializing platform")
-
+	logger.Infof("Initializing platform")
 	tx := db.Begin()
 
 	if err := initPlatformAdmin(tx, platformAdmin, blogID); nil != err {
@@ -160,7 +159,7 @@ func (srv *initService) InitPlatform(platformAdmin *model.User) error {
 	}
 
 	tx.Commit()
-	logger.Tracef("Initialized platform")
+	logger.Infof("Initialized platform")
 
 	srv.inited = true
 
@@ -168,9 +167,6 @@ func (srv *initService) InitPlatform(platformAdmin *model.User) error {
 }
 
 func initPlatformAdmin(tx *gorm.DB, admin *model.User, blogID uint) error {
-	admin.Role = model.UserRolePlatformAdmin
-	admin.ArticleCount = 1 // article "Hello, World!"
-	admin.BlogID = blogID
 	admin.Locale = "zh_CN"
 
 	tx.Where("name = ?", admin.Name).Delete(&model.User{}) // remove b3-id created if exists
@@ -183,6 +179,8 @@ func initPlatformAdmin(tx *gorm.DB, admin *model.User, blogID uint) error {
 		ID1:    blogID,
 		ID2:    admin.ID,
 		Type:   model.CorrelationBlogUser,
+		Int1:   model.UserRolePlatformAdmin,
+		Int2:   1, // article "Hello, World!"
 		BlogID: blogID,
 	}
 	if err := tx.Create(blogUser).Error; nil != err {

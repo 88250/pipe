@@ -45,7 +45,7 @@ func TestGetUser(t *testing.T) {
 }
 
 func TestGetBlogUsers(t *testing.T) {
-	users := User.GetBlogUsers(1)
+	users, _ := User.GetBlogUsers(1, 1)
 	if 1 > len(users) {
 		t.Errorf("users is empty")
 

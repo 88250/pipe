@@ -39,13 +39,19 @@ func resolveBlog(c *gin.Context) {
 
 		return
 	}
-	blogAdmin := service.User.GetUserByName(username)
-	if nil == blogAdmin {
+	user := service.User.GetUserByName(username)
+	if nil == user {
 		c.AbortWithStatus(http.StatusNotFound)
 
 		return
 	}
-	c.Set("blogAdmin", blogAdmin)
+	userBlog := service.User.GetOwnBlog(user.ID)
+	if nil == userBlog {
+		c.AbortWithStatus(http.StatusNotFound)
+
+		return
+	}
+	c.Set("userBlog", userBlog)
 
 	fillCommon(c)
 
@@ -71,9 +77,9 @@ func fillCommon(c *gin.Context) {
 		i18n.Load()
 	}
 
-	blogAdminVal, _ := c.Get("blogAdmin")
-	blogAdmin := blogAdminVal.(*model.User)
-	blogID := blogAdmin.BlogID
+	userBlogVal, _ := c.Get("userBlog")
+	userBlog := userBlogVal.(*service.UserBlog)
+	blogID := userBlog.ID
 
 	dataModelVal, _ := c.Get("dataModel")
 	dataModel := dataModelVal.(*DataModel)
@@ -251,10 +257,10 @@ func getBlogURL(c *gin.Context) string {
 	return dataModel["Setting"].(map[string]interface{})[model.SettingNameBasicBlogURL].(string)
 }
 
-func getBlogAdmin(c *gin.Context) *model.User {
-	blogAdminVal, _ := c.Get("blogAdmin")
+func getBlogID(c *gin.Context) uint {
+	userBlogVal, _ := c.Get("userBlog")
 
-	return blogAdminVal.(*model.User)
+	return userBlogVal.(*service.UserBlog).ID
 }
 
 func getTheme(c *gin.Context) string {

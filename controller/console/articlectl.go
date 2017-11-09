@@ -83,6 +83,7 @@ func GetArticlesAction(c *gin.Context) {
 
 	session := util.GetSession(c)
 	articleModels, pagination := service.Article.ConsoleGetArticles(util.GetPage(c), session.BID)
+	blogURLSetting := service.Setting.GetSetting(model.SettingCategoryBasic, model.SettingNameBasicBlogURL, session.BID)
 
 	articles := []*ConsoleArticle{}
 	for _, articleModel := range articleModels {
@@ -97,19 +98,6 @@ func GetArticlesAction(c *gin.Context) {
 		}
 
 		authorModel := service.User.GetUser(articleModel.AuthorID)
-		if nil == authorModel {
-			logger.Errorf("not found author of article [id=%d, authorID=%d]", articleModel.ID, articleModel.AuthorID)
-
-			continue
-		}
-
-		blogURLSetting := service.Setting.GetSetting(model.SettingCategoryBasic, model.SettingNameBasicBlogURL, authorModel.BlogID)
-		if nil == blogURLSetting {
-			logger.Errorf("not found blog URL setting [blogID=%d]", authorModel.BlogID)
-
-			continue
-		}
-
 		author := &ConsoleAuthor{
 			Name:      authorModel.Name,
 			URL:       blogURLSetting.Value + util.PathAuthors + "/" + authorModel.Name,

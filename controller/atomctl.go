@@ -25,20 +25,19 @@ import (
 )
 
 func outputAtomAction(c *gin.Context) {
-	blogAdmin := getBlogAdmin(c)
+	blogID := getBlogID(c)
 
-	blogTitleSetting := service.Setting.GetSetting(model.SettingCategoryBasic, model.SettingNameBasicBlogTitle, blogAdmin.BlogID)
-	blogURLSetting := service.Setting.GetSetting(model.SettingCategoryBasic, model.SettingNameBasicBlogURL, blogAdmin.BlogID)
-	blogSubtitleSetting := service.Setting.GetSetting(model.SettingCategoryBasic, model.SettingNameBasicBlogSubtitle, blogAdmin.BlogID)
+	blogTitleSetting := service.Setting.GetSetting(model.SettingCategoryBasic, model.SettingNameBasicBlogTitle, blogID)
+	blogURLSetting := service.Setting.GetSetting(model.SettingCategoryBasic, model.SettingNameBasicBlogURL, blogID)
+	blogSubtitleSetting := service.Setting.GetSetting(model.SettingCategoryBasic, model.SettingNameBasicBlogSubtitle, blogID)
 	feed := &feeds.Feed{
 		Title:       blogTitleSetting.Value,
 		Link:        &feeds.Link{Href: blogURLSetting.Value},
 		Description: blogSubtitleSetting.Value,
-		Author:      &feeds.Author{Name: blogAdmin.Name},
 	}
 
 	items := []*feeds.Item{}
-	articles, _ := service.Article.GetArticles(1, blogAdmin.BlogID)
+	articles, _ := service.Article.GetArticles(1, blogID)
 	for _, article := range articles {
 		user := service.User.GetUser(article.AuthorID)
 		items = append(items, &feeds.Item{

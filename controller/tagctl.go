@@ -29,8 +29,8 @@ import (
 
 func showTagsAction(c *gin.Context) {
 	dataModel := getDataModel(c)
-	blogAdmin := getBlogAdmin(c)
-	tagModels := service.Tag.ConsoleGetTags(blogAdmin.BlogID)
+	blogID := getBlogID(c)
+	tagModels := service.Tag.ConsoleGetTags(blogID)
 	themeTags := []*ThemeTag{}
 	for _, tagModel := range tagModels {
 		themeTag := &ThemeTag{
@@ -47,16 +47,16 @@ func showTagsAction(c *gin.Context) {
 
 func showTagArticlesAction(c *gin.Context) {
 	dataModel := getDataModel(c)
-	blogAdmin := getBlogAdmin(c)
+	blogID := getBlogID(c)
 	session := util.GetSession(c)
 	tagTitle := strings.SplitAfter(c.Request.URL.Path, util.PathTags+"/")[1]
-	tagModel := service.Tag.GetTagByTitle(tagTitle, blogAdmin.BlogID)
+	tagModel := service.Tag.GetTagByTitle(tagTitle, blogID)
 	if nil == tagModel {
 		c.Status(http.StatusNotFound)
 
 		return
 	}
-	articleModels, pagination := service.Article.GetTagArticles(tagModel.ID, util.GetPage(c), blogAdmin.BlogID)
+	articleModels, pagination := service.Article.GetTagArticles(tagModel.ID, util.GetPage(c), blogID)
 	articles := []*ThemeArticle{}
 	for _, articleModel := range articleModels {
 		themeTags := []*ThemeTag{}

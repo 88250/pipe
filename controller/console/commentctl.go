@@ -33,27 +33,12 @@ func GetCommentsAction(c *gin.Context) {
 
 	session := util.GetSession(c)
 	commentModels, pagination := service.Comment.ConsoleGetComments(util.GetPage(c), session.BID)
+	blogURLSetting := service.Setting.GetSetting(model.SettingCategoryBasic, model.SettingNameBasicBlogURL, session.BID)
 
 	comments := []*ConsoleComment{}
 	for _, commentModel := range commentModels {
 		article := service.Article.ConsoleGetArticle(commentModel.ArticleID)
-		if nil == article {
-			logger.Errorf("not found comment [id=%d]'s article", commentModel.ID)
-
-			continue
-		}
 		articleAuthor := service.User.GetUser(article.AuthorID)
-		if nil == articleAuthor {
-			logger.Errorf("not found article [id=%d]'s author", article.ID)
-
-			continue
-		}
-		blogURLSetting := service.Setting.GetSetting(model.SettingCategoryBasic, model.SettingNameBasicBlogURL, articleAuthor.BlogID)
-		if nil == blogURLSetting {
-			logger.Errorf("not found blog URL setting [blogID=%d]", articleAuthor.BlogID)
-
-			continue
-		}
 		consoleArticleAuthor := &ConsoleAuthor{
 			URL:       blogURLSetting.Value + util.PathAuthors + "/" + articleAuthor.Name,
 			Name:      articleAuthor.Name,
@@ -61,17 +46,8 @@ func GetCommentsAction(c *gin.Context) {
 		}
 
 		commentAuthor := service.User.GetUser(commentModel.AuthorID)
-		if nil == commentAuthor {
-			logger.Errorf("not found comment author [userID=%d]", commentModel.AuthorID)
-
-			continue
-		}
-		blogURLSetting = service.Setting.GetSetting(model.SettingCategoryBasic, model.SettingNameBasicBlogURL, commentAuthor.BlogID)
-		if nil == blogURLSetting {
-			logger.Errorf("not found blog URL setting [blogID=%d]", commentAuthor.BlogID)
-
-			continue
-		}
+		commentAuthorBlog := service.User.GetOwnBlog(commentModel.AuthorID)
+		blogURLSetting = service.Setting.GetSetting(model.SettingCategoryBasic, model.SettingNameBasicBlogURL, commentAuthorBlog.ID)
 		author := &ConsoleAuthor{
 			URL:       blogURLSetting.Value + util.PathAuthors + "/" + commentAuthor.Name,
 			Name:      commentAuthor.Name,

@@ -62,8 +62,8 @@ func showCategoryArticlesArticlesAction(c *gin.Context) {
 	dataModel := *(dm.(*DataModel))
 
 	page := util.GetPage(c)
-	blogAdmin := getBlogAdmin(c)
-	articleModels, pagination := service.Article.GetArticles(page, blogAdmin.BlogID)
+	blogID := getBlogID(c)
+	articleModels, pagination := service.Article.GetArticles(page, blogID)
 	articles := []*ThemeArticle{}
 	for _, articleModel := range articleModels {
 		themeTags := []*ThemeTag{}

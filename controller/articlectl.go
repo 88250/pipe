@@ -33,9 +33,9 @@ import (
 func showArticlesAction(c *gin.Context) {
 	page := util.GetPage(c)
 	dataModel := getDataModel(c)
-	blogAdmin := getBlogAdmin(c)
+	blogID := getBlogID(c)
 	session := util.GetSession(c)
-	articleModels, pagination := service.Article.GetArticles(page, blogAdmin.BlogID)
+	articleModels, pagination := service.Article.GetArticles(page, blogID)
 	articles := []*ThemeArticle{}
 	for _, articleModel := range articleModels {
 		themeTags := []*ThemeTag{}
@@ -87,7 +87,7 @@ func showArticlesAction(c *gin.Context) {
 
 func showArticleAction(c *gin.Context) {
 	dataModel := getDataModel(c)
-	blogAdmin := getBlogAdmin(c)
+	blogID := getBlogID(c)
 	session := util.GetSession(c)
 
 	a, _ := c.Get("article")
@@ -124,7 +124,7 @@ func showArticleAction(c *gin.Context) {
 	}
 
 	page := util.GetPage(c)
-	commentModels, pagination := service.Comment.GetArticleComments(article.ID, page, blogAdmin.BlogID)
+	commentModels, pagination := service.Comment.GetArticleComments(article.ID, page, blogID)
 	comments := []*ThemeComment{}
 	for _, commentModel := range commentModels {
 		commentAuthor := service.User.GetUser(commentModel.AuthorID)
@@ -133,12 +133,10 @@ func showArticleAction(c *gin.Context) {
 
 			continue
 		}
-		commentAuthorURL := util.HacPaiURL + "/member/" + commentAuthor.Name
-		blogURLSetting := service.Setting.GetSetting(model.SettingCategoryBasic, model.SettingNameBasicBlogURL, commentAuthor.BlogID)
-		if nil != blogURLSetting {
-			commentAuthorURL = blogURLSetting.Value + util.PathAuthors + "/" + commentAuthor.Name
-		}
 
+		commentAuthorBlog := service.User.GetOwnBlog(commentAuthor.ID)
+		blogURLSetting := service.Setting.GetSetting(model.SettingCategoryBasic, model.SettingNameBasicBlogURL, commentAuthorBlog.ID)
+		commentAuthorURL := blogURLSetting.Value + util.PathAuthors + "/" + commentAuthor.Name
 		author := &ThemeAuthor{
 			Name:      commentAuthor.Name,
 			URL:       commentAuthorURL,
@@ -175,7 +173,7 @@ func showArticleAction(c *gin.Context) {
 	dataModel["Comments"] = comments
 	dataModel["Pagination"] = pagination
 
-	articleModels, pagination := service.Article.GetArticles(1, blogAdmin.BlogID)
+	articleModels, pagination := service.Article.GetArticles(1, blogID)
 	articles := []*ThemeArticle{}
 	for _, articleModel := range articleModels {
 		tagStrs := strings.Split(articleModel.Tags, ",")

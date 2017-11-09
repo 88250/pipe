@@ -17,7 +17,6 @@
 package controller
 
 import (
-	"fmt"
 	"net/http"
 
 	"github.com/b3log/pipe/model"
@@ -75,26 +74,12 @@ func getStatusAction(c *gin.Context) {
 		data.Name = user.Name
 		data.Nickname = user.Nickname
 		data.AvatarURL = user.AvatarURL
-		data.Role = user.Role
+		data.Role = model.UserRoleBlogAdmin
 
-		if model.UserRoleBlogVisitor != session.URole {
-			blogTitleSetting := service.Setting.GetSetting(model.SettingCategoryBasic, model.SettingNameBasicBlogTitle, user.BlogID)
-			if nil == blogTitleSetting {
-				result.Code = -1
-				result.Msg = fmt.Sprintf("not found blog title settings [blogID=%d]", user.BlogID)
-
-				return
-			}
-			data.BlogTitle = blogTitleSetting.Value
-
-			blogURLSetting := service.Setting.GetSetting(model.SettingCategoryBasic, model.SettingNameBasicBlogURL, user.BlogID)
-			if nil == blogURLSetting {
-				result.Code = -1
-				result.Msg = fmt.Sprintf("not found blog URL settings [blogID=%d]", user.BlogID)
-
-				return
-			}
-			data.BlogURL = blogURLSetting.Value
+		if model.UserRoleNoLogin != session.URole {
+			ownBlog := service.User.GetOwnBlog(user.ID)
+			data.BlogTitle = ownBlog.Title
+			data.BlogURL = ownBlog.URL
 			data.Blogs = service.User.GetUserBlogs(user.ID)
 		}
 	}

@@ -89,26 +89,21 @@ func fillUser(c *gin.Context) {
 			UName:   username,
 			UB3Key:  b3Key,
 			UAvatar: userAvatar,
-			URole:   model.UserRoleBlogVisitor,
+			URole:   model.UserRoleBlogAdmin,
 		}
 
 		user := service.User.GetUserByName(username)
 		if nil != user {
 			session.UAvatar = user.AvatarURL
-			session.BID = user.BlogID
-			blogURL := ""
-			blogURLSetting := service.Setting.GetSetting(model.SettingCategoryBasic, model.SettingNameBasicBlogURL, user.BlogID)
-			if nil != blogURLSetting {
-				blogURL = blogURLSetting.Value
-			}
-			session.BURL = blogURL
+			ownBlog := service.User.GetOwnBlog(user.ID)
+			session.BID = ownBlog.ID
+			session.BURL = ownBlog.URL
 			session.UID = user.ID
-			session.URole = user.Role
+			session.URole = ownBlog.UserRole
 		} else {
 			user = &model.User{
 				Name:      session.UName,
 				AvatarURL: session.UAvatar,
-				Role:      session.URole,
 			}
 			if err := service.User.AddUser(user); nil != err {
 				logger.Errorf("add user [name=%s] failed: %s", username, err.Error())

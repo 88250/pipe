@@ -143,8 +143,20 @@ func (srv *articleService) AddArticle(article *model.Article) error {
 	if err := tx.First(author, article.AuthorID).Error; nil != err {
 		return err
 	}
-	author.ArticleCount = author.ArticleCount + 1
+	author.TotalArticleCount += 1
 	if err := tx.Model(author).Updates(author).Error; nil != err {
+		tx.Rollback()
+
+		return err
+	}
+	blogUserRel := &model.Correlation{ID1: article.BlogID, ID2: author.ID, Type: model.CorrelationBlogUser, BlogID: article.BlogID}
+	if err := tx.Where(blogUserRel).First(blogUserRel).Error; nil != err {
+		tx.Rollback()
+
+		return err
+	}
+	blogUserRel.Int2 += 1
+	if err := tx.Model(blogUserRel).Updates(blogUserRel).Error; nil != err {
 		tx.Rollback()
 
 		return err
@@ -282,14 +294,30 @@ func (srv *articleService) RemoveArticle(id uint) error {
 
 	tx := db.Begin()
 	if err := tx.First(article, id).Error; nil != err {
+		tx.Rollback()
+
 		return err
 	}
 	author := &model.User{}
 	if err := tx.First(author, article.AuthorID).Error; nil != err {
+		tx.Rollback()
+
 		return err
 	}
-	author.ArticleCount = author.ArticleCount - 1
+	author.TotalArticleCount -= 1
 	if err := tx.Model(author).Updates(author).Error; nil != err {
+		tx.Rollback()
+
+		return err
+	}
+	blogUserRel := &model.Correlation{ID1: article.BlogID, ID2: author.ID, Type: model.CorrelationBlogUser, BlogID: article.BlogID}
+	if err := tx.Where(blogUserRel).First(blogUserRel).Error; nil != err {
+		tx.Rollback()
+
+		return err
+	}
+	blogUserRel.Int2 -= 1
+	if err := tx.Model(blogUserRel).Updates(blogUserRel).Error; nil != err {
 		tx.Rollback()
 
 		return err
@@ -309,7 +337,7 @@ func (srv *articleService) RemoveArticle(id uint) error {
 
 		return err
 	}
-	if err := Statistic.DecArticleCountWithoutTx(tx, author.BlogID); nil != err {
+	if err := Statistic.DecArticleCountWithoutTx(tx, article.BlogID); nil != err {
 		tx.Rollback()
 
 		return err
@@ -327,7 +355,7 @@ func (srv *articleService) RemoveArticle(id uint) error {
 			return err
 		}
 		for _, _ = range comments {
-			Statistic.DecCommentCountWithoutTx(tx, author.BlogID)
+			Statistic.DecCommentCountWithoutTx(tx, article.BlogID)
 		}
 	}
 	tx.Commit()

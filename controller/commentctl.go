@@ -33,12 +33,12 @@ func getRepliesAction(c *gin.Context) {
 	result := util.NewResult()
 	defer c.JSON(http.StatusOK, result)
 
-	blogAdmin := getBlogAdmin(c)
+	blogID := getBlogID(c)
 	parentCmtIDArg := strings.SplitAfter(c.Request.URL.Path, util.PathComments+"/")[1]
 	parentCmtIDArg = strings.Split(parentCmtIDArg, "/replies")[0]
 	parentCmtID, _ := strconv.Atoi(parentCmtIDArg)
 
-	replyComments := service.Comment.GetReplies(uint(parentCmtID), blogAdmin.BlogID)
+	replyComments := service.Comment.GetReplies(uint(parentCmtID), blogID)
 	replies := []*ThemeReply{}
 	for _, replyComment := range replyComments {
 		commentAuthor := service.User.GetUser(replyComment.AuthorID)
@@ -47,12 +47,9 @@ func getRepliesAction(c *gin.Context) {
 
 			continue
 		}
-		commentAuthorURL := util.HacPaiURL + "/member/" + commentAuthor.Name
-		blogURLSetting := service.Setting.GetSetting(model.SettingCategoryBasic, model.SettingNameBasicBlogURL, commentAuthor.BlogID)
-		if nil != blogURLSetting {
-			commentAuthorURL = blogURLSetting.Value + util.PathAuthors + "/" + commentAuthor.Name
-		}
-
+		commentAuthorBlog := service.User.GetOwnBlog(commentAuthor.ID)
+		blogURLSetting := service.Setting.GetSetting(model.SettingCategoryBasic, model.SettingNameBasicBlogURL, commentAuthorBlog.ID)
+		commentAuthorURL := blogURLSetting.Value + util.PathAuthors + "/" + commentAuthor.Name
 		author := &ThemeAuthor{
 			Name:      commentAuthor.Name,
 			URL:       commentAuthorURL,
@@ -75,7 +72,7 @@ func addCommentAction(c *gin.Context) {
 	result := util.NewResult()
 	defer c.JSON(http.StatusOK, result)
 
-	blogAdmin := getBlogAdmin(c)
+	blogID := getBlogID(c)
 	session := util.GetSession(c)
 	if nil == session {
 		result.Code = -1
@@ -86,7 +83,7 @@ func addCommentAction(c *gin.Context) {
 
 	comment := &model.Comment{
 		AuthorID: session.UID,
-		BlogID:   blogAdmin.BlogID,
+		BlogID:   blogID,
 	}
 	if err := c.BindJSON(comment); nil != err {
 		result.Code = -1

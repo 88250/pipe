@@ -28,10 +28,10 @@ import (
 
 func showArchivesAction(c *gin.Context) {
 	dataModel := getDataModel(c)
-	blogAdmin := getBlogAdmin(c)
+	blogID := getBlogID(c)
 	locale := getLocale(c)
 	themeArchives := []*ThemeArchive{}
-	archiveModels := service.Archive.GetArchives(blogAdmin.BlogID)
+	archiveModels := service.Archive.GetArchives(blogID)
 	for _, archiveModel := range archiveModels {
 		archive := &ThemeArchive{
 			Title:        i18n.GetMessagef(locale, "archiveYearMonth", archiveModel.Year, archiveModel.Month),
@@ -47,19 +47,19 @@ func showArchivesAction(c *gin.Context) {
 
 func showArchiveArticlesAction(c *gin.Context) {
 	dataModel := getDataModel(c)
-	blogAdmin := getBlogAdmin(c)
+	blogID := getBlogID(c)
 	locale := getLocale(c)
 	session := util.GetSession(c)
 	date := strings.SplitAfter(c.Request.URL.Path, util.PathArchives+"/")[1]
 	year := strings.Split(date, "/")[0]
 	month := strings.Split(date, "/")[1]
-	archiveModel := service.Archive.GetArchive(year, month, blogAdmin.BlogID)
+	archiveModel := service.Archive.GetArchive(year, month, blogID)
 	if nil == archiveModel {
 		c.Status(http.StatusNotFound)
 
 		return
 	}
-	articleModels, pagination := service.Article.GetArchiveArticles(archiveModel.ID, util.GetPage(c), blogAdmin.BlogID)
+	articleModels, pagination := service.Article.GetArchiveArticles(archiveModel.ID, util.GetPage(c), blogID)
 	articles := []*ThemeArticle{}
 	for _, articleModel := range articleModels {
 		themeTags := []*ThemeTag{}
