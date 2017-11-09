@@ -17,9 +17,12 @@
 package service
 
 import (
+	"math"
 	"sync"
 
 	"github.com/b3log/pipe/model"
+	"github.com/b3log/pipe/util"
+	"github.com/prometheus/common/log"
 )
 
 var User = &userService{
@@ -29,6 +32,12 @@ var User = &userService{
 type userService struct {
 	mutex *sync.Mutex
 }
+
+// User pagination arguments of admin console.
+const (
+	adminConsoleUserListPageSize   = 15
+	adminConsoleUserListWindowSize = 20
+)
 
 func (srv *userService) AddUser(user *model.User) error {
 	srv.mutex.Lock()
@@ -71,21 +80,31 @@ type UserBlog struct {
 	UserRole int    `json:"userRole"`
 }
 
-func (srv *userService) GetBlogUsers(blogID uint) (ret []*model.User) {
+func (srv *userService) GetBlogUsers(page int, blogID uint) (ret []*model.User, pagination *util.Pagination) {
 	correlations := []*model.Correlation{}
-	if err := db.Where("id1 = ? AND type = ?", blogID, model.CorrelationBlogUser).
-		Find(&correlations).Error; nil != err {
-		return
+	offset := (page - 1) * adminConsoleUserListPageSize
+	count := 0
+	if err := db.Model(&model.Correlation{}).
+		Where(&model.Correlation{ID1: blogID, Type: model.CorrelationBlogUser, BlogID: blogID}).
+		Count(&count).Offset(offset).Limit(adminConsoleUserListPageSize).Find(&correlations).Error; nil != err {
+		log.Errorf("get users failed: " + err.Error())
 	}
 
 	for _, rel := range correlations {
 		user := &model.User{}
 		if err := db.Where("id = ?", rel.ID2).Find(user).Error; nil != err {
-			return
+			log.Errorf("get user failed: " + err.Error())
+
+			continue
 		}
 
 		ret = append(ret, user)
 	}
+
+	pageCount := int(math.Ceil(float64(count) / adminConsoleUserListPageSize))
+	pagination = util.NewPagination(page, adminConsoleUserListPageSize, pageCount, adminConsoleUserListWindowSize, count)
+
+	return
 
 	return
 }

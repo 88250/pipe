@@ -133,7 +133,7 @@ func (srv *articleService) AddArticle(article *model.Article) error {
 func (srv *articleService) ConsoleGetArticles(page int, blogID uint) (ret []*model.Article, pagination *util.Pagination) {
 	offset := (page - 1) * adminConsoleArticleListPageSize
 	count := 0
-	if err := db.Model(model.Article{}).Select("id, created_at, author_id, title, tags, path, topped, view_count, comment_count").
+	if err := db.Model(&model.Article{}).Select("id, created_at, author_id, title, tags, path, topped, view_count, comment_count").
 		Where(model.Article{Status: model.ArticleStatusOK, BlogID: blogID}).
 		Order("topped DESC, id DESC").Count(&count).
 		Offset(offset).Limit(adminConsoleArticleListPageSize).
@@ -151,7 +151,7 @@ func (srv *articleService) GetArticles(page int, blogID uint) (ret []*model.Arti
 	pageSize, windowSize := getPageWindowSize(blogID)
 	offset := (page - 1) * pageSize
 	count := 0
-	if err := db.Model(model.Article{}).Select("id, created_at, author_id, title, content, tags, path, topped, view_count, comment_count").
+	if err := db.Model(&model.Article{}).Select("id, created_at, author_id, title, content, tags, path, topped, view_count, comment_count").
 		Where(model.Article{Status: model.ArticleStatusOK, BlogID: blogID}).
 		Order("topped DESC, id DESC").Count(&count).
 		Offset(offset).Limit(pageSize).
@@ -176,7 +176,7 @@ func (src *articleService) GetTagArticles(tagTitle string, page int, blogID uint
 	count := 0
 
 	rels := []*model.Correlation{}
-	if err := db.Model(model.Correlation{}).Where(model.Correlation{ID2: tag.ID, Type: model.CorrelationArticleTag}).
+	if err := db.Model(&model.Correlation{}).Where(model.Correlation{ID2: tag.ID, Type: model.CorrelationArticleTag}).
 		Find(&rels).Error; nil != err {
 		return
 	}
@@ -186,7 +186,7 @@ func (src *articleService) GetTagArticles(tagTitle string, page int, blogID uint
 		articleIDs = append(articleIDs, articleTagRel.ID1)
 	}
 
-	if err := db.Model(model.Article{}).
+	if err := db.Model(&model.Article{}).
 		Where("ID in (?) AND status = ?", articleIDs, model.ArticleStatusOK).
 		Order("topped DESC, id DESC").Count(&count).
 		Offset(offset).Limit(pageSize).
@@ -205,7 +205,7 @@ func (src *articleService) GetAuthorArticles(authorID uint, page int, blogID uin
 	offset := (page - 1) * pageSize
 	count := 0
 
-	if err := db.Model(model.Article{}).
+	if err := db.Model(&model.Article{}).
 		Where("author_id = ? AND status = ?", authorID, model.ArticleStatusOK).
 		Order("topped DESC, id DESC").Count(&count).
 		Offset(offset).Limit(pageSize).
@@ -220,7 +220,7 @@ func (src *articleService) GetAuthorArticles(authorID uint, page int, blogID uin
 }
 
 func (srv *articleService) GetMostViewArticles(size int, blogID uint) (ret []*model.Article) {
-	if err := db.Model(model.Article{}).Select("id, created_at, author_id, title, path").
+	if err := db.Model(&model.Article{}).Select("id, created_at, author_id, title, path").
 		Where(model.Article{Status: model.ArticleStatusOK, BlogID: blogID}).
 		Order("view_count DESC, id DESC").Limit(size).Find(&ret).Error; nil != err {
 		log.Errorf("get most view articles failed: " + err.Error())
@@ -230,7 +230,7 @@ func (srv *articleService) GetMostViewArticles(size int, blogID uint) (ret []*mo
 }
 
 func (srv *articleService) GetMostCommentArticles(size int, blogID uint) (ret []*model.Article) {
-	if err := db.Model(model.Article{}).Select("id, created_at, author_id, title, path").
+	if err := db.Model(&model.Article{}).Select("id, created_at, author_id, title, path").
 		Where(model.Article{Status: model.ArticleStatusOK, BlogID: blogID}).
 		Order("comment_count DESC, id DESC").Limit(size).Find(&ret).Error; nil != err {
 		log.Errorf("get most comment articles failed: " + err.Error())

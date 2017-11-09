@@ -31,7 +31,7 @@ func showAuthorsAction(c *gin.Context) {
 	dataModel := getDataModel(c)
 
 	themeAuthors := []*ThemeAuthor{}
-	authorModels := service.User.GetBlogUsers(blogAdmin.BlogID)
+	authorModels, _ := service.User.GetBlogUsers(1, blogAdmin.BlogID)
 	for _, authorModel := range authorModels {
 		author := &ThemeAuthor{
 			Name:         authorModel.Name,

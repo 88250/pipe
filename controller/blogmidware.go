@@ -119,7 +119,8 @@ func fillCommon(c *gin.Context) {
 	(*dataModel)["MetaDescription"] = settingMap[model.SettingNameBasicMetaDescription]
 	(*dataModel)["Conf"] = util.Conf
 	(*dataModel)["Year"] = time.Now().Year()
-	(*dataModel)["UserCount"] = len(service.User.GetBlogUsers(blogID))
+	users, _ := service.User.GetBlogUsers(1, blogID)
+	(*dataModel)["UserCount"] = len(users)
 
 	(*dataModel)["Navigations"] = service.Navigation.GetNavigations(blogID)
 

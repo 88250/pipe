@@ -32,14 +32,15 @@ func GetUsersAction(c *gin.Context) {
 
 	session := util.GetSession(c)
 
-	users := []*ConsoleUser{}
 	blogURLSetting := service.Setting.GetSetting(model.SettingCategoryBasic, model.SettingNameBasicBlogURL, session.BID)
 	if nil == blogURLSetting {
 		log.Errorf("not found blog URL setting [blogID=%d]", session.BID)
 
 		return
 	}
-	userModels := service.User.GetBlogUsers(session.BID)
+
+	users := []*ConsoleUser{}
+	userModels, pagination := service.User.GetBlogUsers(util.GetPage(c), session.BID)
 	for _, userModel := range userModels {
 		users = append(users, &ConsoleUser{
 			ID:        userModel.ID,
@@ -51,5 +52,8 @@ func GetUsersAction(c *gin.Context) {
 		})
 	}
 
-	result.Data = users
+	result.Data = map[string]interface{}{
+		"users":      users,
+		"pagination": pagination,
+	}
 }
