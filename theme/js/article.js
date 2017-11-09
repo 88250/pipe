@@ -9,18 +9,22 @@ import $ from 'jquery'
 import hljs from 'highlight.js'
 import {LazyLoadCSSImage, LazyLoadImage} from './common'
 /**
- * @description 按需加载 MathJax
- * @returns {undefined}
+ * @description 初始化 markdown 解析
  */
-export const InitMathJax = () => {
+export const ParseMarkdown = () => {
   let hasMathJax = false;
+  let hasFlow = false;
+  // 按需加载 MathJax
   $('.pipe-content__reset').each(function () {
     $(this).find('p').each(function () {
       if ($(this).text().indexOf('$/') > -1 || $(this).text().indexOf('$$') > -1) {
-        hasMathJax = true;
-        return false;
+        hasMathJax = true
       }
     });
+
+    if ($(this).find('code.lang-flow').length > 0) {
+      hasFlow = true
+    }
   });
 
   if (hasMathJax) {
@@ -38,6 +42,19 @@ export const InitMathJax = () => {
           skipTags: ['pre', 'code']
         }
       });
+    });
+  }
+
+  if (hasFlow) {
+    $.ajax({
+      method: "GET",
+      url: "https://cdnjs.cloudflare.com/ajax/libs/flowchart/1.7.0/flowchart.min.js",
+      dataType: "script"
+    }).done(function () {
+      $('.pipe-content__reset code.lang-flow').each(function () {
+        const diagram = flowchart.parse($(this).text())
+        diagram.drawSVG('diagram');
+      })
     });
   }
 }
@@ -210,6 +227,7 @@ export const InitComment = () => {
             })
             LazyLoadImage()
             LazyLoadCSSImage()
+            ParseMarkdown()
           } else {
             alert(result.msg)
             $it.removeClass('disabled')
@@ -344,6 +362,7 @@ export const InitComment = () => {
           })
           LazyLoadCSSImage()
           LazyLoadImage()
+          ParseMarkdown()
           $commentContent.val('')
           localStorage.removeItem('pipeEditorComment')
         } else {

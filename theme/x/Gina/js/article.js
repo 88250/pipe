@@ -11,7 +11,7 @@ import {
   InitToc,
   ShowEditor,
   InitComment,
-  InitMathJax
+  ParseMarkdown
 } from '../../../js/article'
 import './common'
 
@@ -38,7 +38,7 @@ const Article = {
       hljs.highlightBlock(block);
     });
 
-    InitMathJax()
+    ParseMarkdown()
   }
 }
 
