@@ -157,7 +157,7 @@
         if (this.useThumbs) {
           document.querySelectorAll('.carousel__item').forEach((item, index) => {
             if (item.style.display !== 'none') {
-              content = `![](${this.thumbs[index]})` + content
+              content = `![](${this.thumbs[index]})\n\n` + content
             }
           })
         }
