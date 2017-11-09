@@ -113,7 +113,6 @@ Pipe 的诞生离不开以下开源项目：
 * [jQuery](https://github.com/jquery/jquery)：使用广泛的 JavaScript 工具库
 * [Gin](https://github.com/gin-gonic/gin)：又快又好用的 golang HTTP web 框架
 * [GORM](https://github.com/jinzhu/gorm)：梦幻般的 golang ORM 库
-* [Logrus](https://github.com/sirupsen/logrus)：结构化的 golang 日志组件
 * [Blackfriday](github.com/russross/blackfriday)：golang Markdown 处理器
 * [SQLite](https://www.sqlite.org)：使用广泛的嵌入式 SQL 引擎
 * [GCache](github.com/bluele/gcache)：golang 缓存库
