@@ -47,7 +47,7 @@ func Markdown(mdText string) string {
 	mdText = emojify(mdText)
 	mdTextBytes := []byte(mdText)
 	unsafe := blackfriday.MarkdownCommon(mdTextBytes)
-	ret := string(bluemonday.UGCPolicy().SanitizeBytes(unsafe))
+	ret := string(bluemonday.UGCPolicy().AllowAttrs("class").Matching(regexp.MustCompile("^language-[a-zA-Z0-9]+$")).OnElements("code").SanitizeBytes(unsafe))
 
 	doc, _ := goquery.NewDocumentFromReader(strings.NewReader(ret))
 	doc.Find("img").Each(func(i int, ele *goquery.Selection) {
