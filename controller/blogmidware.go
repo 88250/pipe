@@ -30,7 +30,6 @@ import (
 	"github.com/b3log/pipe/util"
 	"github.com/dustin/go-humanize"
 	"github.com/gin-gonic/gin"
-	log "github.com/sirupsen/logrus"
 )
 
 func resolveBlog(c *gin.Context) {
@@ -105,7 +104,7 @@ func fillCommon(c *gin.Context) {
 	for _, statistic := range statistics {
 		count, err := strconv.Atoi(statistic.Value)
 		if nil != err {
-			log.Errorf("statistic [%s] should be an integer, actual is [%v]", statistic.Name, statistic.Value)
+			logger.Errorf("statistic [%s] should be an integer, actual is [%v]", statistic.Name, statistic.Value)
 		}
 		statisticMap[strings.Title(statistic.Name)] = count
 		statisticMap[statistic.Name] = count
@@ -149,7 +148,7 @@ func fillMostUseCategories(settingMap *map[string]interface{}, dataModel *DataMo
 func fillMostUseTags(settingMap *map[string]interface{}, dataModel *DataModel, blogID uint) {
 	tagSize, err := strconv.Atoi((*settingMap)[model.SettingNamePreferenceMostUseTagListSize].(string))
 	if nil != err {
-		log.Errorf("setting [%s] should be an integer, actual is [%v]", model.SettingNamePreferenceMostUseTagListSize,
+		logger.Errorf("setting [%s] should be an integer, actual is [%v]", model.SettingNamePreferenceMostUseTagListSize,
 			(*settingMap)[model.SettingNamePreferenceMostUseTagListSize])
 		tagSize = model.SettingPreferenceMostUseTagListSizeDefault
 	}
@@ -168,7 +167,7 @@ func fillMostUseTags(settingMap *map[string]interface{}, dataModel *DataModel, b
 func fillMostViewArticles(settingMap *map[string]interface{}, dataModel *DataModel, blogID uint) {
 	mostViewArticleSize, err := strconv.Atoi((*settingMap)[model.SettingNamePreferenceMostViewArticleListSize].(string))
 	if nil != err {
-		log.Errorf("setting [%s] should be an integer, actual is [%v]", model.SettingNamePreferenceMostViewArticleListSize,
+		logger.Errorf("setting [%s] should be an integer, actual is [%v]", model.SettingNamePreferenceMostViewArticleListSize,
 			(*settingMap)[model.SettingNamePreferenceMostViewArticleListSize])
 		mostViewArticleSize = model.SettingPreferenceMostViewArticleListSizeDefault
 	}
@@ -195,7 +194,7 @@ func fillMostViewArticles(settingMap *map[string]interface{}, dataModel *DataMod
 func fillRecentComments(settingMap *map[string]interface{}, dataModel *DataModel, blogID uint) {
 	recentCommentSize, err := strconv.Atoi((*settingMap)[model.SettingNamePreferenceRecentCommentListSize].(string))
 	if nil != err {
-		log.Errorf("setting [%s] should be an integer, actual is [%v]", model.SettingNamePreferenceRecentCommentListSize,
+		logger.Errorf("setting [%s] should be an integer, actual is [%v]", model.SettingNamePreferenceRecentCommentListSize,
 			(*settingMap)[model.SettingNamePreferenceRecentCommentListSize])
 		recentCommentSize = model.SettingPreferenceRecentCommentListSizeDefault
 	}
@@ -222,7 +221,7 @@ func fillRecentComments(settingMap *map[string]interface{}, dataModel *DataModel
 func fillMostCommentArticles(settingMap *map[string]interface{}, dataModel *DataModel, blogID uint) {
 	mostCommentArticleSize, err := strconv.Atoi((*settingMap)[model.SettingNamePreferenceMostCommentArticleListSize].(string))
 	if nil != err {
-		log.Errorf("setting [%s] should be an integer, actual is [%v]", model.SettingNamePreferenceMostCommentArticleListSize,
+		logger.Errorf("setting [%s] should be an integer, actual is [%v]", model.SettingNamePreferenceMostCommentArticleListSize,
 			(*settingMap)[model.SettingNamePreferenceMostCommentArticleListSize])
 		mostCommentArticleSize = model.SettingPreferenceMostCommentArticleListSizeDefault
 	}

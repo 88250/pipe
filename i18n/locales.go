@@ -24,9 +24,12 @@ import (
 	"sort"
 	"strings"
 
+	"github.com/b3log/pipe/log"
 	"github.com/b3log/pipe/util"
-	log "github.com/sirupsen/logrus"
 )
+
+// Logger
+var logger = log.NewLogger(os.Stdout)
 
 type locale struct {
 	Name     string
@@ -51,20 +54,20 @@ func Load() {
 		load(loc)
 	}
 
-	log.Debugf("loaded [%d] language configuration files", len(locales))
+	logger.Debugf("loaded [%d] language configuration files", len(locales))
 }
 
 func load(localeStr string) {
 	bytes, err := ioutil.ReadFile("i18n/" + localeStr + ".json")
 	if nil != err {
-		log.Fatal("reads i18n configurations fialed: " + err.Error())
+		logger.Fatal("reads i18n configurations fialed: " + err.Error())
 	}
 
 	l := locale{Name: localeStr}
 
 	err = json.Unmarshal(bytes, &l.Langs)
 	if nil != err {
-		log.Fatal("parses i18n configurations failed: " + err.Error())
+		logger.Fatal("parses i18n configurations failed: " + err.Error())
 	}
 
 	locales[localeStr] = l

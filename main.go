@@ -26,15 +26,21 @@ import (
 
 	"github.com/b3log/pipe/controller"
 	"github.com/b3log/pipe/i18n"
+	"github.com/b3log/pipe/log"
 	"github.com/b3log/pipe/service"
 	"github.com/b3log/pipe/theme"
 	"github.com/b3log/pipe/util"
 	"github.com/gin-gonic/gin"
-	log "github.com/sirupsen/logrus"
 )
+
+// Logger
+var logger *log.Logger
 
 // The only one init function in pipe.
 func init() {
+	log.SetLevel("warn")
+	logger = log.NewLogger(os.Stdout)
+
 	util.LoadConf()
 	i18n.Load()
 	theme.Load()
@@ -53,7 +59,7 @@ func main() {
 
 	serverURL, err := url.ParseRequestURI(util.Conf.Server)
 	if nil != err {
-		log.Fatal("Invalid [Server] configuration item")
+		logger.Fatal("Invalid [Server] configuration item")
 	}
 
 	router := controller.MapRoutes()
@@ -64,7 +70,7 @@ func main() {
 
 	handleSignal(server)
 
-	log.Infof("Pipe (v%s) is running [%s]", util.Version, util.Conf.Server)
+	logger.Infof("Pipe (v%s) is running [%s]", util.Version, util.Conf.Server)
 
 	server.ListenAndServe()
 }
@@ -76,14 +82,14 @@ func handleSignal(server *http.Server) {
 
 	go func() {
 		s := <-c
-		log.Infof("got signal [%s], exiting pipe now", s)
+		logger.Infof("got signal [%s], exiting pipe now", s)
 		if err := server.Close(); nil != err {
-			log.Error("server close failed: ", err)
+			logger.Errorf("server close failed: ", err)
 		}
 
 		service.DisconnectDB()
 
-		log.Info("Pipe exited")
+		logger.Infof("Pipe exited")
 		os.Exit(0)
 	}()
 }

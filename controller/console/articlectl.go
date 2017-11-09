@@ -19,15 +19,19 @@ package console
 
 import (
 	"net/http"
+	"os"
 	"strconv"
 	"strings"
 
+	"github.com/b3log/pipe/log"
 	"github.com/b3log/pipe/model"
 	"github.com/b3log/pipe/service"
 	"github.com/b3log/pipe/util"
 	"github.com/gin-gonic/gin"
-	log "github.com/sirupsen/logrus"
 )
+
+// Logger
+var logger = log.NewLogger(os.Stdout)
 
 func AddArticleAction(c *gin.Context) {
 	result := util.NewResult()
@@ -94,14 +98,14 @@ func GetArticlesAction(c *gin.Context) {
 
 		authorModel := service.User.GetUser(articleModel.AuthorID)
 		if nil == authorModel {
-			log.Errorf("not found author of article [id=%d, authorID=%d]", articleModel.ID, articleModel.AuthorID)
+			logger.Errorf("not found author of article [id=%d, authorID=%d]", articleModel.ID, articleModel.AuthorID)
 
 			continue
 		}
 
 		blogURLSetting := service.Setting.GetSetting(model.SettingCategoryBasic, model.SettingNameBasicBlogURL, authorModel.BlogID)
 		if nil == blogURLSetting {
-			log.Errorf("not found blog URL setting [blogID=%d]", authorModel.BlogID)
+			logger.Errorf("not found blog URL setting [blogID=%d]", authorModel.BlogID)
 
 			continue
 		}
@@ -167,7 +171,7 @@ func RemoveArticlesAction(c *gin.Context) {
 	ids := arg["ids"].([]interface{})
 	for _, id := range ids {
 		if err := service.Article.RemoveArticle(uint(id.(float64))); nil != err {
-			log.Errorf("remove article failed: " + err.Error())
+			logger.Errorf("remove article failed: " + err.Error())
 		}
 	}
 }

@@ -24,7 +24,6 @@ import (
 	"github.com/b3log/pipe/service"
 	"github.com/b3log/pipe/util"
 	"github.com/gin-gonic/gin"
-	log "github.com/sirupsen/logrus"
 )
 
 func GenArticlesAction(c *gin.Context) {
@@ -39,7 +38,7 @@ func GenArticlesAction(c *gin.Context) {
 			BlogID:   session.BID,
 		}
 		if err := service.Article.AddArticle(article); nil != err {
-			log.Errorf("generate article failed: " + err.Error())
+			logger.Errorf("generate article failed: " + err.Error())
 		}
 	}
 

@@ -24,7 +24,6 @@ import (
 
 	"github.com/b3log/pipe/model"
 	"github.com/b3log/pipe/util"
-	log "github.com/sirupsen/logrus"
 )
 
 var Navigation = &navigationService{
@@ -101,7 +100,7 @@ func (srv *navigationService) ConsoleGetNavigations(page int, blogID uint) (ret 
 	if err := db.Model(&model.Navigation{}).Order("number ASC, id DESC").
 		Where(model.Navigation{BlogID: blogID}).
 		Count(&count).Offset(offset).Limit(adminConsoleNavigationListPageSize).Find(&ret).Error; nil != err {
-		log.Errorf("get navigations failed: " + err.Error())
+		logger.Errorf("get navigations failed: " + err.Error())
 	}
 
 	pageCount := int(math.Ceil(float64(count) / adminConsoleNavigationListPageSize))
@@ -113,7 +112,7 @@ func (srv *navigationService) ConsoleGetNavigations(page int, blogID uint) (ret 
 func (srv *navigationService) GetNavigations(blogID uint) (ret []*model.Navigation) {
 	if err := db.Model(&model.Navigation{}).Order("number ASC, id DESC").
 		Where(model.Navigation{BlogID: blogID}).Find(&ret).Error; nil != err {
-		log.Errorf("get navigations failed: " + err.Error())
+		logger.Errorf("get navigations failed: " + err.Error())
 	}
 
 	return

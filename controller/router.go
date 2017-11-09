@@ -19,17 +19,21 @@ package controller
 import (
 	"errors"
 	"html/template"
+	"os"
 	"path/filepath"
 	"strconv"
 	"strings"
 
 	"github.com/b3log/pipe/controller/console"
+	"github.com/b3log/pipe/log"
 	"github.com/b3log/pipe/theme"
 	"github.com/b3log/pipe/util"
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
-	log "github.com/sirupsen/logrus"
 )
+
+// Logger
+var logger = log.NewLogger(os.Stdout)
 
 // MapRoutes returns a gin engine and binds controllers with request URLs.
 func MapRoutes() *gin.Engine {
@@ -129,11 +133,11 @@ func MapRoutes() *gin.Engine {
 	}
 	themeTemplates, err := filepath.Glob("theme/x/*/*.html")
 	if nil != err {
-		log.Fatal("load theme templates failed: " + err.Error())
+		logger.Fatal("load theme templates failed: " + err.Error())
 	}
 	commentTemplates, err := filepath.Glob("theme/comment/*.html")
 	if nil != err {
-		log.Fatal("load comment templates failed: " + err.Error())
+		logger.Fatal("load comment templates failed: " + err.Error())
 	}
 	templates := append(themeTemplates, commentTemplates...)
 	ret.LoadHTMLFiles(templates...)
@@ -223,5 +227,5 @@ func routePath(c *gin.Context) {
 		return
 	}
 
-	log.Info("can't handle path [" + path + "]")
+	logger.Infof("can't handle path [" + path + "]")
 }

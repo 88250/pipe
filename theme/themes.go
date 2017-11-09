@@ -21,9 +21,12 @@ package theme
 import (
 	"os"
 
+	"github.com/b3log/pipe/log"
 	"github.com/b3log/pipe/util"
-	log "github.com/sirupsen/logrus"
 )
+
+// Logger
+var logger = log.NewLogger(os.Stdout)
 
 const DefaultTheme = "Gina"
 
@@ -43,5 +46,5 @@ func Load() {
 		Themes = append(Themes, name)
 	}
 
-	log.Debugf("loaded [%d] themes", len(Themes))
+	logger.Debugf("loaded [%d] themes", len(Themes))
 }

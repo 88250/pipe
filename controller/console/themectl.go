@@ -24,7 +24,6 @@ import (
 	"github.com/b3log/pipe/theme"
 	"github.com/b3log/pipe/util"
 	"github.com/gin-gonic/gin"
-	log "github.com/sirupsen/logrus"
 )
 
 func UpdateThemeAction(c *gin.Context) {
@@ -58,7 +57,7 @@ func GetThemesAction(c *gin.Context) {
 	currentID := theme.Themes[0]
 	themeNameSetting := service.Setting.GetSetting(model.SettingCategoryTheme, model.SettingNameThemeName, session.BID)
 	if nil == themeNameSetting {
-		log.Error("not found theme name setting")
+		logger.Errorf("not found theme name setting")
 	} else {
 		currentID = themeNameSetting.Value
 	}

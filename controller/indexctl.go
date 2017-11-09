@@ -21,13 +21,12 @@ import (
 	"text/template"
 
 	"github.com/gin-gonic/gin"
-	log "github.com/sirupsen/logrus"
 )
 
 func showIndexAction(c *gin.Context) {
 	t, err := template.ParseFiles("console/dist/index.html")
 	if nil != err {
-		log.Error("load index page failed: " + err.Error())
+		logger.Errorf("load index page failed: " + err.Error())
 		c.String(http.StatusNotFound, "load index page failed")
 
 		return

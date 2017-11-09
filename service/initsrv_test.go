@@ -40,7 +40,7 @@ func TestMain(m *testing.M) {
 func setup() {
 	home, err := util.UserHome()
 	if nil != err {
-		log.Fatal(err)
+		logger.Fatal(err)
 	}
 
 	util.Conf = &util.Configuration{}

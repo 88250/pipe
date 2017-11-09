@@ -27,7 +27,6 @@ import (
 	"github.com/b3log/pipe/service"
 	"github.com/b3log/pipe/util"
 	"github.com/gin-gonic/gin"
-	log "github.com/sirupsen/logrus"
 	"github.com/vinta/pangu"
 )
 
@@ -51,7 +50,7 @@ func showArticlesAction(c *gin.Context) {
 
 		authorModel := service.User.GetUser(articleModel.AuthorID)
 		if nil == authorModel {
-			log.Errorf("not found author of article [id=%d, authorID=%d]", articleModel.ID, articleModel.AuthorID)
+			logger.Errorf("not found author of article [id=%d, authorID=%d]", articleModel.ID, articleModel.AuthorID)
 
 			continue
 		}
@@ -129,7 +128,7 @@ func showArticleAction(c *gin.Context) {
 	for _, commentModel := range commentModels {
 		commentAuthor := service.User.GetUser(commentModel.AuthorID)
 		if nil == commentAuthor {
-			log.Errorf("not found comment author [userID=%d]", commentModel.AuthorID)
+			logger.Errorf("not found comment author [userID=%d]", commentModel.AuthorID)
 
 			continue
 		}
@@ -188,7 +187,7 @@ func showArticleAction(c *gin.Context) {
 
 		authorModel := service.User.GetUser(articleModel.AuthorID)
 		if nil == authorModel {
-			log.Errorf("not found author of article [id=%d, authorID=%d]", articleModel.ID, articleModel.AuthorID)
+			logger.Errorf("not found author of article [id=%d, authorID=%d]", articleModel.ID, articleModel.AuthorID)
 
 			continue
 		}

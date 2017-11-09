@@ -25,7 +25,6 @@ import (
 	"github.com/b3log/pipe/theme"
 	"github.com/b3log/pipe/util"
 	"github.com/jinzhu/gorm"
-	log "github.com/sirupsen/logrus"
 )
 
 var Init = &initService{
@@ -71,7 +70,7 @@ func (srv *initService) Status() (platformStatus *PlatformStatus, err error) {
 		}
 
 		msg := "checks platform init status failed: " + err.Error()
-		log.Error(msg)
+		logger.Errorf(msg)
 
 		return platformStatus, errors.New(msg)
 	}
@@ -100,7 +99,7 @@ func (srv *initService) InitPlatform(platformAdmin *model.User) error {
 		return nil
 	}
 
-	log.Debug("Initializing platform")
+	logger.Debugf("Initializing platform")
 
 	tx := db.Begin()
 
@@ -161,7 +160,7 @@ func (srv *initService) InitPlatform(platformAdmin *model.User) error {
 	}
 
 	tx.Commit()
-	log.Debug("Initialized platform")
+	logger.Debugf("Initialized platform")
 
 	srv.inited = true
 

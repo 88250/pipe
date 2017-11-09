@@ -27,7 +27,6 @@ import (
 	"github.com/b3log/pipe/service"
 	"github.com/b3log/pipe/util"
 	"github.com/gin-gonic/gin"
-	log "github.com/sirupsen/logrus"
 )
 
 func getRepliesAction(c *gin.Context) {
@@ -44,7 +43,7 @@ func getRepliesAction(c *gin.Context) {
 	for _, replyComment := range replyComments {
 		commentAuthor := service.User.GetUser(replyComment.AuthorID)
 		if nil == commentAuthor {
-			log.Errorf("not found comment author [userID=%d]", replyComment.AuthorID)
+			logger.Errorf("not found comment author [userID=%d]", replyComment.AuthorID)
 
 			continue
 		}
@@ -127,7 +126,7 @@ func addCommentAction(c *gin.Context) {
 
 	htmlBuilder := bytes.Buffer{}
 	if err := t.ExecuteTemplate(&htmlBuilder, "comment/comment", dataModel); nil != err {
-		log.Errorf("execute comment template failed: " + err.Error())
+		logger.Errorf("execute comment template failed: " + err.Error())
 
 		return
 	}

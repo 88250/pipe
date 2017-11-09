@@ -23,7 +23,6 @@ import (
 	"github.com/b3log/pipe/service"
 	"github.com/b3log/pipe/util"
 	"github.com/gin-gonic/gin"
-	log "github.com/sirupsen/logrus"
 )
 
 func showCategoriesAction(c *gin.Context) {
@@ -79,7 +78,7 @@ func showCategoryArticlesArticlesAction(c *gin.Context) {
 
 		authorModel := service.User.GetUser(articleModel.AuthorID)
 		if nil == authorModel {
-			log.Errorf("not found author of article [id=%d, authorID=%d]", articleModel.ID, articleModel.AuthorID)
+			logger.Errorf("not found author of article [id=%d, authorID=%d]", articleModel.ID, articleModel.AuthorID)
 
 			continue
 		}

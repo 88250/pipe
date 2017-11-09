@@ -25,8 +25,6 @@ import (
 	"github.com/b3log/pipe/service"
 	"github.com/b3log/pipe/util"
 	"github.com/gin-gonic/gin"
-
-	log "github.com/sirupsen/logrus"
 )
 
 func GetCommentsAction(c *gin.Context) {
@@ -40,19 +38,19 @@ func GetCommentsAction(c *gin.Context) {
 	for _, commentModel := range commentModels {
 		article := service.Article.ConsoleGetArticle(commentModel.ArticleID)
 		if nil == article {
-			log.Errorf("not found comment [id=%d]'s article", commentModel.ID)
+			logger.Errorf("not found comment [id=%d]'s article", commentModel.ID)
 
 			continue
 		}
 		articleAuthor := service.User.GetUser(article.AuthorID)
 		if nil == articleAuthor {
-			log.Errorf("not found article [id=%d]'s author", article.ID)
+			logger.Errorf("not found article [id=%d]'s author", article.ID)
 
 			continue
 		}
 		blogURLSetting := service.Setting.GetSetting(model.SettingCategoryBasic, model.SettingNameBasicBlogURL, articleAuthor.BlogID)
 		if nil == blogURLSetting {
-			log.Errorf("not found blog URL setting [blogID=%d]", articleAuthor.BlogID)
+			logger.Errorf("not found blog URL setting [blogID=%d]", articleAuthor.BlogID)
 
 			continue
 		}
@@ -64,13 +62,13 @@ func GetCommentsAction(c *gin.Context) {
 
 		commentAuthor := service.User.GetUser(commentModel.AuthorID)
 		if nil == commentAuthor {
-			log.Errorf("not found comment author [userID=%d]", commentModel.AuthorID)
+			logger.Errorf("not found comment author [userID=%d]", commentModel.AuthorID)
 
 			continue
 		}
 		blogURLSetting = service.Setting.GetSetting(model.SettingCategoryBasic, model.SettingNameBasicBlogURL, commentAuthor.BlogID)
 		if nil == blogURLSetting {
-			log.Errorf("not found blog URL setting [blogID=%d]", commentAuthor.BlogID)
+			logger.Errorf("not found blog URL setting [blogID=%d]", commentAuthor.BlogID)
 
 			continue
 		}
@@ -133,7 +131,7 @@ func RemoveCommentsAction(c *gin.Context) {
 	ids := arg["ids"].([]interface{})
 	for _, id := range ids {
 		if err := service.Comment.RemoveComment(uint(id.(float64))); nil != err {
-			log.Errorf("remove comment failed: " + err.Error())
+			logger.Errorf("remove comment failed: " + err.Error())
 		}
 	}
 }

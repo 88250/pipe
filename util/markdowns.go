@@ -28,7 +28,6 @@ import (
 	"github.com/hackebrot/turtle"
 	"github.com/microcosm-cc/bluemonday"
 	"github.com/russross/blackfriday"
-	log "github.com/sirupsen/logrus"
 	"github.com/vinta/pangu"
 )
 
@@ -132,7 +131,7 @@ func emojify(text string) string {
 		emojiASCII = strings.Replace(emojiASCII, ":", "", -1)
 		emoji := turtle.Emojis[emojiASCII]
 		if nil == emoji {
-			log.Warn("not found [" + emojiASCII + "]")
+			logger.Warn("not found [" + emojiASCII + "]")
 
 			return emojiASCII
 		}

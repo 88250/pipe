@@ -24,7 +24,6 @@ import (
 	"github.com/b3log/pipe/model"
 	"github.com/b3log/pipe/util"
 	"github.com/jinzhu/gorm"
-	log "github.com/sirupsen/logrus"
 )
 
 var Category = &categoryService{
@@ -73,7 +72,7 @@ func (srv *categoryService) ConsoleGetCategories(page int, blogID uint) (ret []*
 	if err := db.Model(&model.Category{}).Order("number ASC, id DESC").
 		Where(model.Category{BlogID: blogID}).
 		Count(&count).Offset(offset).Limit(adminConsoleCategoryListPageSize).Find(&ret).Error; nil != err {
-		log.Errorf("get categories failed: " + err.Error())
+		logger.Errorf("get categories failed: " + err.Error())
 	}
 
 	pageCount := int(math.Ceil(float64(count) / adminConsoleCategoryListPageSize))
@@ -84,7 +83,7 @@ func (srv *categoryService) ConsoleGetCategories(page int, blogID uint) (ret []*
 
 func (srv *categoryService) GetCategories(size int, blogID uint) (ret []*model.Category) {
 	if err := db.Where(model.Category{BlogID: blogID}).Order("number asc").Limit(size).Find(&ret).Error; nil != err {
-		log.Errorf("get categories failed: " + err.Error())
+		logger.Errorf("get categories failed: " + err.Error())
 	}
 
 	return

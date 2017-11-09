@@ -30,7 +30,6 @@ import (
 	"github.com/b3log/pipe/model"
 	"github.com/b3log/pipe/util"
 	"github.com/jinzhu/gorm"
-	log "github.com/sirupsen/logrus"
 )
 
 var Article = &articleService{
@@ -138,7 +137,7 @@ func (srv *articleService) ConsoleGetArticles(page int, blogID uint) (ret []*mod
 		Order("topped DESC, id DESC").Count(&count).
 		Offset(offset).Limit(adminConsoleArticleListPageSize).
 		Find(&ret).Error; nil != err {
-		log.Errorf("get articles failed: " + err.Error())
+		logger.Errorf("get articles failed: " + err.Error())
 	}
 
 	pageCount := int(math.Ceil(float64(count) / adminConsoleArticleListPageSize))
@@ -156,7 +155,7 @@ func (srv *articleService) GetArticles(page int, blogID uint) (ret []*model.Arti
 		Order("topped DESC, id DESC").Count(&count).
 		Offset(offset).Limit(pageSize).
 		Find(&ret).Error; nil != err {
-		log.Errorf("get articles failed: " + err.Error())
+		logger.Errorf("get articles failed: " + err.Error())
 	}
 
 	pageCount := int(math.Ceil(float64(count) / float64(pageSize)))
@@ -191,7 +190,7 @@ func (src *articleService) GetTagArticles(tagTitle string, page int, blogID uint
 		Order("topped DESC, id DESC").Count(&count).
 		Offset(offset).Limit(pageSize).
 		Find(&ret).Error; nil != err {
-		log.Errorf("get tag articles failed: " + err.Error())
+		logger.Errorf("get tag articles failed: " + err.Error())
 	}
 
 	pageCount := int(math.Ceil(float64(count) / float64(pageSize)))
@@ -210,7 +209,7 @@ func (src *articleService) GetAuthorArticles(authorID uint, page int, blogID uin
 		Order("topped DESC, id DESC").Count(&count).
 		Offset(offset).Limit(pageSize).
 		Find(&ret).Error; nil != err {
-		log.Errorf("get author articles failed: " + err.Error())
+		logger.Errorf("get author articles failed: " + err.Error())
 	}
 
 	pageCount := int(math.Ceil(float64(count) / float64(pageSize)))
@@ -223,7 +222,7 @@ func (srv *articleService) GetMostViewArticles(size int, blogID uint) (ret []*mo
 	if err := db.Model(&model.Article{}).Select("id, created_at, author_id, title, path").
 		Where(model.Article{Status: model.ArticleStatusOK, BlogID: blogID}).
 		Order("view_count DESC, id DESC").Limit(size).Find(&ret).Error; nil != err {
-		log.Errorf("get most view articles failed: " + err.Error())
+		logger.Errorf("get most view articles failed: " + err.Error())
 	}
 
 	return
@@ -233,7 +232,7 @@ func (srv *articleService) GetMostCommentArticles(size int, blogID uint) (ret []
 	if err := db.Model(&model.Article{}).Select("id, created_at, author_id, title, path").
 		Where(model.Article{Status: model.ArticleStatusOK, BlogID: blogID}).
 		Order("comment_count DESC, id DESC").Limit(size).Find(&ret).Error; nil != err {
-		log.Errorf("get most comment articles failed: " + err.Error())
+		logger.Errorf("get most comment articles failed: " + err.Error())
 	}
 
 	return
@@ -242,7 +241,7 @@ func (srv *articleService) GetMostCommentArticles(size int, blogID uint) (ret []
 func (srv *articleService) ConsoleGetArticle(id uint) *model.Article {
 	ret := &model.Article{}
 	if err := db.First(ret, id).Error; nil != err {
-		log.Errorf("get article failed: " + err.Error())
+		logger.Errorf("get article failed: " + err.Error())
 
 		return nil
 	}
@@ -487,13 +486,13 @@ func getPageWindowSize(blogID uint) (pageSize, windowSize int) {
 	settings := Setting.GetSettings(blogID, model.SettingCategoryPreference, []string{model.SettingNamePreferenceArticleListPageSize, model.SettingNamePreferenceArticleListWindowSize})
 	pageSize, err := strconv.Atoi(settings[model.SettingNamePreferenceArticleListPageSize].Value)
 	if nil != err {
-		log.Errorf("value of setting [%s] is not an integer, actual is [%v]", model.SettingNamePreferenceArticleListPageSize, settings[model.SettingNamePreferenceArticleListPageSize].Value)
+		logger.Errorf("value of setting [%s] is not an integer, actual is [%v]", model.SettingNamePreferenceArticleListPageSize, settings[model.SettingNamePreferenceArticleListPageSize].Value)
 		pageSize = adminConsoleArticleListPageSize
 	}
 
 	windowSize, err = strconv.Atoi(settings[model.SettingNamePreferenceArticleListWindowSize].Value)
 	if nil != err {
-		log.Errorf("value of setting [%s] is not an integer, actual is [%v]", model.SettingNamePreferenceArticleListWindowSize, settings[model.SettingNamePreferenceArticleListWindowSize].Value)
+		logger.Errorf("value of setting [%s] is not an integer, actual is [%v]", model.SettingNamePreferenceArticleListWindowSize, settings[model.SettingNamePreferenceArticleListWindowSize].Value)
 		windowSize = adminConsoleArticleListWindowSize
 	}
 

@@ -22,7 +22,6 @@ import (
 	"github.com/b3log/pipe/util"
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
-	log "github.com/sirupsen/logrus"
 )
 
 func logoutAction(c *gin.Context) {
@@ -36,6 +35,6 @@ func logoutAction(c *gin.Context) {
 	})
 	session.Clear()
 	if err := session.Save(); nil != err {
-		log.Errorf("saves session failed: " + err.Error())
+		logger.Errorf("saves session failed: " + err.Error())
 	}
 }

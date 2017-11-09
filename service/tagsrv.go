@@ -20,7 +20,6 @@ import (
 	"sync"
 
 	"github.com/b3log/pipe/model"
-	log "github.com/sirupsen/logrus"
 )
 
 var Tag = &tagService{
@@ -33,7 +32,7 @@ type tagService struct {
 
 func (srv *tagService) ConsoleGetTags(blogID uint) (ret []*model.Tag) {
 	if err := db.Where(model.Tag{BlogID: blogID}).Order("article_count DESC, id DESC").Find(&ret).Error; nil != err {
-		log.Errorf("get tags failed: " + err.Error())
+		logger.Errorf("get tags failed: " + err.Error())
 	}
 
 	return
@@ -41,7 +40,7 @@ func (srv *tagService) ConsoleGetTags(blogID uint) (ret []*model.Tag) {
 
 func (srv *tagService) GetTags(size int, blogID uint) (ret []*model.Tag) {
 	if err := db.Where(model.Tag{BlogID: blogID}).Order("article_count DESC, id DESC").Limit(size).Find(&ret).Error; nil != err {
-		log.Errorf("get tags failed: " + err.Error())
+		logger.Errorf("get tags failed: " + err.Error())
 	}
 
 	return

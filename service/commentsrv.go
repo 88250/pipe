@@ -22,7 +22,6 @@ import (
 
 	"github.com/b3log/pipe/model"
 	"github.com/b3log/pipe/util"
-	log "github.com/sirupsen/logrus"
 )
 
 var Comment = &commentService{
@@ -67,7 +66,7 @@ func (srv *commentService) GetCommentPage(articleID, commentID uint, blogID uint
 func (srv *commentService) GetRepliesCount(parentCommentID uint, blogID uint) int {
 	ret := 0
 	if err := db.Model(&model.Comment{}).Where(&model.Comment{ParentCommentID: parentCommentID, BlogID: blogID}).Count(&ret).Error; nil != err {
-		log.Errorf("count comment [id=%d]'s replies failed: "+err.Error(), parentCommentID)
+		logger.Errorf("count comment [id=%d]'s replies failed: "+err.Error(), parentCommentID)
 	}
 
 	return ret
@@ -75,7 +74,7 @@ func (srv *commentService) GetRepliesCount(parentCommentID uint, blogID uint) in
 
 func (srv *commentService) GetReplies(parentCommentID uint, blogID uint) (ret []*model.Comment) {
 	if err := db.Where(&model.Comment{ParentCommentID: parentCommentID, BlogID: blogID}).Find(&ret).Error; nil != err {
-		log.Errorf("get comment [id=%d]'s replies failed: "+err.Error(), parentCommentID)
+		logger.Errorf("get comment [id=%d]'s replies failed: "+err.Error(), parentCommentID)
 	}
 
 	return
@@ -87,7 +86,7 @@ func (srv *commentService) ConsoleGetComments(page int, blogID uint) (ret []*mod
 	if err := db.Model(&model.Comment{}).
 		Where(&model.Comment{BlogID: blogID}).
 		Count(&count).Offset(offset).Limit(adminConsoleCommentListPageSize).Find(&ret).Error; nil != err {
-		log.Errorf("get comments failed: " + err.Error())
+		logger.Errorf("get comments failed: " + err.Error())
 	}
 
 	pageCount := int(math.Ceil(float64(count) / adminConsoleCommentListPageSize))
@@ -100,7 +99,7 @@ func (srv *commentService) GetRecentComments(size int, blogID uint) (ret []*mode
 	if err := db.Model(&model.Comment{}).Select("id, created_at, content").
 		Where(model.Comment{BlogID: blogID}).
 		Order("created_at DESC, id DESC").Limit(size).Find(&ret).Error; nil != err {
-		log.Errorf("get recent comments failed: " + err.Error())
+		logger.Errorf("get recent comments failed: " + err.Error())
 	}
 
 	return
@@ -112,7 +111,7 @@ func (srv *commentService) GetArticleComments(articleID uint, page int, blogID u
 	if err := db.Model(&model.Comment{}).Order("id ASC").
 		Where(model.Comment{ArticleID: articleID, BlogID: blogID}).
 		Count(&count).Offset(offset).Limit(themeCommentListPageSize).Find(&ret).Error; nil != err {
-		log.Errorf("get comments failed: " + err.Error())
+		logger.Errorf("get comments failed: " + err.Error())
 	}
 
 	pageCount := int(math.Ceil(float64(count) / themeCommentListPageSize))

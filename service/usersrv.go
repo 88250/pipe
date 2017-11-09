@@ -22,7 +22,6 @@ import (
 
 	"github.com/b3log/pipe/model"
 	"github.com/b3log/pipe/util"
-	"github.com/prometheus/common/log"
 )
 
 var User = &userService{
@@ -87,13 +86,13 @@ func (srv *userService) GetBlogUsers(page int, blogID uint) (ret []*model.User, 
 	if err := db.Model(&model.Correlation{}).
 		Where(&model.Correlation{ID1: blogID, Type: model.CorrelationBlogUser, BlogID: blogID}).
 		Count(&count).Offset(offset).Limit(adminConsoleUserListPageSize).Find(&correlations).Error; nil != err {
-		log.Errorf("get users failed: " + err.Error())
+		logger.Errorf("get users failed: " + err.Error())
 	}
 
 	for _, rel := range correlations {
 		user := &model.User{}
 		if err := db.Where("id = ?", rel.ID2).Find(user).Error; nil != err {
-			log.Errorf("get user failed: " + err.Error())
+			logger.Errorf("get user failed: " + err.Error())
 
 			continue
 		}

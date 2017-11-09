@@ -25,7 +25,6 @@ import (
 	"github.com/b3log/pipe/service"
 	"github.com/b3log/pipe/util"
 	"github.com/gin-gonic/gin"
-	log "github.com/sirupsen/logrus"
 )
 
 func GetBasicSettingsAction(c *gin.Context) {
@@ -39,7 +38,7 @@ func GetBasicSettingsAction(c *gin.Context) {
 		if model.SettingNameBasicCommentable == setting.Name {
 			v, err := strconv.ParseBool(setting.Value)
 			if nil != err {
-				log.Errorf("value of basic setting [name=%s] must be \"true\" or \"false\"", setting.Name)
+				logger.Errorf("value of basic setting [name=%s] must be \"true\" or \"false\"", setting.Name)
 				data[setting.Name] = true
 			} else {
 				data[setting.Name] = v
@@ -101,7 +100,7 @@ func GetPreferenceSettingsAction(c *gin.Context) {
 		if model.SettingNamePreferenceArticleListStyle != setting.Name {
 			v, err := strconv.ParseInt(setting.Value, 10, 64)
 			if nil != err {
-				log.Errorf("value of preference setting [name=%s] must be an integer", setting.Name)
+				logger.Errorf("value of preference setting [name=%s] must be an integer", setting.Name)
 				data[setting.Name] = 10
 			} else {
 				data[setting.Name] = v
@@ -243,7 +242,7 @@ func GetFeedSettingsAction(c *gin.Context) {
 		if model.SettingNameFeedOutputSize == setting.Name {
 			v, err := strconv.ParseInt(setting.Value, 10, 64)
 			if nil != err {
-				log.Errorf("value of feed setting [name=%s] must be an integer", setting.Name)
+				logger.Errorf("value of feed setting [name=%s] must be an integer", setting.Name)
 				data[setting.Name] = 20
 			} else {
 				data[setting.Name] = v

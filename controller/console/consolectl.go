@@ -21,13 +21,12 @@ import (
 	"text/template"
 
 	"github.com/gin-gonic/gin"
-	log "github.com/sirupsen/logrus"
 )
 
 func ShowAdminPagesAction(c *gin.Context) {
 	t, err := template.ParseFiles("console/dist/admin" + c.Param("path") + "/index.html")
 	if nil != err {
-		log.Error("load console page [" + c.Param("path") + "] failed: " + err.Error())
+		logger.Errorf("load console page [" + c.Param("path") + "] failed: " + err.Error())
 		c.String(http.StatusNotFound, "load console page failed")
 
 		return
@@ -39,7 +38,7 @@ func ShowAdminPagesAction(c *gin.Context) {
 func ShowLoginAction(c *gin.Context) {
 	t, err := template.ParseFiles("console/dist/login/index.html")
 	if nil != err {
-		log.Error("loads login page failed: " + err.Error())
+		logger.Errorf("loads login page failed: " + err.Error())
 		c.String(http.StatusNotFound, "loads login page failed")
 
 		return

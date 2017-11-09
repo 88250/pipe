@@ -23,7 +23,6 @@ import (
 	"github.com/b3log/pipe/service"
 	"github.com/b3log/pipe/util"
 	"github.com/gin-gonic/gin"
-	log "github.com/sirupsen/logrus"
 )
 
 func GetUsersAction(c *gin.Context) {
@@ -34,7 +33,7 @@ func GetUsersAction(c *gin.Context) {
 
 	blogURLSetting := service.Setting.GetSetting(model.SettingCategoryBasic, model.SettingNameBasicBlogURL, session.BID)
 	if nil == blogURLSetting {
-		log.Errorf("not found blog URL setting [blogID=%d]", session.BID)
+		logger.Errorf("not found blog URL setting [blogID=%d]", session.BID)
 
 		return
 	}

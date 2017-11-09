@@ -25,7 +25,6 @@ import (
 	"github.com/b3log/pipe/util"
 	"github.com/gin-gonic/gin"
 	"github.com/parnurzeal/gorequest"
-	log "github.com/sirupsen/logrus"
 )
 
 type DataModel map[string]interface{}
@@ -71,7 +70,7 @@ func fillUser(c *gin.Context) {
 		_, _, errs := request.Get(util.HacPaiURL+"/apis/check-b3-identity?b3id="+b3id).
 			Set("user-agent", util.UserAgent).Timeout(30 * time.Second).EndStruct(result)
 		if nil != errs {
-			log.Errorf("check b3 identity failed: %s", errs)
+			logger.Errorf("check b3 identity failed: %s", errs)
 			c.Next()
 
 			return
@@ -114,7 +113,7 @@ func fillUser(c *gin.Context) {
 				Role:      session.URole,
 			}
 			if err := service.User.AddUser(user); nil != err {
-				log.Errorf("add user [name=%s] failed: %s", username, err.Error())
+				logger.Errorf("add user [name=%s] failed: %s", username, err.Error())
 			}
 			session.UID = user.ID
 		}
