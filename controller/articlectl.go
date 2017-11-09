@@ -194,8 +194,8 @@ func showArticleAction(c *gin.Context) {
 
 		author := &ThemeAuthor{
 			Name:      authorModel.Name,
-			URL:       "http://localhost:5879/blogs/pipe/vanessa",
-			AvatarURL: "https://img.hacpai.com/20170818zhixiaoyun.jpeg",
+			URL:       getBlogURL(c) + util.PathAuthors + "/" + authorModel.Name,
+			AvatarURL: authorModel.AvatarURL,
 		}
 
 		article := &ThemeArticle{
@@ -208,8 +208,8 @@ func showArticleAction(c *gin.Context) {
 			Topped:       articleModel.Topped,
 			ViewCount:    articleModel.ViewCount,
 			CommentCount: articleModel.CommentCount,
-			ThumbnailURL: "https://img.hacpai.com/20170818zhixiaoyun.jpeg",
-			Content:      "sfasdfsf",
+			ThumbnailURL: "",
+			Content:      "",
 			Editable:     false,
 		}
 

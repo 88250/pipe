@@ -46,6 +46,36 @@ const (
 	adminConsoleArticleListWindowSize = 20
 )
 
+func (src *articleService) GetArchiveArticles(archiveID uint, page int, blogID uint) (ret []*model.Article, pagination *util.Pagination) {
+	pageSize, windowSize := getPageWindowSize(blogID)
+	offset := (page - 1) * pageSize
+	count := 0
+
+	rels := []*model.Correlation{}
+	if err := db.Model(&model.Correlation{}).Where(model.Correlation{ID2: archiveID, Type: model.CorrelationArticleTag}).
+		Find(&rels).Error; nil != err {
+		return
+	}
+
+	articleIDs := []uint{}
+	for _, articleTagRel := range rels {
+		articleIDs = append(articleIDs, articleTagRel.ID1)
+	}
+
+	if err := db.Model(&model.Article{}).
+		Where("ID in (?) AND status = ?", articleIDs, model.ArticleStatusOK).
+		Order("topped DESC, id DESC").Count(&count).
+		Offset(offset).Limit(pageSize).
+		Find(&ret).Error; nil != err {
+		logger.Errorf("get archive articles failed: " + err.Error())
+	}
+
+	pageCount := int(math.Ceil(float64(count) / float64(pageSize)))
+	pagination = util.NewPagination(page, pageSize, pageCount, windowSize, count)
+
+	return
+}
+
 func (srv *articleService) GetPreviousArticle(id uint, blogID uint) *model.Article {
 	ret := &model.Article{}
 	if err := db.Where("id < ? AND blog_id = ?", id, blogID).Limit(1).Find(ret).Error; nil != err {
@@ -164,18 +194,13 @@ func (srv *articleService) GetArticles(page int, blogID uint) (ret []*model.Arti
 	return
 }
 
-func (src *articleService) GetTagArticles(tagTitle string, page int, blogID uint) (ret []*model.Article, pagination *util.Pagination) {
-	tag := &model.Tag{}
-	if err := db.Where(model.Tag{Title: tagTitle}).First(tag).Error; nil != err {
-		return
-	}
-
+func (src *articleService) GetTagArticles(tagID uint, page int, blogID uint) (ret []*model.Article, pagination *util.Pagination) {
 	pageSize, windowSize := getPageWindowSize(blogID)
 	offset := (page - 1) * pageSize
 	count := 0
 
 	rels := []*model.Correlation{}
-	if err := db.Model(&model.Correlation{}).Where(model.Correlation{ID2: tag.ID, Type: model.CorrelationArticleTag}).
+	if err := db.Model(&model.Correlation{}).Where(model.Correlation{ID2: tagID, Type: model.CorrelationArticleTag}).
 		Find(&rels).Error; nil != err {
 		return
 	}

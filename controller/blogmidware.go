@@ -268,3 +268,9 @@ func getDataModel(c *gin.Context) DataModel {
 
 	return *(dataModelVal.(*DataModel))
 }
+
+func getLocale(c *gin.Context) string {
+	dataModel := getDataModel(c)
+
+	return dataModel["Setting"].(map[string]interface{})[model.SettingNameI18nLocale].(string)
+}
