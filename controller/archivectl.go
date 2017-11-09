@@ -18,9 +18,9 @@ package controller
 
 import (
 	"net/http"
-
 	"strings"
 
+	"github.com/b3log/pipe/i18n"
 	"github.com/b3log/pipe/service"
 	"github.com/b3log/pipe/util"
 	"github.com/gin-gonic/gin"
@@ -29,14 +29,14 @@ import (
 func showArchivesAction(c *gin.Context) {
 	dataModel := getDataModel(c)
 	blogAdmin := getBlogAdmin(c)
-	_ = blogAdmin
+	locale := getLocale(c)
 	themeArchives := []*ThemeArchive{}
-	archiveModels := strings.Split("a, g, c, d", ",")
+	archiveModels := service.Archive.GetArchives(blogAdmin.BlogID)
 	for _, archiveModel := range archiveModels {
 		archive := &ThemeArchive{
-			Title:        archiveModel,
-			URL:          getBlogURL(c) + "/" + archiveModel,
-			ArticleCount: 13,
+			Title:        i18n.GetMessagef(locale, "archiveYearMonth", archiveModel.Year, archiveModel.Month),
+			URL:          getBlogURL(c) + util.PathArchives + "/" + archiveModel.Year + "/" + archiveModel.Month,
+			ArticleCount: archiveModel.ArticleCount,
 		}
 		themeArchives = append(themeArchives, archive)
 	}
@@ -46,12 +46,20 @@ func showArchivesAction(c *gin.Context) {
 }
 
 func showArchiveArticlesAction(c *gin.Context) {
-	dm, _ := c.Get("dataModel")
-	dataModel := *(dm.(*DataModel))
-
-	page := util.GetPage(c)
+	dataModel := getDataModel(c)
 	blogAdmin := getBlogAdmin(c)
-	articleModels, pagination := service.Article.GetArticles(page, blogAdmin.BlogID)
+	locale := getLocale(c)
+	session := util.GetSession(c)
+	date := strings.SplitAfter(c.Request.URL.Path, util.PathArchives+"/")[1]
+	year := strings.Split(date, "/")[0]
+	month := strings.Split(date, "/")[1]
+	archiveModel := service.Archive.GetArchive(year, month, blogAdmin.BlogID)
+	if nil == archiveModel {
+		c.Status(http.StatusNotFound)
+
+		return
+	}
+	articleModels, pagination := service.Article.GetArchiveArticles(archiveModel.ID, util.GetPage(c), blogAdmin.BlogID)
 	articles := []*ThemeArticle{}
 	for _, articleModel := range articleModels {
 		themeTags := []*ThemeTag{}
@@ -73,12 +81,14 @@ func showArchiveArticlesAction(c *gin.Context) {
 
 		author := &ThemeAuthor{
 			Name:      authorModel.Name,
-			URL:       "http://localhost:5879/blogs/pipe/vanessa",
-			AvatarURL: "https://img.hacpai.com/20170818zhixiaoyun.jpeg",
+			URL:       getBlogURL(c) + util.PathAuthors + "/" + authorModel.Name,
+			AvatarURL: authorModel.AvatarURL,
 		}
 
+		mdResult := util.Markdown(articleModel.Content)
 		article := &ThemeArticle{
 			ID:           articleModel.ID,
+			Abstract:     mdResult.AbstractText,
 			Author:       author,
 			CreatedAt:    articleModel.CreatedAt.Format("2006-01-02"),
 			Title:        articleModel.Title,
@@ -87,17 +97,19 @@ func showArchiveArticlesAction(c *gin.Context) {
 			Topped:       articleModel.Topped,
 			ViewCount:    articleModel.ViewCount,
 			CommentCount: articleModel.CommentCount,
-			ThumbnailURL: "https://img.hacpai.com/20170818zhixiaoyun.jpeg",
-			Editable:     false,
+			ThumbnailURL: mdResult.ThumbURL,
+			Editable:     session.UID == authorModel.ID,
 		}
 
 		articles = append(articles, article)
 	}
 	dataModel["Articles"] = articles
 	dataModel["Pagination"] = pagination
-
-	dataModel["ArchivesDate"] = "2012-12-12"
-	dataModel["ArchivesCount"] = 12
+	dataModel["Archive"] = &ThemeArchive{
+		Title:        i18n.GetMessagef(locale, "archiveYearMonth", archiveModel.Year, archiveModel.Month),
+		URL:          getBlogURL(c) + util.PathArchives + "/" + archiveModel.Year + "/" + archiveModel.Month,
+		ArticleCount: archiveModel.ArticleCount,
+	}
 
 	c.HTML(http.StatusOK, getTheme(c)+"/archive-articles.html", dataModel)
 }

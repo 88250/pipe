@@ -30,13 +30,13 @@ import (
 func showTagsAction(c *gin.Context) {
 	dataModel := getDataModel(c)
 	blogAdmin := getBlogAdmin(c)
-	tags := service.Tag.ConsoleGetTags(blogAdmin.BlogID)
+	tagModels := service.Tag.ConsoleGetTags(blogAdmin.BlogID)
 	themeTags := []*ThemeTag{}
-	for _, tag := range tags {
+	for _, tagModel := range tagModels {
 		themeTag := &ThemeTag{
-			Title:        tag.Title,
-			URL:          getBlogURL(c) + util.PathTags + "/" + tag.Title,
-			ArticleCount: tag.ArticleCount,
+			Title:        tagModel.Title,
+			URL:          getBlogURL(c) + util.PathTags + "/" + tagModel.Title,
+			ArticleCount: tagModel.ArticleCount,
 		}
 		themeTags = append(themeTags, themeTag)
 	}
@@ -46,18 +46,17 @@ func showTagsAction(c *gin.Context) {
 }
 
 func showTagArticlesAction(c *gin.Context) {
-	page := util.GetPage(c)
 	dataModel := getDataModel(c)
 	blogAdmin := getBlogAdmin(c)
 	session := util.GetSession(c)
 	tagTitle := strings.SplitAfter(c.Request.URL.Path, util.PathTags+"/")[1]
-	tag := service.Tag.GetTagByTitle(tagTitle, blogAdmin.BlogID)
-	if nil == tag {
+	tagModel := service.Tag.GetTagByTitle(tagTitle, blogAdmin.BlogID)
+	if nil == tagModel {
 		c.Status(http.StatusNotFound)
 
 		return
 	}
-	articleModels, pagination := service.Article.GetTagArticles(tagTitle, page, blogAdmin.BlogID)
+	articleModels, pagination := service.Article.GetTagArticles(tagModel.ID, util.GetPage(c), blogAdmin.BlogID)
 	articles := []*ThemeArticle{}
 	for _, articleModel := range articleModels {
 		themeTags := []*ThemeTag{}
@@ -79,12 +78,14 @@ func showTagArticlesAction(c *gin.Context) {
 
 		author := &ThemeAuthor{
 			Name:      authorModel.Name,
-			URL:       "http://localhost:5879/blogs/pipe/vanessa",
-			AvatarURL: "https://img.hacpai.com/20170818zhixiaoyun.jpeg",
+			URL:       getBlogURL(c) + util.PathAuthors + "/" + authorModel.Name,
+			AvatarURL: authorModel.AvatarURL,
 		}
 
+		mdResult := util.Markdown(articleModel.Content)
 		article := &ThemeArticle{
 			ID:           articleModel.ID,
+			Abstract:     mdResult.AbstractText,
 			Author:       author,
 			CreatedAt:    articleModel.CreatedAt.Format("2006-01-02"),
 			Title:        pangu.SpacingText(articleModel.Title),
@@ -93,7 +94,7 @@ func showTagArticlesAction(c *gin.Context) {
 			Topped:       articleModel.Topped,
 			ViewCount:    articleModel.ViewCount,
 			CommentCount: articleModel.CommentCount,
-			ThumbnailURL: "https://img.hacpai.com/20170818zhixiaoyun.jpeg",
+			ThumbnailURL: mdResult.ThumbURL,
 			Editable:     session.UID == authorModel.ID,
 		}
 
@@ -101,7 +102,11 @@ func showTagArticlesAction(c *gin.Context) {
 	}
 	dataModel["Articles"] = articles
 	dataModel["Pagination"] = pagination
-	dataModel["Tag"] = tag
+	dataModel["Tag"] = &ThemeTag{
+		Title:        tagModel.Title,
+		URL:          getBlogURL(c) + util.PathTags + "/" + tagModel.Title,
+		ArticleCount: tagModel.ArticleCount,
+	}
 
 	c.HTML(http.StatusOK, getTheme(c)+"/tag-articles.html", dataModel)
 }

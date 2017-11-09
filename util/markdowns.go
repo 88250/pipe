@@ -32,24 +32,29 @@ import (
 )
 
 var markdownCache = gcache.New(1024).LRU().Build()
-var markdownAbstractCache = gcache.New(1024).LRU().Build()
 
-func Markdown(mdText string) string {
+type MarkdownResult struct {
+	ContentHTML  string
+	AbstractText string
+	ThumbURL     string
+}
+
+func Markdown(mdText string) *MarkdownResult {
 	digest := md5.New()
 	digest.Write([]byte(mdText))
 	key := string(digest.Sum(nil))
 
 	cached, err := markdownCache.Get(key)
 	if nil == err {
-		return cached.(string)
+		return cached.(*MarkdownResult)
 	}
 
 	mdText = emojify(mdText)
 	mdTextBytes := []byte(mdText)
 	unsafe := blackfriday.MarkdownCommon(mdTextBytes)
-	ret := string(bluemonday.UGCPolicy().SanitizeBytes(unsafe))
+	contentHTML := string(bluemonday.UGCPolicy().AllowAttrs("class").Matching(regexp.MustCompile("^language-[a-zA-Z0-9]+$")).OnElements("code").SanitizeBytes(unsafe))
 
-	doc, _ := goquery.NewDocumentFromReader(strings.NewReader(ret))
+	doc, _ := goquery.NewDocumentFromReader(strings.NewReader(contentHTML))
 	doc.Find("img").Each(func(i int, ele *goquery.Selection) {
 		src, _ := ele.Attr("src")
 		ele.SetAttr("data-src", src)
@@ -64,27 +69,7 @@ func Markdown(mdText string) string {
 		ele.ReplaceWithHtml(text)
 	})
 
-	ret, _ = doc.Find("body").Html()
-
-	markdownCache.Set(key, ret)
-
-	return ret
-}
-
-func MarkdownAbstract(mdText string) (abstract string, thumbnailURL string) {
-	digest := md5.New()
-	digest.Write([]byte(mdText))
-	key := string(digest.Sum(nil))
-
-	cached, err := markdownAbstractCache.Get(key)
-	if nil == err {
-		data := cached.(map[string]string)
-
-		return data["abstract"], data["thumb"]
-	}
-
-	content := Markdown(mdText)
-	doc, _ := goquery.NewDocumentFromReader(strings.NewReader((content)))
+	contentHTML, _ = doc.Find("body").Html()
 
 	text := doc.Text()
 	runes := []rune{}
@@ -103,20 +88,21 @@ func MarkdownAbstract(mdText string) (abstract string, thumbnailURL string) {
 	}
 
 	selection := doc.Find("img").First()
-	thumbnailURL, _ = selection.Attr("src")
+	thumbnailURL, _ := selection.Attr("src")
 	if "" == thumbnailURL {
 		thumbnailURL, _ = selection.Attr("data-src")
 	}
-	abstract = strings.TrimSpace(runesToString(runes))
-	abstract = pangu.SpacingText(abstract)
+	abstractText := strings.TrimSpace(runesToString(runes))
+	abstractText = pangu.SpacingText(abstractText)
 
-	data := map[string]string{
-		"abstract": abstract,
-		"thumb":    thumbnailURL,
+	ret := &MarkdownResult{
+		ContentHTML:  contentHTML,
+		AbstractText: abstractText,
+		ThumbURL:     thumbnailURL,
 	}
-	markdownAbstractCache.Set(key, data)
+	markdownCache.Set(key, ret)
 
-	return
+	return ret
 }
 
 func runesToString(runes []rune) (ret string) {

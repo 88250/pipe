@@ -202,7 +202,7 @@ func fillRecentComments(settingMap *map[string]interface{}, dataModel *DataModel
 	themeRecentComments := []*ThemeComment{}
 	for _, comment := range recentComments {
 		themeComment := &ThemeComment{
-			Title:     util.Markdown(comment.Content),
+			Title:     util.Markdown(comment.Content).AbstractText,
 			Content:   "",
 			URL:       "todo",
 			CreatedAt: humanize.Time(comment.CreatedAt),
@@ -267,4 +267,10 @@ func getDataModel(c *gin.Context) DataModel {
 	dataModelVal, _ := c.Get("dataModel")
 
 	return *(dataModelVal.(*DataModel))
+}
+
+func getLocale(c *gin.Context) string {
+	dataModel := getDataModel(c)
+
+	return dataModel["Setting"].(map[string]interface{})[model.SettingNameI18nLocale].(string)
 }

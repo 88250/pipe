@@ -61,7 +61,7 @@ func getRepliesAction(c *gin.Context) {
 
 		reply := &ThemeReply{
 			ID:        replyComment.ID,
-			Content:   template.HTML(util.Markdown(replyComment.Content)),
+			Content:   template.HTML(util.Markdown(replyComment.Content).ContentHTML),
 			Author:    author,
 			CreatedAt: replyComment.CreatedAt.Format("2006-01-02"),
 		}
@@ -114,7 +114,7 @@ func addCommentAction(c *gin.Context) {
 	}
 	themeComment := ThemeComment{
 		ID:        comment.ID,
-		Content:   template.HTML(util.Markdown(comment.Content)),
+		Content:   template.HTML(util.Markdown(comment.Content).ContentHTML),
 		Author:    author,
 		CreatedAt: comment.CreatedAt.Format("2006-01-02"),
 		Removable: false,

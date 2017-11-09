@@ -31,6 +31,15 @@ type archiveService struct {
 	mutex *sync.Mutex
 }
 
+func (srv *archiveService) GetArchives(blogID uint) []*model.Archive {
+	ret := []*model.Archive{}
+	if err := db.Where(&model.Archive{BlogID: blogID}).Find(&ret).Error; nil != err {
+		logger.Error("get archives failed: " + err.Error())
+	}
+
+	return ret
+}
+
 func (srv *archiveService) UnarchiveArticleWithoutTx(tx *gorm.DB, article *model.Article) error {
 	srv.mutex.Lock()
 	defer srv.mutex.Unlock()
@@ -38,12 +47,11 @@ func (srv *archiveService) UnarchiveArticleWithoutTx(tx *gorm.DB, article *model
 	year := article.CreatedAt.Format("2006")
 	month := article.CreatedAt.Format("01")
 
-	archive, err := srv.GetArchive(year, month, article.BlogID)
-	if nil != err {
-		return err
-	}
-	if nil == archive {
-		return nil
+	archive := &model.Archive{Year: year, Month: month, BlogID: article.BlogID}
+	if err := db.Where(archive).First(archive).Error; nil != err {
+		if gorm.ErrRecordNotFound != err {
+			return err
+		}
 	}
 	archive.ArticleCount -= 1
 	if err := tx.Save(archive).Error; nil != err {
@@ -64,12 +72,11 @@ func (srv *archiveService) ArchiveArticleWithoutTx(tx *gorm.DB, article *model.A
 	year := article.CreatedAt.Format("2006")
 	month := article.CreatedAt.Format("01")
 
-	archive, err := srv.GetArchive(year, month, article.BlogID)
-	if nil != err {
-		return err
-	}
-	if nil == archive {
-		archive = &model.Archive{Year: year, Month: month, BlogID: article.BlogID}
+	archive := &model.Archive{Year: year, Month: month, BlogID: article.BlogID}
+	if err := db.Where(archive).First(archive).Error; nil != err {
+		if gorm.ErrRecordNotFound != err {
+			return err
+		}
 	}
 	archive.ArticleCount += 1
 	if err := tx.Save(archive).Error; nil != err {
@@ -89,15 +96,11 @@ func (srv *archiveService) ArchiveArticleWithoutTx(tx *gorm.DB, article *model.A
 	return nil
 }
 
-func (srv *archiveService) GetArchive(year, month string, blogID uint) (*model.Archive, error) {
+func (srv *archiveService) GetArchive(year, month string, blogID uint) *model.Archive {
 	ret := &model.Archive{Year: year, Month: month, BlogID: blogID}
 	if err := db.Where(ret).First(ret).Error; nil != err {
-		if gorm.ErrRecordNotFound != err {
-			return nil, err
-		}
-
-		return nil, nil
+		return nil
 	}
 
-	return ret, nil
+	return ret
 }
