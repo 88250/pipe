@@ -6,11 +6,12 @@
  */
 
 import $ from 'jquery'
+import hljs from 'highlight.js'
 import {
   InitToc,
   ShowEditor,
   InitComment
-} from '../../../js/common'
+} from '../../../js/article'
 import './common'
 
 const Article = {
@@ -31,6 +32,10 @@ const Article = {
     }
 
     InitComment()
+
+    $('pre > code').each(function (i, block) {
+      hljs.highlightBlock(block);
+    });
   }
 }
 

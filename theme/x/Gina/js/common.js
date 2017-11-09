@@ -6,7 +6,6 @@
  */
 
 import $ from 'jquery'
-import hljs from 'highlight.js'
 import QRious from 'qrious'
 import Icon from './symbol'
 import {KillBrowser, LazyLoadCSSImage, LazyLoadImage, Logout, TrimB3Id, PreviewImg} from '../../../js/common'
@@ -26,10 +25,6 @@ const Common = {
     $('#sidebarIcon').click(() => {
       Common.toggleSide()
     })
-
-    $('pre > code').each(function (i, block) {
-      hljs.highlightBlock(block);
-    });
 
     $('#logout').click(function () {
       Logout()
