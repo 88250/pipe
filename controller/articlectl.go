@@ -61,10 +61,10 @@ func showArticlesAction(c *gin.Context) {
 			AvatarURL: authorModel.AvatarURL,
 		}
 
-		abstract, thumb := util.MarkdownAbstract(articleModel.Content)
+		mdResult := util.Markdown(articleModel.Content)
 		article := &ThemeArticle{
 			ID:           articleModel.ID,
-			Abstract:     abstract,
+			Abstract:     mdResult.AbstractText,
 			Author:       author,
 			CreatedAt:    articleModel.CreatedAt.Format("2006-01-02"),
 			Title:        pangu.SpacingText(articleModel.Title),
@@ -73,7 +73,7 @@ func showArticlesAction(c *gin.Context) {
 			Topped:       articleModel.Topped,
 			ViewCount:    articleModel.ViewCount,
 			CommentCount: articleModel.CommentCount,
-			ThumbnailURL: thumb,
+			ThumbnailURL: mdResult.ThumbURL,
 			Editable:     session.UID == authorModel.ID,
 		}
 
@@ -103,6 +103,7 @@ func showArticleAction(c *gin.Context) {
 		themeTags = append(themeTags, themeTag)
 	}
 
+	mdResult := util.Markdown(article.Content)
 	authorModel := service.User.GetUser(article.AuthorID)
 	dataModel["Article"] = &ThemeArticle{
 		Author: &ThemeAuthor{
@@ -118,7 +119,7 @@ func showArticleAction(c *gin.Context) {
 		Topped:       article.Topped,
 		ViewCount:    article.ViewCount,
 		CommentCount: article.CommentCount,
-		Content:      template.HTML(util.Markdown(article.Content)),
+		Content:      template.HTML(mdResult.ContentHTML),
 		Editable:     session.UID == authorModel.ID,
 	}
 
@@ -144,9 +145,10 @@ func showArticleAction(c *gin.Context) {
 			AvatarURL: commentAuthor.AvatarURLWithSize(64),
 		}
 
+		mdResult := util.Markdown(commentModel.Content)
 		comment := &ThemeComment{
 			ID:         commentModel.ID,
-			Content:    template.HTML(util.Markdown(commentModel.Content)),
+			Content:    template.HTML(mdResult.ContentHTML),
 			Author:     author,
 			CreatedAt:  commentModel.CreatedAt.Format("2006-01-02"),
 			Removable:  session.UID == authorModel.ID,

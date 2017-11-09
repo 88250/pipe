@@ -78,13 +78,14 @@ func GetCommentsAction(c *gin.Context) {
 			AvatarURL: commentAuthor.AvatarURL,
 		}
 
+		mdResult := util.Markdown(commentModel.Content)
 		comment := &ConsoleComment{
 			ID:            commentModel.ID,
 			Author:        author,
 			ArticleAuthor: consoleArticleAuthor,
 			CreatedAt:     commentModel.CreatedAt.Format("2006-01-02"),
 			Title:         article.Title,
-			Content:       template.HTML(util.Markdown(commentModel.Content)),
+			Content:       template.HTML(mdResult.ContentHTML),
 			URL:           session.BURL + "/todo comment path",
 		}
 

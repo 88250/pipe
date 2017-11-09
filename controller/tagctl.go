@@ -82,10 +82,10 @@ func showTagArticlesAction(c *gin.Context) {
 			AvatarURL: authorModel.AvatarURL,
 		}
 
-		abstract, thumb := util.MarkdownAbstract(articleModel.Content)
+		mdResult := util.Markdown(articleModel.Content)
 		article := &ThemeArticle{
 			ID:           articleModel.ID,
-			Abstract:     abstract,
+			Abstract:     mdResult.AbstractText,
 			Author:       author,
 			CreatedAt:    articleModel.CreatedAt.Format("2006-01-02"),
 			Title:        pangu.SpacingText(articleModel.Title),
@@ -94,7 +94,7 @@ func showTagArticlesAction(c *gin.Context) {
 			Topped:       articleModel.Topped,
 			ViewCount:    articleModel.ViewCount,
 			CommentCount: articleModel.CommentCount,
-			ThumbnailURL: thumb,
+			ThumbnailURL: mdResult.ThumbURL,
 			Editable:     session.UID == authorModel.ID,
 		}
 
