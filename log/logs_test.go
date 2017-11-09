@@ -98,6 +98,13 @@ func TestErrorf(t *testing.T) {
 	logger.Errorf("errorf")
 }
 
+func TestFatalf(t *testing.T) {
+	logger.SetLevel("fatal")
+	logger.Fatalf("fatalf")
+	logger.SetLevel("off")
+	logger.Fatalf("fatalf")
+}
+
 func TestGetLevel(t *testing.T) {
 	if getLevel("trace") != Trace {
 		t.FailNow()
@@ -124,6 +131,12 @@ func TestGetLevel(t *testing.T) {
 	}
 
 	if getLevel("error") != Error {
+		t.FailNow()
+
+		return
+	}
+
+	if getLevel("fatal") != Fatal {
 		t.FailNow()
 
 		return

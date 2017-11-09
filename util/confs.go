@@ -46,11 +46,10 @@ type Configuration struct {
 	Server                string // server scheme, host and port
 	StaticServer          string // static resources server scheme, host and port
 	StaticResourceVersion string // version of static resources
-	LogLevel              string // logging level: debug/info/warn/error/fatal
+	LogLevel              string // logging level: trace/debug/info/warn/error/fatal
 	SessionSecret         string // HTTP session secret
 	SessionMaxAge         int    // HTTP session max age (in seciond)
 	RuntimeMode           string // runtime mode (dev/prod)
-	WD                    string // current working direcitory, ${pwd}
 	DataFilePath          string // database file path
 }
 
@@ -109,5 +108,5 @@ func LoadConf() {
 		Conf.DataFilePath = *confDataFilePath
 	}
 
-	logger.Debugf("configurations [%+v]", Conf)
+	logger.Debugf("configurations [%#v]", Conf)
 }
