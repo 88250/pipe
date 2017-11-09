@@ -18,9 +18,10 @@ package controller
 
 import (
 	"net/http"
-
 	"strings"
 
+	"github.com/b3log/pipe/i18n"
+	"github.com/b3log/pipe/model"
 	"github.com/b3log/pipe/service"
 	"github.com/b3log/pipe/util"
 	"github.com/gin-gonic/gin"
@@ -29,14 +30,15 @@ import (
 func showArchivesAction(c *gin.Context) {
 	dataModel := getDataModel(c)
 	blogAdmin := getBlogAdmin(c)
-	_ = blogAdmin
+
+	locale := dataModel["Setting"].(map[string]interface{})[model.SettingNameI18nLocale].(string)
 	themeArchives := []*ThemeArchive{}
-	archiveModels := strings.Split("a, g, c, d", ",")
+	archiveModels := service.Archive.GetArchives(blogAdmin.BlogID)
 	for _, archiveModel := range archiveModels {
 		archive := &ThemeArchive{
-			Title:        archiveModel,
-			URL:          getBlogURL(c) + "/" + archiveModel,
-			ArticleCount: 13,
+			Title:        i18n.GetMessagef(locale, "archiveYearMonth", archiveModel.Year, archiveModel.Month),
+			URL:          getBlogURL(c) + util.PathArchives + "/" + archiveModel.Year + "/" + archiveModel.Month,
+			ArticleCount: archiveModel.ArticleCount,
 		}
 		themeArchives = append(themeArchives, archive)
 	}
@@ -46,12 +48,10 @@ func showArchivesAction(c *gin.Context) {
 }
 
 func showArchiveArticlesAction(c *gin.Context) {
-	dm, _ := c.Get("dataModel")
-	dataModel := *(dm.(*DataModel))
-
-	page := util.GetPage(c)
+	dataModel := getDataModel(c)
 	blogAdmin := getBlogAdmin(c)
-	articleModels, pagination := service.Article.GetArticles(page, blogAdmin.BlogID)
+
+	articleModels, pagination := service.Article.GetArticles(util.GetPage(c), blogAdmin.BlogID)
 	articles := []*ThemeArticle{}
 	for _, articleModel := range articleModels {
 		themeTags := []*ThemeTag{}

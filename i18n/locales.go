@@ -19,6 +19,7 @@ package i18n
 
 import (
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"os"
 	"sort"
@@ -71,6 +72,13 @@ func load(localeStr string) {
 	}
 
 	locales[localeStr] = l
+}
+
+// GetMessagef gets a message with the specified locale, key and arguments
+func GetMessagef(locale, key string, a ...interface{}) string {
+	msg := GetMessage(locale, key)
+
+	return fmt.Sprintf(msg.(string), a...)
 }
 
 // GetMessage gets a message with the specified locale and key.

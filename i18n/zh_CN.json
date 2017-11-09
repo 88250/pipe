@@ -1,4 +1,5 @@
 {
+  "archiveYearMonth": "%s 年 %s 月",
   "colon": "：",
   "home": "后台首页",
   "index": "首页",
@@ -116,7 +117,7 @@
   "import": "导入",
   "abstract": "摘要",
   "content": "正文",
-  "fullArticle" : "全文",
+  "fullArticle": "全文",
   "blogTitle": "博客标题",
   "blogSubtitle": "博客子标题",
   "footer": "页脚",

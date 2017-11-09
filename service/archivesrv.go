@@ -31,6 +31,15 @@ type archiveService struct {
 	mutex *sync.Mutex
 }
 
+func (srv *archiveService) GetArchives(blogID uint) []*model.Archive {
+	ret := []*model.Archive{}
+	if err := db.Where(&model.Archive{BlogID: blogID}).Find(&ret).Error; nil != err {
+		logger.Error("get archives failed: " + err.Error())
+	}
+
+	return ret
+}
+
 func (srv *archiveService) UnarchiveArticleWithoutTx(tx *gorm.DB, article *model.Article) error {
 	srv.mutex.Lock()
 	defer srv.mutex.Unlock()
