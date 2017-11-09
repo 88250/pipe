@@ -56,7 +56,7 @@ func getStatusAction(c *gin.Context) {
 	}
 
 	session := util.GetSession(c)
-	if nil != session {
+	if 0 != session.UID {
 		user := service.User.GetUser(session.UID)
 		if nil == user {
 			session := sessions.Default(c)
