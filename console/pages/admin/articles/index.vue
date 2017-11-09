@@ -182,6 +182,12 @@
           this.$set(this, 'isBatch', true)
           this.selectedIds.push(id)
         }
+
+        if (this.selectedIds.length === this.list.length) {
+          this.$set(this, 'isSelectAll', true)
+        } else {
+          this.$set(this, 'isSelectAll', false)
+        }
       },
       async getList (currentPage = 1) {
         const responseData = await this.axios.get(`/console/articles?p=${currentPage}&key=${this.keyword}`)
