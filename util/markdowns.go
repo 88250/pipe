@@ -104,6 +104,9 @@ func MarkdownAbstract(mdText string) (abstract string, thumbnailURL string) {
 
 	selection := doc.Find("img").First()
 	thumbnailURL, _ = selection.Attr("src")
+	if "" == thumbnailURL {
+		thumbnailURL, _ = selection.Attr("data-src")
+	}
 	abstract = strings.TrimSpace(runesToString(runes))
 	abstract = pangu.SpacingText(abstract)
 

@@ -6,6 +6,5 @@
     "SessionSecret": "BEYOND",
     "SessionMaxAge": 86400,
     "RuntimeMode": "dev",
-    "WD": "${pwd}",
     "DataFilePath": "${home}/pipe.db"
 }
