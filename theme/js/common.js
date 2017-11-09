@@ -55,9 +55,8 @@ export const LazyLoadImage = () => {
 
 /**
  * @description CSS 背景图延迟加载
- * @param {string} classes 需要延迟加载的类名
  */
-export const LazyLoadCSSImage = (classes) => {
+export const LazyLoadCSSImage = () => {
   const loadCSSImage = (it) => {
     const testImage = document.createElement('img')
     testImage.src = it.getAttribute('data-src')
@@ -67,8 +66,12 @@ export const LazyLoadCSSImage = (classes) => {
     it.removeAttribute('data-src')
   }
 
+  const $cssImage = $('*[data-src]')
   if (!('IntersectionObserver' in window)) {
-    $(classes).each((item) => {
+    $cssImage.each((item) => {
+      if (item.tagName.toLowerCase() === 'img') {
+        return
+      }
       if (item.getAttribute('data-src')) {
         loadCSSImage(item)
       }
@@ -78,7 +81,10 @@ export const LazyLoadCSSImage = (classes) => {
 
   if (window.CSSImageIntersectionObserver) {
     window.CSSImageIntersectionObserver.disconnect()
-    $(classes).each(function () {
+    $cssImage.each(function () {
+      if (this.tagName.toLowerCase() === 'img') {
+        return
+      }
       window.CSSImageIntersectionObserver.observe(this)
     })
   } else {
@@ -90,7 +96,10 @@ export const LazyLoadCSSImage = (classes) => {
         }
       })
     })
-    $(classes).each(function () {
+    $cssImage.each(function () {
+      if (this.tagName.toLowerCase() === 'img') {
+        return
+      }
       window.CSSImageIntersectionObserver.observe(this)
     })
   }
@@ -348,6 +357,8 @@ export const InitComment = () => {
                 $it.removeClass('disabled')
               }
             })
+            LazyLoadImage()
+            LazyLoadCSSImage()
           } else {
             alert(result.msg)
             $it.removeClass('disabled')
@@ -370,7 +381,7 @@ export const InitComment = () => {
     const $it = $(this)
     if (confirm($it.data('label'))) {
       $.ajax({
-        url: `${$('#pipeEditorComment').data('blogurl')}/api/console/comments/${$it.data('id')}`,
+        url: `/api/console/comments/${$it.data('id')}`,
         type: 'DELETE',
         success: (result) => {
           if (result.code === 0) {
@@ -480,7 +491,7 @@ export const InitComment = () => {
           $comments.find('pre > code').each(function (i, block) {
             hljs.highlightBlock(block)
           })
-          LazyLoadCSSImage('.avatar, .pipe-comment__avatar, .article__thumb')
+          LazyLoadCSSImage()
           LazyLoadImage()
           $commentContent.val('')
           localStorage.removeItem('pipeEditorComment')
