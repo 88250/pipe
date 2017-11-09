@@ -11,7 +11,7 @@ import hljs from 'highlight.js'
 /**
  * @description 图片预览
  */
-const PreviewImg = () => {
+export const PreviewImg = () => {
   const _previewImg = (it) => {
     const $it = $(it);
     var top = it.offsetTop,
@@ -58,7 +58,7 @@ export const LazyLoadImage = () => {
     testImage.src = it.getAttribute('data-src')
     testImage.addEventListener('load', () => {
       it.src = testImage.src
-      it.style.backgroundImage = 'url()'
+      it.style.backgroundImage = 'none'
       it.style.backgroundColor = 'transparent'
     })
     it.removeAttribute('data-src')
