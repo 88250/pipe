@@ -43,13 +43,11 @@ func fillUser(c *gin.Context) {
 	dataModel := &DataModel{}
 	c.Set("dataModel", dataModel)
 	session := util.GetSession(c)
-	if nil != session {
-		(*dataModel)["User"] = session
+	(*dataModel)["User"] = session
+	if 0 != session.UID {
 		c.Next()
 
 		return
-	} else {
-		(*dataModel)["User"] = &util.SessionData{}
 	}
 
 	b3id := c.Request.URL.Query().Get("b3id")
