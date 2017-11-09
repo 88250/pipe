@@ -3,7 +3,7 @@
 <div class="pipe-editor" id="pipeEditor">
     <div class="pipe-editor__wrap">
         <div id="pipeEditorReplyTarget"></div>
-        <div class="form">
+        <div class="pipe-form">
             <div class="pipe-editor__emotion">
                 <span title="😁">😁</span>
                 <span title="😂">😂</span>
@@ -23,13 +23,13 @@
             </div>
             <textarea id="pipeEditorComment" data-blogurl="{{.BlogURL}}" placeholder="{{.I18n.CommentPlaceholder}}" rows="3"></textarea>
             <div class="fn-clear">
-                <span class="fn-right btn btn--space btn--success"
+                <span class="fn-right pipe-btn pipe-btn--space pipe-btn--success"
                       id="pipeEditorAdd"
                       data-label2="{{.I18n.Required}}"
                       data-label="{{.I18n.Comment}}">
                     {{.I18n.Confirm}}&nbsp;<svg class="fn-right"><use xlink:href="#comment"></use></svg>
                 </span>
-                <span class="fn-right btn"
+                <span class="fn-right pipe-btn"
                       id="pipeEditorCancel">
                     {{.I18n.Cancel}}&nbsp;<svg class="fn-right"><use xlink:href="#chevron-up"></use></svg>
                 </span>

@@ -41,7 +41,7 @@
         class="fn-flex"
         :class="{'selected': isSelected(item.id)}"
         @click="setSelectedId(item.id)">
-        <a class="avatar avatar--mid avatar--space tooltipped tooltipped--s"
+        <a class="avatar avatar--mid avatar--space pipe-tooltipped pipe-tooltipped--s"
            v-if="userCount > 1"
            :aria-label="item.author.name"
            :href="item.author.url"

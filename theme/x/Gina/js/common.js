@@ -9,7 +9,7 @@ import $ from 'jquery'
 import hljs from 'highlight.js'
 import QRious from 'qrious'
 import Icon from './symbol'
-import {KillBrowser, LazyLoadCSSImage, LazyLoadImage, Logout, TrimB3Id} from '../../../js/common'
+import {KillBrowser, LazyLoadCSSImage, LazyLoadImage, Logout, TrimB3Id, PreviewImg} from '../../../js/common'
 
 const Common = {
   /**
@@ -20,6 +20,7 @@ const Common = {
     KillBrowser()
     LazyLoadCSSImage()
     LazyLoadImage()
+    PreviewImg()
     Common._header()
     Common._share()
     $('#sidebarIcon').click(() => {

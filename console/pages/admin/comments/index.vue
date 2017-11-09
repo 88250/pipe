@@ -40,7 +40,7 @@
         :class="{'selected': isSelected(item.id)}"
         @click="setSelectedId(item.id)"
         v-for="item in list" :key="item.id" class="fn-flex">
-        <a class="avatar avatar--mid avatar--space tooltipped tooltipped--s"
+        <a class="avatar avatar--mid avatar--space pipe-tooltipped pipe-tooltipped--s"
            :aria-label="item.author.name"
            :href="item.author.url"
            :style="`background-image: url(${item.author.avatarURL})`"></a>
@@ -63,7 +63,7 @@
               </v-btn>
             </div>
           </div>
-          <div class="content__reset" v-html="item.content"></div>
+          <div class="pipe-content__reset" v-html="item.content"></div>
           <div class="list__meta">
             <time class="fn-nowrap">{{ item.createdAt }}</time>
           </div>

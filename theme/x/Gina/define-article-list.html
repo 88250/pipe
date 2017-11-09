@@ -12,7 +12,7 @@
                 <div class="fn-padding30">
                     {{if gt $.UserCount 1}}
                     <a rel="nofollow"
-                       class="avatar tooltipped tooltipped--w fn-absolute"
+                       class="avatar pipe-tooltipped pipe-tooltipped--w fn-absolute"
                        aria-label="{{.Author.Name}}"
                        data-src="{{.Author.AvatarURL}}"
                        href="{{.Author.URL}}">
@@ -42,7 +42,7 @@
                 </div>
             </header>
             {{if .Abstract}}
-            <section class="content__reset article__abstract fn-padding30">
+            <section class="pipe-content__reset article__abstract fn-padding30">
                 {{.Abstract}}
             </section>
             {{end}}

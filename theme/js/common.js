@@ -9,6 +9,46 @@ import $ from 'jquery'
 import hljs from 'highlight.js'
 
 /**
+ * @description 图片预览
+ */
+const PreviewImg = () => {
+  const _previewImg = (it) => {
+    const $it = $(it);
+    var top = it.offsetTop,
+      left = it.offsetLeft;
+    if ($it.closest('.comments').length === 1) {
+      top = top + $it.closest('li')[0].offsetTop;
+      left = left + $('.comments')[0].offsetLeft + 15;
+    }
+
+    $('body').append('<div class="pipe-preview__img" onclick="this.remove()"><img style="transform: translate3d(' +
+      Math.max(0, left) + 'px, ' + Math.max(0, (top - $(window).scrollTop())) + 'px, 0)" src="' +
+      ($it.attr('src').split('?imageView2')[0]) + '"></div>');
+
+    $('.pipe-preview__img').css({
+      'background-color': '#fff',
+      'position': 'fixed'
+    });
+
+    $('.pipe-preview__img img')[0].onload = function () {
+      const $previewImage = $('.pipe-preview__img');
+      $previewImage.find('img').css('transform', 'translate3d(' +
+        (Math.max(0, $(window).width() - $previewImage.find('img').width()) / 2) + 'px, ' +
+        (Math.max(0, $(window).height() - $previewImage.find('img').height()) / 2) + 'px, 0)');
+
+      // fixed chrome render transform bug
+      setTimeout(function () {
+        $previewImage.width($(window).width());
+      }, 300);
+    }
+  }
+  // init
+  $('body').on('click', '.pipe-content__reset img', function () {
+    _previewImg(this)
+  });
+}
+
+/**
  * @description 图片延迟加载
  * @returns {boolean}
  */
@@ -225,42 +265,6 @@ export const ShowEditor = (reply, id, commentId) => {
 
 export const InitComment = () => {
   /**
-   * @description 图片预览
-   * @private
-   */
-    // TODO
-  const _previewImg = (it) => {
-      const $it = $(it);
-      var top = it.offsetTop,
-        left = it.offsetLeft;
-      if ($it.closest('.comments').length === 1) {
-        top = top + $it.closest('li')[0].offsetTop;
-        left = left + $('.comments')[0].offsetLeft + 15;
-      }
-
-      $('body').append('<div class="preview__img" onclick="this.remove()"><img style="transform: translate3d(' +
-        Math.max(0, left) + 'px, ' + Math.max(0, (top - $(window).scrollTop())) + 'px, 0)" src="' +
-        ($it.attr('src').split('?imageView2')[0]) + '"></div>');
-
-      $('.preview__img').css({
-        'background-color': '#fff',
-        'position': 'fixed'
-      });
-
-      $('.preview__img img')[0].onload = function () {
-        const $previewImage = $('.preview__img');
-        $previewImage.find('img').css('transform', 'translate3d(' +
-          (Math.max(0, $(window).width() - $previewImage.find('img').width()) / 2) + 'px, ' +
-          (Math.max(0, $(window).height() - $previewImage.find('img').height()) / 2) + 'px, 0)');
-
-        // fixed chrome render transform bug
-        setTimeout(function () {
-          $previewImage.width($(window).width());
-        }, 300);
-      }
-    }
-
-  /**
    * @description 获取 textarea 光标位置
    * @param {Bom} textarea textarea 对象
    * @private
@@ -293,11 +297,6 @@ export const InitComment = () => {
     $editor.css({'bottom': `-${$editor.outerHeight()}px`, 'opacity': 0})
     $('body').css('padding-bottom', 0)
   }
-
-  // preview image
-  $('body').on('click', '.content__reset img', function () {
-    _previewImg(this)
-  });
 
   // comment local storage
   $('#pipeEditorComment').val(localStorage.getItem('pipeEditorComment') || '').keyup(function () {
@@ -345,7 +344,7 @@ export const InitComment = () => {
                     <div class="pipe-comment__body">
                         <a href="${item.Author.URL}" class="ft-gray">${item.Author.Name}</a>
                         <span class="ft-nowrap ft-12 ft-gray"> • ${item.CreatedAt}</span>
-                        <div class="content__reset">
+                        <div class="pipe-content__reset">
                              ${item.Content}
                         </div>
                     </div>

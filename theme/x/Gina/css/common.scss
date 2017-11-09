@@ -5,7 +5,7 @@
  * @version 0.1.0.0, Oct 23, 2017
 */
 @import '../../../scss/basic';
-@import "github.css";
+@import "github";
 
 // z-index
 // article avatar 10
@@ -39,7 +39,7 @@ a {
   transition: $transition;
 }
 
-.content__reset {
+.pipe-content__reset {
   pre > code,
   pre {
     background-image: url(../images/code-bg.png);

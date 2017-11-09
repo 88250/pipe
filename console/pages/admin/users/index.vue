@@ -18,7 +18,7 @@
           v-if="($store.state.role === 3 && item.name === $store.state.name) || $store.state.role < 3">
         <a :href="item.url"
            :aria-label="item.name"
-           class="avatar avatar--mid avatar--space tooltipped tooltipped--n"
+           class="avatar avatar--mid avatar--space pipe-tooltipped pipe-tooltipped--n"
            :style="`background-image: url(${item.avatarURL})`"></a>
         <div class="fn-flex-1">
           <div class="fn-flex">

@@ -1,7 +1,7 @@
 {
     "Server": "http://localhost:5897",
     "StaticServer": "",
-    "StaticResourceVersion": "1509461684551",
+    "StaticResourceVersion": "1510199278379",
     "LogFilePath": "${home}/pipe.log",
     "LogLevel": "debug",
     "SessionSecret": "BEYOND",
