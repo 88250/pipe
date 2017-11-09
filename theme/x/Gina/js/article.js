@@ -10,7 +10,8 @@ import hljs from 'highlight.js'
 import {
   InitToc,
   ShowEditor,
-  InitComment
+  InitComment,
+  InitMathJax
 } from '../../../js/article'
 import './common'
 
@@ -36,6 +37,8 @@ const Article = {
     $('pre > code').each(function (i, block) {
       hljs.highlightBlock(block);
     });
+
+    InitMathJax()
   }
 }
 
