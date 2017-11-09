@@ -7,6 +7,40 @@
 
 import $ from 'jquery'
 import hljs from 'highlight.js'
+import {LazyLoadCSSImage, LazyLoadImage} from './common'
+/**
+ * @description 按需加载 MathJax
+ * @returns {undefined}
+ */
+export const InitMathJax = () => {
+  let hasMathJax = false;
+  $('.pipe-content__reset').each(function () {
+    $(this).find('p').each(function () {
+      if ($(this).text().indexOf('$/') > -1 || $(this).text().indexOf('$$') > -1) {
+        hasMathJax = true;
+        return false;
+      }
+    });
+  });
+
+  if (hasMathJax) {
+    $.ajax({
+      method: "GET",
+      url: "https://cdn.staticfile.org/MathJax/MathJax-2.6-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML&_=1473258780393",
+      dataType: "script"
+    }).done(function () {
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [['$', '$'], ["\\(", "\\)"]],
+          displayMath: [['$$', '$$']],
+          processEscapes: true,
+          processEnvironments: true,
+          skipTags: ['pre', 'code']
+        }
+      });
+    });
+  }
+}
 
 /**
  * @description 初始化目录

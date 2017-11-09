@@ -15,10 +15,6 @@ export const PreviewImg = () => {
     const $it = $(it);
     var top = it.offsetTop,
       left = it.offsetLeft;
-    if ($it.closest('.comments').length === 1) {
-      top = top + $it.closest('li')[0].offsetTop;
-      left = left + $('.comments')[0].offsetLeft + 15;
-    }
 
     $('body').append('<div class="pipe-preview__img" onclick="this.remove()"><img style="transform: translate3d(' +
       Math.max(0, left) + 'px, ' + Math.max(0, (top - $(window).scrollTop())) + 'px, 0)" src="' +

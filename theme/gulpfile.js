@@ -46,7 +46,7 @@ gulp.task('dev', function () {
 
 gulp.task('watch', function () {
   livereload.listen()
-  gulp.watch(['./js/common.js', './x/*/js/article.js', './x/*/js/common.js', './x/*/js/symbol.js'], ['dev'])
+  gulp.watch(['./js/common.js', './js/article.js', './x/*/js/article.js', './x/*/js/common.js', './x/*/js/symbol.js'], ['dev'])
   gulp.watch('./x/*/css/*.scss', ['sass'])
 })
 
