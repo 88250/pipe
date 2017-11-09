@@ -37,7 +37,7 @@
           :nudge-bottom="30"
           :nudge-right="30">
           <v-toolbar-title slot="activator">
-            <div class="avatar avatar--small tooltipped tooltipped--w"
+            <div class="avatar avatar--small pipe-tooltipped pipe-tooltipped--w"
                        :style="`background-image: url(${$store.state.avatarURL})`"
                        :aria-label="$store.state.nickname || $store.state.name"></div>
           </v-toolbar-title>

@@ -19,7 +19,7 @@
             {{if gt .UserCount 1}}
             <a rel="nofollow"
                href="{{.Article.Author.URL}}"
-               class="avatar tooltipped tooltipped--w fn-absolute"
+               class="avatar pipe-tooltipped pipe-tooltipped--w fn-absolute"
                aria-label="{{.Article.Author.Name}}"
                data-src="{{.Article.Author.AvatarURL}}">
             </a>
@@ -172,7 +172,7 @@
         <svg class="fn-absolute near__svg">
             <use xlink:href="#chevron-left"></use>
         </svg>
-        <span class="avatar tooltipped tooltipped--n fn-absolute"
+        <span class="avatar pipe-tooltipped pipe-tooltipped--n fn-absolute"
               aria-label="{{.PreviousArticle.Author.Name}}"
               data-src="{{.PreviousArticle.Author.AvatarURL}}"></span>
         <span class="near__title">
@@ -187,7 +187,7 @@
         <svg class="fn-absolute near__svg">
             <use xlink:href="#chevron-right"></use>
         </svg>
-        <span class="avatar tooltipped tooltipped--n fn-absolute"
+        <span class="avatar pipe-tooltipped pipe-tooltipped--n fn-absolute"
               aria-label="{{.NextArticle.Author.Name}}"
               data-src="{{.NextArticle.Author.AvatarURL}}"></span>
         <span class="near__title">
@@ -201,7 +201,7 @@
 <div class="fn-clear article__near fn-two">
     {{if .PreviousArticle}}
     <a href="{{.PreviousArticle.URL}}"
-       class="tooltipped tooltipped--w"
+       class="pipe-tooltipped pipe-tooltipped--w"
        rel="prev" aria-label="{{.I18n.PreArticle}}">
         <svg class="near__icon">
             <use xlink:href="#chevron-left"></use>
@@ -212,7 +212,7 @@
 
     {{if .NextArticle}}
     <a href="{{.NextArticle.URL}}" rel="next"
-       class="tooltipped tooltipped--e fn-two--next {{if .PreviousArticle}}{{else}}near__next--single{{end}}"
+       class="pipe-tooltipped pipe-tooltipped--e fn-two--next {{if .PreviousArticle}}{{else}}near__next--single{{end}}"
        aria-label="{{.I18n.NextArticle}}">
         <b class="ft-break">{{.NextArticle.Title}}</b>
         <svg class="near__icon-last">

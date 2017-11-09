@@ -72,19 +72,25 @@ gulp.task('build', function () {
   // theme js
   fs.readdirSync('./x').forEach(function (file) {
     const jsPath = `./x/${file}/js/`
-    browserify({entries: `${jsPath}/common.js`})
-      .transform('babelify', {presets: ['es2015']})
-      .bundle()
-      .pipe(source('common.min.js'))
-      .pipe(minify().on('error', gulpUtil.log))
-      .pipe(gulp.dest(jsPath))
+    try {
+      fs.statSync(`${jsPath}/common.js`)
+      browserify({entries: `${jsPath}/common.js`})
+        .transform('babelify', {presets: ['es2015']})
+        .bundle()
+        .pipe(source('common.min.js'))
+        .pipe(buffer())
+        .pipe(minify().on('error', gulpUtil.log))
+        .pipe(gulp.dest(jsPath))
+      browserify({entries: `${jsPath}/article.js`})
+        .transform('babelify', {presets: ['es2015']})
+        .bundle()
+        .pipe(source('article.min.js'))
+        .pipe(buffer())
+        .pipe(minify().on('error', gulpUtil.log))
+        .pipe(gulp.dest(jsPath))
 
-    browserify({entries: `${jsPath}/article.js`})
-      .transform('babelify', {presets: ['es2015']})
-      .bundle()
-      .pipe(source('article.min.js'))
-      .pipe(minify().on('error', gulpUtil.log))
-      .pipe(gulp.dest(jsPath))
+    } catch (e) {
+    }
   })
 })
 

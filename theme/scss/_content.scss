@@ -6,7 +6,7 @@
  */
 @import 'mixin';
 
-.content__reset {
+.pipe-content__reset {
   font-family: $font-family-base;
   word-wrap: break-word;
   overflow: auto;
@@ -178,7 +178,7 @@
   }
 }
 
-.preview {
+.pipe-preview {
   &__img {
     width: 100%;
     height: 100%;
