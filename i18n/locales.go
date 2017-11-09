@@ -55,7 +55,7 @@ func Load() {
 		load(loc)
 	}
 
-	logger.Debugf("loaded [%d] language configuration files", len(locales))
+	logger.Tracef("loaded [%d] language configuration files", len(locales))
 }
 
 func load(localeStr string) {

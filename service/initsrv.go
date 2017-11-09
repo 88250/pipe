@@ -99,7 +99,7 @@ func (srv *initService) InitPlatform(platformAdmin *model.User) error {
 		return nil
 	}
 
-	logger.Debugf("Initializing platform")
+	logger.Trace("Initializing platform")
 
 	tx := db.Begin()
 
@@ -160,7 +160,7 @@ func (srv *initService) InitPlatform(platformAdmin *model.User) error {
 	}
 
 	tx.Commit()
-	logger.Debugf("Initialized platform")
+	logger.Tracef("Initialized platform")
 
 	srv.inited = true
 
