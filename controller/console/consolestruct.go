@@ -76,11 +76,11 @@ type ConsoleTheme struct {
 }
 
 type ConsoleUser struct {
-	ID                    uint   `json:"id"`
-	Name                  string `json:"name"`
-	Nickname              string `json:"nickname"`
-	Role                  int    `json:"role"`
-	URL                   string `json:"url"`
-	AvatarURL             string `json:"avatarURL"`
-	PublishedArticleCount int    `json:"publishedArticleCount"`
+	ID           uint   `json:"id"`
+	Name         string `json:"name"`
+	Nickname     string `json:"nickname"`
+	Role         int    `json:"role"`
+	URL          string `json:"url"`
+	AvatarURL    string `json:"avatarURL"`
+	ArticleCount int    `json:"articleCount"`
 }
