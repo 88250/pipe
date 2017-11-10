@@ -124,7 +124,8 @@ func (srv *initService) InitBlog(blogAdmin *model.User) error {
 	defer srv.mutex.Unlock()
 
 	adminCount := 0
-	db.Model(&model.Correlation{}).Where(&model.Correlation{ID2: blogAdmin.ID, Type: model.CorrelationBlogUser, Int1: model.UserRoleBlogAdmin}).Count(&adminCount)
+	db.Model(&model.Correlation{}).Where("id2 = ? AND type = ? AND int1 = ?", blogAdmin.ID, model.CorrelationBlogUser, model.UserRoleBlogAdmin).
+		Count(&adminCount)
 	if 0 < adminCount {
 		return nil
 	}
@@ -177,6 +178,7 @@ func initBlogAdmin(tx *gorm.DB, admin *model.User, blogID uint) error {
 
 	tx.Unscoped().Where(&model.User{Name: admin.Name}).Delete(&model.User{}) // remove b3-id created if exists
 
+	admin.TotalArticleCount = 1 // article "Hello, World!"
 	if err := tx.Create(admin).Error; nil != err {
 		return err
 	}

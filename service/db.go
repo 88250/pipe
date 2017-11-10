@@ -58,7 +58,7 @@ func ConnectDB() {
 		logger.Fatal("auto migrate tables failed: " + err.Error())
 	}
 
-	if err = db.Model(&model.Article{}).AddUniqueIndex("idx_article_path", "path").Error; nil != err {
+	if err = db.Model(&model.Article{}).AddIndex("idx_article_path", "path").Error; nil != err {
 		logger.Fatal("adds index failed: " + err.Error())
 	}
 }
