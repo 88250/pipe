@@ -99,7 +99,6 @@ func fillUser(c *gin.Context) {
 		}
 
 		if service.Init.Inited() {
-			logger.Info("init blog " + username)
 			if err := service.Init.InitBlog(user); nil != err {
 				logger.Errorf("init user [name=%s] blog failed: %s", username, err.Error())
 			}

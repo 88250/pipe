@@ -179,3 +179,26 @@ func (srv *userService) GetUserBlog(userID, blogID uint) *UserBlog {
 		UserArticleCount: rel.Int2,
 	}
 }
+
+func (srv *userService) AddUserToBlog(userID, blogID uint) error {
+	srv.mutex.Lock()
+	defer srv.mutex.Unlock()
+
+	if nil != srv.GetUserBlog(userID, blogID) {
+		return nil
+	}
+
+	blogUser := &model.Correlation{
+		ID1:    blogID,
+		ID2:    userID,
+		Type:   model.CorrelationBlogUser,
+		Int1:   model.UserRoleBlogAdmin,
+		Int2:   0,
+		BlogID: blogID,
+	}
+	if err := db.Create(blogUser).Error; nil != err {
+		return err
+	}
+
+	return nil
+}

@@ -46,6 +46,13 @@ func AddUserAction(c *gin.Context) {
 		return
 	}
 
+	session := util.GetSession(c)
+	if err := service.User.AddUserToBlog(user.ID, session.BID); nil != err {
+		result.Code = -1
+		result.Msg = err.Error()
+
+		return
+	}
 }
 
 func GetUsersAction(c *gin.Context) {

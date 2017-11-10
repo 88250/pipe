@@ -42,7 +42,7 @@ func UpdateThemeAction(c *gin.Context) {
 			BlogID:   session.BID,
 		},
 	}
-	if err := service.Setting.UpdateSettings(model.SettingCategoryTheme, settings); nil != err {
+	if err := service.Setting.UpdateSettings(model.SettingCategoryTheme, settings, session.BID); nil != err {
 		result.Code = -1
 		result.Msg = err.Error()
 	}
