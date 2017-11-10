@@ -76,7 +76,7 @@ func TestUpdateSettings(t *testing.T) {
 	for _, setting := range settings {
 		basics = append(basics, setting)
 	}
-	if err := Setting.UpdateSettings(model.SettingCategoryBasic, basics); nil != err {
+	if err := Setting.UpdateSettings(model.SettingCategoryBasic, basics, 1); nil != err {
 		t.Errorf("updates settings failed: " + err.Error())
 
 		return
