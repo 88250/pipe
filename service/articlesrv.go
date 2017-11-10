@@ -278,8 +278,6 @@ func (srv *articleService) GetMostCommentArticles(size int, blogID uint) (ret []
 func (srv *articleService) ConsoleGetArticle(id uint) *model.Article {
 	ret := &model.Article{}
 	if err := db.First(ret, id).Error; nil != err {
-		logger.Errorf("get article failed: " + err.Error())
-
 		return nil
 	}
 

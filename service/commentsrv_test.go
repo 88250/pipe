@@ -56,8 +56,9 @@ func TestGetArticleComments(t *testing.T) {
 }
 
 func TestRemoveComment(t *testing.T) {
+	articles, _ := Article.GetArticles(1, 1)
 	comment := &model.Comment{
-		ArticleID: 1,
+		ArticleID: articles[0].ID,
 		AuthorID:  1,
 		Content:   "写博客需要坚持，相信积累后必然会有收获，我们一起努力加油 :smile:",
 		BlogID:    1,
