@@ -106,6 +106,7 @@ func MapRoutes() *gin.Engine {
 	consoleGroup.GET("/users", console.GetUsersAction)
 	consoleGroup.POST("/users", console.AddUserAction)
 	consoleGroup.GET("/thumbs", console.GetArticleThumbsAction)
+	consoleGroup.POST("/markdown", console.MarkdownAction)
 
 	consoleGroup.POST("/blogs/switch/:id", console.BlogSwitchAction)
 
