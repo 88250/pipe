@@ -11,7 +11,7 @@
           @change="setLocalstorage('title')"
         ></v-text-field>
 
-        <mavon-editor v-model="content" @change="setLocalstorage"/>
+        <v-editor :height="300" :text="content" @changed="setLocalstorage"></v-editor>
 
         <v-select
           v-model="tags"
@@ -81,7 +81,6 @@
 </template>
 
 <script>
-  import 'mavon-editor/dist/css/index.css'
   import {required, maxSize} from '~/plugins/validate'
 
   export default {
