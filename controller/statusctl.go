@@ -76,7 +76,7 @@ func getStatusAction(c *gin.Context) {
 		data.AvatarURL = user.AvatarURL
 		data.Role = model.UserRoleBlogAdmin
 
-		if model.UserRoleNoLogin != session.URole {
+		if model.UserRoleNoLogin != session.URole && platformStatus.Inited {
 			ownBlog := service.User.GetOwnBlog(user.ID)
 			data.BlogTitle = ownBlog.Title
 			data.BlogURL = ownBlog.URL

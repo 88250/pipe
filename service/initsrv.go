@@ -81,6 +81,13 @@ func (srv *initService) Status() (platformStatus *PlatformStatus, err error) {
 	return
 }
 
+func (srv *initService) InitBlog(blogAdmin *model.User) error {
+	srv.mutex.Lock()
+	defer srv.mutex.Unlock()
+
+	return nil
+}
+
 func (srv *initService) InitPlatform(platformAdmin *model.User) error {
 	if srv.inited {
 		return nil
@@ -179,7 +186,7 @@ func initPlatformAdmin(tx *gorm.DB, admin *model.User, blogID uint) error {
 		ID1:    blogID,
 		ID2:    admin.ID,
 		Type:   model.CorrelationBlogUser,
-		Int1:   model.UserRolePlatformAdmin,
+		Int1:   model.UserRoleBlogAdmin,
 		Int2:   1, // article "Hello, World!"
 		BlogID: blogID,
 	}
