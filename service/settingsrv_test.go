@@ -50,8 +50,8 @@ func TestGetCategorySettings(t *testing.T) {
 }
 
 func TestGetSettings(t *testing.T) {
-	settings := Setting.GetSettings(1, model.SettingCategoryBasic,
-		[]string{model.SettingNameBasicBlogTitle, model.SettingNameBasicBlogSubtitle})
+	settings := Setting.GetSettings(model.SettingCategoryBasic,
+		[]string{model.SettingNameBasicBlogTitle, model.SettingNameBasicBlogSubtitle}, 1)
 	if nil == settings {
 		t.Errorf("settings is nil")
 
@@ -69,8 +69,8 @@ func TestGetSettings(t *testing.T) {
 }
 
 func TestUpdateSettings(t *testing.T) {
-	settings := Setting.GetSettings(1, model.SettingCategoryBasic,
-		[]string{model.SettingNameBasicBlogTitle, model.SettingNameBasicBlogSubtitle})
+	settings := Setting.GetSettings(model.SettingCategoryBasic,
+		[]string{model.SettingNameBasicBlogTitle, model.SettingNameBasicBlogSubtitle}, 1)
 	settings[model.SettingNameBasicBlogTitle].Value = "更新后的标题"
 	basics := []*model.Setting{}
 	for _, setting := range settings {
@@ -82,8 +82,8 @@ func TestUpdateSettings(t *testing.T) {
 		return
 	}
 
-	settings = Setting.GetSettings(1, model.SettingCategoryBasic,
-		[]string{model.SettingNameBasicBlogTitle, model.SettingNameBasicBlogSubtitle})
+	settings = Setting.GetSettings(model.SettingCategoryBasic,
+		[]string{model.SettingNameBasicBlogTitle, model.SettingNameBasicBlogSubtitle}, 1)
 	if "更新后的标题" != settings[model.SettingNameBasicBlogTitle].Value {
 		t.Errorf("expected is [%s], actual is [%s]", "更新后的标题", settings[model.SettingNameBasicBlogTitle].Value)
 	}
