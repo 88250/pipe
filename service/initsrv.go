@@ -81,9 +81,62 @@ func (srv *initService) Status() (platformStatus *PlatformStatus, err error) {
 	return
 }
 
+func (srv *initService) initBlog(tx *gorm.DB, admin *model.User, blogID uint) error {
+	if err := initBlogAdmin(tx, admin, blogID); nil != err {
+		return err
+	}
+	if err := initSystemSettings(tx, blogID); nil != err {
+		return err
+	}
+	if err := initThemeSettings(tx, blogID); nil != err {
+		return err
+	}
+	if err := initBasicSettings(tx, admin, blogID); nil != err {
+		return err
+	}
+	if err := initPreferenceSettings(tx, blogID); nil != err {
+		return err
+	}
+	if err := initSignSettings(tx, blogID); nil != err {
+		return err
+	}
+	if err := initI18nSettings(tx, blogID); nil != err {
+		return err
+	}
+	if err := initFeedSettings(tx, blogID); nil != err {
+		return err
+	}
+	if err := initStatisticSettings(tx, blogID); nil != err {
+		return err
+	}
+	if err := initNavigation(tx, blogID); nil != err {
+		return err
+	}
+	if err := helloWorld(tx, admin, blogID); nil != err {
+		return err
+	}
+
+	return nil
+}
+
 func (srv *initService) InitBlog(blogAdmin *model.User) error {
 	srv.mutex.Lock()
 	defer srv.mutex.Unlock()
+
+	adminCount := 0
+	db.Model(&model.Correlation{}).Where(&model.Correlation{ID2: blogAdmin.ID, Type: model.CorrelationBlogUser, Int1: model.UserRoleBlogAdmin}).Count(&adminCount)
+	if 0 < adminCount {
+		return nil
+	}
+
+	blogID := util.CurrentMillisecond()
+	tx := db.Begin()
+	if err := srv.initBlog(tx, blogAdmin, blogID); nil != err {
+		tx.Rollback()
+
+		return err
+	}
+	tx.Commit()
 
 	return nil
 }
@@ -99,84 +152,30 @@ func (srv *initService) InitPlatform(platformAdmin *model.User) error {
 	blogID := uint(1)
 
 	saCount := 0
-	db.Model(&model.Correlation{}).Where(&model.Correlation{ID1: blogID, Type: model.CorrelationBlogUser, Int1: model.UserRolePlatformAdmin, BlogID: blogID}).Count(&saCount)
+	db.Model(&model.Correlation{}).Where(&model.Correlation{ID1: blogID, Type: model.CorrelationBlogUser, Int1: model.UserRoleBlogAdmin, BlogID: blogID}).Count(&saCount)
 	if 0 < saCount {
 		srv.inited = true
 
 		return nil
 	}
 
-	logger.Infof("Initializing platform")
 	tx := db.Begin()
-
-	if err := initPlatformAdmin(tx, platformAdmin, blogID); nil != err {
+	if err := srv.initBlog(tx, platformAdmin, blogID); nil != err {
 		tx.Rollback()
 
 		return err
 	}
-	if err := initSystemSettings(tx, blogID); nil != err {
-		tx.Rollback()
-
-		return err
-	}
-	if err := initThemeSettings(tx, blogID); nil != err {
-		tx.Rollback()
-
-		return err
-	}
-	if err := initBasicSettings(tx, platformAdmin, blogID); nil != err {
-		tx.Rollback()
-
-		return err
-	}
-	if err := initPreferenceSettings(tx, blogID); nil != err {
-		tx.Rollback()
-
-		return err
-	}
-	if err := initSignSettings(tx, blogID); nil != err {
-		tx.Rollback()
-
-		return err
-	}
-	if err := initI18nSettings(tx, blogID); nil != err {
-		tx.Rollback()
-
-		return err
-	}
-	if err := initFeedSettings(tx, blogID); nil != err {
-		tx.Rollback()
-
-		return err
-	}
-	if err := initStatisticSettings(tx, blogID); nil != err {
-		tx.Rollback()
-
-		return err
-	}
-	if err := initNavigation(tx, blogID); nil != err {
-		tx.Rollback()
-
-		return err
-	}
-	if err := helloWorld(tx, platformAdmin, blogID); nil != err {
-		tx.Rollback()
-
-		return err
-	}
-
 	tx.Commit()
-	logger.Infof("Initialized platform")
 
 	srv.inited = true
 
 	return nil
 }
 
-func initPlatformAdmin(tx *gorm.DB, admin *model.User, blogID uint) error {
+func initBlogAdmin(tx *gorm.DB, admin *model.User, blogID uint) error {
 	admin.Locale = "zh_CN"
 
-	tx.Where("name = ?", admin.Name).Delete(&model.User{}) // remove b3-id created if exists
+	tx.Unscoped().Where(&model.User{Name: admin.Name}).Delete(&model.User{}) // remove b3-id created if exists
 
 	if err := tx.Create(admin).Error; nil != err {
 		return err
