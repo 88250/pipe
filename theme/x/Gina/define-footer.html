@@ -58,10 +58,10 @@
 </div>
 
 {{if .Article}}
-<script type="text/javascript"
+<script type="text/javascript" id="pipeScript"
         src="{{.Conf.StaticServer}}/theme/x/{{.Setting.ThemeName}}/js/article.min.js?{{.Conf.StaticResourceVersion}}"></script>
 {{else}}
-<script type="text/javascript"
+<script type="text/javascript" id="pipeScript"
         src="{{.Conf.StaticServer}}/theme/x/{{.Setting.ThemeName}}/js/common.min.js?{{.Conf.StaticResourceVersion}}"></script>
 {{end}}
 

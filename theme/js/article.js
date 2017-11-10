@@ -8,56 +8,6 @@
 import $ from 'jquery'
 import hljs from 'highlight.js'
 import {LazyLoadCSSImage, LazyLoadImage} from './common'
-/**
- * @description 初始化 markdown 解析
- */
-export const ParseMarkdown = () => {
-  let hasMathJax = false;
-  let hasFlow = false;
-  // 按需加载 MathJax
-  $('.pipe-content__reset').each(function () {
-    $(this).find('p').each(function () {
-      if ($(this).text().indexOf('$/') > -1 || $(this).text().indexOf('$$') > -1) {
-        hasMathJax = true
-      }
-    });
-
-    if ($(this).find('code.lang-flow').length > 0) {
-      hasFlow = true
-    }
-  });
-
-  if (hasMathJax) {
-    $.ajax({
-      method: "GET",
-      url: "https://cdn.staticfile.org/MathJax/MathJax-2.6-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML&_=1473258780393",
-      dataType: "script"
-    }).done(function () {
-      MathJax.Hub.Config({
-        tex2jax: {
-          inlineMath: [['$', '$'], ["\\(", "\\)"]],
-          displayMath: [['$$', '$$']],
-          processEscapes: true,
-          processEnvironments: true,
-          skipTags: ['pre', 'code']
-        }
-      });
-    });
-  }
-
-  if (hasFlow) {
-    $.ajax({
-      method: "GET",
-      url: "https://cdnjs.cloudflare.com/ajax/libs/flowchart/1.7.0/flowchart.min.js",
-      dataType: "script"
-    }).done(function () {
-      $('.pipe-content__reset code.lang-flow').each(function () {
-        const diagram = flowchart.parse($(this).text())
-        diagram.drawSVG('diagram');
-      })
-    });
-  }
-}
 
 /**
  * @description 初始化目录

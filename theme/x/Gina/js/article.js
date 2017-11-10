@@ -10,8 +10,7 @@ import hljs from 'highlight.js'
 import {
   InitToc,
   ShowEditor,
-  InitComment,
-  ParseMarkdown
+  InitComment
 } from '../../../js/article'
 import './common'
 
@@ -37,8 +36,6 @@ const Article = {
     $('pre > code').each(function (i, block) {
       hljs.highlightBlock(block);
     });
-
-    ParseMarkdown()
   }
 }
 

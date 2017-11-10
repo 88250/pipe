@@ -8,6 +8,75 @@
 import $ from 'jquery'
 
 /**
+ * @description 初始化 markdown 解析
+ */
+export const ParseMarkdown = () => {
+  let hasMathJax = false;
+  let hasFlow = false;
+  // 按需加载 MathJax
+  $('.pipe-content__reset').each(function () {
+    if ($(this).text().indexOf('$\\') > -1 || $(this).text().indexOf('$$') > -1) {
+      hasMathJax = true;
+    }
+
+    if ($(this).find('code.language-flow').length > 0) {
+      hasFlow = true
+    }
+  });
+
+  if (hasMathJax) {
+    if (typeof MathJax !== 'undefined') {
+      MathJax.Hub.Typeset();
+    } else {
+      $.ajax({
+        method: "GET",
+        url: "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML",
+        dataType: "script"
+      }).done(function () {
+        MathJax.Hub.Config({
+          tex2jax: {
+            inlineMath: [['$', '$'], ["\\(", "\\)"]],
+            displayMath: [['$$', '$$']],
+            processEscapes: true,
+            processEnvironments: true,
+            skipTags: ['pre', 'code', 'script']
+          }
+        });
+      });
+    }
+  }
+
+  if (hasFlow) {
+    const initFlow = function () {
+      $('.pipe-content__reset code.language-flow').each(function (index) {
+        const $it = $(this);
+        const id = 'pipeFlowChart' + (new Date()).getTime() + index;
+        $it.hide();
+        $it.parent().after('<div class="ft-center" id="' + id + '"></div>')
+
+        const diagram = flowchart.parse($.trim($it.text()));
+        diagram.drawSVG(id);
+
+        $it.parent().remove();
+        $('#' + id).find('svg').height('auto').width('auto');
+      });
+    };
+
+    if (typeof flowchart !== 'undefined') {
+      initFlow();
+    } else {
+      $.ajax({
+        method: "GET",
+        url: $('#pipeScript').attr('src').split('theme')[0] + 'theme/js/lib/flowchart.min.js',
+        dataType: "script"
+      }).done(function () {
+        initFlow()
+      });
+    }
+  }
+}
+
+/**
  * @description 图片预览
  */
 export const PreviewImg = () => {
