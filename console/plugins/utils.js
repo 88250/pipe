@@ -190,3 +190,10 @@ export const initParticlesJS = (id) => {
     'retina_detect': true
   })
 }
+
+export const asyncLoadScript = (url, loadCB) => {
+  const scriptDom = document.createElement('script')
+  scriptDom.setAttribute('src', url)
+  document.head.appendChild(scriptDom)
+  scriptDom.onload = loadCB
+}

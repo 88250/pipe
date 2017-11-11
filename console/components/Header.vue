@@ -152,7 +152,7 @@
     position: fixed
     height: 60px
     width: 100%
-    z-index: 10
+    z-index: 20
     top: 0
     color: #fff
     .side__icon

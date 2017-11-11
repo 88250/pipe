@@ -82,6 +82,7 @@
 
 <script>
   import {required, maxSize} from '~/plugins/validate'
+  import {asyncLoadScript} from '~/plugins/utils'
 
   export default {
     data () {
@@ -110,10 +111,71 @@
       }
     },
     methods: {
-      parseMarkdown (value, hasPreview) {
+      _paseMD (text, previewRef) {
+        previewRef.innerHTML = `<div class="pipe-content__reset">${text}</div>`
+        let hasMathJax = false
+        let hasFlow = false
+        if (text.indexOf('$\\') > -1 || text.indexOf('$$') > -1) {
+          hasMathJax = true
+        }
+
+        if (text.indexOf('<code class="language-flow"') > -1) {
+          hasFlow = true
+        }
+
+        if (hasMathJax) {
+          if (typeof MathJax !== 'undefined') {
+            window.MathJax.Hub.Typeset()
+          } else {
+            asyncLoadScript('https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML',
+              () => {
+                window.MathJax.Hub.Config({
+                  tex2jax: {
+                    inlineMath: [['$', '$'], ['\\(', '\\)']],
+                    displayMath: [['$$', '$$']],
+                    processEscapes: true,
+                    processEnvironments: true,
+                    skipTags: ['pre', 'code', 'script']
+                  }
+                })
+              })
+          }
+        }
+
+        if (hasFlow) {
+          const initFlow = function () {
+            document.querySelectorAll('.pipe-content__reset .language-flow').forEach(function (it, index) {
+              const id = 'pipeFlow' + (new Date()).getTime() + index
+              it.style.display = 'none'
+              const diagram = window.flowchart.parse(it.textContent)
+              it.parentElement.outerHTML = '<div class="ft-center" id="' + id + '"></div>'
+              diagram.drawSVG(id)
+              document.getElementById(id).firstChild.style.height = 'auto'
+              document.getElementById(id).firstChild.style.width = 'auto'
+            })
+          }
+
+          if (typeof (flowchart) !== 'undefined') {
+            initFlow()
+          } else {
+            asyncLoadScript('https://static.hacpai.com/js/lib/flowchart/flowchart.min.js', initFlow())
+          }
+        }
+      },
+      async parseMarkdown (value, previewRef) {
         this.setLocalstorage('content')
-        if (hasPreview) {
-          console.log(value)
+        if (previewRef) {
+          const responseData = await this.axios.post('/console/markdown', {
+            mdText: this.content
+          })
+          if (responseData.code === 0) {
+            this._paseMD(responseData.data.html, previewRef)
+            this.$set(this, 'error', false)
+            this.$set(this, 'errorMsg', '')
+          } else {
+            this.$set(this, 'error', true)
+            this.$set(this, 'errorMsg', responseData.msg)
+          }
         }
       },
       setLocalstorage (type) {
