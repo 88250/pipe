@@ -32,7 +32,7 @@ func GetBasicSettingsAction(c *gin.Context) {
 	defer c.JSON(http.StatusOK, result)
 
 	session := util.GetSession(c)
-	settings := service.Setting.GetCategorySettings(session.BID, model.SettingCategoryBasic)
+	settings := service.Setting.GetCategorySettings(model.SettingCategoryBasic, session.BID)
 	data := map[string]interface{}{}
 	for _, setting := range settings {
 		if model.SettingNameBasicCommentable == setting.Name {
@@ -83,7 +83,7 @@ func UpdateBasicSettingsAction(c *gin.Context) {
 		basics = append(basics, basic)
 	}
 
-	if err := service.Setting.UpdateSettings(model.SettingCategoryBasic, basics); nil != err {
+	if err := service.Setting.UpdateSettings(model.SettingCategoryBasic, basics, session.BID); nil != err {
 		result.Code = -1
 		result.Msg = err.Error()
 	}
@@ -94,7 +94,7 @@ func GetPreferenceSettingsAction(c *gin.Context) {
 	defer c.JSON(http.StatusOK, result)
 
 	session := util.GetSession(c)
-	settings := service.Setting.GetCategorySettings(session.BID, model.SettingCategoryPreference)
+	settings := service.Setting.GetCategorySettings(model.SettingCategoryPreference, session.BID)
 	data := map[string]interface{}{}
 	for _, setting := range settings {
 		if model.SettingNamePreferenceArticleListStyle != setting.Name {
@@ -145,7 +145,7 @@ func UpdatePreferenceSettingsAction(c *gin.Context) {
 		prefs = append(prefs, pref)
 	}
 
-	if err := service.Setting.UpdateSettings(model.SettingCategoryPreference, prefs); nil != err {
+	if err := service.Setting.UpdateSettings(model.SettingCategoryPreference, prefs, session.BID); nil != err {
 		result.Code = -1
 		result.Msg = err.Error()
 	}
@@ -182,7 +182,7 @@ func UpdateSignSettingsAction(c *gin.Context) {
 	}
 	signs = append(signs, sign)
 
-	if err := service.Setting.UpdateSettings(model.SettingCategorySign, signs); nil != err {
+	if err := service.Setting.UpdateSettings(model.SettingCategorySign, signs, session.BID); nil != err {
 		result.Code = -1
 		result.Msg = err.Error()
 	}
@@ -193,7 +193,7 @@ func GetI18nSettingsAction(c *gin.Context) {
 	defer c.JSON(http.StatusOK, result)
 
 	session := util.GetSession(c)
-	settings := service.Setting.GetCategorySettings(session.BID, model.SettingCategoryI18n)
+	settings := service.Setting.GetCategorySettings(model.SettingCategoryI18n, session.BID)
 	data := map[string]interface{}{}
 	for _, setting := range settings {
 		data[setting.Name] = setting.Value
@@ -225,7 +225,7 @@ func UpdateI18nSettingsAction(c *gin.Context) {
 		i18ns = append(i18ns, i18n)
 	}
 
-	if err := service.Setting.UpdateSettings(model.SettingCategoryI18n, i18ns); nil != err {
+	if err := service.Setting.UpdateSettings(model.SettingCategoryI18n, i18ns, session.BID); nil != err {
 		result.Code = -1
 		result.Msg = err.Error()
 	}
@@ -236,7 +236,7 @@ func GetFeedSettingsAction(c *gin.Context) {
 	defer c.JSON(http.StatusOK, result)
 
 	session := util.GetSession(c)
-	settings := service.Setting.GetCategorySettings(session.BID, model.SettingCategoryFeed)
+	settings := service.Setting.GetCategorySettings(model.SettingCategoryFeed, session.BID)
 	data := map[string]interface{}{}
 	for _, setting := range settings {
 		if model.SettingNameFeedOutputSize == setting.Name {
@@ -286,7 +286,7 @@ func UpdateFeedSettingsAction(c *gin.Context) {
 		feeds = append(feeds, feed)
 	}
 
-	if err := service.Setting.UpdateSettings(model.SettingCategoryFeed, feeds); nil != err {
+	if err := service.Setting.UpdateSettings(model.SettingCategoryFeed, feeds, session.BID); nil != err {
 		result.Code = -1
 		result.Msg = err.Error()
 	}

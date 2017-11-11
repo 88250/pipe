@@ -72,11 +72,12 @@ func (srv *userService) GetUser(userID uint) *model.User {
 }
 
 type UserBlog struct {
-	ID       uint   `json:"id"`    // blog ID
-	Title    string `json:"title"` // blog title
-	URL      string `json:"url"`   // blog URL
-	UserID   uint   `json:"userId"`
-	UserRole int    `json:"userRole"`
+	ID               uint   `json:"id"`    // blog ID
+	Title            string `json:"title"` // blog title
+	URL              string `json:"url"`   // blog URL
+	UserID           uint   `json:"userId"`
+	UserRole         int    `json:"userRole"`
+	UserArticleCount int    `json:"userArticleCount"`
 }
 
 func (srv *userService) GetBlogUsers(page int, blogID uint) (ret []*model.User, pagination *util.Pagination) {
@@ -116,11 +117,12 @@ func (srv *userService) GetOwnBlog(userID uint) *UserBlog {
 	blogURLSetting := Setting.GetSetting(model.SettingCategoryBasic, model.SettingNameBasicBlogURL, rel.ID1)
 
 	return &UserBlog{
-		ID:       rel.ID1,
-		Title:    blogTitleSetting.Value,
-		URL:      blogURLSetting.Value,
-		UserID:   userID,
-		UserRole: rel.Int1,
+		ID:               rel.ID1,
+		Title:            blogTitleSetting.Value,
+		URL:              blogURLSetting.Value,
+		UserID:           userID,
+		UserRole:         rel.Int1,
+		UserArticleCount: rel.Int2,
 	}
 }
 
@@ -142,23 +144,61 @@ func (srv *userService) GetUserBlogs(userID uint) (ret []*UserBlog) {
 
 	for _, rel := range correlations {
 		blogTitleSetting := Setting.GetSetting(model.SettingCategoryBasic, model.SettingNameBasicBlogTitle, rel.ID1)
-		if nil == blogTitleSetting {
-			continue
-		}
 		blogURLSetting := Setting.GetSetting(model.SettingCategoryBasic, model.SettingNameBasicBlogURL, rel.ID1)
-		if nil == blogURLSetting {
-			continue
-		}
 
 		userBlog := &UserBlog{
-			ID:       rel.ID1,
-			Title:    blogTitleSetting.Value,
-			URL:      blogURLSetting.Value,
-			UserID:   userID,
-			UserRole: rel.Int1,
+			ID:               rel.ID1,
+			Title:            blogTitleSetting.Value,
+			URL:              blogURLSetting.Value,
+			UserID:           userID,
+			UserRole:         rel.Int1,
+			UserArticleCount: rel.Int2,
 		}
 		ret = append(ret, userBlog)
 	}
 
 	return ret
+}
+
+func (srv *userService) GetUserBlog(userID, blogID uint) *UserBlog {
+	rel := &model.Correlation{}
+	if err := db.Where("id1 = ? AND id2 = ? AND type = ? AND blog_id = ?", blogID, userID, model.CorrelationBlogUser, blogID).
+		First(&rel).Error; nil != err {
+		return nil
+	}
+
+	blogTitleSetting := Setting.GetSetting(model.SettingCategoryBasic, model.SettingNameBasicBlogTitle, rel.ID1)
+	blogURLSetting := Setting.GetSetting(model.SettingCategoryBasic, model.SettingNameBasicBlogURL, rel.ID1)
+
+	return &UserBlog{
+		ID:               rel.ID1,
+		Title:            blogTitleSetting.Value,
+		URL:              blogURLSetting.Value,
+		UserID:           userID,
+		UserRole:         rel.Int1,
+		UserArticleCount: rel.Int2,
+	}
+}
+
+func (srv *userService) AddUserToBlog(userID, blogID uint) error {
+	srv.mutex.Lock()
+	defer srv.mutex.Unlock()
+
+	if nil != srv.GetUserBlog(userID, blogID) {
+		return nil
+	}
+
+	blogUser := &model.Correlation{
+		ID1:    blogID,
+		ID2:    userID,
+		Type:   model.CorrelationBlogUser,
+		Int1:   model.UserRoleBlogAdmin,
+		Int2:   0,
+		BlogID: blogID,
+	}
+	if err := db.Create(blogUser).Error; nil != err {
+		return err
+	}
+
+	return nil
 }

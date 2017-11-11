@@ -33,7 +33,7 @@
             </v-btn>
           </div>
           <div class="list__meta">
-            <span class="fn-nowrap">{{ item.publishedArticleCount }} {{ $t('article', $store.state.locale) }}</span> •
+            <span class="fn-nowrap">{{ item.articleCount }} {{ $t('article', $store.state.locale) }}</span> •
             <span class="fn-nowrap" :class="{'ft-danger': item.role === 4}">{{ getRoleName(item.role) }}</span>
           </div>
         </div>

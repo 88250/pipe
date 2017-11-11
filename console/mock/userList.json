@@ -10,7 +10,7 @@
         "role": 1,
         "url": "https://hacpai.com/member/Vanessa",
         "avatarURL": "https://static.hacpai.com/images/tags/b3log.png",
-        "publishedArticleCount": 20
+        "articleCount": 20
       },
       {
         "id": 3,
@@ -19,7 +19,7 @@
         "role": 4,
         "url": "https://hacpai.com/member/Vanessa",
         "avatarURL": "https://static.hacpai.com/images/tags/b3log.png",
-        "publishedArticleCount": 20
+        "articleCount": 20
       }
     ],
     "pagination": {

@@ -39,7 +39,7 @@ func (srv *settingService) GetSetting(category, name string, blogID uint) *model
 	return ret
 }
 
-func (srv *settingService) GetCategorySettings(blogID uint, category string) []*model.Setting {
+func (srv *settingService) GetCategorySettings(category string, blogID uint) []*model.Setting {
 	ret := []*model.Setting{}
 
 	if err := db.Where("category = ? AND blog_id = ?", category, blogID).Find(&ret).Error; nil != err {
@@ -59,7 +59,7 @@ func (srv *settingService) GetAllSettings(blogID uint) []*model.Setting {
 	return ret
 }
 
-func (srv *settingService) GetSettings(blogID uint, category string, names []string) map[string]*model.Setting {
+func (srv *settingService) GetSettings(category string, names []string, blogID uint) map[string]*model.Setting {
 	ret := map[string]*model.Setting{}
 	settings := []*model.Setting{}
 	if err := db.Where("category = ? AND name IN (?) AND blog_id = ?", category, names, blogID).Find(&settings).Error; nil != err {
@@ -73,13 +73,14 @@ func (srv *settingService) GetSettings(blogID uint, category string, names []str
 	return ret
 }
 
-func (srv *settingService) UpdateSettings(category string, settings []*model.Setting) error {
+func (srv *settingService) UpdateSettings(category string, settings []*model.Setting, blogID uint) error {
 	srv.mutex.Lock()
 	defer srv.mutex.Unlock()
 
 	tx := db.Begin()
 	for _, setting := range settings {
-		if err := tx.Model(&model.Setting{}).Where("category = ? AND name = ?", category, setting.Name).Updates(setting).Error; nil != err {
+		if err := tx.Model(&model.Setting{}).Where("category = ? AND name = ? AND blog_id = ?",
+			category, setting.Name, blogID).Updates(setting).Error; nil != err {
 			tx.Rollback()
 
 			return err

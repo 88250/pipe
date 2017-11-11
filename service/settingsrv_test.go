@@ -43,15 +43,15 @@ func TestGetAllSettings(t *testing.T) {
 }
 
 func TestGetCategorySettings(t *testing.T) {
-	basicSettings := Setting.GetCategorySettings(1, model.SettingCategoryBasic)
+	basicSettings := Setting.GetCategorySettings(model.SettingCategoryBasic, 1)
 	if 11 != len(basicSettings) {
 		t.Errorf("expected is [%d], actual is [%d]", 10, len(basicSettings))
 	}
 }
 
 func TestGetSettings(t *testing.T) {
-	settings := Setting.GetSettings(1, model.SettingCategoryBasic,
-		[]string{model.SettingNameBasicBlogTitle, model.SettingNameBasicBlogSubtitle})
+	settings := Setting.GetSettings(model.SettingCategoryBasic,
+		[]string{model.SettingNameBasicBlogTitle, model.SettingNameBasicBlogSubtitle}, 1)
 	if nil == settings {
 		t.Errorf("settings is nil")
 
@@ -69,21 +69,21 @@ func TestGetSettings(t *testing.T) {
 }
 
 func TestUpdateSettings(t *testing.T) {
-	settings := Setting.GetSettings(1, model.SettingCategoryBasic,
-		[]string{model.SettingNameBasicBlogTitle, model.SettingNameBasicBlogSubtitle})
+	settings := Setting.GetSettings(model.SettingCategoryBasic,
+		[]string{model.SettingNameBasicBlogTitle, model.SettingNameBasicBlogSubtitle}, 1)
 	settings[model.SettingNameBasicBlogTitle].Value = "更新后的标题"
 	basics := []*model.Setting{}
 	for _, setting := range settings {
 		basics = append(basics, setting)
 	}
-	if err := Setting.UpdateSettings(model.SettingCategoryBasic, basics); nil != err {
+	if err := Setting.UpdateSettings(model.SettingCategoryBasic, basics, 1); nil != err {
 		t.Errorf("updates settings failed: " + err.Error())
 
 		return
 	}
 
-	settings = Setting.GetSettings(1, model.SettingCategoryBasic,
-		[]string{model.SettingNameBasicBlogTitle, model.SettingNameBasicBlogSubtitle})
+	settings = Setting.GetSettings(model.SettingCategoryBasic,
+		[]string{model.SettingNameBasicBlogTitle, model.SettingNameBasicBlogSubtitle}, 1)
 	if "更新后的标题" != settings[model.SettingNameBasicBlogTitle].Value {
 		t.Errorf("expected is [%s], actual is [%s]", "更新后的标题", settings[model.SettingNameBasicBlogTitle].Value)
 	}

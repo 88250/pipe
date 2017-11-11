@@ -50,6 +50,11 @@ func TestAddArticle(t *testing.T) {
 			t.Error("add article failed: " + err.Error())
 		}
 	}
+
+	statisticSetting := Statistic.GetStatistic(model.SettingNameStatisticArticleCount, 1)
+	if "100" != statisticSetting.Value {
+		t.Errorf("expected is [%s], actual is [%s]", "100", statisticSetting.Value)
+	}
 }
 
 func TestGetPreviousArticle(t *testing.T) {
@@ -181,11 +186,18 @@ func TestTagArticle(t *testing.T) {
 }
 
 func TestRemoveArticle(t *testing.T) {
+	article := Article.ConsoleGetArticle(1)
+	if nil == article {
+		t.FailNow()
+
+		return
+	}
+
 	if err := Article.RemoveArticle(1); nil != err {
 		t.Error(err)
 	}
 
-	article := Article.ConsoleGetArticle(1)
+	article = Article.ConsoleGetArticle(1)
 	if nil != article {
 		t.Error("remove article failed")
 	}

@@ -46,6 +46,13 @@ func AddUserAction(c *gin.Context) {
 		return
 	}
 
+	session := util.GetSession(c)
+	if err := service.User.AddUserToBlog(user.ID, session.BID); nil != err {
+		result.Code = -1
+		result.Msg = err.Error()
+
+		return
+	}
 }
 
 func GetUsersAction(c *gin.Context) {
@@ -58,13 +65,15 @@ func GetUsersAction(c *gin.Context) {
 	users := []*ConsoleUser{}
 	userModels, pagination := service.User.GetBlogUsers(util.GetPage(c), session.BID)
 	for _, userModel := range userModels {
+		userBlog := service.User.GetUserBlog(userModel.ID, session.BID)
 		users = append(users, &ConsoleUser{
-			ID:        userModel.ID,
-			Name:      userModel.Name,
-			Nickname:  userModel.Nickname,
-			Role:      service.User.GetRole(userModel.ID, session.BID),
-			URL:       blogURLSetting.Value + util.PathAuthors + "/" + userModel.Name,
-			AvatarURL: userModel.AvatarURL,
+			ID:           userModel.ID,
+			Name:         userModel.Name,
+			Nickname:     userModel.Nickname,
+			Role:         userBlog.UserRole,
+			URL:          blogURLSetting.Value + util.PathAuthors + "/" + userModel.Name,
+			AvatarURL:    userModel.AvatarURL,
+			ArticleCount: userBlog.UserArticleCount,
 		})
 	}
 

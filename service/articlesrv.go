@@ -278,8 +278,6 @@ func (srv *articleService) GetMostCommentArticles(size int, blogID uint) (ret []
 func (srv *articleService) ConsoleGetArticle(id uint) *model.Article {
 	ret := &model.Article{}
 	if err := db.First(ret, id).Error; nil != err {
-		logger.Errorf("get article failed: " + err.Error())
-
 		return nil
 	}
 
@@ -536,7 +534,7 @@ func normalizeArticlePath(article *model.Article) error {
 }
 
 func getPageWindowSize(blogID uint) (pageSize, windowSize int) {
-	settings := Setting.GetSettings(blogID, model.SettingCategoryPreference, []string{model.SettingNamePreferenceArticleListPageSize, model.SettingNamePreferenceArticleListWindowSize})
+	settings := Setting.GetSettings(model.SettingCategoryPreference, []string{model.SettingNamePreferenceArticleListPageSize, model.SettingNamePreferenceArticleListWindowSize}, blogID)
 	pageSize, err := strconv.Atoi(settings[model.SettingNamePreferenceArticleListPageSize].Value)
 	if nil != err {
 		logger.Errorf("value of setting [%s] is not an integer, actual is [%v]", model.SettingNamePreferenceArticleListPageSize, settings[model.SettingNamePreferenceArticleListPageSize].Value)

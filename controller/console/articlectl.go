@@ -33,6 +33,25 @@ import (
 // Logger
 var logger = log.NewLogger(os.Stdout)
 
+func MarkdownAction(c *gin.Context) {
+	result := util.NewResult()
+	defer c.JSON(http.StatusOK, result)
+
+	arg := map[string]interface{}{}
+	if err := c.BindJSON(&arg); nil != err {
+		result.Code = -1
+		result.Msg = "parses markdown request failed"
+
+		return
+	}
+
+	mdText := arg["mdText"].(string)
+	mdResult := util.Markdown(mdText)
+	data := map[string]interface{}{}
+	data["html"] = mdResult.ContentHTML
+	result.Data = data
+}
+
 func AddArticleAction(c *gin.Context) {
 	result := util.NewResult()
 	defer c.JSON(http.StatusOK, result)

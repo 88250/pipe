@@ -123,6 +123,11 @@ func (srv *initService) InitBlog(blogAdmin *model.User) error {
 	srv.mutex.Lock()
 	defer srv.mutex.Unlock()
 
+	user := User.GetUserByName(blogAdmin.Name)
+	if nil != user {
+		return nil
+	}
+
 	adminCount := 0
 	db.Model(&model.Correlation{}).Where("id2 = ? AND type = ? AND int1 = ?", blogAdmin.ID, model.CorrelationBlogUser, model.UserRoleBlogAdmin).
 		Count(&adminCount)
@@ -175,11 +180,13 @@ func (srv *initService) InitPlatform(platformAdmin *model.User) error {
 
 func initBlogAdmin(tx *gorm.DB, admin *model.User, blogID uint) error {
 	admin.Locale = "zh_CN"
-
-	tx.Unscoped().Where(&model.User{Name: admin.Name}).Delete(&model.User{}) // remove b3-id created if exists
-
 	admin.TotalArticleCount = 1 // article "Hello, World!"
-	if err := tx.Create(admin).Error; nil != err {
+
+	exist := &model.User{}
+	tx.Where(&model.User{Name: admin.Name}).First(exist)
+	admin.ID = exist.ID
+
+	if err := tx.Save(admin).Error; nil != err {
 		return err
 	}
 

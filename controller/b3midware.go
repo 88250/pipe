@@ -80,7 +80,9 @@ func fillUser(c *gin.Context) {
 			return
 		}
 
+		processB3IDResult(result)
 		data := result.Data.(map[string]interface{})
+
 		username := data["userName"].(string)
 		b3Key := data["userB3Key"].(string)
 		userAvatar := data["userAvatarURL"].(string)
@@ -99,7 +101,6 @@ func fillUser(c *gin.Context) {
 		}
 
 		if service.Init.Inited() {
-			logger.Info("init blog " + username)
 			if err := service.Init.InitBlog(user); nil != err {
 				logger.Errorf("init user [name=%s] blog failed: %s", username, err.Error())
 			}
