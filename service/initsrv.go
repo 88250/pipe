@@ -185,6 +185,7 @@ func initBlogAdmin(tx *gorm.DB, admin *model.User, blogID uint) error {
 	exist := &model.User{}
 	tx.Where(&model.User{Name: admin.Name}).First(exist)
 	admin.ID = exist.ID
+	admin.CreatedAt = exist.CreatedAt
 
 	if err := tx.Save(admin).Error; nil != err {
 		return err
