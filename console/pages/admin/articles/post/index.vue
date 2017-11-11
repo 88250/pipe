@@ -11,7 +11,7 @@
           @change="setLocalstorage('title')"
         ></v-text-field>
 
-        <v-editor :height="300" :text="content" @changed="setLocalstorage"></v-editor>
+        <v-editor :height="300" v-model="content" @input="parseMarkdown"></v-editor>
 
         <v-select
           v-model="tags"
@@ -98,7 +98,6 @@
           (v) => this.tags.length > 0 || this.$t('required', this.$store.state.locale)
         ],
         url: '',
-        password: '',
         tags: [],
         commentable: true,
         useThumbs: false,
@@ -111,12 +110,14 @@
       }
     },
     methods: {
+      parseMarkdown (value, hasPreview) {
+        this.setLocalstorage('content')
+        if (hasPreview) {
+          console.log(value)
+        }
+      },
       setLocalstorage (type) {
         if (this.$route.query.id) {
-          return
-        }
-        if (arguments.length === 2) {
-          localStorage.setItem('article-content', arguments[0])
           return
         }
 
@@ -136,6 +137,9 @@
             break
           case 'useThumbs':
             localStorage.setItem('article-useThumbs', this.useThumbs)
+            break
+          case 'content':
+            localStorage.setItem('article-content', this.content)
             break
           default:
             break
@@ -164,7 +168,6 @@
           title: this.title,
           content: content,
           path: this.url,
-          password: this.password,
           tags: this.tags.toString(),
           commentable: this.commentable
         })
@@ -205,7 +208,6 @@
           this.$set(this, 'title', responseData.title)
           this.$set(this, 'content', responseData.content)
           this.$set(this, 'url', responseData.path)
-          this.$set(this, 'password', responseData.password)
           this.$set(this, 'tags', responseData.tags.split(','))
           this.$set(this, 'commentable', responseData.commentable)
         }
