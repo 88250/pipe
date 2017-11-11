@@ -109,10 +109,12 @@ func fillUser(c *gin.Context) {
 		if existUser := service.User.GetUserByName(username); nil != existUser {
 			session.UAvatar = existUser.AvatarURL
 			ownBlog := service.User.GetOwnBlog(existUser.ID)
-			session.BID = ownBlog.ID
-			session.BURL = ownBlog.URL
+			if nil != ownBlog {
+				session.BID = ownBlog.ID
+				session.BURL = ownBlog.URL
+				session.URole = ownBlog.UserRole
+			}
 			session.UID = existUser.ID
-			session.URole = ownBlog.UserRole
 		} else {
 			if err := service.User.AddUser(user); nil != err {
 				logger.Errorf("add user [name=%s] failed: %s", username, err.Error())
