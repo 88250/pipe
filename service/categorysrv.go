@@ -17,6 +17,8 @@
 package service
 
 import (
+	"errors"
+	"fmt"
 	"math"
 	"strings"
 	"sync"
@@ -40,6 +42,47 @@ const (
 	adminConsoleCategoryListWindowSize = 20
 )
 
+func (srv *categoryService) UpdateCategory(category *model.Category) error {
+	srv.mutex.Lock()
+	defer srv.mutex.Unlock()
+
+	count := 0
+	if db.Model(&model.Category{}).Where("id = ?", category.ID).Count(&count); 1 > count {
+		return errors.New(fmt.Sprintf("not found category [id=%d] to update", category.ID))
+	}
+
+	tagStr, err := normalizeTagStr(category.Tags)
+	if nil != err {
+		return err
+	}
+	category.Tags = tagStr
+
+	if !strings.HasPrefix(category.Path, "/") {
+		category.Path = "/" + category.Path
+	}
+
+	tx := db.Begin()
+	if err := tx.Model(category).Updates(category).Error; nil != err {
+		tx.Rollback()
+
+		return err
+	}
+	if err := tx.Where("id1 = ? AND type = ? AND blog_id = ?",
+		category.ID, model.CorrelationCategoryTag, category.BlogID).Delete(model.Correlation{}).Error; nil != err {
+		tx.Rollback()
+
+		return err
+	}
+	if err := tagCategory(tx, category); nil != err {
+		tx.Rollback()
+
+		return err
+	}
+	tx.Commit()
+
+	return nil
+}
+
 func (srv *categoryService) ConsoleGetCategory(id uint) *model.Category {
 	ret := &model.Category{}
 	if err := db.First(ret, id).Error; nil != err {
@@ -58,6 +101,10 @@ func (srv *categoryService) AddCategory(category *model.Category) error {
 		return err
 	}
 	category.Tags = tagStr
+
+	if !strings.HasPrefix(category.Path, "/") {
+		category.Path = "/" + category.Path
+	}
 
 	tx := db.Begin()
 	if err := tx.Create(category).Error; nil != err {
@@ -109,7 +156,8 @@ func (srv *categoryService) RemoveCategory(id uint) error {
 		return err
 	}
 
-	if err := tx.Where("id1 = ? AND type = ?", category.ID, model.CorrelationCategoryTag).Delete(model.Correlation{}).Error; nil != err {
+	if err := tx.Where("id1 = ? AND type = ? AND blog_id = ?",
+		category.ID, model.CorrelationCategoryTag, category.BlogID).Delete(model.Correlation{}).Error; nil != err {
 		tx.Rollback()
 
 		return err

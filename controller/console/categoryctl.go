@@ -26,6 +26,36 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+func UpdateCategoryAction(c *gin.Context) {
+	result := util.NewResult()
+	defer c.JSON(http.StatusOK, result)
+
+	session := util.GetSession(c)
+
+	idArg := c.Param("id")
+	id, err := strconv.Atoi(idArg)
+	if nil != err {
+		result.Code = -1
+		result.Msg = err.Error()
+
+		return
+	}
+
+	category := &model.Category{Model: model.Model{ID: uint(id)}}
+	if err := c.BindJSON(category); nil != err {
+		result.Code = -1
+		result.Msg = "parses update category request failed"
+
+		return
+	}
+	category.BlogID = session.BID
+
+	if err := service.Category.UpdateCategory(category); nil != err {
+		result.Code = -1
+		result.Msg = err.Error()
+	}
+}
+
 func GetCategoryAction(c *gin.Context) {
 	result := util.NewResult()
 	defer c.JSON(http.StatusOK, result)

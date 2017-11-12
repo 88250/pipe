@@ -87,7 +87,7 @@
         let responseData = {}
         const requestData = {
           title: this.title,
-          url: this.url,
+          path: this.url,
           description: this.description,
           tags: this.tags.join(',')
         }
@@ -113,7 +113,7 @@
         const responseData = await this.axios.get(`/console/categories/${this.id}`)
         if (responseData) {
           this.$set(this, 'title', responseData.title)
-          this.$set(this, 'url', responseData.url)
+          this.$set(this, 'url', responseData.path)
           this.$set(this, 'description', responseData.description)
           this.$set(this, 'tags', responseData.tags.split(','))
         }

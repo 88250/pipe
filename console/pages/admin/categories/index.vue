@@ -15,7 +15,7 @@
       <li v-for="item in list" :key="item.id" class="fn-flex">
         <div class="fn-flex-1">
           <div class="fn-flex">
-            <a class="list__title fn-flex-1" :href="`${$store.state.blogURL}/${item.url}`">
+            <a class="list__title fn-flex-1" :href="item.url">
               {{ item.title }}
             </a>
             <v-menu

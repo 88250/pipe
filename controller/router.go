@@ -99,6 +99,7 @@ func MapRoutes() *gin.Engine {
 	consoleGroup.POST("/categories", console.AddCategoryAction)
 	consoleGroup.DELETE("/categories/:id", console.RemoveCategoryAction)
 	consoleGroup.GET("/categories/:id", console.GetCategoryAction)
+	consoleGroup.PUT("/categories/:id", console.UpdateCategoryAction)
 	consoleGroup.GET("/navigations", console.GetNavigationsAction)
 	consoleGroup.GET("/navigations/:id", console.GetNavigationAction)
 	consoleGroup.PUT("/navigations/:id", console.UpdateNavigationAction)
