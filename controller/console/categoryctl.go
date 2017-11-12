@@ -26,6 +26,29 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+func GetCategoryAction(c *gin.Context) {
+	result := util.NewResult()
+	defer c.JSON(http.StatusOK, result)
+
+	idArg := c.Param("id")
+	id, err := strconv.Atoi(idArg)
+	if nil != err {
+		result.Code = -1
+		result.Msg = err.Error()
+
+		return
+	}
+
+	data := service.Category.ConsoleGetCategory(uint(id))
+	if nil == data {
+		result.Code = -1
+
+		return
+	}
+
+	result.Data = data
+}
+
 func GetCategoriesAction(c *gin.Context) {
 	result := util.NewResult()
 	defer c.JSON(http.StatusOK, result)

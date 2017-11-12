@@ -17,6 +17,7 @@
 package controller
 
 import (
+	"math"
 	"net/http"
 	"strings"
 
@@ -26,34 +27,32 @@ import (
 )
 
 func showCategoriesAction(c *gin.Context) {
-	dm, _ := c.Get("dataModel")
-	dataModel := *(dm.(*DataModel))
-
-	themeCategoryDetail := []*ThemeCategoryDetail{}
-	CategoriesModels := strings.Split("a, g, c, d", ",")
-	for _, categoriesModel := range CategoriesModels {
-
+	dataModel := getDataModel(c)
+	blogID := getBlogID(c)
+	categoryModels := service.Category.GetCategories(math.MaxInt8, blogID)
+	themeCategories := []*ThemeCategory{}
+	for _, categoryModel := range categoryModels {
 		themeTags := []*ThemeTag{}
-		tagStrs := strings.Split("a, g, c, d", ",")
-		for _, tagStr := range tagStrs {
+		tagStrs := strings.Split(categoryModel.Tags, ",")
+		for _, tagTitle := range tagStrs {
 			themeTag := &ThemeTag{
-				Title: tagStr,
-				URL:   getBlogURL(c) + util.PathTags + "/" + tagStr,
+				Title: tagTitle,
+				URL:   getBlogURL(c) + util.PathTags + "/" + tagTitle,
 			}
 			themeTags = append(themeTags, themeTag)
 		}
 
-		categoriesDetail := &ThemeCategoryDetail{
-			Title:       categoriesModel,
-			URL:         "/sss",
-			Description: "http://themedesigner.in/demo/admin-press/assets/images/users/2.jpg",
-			Tags:        themeTags,
-			Count:       23,
+		themeCategory := &ThemeCategory{
+			Title:        categoryModel.Title,
+			URL:          getBlogURL(c) + categoryModel.Path,
+			Description:  categoryModel.Description,
+			Tags:         themeTags,
+			ArticleCount: 8,
 		}
-		themeCategoryDetail = append(themeCategoryDetail, categoriesDetail)
+		themeCategories = append(themeCategories, themeCategory)
 	}
 
-	dataModel["Categories"] = themeCategoryDetail
+	dataModel["Categories"] = themeCategories
 	c.HTML(http.StatusOK, getTheme(c)+"/categories.html", dataModel)
 }
 

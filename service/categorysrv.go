@@ -40,6 +40,15 @@ const (
 	adminConsoleCategoryListWindowSize = 20
 )
 
+func (srv *categoryService) ConsoleGetCategory(id uint) *model.Category {
+	ret := &model.Category{}
+	if err := db.First(ret, id).Error; nil != err {
+		return nil
+	}
+
+	return ret
+}
+
 func (srv *categoryService) AddCategory(category *model.Category) error {
 	srv.mutex.Lock()
 	defer srv.mutex.Unlock()

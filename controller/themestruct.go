@@ -56,16 +56,11 @@ type ThemeAuthor struct {
 }
 
 type ThemeCategory struct {
-	Title string
-	URL   string
-}
-
-type ThemeCategoryDetail struct {
-	Title       string
-	URL         string
-	Description string
-	Tags        []*ThemeTag
-	Count       int
+	Title        string
+	URL          string
+	Description  string
+	Tags         []*ThemeTag
+	ArticleCount int
 }
 
 type ThemeComment struct {
