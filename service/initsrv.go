@@ -124,14 +124,7 @@ func (srv *initService) InitBlog(blogAdmin *model.User) error {
 	defer srv.mutex.Unlock()
 
 	user := User.GetUserByName(blogAdmin.Name)
-	if nil != user {
-		return nil
-	}
-
-	adminCount := 0
-	db.Model(&model.Correlation{}).Where("id2 = ? AND type = ? AND int1 = ?", blogAdmin.ID, model.CorrelationBlogUser, model.UserRoleBlogAdmin).
-		Count(&adminCount)
-	if 0 < adminCount {
+	if nil != user && nil != User.GetOwnBlog(user.ID) {
 		return nil
 	}
 

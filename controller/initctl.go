@@ -20,12 +20,15 @@ package controller
 import (
 	"fmt"
 	"net/http"
+	"strings"
 	"text/template"
+	"time"
 
 	"github.com/b3log/pipe/model"
 	"github.com/b3log/pipe/service"
 	"github.com/b3log/pipe/util"
 	"github.com/gin-gonic/gin"
+	"github.com/parnurzeal/gorequest"
 )
 
 func showInitPageAction(c *gin.Context) {
@@ -52,9 +55,51 @@ func initAction(c *gin.Context) {
 		return
 	}
 
+	arg := map[string]interface{}{}
+	if err := c.BindJSON(&arg); nil != err {
+		result.Code = -1
+		result.Msg = "parses init request failed"
+
+		return
+	}
+	b3key := strings.TrimSpace(arg["b3key"].(string))
+	if "" == b3key {
+		result.Code = -1
+		result.Msg = "B3 key cant' be empty"
+
+		return
+	}
+	if 20 < len(b3key) {
+		result.Code = -1
+		result.Msg = "B3 key should less then 20 characters"
+
+		return
+	}
+
+	checkResult := util.NewResult()
+	request := gorequest.New()
+	_, _, errs := request.Post(util.HacPaiURL+"/apis/check-b3key").Send(map[string]interface{}{
+		"userName":  session.UName,
+		"userB3Key": b3key,
+	}).Set("user-agent", util.UserAgent).Timeout(30 * time.Second).EndStruct(checkResult)
+	if nil != errs {
+		logger.Errorf("check b3 key failed: %s", errs)
+		result.Code = -1
+		result.Msg = "check b3 key failed"
+
+		return
+	}
+
+	if 0 != checkResult.Code {
+		result.Code = -1
+		result.Msg = "B3 key is not match"
+
+		return
+	}
+
 	platformAdmin := &model.User{
 		Name:      session.UName,
-		B3Key:     session.UB3Key,
+		B3Key:     b3key,
 		AvatarURL: session.UAvatar,
 	}
 

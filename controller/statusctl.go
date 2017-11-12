@@ -78,8 +78,10 @@ func getStatusAction(c *gin.Context) {
 
 		if model.UserRoleNoLogin != session.URole && platformStatus.Inited {
 			ownBlog := service.User.GetOwnBlog(user.ID)
-			data.BlogTitle = ownBlog.Title
-			data.BlogURL = ownBlog.URL
+			if nil != ownBlog {
+				data.BlogTitle = ownBlog.Title
+				data.BlogURL = ownBlog.URL
+			}
 			data.Blogs = service.User.GetUserBlogs(user.ID)
 		}
 	}
