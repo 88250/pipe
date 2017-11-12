@@ -80,9 +80,7 @@ func fillUser(c *gin.Context) {
 			return
 		}
 
-		processB3IDResult(result)
 		data := result.Data.(map[string]interface{})
-
 		username := data["userName"].(string)
 		b3Key := data["userB3Key"].(string)
 		userAvatar := data["userAvatarURL"].(string)
