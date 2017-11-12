@@ -148,7 +148,7 @@
               const id = 'pipeFlow' + (new Date()).getTime() + index
               it.style.display = 'none'
               const diagram = window.flowchart.parse(it.textContent)
-              it.parentElement.outerHTML = '<div class="ft-center" id="' + id + '"></div>'
+              it.parentElement.outerHTML = `<div class="ft-center" id="${id}"></div>`
               diagram.drawSVG(id)
               document.getElementById(id).firstChild.style.height = 'auto'
               document.getElementById(id).firstChild.style.width = 'auto'
@@ -158,7 +158,7 @@
           if (typeof (flowchart) !== 'undefined') {
             initFlow()
           } else {
-            asyncLoadScript('https://static.hacpai.com/js/lib/flowchart/flowchart.min.js', initFlow())
+            asyncLoadScript('https://static.hacpai.com/js/lib/flowchart/flowchart.min.js', initFlow)
           }
         }
       },
