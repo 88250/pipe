@@ -11,7 +11,10 @@
           @change="setLocalstorage('title')"
         ></v-text-field>
 
-        <v-editor :height="300" v-model="content" @input="parseMarkdown"></v-editor>
+        <v-editor
+          :height="300"
+          v-model="content"
+          @input="parseMarkdown"></v-editor>
 
         <v-select
           v-model="tags"
@@ -87,6 +90,7 @@
   export default {
     data () {
       return {
+        previewRef: document.querySelectorAll('.editor__markdown')[0],
         error: false,
         errorMsg: '',
         content: '',
@@ -111,8 +115,8 @@
       }
     },
     methods: {
-      _paseMD (text, previewRef) {
-        previewRef.innerHTML = `<div class="pipe-content__reset">${text}</div>`
+      _paseMD (text) {
+        this.previewRef.innerHTML = `<div class="pipe-content__reset">${text}</div>`
         let hasMathJax = false
         let hasFlow = false
         if (text.indexOf('$\\') > -1 || text.indexOf('$$') > -1) {
@@ -162,14 +166,14 @@
           }
         }
       },
-      async parseMarkdown (value, previewRef) {
+      async parseMarkdown (value) {
         this.setLocalstorage('content')
-        if (previewRef) {
+        if (this.previewRef.style.display !== 'none' && value.replace(/(^\s*)|(\s*)$/g, '') !== '') {
           const responseData = await this.axios.post('/console/markdown', {
-            mdText: this.content
+            mdText: value
           })
           if (responseData.code === 0) {
-            this._paseMD(responseData.data.html, previewRef)
+            this._paseMD(responseData.data.html, this.previewRef)
             this.$set(this, 'error', false)
             this.$set(this, 'errorMsg', '')
           } else {
@@ -272,6 +276,7 @@
           this.$set(this, 'url', responseData.path)
           this.$set(this, 'tags', responseData.tags.split(','))
           this.$set(this, 'commentable', responseData.commentable)
+          this.parseMarkdown(this.content)
         }
       } else {
         // set storage
@@ -295,9 +300,10 @@
           if (localStorage.getItem('article-useThumbs')) {
             this.$set(this, 'useThumbs', localStorage.getItem('article-useThumbs'))
           }
+
+          this.parseMarkdown(this.content)
         })
       }
-
       // get tags
       this.$store.dispatch('getTags')
 

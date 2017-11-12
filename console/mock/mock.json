@@ -39,6 +39,18 @@
       ],
       "mockFile": "success.json"
     },
+    "console/thumbs": {
+      "verbs": [
+        "get"
+      ],
+      "mockFile": "thumbs.json"
+    },
+    "console/markdown": {
+      "verbs": [
+        "post"
+      ],
+      "mockFile": "markdown.json"
+    },
     "console/tags": {
       "verbs": [
         "get"
