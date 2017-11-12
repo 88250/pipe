@@ -2,12 +2,11 @@
 
 ## 简介
 
-小而美的 golang 博客平台。
+小而美的博客平台，通过[黑客派](https://hacpai.com)账号登录即可使用。
 
 ### 动机
 
 * 在博客这个轮子上充分发挥 golang 的优势，易部署、性能好、跨平台、省资源
-* [Solo](https://github.com/b3log/solo) 重制版
 * 市面上缺乏支持多独立博客的平台级系统
 * 实现 [B3log 构思](https://hacpai.com/b3log)
 
@@ -19,15 +18,16 @@ TBD
 
 * Markdown / Emoji
 * [聚合分类](https://github.com/b3log/solo/issues/12256) / 标签
-* 自定义导航（页面、链接）
+* 自定义导航
 * 多主题 / 多语言
 * 内置云存储
 * 多博客、团队博客
-* SQL、JSON、MD 格式导出
-* [Hexo/Jekyll 导入](https://hacpai.com/article/1498490209748)
+* Hexo/Jekyll 导入
+* JSON、Markdown 导出
+* Atom 订阅
+* Sitemap
 * CDN 静态资源分离
-
-Pipe 是一个支持多博客的平台，超级管理员可以创建多个博客，每个博客都是独立的团队博客。
+* 域名绑定
 
 ## 文档
 
