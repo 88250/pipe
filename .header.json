@@ -1,6 +1,6 @@
 {
     "Dir": ".",
-    "Template": "header.txt",
+    "Template": ".header.txt",
     "Includes": [
         "**.go"
     ],
