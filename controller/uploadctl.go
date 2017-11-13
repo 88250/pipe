@@ -38,6 +38,7 @@ var ut = &uploadToken{}
 
 type uploadToken struct {
 	token   string
+	domain  string
 	expired time.Time
 }
 
@@ -135,6 +136,8 @@ func refreshUploadToken() {
 		return
 	}
 
-	ut.token = uploadTokenResult.Data.(string)
+	data := uploadTokenResult.Data.(map[string]interface{})
+	ut.token = data["token"].(string)
+	ut.domain = data["domain"].(string)
 	ut.expired = now
 }
