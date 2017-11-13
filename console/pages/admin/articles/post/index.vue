@@ -319,4 +319,6 @@
     width: 720px
   .editor
     margin: 30px 0
+  .pipe-content__reset img
+    cursor: auto
 </style>
