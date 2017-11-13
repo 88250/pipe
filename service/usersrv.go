@@ -38,6 +38,17 @@ const (
 	adminConsoleUserListWindowSize = 20
 )
 
+func (srv *userService) GetBlogAdmin(blogID uint) *model.User {
+	rel := &model.Correlation{ID1: blogID, Type: model.UserRoleBlogAdmin}
+	if err := db.Model(rel).Where(rel).First(rel).Error; nil != err {
+		logger.Errorf("can't get blog admin: " + err.Error())
+
+		return nil
+	}
+
+	return srv.GetUser(rel.ID2)
+}
+
 func (srv *userService) GetPlatformAdmin() *model.User {
 	rel := &model.Correlation{ID1: 1}
 	if err := db.Model(rel).Where(rel).Order("id2 asc").First(rel).Error; nil != err {
@@ -46,7 +57,7 @@ func (srv *userService) GetPlatformAdmin() *model.User {
 		return nil
 	}
 
-	return User.GetUser(rel.ID2)
+	return srv.GetUser(rel.ID2)
 }
 
 func (srv *userService) AddUser(user *model.User) error {

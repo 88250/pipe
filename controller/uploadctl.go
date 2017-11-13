@@ -78,8 +78,11 @@ func uploadAction(c *gin.Context) {
 	platformAdmin := service.User.GetPlatformAdmin()
 	blogID := getBlogID(c)
 	blogAdmin := service.User.GetBlogAdmin(blogID)
-	key := "pipe/" + platformAdmin.Name + "/" + blogAdmin.Name + "/" + session.UName + "/" + +strings.Replace(uuid.NewV4().String(), "-", "", -1) + ext
+	key := "pipe/" + platformAdmin.Name + "/" + blogAdmin.Name + "/" + session.UName + "/" + strings.Replace(uuid.NewV4().String(), "-", "", -1) + ext
 
+	logger.Info(key)
+
+	return
 	if err := storage.NewFormUploader(nil).Put(context.Background(), nil, ut.token, key, c.Request.Body, header.Size, nil); nil != err {
 		msg := "upload file to storage failed"
 		logger.Errorf(msg + ": " + err.Error())
