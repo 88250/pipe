@@ -112,7 +112,7 @@ func uploadAction(c *gin.Context) {
 		return
 	}
 
-	result.Data = "https://img.hacpai.com/" + uploadRet.Key
+	result.Data = ut.domain + "/" + uploadRet.Key
 }
 
 func refreshUploadToken() {
