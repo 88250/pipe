@@ -203,6 +203,10 @@ func routePath(c *gin.Context) {
 		outputAtomAction(c)
 
 		return
+	case util.PathUpload:
+		uploadAction(c)
+
+		return
 	}
 
 	if strings.Contains(path, util.PathArchives+"/") {
