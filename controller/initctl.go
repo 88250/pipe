@@ -121,7 +121,7 @@ func initAction(c *gin.Context) {
 		UID:     platformAdmin.ID,
 		UName:   platformAdmin.Name,
 		UB3Key:  platformAdmin.B3Key,
-		URole:   model.UserRolePlatformAdmin,
+		URole:   model.UserRoleBlogAdmin,
 		UAvatar: platformAdmin.AvatarURL,
 		BID:     1,
 		BURL:    blogURLSetting.Value,
