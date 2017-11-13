@@ -35,8 +35,9 @@
           <div class="ft-center init__content fn-clear">
             <img class="avatar init__image card init__image--step2"
                  :src="`${$store.state.avatarURL}?imageView2/1/w/128/h/128/interlace/1/q/100`"/>
-            <v-form ref="form" class="fn-flex">
-              <v-text-field class="fn-flex-1"
+            <v-form ref="form" class="fn-flex" @submit.prevent="init">
+              <v-text-field
+                class="fn-flex-1"
                 label="B3log Key"
                 v-model="b3key"
                 :counter="20"
@@ -145,5 +146,5 @@
           width: 100px
           padding: 10px
       &--step2.card
-        margin: 40px auto 0
+        margin: 20px auto 0
 </style>

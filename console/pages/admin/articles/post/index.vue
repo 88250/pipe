@@ -126,7 +126,6 @@
         if (text.indexOf('<code class="language-flow"') > -1) {
           hasFlow = true
         }
-
         if (hasMathJax) {
           if (typeof MathJax !== 'undefined') {
             window.MathJax.Hub.Typeset()
@@ -308,6 +307,8 @@
       this.$store.dispatch('getTags')
 
       this.getThumbs()
+
+      this.$set(this, 'previewRef', document.querySelectorAll('.editor__markdown')[0])
     }
   }
 </script>
@@ -315,4 +316,6 @@
   .article-post__carousel
     margin: 0 auto
     width: 720px
+  .editor
+    margin: 30px 0
 </style>
