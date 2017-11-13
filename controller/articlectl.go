@@ -147,6 +147,7 @@ func showArticleAction(c *gin.Context) {
 		comment := &ThemeComment{
 			ID:         commentModel.ID,
 			Content:    template.HTML(mdResult.ContentHTML),
+			URL:        getBlogURL(c) + article.Path + "?p=" + strconv.Itoa(page) + "#pipeComment" + strconv.Itoa(int(commentModel.ID)),
 			Author:     author,
 			CreatedAt:  commentModel.CreatedAt.Format("2006-01-02"),
 			Removable:  session.UID == authorModel.ID,
@@ -158,11 +159,11 @@ func showArticleAction(c *gin.Context) {
 			page := service.Comment.GetCommentPage(commentModel.ArticleID, commentModel.ID, commentModel.BlogID)
 
 			parentComment := &ThemeComment{
-				ID: parentCommentModel.ID,
+				ID:  parentCommentModel.ID,
+				URL: getBlogURL(c) + article.Path + "?p=" + strconv.Itoa(page) + "#pipeComment" + strconv.Itoa(int(parentCommentModel.ID)),
 				Author: &ThemeAuthor{
 					Name: parentCommentAuthorModel.Name,
 				},
-				URL: getBlogURL(c) + article.Path + "?p=" + strconv.Itoa(page) + "#pipeComment" + strconv.Itoa(int(parentCommentModel.ID)),
 			}
 			comment.Parent = parentComment
 		}
