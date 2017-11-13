@@ -85,7 +85,7 @@
 
 <script>
   import {required, maxSize} from '~/plugins/validate'
-  import {asyncLoadScript} from '~/plugins/utils'
+  import {asyncLoadScript, LazyLoadImage} from '~/plugins/utils'
 
   export default {
     data () {
@@ -117,6 +117,7 @@
     methods: {
       _paseMD (text) {
         this.previewRef.innerHTML = `<div class="pipe-content__reset">${text}</div>`
+        LazyLoadImage()
         let hasMathJax = false
         let hasFlow = false
         if (text.indexOf('$\\') > -1 || text.indexOf('$$') > -1) {
@@ -318,4 +319,6 @@
     width: 720px
   .editor
     margin: 30px 0
+  .pipe-content__reset img
+    cursor: auto
 </style>

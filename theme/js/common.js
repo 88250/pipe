@@ -257,12 +257,12 @@ const TrimB3Id = () => {
  * @description 添加版权
  */
 const addCopyright = () => {
-  const genCopy = (author) => {
+  const genCopy = (author, link) => {
     return [
       '',
       '',
       `作者：${author}`,
-      `链接：${location.href}`,
+      `链接：${link}`,
       '来源：黑客派',
       '著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。',
     ]
@@ -274,21 +274,22 @@ const addCopyright = () => {
     }
 
     let copyString = window.getSelection().toString()
-    const author = $(this).data('author') || 'Pipe User'
+    const author = $(this).data('author') || 'Pipe'
+    let link = $(this).data('link') || location.href
 
     if (copyString.length < 128) {
       return
     }
 
     if ('object' === typeof event.originalEvent.clipboardData) {
-      event.originalEvent.clipboardData.setData('text/html', copyString + genCopy(author).join('<br>'))
-      event.originalEvent.clipboardData.setData('text/plain', copyString + genCopy(author).join('\n'))
+      event.originalEvent.clipboardData.setData('text/html', copyString + genCopy(author, link).join('<br>'))
+      event.originalEvent.clipboardData.setData('text/plain', copyString + genCopy(author, link).join('\n'))
       event.preventDefault()
       return
     }
 
     $('body').append(`<div id="pipeFixCopy" style="position: fixed; left: -9999px;">
-${copyString}${genCopy(author).join('<br>')}</div>`)
+${copyString}${genCopy(author, link).join('<br>')}</div>`)
     window.getSelection().selectAllChildren($('#pipeFixCopy')[0])
     setTimeout(function() {
       $('#pipeFixCopy').remove()
