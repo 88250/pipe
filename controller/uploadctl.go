@@ -17,7 +17,9 @@
 package controller
 
 import (
+	"bytes"
 	"context"
+	"io/ioutil"
 	"mime"
 	"net/http"
 	"path/filepath"
@@ -68,6 +70,7 @@ func uploadAction(c *gin.Context) {
 	if "" == ext {
 		typ := header.Header.Get("Content-Type")
 		exts, _ := mime.ExtensionsByType(typ)
+		logger.Info(exts)
 		if 0 < len(exts) {
 			ext = exts[0]
 		} else {
@@ -75,15 +78,29 @@ func uploadAction(c *gin.Context) {
 		}
 	}
 
+	file, err := header.Open()
+	if nil != err {
+		result.Code = -1
+		result.Msg = "read upload file failed"
+
+		return
+	}
+	defer file.Close()
+
+	data, err := ioutil.ReadAll(file)
+	if nil != err {
+		result.Code = -1
+		result.Msg = "read upload file failed"
+
+		return
+	}
+
 	platformAdmin := service.User.GetPlatformAdmin()
 	blogID := getBlogID(c)
 	blogAdmin := service.User.GetBlogAdmin(blogID)
 	key := "pipe/" + platformAdmin.Name + "/" + blogAdmin.Name + "/" + session.UName + "/" + strings.Replace(uuid.NewV4().String(), "-", "", -1) + ext
 
-	logger.Info(key)
-
-	return
-	if err := storage.NewFormUploader(nil).Put(context.Background(), nil, ut.token, key, c.Request.Body, header.Size, nil); nil != err {
+	if err := storage.NewFormUploader(nil).Put(context.Background(), nil, ut.token, key, bytes.NewReader(data), int64(len(data)), nil); nil != err {
 		msg := "upload file to storage failed"
 		logger.Errorf(msg + ": " + err.Error())
 
