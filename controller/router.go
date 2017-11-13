@@ -134,6 +134,7 @@ func MapRoutes() *gin.Engine {
 		ret.Static("/"+themePath+"/css", themePath+"/css")
 		ret.Static("/"+themePath+"/js", themePath+"/js")
 		ret.Static("/"+themePath+"/images", themePath+"/images")
+		ret.StaticFile("/"+themePath+"/thumbnail.jpg", themePath+"/thumbnail.jpg")
 	}
 	themeTemplates, err := filepath.Glob("theme/x/*/*.html")
 	if nil != err {

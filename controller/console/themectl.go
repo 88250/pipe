@@ -66,8 +66,7 @@ func GetThemesAction(c *gin.Context) {
 	for _, themeName := range theme.Themes {
 		consoleTheme := &ConsoleTheme{
 			Name:         themeName,
-			PreviewURL:   "https://img.hacpai.com/20170818zhixiaoyun.jpeg",
-			ThumbnailURL: "https://img.hacpai.com/?theme=Finding",
+			ThumbnailURL: "/theme/x/" + themeName + "/thumbnail.jpg",
 		}
 
 		themes = append(themes, consoleTheme)

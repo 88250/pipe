@@ -71,7 +71,6 @@ type ConsoleNavigation struct {
 
 type ConsoleTheme struct {
 	Name         string `json:"name"`
-	PreviewURL   string `json:"previewURL"`
 	ThumbnailURL string `json:"thumbnailURL"`
 }
 
