@@ -31,7 +31,9 @@
                 {{end}}
             </div>
         </div>
-        <div class="pipe-content__reset" data-author="{{.Item.Author.Name}}">
+        <div class="pipe-content__reset"
+             data-author="{{.Item.Author.Name}}"
+             data-link="{{.Item.URL}}">
             {{.Item.Content}}
         </div>
         {{if ne .Item.ReplyCount 0}}
