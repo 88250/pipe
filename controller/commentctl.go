@@ -76,7 +76,7 @@ func addCommentAction(c *gin.Context) {
 	session := util.GetSession(c)
 	if nil == session {
 		result.Code = -1
-		result.Msg = "Please login before comment"
+		result.Msg = "please login before comment"
 
 		return
 	}
