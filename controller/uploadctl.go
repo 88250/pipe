@@ -100,7 +100,8 @@ func uploadAction(c *gin.Context) {
 	blogAdmin := service.User.GetBlogAdmin(blogID)
 	key := "pipe/" + platformAdmin.Name + "/" + blogAdmin.Name + "/" + session.UName + "/" + strings.Replace(uuid.NewV4().String(), "-", "", -1) + ext
 
-	if err := storage.NewFormUploader(nil).Put(context.Background(), nil, ut.token, key, bytes.NewReader(data), int64(len(data)), nil); nil != err {
+	uploadRet := &storage.PutRet{}
+	if err := storage.NewFormUploader(nil).Put(context.Background(), uploadRet, ut.token, key, bytes.NewReader(data), int64(len(data)), nil); nil != err {
 		msg := "upload file to storage failed"
 		logger.Errorf(msg + ": " + err.Error())
 
@@ -109,6 +110,8 @@ func uploadAction(c *gin.Context) {
 
 		return
 	}
+
+	result.Data = "https://img.hacpai.com/" + uploadRet.Key
 }
 
 func refreshUploadToken() {
