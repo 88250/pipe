@@ -7,7 +7,7 @@
 
 import $ from 'jquery'
 import hljs from 'highlight.js'
-import {LazyLoadCSSImage, LazyLoadImage} from './common'
+import {LazyLoadCSSImage, LazyLoadImage, ParseMarkdown} from './common'
 
 /**
  * @description 初始化目录

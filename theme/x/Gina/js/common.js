@@ -10,12 +10,8 @@ import QRious from 'qrious'
 import Icon from './symbol'
 import {
   KillBrowser,
-  LazyLoadCSSImage,
-  LazyLoadImage,
   Logout,
-  TrimB3Id,
   PreviewImg,
-  ParseMarkdown
 } from '../../../js/common'
 
 const Common = {
@@ -23,12 +19,8 @@ const Common = {
    * @description 页面初始化
    */
   init: () => {
-    TrimB3Id()
-    KillBrowser()
-    LazyLoadCSSImage()
-    LazyLoadImage()
     PreviewImg()
-    ParseMarkdown()
+    KillBrowser()
     Common._header()
     Common._share()
     $('#sidebarIcon').click(() => {

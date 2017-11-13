@@ -245,10 +245,61 @@ export const Logout = () => {
 /**
  * @description 去除查询字符串中的 'b3id=xxx' 参数
  */
-export const TrimB3Id = () => {
+const TrimB3Id = () => {
   const search = location.search
   if (search.indexOf('b3id') === -1) {
     return
   }
   history.replaceState('', '', window.location.href.replace(/(&b3id=\w{8})|(b3id=\w{8}&)|(\?b3id=\w{8}$)/, ''))
 }
+
+/**
+ * @description 添加版权
+ */
+const addCopyright = () => {
+  const genCopy = (author) => {
+    return [
+      '',
+      '',
+      `作者：${author}`,
+      `链接：${location.href}`,
+      '来源：黑客派',
+      '著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。',
+    ]
+  }
+
+  $('.pipe-content__reset').on('copy', function (event) {
+    if (!window.getSelection) {
+      return
+    }
+
+    let copyString = window.getSelection().toString()
+    const author = $(this).data('author') || 'Pipe User'
+
+    if (copyString.length < 128) {
+      return
+    }
+
+    if ('object' === typeof event.originalEvent.clipboardData) {
+      event.originalEvent.clipboardData.setData('text/html', copyString + genCopy(author).join('<br>'))
+      event.originalEvent.clipboardData.setData('text/plain', copyString + genCopy(author).join('\n'))
+      event.preventDefault()
+      return
+    }
+
+    $('body').append(`<div id="pipeFixCopy" style="position: fixed; left: -9999px;">
+${copyString}${genCopy(author).join('<br>')}</div>`)
+    window.getSelection().selectAllChildren($('#pipeFixCopy')[0])
+    setTimeout(function() {
+      $('#pipeFixCopy').remove()
+    }, 200)
+  })
+}
+
+(() => {
+  TrimB3Id()
+  LazyLoadCSSImage()
+  LazyLoadImage()
+  ParseMarkdown()
+  addCopyright()
+})()
