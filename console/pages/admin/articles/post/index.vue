@@ -12,6 +12,11 @@
         ></v-text-field>
 
         <v-editor
+          :loadingLabel="$t('uploading', $store.state.locale)"
+          :errorLabel="$t('uploadError', $store.state.locale)"
+          :overLabel="$t('uploadOver', $store.state.locale)"
+          :uploadURL="`${$store.state.blogURL}/upload`"
+          :uploadMax="10"
           :height="300"
           v-model="content"
           @input="parseMarkdown"></v-editor>
