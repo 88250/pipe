@@ -80,7 +80,6 @@ func uploadAction(c *gin.Context) {
 		if "" == ext {
 			typ := file.Header.Get("Content-Type")
 			exts, _ := mime.ExtensionsByType(typ)
-			logger.Info(exts)
 			if 0 < len(exts) {
 				ext = exts[0]
 			} else {
