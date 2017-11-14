@@ -56,7 +56,7 @@ func uploadAction(c *gin.Context) {
 
 	refreshUploadToken()
 
-	header, err := c.FormFile("file")
+	form, err := c.MultipartForm()
 	if nil != err {
 		msg := "parse upload file header failed"
 		logger.Errorf(msg + ": " + err.Error())
@@ -67,52 +67,59 @@ func uploadAction(c *gin.Context) {
 		return
 	}
 
-	ext := filepath.Ext(header.Filename)
-	if "" == ext {
-		typ := header.Header.Get("Content-Type")
-		exts, _ := mime.ExtensionsByType(typ)
-		logger.Info(exts)
-		if 0 < len(exts) {
-			ext = exts[0]
-		} else {
-			ext = "." + strings.Split(typ, "/")[1]
-		}
-	}
-
-	file, err := header.Open()
-	if nil != err {
-		result.Code = -1
-		result.Msg = "read upload file failed"
-
-		return
-	}
-	defer file.Close()
-
-	data, err := ioutil.ReadAll(file)
-	if nil != err {
-		result.Code = -1
-		result.Msg = "read upload file failed"
-
-		return
-	}
-
 	platformAdmin := service.User.GetPlatformAdmin()
 	blogID := getBlogID(c)
 	blogAdmin := service.User.GetBlogAdmin(blogID)
-	key := "pipe/" + platformAdmin.Name + "/" + blogAdmin.Name + "/" + session.UName + "/" + strings.Replace(uuid.NewV4().String(), "-", "", -1) + ext
 
-	uploadRet := &storage.PutRet{}
-	if err := storage.NewFormUploader(nil).Put(context.Background(), uploadRet, ut.token, key, bytes.NewReader(data), int64(len(data)), nil); nil != err {
-		msg := "upload file to storage failed"
-		logger.Errorf(msg + ": " + err.Error())
+	files := form.File["file[]"]
 
-		result.Code = -1
-		result.Msg = msg
+	errFiles := []string{}
+	succMap := map[string]string{}
+	for _, file := range files {
+		ext := filepath.Ext(file.Filename)
+		if "" == ext {
+			typ := file.Header.Get("Content-Type")
+			exts, _ := mime.ExtensionsByType(typ)
+			logger.Info(exts)
+			if 0 < len(exts) {
+				ext = exts[0]
+			} else {
+				ext = "." + strings.Split(typ, "/")[1]
+			}
+		}
 
-		return
+		f, err := file.Open()
+		if nil != err {
+			errFiles = append(errFiles, file.Filename)
+
+			continue
+		}
+		defer f.Close()
+
+		data, err := ioutil.ReadAll(f)
+		if nil != err {
+			errFiles = append(errFiles, file.Filename)
+
+			continue
+		}
+
+		key := "pipe/" + platformAdmin.Name + "/" + blogAdmin.Name + "/" + session.UName + "/" + strings.Replace(uuid.NewV4().String(), "-", "", -1) + ext
+
+		uploadRet := &storage.PutRet{}
+		if err := storage.NewFormUploader(nil).Put(context.Background(), uploadRet, ut.token, key, bytes.NewReader(data), int64(len(data)), nil); nil != err {
+			logger.Errorf("upload file to storage failed: " + err.Error())
+			errFiles = append(errFiles, file.Filename)
+
+			continue
+		}
+
+		succMap[file.Filename] = ut.domain + "/" + uploadRet.Key
 	}
 
-	result.Data = ut.domain + "/" + uploadRet.Key
+	data := map[string]interface{}{}
+	data["succMap"] = succMap
+	data["errFiles"] = errFiles
+	result.Data = data
 }
 
 func refreshUploadToken() {
