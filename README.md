@@ -110,10 +110,10 @@ Pipe 使用 GPLv3 作为开源授权协议，请尽量遵循，即使是在中�
 Pipe 的诞生离不开以下开源项目：
 
 * [Vue.js](https://github.com/vuejs/vue)：渐进式 JavaScript 框架
+* [Vuetify](https://github.com/vuetifyjs/vuetify)：Vue.js 的 Material 组件框架
 * [jQuery](https://github.com/jquery/jquery)：使用广泛的 JavaScript 工具库
 * [Gin](https://github.com/gin-gonic/gin)：又快又好用的 golang HTTP web 框架
-* [GORM](https://github.com/jinzhu/gorm)：梦幻般的 golang ORM 库
+* [GORM](https://github.com/jinzhu/gorm)：极好的 golang ORM 库
 * [Blackfriday](github.com/russross/blackfriday)：golang Markdown 处理器
 * [SQLite](https://www.sqlite.org)：使用广泛的嵌入式 SQL 引擎
 * [GCache](github.com/bluele/gcache)：golang 缓存库
-* [IntelliJ IDEA](https://www.jetbrains.com/idea)：全宇宙暂时排名第二的 IDE
