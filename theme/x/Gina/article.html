@@ -106,9 +106,37 @@
     <div class="relevant__panel">
     {{range $index, $item := .RelevantArticles}}
         <div class="relevant__item">
-            <a class="module__list-title" href="{{$item.URL}}">{{$item.Title}}</a>
-            <a class="avatar" data-src="{{$item.Author.AvatarURL}}"
-               href="{{$item.Author.URL}}"></a> {{$item.Author.Name}}
+            <a class="module__list-title fn-ellipsis" href="{{$item.URL}}">{{$item.Title}}</a>
+            <div class="ft-fade relevant__abstract">
+                我是摘要我是摘要我是摘要我是摘要我是摘要我是摘要我是摘要我是摘要我是摘要我是摘要
+            </div>
+            <div class="fn-relative">
+                <a class="avatar fn-absolute" data-src="{{$item.Author.AvatarURL}}"
+                   href="{{$item.Author.URL}}"></a>
+                <div class="relevant__content">
+                    <a href="{{$item.Author.URL}}" class="ft-gray">{{$item.Author.Name}}</a> <br>
+                   <span class="ft-12 ft-fade fn-clear">
+                        {{$item.CreatedAt}}
+                       <span class="fn-right">{{$item.CommentCount}} {{$.I18n.Comment}}</span>
+                   </span>
+                </div>
+            </div>
+        </div>
+        <div class="relevant__item">
+            <div class="relevant__thumbnail"
+                 data-src="https://img.hacpai.com/bing/20171109.jpg?imageView2/1/w/960/h/520/interlace/1/q/100"></div>
+            <a class="module__list-title fn-ellipsis" href="{{$item.URL}}">{{$item.Title}}</a>
+            <div class="fn-relative">
+                <a class="avatar fn-absolute" data-src="{{$item.Author.AvatarURL}}"
+                   href="{{$item.Author.URL}}"></a>
+                <div class="relevant__content">
+                    <a href="{{$item.Author.URL}}" class="ft-gray">{{$item.Author.Name}}</a> <br>
+                    <span class="ft-12 ft-fade fn-clear">
+                        {{$item.CreatedAt}}
+                       <span class="fn-right">{{$item.CommentCount}} {{$.I18n.Comment}}</span>
+                   </span>
+                </div>
+            </div>
         </div>
     {{end}}
     </div>

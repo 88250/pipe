@@ -676,6 +676,34 @@ a {
         padding: 10px;
         margin-right: 20px;
         border-radius: 5px;
+
+        .avatar {
+          height: 38px;
+          width: 38px;
+        }
+
+        .module__list-title {
+          font-size: 18px;
+          display: block;
+          margin-bottom: 10px;
+        }
+      }
+      &__content {
+       padding-left: 48px;
+      }
+      &__thumbnail {
+        height: 90px;
+        margin: -10px -10px 0;
+        @include image-bg('../images/image-bg.svg');
+        margin-bottom: 10px;
+      }
+      &__abstract {
+        height: 80px;
+        margin-bottom: 10px;
+        word-wrap: break-word;
+        word-break: break-all;
+        overflow: hidden;
+        white-space: normal;
       }
     }
   }
