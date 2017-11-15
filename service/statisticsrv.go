@@ -71,6 +71,40 @@ func (srv *statisticService) GetStatistics(blogID uint, statisticNames ...string
 	return ret
 }
 
+func (srv *statisticService) IncViewCount(blogID uint) error {
+	tx := db.Begin()
+	if err := srv.IncViewCountWithoutTx(tx, blogID); nil != err {
+		tx.Rollback()
+
+		return err
+	}
+	tx.Commit()
+
+	return nil
+}
+
+func (srv *statisticService) IncViewCountWithoutTx(tx *gorm.DB, blogID uint) error {
+	srv.mutex.Lock()
+	defer srv.mutex.Unlock()
+
+	setting := &model.Setting{}
+	if err := tx.Where("name = ? AND category = ? AND blog_id = ?", model.SettingNameStatisticViewCount, model.SettingCategoryStatistic, blogID).Find(setting).Error; nil != err {
+		return err
+	}
+
+	count, err := strconv.Atoi(setting.Value)
+	if nil != err {
+		return err
+	}
+
+	setting.Value = strconv.Itoa(count + 1)
+	if err := tx.Model(setting).Updates(setting).Error; nil != err {
+		return err
+	}
+
+	return nil
+}
+
 func (srv *statisticService) IncArticleCount(blogID uint) error {
 	tx := db.Begin()
 	if err := srv.IncArticleCountWithoutTx(tx, blogID); nil != err {
