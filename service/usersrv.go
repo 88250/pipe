@@ -214,7 +214,7 @@ func (srv *userService) AddUserToBlog(userID, blogID uint) error {
 		ID1:    blogID,
 		ID2:    userID,
 		Type:   model.CorrelationBlogUser,
-		Int1:   model.UserRoleBlogAdmin,
+		Int1:   model.UserRoleBlogUser,
 		Int2:   0,
 		BlogID: blogID,
 	}
