@@ -35,6 +35,8 @@
         <v-text-field
           :label="$t('links', $store.state.locale)"
           v-model="url"
+          :rules="linkRules"
+          :counter="255"
           @change="setLocalstorage('url')"
         ></v-text-field>
 
@@ -103,6 +105,10 @@
         titleRules: [
           (v) => required.call(this, v),
           (v) => maxSize.call(this, v, 128)
+        ],
+        linkRules: [
+          (v) => required.call(this, v),
+          (v) => maxSize.call(this, v, 255)
         ],
         tagsRules: [
           (v) => this.tags.length > 0 || this.$t('required', this.$store.state.locale)
