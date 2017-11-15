@@ -300,10 +300,10 @@
             this.$set(this, 'url', localStorage.getItem('article-url'))
           }
           if (localStorage.getItem('article-commentable')) {
-            this.$set(this, 'commentable', localStorage.getItem('article-commentable'))
+            this.$set(this, 'commentable', localStorage.getItem('article-commentable') === 'true')
           }
           if (localStorage.getItem('article-useThumbs')) {
-            this.$set(this, 'useThumbs', localStorage.getItem('article-useThumbs'))
+            this.$set(this, 'useThumbs', localStorage.getItem('article-useThumbs') === 'true')
           }
 
           this.parseMarkdown(this.content)

@@ -718,21 +718,26 @@ a {
 .toc {
   margin: 20px 0;
   li.toc__item--active a {
-    background-color: $border-color;
+    background-color: #fafafa;
     color: $theme-accent;
+    border-left-color: $theme-accent;
   }
+
   a {
     display: block;
     line-height: 30px;
     color: $gray;
+    border-left: 2px solid transparent;
     &:hover {
       text-decoration: none;
+      background-color: #fafafa;
       color: $theme-accent;
     }
 
   }
+
   @for $i from 1 through 5 {
-    .toc__#{$i} a {
+    .toc__h#{$i} a {
       padding-left: 20px * $i
     }
   }
