@@ -14,7 +14,6 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-// Package controller is the "controller" layer.
 package controller
 
 import (
@@ -23,6 +22,7 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/PuerkitoBio/goquery"
 	"github.com/b3log/pipe/model"
 	"github.com/b3log/pipe/service"
 	"github.com/b3log/pipe/util"
@@ -219,7 +219,8 @@ func showArticleAction(c *gin.Context) {
 	dataModel["RelevantArticles"] = articles
 	fillPreviousArticle(c, article, &dataModel)
 	fillNextArticle(c, article, &dataModel)
-	dataModel["ToC"] = "todo"
+	logger.Info(mdResult.ContentHTML)
+	dataModel["ToC"] = ToC(mdResult.ContentHTML)
 	c.HTML(http.StatusOK, getTheme(c)+"/article.html", dataModel)
 
 	service.Article.IncArticleViewCount(article)
@@ -231,9 +232,15 @@ func fillPreviousArticle(c *gin.Context, article *model.Article, dataModel *Data
 		return
 	}
 
+	author := service.User.GetUser(previous.AuthorID)
 	previousArticle := &ThemeArticle{
 		Title: previous.Title,
 		URL:   getBlogURL(c) + previous.Path,
+		Author: &ThemeAuthor{
+			Name:      author.Name,
+			URL:       getBlogURL(c) + util.PathAuthors + "/" + author.Name,
+			AvatarURL: author.AvatarURL,
+		},
 	}
 	(*dataModel)["PreviousArticle"] = previousArticle
 }
@@ -244,9 +251,35 @@ func fillNextArticle(c *gin.Context, article *model.Article, dataModel *DataMode
 		return
 	}
 
+	author := service.User.GetUser(next.AuthorID)
 	nextArticle := &ThemeArticle{
 		Title: next.Title,
 		URL:   getBlogURL(c) + next.Path,
+		Author: &ThemeAuthor{
+			Name:      author.Name,
+			URL:       getBlogURL(c) + util.PathAuthors + "/" + author.Name,
+			AvatarURL: author.AvatarURL,
+		},
 	}
 	(*dataModel)["NextArticle"] = nextArticle
+}
+
+func ToC(content string) string {
+	doc, _ := goquery.NewDocumentFromReader(strings.NewReader(content))
+	elements := doc.Find("h1, h2, h3, h4, h5")
+	if nil == elements || 3 > elements.Length() {
+		return ""
+	}
+
+	ret := "<ul class=\"article-toc\">"
+	elements.Each(func(i int, ele *goquery.Selection) {
+		// ele.Nodes[0]
+
+		logger.Infof("%+v", ele)
+
+	})
+
+	_ = ret
+
+	return ""
 }
