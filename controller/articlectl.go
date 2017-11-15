@@ -220,7 +220,7 @@ func showArticleAction(c *gin.Context) {
 	dataModel["RelevantArticles"] = articles
 	fillPreviousArticle(c, article, &dataModel)
 	fillNextArticle(c, article, &dataModel)
-	dataModel["ToC"] = template.HTML(toc(mdResult.ContentHTML))
+	dataModel["ToC"] = template.HTML(toc(dataModel["Article"].(*ThemeArticle)))
 	c.HTML(http.StatusOK, getTheme(c)+"/article.html", dataModel)
 
 	service.Article.IncArticleViewCount(article)
@@ -264,8 +264,8 @@ func fillNextArticle(c *gin.Context, article *model.Article, dataModel *DataMode
 	(*dataModel)["NextArticle"] = nextArticle
 }
 
-func toc(content string) string {
-	doc, _ := goquery.NewDocumentFromReader(strings.NewReader(content))
+func toc(article *ThemeArticle) string {
+	doc, _ := goquery.NewDocumentFromReader(strings.NewReader(string(article.Content)))
 	elements := doc.Find("h1, h2, h3, h4, h5")
 	if nil == elements || 3 > elements.Length() {
 		return ""
@@ -286,6 +286,9 @@ func toc(content string) string {
 		builder.WriteString("</a></li>")
 	})
 	builder.WriteString("</ul>")
+
+	content, _ := doc.Find("body").Html()
+	article.Content = template.HTML(content)
 
 	return builder.String()
 }
