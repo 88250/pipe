@@ -105,6 +105,7 @@ a {
   border-radius: 50%;
   display: inline-block;
   z-index: 10;
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 7px;
   @include image-bg('../images/image-bg.svg');
 
   &--space {
@@ -353,6 +354,7 @@ a {
   border-radius: 50%;
   background-color: #fff;
   z-index: 200;
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 7px;
 
   &-line {
     display: block;
@@ -484,6 +486,7 @@ a {
         box-sizing: border-box;
         transition: transform 0.35s ease-in, background .15s ease-in-out;
         color: $black;
+        box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 7px;
         svg {
           margin-top: 7px;
           transition: $transition;
@@ -592,7 +595,7 @@ a {
     color: $black;
     position: relative;
     .near__svg {
-      margin: 17px 10px 0 0;
+      margin: 22px 10px 0 0;
     }
     .avatar {
       margin-right: 10px;
@@ -600,15 +603,15 @@ a {
     }
 
     .near__title {
-      padding-left: 84px;
+      padding-left: 92px;
       display: block;
-      line-height: 25px;
+      line-height: 29px;
     }
 
     &.near__next {
       svg {
         right: 0;
-        top: 17px;
+        top: 22px;
         margin: 0;
       }
 
@@ -619,7 +622,7 @@ a {
 
       .near__title {
         text-align: right;
-        padding: 0 84px 0 0;
+        padding: 0 92px 0 0;
       }
 
       &--single {
@@ -630,7 +633,7 @@ a {
 
     .near__icon {
       float: left;
-      margin: 4px 10px 0 0;
+      margin: 3px 10px 0 0;
     }
 
     .near__icon-last {
@@ -643,6 +646,33 @@ a {
       color: $text-hover-color;
       svg {
         color: $theme-accent;
+      }
+    }
+  }
+
+  &__relevant {
+    background-color: #fafafa;
+    padding: 50px;
+
+    .relevant {
+      &__panel {
+        overflow: auto;
+        word-break: keep-all;
+        word-wrap: normal;
+        white-space: nowrap;
+        &::-webkit-scrollbar {
+          display: none;
+        }
+      }
+      &__item {
+        width: 260px;
+        box-shadow: 0 1px 7px rgba(0,0,0,.05);
+        display: inline-block;
+        overflow: hidden;
+        background-color: #fff;
+        padding: 10px;
+        margin-right: 20px;
+        border-radius: 5px;
       }
     }
   }

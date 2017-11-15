@@ -7,6 +7,9 @@
                     {{.I18n.NoticeBoard}}
                 </div>
                 <div>
+                    {{if eq .Setting.BasicNoticeBoard ""}}
+                    {{.I18n.NoData}}
+                    {{end}}
                     {{.Setting.BasicNoticeBoard}}
                 </div>
             </div>
@@ -25,6 +28,9 @@
                     {{.I18n.Categories}}
                 </div>
                 <div>
+                    {{if eq 0 (len .MostUseCategories)}}
+                    {{.I18n.NoData}}
+                    {{end}}
                     {{range .MostUseCategories}}
                     <a class="tag" href="{{.URL}}">{{.Title}}</a>
                     {{end}}

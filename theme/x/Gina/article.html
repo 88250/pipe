@@ -14,7 +14,7 @@
 {{template "Gina/header" .}}
 {{template "Gina/side" .}}
 <div class="wrapper content">
-    <article class="fn-bottom fn-padding30">
+    <article class="fn-padding30">
         <header class="article-detail__header">
             <div class="ft-center fn-relative">
                 <h2 class="header__title">
@@ -95,28 +95,27 @@
             </span>
         </div>
     </article>
-
-    {{template "comment/comments" .}}
-
+</div>
+<div class="article__relevant">
     {{if ne (len .RelevantArticles) 0}}
-    <div class="fn-bottom"></div>
-    <div>
-        <div class="module__header">
-            {{$.I18n.RelevantArticle}}
-        </div>
-        <div class="fn-three fn-clear">
-        {{range $index, $item := .RelevantArticles}}
-        {{if lt $index 3}}
-        <div {{if eq $index 1}} class="fn-three--mid"{{end}}>
-            <a class="article__thumb article__thumb--relevant" data-src="{{$item.Author.AvatarURL}}"
-               href="{{$item.URL}}"></a>
-            <a class="module__list-title" href="{{$item.URL}}">{{$item.Title}}</a>
-        </div>
-        {{end}}
-        {{end}}
-        </div>
+    <div class="module__header">
+        {{$.I18n.RelevantArticle}}
     </div>
+    <div class="relevant__panel">
+    {{range $index, $item := .RelevantArticles}}
+        <div class="relevant__item">
+            <a class="module__list-title" href="{{$item.URL}}">{{$item.Title}}</a>
+            <a class="avatar" data-src="{{$item.Author.AvatarURL}}"
+               href="{{$item.Author.URL}}"></a> {{$item.Author.Name}}
+        </div>
     {{end}}
+    </div>
+    {{else}}
+    {{.I18n.NoData}}
+    {{end}}
+</div>
+<div class="wrapper content">
+    {{template "comment/comments" .}}
 
     {{if or .PreviousArticle .NextArticle}}
     <div class="fn-bottom"></div>
