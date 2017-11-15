@@ -16,7 +16,8 @@
         <a href="{{.BlogURL}}/atom">{{.I18n.Feed}}</a>
         {{range .Navigations}}
         <a href="{{.URL}}" target="{{.OpenMethod}}">
-            <img src="https://img.hacpai.com/avatar/1353745196544_1501644090048.png"/>
+            <img class="header__icon"
+                 data-src="https://img.hacpai.com/avatar/1353745196544_1501644090048.png"/>
             {{.Title}}
         </a>
         {{end}}

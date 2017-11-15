@@ -226,6 +226,13 @@ a {
     height: 35px;
     width: 35px;
   }
+
+  &__icon {
+    height: 18px;
+    width: 18px;
+    display: inline-block;
+    margin-top: -3px;
+  }
   .wrapper a {
     color: $text-color;
     padding: 0 10px;
