@@ -3,16 +3,12 @@
     <div class="wrapper">
         <div class="footer__side fn-clear fn-three">
             <div>
-                {{if eq .Setting.BasicNoticeBoard ""}}
-                {{template "Gina/module-list"  dict "List" .MostUseCategories "Title" .I18n.Categories "UserCount" .UserCount}}
-                {{else}}
                 <div class="module__header">
                     {{.I18n.NoticeBoard}}
                 </div>
                 <div>
                     {{.Setting.BasicNoticeBoard}}
                 </div>
-                {{end}}
             </div>
             <div class="fn-three--mid">
                 <div class="module__header">
@@ -20,6 +16,16 @@
                 </div>
                 <div>
                     {{range .MostUseTags}}
+                    <a class="tag" href="{{.URL}}">{{.Title}}</a>
+                    {{end}}
+                </div>
+            </div>
+            <div>
+                <div class="module__header">
+                    {{.I18n.Categories}}
+                </div>
+                <div>
+                    {{range .MostUseCategories}}
                     <a class="tag" href="{{.URL}}">{{.Title}}</a>
                     {{end}}
                 </div>
