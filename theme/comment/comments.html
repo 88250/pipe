@@ -4,25 +4,24 @@
      data-title="{{.I18n.Comment}}{{.I18n.Colon}}{{.Article.Title}}"
      data-id="{{.Article.ID}}">
     <div class="pipe-comment__header">
-        <span id="pipeCommentsCnt">{{len $.Comments}}</span> {{$.I18n.Comment}}
+        <span id="pipeCommentsCnt">{{.Article.CommentCount}}</span> {{$.I18n.Comment}}
     </div>
     <div>
         {{range .Comments}}
         {{template "comment/comment" dict "Item" . "I18n" $.I18n "Username" $.User.UName "ArticleID" $.Article.ID}}
         {{end}}
     </div>
-    {{if ne 1 (len $.Pagination.PageNums)}}
+    {{if gt $.Pagination.PageCount 0}}
     <nav class="pipe-comment__pagination fn-right">
-        {{range $.Pagination.PageNums}}
-        {{if eq . -1}}
-        <a class="pipe-comment__btn" href="{{$.Pagination.PageURL}}{{$.Pagination.PreviousPageNum}}">
+        {{if gt $.Pagination.PreviousPageNum 0}}
+        <a class="pipe-comment__btn" href="?p={{$.Pagination.PreviousPageNum}}">
             <svg class="fn-left"><use xlink:href="#chevron-left"></use></svg> {{$.I18n.prePage}}
         </a>
-        {{else if eq . -2}}
-        <a class="pipe-comment__btn" href="{{$.Pagination.PageURL}}{{$.Pagination.NextPageNum}}">
-            {{$.I18n.nextPage}}  <svg class="fn-right"><use xlink:href="#chevron-right"></use></svg>
-        </a>
         {{end}}
+        {{if lt $.Pagination.CurrentPageNum $.Pagination.PageCount}}
+        <a class="pipe-comment__btn" href="?p={{$.Pagination.NextPageNum}}">
+            {{$.I18n.nextPage}} <svg class="fn-right"><use xlink:href="#chevron-right"></use></svg>
+        </a>
         {{end}}
     </nav>
     {{end}}
