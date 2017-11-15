@@ -4,22 +4,22 @@
       <v-text-field
         :label="$t('title', $store.state.locale)"
         v-model="title"
-        :counter="32"
+        :counter="128"
         :rules="titleRules"
         required
       ></v-text-field>
       <v-text-field
         label="URI"
         v-model="url"
-        :rules="titleRules"
-        :counter="32"
+        :rules="URIRules"
+        :counter="255"
         required
       ></v-text-field>
       <v-text-field
         :label="$t('description', $store.state.locale)"
         v-model="description"
         :rules="descriptionRules"
-        :counter="32"
+        :counter="255"
       ></v-text-field>
       <v-select
         v-model="tags"
@@ -64,10 +64,14 @@
         tags: '',
         titleRules: [
           (v) => required.call(this, v),
-          (v) => maxSize.call(this, v, 32)
+          (v) => maxSize.call(this, v, 128)
         ],
         descriptionRules: [
-          (v) => maxSize.call(this, v, 32)
+          (v) => maxSize.call(this, v, 255)
+        ],
+        URIRules: [
+          (v) => required.call(this, v),
+          (v) => maxSize.call(this, v, 255)
         ],
         tagsRules: [
           (v) => this.tags.length > 0 || this.$t('required', this.$store.state.locale)

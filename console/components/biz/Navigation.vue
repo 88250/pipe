@@ -4,22 +4,22 @@
       <v-text-field
         :label="$t('title', $store.state.locale)"
         v-model="title"
-        :counter="32"
+        :counter="128"
         :rules="titleRules"
         required
       ></v-text-field>
       <v-text-field
         :label="$t('links', $store.state.locale)"
         v-model="url"
-        :rules="titleRules"
-        :counter="32"
+        :rules="linkRules"
+        :counter="255"
         required
       ></v-text-field>
       <v-text-field
         :label="$t('iconPath', $store.state.locale)"
         v-model="iconURL"
         :rules="iconURLRules"
-        :counter="32"
+        :counter="255"
       ></v-text-field>
       <v-select
         :label="$t('openMethod', $store.state.locale)"
@@ -79,10 +79,14 @@
         ],
         titleRules: [
           (v) => required.call(this, v),
-          (v) => maxSize.call(this, v, 32)
+          (v) => maxSize.call(this, v, 128)
+        ],
+        linkRules: [
+          (v) => required.call(this, v),
+          (v) => maxSize.call(this, v, 255)
         ],
         iconURLRules: [
-          (v) => maxSize.call(this, v, 32)
+          (v) => maxSize.call(this, v, 255)
         ]
       }
     },
