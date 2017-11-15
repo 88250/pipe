@@ -74,12 +74,14 @@ func showAuthorArticlesAction(c *gin.Context) {
 		authorModel := service.User.GetUser(articleModel.AuthorID)
 		author := &ThemeAuthor{
 			Name:      authorModel.Name,
-			URL:       "http://localhost:5879/blogs/pipe/vanessa",
-			AvatarURL: "https://img.hacpai.com/20170818zhixiaoyun.jpeg",
+			URL:       getBlogURL(c) + util.PathAuthors + "/" + authorModel.Name,
+			AvatarURL: authorModel.AvatarURL,
 		}
 
+		mdResult := util.Markdown(articleModel.Content)
 		article := &ThemeArticle{
 			ID:           articleModel.ID,
+			Abstract:     mdResult.AbstractText,
 			Author:       author,
 			CreatedAt:    articleModel.CreatedAt.Format("2006-01-02"),
 			Title:        pangu.SpacingText(articleModel.Title),
@@ -88,7 +90,7 @@ func showAuthorArticlesAction(c *gin.Context) {
 			Topped:       articleModel.Topped,
 			ViewCount:    articleModel.ViewCount,
 			CommentCount: articleModel.CommentCount,
-			ThumbnailURL: "https://img.hacpai.com/20170818zhixiaoyun.jpeg",
+			ThumbnailURL: mdResult.ThumbURL,
 			Editable:     session.UID == authorModel.ID,
 		}
 
@@ -96,7 +98,11 @@ func showAuthorArticlesAction(c *gin.Context) {
 	}
 	dataModel["Articles"] = articles
 	dataModel["Pagination"] = pagination
-	dataModel["Author"] = author
+	userBlog := service.User.GetUserBlog(author.ID, blogID)
+	dataModel["Author"] = ThemeAuthor{
+		Name:         author.Name,
+		ArticleCount: userBlog.UserArticleCount,
+	}
 
 	c.HTML(http.StatusOK, getTheme(c)+"/author-articles.html", dataModel)
 }

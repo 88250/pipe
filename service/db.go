@@ -20,7 +20,6 @@ import (
 	"os"
 
 	"github.com/b3log/pipe/log"
-	"github.com/b3log/pipe/model"
 	"github.com/b3log/pipe/util"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/sqlite"
@@ -45,22 +44,22 @@ func ConnectDB() {
 	}
 
 	// TODO: D, remove it after release 1.0.0
-	tables := []interface{}{
-		&model.User{}, &model.Article{}, &model.Comment{}, &model.Navigation{}, &model.Tag{},
-		&model.Category{}, &model.Archive{}, &model.Setting{}, &model.Correlation{},
-	}
+	//	tables := []interface{}{
+	//		&model.User{}, &model.Article{}, &model.Comment{}, &model.Navigation{}, &model.Tag{},
+	//		&model.Category{}, &model.Archive{}, &model.Setting{}, &model.Correlation{},
+	//	}
 
-	if err = db.DropTableIfExists(tables...).Error; nil != err {
-		logger.Fatal("drops tables failed: " + err.Error())
-	}
+	//	if err = db.DropTableIfExists(tables...).Error; nil != err {
+	//		logger.Fatal("drops tables failed: " + err.Error())
+	//	}
 
-	if err = db.AutoMigrate(tables...).Error; nil != err {
-		logger.Fatal("auto migrate tables failed: " + err.Error())
-	}
+	//	if err = db.AutoMigrate(tables...).Error; nil != err {
+	//		logger.Fatal("auto migrate tables failed: " + err.Error())
+	//	}
 
-	if err = db.Model(&model.Article{}).AddIndex("idx_article_path", "path").Error; nil != err {
-		logger.Fatal("adds index failed: " + err.Error())
-	}
+	//	if err = db.Model(&model.Article{}).AddIndex("idx_article_path", "path").Error; nil != err {
+	//		logger.Fatal("adds index failed: " + err.Error())
+	//	}
 }
 
 func DisconnectDB() {
