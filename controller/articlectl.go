@@ -17,6 +17,7 @@
 package controller
 
 import (
+	"bytes"
 	"html/template"
 	"net/http"
 	"strconv"
@@ -219,8 +220,7 @@ func showArticleAction(c *gin.Context) {
 	dataModel["RelevantArticles"] = articles
 	fillPreviousArticle(c, article, &dataModel)
 	fillNextArticle(c, article, &dataModel)
-	logger.Info(mdResult.ContentHTML)
-	dataModel["ToC"] = ToC(mdResult.ContentHTML)
+	dataModel["ToC"] = toc(mdResult.ContentHTML)
 	c.HTML(http.StatusOK, getTheme(c)+"/article.html", dataModel)
 
 	service.Article.IncArticleViewCount(article)
@@ -264,22 +264,30 @@ func fillNextArticle(c *gin.Context, article *model.Article, dataModel *DataMode
 	(*dataModel)["NextArticle"] = nextArticle
 }
 
-func ToC(content string) string {
+func toc(content string) string {
 	doc, _ := goquery.NewDocumentFromReader(strings.NewReader(content))
 	elements := doc.Find("h1, h2, h3, h4, h5")
 	if nil == elements || 3 > elements.Length() {
 		return ""
 	}
 
-	ret := "<ul class=\"article-toc\">"
-	elements.Each(func(i int, ele *goquery.Selection) {
-		// ele.Nodes[0]
-
-		logger.Infof("%+v", ele)
-
+	builder := bytes.Buffer{}
+	builder.WriteString("<ul class=\"article-toc\">")
+	elements.Each(func(i int, element *goquery.Selection) {
+		tagName := goquery.NodeName(element)
+		id := "toc_" + tagName + "_" + strconv.Itoa(i)
+		element.SetAttr("id", id)
+		builder.WriteString("<li class='toc-")
+		builder.WriteString(tagName)
+		builder.WriteString("'><a data-id=\"")
+		builder.WriteString(id)
+		builder.WriteString("\" href=\"javascript:Comment._bgFade($('#")
+		builder.WriteString(id)
+		builder.WriteString("'))\">")
+		builder.WriteString(element.Text())
+		builder.WriteString("</a></li>")
 	})
+	builder.WriteString("</ul>")
 
-	_ = ret
-
-	return ""
+	return builder.String()
 }
