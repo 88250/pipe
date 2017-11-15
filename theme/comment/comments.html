@@ -11,7 +11,7 @@
         {{template "comment/comment" dict "Item" . "I18n" $.I18n "Username" $.User.UName "ArticleID" $.Article.ID}}
         {{end}}
     </div>
-    {{if $.Pagination}}
+    {{if ne 1 (len $.Pagination.PageNums)}}
     <nav class="pipe-comment__pagination fn-right">
         {{range $.Pagination.PageNums}}
         {{if eq . -1}}

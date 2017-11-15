@@ -18,7 +18,7 @@
                        href="{{.Author.URL}}">
                     </a>
                     {{end}}
-                    <div {{if gt $.UserCount 1}} class="fn-padding60" {{end}}>
+                    <div {{if gt $.UserCount 1}} class="fn-padding68" {{end}}>
                         <h2 class="article__title">
                             {{if .Topped}}
                             <svg>
@@ -32,7 +32,7 @@
                         <div class="ft-gray ft-12">
                             {{range .Tags}}
                             <a class="tag" rel="tag" href="{{.URL}}">{{.Title}}</a>
-                            {{end}} &nbsp;
+                            {{end}}
                             <time class="ft-nowrap">{{.CreatedAt}}</time>
                             •
                             <span class="ft-nowrap">{{.ViewCount}} {{$.I18n.View}}</span> •
@@ -50,40 +50,19 @@
             </section>
             {{end}}
             <div class="article__action fn-clear fn-padding30">
-                <span class="action__share fn-left">
-                    <span class="action__btn action__btn--share fn-clear fn-left">
-                        {{$.I18n.Share}} &nbsp; <svg class="fn-right"><use xlink:href="#reply"></use></svg>
-                    </span>
-                    <span class="action__btns fn-left">
-                        <span class="action__btn action__btn--wechat" data-type="wechat">
-                            <svg><use xlink:href="#wechat"></use></svg>
-                        </span>
-                        <span class="action__btn action__btn--weibo" data-type="weibo">
-                            <svg><use xlink:href="#weibo"></use></svg>
-                        </span>
-                        <span class="action__btn action__btn--twitter" data-type="twitter">
-                            <svg><use xlink:href="#twitter"></use></svg>
-                        </span>
-                        <span class="action__btn action__btn--google" data-type="google">
-                            <svg><use xlink:href="#google"></use></svg>
-                        </span>
-                        <div class="action__code"
-                             data-title="{{.Title}}"
-                             data-blogtitle="{{$.Setting.BasicBlogTitle}}"
-                             data-url="{{.URL}}"
-                             data-avatar="{{.Author.AvatarURL}}"></div>
-                    </span>
-                </span>
                 <span class="fn-right">
                     {{if .Editable}}
-                    <a class="fn-right action__btn action__btn--space"
+                    <a class="fn-right action__btn action__btn--space fn-clear"
                        href="{{$.Conf.Server}}/admin/articles/post?id={{.ID}}">
-                        <svg>
+                        {{$.I18n.Edit}} &nbsp;
+                        <svg class="fn-right">
                             <use xlink:href="#edit"></use>
                         </svg>
                     </a>
                     {{end}}
-                    <a class="action__btn fn-right action__btn--active" rel="bookmark" href="{{.URL}}">{{$.I18n.ReadMore}}</a>
+                    <a class="action__btn fn-right action__btn--active fn-clear" rel="bookmark" href="{{.URL}}">
+                        {{$.I18n.ReadMore}} &nbsp; <svg class="fn-right"><use xlink:href="#reply"></use></svg>
+                    </a>
                 </span>
             </div>
         </article>

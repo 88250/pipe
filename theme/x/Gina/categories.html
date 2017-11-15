@@ -10,6 +10,12 @@
     <h1 class="page__title">
         <span id="categoriesCount">0</span> <span class="ft-fade ft-13">{{.I18n.Categories2}}</span>
     </h1>
+    {{if eq (len .Categories) 0}}
+    <div class="ft-center">
+        <br> <br>
+            {{.I18n.NoData}}
+    </div>
+    {{end}}
     <ul>
         {{range .Categories}}
         <li class="categories__item">
