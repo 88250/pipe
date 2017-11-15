@@ -18,7 +18,6 @@ package util
 
 import (
 	"encoding/json"
-	"strconv"
 
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
@@ -35,7 +34,7 @@ type SessionData struct {
 }
 
 func (sd *SessionData) AvatarURLWithSize(size int) string {
-	return sd.UAvatar + "?imageView2/1/w/" + strconv.Itoa(size) + "/h/" + strconv.Itoa(size) + "/interlace/1/q/100"
+	return AvatarSize(sd.UAvatar, size)
 }
 
 func (sd *SessionData) Save(c *gin.Context) error {

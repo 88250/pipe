@@ -18,6 +18,8 @@ package controller
 
 import (
 	"html/template"
+
+	"github.com/b3log/pipe/util"
 )
 
 type ThemeArticle struct {
@@ -53,6 +55,10 @@ type ThemeAuthor struct {
 	AvatarURL    string
 	URL          string
 	ArticleCount int
+}
+
+func (author *ThemeAuthor) AvatarURLWithSize(size int) string {
+	return util.AvatarSize(author.AvatarURL, size)
 }
 
 type ThemeCategory struct {
