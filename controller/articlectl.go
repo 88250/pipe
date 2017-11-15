@@ -231,9 +231,15 @@ func fillPreviousArticle(c *gin.Context, article *model.Article, dataModel *Data
 		return
 	}
 
+	author := service.User.GetUser(previous.AuthorID)
 	previousArticle := &ThemeArticle{
 		Title: previous.Title,
 		URL:   getBlogURL(c) + previous.Path,
+		Author: &ThemeAuthor{
+			Name:      author.Name,
+			URL:       getBlogURL(c) + util.PathAuthors + "/" + author.Name,
+			AvatarURL: author.AvatarURL,
+		},
 	}
 	(*dataModel)["PreviousArticle"] = previousArticle
 }
@@ -244,9 +250,15 @@ func fillNextArticle(c *gin.Context, article *model.Article, dataModel *DataMode
 		return
 	}
 
+	author := service.User.GetUser(next.AuthorID)
 	nextArticle := &ThemeArticle{
 		Title: next.Title,
 		URL:   getBlogURL(c) + next.Path,
+		Author: &ThemeAuthor{
+			Name:      author.Name,
+			URL:       getBlogURL(c) + util.PathAuthors + "/" + author.Name,
+			AvatarURL: author.AvatarURL,
+		},
 	}
 	(*dataModel)["NextArticle"] = nextArticle
 }
