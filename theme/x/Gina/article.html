@@ -14,7 +14,7 @@
 {{template "Gina/header" .}}
 {{template "Gina/side" .}}
 <div class="wrapper content">
-    <article class="fn-padding30">
+    <article>
         <header class="article-detail__header">
             <div class="ft-center fn-relative">
                 <h2 class="header__title">
@@ -52,11 +52,13 @@
                 </span>
                 {{end}}
             </div>
-            {{range .Article.Tags}}
-            <a class="tag" rel="tag" href="{{.URL}}">{{.Title}}</a>
-            {{end}}
+            <div class="fn-padding30">
+                {{range .Article.Tags}}
+                <a class="tag" rel="tag" href="{{.URL}}">{{.Title}}</a>
+                {{end}}
+            </div>
         </header>
-        <section class="pipe-content__reset article__abstract" id="articleContent" data-author="{{.Article.Author.Name}}">
+        <section class="pipe-content__reset article__abstract fn-padding30" id="articleContent" data-author="{{.Article.Author.Name}}">
             {{.Article.Content}}
         </section>
         <div class="article__action fn-clear">

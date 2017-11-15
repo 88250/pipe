@@ -22,10 +22,15 @@
 
   &__pagination {
     margin-top: 20px;
+    .pipe-comment__btn {
+      display: inline-block;
+    }
   }
 
   &__item {
-    margin-bottom: 30px;
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(0, 0, 0, .06);
     &:hover {
       .pipe-comment__btn {
         display: inline-block;
@@ -36,27 +41,34 @@
   &__avatar {
     position: absolute;
     border: 2px solid #fff;
-    height: 50px;
-    width: 50px;
+    height: 57px;
+    width: 57px;
     border-radius: 50%;
     display: inline-block;
     z-index: 10;
     @include image-bg('../images/image-bg.svg');
     &:hover {
-      border-color: $gray;
+      border-color: rgba(0, 0, 0, .06);
     }
   }
 
   &__body {
-    padding-left: 74px;
+    padding-left: 81px;
   }
 
   &__chevron-down {
     transform: rotate(180deg);
   }
 
-  &__icon {
-    transition: $transition;
+  &__reply-icon {
+    &:hover {
+      opacity: .8;
+    }
+    svg {
+      float: left;
+      margin: 4px 5px 0 0;
+      transition: $transition;
+    }
   }
 
   &__reply {
@@ -66,15 +78,15 @@
 
   &__btn {
     cursor: pointer;
-    display: none;
-    padding-left: 10px;
     color: $black;
+    display: none;
     transition: $transition;
+    padding-left: 10px;
     &--danger {
       color: $red;
     }
     svg {
-      margin-top: 4px;
+      margin-top: 1px;
     }
 
     &:hover {
@@ -94,7 +106,7 @@
   &__emotion span {
     cursor: pointer;
     float: left;
-    margin: 10px 10px 5px 0;
+    margin: 5px 10px 5px 0;
     font-size: 16px;
     transition: $transition;
     background-color: transparent;

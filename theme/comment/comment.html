@@ -38,9 +38,9 @@
         </div>
         {{if ne .Item.ReplyCount 0}}
         <div>
-            <span class="ft-gray ft-12 fn-pointer" data-id="{{.Item.ID}}">
+            <span class="ft-gray ft-12 fn-pointer pipe-comment__reply-icon" data-id="{{.Item.ID}}">
                 {{.Item.ReplyCount}} {{.I18n.Reply}}
-                <svg class="pipe-comment__chevron-down pipe-comment__icon"><use xlink:href="#chevron-up"></use></svg>
+                <svg class="pipe-comment__chevron-down"><use xlink:href="#chevron-up"></use></svg>
             </span>
             <div class="pipe-comment__reply fn-none">
             </div>

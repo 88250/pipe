@@ -184,6 +184,7 @@ a {
   .header__tool {
     position: fixed;
     width: 339px;
+    box-shadow: rgba(0,0,0,0.05) 0px 1px 7px;
   }
 
   .side {
@@ -219,6 +220,7 @@ a {
   line-height: 64px;
   position: relative;
   overflow: hidden;
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 7px;
 
   &__logo {
     height: 35px;
@@ -290,6 +292,7 @@ a {
 // footer
 .footer {
   border-top: 1px solid $border-color;
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 7px;
   &__side {
     padding: 50px 0 30px;
     .tag {
