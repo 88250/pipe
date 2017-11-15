@@ -19,7 +19,7 @@ module.exports = {
   /*
   ** Customize the progress bar color
   */
-  loading: { color: '#1976d2' },
+  loading: { color: '#4a4a4a' },
   css: [
     'vuetify/dist/vuetify.min.css',
     '~assets/scss/main.scss'

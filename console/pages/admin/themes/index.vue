@@ -2,24 +2,18 @@
   <div class="admin__themes fn-clear">
     <div class="card"
          v-for="item in list"
+         @click="setup(item.name)"
          :key="item.previewURL"
          :class="{ 'theme--current': item.name === currentName }">
       <div class="theme__img-wrap">
-        <img :src="item.previewURL"/>
+        <span class="theme__image" :style="`background-image: url('${item.thumbnailURL}')`"/>
         <div class="theme__overlay">
-          <div>
-            <v-btn
-              v-show="item.name !== currentName"
-              class="btn--info"
-              @click="setup(item.name)">{{ $t('setup', $store.state.locale) }}</v-btn>
-            <a
-              class="btn btn--danger btn--space"
-              target="_blank"
-              :href="item.thumbnailURL">{{ $t('preview', $store.state.locale) }}</a>
-          </div>
+          {{ item.name }} <br><br>
+          <v-btn
+            v-show="item.name !== currentName"
+            class="btn--info">{{ $t('setup', $store.state.locale) }}</v-btn>
         </div>
       </div>
-      <h3>{{ item.name }}</h3>
     </div>
   </div>
 </template>
@@ -73,26 +67,27 @@
     .card
       margin: 0 30px 30px 0
       float: left
-      width: 360px
-
-      &.theme--current
+      width: 300px
+      cursor: pointer
+    .theme
+      &--current
         background-color: $blue
+        cursor: auto
+        .theme__overlay
+          opacity: 1
+        .theme__image
+          transform: scale(1.2) translateZ(0)
 
-        h3
-          color: #fff
-
-      .theme__img-wrap
+      &__img-wrap
         overflow: hidden
-        margin-bottom: 10px
         position: relative
-        min-height: 250px
         &:hover
           .theme__overlay
             opacity: 1
-          img
+          .theme__image
             transform: scale(1.2) translateZ(0)
 
-      .theme__overlay
+      &__overlay
         top: 0
         width: 100%
         height: 100%
@@ -100,20 +95,20 @@
         transition: all .4s ease-in-out
         opacity: 0
         background-color: rgba(0, 0, 0, 0.7)
+        text-align: center
+        color: #fff
+        font-size: 20px
+        padding-top: 150px
+        box-sizing: border-box
 
-        & > div
-          top: 50%
-          left: 0
-          right: 0
-          transform: translateY(-50%) translateZ(0)
-          position: absolute
-          text-align: center
-      img
+      &__image
         width: 100%
         transition: all .4s linear
-      h3
-        margin-bottom: 10px
-        text-align: center
+        height: 360px
+        display: block
+        background-repeat: no-repeat
+        background-size: cover
+        background-position: center center
   @media (max-width: 768px)
     .admin__themes .card
       width: 100%
