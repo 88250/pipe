@@ -815,11 +815,11 @@ a {
     width: 202px;
     border-radius: 4px;
     background-color: $theme-accent;
-    box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.05);
     margin: 30px 30px 0 0;
     display: block;
     text-align: center;
     color: #fff;
+    box-shadow: rgba(0,0,0,0.05) 0px 1px 7px;
     &:hover {
       text-decoration: none;
       color: $fade;
@@ -842,8 +842,8 @@ a {
   }
 
   &__name {
-    font-size: 20px;
-    margin-top: 10px;
+    font-size: 16px;
+    margin: 9px 0 3px;
   }
 }
 
