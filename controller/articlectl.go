@@ -277,7 +277,7 @@ func toc(article *ThemeArticle) string {
 		tagName := goquery.NodeName(element)
 		id := "toc_" + tagName + "_" + strconv.Itoa(i)
 		element.SetAttr("id", id)
-		builder.WriteString("<li class='toc-")
+		builder.WriteString("<li class='toc__")
 		builder.WriteString(tagName)
 		builder.WriteString("'><a href=\"#")
 		builder.WriteString(id)
