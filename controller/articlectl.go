@@ -272,18 +272,16 @@ func toc(content string) string {
 	}
 
 	builder := bytes.Buffer{}
-	builder.WriteString("<ul class=\"article-toc\">")
+	builder.WriteString("<ul id=\"toc\" class=\"toc\">")
 	elements.Each(func(i int, element *goquery.Selection) {
 		tagName := goquery.NodeName(element)
 		id := "toc_" + tagName + "_" + strconv.Itoa(i)
 		element.SetAttr("id", id)
 		builder.WriteString("<li class='toc-")
 		builder.WriteString(tagName)
-		builder.WriteString("'><a data-id=\"")
+		builder.WriteString("'><a href=\"#")
 		builder.WriteString(id)
-		builder.WriteString("\" href=\"javascript:Comment._bgFade($('#")
-		builder.WriteString(id)
-		builder.WriteString("'))\">")
+		builder.WriteString("\">")
 		builder.WriteString(element.Text())
 		builder.WriteString("</a></li>")
 	})

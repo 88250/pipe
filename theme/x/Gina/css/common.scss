@@ -731,7 +731,7 @@ a {
     }
 
   }
-  @for $i from 1 through 6 {
+  @for $i from 1 through 5 {
     .toc__#{$i} a {
       padding-left: 20px * $i
     }
