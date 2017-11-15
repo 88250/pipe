@@ -2,7 +2,7 @@
 <header class="header">
     <div class="wrapper">
         <a href="{{.BlogURL}}">
-            <img src="{{.LogoURL}}" class="header__logo">
+            <img data-src="{{.LogoURL}}" class="header__logo">
             {{.Setting.BasicBlogTitle}}
         </a>
         <a href="{{.BlogURL}}/categories">{{.I18n.Categories}}</a>
@@ -16,8 +16,10 @@
         <a href="{{.BlogURL}}/atom">{{.I18n.Feed}}</a>
         {{range .Navigations}}
         <a href="{{.URL}}" target="{{.OpenMethod}}">
+            {{if ne "" .IconURL}}
             <img class="header__icon"
-                 data-src="https://img.hacpai.com/avatar/1353745196544_1501644090048.png"/>
+                 data-src="{{.IconURL}}"/>
+            {{end}}
             {{.Title}}
         </a>
         {{end}}
