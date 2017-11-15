@@ -141,7 +141,7 @@ func showArticleAction(c *gin.Context) {
 		author := &ThemeAuthor{
 			Name:      commentAuthor.Name,
 			URL:       commentAuthorURL,
-			AvatarURL: commentAuthor.AvatarURLWithSize(64),
+			AvatarURL: commentAuthor.AvatarURL,
 		}
 
 		mdResult := util.Markdown(commentModel.Content)
@@ -277,7 +277,7 @@ func toc(article *ThemeArticle) string {
 		tagName := goquery.NodeName(element)
 		id := "toc_" + tagName + "_" + strconv.Itoa(i)
 		element.SetAttr("id", id)
-		builder.WriteString("<li class='toc__")
+		builder.WriteString("<li class='toc-")
 		builder.WriteString(tagName)
 		builder.WriteString("'><a href=\"#")
 		builder.WriteString(id)
