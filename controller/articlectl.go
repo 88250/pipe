@@ -220,7 +220,7 @@ func showArticleAction(c *gin.Context) {
 	dataModel["RelevantArticles"] = articles
 	fillPreviousArticle(c, article, &dataModel)
 	fillNextArticle(c, article, &dataModel)
-	dataModel["ToC"] = toc(mdResult.ContentHTML)
+	dataModel["ToC"] = template.HTML(toc(mdResult.ContentHTML))
 	c.HTML(http.StatusOK, getTheme(c)+"/article.html", dataModel)
 
 	service.Article.IncArticleViewCount(article)
