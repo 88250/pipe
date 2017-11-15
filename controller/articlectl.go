@@ -23,6 +23,7 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/PuerkitoBio/goquery"
 	"github.com/b3log/pipe/model"
 	"github.com/b3log/pipe/service"
 	"github.com/b3log/pipe/util"
@@ -219,7 +220,8 @@ func showArticleAction(c *gin.Context) {
 	dataModel["RelevantArticles"] = articles
 	fillPreviousArticle(c, article, &dataModel)
 	fillNextArticle(c, article, &dataModel)
-	dataModel["ToC"] = "todo"
+	logger.Info(mdResult.ContentHTML)
+	dataModel["ToC"] = ToC(mdResult.ContentHTML)
 	c.HTML(http.StatusOK, getTheme(c)+"/article.html", dataModel)
 
 	service.Article.IncArticleViewCount(article)
@@ -261,4 +263,24 @@ func fillNextArticle(c *gin.Context, article *model.Article, dataModel *DataMode
 		},
 	}
 	(*dataModel)["NextArticle"] = nextArticle
+}
+
+func ToC(content string) string {
+	doc, _ := goquery.NewDocumentFromReader(strings.NewReader(content))
+	elements := doc.Find("h1, h2, h3, h4, h5")
+	if nil == elements || 3 > elements.Length() {
+		return ""
+	}
+
+	ret := "<ul class=\"article-toc\">"
+	elements.Each(func(i int, ele *goquery.Selection) {
+		// ele.Nodes[0]
+
+		logger.Infof("%+v", ele)
+
+	})
+
+	_ = ret
+
+	return ""
 }
