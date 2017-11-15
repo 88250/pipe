@@ -86,7 +86,7 @@
       color: $red;
     }
     svg {
-      margin-top: 1px;
+      margin-top: 2px;
     }
 
     &:hover {
@@ -106,7 +106,7 @@
   &__emotion span {
     cursor: pointer;
     float: left;
-    margin: 5px 10px 5px 0;
+    margin: 0 10px 5px 0;
     font-size: 16px;
     transition: $transition;
     background-color: transparent;
@@ -122,13 +122,17 @@
   opacity: 0;
   background-color: #fff;
   box-shadow: 0 0px 2px $fade;
-  padding: 30px 0;
+  padding: 20px 0;
   transition: $transition;
   z-index: 100;
   left: 0;
 
   input,
   textarea {
-    margin-bottom: 30px;
+    margin-bottom: 20px;
+  }
+
+  #pipeEditorReplyTarget {
+    line-height: 33px;
   }
 }

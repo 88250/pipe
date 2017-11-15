@@ -2,7 +2,6 @@
 {{if ne .User.UID 0}}
 <div class="pipe-editor" id="pipeEditor">
     <div class="pipe-editor__wrap">
-        <div id="pipeEditorReplyTarget"></div>
         <div class="pipe-form">
             <div class="pipe-editor__emotion">
                 <span title="😁">😁</span>
@@ -23,6 +22,7 @@
             </div>
             <textarea id="pipeEditorComment" data-blogurl="{{.BlogURL}}" placeholder="{{.I18n.CommentPlaceholder}}" rows="3"></textarea>
             <div class="fn-clear">
+                <div class="fn-left ft-fade" id="pipeEditorReplyTarget"></div>
                 <span class="fn-right pipe-btn pipe-btn--space pipe-btn--success"
                       id="pipeEditorAdd"
                       data-label2="{{.I18n.Required}}"
