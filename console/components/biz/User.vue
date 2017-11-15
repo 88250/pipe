@@ -1,6 +1,6 @@
 <template>
   <div class="card__body fn-clear">
-    <v-form ref="form">
+    <v-form ref="form" @submit.prevent="created">
       <v-text-field
         :label="$t('account', $store.state.locale)"
         v-model="name"
