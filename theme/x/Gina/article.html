@@ -106,10 +106,17 @@
     <div class="relevant__panel">
     {{range $index, $item := .RelevantArticles}}
         <div class="relevant__item">
+            {{if $item.ThumbnailURL}}
+            <a class="relevant__thumbnail"
+               href="{{$item.URL}}"
+               data-src="https://img.hacpai.com/bing/20171109.jpg?imageView2/1/w/960/h/520/interlace/1/q/100"></a>
             <a class="module__list-title fn-ellipsis" href="{{$item.URL}}">{{$item.Title}}</a>
-            <div class="ft-fade relevant__abstract">
+            {{else}}
+            <a class="module__list-title fn-ellipsis" href="{{$item.URL}}">{{$item.Title}}</a>
+            <a href="{{$item.URL}}" class="ft-fade relevant__abstract">
                 我是摘要我是摘要我是摘要我是摘要我是摘要我是摘要我是摘要我是摘要我是摘要我是摘要
-            </div>
+            </a>
+            {{end}}
             <div class="fn-relative">
                 <a class="avatar fn-absolute" data-src="{{$item.Author.AvatarURL}}"
                    href="{{$item.Author.URL}}"></a>
@@ -117,23 +124,15 @@
                     <a href="{{$item.Author.URL}}" class="ft-gray">{{$item.Author.Name}}</a> <br>
                    <span class="ft-12 ft-fade fn-clear">
                         {{$item.CreatedAt}}
-                       <span class="fn-right">{{$item.CommentCount}} {{$.I18n.Comment}}</span>
-                   </span>
-                </div>
-            </div>
-        </div>
-        <div class="relevant__item">
-            <div class="relevant__thumbnail"
-                 data-src="https://img.hacpai.com/bing/20171109.jpg?imageView2/1/w/960/h/520/interlace/1/q/100"></div>
-            <a class="module__list-title fn-ellipsis" href="{{$item.URL}}">{{$item.Title}}</a>
-            <div class="fn-relative">
-                <a class="avatar fn-absolute" data-src="{{$item.Author.AvatarURL}}"
-                   href="{{$item.Author.URL}}"></a>
-                <div class="relevant__content">
-                    <a href="{{$item.Author.URL}}" class="ft-gray">{{$item.Author.Name}}</a> <br>
-                    <span class="ft-12 ft-fade fn-clear">
-                        {{$item.CreatedAt}}
-                       <span class="fn-right">{{$item.CommentCount}} {{$.I18n.Comment}}</span>
+                       <a href="{{$item.URL}}#pipeComments" class="fn-right ft-fade">
+                           {{if ne 0 $item.CommentCount}}
+                           {{$item.CommentCount}}
+                           {{$.I18n.Comment}}
+                           {{else}}
+                           {{$.I18n.Comment}}
+                           <svg><use xlink:href="#comment"></use></svg>
+                           {{end}}
+                       </a>
                    </span>
                 </div>
             </div>

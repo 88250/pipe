@@ -201,18 +201,13 @@ func showArticleAction(c *gin.Context) {
 		}
 
 		article := &ThemeArticle{
-			ID:           articleModel.ID,
 			Author:       author,
 			CreatedAt:    articleModel.CreatedAt.Format("2006-01-02"),
 			Title:        articleModel.Title,
-			Tags:         themeTags,
 			URL:          getBlogURL(c) + articleModel.Path,
-			Topped:       articleModel.Topped,
-			ViewCount:    articleModel.ViewCount,
 			CommentCount: articleModel.CommentCount,
-			ThumbnailURL: "",
-			Content:      "",
-			Editable:     false,
+			ThumbnailURL: "https://img.hacpai.com/bing/20171109.jpg?imageView2/1/w/960/h/520/interlace/1/q/100",
+			Abstract: "丁亮快来修改我呀",
 		}
 
 		articles = append(articles, article)

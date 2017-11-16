@@ -703,6 +703,7 @@ a {
         margin: -10px -10px 0;
         @include image-bg('../images/image-bg.svg');
         margin-bottom: 10px;
+        display: block;
       }
       &__abstract {
         height: 80px;
@@ -710,7 +711,11 @@ a {
         word-wrap: break-word;
         word-break: break-all;
         overflow: hidden;
+        display: block;
         white-space: normal;
+        &:hover {
+          text-decoration: none;
+        }
       }
     }
   }
