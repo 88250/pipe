@@ -20,23 +20,12 @@ const Common = {
   init: () => {
     PreviewImg()
     KillBrowser()
-    Common._header()
     $('#sidebarIcon').click(() => {
       Common.toggleSide()
     })
 
     $('#logout').click(function () {
       Logout()
-    })
-  },
-  _header: () => {
-    const $headerSearch = $('#headerSearch')
-    const $input = $headerSearch.find('input')
-    $headerSearch.click(() => {
-      $input.width(95).focus()
-    })
-    $input.blur(function () {
-      $(this).width(0)
     })
   },
   toggleSide: () => {

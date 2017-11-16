@@ -1,8 +1,8 @@
 {{define "Gina/header"}}
 <header class="header">
-    <div class="wrapper">
-        <a href="{{.BlogURL}}">
-            <img data-src="{{.LogoURL}}" class="header__logo">
+    <div class="wrapper ft-center">
+        <a href="{{.BlogURL}}" class="header__logo">
+            <img data-src="{{.LogoURL}}">
             {{.Setting.BasicBlogTitle}}
         </a>
         <a href="{{.BlogURL}}/categories">{{.I18n.Categories}}</a>
@@ -23,25 +23,20 @@
             {{.Title}}
         </a>
         {{end}}
-        <form id="headerSearch"
-              class="header__search"
-              action="{{.BlogURL}}/search">
-            <input type="text" name="keyword" placeholder="{{.I18n.EnterSearch}}">
+        <a href="{{.BlogURL}}/search" class="header__search">
             <svg>
                 <use xlink:href="#search"></use>
             </svg>
-        </form>
+        </a>
         <div class="header__tool">
             {{if eq .User.URole 0}}
             <a href="https://hacpai.com/register" class="fn-right ft-orange">{{.I18n.Register}}</a>
             <a href="https://hacpai.com/login" class="fn-right">{{.I18n.Login}}</a>
             {{else}}
-            <a id="logout" href="javascript:void(0)" class="fn-right ft-orange">{{.I18n.Logout}}</a>
-            {{if ne .User.URole 4}}
-            <a href="/admin" class="fn-right">{{.I18n.Manage}}</a>
-            {{end}}
-            <div class="avatar fn-right"
-                 data-src="{{.User.AvatarURLWithSize 64}}"></div>
+            <a class="avatar fn-right"
+               href="/{{if ne .User.URole 4}}admin{{end}}"
+               data-src="{{.User.AvatarURLWithSize 64}}"></a>
+            <a id="logout" href="javascript:void(0)" class="fn-right">{{.I18n.Logout}}</a>
             {{end}}
         </div>
     </div>

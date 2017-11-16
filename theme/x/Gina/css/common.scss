@@ -187,6 +187,10 @@ a {
     box-shadow: rgba(0,0,0,0.05) 0px 1px 7px;
   }
 
+  .header__logo {
+    display: none;
+  }
+
   .side {
     right: 0;
   }
@@ -223,8 +227,12 @@ a {
   box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 7px;
 
   &__logo {
-    height: 35px;
-    width: 35px;
+    position: absolute;
+    left: 20px;
+    img {
+      height: 35px;
+      width: 35px;
+    }
   }
 
   &__icon {
@@ -260,7 +268,8 @@ a {
     box-sizing: border-box;
 
     a.fn-right {
-      padding: 0 0 0 20px;
+      padding: 0 20px 0 0;
+      box-sizing: border-box;
 
       &:first-child {
         margin-left: 0;
@@ -271,27 +280,6 @@ a {
       margin: 17px 0 0 20px;
       height: 30px;
       width: 30px;
-    }
-  }
-
-  &__search {
-    float: right;
-    height: 64px;
-    cursor: pointer;
-    &:hover svg {
-      color: $text-color;
-    }
-    input {
-      font-size: 13px;
-      width: 0;
-      border: 0;
-      transition: $transition;
-      border-bottom: 1px solid $border-color;
-    }
-    svg {
-      color: $text-hover-color;
-      float: right;
-      margin-top: 26px;
     }
   }
 }
@@ -899,6 +887,7 @@ a {
   padding: 20px;
   .tag {
     margin: 0 20px 20px 0;
+    line-height: 1.6;
   }
   &__level0 {
     font-size: 12px;
@@ -980,10 +969,7 @@ a {
     border-color: transparent;
     left: 5px;
     position: absolute;
-  }
-
-  .header__logo {
-    border-radius: 20px;
+    box-shadow: 0 0 0;
   }
 
   .header > .wrapper {
@@ -994,6 +980,11 @@ a {
         display: block;
         float: left;
         margin-left: 20px;
+      }
+
+      &.header__search {
+        display: block;
+        float: right;
       }
     }
   }
