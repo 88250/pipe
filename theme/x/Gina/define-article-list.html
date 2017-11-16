@@ -1,6 +1,9 @@
 {{define "Gina/article-list"}}
 <div class="wrapper content">
     <div>
+        {{if eq (len .Articles) 0}}
+        {{.I18n.NoData}}
+        {{end}}
         {{range .Articles}}
         <article class="fn-bottom article__item">
             <header class="fn-relative article__header">

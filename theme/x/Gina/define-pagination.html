@@ -1,5 +1,5 @@
 {{define "Gina/pagination"}}
-{{if $.Pagination}}
+{{if $.Pagination.PageNums}}
 <nav class="pagination">
     {{if gt $.Pagination.PreviousPageNum 0}}
     <a class="pagination__near" href="?p={{$.Pagination.PreviousPageNum}}">
