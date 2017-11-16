@@ -128,6 +128,12 @@ export const InitComment = () => {
     ShowEditor($commentNull.data('title'), $commentNull.data('id'))
   })
 
+  // bottom reply
+  $('#pipeCommentBottomComment').click(function () {
+    const $bottomComment = $(this)
+    ShowEditor($bottomComment.text(), $bottomComment.data('id'))
+  })
+
   // comment show reply
   $('body').on('click', '#pipeComments .fn-pointer', function () {
     const $it = $(this)

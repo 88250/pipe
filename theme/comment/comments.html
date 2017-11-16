@@ -11,8 +11,9 @@
         {{template "comment/comment" dict "Item" . "I18n" $.I18n "Username" $.User.UName "ArticleID" $.Article.ID}}
         {{end}}
     </div>
-    {{if gt $.Pagination.PageCount 0}}
-    <nav class="pipe-comment__pagination fn-right">
+
+    <nav class="pipe-comment__pagination fn-clear">
+        {{if gt $.Pagination.PageCount 0}}
         {{if gt $.Pagination.PreviousPageNum 0}}
         <a class="pipe-comment__btn" href="?p={{$.Pagination.PreviousPageNum}}">
             <svg class="fn-left"><use xlink:href="#chevron-left"></use></svg> {{$.I18n.prePage}}
@@ -23,8 +24,12 @@
             {{$.I18n.nextPage}} <svg class="fn-right"><use xlink:href="#chevron-right"></use></svg>
         </a>
         {{end}}
+        {{end}}
+        <span class="fn-right pipe-comment__btn" data-id="{{$.Article.ID}}" id="pipeCommentBottomComment">
+            {{$.I18n.Comment}}{{$.I18n.Colon}}{{$.Article.Title}}<svg><use xlink:href="#comment"></use></svg>
+        </span>
     </nav>
-    {{end}}
+
 </div>
 {{else}}
 <div class="pipe-comment__null fn-clear"

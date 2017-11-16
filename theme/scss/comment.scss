@@ -22,6 +22,8 @@
 
   &__pagination {
     margin-top: 20px;
+    border-top: 1px solid rgba(0, 0, 0, 0.06);
+    padding-top: 20px;
     .pipe-comment__btn {
       display: inline-block;
     }
