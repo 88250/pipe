@@ -34,6 +34,8 @@
         </span>
         <v-menu
           z-index="100"
+          :min-width="120"
+          :open-on-hover="true"
           :nudge-bottom="30"
           :nudge-right="30">
           <v-toolbar-title slot="activator">

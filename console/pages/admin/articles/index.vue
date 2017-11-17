@@ -89,7 +89,7 @@
         </div>
       </li>
     </ul>
-    <div class="pagination--wrapper fn-clear" v-if="list.length !== 0">
+    <div class="pagination--wrapper fn-clear" v-if="pageCount > 1">
       <v-pagination
         :length="pageCount"
         v-model="currentPageNum"
