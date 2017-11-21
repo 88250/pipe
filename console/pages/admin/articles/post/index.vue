@@ -59,6 +59,16 @@
           class="checkbox__icon"></span>
           {{ $t('useThumb', $store.state.locale) }}
         </label>
+
+        <label class="checkbox btn--space">
+          <input
+            type="checkbox"
+            :checked="useThumbs"
+            @change="setLocalstorage('topped')"
+            @click="topped = !topped"/><span
+          class="checkbox__icon"></span>
+          {{ $t('top', $store.state.locale) }}
+        </label>
       </v-form>
       <div class="alert alert--danger" v-show="error">
         <v-icon>danger</v-icon>
@@ -117,6 +127,7 @@
         tags: [],
         commentable: true,
         useThumbs: false,
+        topped: false,
         thumbs: ['', '', '', '', '', '']
       }
     },
@@ -215,6 +226,9 @@
           case 'useThumbs':
             localStorage.setItem('article-useThumbs', this.useThumbs)
             break
+          case 'topped':
+            localStorage.setItem('article-topped', this.topped)
+            break
           case 'content':
             localStorage.setItem('article-content', this.content)
             break
@@ -246,7 +260,8 @@
           content: content,
           path: this.url,
           tags: this.tags.toString(),
-          commentable: this.commentable
+          commentable: this.commentable,
+          topped: this.topped,
         })
         if (responseData.code === 0) {
           if (!id) {
@@ -256,6 +271,7 @@
             localStorage.removeItem('article-url')
             localStorage.removeItem('article-commentable')
             localStorage.removeItem('article-useThumbs')
+            localStorage.removeItem('article-topped')
           }
           this.$set(this, 'error', false)
           this.$set(this, 'errorMsg', '')
@@ -287,6 +303,7 @@
           this.$set(this, 'url', responseData.path)
           this.$set(this, 'tags', responseData.tags.split(','))
           this.$set(this, 'commentable', responseData.commentable)
+          this.$set(this, 'topped', responseData.topped)
           this.parseMarkdown(this.content)
         }
       } else {
@@ -310,6 +327,9 @@
           }
           if (localStorage.getItem('article-useThumbs')) {
             this.$set(this, 'useThumbs', localStorage.getItem('article-useThumbs') === 'true')
+          }
+          if (localStorage.getItem('article-topped')) {
+            this.$set(this, 'topped', localStorage.getItem('article-topped') === 'true')
           }
 
           this.parseMarkdown(this.content)
