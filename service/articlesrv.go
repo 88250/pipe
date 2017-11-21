@@ -368,21 +368,24 @@ func (srv *articleService) UpdateArticle(article *model.Article) error {
 	if err := db.Model(&model.Article{}).Where("id = ?", article.ID).Find(oldArticle).Error; nil != err {
 		return err
 	}
-	article.BlogID = oldArticle.BlogID
-	article.ID = oldArticle.ID
+	oldArticle.Title = article.Title
+	oldArticle.Content = article.Content
+	oldArticle.Commentable = article.Commentable
+	oldArticle.Topped = article.Topped
 
 	tagStr, err := normalizeTagStr(article.Tags)
 	if nil != err {
 		return err
 	}
-	article.Tags = tagStr
+	oldArticle.Tags = tagStr
 
 	if err := normalizeArticlePath(article); nil != err {
 		return err
 	}
+	oldArticle.Path = article.Path
 
 	tx := db.Begin()
-	if err := tx.Model(article).Updates(article).Error; nil != err {
+	if err := tx.Save(oldArticle).Error; nil != err {
 		tx.Rollback()
 
 		return err

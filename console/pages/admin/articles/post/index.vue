@@ -63,7 +63,7 @@
         <label class="checkbox btn--space">
           <input
             type="checkbox"
-            :checked="useThumbs"
+            :checked="topped"
             @change="setLocalstorage('topped')"
             @click="topped = !topped"/><span
           class="checkbox__icon"></span>
