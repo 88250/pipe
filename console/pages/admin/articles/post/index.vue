@@ -117,7 +117,6 @@
           (v) => maxSize.call(this, v, 128)
         ],
         linkRules: [
-          (v) => required.call(this, v),
           (v) => maxSize.call(this, v, 255)
         ],
         tagsRules: [
