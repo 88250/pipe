@@ -71,9 +71,6 @@
                 <v-list-tile class="list__tile--link" @click="remove(item.id)">
                   {{ $t('delete', $store.state.locale) }}
                 </v-list-tile>
-                <v-list-tile class="list__tile--link" @click="top(item.id)">
-                  {{ $t('top', $store.state.locale) }}
-                </v-list-tile>
               </v-list>
             </v-menu>
           </div>
@@ -208,22 +205,6 @@
             snackModify: 'success'
           })
           this.getList()
-        }
-      },
-      async top (id) {
-        const responseData = await this.axios.put(`/console/articles/${id}`)
-        if (responseData.code === 0) {
-          this.$store.commit('setSnackBar', {
-            snackBar: true,
-            snackMsg: this.$t('topSuccess', this.$store.state.locale),
-            snackModify: 'success'
-          })
-          this.getList()
-        } else {
-          this.$store.commit('setSnackBar', {
-            snackBar: true,
-            snackMsg: responseData.msg
-          })
         }
       },
       goEdit (id) {
