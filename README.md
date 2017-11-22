@@ -37,58 +37,38 @@ TBD
 
 ## 构建
 
+### 前提
+
+需要预先安装好如下编译环境，请尽量都使用最新版：
+
+1. [Go](https://golang.org)
+2. [Node.js](https://nodejs.org)
+
+### 编译后端
+
 ```
 go build
 ```
 
-## 技术栈
+### 编译前端（管理后台）
 
-### 管理后台
-
-Vue.js, Nuxt, Vuetify
-
-安装依赖
 ```
-cd console && npm install
+cd console && npm install && npm run build
 ```
+
 console/config/env.json 中 `clientBaseURL` 为 `/api` 时需启动 `./pipe`，为 `/mock` 时需运行 
 ```
 npm run mock
 ```
-开发
+
+### 前台主题
+
 ```
-npm run dev
+cd theme && npm install && npm install --global gulp && gulp build
 ```
-
-打包
-```
-npm run build
-```
-
-### 服务器端
-
-* Web 层使用 [Gin](https://github.com/gin-gonic/gin) 框架
-* 持久层使用 [GORM](https://github.com/jinzhu/gorm) ORM 库
-
-### 主题
-
-jQuery, Gulp
 
 theme/js 和 theme/scss 下为基础方法和样式，可按需引入使用。主题开发可参照 theme/x/Gina。
 
-安装依赖
-```
-cd theme && npm install && npm install --global gulp
-```
-开发
-```
-gulp watch
-```
-
-打包
-```
-gulp build
-```
 ## 作者
 
 Pipe 的主要作者是 [Daniel](https://github.com/88250) 与 [Vanessa](https://github.com/Vanessa219)，所有贡献者可以在[这里](https://github.com/b3log/pipe/graphs/contributors)看到。
