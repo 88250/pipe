@@ -44,7 +44,7 @@ func showCategoriesAction(c *gin.Context) {
 
 		themeCategory := &ThemeCategory{
 			Title:        categoryModel.Title,
-			URL:          getBlogURL(c) + categoryModel.Path,
+			URL:          getBlogURL(c) + util.PathCategories + categoryModel.Path,
 			Description:  categoryModel.Description,
 			Tags:         themeTags,
 			ArticleCount: 8,

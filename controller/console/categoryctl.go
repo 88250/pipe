@@ -91,7 +91,7 @@ func GetCategoriesAction(c *gin.Context) {
 		categories = append(categories, &ConsoleCategory{
 			ID:          categoryModel.ID,
 			Title:       categoryModel.Title,
-			URL:         session.BURL + categoryModel.Path,
+			URL:         session.BURL + util.PathCategories + categoryModel.Path,
 			Description: categoryModel.Description,
 			Number:      categoryModel.Number,
 			Tags:        categoryModel.Tags,
