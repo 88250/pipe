@@ -260,7 +260,7 @@
           path: this.url,
           tags: this.tags.toString(),
           commentable: this.commentable,
-          topped: this.topped,
+          topped: this.topped
         })
         if (responseData.code === 0) {
           if (!id) {
