@@ -16,12 +16,12 @@ TBD
 
 ## 特性
 
+* 多博客平台
 * Markdown / Emoji
 * [聚合分类](https://github.com/b3log/solo/issues/12256) / 标签
 * 自定义导航
 * 多主题 / 多语言
 * 内置云存储
-* 多博客、团队博客
 * Hexo/Jekyll 导入
 * JSON、Markdown 导出
 * Atom 订阅
