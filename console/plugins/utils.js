@@ -80,7 +80,7 @@ export const genMenuData = (app, locale) => [
         title: app.$t('navigationList', locale),
         link: '/admin/navigations',
         role: 2
-      },
+      }/*,
       {
         title: app.$t('userList', locale),
         link: '/admin/users',
@@ -90,7 +90,7 @@ export const genMenuData = (app, locale) => [
         title: app.$t('blogManage', locale),
         link: '/admin/blogs',
         role: 3
-      }
+      } */
     ]
   },
   {
