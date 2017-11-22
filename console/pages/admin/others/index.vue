@@ -57,6 +57,7 @@
             </v-list>
           </v-menu>
         </li>
+        <!--
         <li class="fn-flex" v-if="$store.state.role <= 3">
           <div class="fn-flex-1">
             {{ $t('clearData', $store.state.locale) }}
@@ -83,32 +84,17 @@
             </v-list>
           </v-menu>
         </li>
+        -->
       </ul>
-    </div>
-
-    <div class="card">
-      <div class="card__title">B3log key</div>
-      <div class="card__body">{{ key }}</div>
     </div>
   </div>
 </template>
 
 <script>
   export default {
-    data () {
-      return {
-        key: ''
-      }
-    },
     head () {
       return {
         title: `${this.$store.state.blogTitle} - ${this.$t('others', this.$store.state.locale)}`
-      }
-    },
-    async mounted () {
-      const responseData = await this.axios.get('/console/b3log-key')
-      if (responseData) {
-        this.$set(this, 'key', responseData)
       }
     }
   }
