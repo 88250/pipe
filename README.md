@@ -6,9 +6,20 @@
 
 ### 动机
 
-* 在博客这个轮子上充分发挥 golang 的优势，易部署、性能好、跨平台、省资源
+产品层面：
+
 * 市面上缺乏支持多独立博客的平台级系统
 * 实现 [B3log 构思](https://hacpai.com/b3log)
+
+技术层面：
+
+* 在博客系统这个轮子上充分发挥 golang 的优势
+* 使用流行的框架和开发方式，比如 Vue.js，前后端分离
+
+作者个人层面：
+
+* 之前的产品 [Solo](https://github.com/b3log/solo) 在一些设计上不够理想
+* 希望这是[我](https://github.com/88250)和 [V](https://github.com/vanessa219) 最后一次造博客轮子了
 
 ### 案例
 
@@ -68,12 +79,6 @@ cd theme && npm install && npm install --global gulp && gulp build
 ```
 
 theme/js 和 theme/scss 下为基础方法和样式，可按需引入使用。主题开发可参照 theme/x/Gina。
-
-## 作者
-
-Pipe 的主要作者是 [Daniel](https://github.com/88250) 与 [Vanessa](https://github.com/Vanessa219)，所有贡献者可以在[这里](https://github.com/b3log/pipe/graphs/contributors)看到。
-
-我们非常期待你加入到这个项目中，无论是使用反馈还是代码补丁，都是对 Pipe 一份满满的爱 :heart:
 
 ## 社区
 
