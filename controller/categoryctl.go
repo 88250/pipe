@@ -24,6 +24,7 @@ import (
 	"github.com/b3log/pipe/service"
 	"github.com/b3log/pipe/util"
 	"github.com/gin-gonic/gin"
+	"github.com/vinta/pangu"
 )
 
 func showCategoriesAction(c *gin.Context) {
@@ -59,6 +60,7 @@ func showCategoriesAction(c *gin.Context) {
 func showCategoryArticlesArticlesAction(c *gin.Context) {
 	dataModel := getDataModel(c)
 	blogID := getBlogID(c)
+	session := util.GetSession(c)
 	page := util.GetPage(c)
 	categoryPath := strings.SplitAfter(c.Request.URL.Path, util.PathCategories)[1]
 	categoryModel := service.Category.GetCategoryByPath(categoryPath, blogID)
@@ -67,8 +69,6 @@ func showCategoryArticlesArticlesAction(c *gin.Context) {
 
 		return
 	}
-	logger.Info(categoryModel)
-
 	articleModels, pagination := service.Article.GetCategoryArticles(categoryModel.ID, page, blogID)
 	articles := []*ThemeArticle{}
 	for _, articleModel := range articleModels {
@@ -91,22 +91,24 @@ func showCategoryArticlesArticlesAction(c *gin.Context) {
 
 		author := &ThemeAuthor{
 			Name:      authorModel.Name,
-			URL:       "http://localhost:5879/blogs/pipe/vanessa",
-			AvatarURL: "https://img.hacpai.com/20170818zhixiaoyun.jpeg",
+			URL:       getBlogURL(c) + util.PathAuthors + "/" + authorModel.Name,
+			AvatarURL: authorModel.AvatarURL,
 		}
 
+		mdResult := util.Markdown(articleModel.Content)
 		article := &ThemeArticle{
 			ID:           articleModel.ID,
+			Abstract:     mdResult.AbstractText,
 			Author:       author,
 			CreatedAt:    articleModel.CreatedAt.Format("2006-01-02"),
-			Title:        articleModel.Title,
+			Title:        pangu.SpacingText(articleModel.Title),
 			Tags:         themeTags,
 			URL:          getBlogURL(c) + articleModel.Path,
 			Topped:       articleModel.Topped,
 			ViewCount:    articleModel.ViewCount,
 			CommentCount: articleModel.CommentCount,
-			ThumbnailURL: "https://img.hacpai.com/20170818zhixiaoyun.jpeg",
-			Editable:     false,
+			ThumbnailURL: mdResult.ThumbURL,
+			Editable:     session.UID == authorModel.ID,
 		}
 
 		articles = append(articles, article)
@@ -115,7 +117,7 @@ func showCategoryArticlesArticlesAction(c *gin.Context) {
 	dataModel["Pagination"] = pagination
 	dataModel["Category"] = &ThemeCategory{
 		Title:        categoryModel.Title,
-		ArticleCount: 5,
+		ArticleCount: pagination.RecordCount,
 	}
 
 	c.HTML(http.StatusOK, getTheme(c)+"/category-articles.html", dataModel)
