@@ -34,9 +34,9 @@ TBD
 - [X] 多主题 / 多语言
 - [X] Atom 订阅
 - [X] 可配置动静分离
+- [ ] 全文搜索
 - [ ] Sitemap
 - [ ] Hexo/Jekyll 导入
-- [ ] JSON、Markdown 导出
 
 ## 文档
 
