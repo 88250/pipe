@@ -27,18 +27,16 @@ TBD
 
 ## 特性
 
-* 多博客平台
-* Markdown / Emoji
-* [聚合分类](https://github.com/b3log/solo/issues/12256) / 标签
-* 自定义导航
-* 多主题 / 多语言
-* 内置云存储
-* Hexo/Jekyll 导入
-* JSON、Markdown 导出
-* Atom 订阅
-* Sitemap
-* CDN 静态资源分离
-* 域名绑定
+- [X] 多用户博客平台
+- [X] Markdown / Emoji
+- [X] [聚合分类](https://github.com/b3log/solo/issues/12256) / 标签
+- [X] 自定义导航
+- [X] 多主题 / 多语言
+- [X] Atom 订阅
+- [X] 可配置动静分离
+- [ ] Sitemap
+- [ ] Hexo/Jekyll 导入
+- [ ] JSON、Markdown 导出
 
 ## 文档
 
