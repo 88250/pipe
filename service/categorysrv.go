@@ -43,8 +43,8 @@ const (
 )
 
 func (srv *categoryService) GetCategoryByPath(path string, blogID uint) *model.Category {
-	ret := &model.Category{Path: path, BlogID: blogID}
-	if err := db.Where(ret).First(ret).Error; nil != err {
+	ret := &model.Category{}
+	if err := db.Where("path = ? AND blog_ID = ?", path, blogID).First(ret).Error; nil != err {
 		return nil
 	}
 

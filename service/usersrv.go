@@ -39,8 +39,9 @@ const (
 )
 
 func (srv *userService) GetBlogAdmin(blogID uint) *model.User {
-	rel := &model.Correlation{ID1: blogID, Type: model.UserRoleBlogAdmin}
-	if err := db.Model(rel).Where(rel).First(rel).Error; nil != err {
+	rel := &model.Correlation{}
+	if err := db.Where("id1 = ? AND type = ? AND blog_id = ?",
+		blogID, model.UserRoleBlogAdmin, blogID).First(rel).Error; nil != err {
 		logger.Errorf("can't get blog admin: " + err.Error())
 
 		return nil
@@ -50,8 +51,8 @@ func (srv *userService) GetBlogAdmin(blogID uint) *model.User {
 }
 
 func (srv *userService) GetPlatformAdmin() *model.User {
-	rel := &model.Correlation{ID1: 1}
-	if err := db.Model(rel).Where(rel).Order("id2 asc").First(rel).Error; nil != err {
+	rel := &model.Correlation{}
+	if err := db.Where("id1 = ?", 1).Order("id2 asc").First(rel).Error; nil != err {
 		logger.Errorf("can't get platform admin: " + err.Error())
 
 		return nil
@@ -76,8 +77,8 @@ func (srv *userService) AddUser(user *model.User) error {
 }
 
 func (srv *userService) GetUserByName(name string) *model.User {
-	ret := &model.User{Name: name}
-	if err := db.Where(ret).First(ret).Error; nil != err {
+	ret := &model.User{}
+	if err := db.Where("name = ?", name).First(ret).Error; nil != err {
 		return nil
 	}
 
@@ -130,8 +131,9 @@ func (srv *userService) GetBlogUsers(page int, blogID uint) (ret []*model.User, 
 }
 
 func (srv *userService) GetOwnBlog(userID uint) *UserBlog {
-	rel := &model.Correlation{ID2: userID, Type: model.CorrelationBlogUser, Int1: model.UserRoleBlogAdmin}
-	if err := db.Where(rel).First(rel).Error; nil != err {
+	rel := &model.Correlation{}
+	if err := db.Where("id2 = ? AND type = ? AND int1 = ?",
+		userID, model.CorrelationBlogUser, model.UserRoleBlogAdmin).First(rel).Error; nil != err {
 		return nil
 	}
 
@@ -149,8 +151,9 @@ func (srv *userService) GetOwnBlog(userID uint) *UserBlog {
 }
 
 func (srv *userService) GetRole(userID, blogID uint) int {
-	rel := &model.Correlation{ID1: blogID, ID2: userID, Type: model.CorrelationBlogUser}
-	if err := db.Where(rel).First(rel).Error; nil != err {
+	rel := &model.Correlation{}
+	if err := db.Where("id1 = ? AND id2 = ? AND type = ?",
+		blogID, userID, model.CorrelationBlogUser).First(rel).Error; nil != err {
 		return model.UserRoleNoLogin
 	}
 

@@ -148,8 +148,9 @@ func (srv *articleService) AddArticle(article *model.Article) error {
 
 		return err
 	}
-	blogUserRel := &model.Correlation{ID1: article.BlogID, ID2: author.ID, Type: model.CorrelationBlogUser, BlogID: article.BlogID}
-	if err := tx.Where(blogUserRel).First(blogUserRel).Error; nil != err {
+	blogUserRel := &model.Correlation{}
+	if err := tx.Where("id1 = ? AND id2 = ? AND type = ? AND blog_id = ?",
+		article.BlogID, author.ID, model.CorrelationBlogUser, article.BlogID).First(blogUserRel).Error; nil != err {
 		tx.Rollback()
 
 		return err
@@ -344,8 +345,9 @@ func (srv *articleService) RemoveArticle(id uint) error {
 
 		return err
 	}
-	blogUserRel := &model.Correlation{ID1: article.BlogID, ID2: author.ID, Type: model.CorrelationBlogUser, BlogID: article.BlogID}
-	if err := tx.Where(blogUserRel).First(blogUserRel).Error; nil != err {
+	blogUserRel := &model.Correlation{}
+	if err := tx.Where("id1 = ? AND id2 = ? AND type = ? AND blog_id = ?",
+		article.BlogID, author.ID, model.CorrelationBlogUser, article.BlogID).First(blogUserRel).Error; nil != err {
 		tx.Rollback()
 
 		return err
