@@ -51,7 +51,7 @@ func (src *articleService) GetArchiveArticles(archiveID uint, page int, blogID u
 	count := 0
 
 	rels := []*model.Correlation{}
-	if err := db.Model(&model.Correlation{}).Where(model.Correlation{ID2: archiveID, Type: model.CorrelationArticleTag}).
+	if err := db.Where("id2 = ? AND type = ? AND blog_id = ?", archiveID, model.CorrelationArticleTag, blogID).
 		Find(&rels).Error; nil != err {
 		return
 	}
@@ -62,7 +62,7 @@ func (src *articleService) GetArchiveArticles(archiveID uint, page int, blogID u
 	}
 
 	if err := db.Model(&model.Article{}).
-		Where("id IN (?) AND status = ?", articleIDs, model.ArticleStatusOK).
+		Where("id IN (?) AND status = ? AND blog_id = ?", articleIDs, model.ArticleStatusOK, blogID).
 		Order("topped DESC, id DESC").Count(&count).
 		Offset(offset).Limit(pageSize).
 		Find(&ret).Error; nil != err {
@@ -249,7 +249,7 @@ func (src *articleService) GetTagArticles(tagID uint, page int, blogID uint) (re
 	count := 0
 
 	rels := []*model.Correlation{}
-	if err := db.Model(&model.Correlation{}).Where(&model.Correlation{ID2: tagID, Type: model.CorrelationArticleTag}).
+	if err := db.Where("id2 = ? AND type = ? AND blog_id = ?", tagID, model.CorrelationArticleTag, blogID).
 		Find(&rels).Error; nil != err {
 		return
 	}

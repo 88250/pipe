@@ -17,6 +17,7 @@
 package console
 
 import (
+	"math"
 	"net/http"
 
 	"github.com/b3log/pipe/service"
@@ -31,7 +32,7 @@ func GetTagsAction(c *gin.Context) {
 	session := util.GetSession(c)
 
 	tags := []*ConsoleTag{}
-	tagModels := service.Tag.ConsoleGetTags(session.BID)
+	tagModels := service.Tag.GetTags(math.MaxInt64, session.BID)
 	for _, tagModel := range tagModels {
 		tags = append(tags, &ConsoleTag{Title: tagModel.Title})
 	}

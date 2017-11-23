@@ -147,7 +147,7 @@ func (srv *categoryService) ConsoleGetCategories(page int, blogID uint) (ret []*
 }
 
 func (srv *categoryService) GetCategories(size int, blogID uint) (ret []*model.Category) {
-	if err := db.Where(model.Category{BlogID: blogID}).Order("number asc").Limit(size).Find(&ret).Error; nil != err {
+	if err := db.Where("blog_id = ?", blogID).Order("number asc").Limit(size).Find(&ret).Error; nil != err {
 		logger.Errorf("get categories failed: " + err.Error())
 	}
 

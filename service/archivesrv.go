@@ -34,7 +34,7 @@ type archiveService struct {
 
 func (srv *archiveService) GetArchives(blogID uint) []*model.Archive {
 	ret := []*model.Archive{}
-	if err := db.Where(&model.Archive{BlogID: blogID}).Find(&ret).Error; nil != err {
+	if err := db.Where("blog_id = ?", blogID).Find(&ret).Error; nil != err {
 		logger.Error("get archives failed: " + err.Error())
 	}
 
@@ -58,7 +58,8 @@ func (srv *archiveService) UnarchiveArticleWithoutTx(tx *gorm.DB, article *model
 	if err := tx.Save(archive).Error; nil != err {
 		return err
 	}
-	if err := tx.Where(&model.Correlation{ID1: article.ID, ID2: archive.ID, Type: model.CorrelationArticleArchive, BlogID: article.BlogID}).
+	if err := tx.Where("id1 = ? AND id2 = ? AND type = ? AND blog_id = ?",
+	article.ID, archive.ID, model.CorrelationArticleArchive, article.BlogID).
 		Delete(&model.Correlation{}).Error; nil != err {
 		return err
 	}

@@ -30,16 +30,8 @@ type tagService struct {
 	mutex *sync.Mutex
 }
 
-func (srv *tagService) ConsoleGetTags(blogID uint) (ret []*model.Tag) {
-	if err := db.Where(model.Tag{BlogID: blogID}).Order("article_count DESC, id DESC").Find(&ret).Error; nil != err {
-		logger.Errorf("get tags failed: " + err.Error())
-	}
-
-	return
-}
-
 func (srv *tagService) GetTags(size int, blogID uint) (ret []*model.Tag) {
-	if err := db.Where(model.Tag{BlogID: blogID}).Order("article_count DESC, id DESC").Limit(size).Find(&ret).Error; nil != err {
+	if err := db.Where("blog_id = ?", blogID).Order("article_count DESC, id DESC").Limit(size).Find(&ret).Error; nil != err {
 		logger.Errorf("get tags failed: " + err.Error())
 	}
 
@@ -48,7 +40,7 @@ func (srv *tagService) GetTags(size int, blogID uint) (ret []*model.Tag) {
 
 func (srv *tagService) GetTagByTitle(title string, blogID uint) *model.Tag {
 	ret := &model.Tag{}
-	if err := db.Where(model.Tag{Title: title, BlogID: blogID}).First(ret).Error; nil != err {
+	if err := db.Where("title = ? AND blog_id = ?", title, blogID).First(ret).Error; nil != err {
 		return nil
 	}
 

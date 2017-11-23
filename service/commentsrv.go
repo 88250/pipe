@@ -65,7 +65,7 @@ func (srv *commentService) GetCommentPage(articleID, commentID uint, blogID uint
 
 func (srv *commentService) GetRepliesCount(parentCommentID uint, blogID uint) int {
 	ret := 0
-	if err := db.Model(&model.Comment{}).Where(&model.Comment{ParentCommentID: parentCommentID, BlogID: blogID}).Count(&ret).Error; nil != err {
+	if err := db.Model(&model.Comment{}).Where("parent_comment_id = ? AND blog_id = ?", parentCommentID, blogID).Count(&ret).Error; nil != err {
 		logger.Errorf("count comment [id=%d]'s replies failed: "+err.Error(), parentCommentID)
 	}
 
@@ -73,7 +73,7 @@ func (srv *commentService) GetRepliesCount(parentCommentID uint, blogID uint) in
 }
 
 func (srv *commentService) GetReplies(parentCommentID uint, blogID uint) (ret []*model.Comment) {
-	if err := db.Where(&model.Comment{ParentCommentID: parentCommentID, BlogID: blogID}).Find(&ret).Error; nil != err {
+	if err := db.Where("parent_comment_id = ? AND blog_id = ?", parentCommentID, blogID).Find(&ret).Error; nil != err {
 		logger.Errorf("get comment [id=%d]'s replies failed: "+err.Error(), parentCommentID)
 	}
 

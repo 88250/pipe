@@ -17,6 +17,7 @@
 package controller
 
 import (
+	"math"
 	"net/http"
 
 	"strings"
@@ -30,7 +31,7 @@ import (
 func showTagsAction(c *gin.Context) {
 	dataModel := getDataModel(c)
 	blogID := getBlogID(c)
-	tagModels := service.Tag.ConsoleGetTags(blogID)
+	tagModels := service.Tag.GetTags(math.MaxInt64, blogID)
 	themeTags := []*ThemeTag{}
 	for _, tagModel := range tagModels {
 		themeTag := &ThemeTag{

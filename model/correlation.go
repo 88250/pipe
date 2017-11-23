@@ -28,6 +28,7 @@ const (
 //   id1(category_id) - id2(tag_id)
 //   id1(article_id) - id2(tag_id)
 //   id1(blog_id) - id2(user_id) - int1(role) - int2(article_count)
+//   id1(article_id) - id2(archive_id)
 type Correlation struct {
 	Model
 
