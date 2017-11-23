@@ -48,12 +48,10 @@ func (srv *archiveService) UnarchiveArticleWithoutTx(tx *gorm.DB, article *model
 	year := article.CreatedAt.Format("2006")
 	month := article.CreatedAt.Format("01")
 
-	archive := &model.Archive{}
+	archive := &model.Archive{Year: year, Month: month, BlogID: article.BlogID}
 	if err := db.Where("year = ? AND month = ? AND blog_id = ?",
 		year, month, article.BlogID).First(archive).Error; nil != err {
-		if gorm.ErrRecordNotFound != err {
-			return err
-		}
+		return err
 	}
 	archive.ArticleCount -= 1
 	if err := tx.Save(archive).Error; nil != err {
@@ -75,7 +73,7 @@ func (srv *archiveService) ArchiveArticleWithoutTx(tx *gorm.DB, article *model.A
 	year := article.CreatedAt.Format("2006")
 	month := article.CreatedAt.Format("01")
 
-	archive := &model.Archive{}
+	archive := &model.Archive{Year: year, Month: month, BlogID: article.BlogID}
 	if err := db.Where("year = ? AND month = ? AND blog_id = ?",
 		year, month, article.BlogID).First(archive).Error; nil != err {
 		if gorm.ErrRecordNotFound != err {
