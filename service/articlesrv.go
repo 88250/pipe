@@ -62,7 +62,7 @@ func (src *articleService) GetArchiveArticles(archiveID uint, page int, blogID u
 	}
 
 	if err := db.Model(&model.Article{}).
-		Where("ID in (?) AND status = ?", articleIDs, model.ArticleStatusOK).
+		Where("id IN (?) AND status = ?", articleIDs, model.ArticleStatusOK).
 		Order("topped DESC, id DESC").Count(&count).
 		Offset(offset).Limit(pageSize).
 		Find(&ret).Error; nil != err {
@@ -205,13 +205,51 @@ func (srv *articleService) GetArticles(page int, blogID uint) (ret []*model.Arti
 	return
 }
 
+func (srv *articleService) GetCategoryArticles(categoryID uint, page int, blogID uint) (ret []*model.Article, pagination *util.Pagination) {
+	pageSize, windowSize := getPageWindowSize(blogID)
+	offset := (page - 1) * pageSize
+
+	rels := []*model.Correlation{}
+	if err := db.Model(&model.Correlation{}).Where(&model.Correlation{ID1: categoryID, Type: model.CorrelationCategoryTag, BlogID: blogID}).
+		Find(&rels).Error; nil != err {
+		return
+	}
+
+	tagIDs := []uint{}
+	for _, categoryTagRel := range rels {
+		tagIDs = append(tagIDs, categoryTagRel.ID2)
+	}
+
+	count := 0
+	rels = []*model.Correlation{}
+	if err := db.Model(&model.Correlation{}).Where("id2 IN (?) AND type = ? AND blog_id = ?", tagIDs, model.CorrelationArticleTag, blogID).
+		Order("id DESC").Count(&count).Offset(offset).Limit(pageSize).
+		Find(&rels).Error; nil != err {
+		return
+	}
+
+	pageCount := int(math.Ceil(float64(count) / float64(pageSize)))
+	pagination = util.NewPagination(page, pageSize, pageCount, windowSize, count)
+
+	articleIDs := []uint{}
+	for _, articleTagRel := range rels {
+		articleIDs = append(articleIDs, articleTagRel.ID1)
+	}
+
+	if err := db.Where("id IN (?) AND blog_id = ?", articleIDs, blogID).Find(&ret).Error; nil != err {
+		return
+	}
+
+	return
+}
+
 func (src *articleService) GetTagArticles(tagID uint, page int, blogID uint) (ret []*model.Article, pagination *util.Pagination) {
 	pageSize, windowSize := getPageWindowSize(blogID)
 	offset := (page - 1) * pageSize
 	count := 0
 
 	rels := []*model.Correlation{}
-	if err := db.Model(&model.Correlation{}).Where(model.Correlation{ID2: tagID, Type: model.CorrelationArticleTag}).
+	if err := db.Model(&model.Correlation{}).Where(&model.Correlation{ID2: tagID, Type: model.CorrelationArticleTag}).
 		Find(&rels).Error; nil != err {
 		return
 	}
@@ -222,9 +260,8 @@ func (src *articleService) GetTagArticles(tagID uint, page int, blogID uint) (re
 	}
 
 	if err := db.Model(&model.Article{}).
-		Where("ID in (?) AND status = ?", articleIDs, model.ArticleStatusOK).
-		Order("topped DESC, id DESC").Count(&count).
-		Offset(offset).Limit(pageSize).
+		Where("id IN (?) AND status = ?", articleIDs, model.ArticleStatusOK).
+		Order("topped DESC, id DESC").Count(&count).Offset(offset).Limit(pageSize).
 		Find(&ret).Error; nil != err {
 		logger.Errorf("get tag articles failed: " + err.Error())
 	}

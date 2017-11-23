@@ -69,7 +69,7 @@ func showCategoryArticlesArticlesAction(c *gin.Context) {
 	}
 	logger.Info(categoryModel)
 
-	articleModels, pagination := service.Article.GetArticles(page, blogID)
+	articleModels, pagination := service.Article.GetCategoryArticles(categoryModel.ID, page, blogID)
 	articles := []*ThemeArticle{}
 	for _, articleModel := range articleModels {
 		themeTags := []*ThemeTag{}
@@ -113,9 +113,10 @@ func showCategoryArticlesArticlesAction(c *gin.Context) {
 	}
 	dataModel["Articles"] = articles
 	dataModel["Pagination"] = pagination
-
-	dataModel["CategoryName"] = "JavaScript"
-	dataModel["CategoryCount"] = 12
+	dataModel["Category"] = &ThemeCategory{
+		Title:        categoryModel.Title,
+		ArticleCount: 5,
+	}
 
 	c.HTML(http.StatusOK, getTheme(c)+"/category-articles.html", dataModel)
 }

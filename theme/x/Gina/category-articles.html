@@ -8,7 +8,7 @@
 {{template "Gina/header" .}}
 <div class="wrapper">
     <h1 class="page__headline">
-        {{.CategoryName}}
+        {{.Category.Title}}
         <span id="categoryName" class="ft-fade">0</span> <span class="ft-fade ft-13">{{.I18n.Article2}}</span>
     </h1>
 </div>
@@ -16,7 +16,7 @@
 {{template "Gina/side" .}}
 {{template "Gina/footer" .}}
 <script>
-  increase({{.CategoryCount}}, 1000, 'categoryName', 0)
+  increase({{.Category.ArticleCount}}, 1000, 'categoryName', 0)
 </script>
 </body>
 </html>
