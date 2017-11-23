@@ -57,11 +57,18 @@ func showCategoriesAction(c *gin.Context) {
 }
 
 func showCategoryArticlesArticlesAction(c *gin.Context) {
-	dm, _ := c.Get("dataModel")
-	dataModel := *(dm.(*DataModel))
-
-	page := util.GetPage(c)
+	dataModel := getDataModel(c)
 	blogID := getBlogID(c)
+	page := util.GetPage(c)
+	categoryPath := strings.SplitAfter(c.Request.URL.Path, util.PathCategories)[1]
+	categoryModel := service.Category.GetCategoryByPath(categoryPath, blogID)
+	if nil == categoryModel {
+		c.Status(http.StatusNotFound)
+
+		return
+	}
+	logger.Info(categoryModel)
+
 	articleModels, pagination := service.Article.GetArticles(page, blogID)
 	articles := []*ThemeArticle{}
 	for _, articleModel := range articleModels {

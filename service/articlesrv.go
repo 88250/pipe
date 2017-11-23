@@ -526,7 +526,7 @@ func normalizeArticlePath(article *model.Article) error {
 	}
 
 	count := 0
-	if db.Model(&model.Article{}).Where("path = ? AND id != ?", path, article.ID).Count(&count); 0 < count {
+	if db.Model(&model.Article{}).Where("path = ? AND id != ? AND blog_id = ?", path, article.ID, article.BlogID).Count(&count); 0 < count {
 		return errors.New("path is reduplicated")
 	}
 

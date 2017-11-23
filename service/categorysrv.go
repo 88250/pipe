@@ -42,6 +42,15 @@ const (
 	adminConsoleCategoryListWindowSize = 20
 )
 
+func (srv *categoryService) GetCategoryByPath(path string, blogID uint) *model.Category {
+	ret := &model.Category{Path: path, BlogID: blogID}
+	if err := db.Where(ret).First(ret).Error; nil != err {
+		return nil
+	}
+
+	return ret
+}
+
 func (srv *categoryService) UpdateCategory(category *model.Category) error {
 	srv.mutex.Lock()
 	defer srv.mutex.Unlock()
@@ -57,8 +66,8 @@ func (srv *categoryService) UpdateCategory(category *model.Category) error {
 	}
 	category.Tags = tagStr
 
-	if !strings.HasPrefix(category.Path, "/") {
-		category.Path = "/" + category.Path
+	if err := normalizeCategoryPath(category); nil != err {
+		return err
 	}
 
 	tx := db.Begin()
@@ -102,8 +111,8 @@ func (srv *categoryService) AddCategory(category *model.Category) error {
 	}
 	category.Tags = tagStr
 
-	if !strings.HasPrefix(category.Path, "/") {
-		category.Path = "/" + category.Path
+	if err := normalizeCategoryPath(category); nil != err {
+		return err
 	}
 
 	tx := db.Begin()
@@ -168,6 +177,26 @@ func (srv *categoryService) RemoveCategory(id uint) error {
 		return err
 	}
 	tx.Commit()
+
+	return nil
+}
+
+func normalizeCategoryPath(category *model.Category) error {
+	path := strings.TrimSpace(category.Path)
+	if "" == path {
+		path = "/" + category.Title
+	}
+
+	if !strings.HasPrefix(path, "/") {
+		path = "/" + path
+	}
+
+	count := 0
+	if db.Model(&model.Category{}).Where("path = ? AND id != ? AND blog_id = ?", path, category.ID, category.BlogID).Count(&count); 0 < count {
+		return errors.New("path is reduplicated")
+	}
+
+	category.Path = path
 
 	return nil
 }
