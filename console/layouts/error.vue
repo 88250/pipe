@@ -59,6 +59,15 @@
 </script>
 
 <style lang="sass">
+  @import '~assets/scss/_variables'
+  #__nuxt, #pipe, .main
+    height: 100%
+  .main
+    padding-top: 60px
+    display: flex
+    flex-direction: column
+    transition: $transition
+    box-sizing: border-box
   .error__description
     margin: 50px 0
     font-size: 1.25rem
