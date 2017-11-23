@@ -40,9 +40,9 @@ TBD
 
 ## 文档
 
-* 用户指南 数据浏览可以使用 SQLite 的图形化工具 [SQLiteBrowser](http://sqlitebrowser.org)。
-* 开发指南
-* 主题开发指南
+* 用户指南 TBD
+* 开发指南 TBD
+* 主题开发指南 TBD
 
 ## 构建
 
