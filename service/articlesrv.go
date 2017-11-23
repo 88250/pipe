@@ -210,7 +210,7 @@ func (srv *articleService) GetCategoryArticles(categoryID uint, page int, blogID
 	offset := (page - 1) * pageSize
 
 	rels := []*model.Correlation{}
-	if err := db.Model(&model.Correlation{}).Where(&model.Correlation{ID1: categoryID, Type: model.CorrelationCategoryTag, BlogID: blogID}).
+	if err := db.Model(&model.Correlation{}).Where("id1 = ? AND type = ? AND blog_id = ?", categoryID, model.CorrelationCategoryTag, blogID).
 		Find(&rels).Error; nil != err {
 		return
 	}
