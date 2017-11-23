@@ -17,9 +17,18 @@
             {{ $t('about2', $store.state.locale) }}
             <a class="ft-danger" :href="download" target="_blank">{{ version }}</a>
           </h2>
-          <p><a href='https://hacpai.com/tag/Pipe' target='_blank'>Pipe</a> 是一款开源（<a
-            href='http://www.gnu.org/licenses/gpl-3.0.html' target='_blank'>GPLv3</a>）的博客平台，由 <a href="https://github.com/b3log" target="_blank">B3log 开源</a>组织维护。</p>
-          <p>如果你对开源感兴趣，想贡献自己的一份力量，欢迎<a
+          <p class="fn-clear">
+            <span class="fn-left">
+              <a href='https://hacpai.com/tag/Pipe' target='_blank'>Pipe</a> 是一款开源（<a
+              href='http://www.gnu.org/licenses/gpl-3.0.html' target='_blank'>GPLv3</a>）的博客平台，由
+              <a href="https://github.com/b3log" target="_blank">B3log 开源</a>组织维护。
+            </span>
+            <iframe class="about__github fn-left"
+                    src="https://ghbtns.com/github-btn.html?user=b3log&repo=pipe&type=star&count=true&size=large"
+                    frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+          </p>
+          <p>
+            如果你对开源感兴趣，想贡献自己的一份力量，欢迎<a
               href='https://hacpai.com/article/1463025124998' target='_blank'>加入我们</a>！</p>
           <p>
             <a href="http://b3log.org/services/index.html#pipe" target="_blank" class="about__link btn btn--info">
@@ -81,6 +90,9 @@
     &__side
       margin: 30px 50px 0 30px
       width: 112px
+    &__github
+      border: 0
+      margin: -4px 0 0 10px
     &__link
       margin: 10px 20px 10px 20px
       .icon
