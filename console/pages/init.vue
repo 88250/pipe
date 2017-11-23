@@ -63,12 +63,13 @@
         <v-stepper-content step="3" class="fn-clear">
           <h1>{{ $t('welcome', $store.state.locale) }} Pipe</h1>
           <div class="ft-center init__content fn-clear">
-            <a :href="`/blogs/${$store.state.name}`" class="card init__image">
+            <a :href="`/blogs/${$store.state.name}`"
+               :aria-label="$t('openPipeTravel', $store.state.locale)"
+               class="card init__image pipe-tooltipped pipe-tooltipped--n">
                 <img src="~/static/images/logo.jpg"/>
             </a>
-            <div>
-              <a href="/admin">{{ $t('openPipeTravel', $store.state.locale) }}</a>
-            </div>
+            <iframe src="https://ghbtns.com/github-btn.html?user=b3log&repo=pipe&type=star&count=true&size=large"
+                    frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
           </div>
         </v-stepper-content>
       </v-stepper>
