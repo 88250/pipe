@@ -17,6 +17,7 @@
 package util
 
 import (
+	"math"
 	"strconv"
 
 	"github.com/gin-gonic/gin"
@@ -45,7 +46,9 @@ func GetPage(c *gin.Context) int {
 	return ret
 }
 
-func NewPagination(currentPageNum, pageSize, pageCount, windowSize, recordCount int) *Pagination {
+func NewPagination(currentPageNum, pageSize, windowSize, recordCount int) *Pagination {
+	pageCount := int(math.Ceil(float64(recordCount) / float64(pageSize)))
+
 	previousPageNum := currentPageNum - 1
 	if 1 > previousPageNum {
 		previousPageNum = 0

@@ -19,7 +19,6 @@ package service
 import (
 	"errors"
 	"fmt"
-	"math"
 	"strings"
 	"sync"
 
@@ -140,8 +139,7 @@ func (srv *categoryService) ConsoleGetCategories(page int, blogID uint) (ret []*
 		logger.Errorf("get categories failed: " + err.Error())
 	}
 
-	pageCount := int(math.Ceil(float64(count) / adminConsoleCategoryListPageSize))
-	pagination = util.NewPagination(page, adminConsoleCategoryListPageSize, pageCount, adminConsoleCategoryListWindowSize, count)
+	pagination = util.NewPagination(page, adminConsoleCategoryListPageSize, adminConsoleCategoryListWindowSize, count)
 
 	return
 }

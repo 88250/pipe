@@ -17,7 +17,6 @@
 package service
 
 import (
-	"math"
 	"sync"
 
 	"github.com/b3log/pipe/model"
@@ -124,8 +123,7 @@ func (srv *userService) GetBlogUsers(page int, blogID uint) (ret []*model.User, 
 		ret = append(ret, user)
 	}
 
-	pageCount := int(math.Ceil(float64(count) / adminConsoleUserListPageSize))
-	pagination = util.NewPagination(page, adminConsoleUserListPageSize, pageCount, adminConsoleUserListWindowSize, count)
+	pagination = util.NewPagination(page, adminConsoleUserListPageSize, adminConsoleUserListWindowSize, count)
 
 	return
 }

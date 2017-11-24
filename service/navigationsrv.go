@@ -19,7 +19,6 @@ package service
 import (
 	"errors"
 	"fmt"
-	"math"
 	"sync"
 
 	"github.com/b3log/pipe/model"
@@ -103,8 +102,7 @@ func (srv *navigationService) ConsoleGetNavigations(page int, blogID uint) (ret 
 		logger.Errorf("get navigations failed: " + err.Error())
 	}
 
-	pageCount := int(math.Ceil(float64(count) / adminConsoleNavigationListPageSize))
-	pagination = util.NewPagination(page, adminConsoleNavigationListPageSize, pageCount, adminConsoleNavigationListWindowSize, count)
+	pagination = util.NewPagination(page, adminConsoleNavigationListPageSize, adminConsoleNavigationListWindowSize, count)
 
 	return
 }

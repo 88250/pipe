@@ -19,7 +19,6 @@ package service
 import (
 	"errors"
 	"fmt"
-	"math"
 	"regexp"
 	"strconv"
 	"strings"
@@ -69,8 +68,7 @@ func (src *articleService) GetArchiveArticles(archiveID uint, page int, blogID u
 		logger.Errorf("get archive articles failed: " + err.Error())
 	}
 
-	pageCount := int(math.Ceil(float64(count) / float64(pageSize)))
-	pagination = util.NewPagination(page, pageSize, pageCount, windowSize, count)
+	pagination = util.NewPagination(page, pageSize, windowSize, count)
 
 	return
 }
@@ -182,8 +180,7 @@ func (srv *articleService) ConsoleGetArticles(page int, blogID uint) (ret []*mod
 		logger.Errorf("get articles failed: " + err.Error())
 	}
 
-	pageCount := int(math.Ceil(float64(count) / adminConsoleArticleListPageSize))
-	pagination = util.NewPagination(page, adminConsoleArticleListPageSize, pageCount, adminConsoleArticleListWindowSize, count)
+	pagination = util.NewPagination(page, adminConsoleArticleListPageSize, adminConsoleArticleListWindowSize, count)
 
 	return
 }
@@ -200,8 +197,7 @@ func (srv *articleService) GetArticles(page int, blogID uint) (ret []*model.Arti
 		logger.Errorf("get articles failed: " + err.Error())
 	}
 
-	pageCount := int(math.Ceil(float64(count) / float64(pageSize)))
-	pagination = util.NewPagination(page, pageSize, pageCount, windowSize, count)
+	pagination = util.NewPagination(page, pageSize, windowSize, count)
 
 	return
 }
@@ -229,8 +225,7 @@ func (srv *articleService) GetCategoryArticles(categoryID uint, page int, blogID
 		return
 	}
 
-	pageCount := int(math.Ceil(float64(count) / float64(pageSize)))
-	pagination = util.NewPagination(page, pageSize, pageCount, windowSize, count)
+	pagination = util.NewPagination(page, pageSize, windowSize, count)
 
 	articleIDs := []uint{}
 	for _, articleTagRel := range rels {
@@ -267,8 +262,7 @@ func (src *articleService) GetTagArticles(tagID uint, page int, blogID uint) (re
 		logger.Errorf("get tag articles failed: " + err.Error())
 	}
 
-	pageCount := int(math.Ceil(float64(count) / float64(pageSize)))
-	pagination = util.NewPagination(page, pageSize, pageCount, windowSize, count)
+	pagination = util.NewPagination(page, pageSize, windowSize, count)
 
 	return
 }
@@ -286,8 +280,7 @@ func (src *articleService) GetAuthorArticles(authorID uint, page int, blogID uin
 		logger.Errorf("get author articles failed: " + err.Error())
 	}
 
-	pageCount := int(math.Ceil(float64(count) / float64(pageSize)))
-	pagination = util.NewPagination(page, pageSize, pageCount, windowSize, count)
+	pagination = util.NewPagination(page, pageSize, windowSize, count)
 
 	return
 }

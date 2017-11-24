@@ -17,7 +17,6 @@
 package service
 
 import (
-	"math"
 	"sync"
 
 	"github.com/b3log/pipe/model"
@@ -89,8 +88,7 @@ func (srv *commentService) ConsoleGetComments(page int, blogID uint) (ret []*mod
 		logger.Errorf("get comments failed: " + err.Error())
 	}
 
-	pageCount := int(math.Ceil(float64(count) / adminConsoleCommentListPageSize))
-	pagination = util.NewPagination(page, adminConsoleCommentListPageSize, pageCount, adminConsoleCommentListWindowSize, count)
+	pagination = util.NewPagination(page, adminConsoleCommentListPageSize, adminConsoleCommentListWindowSize, count)
 
 	return
 }
@@ -114,8 +112,7 @@ func (srv *commentService) GetArticleComments(articleID uint, page int, blogID u
 		logger.Errorf("get comments failed: " + err.Error())
 	}
 
-	pageCount := int(math.Ceil(float64(count) / themeCommentListPageSize))
-	pagination = util.NewPagination(page, themeCommentListPageSize, pageCount, themeCommentListWindowSize, count)
+	pagination = util.NewPagination(page, themeCommentListPageSize, themeCommentListWindowSize, count)
 
 	return
 }
