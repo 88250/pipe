@@ -318,7 +318,7 @@ func initBasicSettings(tx *gorm.DB, blogAdmin *model.User, blogID uint) error {
 	if err := tx.Create(&model.Setting{
 		Category: model.SettingCategoryBasic,
 		Name:     model.SettingNameBasicBlogTitle,
-		Value:    "Pipe 示例",
+		Value:    blogAdmin.Name + " 的个人博客",
 		BlogID:   blogID}).Error; nil != err {
 		return err
 	}
