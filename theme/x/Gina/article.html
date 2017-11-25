@@ -162,8 +162,8 @@
     {{end}}
     {{end}}
 </div>
+{{if gt (len .RecommendArticles) 0}}
 <div class="article__relevant">
-    {{if ne (len .RecommendArticles) 0}}
     <div class="module__header">
         {{$.I18n.RelcommendArticle}}
     </div>
@@ -203,10 +203,8 @@
         </div>
         {{end}}
     </div>
-    {{else}}
-    {{.I18n.NoData}}
-    {{end}}
 </div>
+{{end}}
 
 {{template "comment/editor" .}}
 

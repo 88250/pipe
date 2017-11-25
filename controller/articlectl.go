@@ -176,7 +176,7 @@ func showArticleAction(c *gin.Context) {
 
 	dataModel["Comments"] = comments
 	dataModel["Pagination"] = pagination
-	dataModel["RecommendArticles"] = recommendArticles()
+	dataModel["RecommendArticles"] = getRecommendArticles()
 	fillPreviousArticle(c, article, &dataModel)
 	fillNextArticle(c, article, &dataModel)
 	dataModel["ToC"] = template.HTML(toc(dataModel["Article"].(*ThemeArticle)))
@@ -252,8 +252,20 @@ func toc(article *ThemeArticle) string {
 	return builder.String()
 }
 
-func recommendArticles() []*ThemeArticle {
-	ret := []*ThemeArticle{}
+var recommendArticles []*ThemeArticle
+
+func RefreshRecommendArticlesPeriodically() {
+	refreshRecommendArticles()
+
+	go func() {
+		for _ = range time.Tick(time.Minute * 7) {
+			refreshRecommendArticles()
+		}
+	}()
+}
+
+func refreshRecommendArticles() {
+	recommendations := []*ThemeArticle{}
 
 	result := util.NewResult()
 	_, _, errs := gorequest.New().Get(util.HacPaiURL+"/apis/recommend/articles").
@@ -261,13 +273,13 @@ func recommendArticles() []*ThemeArticle {
 	if nil != errs {
 		logger.Errorf("get recommend articles: %s", errs)
 
-		return ret
+		return
 	}
 	if 0 != result.Code {
-		return ret
+		return
 	}
 
-	size := 5
+	size := 50
 	entries := result.Data.([]interface{})
 	if size > len(entries) {
 		size = len(entries)
@@ -284,7 +296,7 @@ func recommendArticles() []*ThemeArticle {
 			AvatarURL: article["articleAuthorThumbnailURL"].(string),
 		}
 
-		ret = append(ret, &ThemeArticle{
+		recommendations = append(recommendations, &ThemeArticle{
 			Author:       author,
 			CreatedAt:    time.Unix(int64(article["articleCreateTime"].(float64)/1000), 0).Format("2006-01-02"),
 			Title:        article["articleTitle"].(string),
@@ -292,6 +304,20 @@ func recommendArticles() []*ThemeArticle {
 			CommentCount: int(article["articleCommentCount"].(float64)),
 			ThumbnailURL: util.ImageSize(images[i], 280, 90),
 		})
+	}
+
+	recommendArticles = recommendations
+}
+
+func getRecommendArticles() []*ThemeArticle {
+	ret := []*ThemeArticle{}
+
+	size := 5
+	indics := util.RandInts(0, len(recommendArticles), size)
+	for _, index := range indics {
+		article := recommendArticles[index]
+
+		ret = append(ret, article)
 	}
 
 	return ret
