@@ -212,7 +212,7 @@ func showArticleAction(c *gin.Context) {
 
 		articles = append(articles, article)
 	}
-	dataModel["RelevantArticles"] = articles
+	dataModel["RecommendArticles"] = articles
 	fillPreviousArticle(c, article, &dataModel)
 	fillNextArticle(c, article, &dataModel)
 	dataModel["ToC"] = template.HTML(toc(dataModel["Article"].(*ThemeArticle)))

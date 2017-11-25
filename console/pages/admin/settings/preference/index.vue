@@ -34,12 +34,6 @@
           :rules="requiredRules"
         ></v-text-field>
         <v-text-field
-          :label="$t('relevantArticleListSize', $store.state.locale)"
-          v-model="preferenceRelevantArticleListSize"
-          required
-          :rules="requiredRules"
-        ></v-text-field>
-        <v-text-field
           :label="$t('articleListPageSize', $store.state.locale)"
           v-model="preferenceArticleListPageSize"
           required
@@ -90,7 +84,6 @@
         preferenceMostViewArticleListSize: 10,
         preferenceArticleListPageSize: 15,
         preferenceArticleListWindowSize: 20,
-        preferenceRelevantArticleListSize: 10,
         error: false,
         errorMsg: ''
       }
@@ -113,7 +106,6 @@
           preferenceMostViewArticleListSize: this.preferenceMostViewArticleListSize,
           preferenceArticleListPageSize: this.preferenceArticleListPageSize,
           preferenceArticleListWindowSize: this.preferenceArticleListWindowSize,
-          preferenceRelevantArticleListSize: this.preferenceRelevantArticleListSize
         })
 
         if (responseData.code === 0) {
@@ -142,7 +134,6 @@
         this.$set(this, 'preferenceMostViewArticleListSize', responseData.preferenceMostViewArticleListSize)
         this.$set(this, 'preferenceArticleListPageSize', responseData.preferenceArticleListPageSize)
         this.$set(this, 'preferenceArticleListWindowSize', responseData.preferenceArticleListWindowSize)
-        this.$set(this, 'preferenceRelevantArticleListSize', responseData.preferenceRelevantArticleListSize)
       }
     }
   }

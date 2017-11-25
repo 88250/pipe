@@ -99,12 +99,12 @@
     </article>
 </div>
 <div class="article__relevant">
-    {{if ne (len .RelevantArticles) 0}}
+    {{if ne (len .RecommendArticles) 0}}
     <div class="module__header">
-        {{$.I18n.RelevantArticle}}
+        {{$.I18n.RelcommendArticle}}
     </div>
     <div class="relevant__panel">
-    {{range $index, $item := .RelevantArticles}}
+    {{range $index, $item := .RecommendArticles}}
         <div class="relevant__item">
             {{if $item.ThumbnailURL}}
             <a class="relevant__thumbnail"

@@ -14,45 +14,56 @@
 {{template "Koma/header" .}}
 {{template "Koma/side" .}}
 <div class="wrapper content">
-    <article class="fn-bottom">
-        <header class="fn-relative article__header">
-            {{if gt .UserCount 1}}
-            <a rel="nofollow"
-               href="{{.Article.Author.URL}}"
-               class="avatar pipe-tooltipped pipe-tooltipped--w fn-absolute"
-               aria-label="{{.Article.Author.Name}}"
-               data-src="{{.Article.Author.AvatarURL}}">
-            </a>
-            {{end}}
-            <div {{if gt .UserCount 1}} class="fn-padding80" {{end}}>
-                <h2 class="article__title">
+    <article>
+        <header class="article-detail__header">
+            <div class="ft-center fn-relative">
+                <h2 class="header__title">
                     {{if .Article.Topped}}
                     <svg>
                         <use xlink:href="#focus"></use>
                     </svg>
                     {{end}}
-                    <a rel="bookmark" href="{{.Article.URL}}">
-                        {{.Article.Title}}
-                    </a>
+                    {{.Article.Title}}
                 </h2>
-                <div class="ft-gray ft-12">
-                    {{range .Article.Tags}}
-                    <a class="tag" rel="tag" href="{{.URL}}">{{.Title}}</a>
-                    {{end}} &nbsp;
+                <div class="ft-gray">
+                    {{if gt .UserCount 1}}
+                    <a rel="nofollow"
+                       href="{{.Article.Author.URL}}">
+                        {{.Article.Author.Name}}
+                    </a>
+                    •
+                    {{end}}
                     <time class="ft-nowrap">{{.Article.CreatedAt}}</time>
                     •
                     <span class="ft-nowrap">{{.Article.ViewCount}} {{$.I18n.View}}</span> •
                     <a href="{{.URL}}#comments" class="ft-nowrap ft-gray">{{.Article.CommentCount}}
                         {{$.I18n.Comment}}</a>
                 </div>
+
+                {{if .Article.Editable}}
+                <span class="article__action">
+                    <a class="action__btn fn-clear action__btn--active"
+                       href="{{$.Conf.Server}}/admin/articles/post?id={{.Article.ID}}">
+                        {{$.I18n.Edit}} &nbsp;
+                        <svg class="fn-right">
+                            <use xlink:href="#edit"></use>
+                        </svg>
+                    </a>
+                </span>
+                {{end}}
+            </div>
+            <div class="fn-padding30">
+                {{range .Article.Tags}}
+                <a class="tag" rel="tag" href="{{.URL}}">{{.Title}}</a>
+                {{end}}
             </div>
         </header>
-        <section class="content__reset article__abstract" id="articleContent">
+        <section class="pipe-content__reset article__abstract fn-padding30" id="articleContent" data-author="{{.Article.Author.Name}}">
             {{.Article.Content}}
         </section>
         <div class="article__action fn-clear">
             <span class="action__share fn-left">
-                <span class="action__btn action__btn--share fn-left">
+                <span class="action__btn action__btn--share fn-clear fn-left">
                     {{$.I18n.Share}} &nbsp; <svg class="fn-right"><use xlink:href="#reply"></use></svg>
                 </span>
                 <span class="action__btns fn-left">
@@ -69,22 +80,13 @@
                         <svg><use xlink:href="#google"></use></svg>
                     </span>
                     <div class="action__code"
-                         data-title="{{.Article.Title}}"
+                         data-title="{{.Title}}"
                          data-blogtitle="{{$.Setting.BasicBlogTitle}}"
-                         data-url="{{.Article.URL}}"
-                         data-avatar="{{.Article.Author.AvatarURL}}"></div>
+                         data-url="{{.URL}}"
+                         data-avatar="{{.Author.AvatarURL}}"></div>
                 </span>
             </span>
-            <span class="fn-right">
-                {{if .Article.Editable}}
-            <a class="fn-right action__btn action__btn--space"
-               href="{{$.Conf.Server}}/admin/articles/post?id={{.Article.ID}}">
-                <svg>
-                    <use xlink:href="#edit"></use>
-                </svg>
-            </a>
-            {{end}}
-            <span class="fn-right action__btn action__btn--space fn-clear"
+            <span class="fn-right action__btn action__btn--space action__btn--active fn-clear"
                   data-title="{{.I18n.Comment}}{{.I18n.Colon}}{{.Article.Title}}"
                   id="articleCommentBtn"
                   data-id="{{.Article.ID}}">
@@ -93,178 +95,121 @@
                     <use xlink:href="#comment"></use>
                 </svg>
             </span>
-            </span>
         </div>
     </article>
-
-    {{if gt (len .Comments) 0}}
-    <div id="comments" {{if ne (len .RelevantArticles) 0}}class="fn-bottom"{{end}}>
-        <div class="module__header">
-            <span id="commentsCnt">{{len .Comments}}</span> {{.I18n.Comment}}
+</div>
+<div class="article__relevant">
+    {{if ne (len .RecommendArticles) 0}}
+    <div class="module__header">
+        {{$.I18n.RelcommendArticle}}
+    </div>
+    <div class="relevant__panel">
+        {{range $index, $item := .RecommendArticles}}
+        <div class="relevant__item">
+            {{if $item.ThumbnailURL}}
+            <a class="relevant__thumbnail"
+               href="{{$item.URL}}"
+               data-src="https://img.hacpai.com/bing/20171109.jpg?imageView2/1/w/960/h/520/interlace/1/q/100"></a>
+            <a class="module__list-title fn-ellipsis" href="{{$item.URL}}">{{$item.Title}}</a>
+            {{else}}
+            <a class="module__list-title fn-ellipsis" href="{{$item.URL}}">{{$item.Title}}</a>
+            <a href="{{$item.URL}}" class="ft-fade relevant__abstract">
+                我是摘要我是摘要我是摘要我是摘要我是摘要我是摘要我是摘要我是摘要我是摘要我是摘要
+            </a>
+            {{end}}
+            <div class="fn-relative">
+                <a class="avatar fn-absolute" data-src="{{$item.Author.AvatarURL}}"
+                   href="{{$item.Author.URL}}"></a>
+                <div class="relevant__content">
+                    <a href="{{$item.Author.URL}}" class="ft-gray">{{$item.Author.Name}}</a> <br>
+                    <span class="ft-12 ft-fade fn-clear">
+                        {{$item.CreatedAt}}
+                       <a href="{{$item.URL}}#pipeComments" class="fn-right ft-fade">
+                           {{if ne 0 $item.CommentCount}}
+                           {{$item.CommentCount}}
+                           {{$.I18n.Comment}}
+                           {{else}}
+                           {{$.I18n.Comment}}
+                           <svg><use xlink:href="#comment"></use></svg>
+                           {{end}}
+                       </a>
+                   </span>
+                </div>
+            </div>
         </div>
-        <div>
-        {{range .Comments}}
-        {{template "Koma/comment" dict "Item" . "I18n" $.I18n "Username" $.User.UName "ArticleID" $.Article.ID}}
         {{end}}
-        </div>
-        {{template "Koma/pagination" .}}
     </div>
     {{else}}
-    <div class="{{if ne (len .RelevantArticles) 0}}fn-bottom{{end}} ft-center comment__null"
-         data-title="{{.I18n.Comment}}{{.I18n.Colon}}{{.Article.Title}}"
-         data-id="{{.Article.ID}}"
-         id="comments">
-        {{.I18n.StayStep}}
-        <svg>
-            <use xlink:href="#comment"></use>
-        </svg>
-    </div>
+    {{.I18n.NoData}}
     {{end}}
+</div>
+<div class="wrapper content">
+    {{template "comment/comments" .}}
 
-    {{if ne (len .RelevantArticles) 0}}
-    <div class="{{if or .PreviousArticle .NextArticle}}fn-bottom{{end}} fn-three fn-clear">
-        {{if ne (len .RelevantArticles) 0}}
-        {{range $index, $item := .RelevantArticles}}
-        {{if lt $index 2}}
-        <div
-        {{if eq $index 1}} class="fn-three--mid"{{end}}>
-        <div class="module__header">
-            {{if eq $index 0}}
-            {{$.I18n.RelevantArticle}}
-            {{else}}
-            &nbsp;
-            {{end}}
-        </div>
-        <a class="article__thumb article__thumb--relevant" data-src="{{$item.Author.AvatarURL}}"
-           href="{{$item.URL}}"></a>
-        <a class="module__list-title" href="{{$item.URL}}">{{$item.Title}}</a>
-    </div>
-    {{end}}
-    {{end}}
-    {{end}}
+    {{if or .PreviousArticle .NextArticle}}
+    <div class="fn-bottom"></div>
+    {{if gt .UserCount 1}}
+    <div class="fn-clear article__near fn-two">
+        {{if .PreviousArticle}}
+        <a href="{{.PreviousArticle.URL}}" rel="prev">
+            <svg class="fn-absolute near__svg">
+                <use xlink:href="#chevron-left"></use>
+            </svg>
+            <span class="avatar pipe-tooltipped pipe-tooltipped--n fn-absolute"
+                  aria-label="{{.PreviousArticle.Author.Name}}"
+                  data-src="{{.PreviousArticle.Author.AvatarURL}}"></span>
+            <span class="near__title">
+                     {{.I18n.PreArticle}}<br>
+                    <b class="ft-break">{{.PreviousArticle.Title}}</b>
+                </span>
+        </a>
+        {{end}}
 
-    {{range $index, $item := .RelevantArticles}}
-    {{if or (or (and (eq (len $.RelevantArticles) 0) (lt $index 3)) (and (eq (len $.RelevantArticles) 1) (lt $index 2))) (and (eq (len $.RelevantArticles) 2) (lt $index 1))}}
-    <div
-    {{if or (and (eq (len $.RelevantArticles) 0) (eq $index 1)) (and (eq (len $.RelevantArticles) 1) (eq $index 0))}}
-    class="fn-three--mid"{{end}}>
-    <div class="module__header">
-        {{if eq $index 0}}
-        {{$.I18n.ExternalRelevantArticle}}
-        {{else}}
-        &nbsp;
+        {{if .NextArticle}}
+        <a href="{{.NextArticle.URL}}" rel="next" class="near__next {{if .PreviousArticle}}{{else}}near__next--single{{end}}">
+            <svg class="fn-absolute near__svg">
+                <use xlink:href="#chevron-right"></use>
+            </svg>
+            <span class="avatar pipe-tooltipped pipe-tooltipped--n fn-absolute"
+                  aria-label="{{.NextArticle.Author.Name}}"
+                  data-src="{{.NextArticle.Author.AvatarURL}}"></span>
+            <span class="near__title">
+                    {{.I18n.NextArticle}}<br>
+                    <b class="ft-break">{{.NextArticle.Title}}</b>
+                </span>
+        </a>
         {{end}}
     </div>
-    <a class="article__thumb article__thumb--relevant" data-src="{{$item.Author.AvatarURL}}" href="{{$item.URL}}"></a>
-    <a class="module__list-title" href="{{$item.URL}}">{{$item.Title}}</a>
-</div>
-{{end}}
-{{end}}
-</div>
-{{end}}
+    {{else}}
+    <div class="fn-clear article__near fn-two">
+        {{if .PreviousArticle}}
+        <a href="{{.PreviousArticle.URL}}"
+           class="pipe-tooltipped pipe-tooltipped--w"
+           rel="prev" aria-label="{{.I18n.PreArticle}}">
+            <svg class="near__icon">
+                <use xlink:href="#chevron-left"></use>
+            </svg>
+            <b class="ft-break">{{.PreviousArticle.Title}}</b>
+        </a>
+        {{end}}
 
-
-{{if or .PreviousArticle .NextArticle}}
-{{if gt .UserCount 1}}
-<div class="fn-clear article__near fn-two">
-    {{if .PreviousArticle}}
-    <a href="{{.PreviousArticle.URL}}" rel="prev">
-        <svg class="fn-absolute near__svg">
-            <use xlink:href="#chevron-left"></use>
-        </svg>
-        <span class="avatar pipe-tooltipped pipe-tooltipped--n fn-absolute"
-              aria-label="{{.PreviousArticle.Author.Name}}"
-              data-src="{{.PreviousArticle.Author.AvatarURL}}"></span>
-        <span class="near__title">
-                 {{.I18n.PreArticle}}<br>
-                <b class="ft-break">{{.PreviousArticle.Title}}</b>
-            </span>
-    </a>
-    {{end}}
-
-    {{if .NextArticle}}
-    <a href="{{.NextArticle.URL}}" rel="next" class="near__next {{if .PreviousArticle}}{{else}}near__next--single{{end}}">
-        <svg class="fn-absolute near__svg">
-            <use xlink:href="#chevron-right"></use>
-        </svg>
-        <span class="avatar pipe-tooltipped pipe-tooltipped--n fn-absolute"
-              aria-label="{{.NextArticle.Author.Name}}"
-              data-src="{{.NextArticle.Author.AvatarURL}}"></span>
-        <span class="near__title">
-                {{.I18n.NextArticle}}<br>
-                <b class="ft-break">{{.NextArticle.Title}}</b>
-            </span>
-    </a>
-    {{end}}
-</div>
-{{else}}
-<div class="fn-clear article__near fn-two">
-    {{if .PreviousArticle}}
-    <a href="{{.PreviousArticle.URL}}"
-       class="pipe-tooltipped pipe-tooltipped--w"
-       rel="prev" aria-label="{{.I18n.PreArticle}}">
-        <svg class="near__icon">
-            <use xlink:href="#chevron-left"></use>
-        </svg>
-        <b class="ft-break">{{.PreviousArticle.Title}}</b>
-    </a>
-    {{end}}
-
-    {{if .NextArticle}}
-    <a href="{{.NextArticle.URL}}" rel="next"
-       class="pipe-tooltipped pipe-tooltipped--e fn-two--next {{if .PreviousArticle}}{{else}}near__next--single{{end}}"
-       aria-label="{{.I18n.NextArticle}}">
-        <b class="ft-break">{{.NextArticle.Title}}</b>
-        <svg class="near__icon-last">
-            <use xlink:href="#chevron-right"></use>
-        </svg>
-    </a>
-    {{end}}
-</div>
-{{end}}
-{{end}}
-
-</div>
-
-{{if ne .User.UID 0}}
-<div class="editor" id="editor">
-    <div class="wrapper">
-        <div id="replyObject"></div>
-        <div class="form">
-            <div id="emotions">
-                <span class="emotion__item" title="😁">😁</span>
-                <span class="emotion__item" title="😂">😂</span>
-                <span class="emotion__item" title="😜">😜</span>
-                <span class="emotion__item" title="😫">😫</span>
-                <span class="emotion__item" title="😭">😭</span>
-                <span class="emotion__item" title="😰">😰</span>
-                <span class="emotion__item" title="😡">😡</span>
-                <span class="emotion__item" title="😤">😤</span>
-                <span class="emotion__item" title="👀">👀</span>
-                <span class="emotion__item" title="😱">😱</span>
-                <span class="emotion__item" title="😎">😎</span>
-                <span class="emotion__item" title="😋">😋</span>
-                <span class="emotion__item" title="💕">💕</span>
-                <span class="emotion__item" title="💔">💔</span>
-                <span class="emotion__item" title="😈">😈</span>
-            </div>
-            <textarea id="commentContent" data-blogurl="{{.BlogURL}}" placeholder="{{.I18n.Content}}" rows="3"></textarea>
-            <div class="article__action fn-clear">
-                <span class="fn-right action__btn action__btn--space action__btn--active"
-                      id="editorAdd"
-                      data-label2="{{.I18n.Required}}"
-                      data-label="{{.I18n.Comment}}">
-                    {{.I18n.Confirm}}&nbsp;<svg class="fn-right"><use xlink:href="#comment"></use></svg>
-                </span>
-                <span class="fn-right action__btn action__btn--space"
-                      id="editorCancel">
-                    {{.I18n.Cancel}}&nbsp;<svg class="fn-right"><use xlink:href="#chevron-up"></use></svg>
-                </span>
-            </div>
-        </div>
+        {{if .NextArticle}}
+        <a href="{{.NextArticle.URL}}" rel="next"
+           class="pipe-tooltipped pipe-tooltipped--e fn-two--next {{if .PreviousArticle}}{{else}}near__next--single{{end}}"
+           aria-label="{{.I18n.NextArticle}}">
+            <b class="ft-break">{{.NextArticle.Title}}</b>
+            <svg class="near__icon-last">
+                <use xlink:href="#chevron-right"></use>
+            </svg>
+        </a>
+        {{end}}
     </div>
+    {{end}}
+    {{end}}
+
 </div>
-{{end}}
+
+{{template "comment/editor" .}}
 
 {{template "Koma/footer" .}}
 </body>
