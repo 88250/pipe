@@ -60,6 +60,7 @@ func init() {
 // Entry point.
 func main() {
 	service.ConnectDB()
+	controller.RefreshRecommendArticlesPeriodically()
 
 	serverURL, err := url.ParseRequestURI(util.Conf.Server)
 	if nil != err {

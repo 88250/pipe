@@ -258,18 +258,20 @@ func RefreshRecommendArticlesPeriodically() {
 	refreshRecommendArticles()
 
 	go func() {
-		for _ = range time.Tick(time.Minute * 7) {
+		for _ = range time.Tick(time.Minute * 30) {
 			refreshRecommendArticles()
 		}
 	}()
 }
 
 func refreshRecommendArticles() {
+	defer util.Recover()
+
 	recommendations := []*ThemeArticle{}
 
 	result := util.NewResult()
 	_, _, errs := gorequest.New().Get(util.HacPaiURL+"/apis/recommend/articles").
-		Set("user-agent", util.UserAgent).Timeout(30 * time.Second).EndStruct(result)
+		Set("user-agent", util.UserAgent).Timeout(5 * time.Second).EndStruct(result)
 	if nil != errs {
 		logger.Errorf("get recommend articles: %s", errs)
 
@@ -279,7 +281,7 @@ func refreshRecommendArticles() {
 		return
 	}
 
-	size := 50
+	size := 30
 	entries := result.Data.([]interface{})
 	if size > len(entries) {
 		size = len(entries)
@@ -287,6 +289,7 @@ func refreshRecommendArticles() {
 
 	indics := util.RandInts(0, len(entries), size)
 	images := util.RandImages(size)
+	indics = indics[:len(images)]
 
 	for i, index := range indics {
 		article := entries[index].(map[string]interface{})
@@ -312,8 +315,7 @@ func refreshRecommendArticles() {
 func getRecommendArticles() []*ThemeArticle {
 	ret := []*ThemeArticle{}
 
-	size := 5
-	indics := util.RandInts(0, len(recommendArticles), size)
+	indics := util.RandInts(0, len(recommendArticles), 5)
 	for _, index := range indics {
 		article := recommendArticles[index]
 
