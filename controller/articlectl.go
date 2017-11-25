@@ -22,12 +22,14 @@ import (
 	"net/http"
 	"strconv"
 	"strings"
+	"time"
 
 	"github.com/PuerkitoBio/goquery"
 	"github.com/b3log/pipe/model"
 	"github.com/b3log/pipe/service"
 	"github.com/b3log/pipe/util"
 	"github.com/gin-gonic/gin"
+	"github.com/parnurzeal/gorequest"
 	"github.com/vinta/pangu"
 )
 
@@ -174,45 +176,7 @@ func showArticleAction(c *gin.Context) {
 
 	dataModel["Comments"] = comments
 	dataModel["Pagination"] = pagination
-
-	articleModels, pagination := service.Article.GetArticles(1, blogID)
-	articles := []*ThemeArticle{}
-	for _, articleModel := range articleModels {
-		tagStrs := strings.Split(articleModel.Tags, ",")
-		for _, tagStr := range tagStrs {
-			themeTag := &ThemeTag{
-				Title: tagStr,
-				URL:   getBlogURL(c) + util.PathTags + "/" + tagStr,
-			}
-			themeTags = append(themeTags, themeTag)
-		}
-
-		authorModel := service.User.GetUser(articleModel.AuthorID)
-		if nil == authorModel {
-			logger.Errorf("not found author of article [id=%d, authorID=%d]", articleModel.ID, articleModel.AuthorID)
-
-			continue
-		}
-
-		author := &ThemeAuthor{
-			Name:      authorModel.Name,
-			URL:       getBlogURL(c) + util.PathAuthors + "/" + authorModel.Name,
-			AvatarURL: authorModel.AvatarURL,
-		}
-
-		article := &ThemeArticle{
-			Author:       author,
-			CreatedAt:    articleModel.CreatedAt.Format("2006-01-02"),
-			Title:        articleModel.Title,
-			URL:          getBlogURL(c) + articleModel.Path,
-			CommentCount: articleModel.CommentCount,
-			ThumbnailURL: "https://img.hacpai.com/bing/20171109.jpg?imageView2/1/w/960/h/520/interlace/1/q/100",
-			Abstract: "丁亮快来修改我呀",
-		}
-
-		articles = append(articles, article)
-	}
-	dataModel["RecommendArticles"] = articles
+	dataModel["RecommendArticles"] = recommendArticles()
 	fillPreviousArticle(c, article, &dataModel)
 	fillNextArticle(c, article, &dataModel)
 	dataModel["ToC"] = template.HTML(toc(dataModel["Article"].(*ThemeArticle)))
@@ -286,4 +250,42 @@ func toc(article *ThemeArticle) string {
 	article.Content = template.HTML(content)
 
 	return builder.String()
+}
+
+func recommendArticles() []*ThemeArticle {
+	ret := []*ThemeArticle{}
+
+	result := util.NewResult()
+	_, _, errs := gorequest.New().Get(util.HacPaiURL+"/apis/recommend/articles").
+		Set("user-agent", util.UserAgent).Timeout(30 * time.Second).EndStruct(result)
+	if nil != errs {
+		logger.Errorf("get recommend articles: %s", errs)
+
+		return ret
+	}
+
+	if 0 != result.Code {
+		return ret
+	}
+
+	for _, entry := range result.Data.([]interface{}) {
+		article := entry.(map[string]interface{})
+		author := &ThemeAuthor{
+			Name:      article["articleAuthorName"].(string),
+			URL:       "https://hacpai.com/member/" + article["articleAuthorName"].(string),
+			AvatarURL: "",
+		}
+
+		ret = append(ret, &ThemeArticle{
+			Author:       author,
+			CreatedAt:    time.Now().Format("2006-01-02"),
+			Title:        article["articleTitle"].(string),
+			URL:          article["articlePermalink"].(string),
+			CommentCount: int(article["articleCommentCount"].(float64)),
+			ThumbnailURL: "https://img.hacpai.com/bing/20171109.jpg?imageView2/1/w/960/h/520/interlace/1/q/100",
+			Abstract:     "丁亮快来修改我呀",
+		})
+	}
+
+	return ret
 }
