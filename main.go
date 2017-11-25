@@ -18,11 +18,13 @@ package main
 
 import (
 	"io"
+	"math/rand"
 	"net/http"
 	"net/url"
 	"os"
 	"os/signal"
 	"syscall"
+	"time"
 
 	"github.com/b3log/pipe/controller"
 	"github.com/b3log/pipe/i18n"
@@ -38,6 +40,8 @@ var logger *log.Logger
 
 // The only one init function in pipe.
 func init() {
+	rand.Seed(time.Now().Unix())
+
 	log.SetLevel("warn")
 	logger = log.NewLogger(os.Stdout)
 

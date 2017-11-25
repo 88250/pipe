@@ -58,7 +58,7 @@ type ThemeAuthor struct {
 }
 
 func (author *ThemeAuthor) AvatarURLWithSize(size int) string {
-	return util.AvatarSize(author.AvatarURL, size)
+	return util.ImageSize(author.AvatarURL, size, size)
 }
 
 type ThemeCategory struct {

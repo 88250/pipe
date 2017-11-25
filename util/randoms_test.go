@@ -14,32 +14,13 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-package model
+package util
 
-import (
-	"github.com/b3log/pipe/util"
-)
+import "testing"
 
-// User model.
-type User struct {
-	Model
-
-	Name              string `gorm:"size:32" json:"name"`
-	Nickname          string `gorm:"size:32" json:"nickname"`
-	AvatarURL         string `gorm:"size:255" json:"avatarURL"`
-	B3Key             string `gorm:"size:32" json:"b3Key"`
-	Locale            string `gorm:"size:32 json:"locale"`
-	TotalArticleCount int    `json:"totalArticleCount"`
-}
-
-// User roles.
-const (
-	UserRoleNoLogin = iota
-	UserRolePlatformAdmin
-	UserRoleBlogAdmin
-	UserRoleBlogUser
-)
-
-func (u *User) AvatarURLWithSize(size int) string {
-	return util.ImageSize(u.AvatarURL, size, size)
+func TestRandInts(t *testing.T) {
+	ints := RandInts(0, 50, 5)
+	if 5 != len(ints) {
+		t.Errorf("generate random integers failed")
+	}
 }

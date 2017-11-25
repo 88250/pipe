@@ -34,7 +34,7 @@ type SessionData struct {
 }
 
 func (sd *SessionData) AvatarURLWithSize(size int) string {
-	return AvatarSize(sd.UAvatar, size)
+	return ImageSize(sd.UAvatar, size, size)
 }
 
 func (sd *SessionData) Save(c *gin.Context) error {

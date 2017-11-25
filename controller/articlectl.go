@@ -263,17 +263,25 @@ func recommendArticles() []*ThemeArticle {
 
 		return ret
 	}
-
 	if 0 != result.Code {
 		return ret
 	}
 
-	for _, entry := range result.Data.([]interface{}) {
-		article := entry.(map[string]interface{})
+	size := 5
+	entries := result.Data.([]interface{})
+	if size > len(entries) {
+		size = len(entries)
+	}
+
+	indics := util.RandInts(0, len(entries), size)
+	images := util.RandImages(size)
+
+	for i, index := range indics {
+		article := entries[index].(map[string]interface{})
 		author := &ThemeAuthor{
 			Name:      article["articleAuthorName"].(string),
 			URL:       "https://hacpai.com/member/" + article["articleAuthorName"].(string),
-			AvatarURL: "",
+			AvatarURL: article["articleAuthorThumbnailURL"].(string),
 		}
 
 		ret = append(ret, &ThemeArticle{
@@ -282,8 +290,7 @@ func recommendArticles() []*ThemeArticle {
 			Title:        article["articleTitle"].(string),
 			URL:          article["articlePermalink"].(string),
 			CommentCount: int(article["articleCommentCount"].(float64)),
-			ThumbnailURL: "https://img.hacpai.com/bing/20171109.jpg?imageView2/1/w/960/h/520/interlace/1/q/100",
-			Abstract:     "丁亮快来修改我呀",
+			ThumbnailURL: util.ImageSize(images[i], 280, 90),
 		})
 	}
 

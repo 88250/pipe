@@ -14,32 +14,28 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-package model
+package util
 
 import (
-	"github.com/b3log/pipe/util"
+	"math/rand"
 )
 
-// User model.
-type User struct {
-	Model
+func RandInts(from, to, size int) []int {
+	if to-from < size {
+		size = to - from
+	}
 
-	Name              string `gorm:"size:32" json:"name"`
-	Nickname          string `gorm:"size:32" json:"nickname"`
-	AvatarURL         string `gorm:"size:255" json:"avatarURL"`
-	B3Key             string `gorm:"size:32" json:"b3Key"`
-	Locale            string `gorm:"size:32 json:"locale"`
-	TotalArticleCount int    `json:"totalArticleCount"`
-}
+	slice := []int{}
+	for i := from; i < to; i++ {
+		slice = append(slice, i)
+	}
 
-// User roles.
-const (
-	UserRoleNoLogin = iota
-	UserRolePlatformAdmin
-	UserRoleBlogAdmin
-	UserRoleBlogUser
-)
+	ret := []int{}
+	for i := 0; i < size; i++ {
+		idx := rand.Intn(len(slice))
+		ret = append(ret, slice[idx])
+		slice = append(slice[:idx], slice[idx+1:]...)
+	}
 
-func (u *User) AvatarURLWithSize(size int) string {
-	return util.ImageSize(u.AvatarURL, size, size)
+	return ret
 }
