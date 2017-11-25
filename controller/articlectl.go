@@ -286,7 +286,7 @@ func recommendArticles() []*ThemeArticle {
 
 		ret = append(ret, &ThemeArticle{
 			Author:       author,
-			CreatedAt:    time.Now().Format("2006-01-02"),
+			CreatedAt:    time.Unix(int64(article["articleCreateTime"].(float64)/1000), 0).Format("2006-01-02"),
 			Title:        article["articleTitle"].(string),
 			URL:          article["articlePermalink"].(string),
 			CommentCount: int(article["articleCommentCount"].(float64)),
