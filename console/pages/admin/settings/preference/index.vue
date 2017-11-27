@@ -105,7 +105,7 @@
           preferenceMostCommentArticleListSize: this.preferenceMostCommentArticleListSize,
           preferenceMostViewArticleListSize: this.preferenceMostViewArticleListSize,
           preferenceArticleListPageSize: this.preferenceArticleListPageSize,
-          preferenceArticleListWindowSize: this.preferenceArticleListWindowSize,
+          preferenceArticleListWindowSize: this.preferenceArticleListWindowSize
         })
 
         if (responseData.code === 0) {
