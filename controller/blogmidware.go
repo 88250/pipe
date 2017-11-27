@@ -141,9 +141,9 @@ func fillCommon(c *gin.Context) {
 
 func fillMostUseCategories(settingMap *map[string]interface{}, dataModel *DataModel, blogID uint) {
 	categories := service.Category.GetCategories(math.MaxInt8, blogID)
-	themeCategories := []*ThemeCategory{}
+	themeCategories := []*model.ThemeCategory{}
 	for _, category := range categories {
-		themeCategory := &ThemeCategory{
+		themeCategory := &model.ThemeCategory{
 			Title: category.Title,
 			URL:   (*settingMap)[model.SettingNameBasicBlogURL].(string) + "/" + category.Title,
 		}
@@ -160,9 +160,9 @@ func fillMostUseTags(settingMap *map[string]interface{}, dataModel *DataModel, b
 		tagSize = model.SettingPreferenceMostUseTagListSizeDefault
 	}
 	tags := service.Tag.GetTags(tagSize, blogID)
-	themeTags := []*ThemeTag{}
+	themeTags := []*model.ThemeTag{}
 	for _, tag := range tags {
-		themeTag := &ThemeTag{
+		themeTag := &model.ThemeTag{
 			Title: tag.Title,
 			URL:   (*settingMap)[model.SettingNameBasicBlogURL].(string) + "/tags/" + tag.Title,
 		}
@@ -179,14 +179,14 @@ func fillMostViewArticles(settingMap *map[string]interface{}, dataModel *DataMod
 		mostViewArticleSize = model.SettingPreferenceMostViewArticleListSizeDefault
 	}
 	mostViewArticles := service.Article.GetMostViewArticles(mostViewArticleSize, blogID)
-	themeMostViewArticles := []*ThemeArticle{}
+	themeMostViewArticles := []*model.ThemeArticle{}
 	for _, article := range mostViewArticles {
-		author := &ThemeAuthor{
+		author := &model.ThemeAuthor{
 			Name:      "Vanessa",
 			URL:       "http://localhost:5879/blogs/pipe/vanessa",
 			AvatarURL: "https://img.hacpai.com/20170818zhixiaoyun.jpeg",
 		}
-		themeArticle := &ThemeArticle{
+		themeArticle := &model.ThemeArticle{
 			Title:     article.Title,
 			URL:       (*settingMap)[model.SettingNameBasicBlogURL].(string) + article.Path,
 			CreatedAt: humanize.Time(article.CreatedAt),
@@ -206,14 +206,14 @@ func fillRecentComments(settingMap *map[string]interface{}, dataModel *DataModel
 		recentCommentSize = model.SettingPreferenceRecentCommentListSizeDefault
 	}
 	recentComments := service.Comment.GetRecentComments(recentCommentSize, blogID)
-	themeRecentComments := []*ThemeComment{}
+	themeRecentComments := []*model.ThemeComment{}
 	for _, comment := range recentComments {
-		themeComment := &ThemeComment{
+		themeComment := &model.ThemeComment{
 			Title:     util.Markdown(comment.Content).AbstractText,
 			Content:   "",
 			URL:       "todo",
 			CreatedAt: humanize.Time(comment.CreatedAt),
-			Author: &ThemeAuthor{
+			Author: &model.ThemeAuthor{
 				Name:      "Vanessa",
 				URL:       "http://localhost:5879/blogs/pipe/vanessa",
 				AvatarURL: "https://img.hacpai.com/20170818zhixiaoyun.jpeg",
@@ -233,14 +233,14 @@ func fillMostCommentArticles(settingMap *map[string]interface{}, dataModel *Data
 		mostCommentArticleSize = model.SettingPreferenceMostCommentArticleListSizeDefault
 	}
 	mostCommentArticles := service.Article.GetMostCommentArticles(mostCommentArticleSize, blogID)
-	themeMostCommentArticles := []*ThemeArticle{}
+	themeMostCommentArticles := []*model.ThemeArticle{}
 	for _, article := range mostCommentArticles {
-		author := &ThemeAuthor{
+		author := &model.ThemeAuthor{
 			Name:      "Vanessa",
 			URL:       "http://localhost:5879/blogs/pipe/vanessa",
 			AvatarURL: "https://img.hacpai.com/20170818zhixiaoyun.jpeg",
 		}
-		themeArticle := &ThemeArticle{
+		themeArticle := &model.ThemeArticle{
 			Title:     article.Title,
 			URL:       (*settingMap)[model.SettingNameBasicBlogURL].(string) + article.Path,
 			CreatedAt: humanize.Time(article.CreatedAt),

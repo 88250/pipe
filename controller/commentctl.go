@@ -39,7 +39,7 @@ func getRepliesAction(c *gin.Context) {
 	parentCmtID, _ := strconv.Atoi(parentCmtIDArg)
 
 	replyComments := service.Comment.GetReplies(uint(parentCmtID), blogID)
-	replies := []*ThemeReply{}
+	replies := []*model.ThemeReply{}
 	for _, replyComment := range replyComments {
 		commentAuthor := service.User.GetUser(replyComment.AuthorID)
 		if nil == commentAuthor {
@@ -50,13 +50,13 @@ func getRepliesAction(c *gin.Context) {
 		commentAuthorBlog := service.User.GetOwnBlog(commentAuthor.ID)
 		blogURLSetting := service.Setting.GetSetting(model.SettingCategoryBasic, model.SettingNameBasicBlogURL, commentAuthorBlog.ID)
 		commentAuthorURL := blogURLSetting.Value + util.PathAuthors + "/" + commentAuthor.Name
-		author := &ThemeAuthor{
+		author := &model.ThemeAuthor{
 			Name:      commentAuthor.Name,
 			URL:       commentAuthorURL,
 			AvatarURL: commentAuthor.AvatarURLWithSize(64),
 		}
 
-		reply := &ThemeReply{
+		reply := &model.ThemeReply{
 			ID:        replyComment.ID,
 			Content:   template.HTML(util.Markdown(replyComment.Content).ContentHTML),
 			Author:    author,
@@ -104,12 +104,12 @@ func addCommentAction(c *gin.Context) {
 	if nil != blogURLSetting {
 		commentAuthorURL = blogURLSetting.Value + util.PathAuthors + "/" + session.UName
 	}
-	author := &ThemeAuthor{
+	author := &model.ThemeAuthor{
 		Name:      session.UName,
 		URL:       commentAuthorURL,
 		AvatarURL: session.UAvatar,
 	}
-	themeComment := ThemeComment{
+	themeComment := &model.ThemeComment{
 		ID:        comment.ID,
 		Content:   template.HTML(util.Markdown(comment.Content).ContentHTML),
 		Author:    author,

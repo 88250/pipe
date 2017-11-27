@@ -22,6 +22,7 @@ import (
 
 	"strings"
 
+	"github.com/b3log/pipe/model"
 	"github.com/b3log/pipe/service"
 	"github.com/b3log/pipe/util"
 	"github.com/gin-gonic/gin"
@@ -32,9 +33,9 @@ func showTagsAction(c *gin.Context) {
 	dataModel := getDataModel(c)
 	blogID := getBlogID(c)
 	tagModels := service.Tag.GetTags(math.MaxInt64, blogID)
-	themeTags := []*ThemeTag{}
+	themeTags := []*model.ThemeTag{}
 	for _, tagModel := range tagModels {
-		themeTag := &ThemeTag{
+		themeTag := &model.ThemeTag{
 			Title:        tagModel.Title,
 			URL:          getBlogURL(c) + util.PathTags + "/" + tagModel.Title,
 			ArticleCount: tagModel.ArticleCount,
@@ -58,12 +59,12 @@ func showTagArticlesAction(c *gin.Context) {
 		return
 	}
 	articleModels, pagination := service.Article.GetTagArticles(tagModel.ID, util.GetPage(c), blogID)
-	articles := []*ThemeArticle{}
+	articles := []*model.ThemeArticle{}
 	for _, articleModel := range articleModels {
-		themeTags := []*ThemeTag{}
+		themeTags := []*model.ThemeTag{}
 		tagStrs := strings.Split(articleModel.Tags, ",")
 		for _, tagStr := range tagStrs {
-			themeTag := &ThemeTag{
+			themeTag := &model.ThemeTag{
 				Title: tagStr,
 				URL:   getBlogURL(c) + util.PathTags + "/" + tagStr,
 			}
@@ -77,14 +78,14 @@ func showTagArticlesAction(c *gin.Context) {
 			continue
 		}
 
-		author := &ThemeAuthor{
+		author := &model.ThemeAuthor{
 			Name:      authorModel.Name,
 			URL:       getBlogURL(c) + util.PathAuthors + "/" + authorModel.Name,
 			AvatarURL: authorModel.AvatarURL,
 		}
 
 		mdResult := util.Markdown(articleModel.Content)
-		article := &ThemeArticle{
+		article := &model.ThemeArticle{
 			ID:           articleModel.ID,
 			Abstract:     mdResult.AbstractText,
 			Author:       author,
@@ -103,7 +104,7 @@ func showTagArticlesAction(c *gin.Context) {
 	}
 	dataModel["Articles"] = articles
 	dataModel["Pagination"] = pagination
-	dataModel["Tag"] = &ThemeTag{
+	dataModel["Tag"] = &model.ThemeTag{
 		Title:        tagModel.Title,
 		URL:          getBlogURL(c) + util.PathTags + "/" + tagModel.Title,
 		ArticleCount: tagModel.ArticleCount,

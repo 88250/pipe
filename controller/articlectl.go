@@ -22,14 +22,13 @@ import (
 	"net/http"
 	"strconv"
 	"strings"
-	"time"
 
 	"github.com/PuerkitoBio/goquery"
+	"github.com/b3log/pipe/cron"
 	"github.com/b3log/pipe/model"
 	"github.com/b3log/pipe/service"
 	"github.com/b3log/pipe/util"
 	"github.com/gin-gonic/gin"
-	"github.com/parnurzeal/gorequest"
 	"github.com/vinta/pangu"
 )
 
@@ -39,12 +38,12 @@ func showArticlesAction(c *gin.Context) {
 	blogID := getBlogID(c)
 	session := util.GetSession(c)
 	articleModels, pagination := service.Article.GetArticles(page, blogID)
-	articles := []*ThemeArticle{}
+	articles := []*model.ThemeArticle{}
 	for _, articleModel := range articleModels {
-		themeTags := []*ThemeTag{}
+		themeTags := []*model.ThemeTag{}
 		tagStrs := strings.Split(articleModel.Tags, ",")
 		for _, tagStr := range tagStrs {
-			themeTag := &ThemeTag{
+			themeTag := &model.ThemeTag{
 				Title: tagStr,
 				URL:   getBlogURL(c) + util.PathTags + "/" + tagStr,
 			}
@@ -58,14 +57,14 @@ func showArticlesAction(c *gin.Context) {
 			continue
 		}
 
-		author := &ThemeAuthor{
+		author := &model.ThemeAuthor{
 			Name:      authorModel.Name,
 			URL:       getBlogURL(c) + util.PathAuthors + "/" + authorModel.Name,
 			AvatarURL: authorModel.AvatarURL,
 		}
 
 		mdResult := util.Markdown(articleModel.Content)
-		article := &ThemeArticle{
+		article := &model.ThemeArticle{
 			ID:           articleModel.ID,
 			Abstract:     mdResult.AbstractText,
 			Author:       author,
@@ -96,10 +95,10 @@ func showArticleAction(c *gin.Context) {
 	a, _ := c.Get("article")
 	article := a.(*model.Article)
 
-	themeTags := []*ThemeTag{}
+	themeTags := []*model.ThemeTag{}
 	tagStrs := strings.Split(article.Tags, ",")
 	for _, tagStr := range tagStrs {
-		themeTag := &ThemeTag{
+		themeTag := &model.ThemeTag{
 			Title: tagStr,
 			URL:   getBlogURL(c) + util.PathTags + "/" + tagStr,
 		}
@@ -108,8 +107,8 @@ func showArticleAction(c *gin.Context) {
 
 	mdResult := util.Markdown(article.Content)
 	authorModel := service.User.GetUser(article.AuthorID)
-	dataModel["Article"] = &ThemeArticle{
-		Author: &ThemeAuthor{
+	dataModel["Article"] = &model.ThemeArticle{
+		Author: &model.ThemeAuthor{
 			Name:      authorModel.Name,
 			URL:       getBlogURL(c) + util.PathAuthors + "/" + authorModel.Name,
 			AvatarURL: authorModel.AvatarURL,
@@ -128,7 +127,7 @@ func showArticleAction(c *gin.Context) {
 
 	page := util.GetPage(c)
 	commentModels, pagination := service.Comment.GetArticleComments(article.ID, page, blogID)
-	comments := []*ThemeComment{}
+	comments := []*model.ThemeComment{}
 	for _, commentModel := range commentModels {
 		commentAuthor := service.User.GetUser(commentModel.AuthorID)
 		if nil == commentAuthor {
@@ -140,14 +139,14 @@ func showArticleAction(c *gin.Context) {
 		commentAuthorBlog := service.User.GetOwnBlog(commentAuthor.ID)
 		blogURLSetting := service.Setting.GetSetting(model.SettingCategoryBasic, model.SettingNameBasicBlogURL, commentAuthorBlog.ID)
 		commentAuthorURL := blogURLSetting.Value + util.PathAuthors + "/" + commentAuthor.Name
-		author := &ThemeAuthor{
+		author := &model.ThemeAuthor{
 			Name:      commentAuthor.Name,
 			URL:       commentAuthorURL,
 			AvatarURL: commentAuthor.AvatarURL,
 		}
 
 		mdResult := util.Markdown(commentModel.Content)
-		comment := &ThemeComment{
+		comment := &model.ThemeComment{
 			ID:         commentModel.ID,
 			Content:    template.HTML(mdResult.ContentHTML),
 			URL:        getBlogURL(c) + article.Path + "?p=" + strconv.Itoa(page) + "#pipeComment" + strconv.Itoa(int(commentModel.ID)),
@@ -161,10 +160,10 @@ func showArticleAction(c *gin.Context) {
 			parentCommentAuthorModel := service.User.GetUser(parentCommentModel.AuthorID)
 			page := service.Comment.GetCommentPage(commentModel.ArticleID, commentModel.ID, commentModel.BlogID)
 
-			parentComment := &ThemeComment{
+			parentComment := &model.ThemeComment{
 				ID:  parentCommentModel.ID,
 				URL: getBlogURL(c) + article.Path + "?p=" + strconv.Itoa(page) + "#pipeComment" + strconv.Itoa(int(parentCommentModel.ID)),
-				Author: &ThemeAuthor{
+				Author: &model.ThemeAuthor{
 					Name: parentCommentAuthorModel.Name,
 				},
 			}
@@ -179,7 +178,7 @@ func showArticleAction(c *gin.Context) {
 	dataModel["RecommendArticles"] = getRecommendArticles()
 	fillPreviousArticle(c, article, &dataModel)
 	fillNextArticle(c, article, &dataModel)
-	dataModel["ToC"] = template.HTML(toc(dataModel["Article"].(*ThemeArticle)))
+	dataModel["ToC"] = template.HTML(toc(dataModel["Article"].(*model.ThemeArticle)))
 	c.HTML(http.StatusOK, getTheme(c)+"/article.html", dataModel)
 
 	service.Article.IncArticleViewCount(article)
@@ -192,10 +191,10 @@ func fillPreviousArticle(c *gin.Context, article *model.Article, dataModel *Data
 	}
 
 	author := service.User.GetUser(previous.AuthorID)
-	previousArticle := &ThemeArticle{
+	previousArticle := &model.ThemeArticle{
 		Title: previous.Title,
 		URL:   getBlogURL(c) + previous.Path,
-		Author: &ThemeAuthor{
+		Author: &model.ThemeAuthor{
 			Name:      author.Name,
 			URL:       getBlogURL(c) + util.PathAuthors + "/" + author.Name,
 			AvatarURL: author.AvatarURL,
@@ -211,10 +210,10 @@ func fillNextArticle(c *gin.Context, article *model.Article, dataModel *DataMode
 	}
 
 	author := service.User.GetUser(next.AuthorID)
-	nextArticle := &ThemeArticle{
+	nextArticle := &model.ThemeArticle{
 		Title: next.Title,
 		URL:   getBlogURL(c) + next.Path,
-		Author: &ThemeAuthor{
+		Author: &model.ThemeAuthor{
 			Name:      author.Name,
 			URL:       getBlogURL(c) + util.PathAuthors + "/" + author.Name,
 			AvatarURL: author.AvatarURL,
@@ -223,7 +222,7 @@ func fillNextArticle(c *gin.Context, article *model.Article, dataModel *DataMode
 	(*dataModel)["NextArticle"] = nextArticle
 }
 
-func toc(article *ThemeArticle) string {
+func toc(article *model.ThemeArticle) string {
 	doc, _ := goquery.NewDocumentFromReader(strings.NewReader(string(article.Content)))
 	elements := doc.Find("h1, h2, h3, h4, h5")
 	if nil == elements || 3 > elements.Length() {
@@ -252,72 +251,12 @@ func toc(article *ThemeArticle) string {
 	return builder.String()
 }
 
-var recommendArticles []*ThemeArticle
+func getRecommendArticles() []*model.ThemeArticle {
+	ret := []*model.ThemeArticle{}
 
-func RefreshRecommendArticlesPeriodically() {
-	refreshRecommendArticles()
-
-	go func() {
-		for _ = range time.Tick(time.Minute * 30) {
-			refreshRecommendArticles()
-		}
-	}()
-}
-
-func refreshRecommendArticles() {
-	defer util.Recover()
-
-	recommendations := []*ThemeArticle{}
-
-	result := util.NewResult()
-	_, _, errs := gorequest.New().Get(util.HacPaiURL+"/apis/recommend/articles").
-		Set("user-agent", util.UserAgent).Timeout(5 * time.Second).EndStruct(result)
-	if nil != errs {
-		logger.Errorf("get recommend articles: %s", errs)
-
-		return
-	}
-	if 0 != result.Code {
-		return
-	}
-
-	size := 30
-	entries := result.Data.([]interface{})
-	if size > len(entries) {
-		size = len(entries)
-	}
-
-	indics := util.RandInts(0, len(entries), size)
-	images := util.RandImages(size)
-	indics = indics[:len(images)]
-
-	for i, index := range indics {
-		article := entries[index].(map[string]interface{})
-		author := &ThemeAuthor{
-			Name:      article["articleAuthorName"].(string),
-			URL:       "https://hacpai.com/member/" + article["articleAuthorName"].(string),
-			AvatarURL: article["articleAuthorThumbnailURL"].(string),
-		}
-
-		recommendations = append(recommendations, &ThemeArticle{
-			Author:       author,
-			CreatedAt:    time.Unix(int64(article["articleCreateTime"].(float64)/1000), 0).Format("2006-01-02"),
-			Title:        article["articleTitle"].(string),
-			URL:          article["articlePermalink"].(string),
-			CommentCount: int(article["articleCommentCount"].(float64)),
-			ThumbnailURL: util.ImageSize(images[i], 280, 90),
-		})
-	}
-
-	recommendArticles = recommendations
-}
-
-func getRecommendArticles() []*ThemeArticle {
-	ret := []*ThemeArticle{}
-
-	indics := util.RandInts(0, len(recommendArticles), 5)
+	indics := util.RandInts(0, len(cron.RecommendArticles), 5)
 	for _, index := range indics {
-		article := recommendArticles[index]
+		article := cron.RecommendArticles[index]
 
 		ret = append(ret, article)
 	}

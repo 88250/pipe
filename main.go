@@ -27,6 +27,7 @@ import (
 	"time"
 
 	"github.com/b3log/pipe/controller"
+	"github.com/b3log/pipe/cron"
 	"github.com/b3log/pipe/i18n"
 	"github.com/b3log/pipe/log"
 	"github.com/b3log/pipe/service"
@@ -60,7 +61,7 @@ func init() {
 // Entry point.
 func main() {
 	service.ConnectDB()
-	controller.RefreshRecommendArticlesPeriodically()
+	cron.Start()
 
 	serverURL, err := url.ParseRequestURI(util.Conf.Server)
 	if nil != err {

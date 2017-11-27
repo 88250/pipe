@@ -21,6 +21,7 @@ import (
 	"net/http"
 	"strings"
 
+	"github.com/b3log/pipe/model"
 	"github.com/b3log/pipe/service"
 	"github.com/b3log/pipe/util"
 	"github.com/gin-gonic/gin"
@@ -31,19 +32,19 @@ func showCategoriesAction(c *gin.Context) {
 	dataModel := getDataModel(c)
 	blogID := getBlogID(c)
 	categoryModels := service.Category.GetCategories(math.MaxInt8, blogID)
-	themeCategories := []*ThemeCategory{}
+	themeCategories := []*model.ThemeCategory{}
 	for _, categoryModel := range categoryModels {
-		themeTags := []*ThemeTag{}
+		themeTags := []*model.ThemeTag{}
 		tagStrs := strings.Split(categoryModel.Tags, ",")
 		for _, tagTitle := range tagStrs {
-			themeTag := &ThemeTag{
+			themeTag := &model.ThemeTag{
 				Title: tagTitle,
 				URL:   getBlogURL(c) + util.PathTags + "/" + tagTitle,
 			}
 			themeTags = append(themeTags, themeTag)
 		}
 
-		themeCategory := &ThemeCategory{
+		themeCategory := &model.ThemeCategory{
 			Title:        categoryModel.Title,
 			URL:          getBlogURL(c) + util.PathCategories + categoryModel.Path,
 			Description:  categoryModel.Description,
@@ -70,12 +71,12 @@ func showCategoryArticlesArticlesAction(c *gin.Context) {
 		return
 	}
 	articleModels, pagination := service.Article.GetCategoryArticles(categoryModel.ID, page, blogID)
-	articles := []*ThemeArticle{}
+	articles := []*model.ThemeArticle{}
 	for _, articleModel := range articleModels {
-		themeTags := []*ThemeTag{}
+		themeTags := []*model.ThemeTag{}
 		tagStrs := strings.Split(articleModel.Tags, ",")
 		for _, tagStr := range tagStrs {
-			themeTag := &ThemeTag{
+			themeTag := &model.ThemeTag{
 				Title: tagStr,
 				URL:   getBlogURL(c) + util.PathTags + "/" + tagStr,
 			}
@@ -89,14 +90,14 @@ func showCategoryArticlesArticlesAction(c *gin.Context) {
 			continue
 		}
 
-		author := &ThemeAuthor{
+		author := &model.ThemeAuthor{
 			Name:      authorModel.Name,
 			URL:       getBlogURL(c) + util.PathAuthors + "/" + authorModel.Name,
 			AvatarURL: authorModel.AvatarURL,
 		}
 
 		mdResult := util.Markdown(articleModel.Content)
-		article := &ThemeArticle{
+		article := &model.ThemeArticle{
 			ID:           articleModel.ID,
 			Abstract:     mdResult.AbstractText,
 			Author:       author,
@@ -115,7 +116,7 @@ func showCategoryArticlesArticlesAction(c *gin.Context) {
 	}
 	dataModel["Articles"] = articles
 	dataModel["Pagination"] = pagination
-	dataModel["Category"] = &ThemeCategory{
+	dataModel["Category"] = &model.ThemeCategory{
 		Title:        categoryModel.Title,
 		ArticleCount: pagination.RecordCount,
 	}

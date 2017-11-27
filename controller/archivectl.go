@@ -21,6 +21,7 @@ import (
 	"strings"
 
 	"github.com/b3log/pipe/i18n"
+	"github.com/b3log/pipe/model"
 	"github.com/b3log/pipe/service"
 	"github.com/b3log/pipe/util"
 	"github.com/gin-gonic/gin"
@@ -30,10 +31,10 @@ func showArchivesAction(c *gin.Context) {
 	dataModel := getDataModel(c)
 	blogID := getBlogID(c)
 	locale := getLocale(c)
-	themeArchives := []*ThemeArchive{}
+	themeArchives := []*model.ThemeArchive{}
 	archiveModels := service.Archive.GetArchives(blogID)
 	for _, archiveModel := range archiveModels {
-		archive := &ThemeArchive{
+		archive := &model.ThemeArchive{
 			Title:        i18n.GetMessagef(locale, "archiveYearMonth", archiveModel.Year, archiveModel.Month),
 			URL:          getBlogURL(c) + util.PathArchives + "/" + archiveModel.Year + "/" + archiveModel.Month,
 			ArticleCount: archiveModel.ArticleCount,
@@ -60,12 +61,12 @@ func showArchiveArticlesAction(c *gin.Context) {
 		return
 	}
 	articleModels, pagination := service.Article.GetArchiveArticles(archiveModel.ID, util.GetPage(c), blogID)
-	articles := []*ThemeArticle{}
+	articles := []*model.ThemeArticle{}
 	for _, articleModel := range articleModels {
-		themeTags := []*ThemeTag{}
+		themeTags := []*model.ThemeTag{}
 		tagStrs := strings.Split(articleModel.Tags, ",")
 		for _, tagStr := range tagStrs {
-			themeTag := &ThemeTag{
+			themeTag := &model.ThemeTag{
 				Title: tagStr,
 				URL:   getBlogURL(c) + util.PathTags + "/" + tagStr,
 			}
@@ -79,14 +80,14 @@ func showArchiveArticlesAction(c *gin.Context) {
 			continue
 		}
 
-		author := &ThemeAuthor{
+		author := &model.ThemeAuthor{
 			Name:      authorModel.Name,
 			URL:       getBlogURL(c) + util.PathAuthors + "/" + authorModel.Name,
 			AvatarURL: authorModel.AvatarURL,
 		}
 
 		mdResult := util.Markdown(articleModel.Content)
-		article := &ThemeArticle{
+		article := &model.ThemeArticle{
 			ID:           articleModel.ID,
 			Abstract:     mdResult.AbstractText,
 			Author:       author,
@@ -105,7 +106,7 @@ func showArchiveArticlesAction(c *gin.Context) {
 	}
 	dataModel["Articles"] = articles
 	dataModel["Pagination"] = pagination
-	dataModel["Archive"] = &ThemeArchive{
+	dataModel["Archive"] = &model.ThemeArchive{
 		Title:        i18n.GetMessagef(locale, "archiveYearMonth", archiveModel.Year, archiveModel.Month),
 		URL:          getBlogURL(c) + util.PathArchives + "/" + archiveModel.Year + "/" + archiveModel.Month,
 		ArticleCount: archiveModel.ArticleCount,

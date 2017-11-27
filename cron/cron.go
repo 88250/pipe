@@ -14,16 +14,17 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-// Package model is the "model" layer which defines entity structures with ORM and controller.
-package model
+package cron
 
-// Archive model.
-type Archive struct {
-	Model
+import (
+	"os"
 
-	Year         string `gorm:"size:4" json:"year"`
-	Month        string `gorm:"size:2" json:"month"`
-	ArticleCount int    `json:"articleCount"`
+	"github.com/b3log/pipe/log"
+)
 
-	BlogID uint `json:"blogID"`
+// Logger
+var logger = log.NewLogger(os.Stdout)
+
+func Start() {
+	refreshRecommendArticlesPeriodically()
 }

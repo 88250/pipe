@@ -20,6 +20,7 @@ import (
 	"net/http"
 	"strings"
 
+	"github.com/b3log/pipe/model"
 	"github.com/b3log/pipe/service"
 	"github.com/b3log/pipe/util"
 	"github.com/gin-gonic/gin"
@@ -29,10 +30,10 @@ import (
 func showAuthorsAction(c *gin.Context) {
 	dataModel := getDataModel(c)
 	blogID := getBlogID(c)
-	themeAuthors := []*ThemeAuthor{}
+	themeAuthors := []*model.ThemeAuthor{}
 	authorModels, _ := service.User.GetBlogUsers(1, blogID)
 	for _, authorModel := range authorModels {
-		author := &ThemeAuthor{
+		author := &model.ThemeAuthor{
 			Name:         authorModel.Name,
 			URL:          getBlogURL(c) + util.PathAuthors + "/" + authorModel.Name,
 			ArticleCount: 11, // TODO PIPE
@@ -59,12 +60,12 @@ func showAuthorArticlesAction(c *gin.Context) {
 	dataModel := getDataModel(c)
 	session := util.GetSession(c)
 	articleModels, pagination := service.Article.GetAuthorArticles(author.ID, page, blogID)
-	articles := []*ThemeArticle{}
+	articles := []*model.ThemeArticle{}
 	for _, articleModel := range articleModels {
-		themeTags := []*ThemeTag{}
+		themeTags := []*model.ThemeTag{}
 		tagStrs := strings.Split(articleModel.Tags, ",")
 		for _, tagStr := range tagStrs {
-			themeTag := &ThemeTag{
+			themeTag := &model.ThemeTag{
 				Title: tagStr,
 				URL:   getBlogURL(c) + util.PathTags + "/" + tagStr,
 			}
@@ -72,14 +73,14 @@ func showAuthorArticlesAction(c *gin.Context) {
 		}
 
 		authorModel := service.User.GetUser(articleModel.AuthorID)
-		author := &ThemeAuthor{
+		author := &model.ThemeAuthor{
 			Name:      authorModel.Name,
 			URL:       getBlogURL(c) + util.PathAuthors + "/" + authorModel.Name,
 			AvatarURL: authorModel.AvatarURL,
 		}
 
 		mdResult := util.Markdown(articleModel.Content)
-		article := &ThemeArticle{
+		article := &model.ThemeArticle{
 			ID:           articleModel.ID,
 			Abstract:     mdResult.AbstractText,
 			Author:       author,
@@ -99,7 +100,7 @@ func showAuthorArticlesAction(c *gin.Context) {
 	dataModel["Articles"] = articles
 	dataModel["Pagination"] = pagination
 	userBlog := service.User.GetUserBlog(author.ID, blogID)
-	dataModel["Author"] = ThemeAuthor{
+	dataModel["Author"] = &model.ThemeAuthor{
 		Name:         author.Name,
 		ArticleCount: userBlog.UserArticleCount,
 	}
