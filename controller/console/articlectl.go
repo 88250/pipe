@@ -111,7 +111,7 @@ func GetArticlesAction(c *gin.Context) {
 		for _, tagStr := range tagStrs {
 			consoleTag := &ConsoleTag{
 				Title: tagStr,
-				URL:   session.BURL + "/" + tagStr,
+				URL:   session.BURL + util.PathTags + "/" + tagStr,
 			}
 			consoleTags = append(consoleTags, consoleTag)
 		}
