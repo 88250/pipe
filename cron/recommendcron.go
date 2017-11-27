@@ -27,7 +27,7 @@ import (
 var RecommendArticles []*model.ThemeArticle
 
 func refreshRecommendArticlesPeriodically() {
-	refreshRecommendArticles()
+	go refreshRecommendArticles()
 
 	go func() {
 		for _ = range time.Tick(time.Minute * 30) {

@@ -44,7 +44,15 @@ const (
 	adminConsoleArticleListWindowSize = 20
 )
 
-func (src *articleService) GetArchiveArticles(archiveID uint, page int, blogID uint) (ret []*model.Article, pagination *util.Pagination) {
+func (srv *articleService) GetUnpushedArticles() (ret []*model.Article) {
+	if err := db.Where("pushed_at < updated_at").Find(&ret).Error; nil != err {
+		return
+	}
+
+	return
+}
+
+func (srv *articleService) GetArchiveArticles(archiveID uint, page int, blogID uint) (ret []*model.Article, pagination *util.Pagination) {
 	pageSize, windowSize := getPageWindowSize(blogID)
 	offset := (page - 1) * pageSize
 	count := 0
@@ -239,7 +247,7 @@ func (srv *articleService) GetCategoryArticles(categoryID uint, page int, blogID
 	return
 }
 
-func (src *articleService) GetTagArticles(tagID uint, page int, blogID uint) (ret []*model.Article, pagination *util.Pagination) {
+func (srv *articleService) GetTagArticles(tagID uint, page int, blogID uint) (ret []*model.Article, pagination *util.Pagination) {
 	pageSize, windowSize := getPageWindowSize(blogID)
 	offset := (page - 1) * pageSize
 	count := 0
@@ -267,7 +275,7 @@ func (src *articleService) GetTagArticles(tagID uint, page int, blogID uint) (re
 	return
 }
 
-func (src *articleService) GetAuthorArticles(authorID uint, page int, blogID uint) (ret []*model.Article, pagination *util.Pagination) {
+func (srv *articleService) GetAuthorArticles(authorID uint, page int, blogID uint) (ret []*model.Article, pagination *util.Pagination) {
 	pageSize, windowSize := getPageWindowSize(blogID)
 	offset := (page - 1) * pageSize
 	count := 0
@@ -400,24 +408,28 @@ func (srv *articleService) UpdateArticle(article *model.Article) error {
 	if err := db.Model(&model.Article{}).Where("id = ?", article.ID).Find(oldArticle).Error; nil != err {
 		return err
 	}
-	oldArticle.Title = article.Title
-	oldArticle.Content = article.Content
-	oldArticle.Commentable = article.Commentable
-	oldArticle.Topped = article.Topped
+	newArticle := &model.Article{}
+	newArticle.Title = article.Title
+	newArticle.Content = article.Content
+	newArticle.Commentable = article.Commentable
+	newArticle.Topped = article.Topped
+	now := time.Now()
+	newArticle.PushedAt = now
+	newArticle.UpdatedAt = now
 
 	tagStr, err := normalizeTagStr(article.Tags)
 	if nil != err {
 		return err
 	}
-	oldArticle.Tags = tagStr
+	newArticle.Tags = tagStr
 
 	if err := normalizeArticlePath(article); nil != err {
 		return err
 	}
-	oldArticle.Path = article.Path
+	newArticle.Path = article.Path
 
 	tx := db.Begin()
-	if err := tx.Save(oldArticle).Error; nil != err {
+	if err := tx.Model(oldArticle).UpdateColumns(newArticle).Error; nil != err {
 		tx.Rollback()
 
 		return err

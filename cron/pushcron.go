@@ -17,15 +17,30 @@
 package cron
 
 import (
-	"os"
+	"time"
 
-	"github.com/b3log/pipe/log"
+	"github.com/b3log/pipe/service"
+	"github.com/b3log/wide/util"
 )
 
-// Logger
-var logger = log.NewLogger(os.Stdout)
+func pushArticlesPeriodically() {
+	go pushArticles()
 
-func Start() {
-	refreshRecommendArticlesPeriodically()
-	pushArticlesPeriodically()
+	go func() {
+		for _ = range time.Tick(time.Second * 30) {
+			pushArticles()
+		}
+	}()
+}
+
+func pushArticles() {
+	defer util.Recover()
+
+	articles := service.Article.GetUnpushedArticles()
+	for _, article := range articles {
+		article.PushedAt = article.UpdatedAt
+		service.Article.UpdateArticle(article)
+		logger.Infof("pushed article [" + article.Title + "]")
+
+	}
 }

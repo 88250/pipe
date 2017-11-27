@@ -16,22 +16,27 @@
 
 package model
 
+import (
+	"time"
+)
+
 // Article model.
 type Article struct {
 	Model
 
-	AuthorID     uint   `json:"authorID"`
-	Title        string `gorm:"size:128" json:"title"`
-	Tags         string `gorm:"size:128" json:"tags"`
-	Content      string `gorm:"type:text" json:"content"`
-	Path         string `gorm:"size:255" json:"path"`
-	Status       int    `json:"status"`
-	Topped       bool   `json:"topped"`
-	Commentable  bool   `json:"commentable"`
-	ViewCount    int    `json:"viewCount"`
-	CommentCount int    `json:"commentCount"`
-	IP           string `gorm:"size:128" json:"ip"`
-	UserAgent    string `gorm:"size:255" json:"userAgent"`
+	AuthorID     uint      `json:"authorID"`
+	Title        string    `gorm:"size:128" json:"title"`
+	Tags         string    `gorm:"size:128" json:"tags"`
+	Content      string    `gorm:"type:text" json:"content"`
+	Path         string    `gorm:"size:255" json:"path"`
+	Status       int       `json:"status"`
+	Topped       bool      `json:"topped"`
+	Commentable  bool      `json:"commentable"`
+	ViewCount    int       `json:"viewCount"`
+	CommentCount int       `json:"commentCount"`
+	IP           string    `gorm:"size:128" json:"ip"`
+	UserAgent    string    `gorm:"size:255" json:"userAgent"`
+	PushedAt     time.Time `json:"pushedAt"`
 
 	BlogID uint `json:"blogID"`
 }
