@@ -367,14 +367,14 @@ func initBasicSettings(tx *gorm.DB, blogAdmin *model.User, blogID uint) error {
 	if err := tx.Create(&model.Setting{
 		Category: model.SettingCategoryBasic,
 		Name:     model.SettingNameBasicFaviconURL,
-		Value:    "https://img.hacpai.com/solo-favicon.ico",
+		Value:    "https://img.hacpai.com/pipe.ico",
 		BlogID:   blogID}).Error; nil != err {
 		return err
 	}
 	if err := tx.Create(&model.Setting{
 		Category: model.SettingCategoryBasic,
 		Name:     model.SettingNameBasicLogoURL,
-		Value:    "https://img.hacpai.com/solo-mid.png",
+		Value:    "https://img.hacpai.com/pipe72.png",
 		BlogID:   blogID}).Error; nil != err {
 		return err
 	}
