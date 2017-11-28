@@ -1,4 +1,4 @@
-# Pipe
+# <img src="https://user-images.githubusercontent.com/873584/33324159-c3ea5050-d489-11e7-9f4b-75ee806a7538.png"> [Pipe](https://github.com/b3log/pipe) 
 
 ## 简介
 
@@ -100,3 +100,12 @@ Pipe 的诞生离不开以下开源项目：
 * [Blackfriday](github.com/russross/blackfriday)：golang Markdown 处理器
 * [SQLite](https://www.sqlite.org)：使用广泛的嵌入式 SQL 引擎
 * [GCache](github.com/bluele/gcache)：golang 缓存库
+
+----
+
+<p align = "center">
+<strong>小而美的博客平台，为未来而构建</strong>
+<br><br>
+<img src="https://user-images.githubusercontent.com/873584/33324033-441773da-d489-11e7-8d39-78abbeb563f0.png">
+</p>
+
