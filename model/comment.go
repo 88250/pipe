@@ -16,16 +16,19 @@
 
 package model
 
+import "time"
+
 // Comment model.
 type Comment struct {
 	Model
 
-	ArticleID       uint   `json:"articleID"`
-	AuthorID        uint   `json:"authorID"`
-	Content         string `gorm:"type:text" json:"content"`
-	ParentCommentID uint   `json:"parentCommentID"` // ID of replied comment
-	IP              string `gorm:"size:128" json:"ip"`
-	UserAgent       string `gorm:"size:255" json:"userAgent"`
+	ArticleID       uint      `json:"articleID"`
+	AuthorID        uint      `json:"authorID"`
+	Content         string    `gorm:"type:text" json:"content"`
+	ParentCommentID uint      `json:"parentCommentID"` // ID of replied comment
+	IP              string    `gorm:"size:128" json:"ip"`
+	UserAgent       string    `gorm:"size:255" json:"userAgent"`
+	PushedAt        time.Time `json:"pushedAt"`
 
 	BlogID uint `json:"blogID"`
 }

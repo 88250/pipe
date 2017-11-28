@@ -28,4 +28,5 @@ var logger = log.NewLogger(os.Stdout)
 func Start() {
 	refreshRecommendArticlesPeriodically()
 	pushArticlesPeriodically()
+	pushCommentsPeriodically()
 }
