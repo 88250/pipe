@@ -3,7 +3,7 @@
     <div class="card__body">
       <div class="fn-flex admin__about">
         <div class="about__side">
-          <img src="~/static/images/logo.jpg"/> <br>
+          <img src="~/static/images/logo.png"/> <br>
           <a class="btn btn--info btn--margin-t30 btn--block btn--success"
              target="_blank"
              href="http://b3log.org/donate.html">{{ $t('becomeSponsor', $store.state.locale) }}</a>
