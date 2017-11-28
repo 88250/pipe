@@ -18,6 +18,7 @@ package service
 
 import (
 	"sync"
+	"time"
 
 	"github.com/b3log/pipe/model"
 	"github.com/b3log/pipe/util"
@@ -42,6 +43,40 @@ const (
 	themeCommentListPageSize   = 15
 	themeCommentListWindowSize = 20
 )
+
+func (srv *commentService) UpdateComment(comment *model.Comment) error {
+	srv.mutex.Lock()
+	defer srv.mutex.Unlock()
+
+	oldComment := &model.Comment{}
+	if err := db.Model(&model.Comment{}).Where("id = ?", comment.ID).Find(oldComment).Error; nil != err {
+		return err
+	}
+
+	newComment := &model.Comment{}
+	newComment.Content = comment.Content
+	now := time.Now()
+	newComment.PushedAt = now
+	newComment.UpdatedAt = now
+
+	tx := db.Begin()
+	if err := tx.Model(oldComment).UpdateColumns(newComment).Error; nil != err {
+		tx.Rollback()
+
+		return err
+	}
+	tx.Commit()
+
+	return nil
+}
+
+func (srv *commentService) GetUnpushedComments() (ret []*model.Comment) {
+	if err := db.Where("pushed_at < updated_at").Find(&ret).Error; nil != err {
+		return
+	}
+
+	return
+}
 
 func (srv *commentService) GetComment(commentID uint) *model.Comment {
 	ret := &model.Comment{}

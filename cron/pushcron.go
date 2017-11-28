@@ -92,9 +92,9 @@ func pushCommentsPeriodically() {
 func pushComments() {
 	defer util.Recover()
 
-	articles := service.Article.GetUnpushedArticles()
-	for _, article := range articles {
-		author := service.User.GetUser(article.AuthorID)
+	comments := service.Comment.GetUnpushedComments()
+	for _, comment := range comments {
+		author := service.User.GetUser(comment.AuthorID)
 		b3Key := author.B3Key
 		b3Name := author.Name
 		if "" == b3Key {
@@ -106,18 +106,16 @@ func pushComments() {
 			continue
 		}
 
-		blogTitleSetting := service.Setting.GetSetting(model.SettingCategoryBasic, model.SettingNameBasicBlogTitle, article.BlogID)
+		blogTitleSetting := service.Setting.GetSetting(model.SettingCategoryBasic, model.SettingNameBasicBlogTitle, comment.BlogID)
 		requestJSON := map[string]interface{}{
-			"article": map[string]interface{}{
-				"id":        article.ID,
-				"title":     article.Title,
-				"permalink": article.Path,
-				"tags":      article.Tags,
-				"content":   article.Content,
+			"comment": map[string]interface{}{
+				"id":          comment.ID,
+				"articleId":   comment.ArticleID,
+				"content":     comment.Content,
+				"authorName":  author.Name,
+				"authorEmail": "",
 			},
 			"client": map[string]interface{}{
-				"name":  "Pipe",
-				"ver":   util.Version,
 				"title": blogTitleSetting.Value,
 				"host":  util.Conf.Server,
 				"email": b3Name,
@@ -125,10 +123,10 @@ func pushComments() {
 			},
 		}
 		result := &map[string]interface{}{}
-		gorequest.New().Post("https://rhythm.b3log.org/api/article").SendMap(requestJSON).
+		gorequest.New().Post("https://rhythm.b3log.org/api/comment").SendMap(requestJSON).
 			Set("user-agent", util.UserAgent).Timeout(30 * time.Second).EndStruct(result)
 
-		article.PushedAt = article.UpdatedAt
-		service.Article.UpdateArticle(article)
+		comment.PushedAt = comment.UpdatedAt
+		service.Comment.UpdateComment(comment)
 	}
 }
