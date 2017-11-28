@@ -400,6 +400,18 @@ func (srv *articleService) RemoveArticle(id uint) error {
 	return nil
 }
 
+func (srv *articleService) UpdatePushedAt(article *model.Article) error {
+	srv.mutex.Lock()
+	defer srv.mutex.Unlock()
+
+	article.PushedAt = article.UpdatedAt
+	if err := db.Model(article).UpdateColumns(article).Error; nil != err {
+		return err
+	}
+
+	return nil
+}
+
 func (srv *articleService) UpdateArticle(article *model.Article) error {
 	srv.mutex.Lock()
 	defer srv.mutex.Unlock()
@@ -414,7 +426,6 @@ func (srv *articleService) UpdateArticle(article *model.Article) error {
 	newArticle.Commentable = article.Commentable
 	newArticle.Topped = article.Topped
 	now := time.Now()
-	newArticle.PushedAt = now
 	newArticle.UpdatedAt = now
 
 	tagStr, err := normalizeTagStr(article.Tags)

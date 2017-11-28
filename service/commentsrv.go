@@ -44,6 +44,18 @@ const (
 	themeCommentListWindowSize = 20
 )
 
+func (srv *commentService) UpdatePushedAt(comment *model.Comment) error {
+	srv.mutex.Lock()
+	defer srv.mutex.Unlock()
+
+	comment.PushedAt = comment.UpdatedAt
+	if err := db.Model(comment).UpdateColumns(comment).Error; nil != err {
+		return err
+	}
+
+	return nil
+}
+
 func (srv *commentService) UpdateComment(comment *model.Comment) error {
 	srv.mutex.Lock()
 	defer srv.mutex.Unlock()
