@@ -19,8 +19,10 @@ package cron
 import (
 	"time"
 
+	"github.com/b3log/pipe/model"
 	"github.com/b3log/pipe/service"
-	"github.com/b3log/wide/util"
+	"github.com/b3log/pipe/util"
+	"github.com/parnurzeal/gorequest"
 )
 
 func pushArticlesPeriodically() {
@@ -38,9 +40,41 @@ func pushArticles() {
 
 	articles := service.Article.GetUnpushedArticles()
 	for _, article := range articles {
+		author := service.User.GetUser(article.AuthorID)
+		b3Key := author.B3Key
+		b3Name := author.Name
+		if "" == b3Key {
+			pa := service.User.GetPlatformAdmin()
+			b3Key = pa.B3Key
+			b3Name = pa.Name
+		}
+		if "" == b3Key {
+			continue
+		}
+
+		blogTitleSetting := service.Setting.GetSetting(model.SettingCategoryBasic, model.SettingNameBasicBlogTitle, article.BlogID)
+		requestJSON := map[string]interface{}{
+			"article": map[string]interface{}{
+				"id":        article.ID,
+				"title":     article.Title,
+				"permalink": article.Path,
+				"tags":      article.Tags,
+				"content":   article.Content,
+			},
+			"client": map[string]interface{}{
+				"name":  "Pipe",
+				"ver":   util.Version,
+				"title": blogTitleSetting.Value,
+				"host":  util.Conf.Server,
+				"email": b3Name,
+				"key":   b3Key,
+			},
+		}
+		result := &map[string]interface{}{}
+		gorequest.New().Post("https://rhythm.b3log.org/api/article").SendMap(requestJSON).
+			Set("user-agent", util.UserAgent).Timeout(30 * time.Second).EndStruct(result)
+
 		article.PushedAt = article.UpdatedAt
 		service.Article.UpdateArticle(article)
-		logger.Infof("pushed article [" + article.Title + "]")
-
 	}
 }
