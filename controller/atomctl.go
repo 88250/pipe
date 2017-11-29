@@ -37,7 +37,7 @@ func outputAtomAction(c *gin.Context) {
 	}
 
 	items := []*feeds.Item{}
-	articles, _ := service.Article.GetArticles(1, blogID)
+	articles, _ := service.Article.GetArticles("", 1, blogID)
 	for _, article := range articles {
 		user := service.User.GetUser(article.AuthorID)
 		items = append(items, &feeds.Item{

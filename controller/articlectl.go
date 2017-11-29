@@ -37,7 +37,7 @@ func showArticlesAction(c *gin.Context) {
 	dataModel := getDataModel(c)
 	blogID := getBlogID(c)
 	session := util.GetSession(c)
-	articleModels, pagination := service.Article.GetArticles(page, blogID)
+	articleModels, pagination := service.Article.GetArticles("", page, blogID)
 	articles := []*model.ThemeArticle{}
 	for _, articleModel := range articleModels {
 		themeTags := []*model.ThemeTag{}

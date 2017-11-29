@@ -17,7 +17,7 @@
     },
     "search": {
       "verbs": [
-        "get"
+        "post"
       ],
       "mockFile": "searchList.json"
     },

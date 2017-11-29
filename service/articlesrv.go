@@ -200,12 +200,20 @@ func (srv *articleService) ConsoleGetArticles(keyword string, page int, blogID u
 	return
 }
 
-func (srv *articleService) GetArticles(page int, blogID uint) (ret []*model.Article, pagination *util.Pagination) {
+func (srv *articleService) GetArticles(keyword string, page int, blogID uint) (ret []*model.Article, pagination *util.Pagination) {
 	pageSize, windowSize := getPageWindowSize(blogID)
 	offset := (page - 1) * pageSize
 	count := 0
+
+	where := "status = ? AND blog_id = ?"
+	whereArgs := []interface{}{model.ArticleStatusOK, blogID}
+	if "" != keyword {
+		where += " AND title LIKE ?"
+		whereArgs = append(whereArgs, "%"+keyword+"%")
+	}
+
 	if err := db.Model(&model.Article{}).Select("id, created_at, author_id, title, content, tags, path, topped, view_count, comment_count").
-		Where(model.Article{Status: model.ArticleStatusOK, BlogID: blogID}).
+		Where(where, whereArgs...).
 		Order("topped DESC, id DESC").Count(&count).
 		Offset(offset).Limit(pageSize).
 		Find(&ret).Error; nil != err {

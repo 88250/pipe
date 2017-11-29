@@ -206,7 +206,7 @@ func routePath(c *gin.Context) {
 
 		return
 	case util.PathSearch:
-		showSearchPageAction(c)
+		searchAction(c)
 
 		return
 	}
