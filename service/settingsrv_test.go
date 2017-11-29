@@ -30,15 +30,15 @@ func TestGetSetting(t *testing.T) {
 		return
 	}
 
-	if "Pipe 示例" != setting.Value {
-		t.Errorf("expected is [%s], actual is [%s]", "Pipe 示例", setting.Value)
+	if "pipe 的个人博客" != setting.Value {
+		t.Errorf("expected is [%s], actual is [%s]", "pipe 的个人博客", setting.Value)
 	}
 }
 
 func TestGetAllSettings(t *testing.T) {
 	settings := Setting.GetAllSettings(1)
-	if 26 != len(settings) {
-		t.Errorf("expected is [%d], actual is [%d]", 26, len(settings))
+	if 25 != len(settings) {
+		t.Errorf("expected is [%d], actual is [%d]", 25, len(settings))
 	}
 }
 
@@ -63,8 +63,8 @@ func TestGetSettings(t *testing.T) {
 		return
 	}
 
-	if "Pipe 示例" != settings[model.SettingNameBasicBlogTitle].Value {
-		t.Errorf("expected is [%s], actual is [%s]", "Pipe 示例", settings[model.SettingNameBasicBlogTitle].Value)
+	if "pipe 的个人博客" != settings[model.SettingNameBasicBlogTitle].Value {
+		t.Errorf("expected is [%s], actual is [%s]", "pipe 的个人博客", settings[model.SettingNameBasicBlogTitle].Value)
 	}
 }
 

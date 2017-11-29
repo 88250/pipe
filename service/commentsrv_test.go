@@ -24,20 +24,20 @@ import (
 
 func TestConsoleGetComments(t *testing.T) {
 	comments, pagination := Comment.ConsoleGetComments(1, 1)
-	if 0 != len(comments) {
-		t.Errorf("expected is [%d], actual is [%d]", 0, len(comments))
+	if 1 != len(comments) {
+		t.Errorf("expected is [%d], actual is [%d]", 1, len(comments))
 
 		return
 	}
-	if 0 != pagination.RecordCount {
-		t.Errorf("expected is [%d], actual is [%d]", 0, pagination.RecordCount)
+	if 1 != pagination.RecordCount {
+		t.Errorf("expected is [%d], actual is [%d]", 1, pagination.RecordCount)
 	}
 }
 
 func TestGetRecentComments(t *testing.T) {
 	comments := Comment.GetRecentComments(10, 1)
-	if 0 != len(comments) {
-		t.Errorf("expected is [%d], actual is [%d]", 0, len(comments))
+	if 1 != len(comments) {
+		t.Errorf("expected is [%d], actual is [%d]", 1, len(comments))
 
 		return
 	}
@@ -76,7 +76,7 @@ func TestRemoveComment(t *testing.T) {
 	}
 
 	comments, _ := Comment.ConsoleGetComments(1, 1)
-	if 0 != len(comments) {
+	if 1 != len(comments) {
 		t.Error("remove comment failed")
 	}
 }

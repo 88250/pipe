@@ -34,13 +34,14 @@ func TestGetArticleByPath(t *testing.T) {
 	}
 }
 
+var lastArticleID uint
+
 func TestAddArticle(t *testing.T) {
 	for i := 0; i < articleRecordSize; i++ {
 		article := &model.Article{AuthorID: 1,
 			Title:       "Test 文章" + strconv.Itoa(i),
 			Tags:        "Tag1, 标签2",
 			Content:     "正文部分",
-			Path:        "/test" + strconv.Itoa(i),
 			Topped:      false,
 			Commentable: true,
 			BlogID:      1,
@@ -49,6 +50,8 @@ func TestAddArticle(t *testing.T) {
 		if err := Article.AddArticle(article); nil != err {
 			t.Error("add article failed: " + err.Error())
 		}
+
+		lastArticleID = article.ID
 	}
 
 	statisticSetting := Statistic.GetStatistic(model.SettingNameStatisticArticleCount, 1)
@@ -57,32 +60,28 @@ func TestAddArticle(t *testing.T) {
 	}
 }
 
-func TestGetPreviousArticle(t *testing.T) {
-	article := Article.GetPreviousArticle(2, 1)
+func TestGetPreviousNextArticle(t *testing.T) {
+	article := Article.GetPreviousArticle(lastArticleID, 1)
 	if nil == article {
 		t.Errorf("article is nil")
 
 		return
 	}
-	if article.ID >= 2 {
-		t.Errorf("it is not the previous article")
-	}
-}
 
-func TestGetNextArticle(t *testing.T) {
-	article := Article.GetNextArticle(1, 1)
+	article = Article.GetNextArticle(article.ID, 1)
 	if nil == article {
 		t.Errorf("article is nil")
 
 		return
 	}
-	if article.ID <= 1 {
+
+	if article.ID != lastArticleID {
 		t.Errorf("it is not the next article")
 	}
 }
 
 func TestConsoleGetArticles(t *testing.T) {
-	articles, pagination := Article.ConsoleGetArticles(1, 1)
+	articles, pagination := Article.ConsoleGetArticles("", 1, 1)
 	if adminConsoleArticleListPageSize != len(articles) {
 		t.Errorf("expected is [%d], actual is [%d]", adminConsoleArticleListPageSize, len(articles))
 	}
@@ -119,20 +118,20 @@ func TestGetMostCommentArticles(t *testing.T) {
 }
 
 func TestConsoleGetArticle(t *testing.T) {
-	article := Article.ConsoleGetArticle(1)
+	article := Article.ConsoleGetArticle(lastArticleID)
 	if nil == article {
 		t.Errorf("article is nil")
 
 		return
 	}
-	if 1 != article.ID {
-		t.Errorf("id is not [1]")
+	if lastArticleID != article.ID {
+		t.Errorf("id is not [" + strconv.Itoa(int(lastArticleID)) + "]")
 	}
 }
 
 func TestUpdateArticle(t *testing.T) {
 	updatedTitle := "Updated title"
-	article := Article.ConsoleGetArticle(1)
+	article := Article.ConsoleGetArticle(lastArticleID)
 	article.Title = updatedTitle
 	if err := Article.UpdateArticle(article); nil != err {
 		t.Errorf("update article failed: " + err.Error())
@@ -140,14 +139,14 @@ func TestUpdateArticle(t *testing.T) {
 		return
 	}
 
-	article = Article.ConsoleGetArticle(1)
+	article = Article.ConsoleGetArticle(lastArticleID)
 	if updatedTitle != article.Title {
 		t.Errorf("expected is [%s], actual is [%s]", updatedTitle, article.Title)
 	}
 }
 
 func TestIncArticleViewCount(t *testing.T) {
-	article := Article.ConsoleGetArticle(1)
+	article := Article.ConsoleGetArticle(lastArticleID)
 	oldCnt := article.ViewCount
 	if err := Article.IncArticleViewCount(article); nil != err {
 		t.Errorf("inc article view count failed: " + err.Error())
@@ -173,7 +172,7 @@ func TestNormalizeTagStr(t *testing.T) {
 }
 
 func TestTagArticle(t *testing.T) {
-	article := Article.ConsoleGetArticle(1)
+	article := Article.ConsoleGetArticle(lastArticleID)
 
 	tx := db.Begin()
 	if err := tagArticle(tx, article); nil != err {
@@ -186,18 +185,18 @@ func TestTagArticle(t *testing.T) {
 }
 
 func TestRemoveArticle(t *testing.T) {
-	article := Article.ConsoleGetArticle(1)
+	article := Article.ConsoleGetArticle(lastArticleID)
 	if nil == article {
 		t.FailNow()
 
 		return
 	}
 
-	if err := Article.RemoveArticle(1); nil != err {
+	if err := Article.RemoveArticle(lastArticleID); nil != err {
 		t.Error(err)
 	}
 
-	article = Article.ConsoleGetArticle(1)
+	article = Article.ConsoleGetArticle(lastArticleID)
 	if nil != article {
 		t.Error("remove article failed")
 	}
