@@ -236,6 +236,7 @@ Pipe 博客平台是一个开源项目，如果你觉得它很赞，请到[项�
 		CommentCount: 1,
 		BlogID:       blogID,
 	}
+	article.ID = util.CurrentMillisecond()
 	if err := tx.Create(article).Error; nil != err {
 		return err
 	}
@@ -263,12 +264,13 @@ Pipe 博客平台是一个开源项目，如果你觉得它很赞，请到[项�
 		return err
 	}
 
-	comment := &model.Comment{
+	comment := &model.Comment{  
 		ArticleID: article.ID,
 		AuthorID:  admin.ID,
 		Content:   "相信积累后必然会有收获 :smile:",
 		BlogID:    blogID,
 	}
+	comment.ID = util.CurrentMillisecond()
 	if err := tx.Create(comment).Error; nil != err {
 		return err
 	}
