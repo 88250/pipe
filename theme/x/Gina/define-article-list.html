@@ -1,6 +1,6 @@
 {{define "Gina/article-list"}}
 <div class="wrapper content">
-    <div>
+    <div {{if lt (len .Pagination.PageNums) 2}} style="margin-bottom: -50px" {{end}}>
         {{if eq (len .Articles) 0}}
         {{.I18n.NoData}}
         {{end}}
