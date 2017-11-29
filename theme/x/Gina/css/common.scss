@@ -2,10 +2,10 @@
  * skin gina style
  *
  * @author <a href="http://vanessa.b3log.org">Liyuan Li</a>
- * @version 0.1.0.0, Nov 9, 2017
+ * @version 0.1.0.1, Nov 29, 2017
 */
 @import '../../../scss/basic';
-@import "github.scss";
+@import "../../../scss/github";
 
 // z-index
 // article avatar 10
@@ -37,16 +37,6 @@ body {
 
 a {
   transition: $transition;
-}
-
-.pipe-content__reset {
-  pre > code,
-  pre {
-    background-image: url(../images/code-bg.png);
-    border-radius: 5px;
-    background-color: #f2f2f2;
-    display: block;
-  }
 }
 
 // function

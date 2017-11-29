@@ -210,7 +210,7 @@
           if (typeof (flowchart) !== 'undefined') {
             initFlow()
           } else {
-            asyncLoadScript('https://static.hacpai.com/js/lib/flowchart/flowchart.min.js', initFlow)
+            asyncLoadScript(process.env.staticPath + 'theme/js/lib/flowchart.min.js', initFlow)
           }
         }
       },
