@@ -71,9 +71,11 @@ func pushArticles() {
 			},
 		}
 		result := &map[string]interface{}{}
-		gorequest.New().Post("https://rhythm.b3log.org/api/article").SendMap(requestJSON).
+		_, _, errs := gorequest.New().Post("https://rhythm.b3log.org/api/article").SendMap(requestJSON).
 			Set("user-agent", util.UserAgent).Timeout(30 * time.Second).EndStruct(result)
-		logger.Tracef("%+v", result)
+		if nil != errs && time.Duration(7*24*time.Hour) > article.UpdatedAt.Sub(article.PushedAt) {
+			continue
+		}
 
 		article.PushedAt = article.UpdatedAt
 		service.Article.UpdatePushedAt(article)
@@ -124,9 +126,11 @@ func pushComments() {
 			},
 		}
 		result := &map[string]interface{}{}
-		gorequest.New().Post("https://rhythm.b3log.org/api/comment").SendMap(requestJSON).
+		_, _, errs := gorequest.New().Post("https://rhythm.b3log.org/api/comment").SendMap(requestJSON).
 			Set("user-agent", util.UserAgent).Timeout(30 * time.Second).EndStruct(result)
-logger.Tracef("%+v", result)
+		if nil != errs && time.Duration(7*24*time.Hour) > comment.UpdatedAt.Sub(comment.PushedAt) {
+			continue
+		}
 
 		comment.PushedAt = comment.UpdatedAt
 		service.Comment.UpdatePushedAt(comment)
