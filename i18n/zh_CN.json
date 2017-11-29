@@ -155,5 +155,14 @@
   "prohibit": "禁止",
   "unProhibit": "解除禁止",
   "hasChoose": "已选择",
-  "cntContent": "项内容"
+  "cntContent": "项内容",
+  "emoji": "表情",
+  "bold": "粗体",
+  "italic": "斜体",
+  "quote": "引用",
+  "link": "链接",
+  "orderedList": "有序列表",
+  "unorderedList": "无序列表",
+  "fullscreen": "全屏",
+  "question": "帮助"
 }

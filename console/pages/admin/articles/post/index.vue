@@ -12,14 +12,13 @@
         ></v-text-field>
 
         <v-editor
-          :loadingLabel="$t('uploading', $store.state.locale)"
-          :errorLabel="$t('uploadError', $store.state.locale)"
-          :overLabel="$t('uploadOver', $store.state.locale)"
           :uploadURL="`${$store.state.blogURL}/upload`"
           :uploadMax="10"
           :height="300"
           v-model="content"
-          @input="parseMarkdown"></v-editor>
+          :label="label"
+          :fetchUpload="fetchUpload"
+          @change="parseMarkdown"></v-editor>
 
         <v-select
           v-model="tags"
@@ -107,7 +106,22 @@
   export default {
     data () {
       return {
-        previewRef: document.querySelectorAll('.editor__markdown')[0],
+        label: {
+          loading: this.$t('uploading', this.$store.state.locale),
+          error: this.$t('uploadError', this.$store.state.locale),
+          over: this.$t('uploadOver', this.$store.state.locale),
+          emoji: this.$t('emoji', this.$store.state.locale),
+          bold: this.$t('bold', this.$store.state.locale),
+          italic: this.$t('italic', this.$store.state.locale),
+          quote: this.$t('quote', this.$store.state.locale),
+          link: this.$t('link', this.$store.state.locale),
+          upload: this.$t('upload', this.$store.state.locale),
+          unorderedList: this.$t('unorderedList', this.$store.state.locale),
+          orderedList: this.$t('orderedList', this.$store.state.locale),
+          view: this.$t('preview', this.$store.state.locale),
+          fullscreen: this.$t('fullscreen', this.$store.state.locale),
+          question: this.$t('question', this.$store.state.locale)
+        },
         error: false,
         errorMsg: '',
         content: '',
@@ -136,8 +150,21 @@
       }
     },
     methods: {
-      _paseMD (text) {
-        this.previewRef.innerHTML = `<div class="pipe-content__reset">${text}</div>`
+      async fetchUpload (url, succCB) {
+        const responseData = await this.axios.post('/console/markdown', {
+          url
+        })
+        if (responseData.code === 0) {
+          succCB(responseData.data.originalURL, responseData.data.url)
+        } else {
+          this.$store.commit('setSnackBar', {
+            snackBar: true,
+            snackMsg: responseData.msg
+          })
+        }
+      },
+      _paseMD (text, previewRef) {
+        previewRef.innerHTML = `<div class="pipe-content__reset">${text}</div>`
         LazyLoadImage()
         let hasMathJax = false
         let hasFlow = false
@@ -187,19 +214,20 @@
           }
         }
       },
-      async parseMarkdown (value) {
+      async parseMarkdown (value, previewRef) {
+        this.$set(this, 'content', value)
         this.setLocalstorage('content')
-        if (this.previewRef.style.display !== 'none' && value.replace(/(^\s*)|(\s*)$/g, '') !== '') {
+        if (previewRef) {
           const responseData = await this.axios.post('/console/markdown', {
             mdText: value
           })
           if (responseData.code === 0) {
-            this._paseMD(responseData.data.html, this.previewRef)
-            this.$set(this, 'error', false)
-            this.$set(this, 'errorMsg', '')
+            this._paseMD(responseData.data.html, previewRef)
           } else {
-            this.$set(this, 'error', true)
-            this.$set(this, 'errorMsg', responseData.msg)
+            this.$store.commit('setSnackBar', {
+              snackBar: true,
+              snackMsg: responseData.msg
+            })
           }
         }
       },
@@ -303,7 +331,6 @@
           this.$set(this, 'tags', responseData.tags.split(','))
           this.$set(this, 'commentable', responseData.commentable)
           this.$set(this, 'topped', responseData.topped)
-          this.parseMarkdown(this.content)
         }
       } else {
         // set storage
@@ -338,8 +365,6 @@
       this.$store.dispatch('getTags')
 
       this.getThumbs()
-
-      this.$set(this, 'previewRef', document.querySelectorAll('.editor__markdown')[0])
     }
   }
 </script>
@@ -347,8 +372,8 @@
   .article-post__carousel
     margin: 0 auto
     width: 720px
-  .editor
-    margin: 30px 0
-  .pipe-content__reset img
-    cursor: auto
+    .editor
+      margin: 30px 0
+    .pipe-content__reset img
+      cursor: auto
 </style>
