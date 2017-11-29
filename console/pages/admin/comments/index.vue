@@ -2,13 +2,13 @@
   <div class="card">
     <div class="card__body" v-show="!isBatch">
       <v-text-field
-        v-if="list.length > 0"
-        @keyup.enter="getList()"
+        v-if="list.length > 0 || isSearch"
+        @keyup.enter="isSearch = true; getList()"
         class="fn-flex-1"
         :label="$t('enterSearch', $store.state.locale)"
         v-model="keyword">
       </v-text-field>
-      <div v-else>
+      <div v-if="list.length < 1 && !isSearch">
         {{ $t('noData', $store.state.locale) }}
       </div>
     </div>
@@ -59,7 +59,7 @@
                 v-show="!isBatch"
                 v-if="$store.state.name === item.author.name || $store.state.role < 3"
                 class="btn btn--danger btn--small"
-                @click="remove(item.id)">{{ $t('delete', $store.state.locale) }}
+                @click.stop="remove(item.id)">{{ $t('delete', $store.state.locale) }}
               </v-btn>
             </div>
           </div>
@@ -68,6 +68,12 @@
             <time class="fn-nowrap">{{ item.createdAt }}</time>
           </div>
         </div>
+      </li>
+    </ul>
+    <ul class="list" v-else-if="isSearch && !isBatch">
+      <li class="fn-flex fn-pointer" @click="isSearch = false;keyword = '';getList();">
+        {{ $t('searchNull', $store.state.locale) }} &nbsp;
+        <span class="ft-danger">{{keyword}}</span>
       </li>
     </ul>
     <div class="pagination--wrapper fn-clear" v-if="pageCount > 1">
@@ -89,6 +95,7 @@
   export default {
     data () {
       return {
+        isSearch: false,
         isSelectAll: false,
         isBatch: false,
         selectedIds: [],
