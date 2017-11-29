@@ -157,17 +157,19 @@ func showArticleAction(c *gin.Context) {
 		}
 		if 0 != commentModel.ParentCommentID {
 			parentCommentModel := service.Comment.GetComment(commentModel.ParentCommentID)
-			parentCommentAuthorModel := service.User.GetUser(parentCommentModel.AuthorID)
-			page := service.Comment.GetCommentPage(commentModel.ArticleID, commentModel.ID, commentModel.BlogID)
+			if nil != parentCommentModel {
+				parentCommentAuthorModel := service.User.GetUser(parentCommentModel.AuthorID)
+				page := service.Comment.GetCommentPage(commentModel.ArticleID, commentModel.ID, commentModel.BlogID)
 
-			parentComment := &model.ThemeComment{
-				ID:  parentCommentModel.ID,
-				URL: getBlogURL(c) + article.Path + "?p=" + strconv.Itoa(page) + "#pipeComment" + strconv.Itoa(int(parentCommentModel.ID)),
-				Author: &model.ThemeAuthor{
-					Name: parentCommentAuthorModel.Name,
-				},
+				parentComment := &model.ThemeComment{
+					ID:  parentCommentModel.ID,
+					URL: getBlogURL(c) + article.Path + "?p=" + strconv.Itoa(page) + "#pipeComment" + strconv.Itoa(int(parentCommentModel.ID)),
+					Author: &model.ThemeAuthor{
+						Name: parentCommentAuthorModel.Name,
+					},
+				}
+				comment.Parent = parentComment
 			}
-			comment.Parent = parentComment
 		}
 
 		comments = append(comments, comment)
