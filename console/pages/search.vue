@@ -14,21 +14,22 @@
         <li v-for="item in list" :key="item.id">
           <a class="search__title" :href="item.url"><b>{{ item.title }}</b></a>
           <div>
-            {{item.content}}
+            {{item.abstract}}
           </div>
         </li>
       </ul>
-      <v-pagination
-        v-if="currentPageNum > 1"
-        :length="pageCount"
-        v-model="currentPageNum"
-        :total-visible="windowSize"
-        class="fn-right"
-        circle
-        next-icon="angle-right"
-        prev-icon="angle-left"
-        @input="getList"
-      ></v-pagination>
+      <div class="pagination--wrapper fn-clear" v-if="pageCount > 1">
+        <v-pagination
+          :length="pageCount"
+          v-model="currentPageNum"
+          :total-visible="windowSize"
+          class="fn-right"
+          circle
+          next-icon="angle-right"
+          prev-icon="angle-left"
+          @input="getList"
+        ></v-pagination>
+      </div>
     </div>
   </div>
 </template>
@@ -56,25 +57,28 @@
     },
     methods: {
       async getList (currentPage = 1) {
-        const responseData = await this.axios.get(`/search?key=${this.$route.query.k}&p=${currentPage}`)
-        if (responseData) {
-          this.$set(this, 'list', responseData.articles)
-          this.$set(this, 'currentPageNum', responseData.pagination.currentPageNum)
-          this.$set(this, 'pageCount', responseData.pagination.pageCount)
-          this.$set(this, 'windowSize', document.documentElement.clientWidth < 721 ? 5 : responseData.pagination.windowSize)
+        const responseData = await this.axios.post(`${this.$store.state.blogURL}/search`, {
+          key: this.$route.query.key,
+          p: currentPage
+        })
+        if (responseData.code === 0) {
+          this.$set(this, 'list', responseData.data.articles)
+          this.$set(this, 'currentPageNum', responseData.data.pagination.currentPageNum)
+          this.$set(this, 'pageCount', responseData.data.pagination.pageCount)
+          this.$set(this, 'windowSize', document.documentElement.clientWidth < 721 ? 5 : responseData.data.pagination.windowSize)
         }
       },
       async goSearch () {
         if (!this.$refs.form.validate()) {
           return
         }
-        this.$router.push(`${location.pathname}?k=${this.keyword}`)
+        this.$router.push(`${location.pathname}?key=${this.keyword}`)
       }
     },
     mounted () {
       this.getList()
       setTimeout(() => {
-        this.$set(this, 'keyword', this.$route.query.k)
+        this.$set(this, 'keyword', this.$route.query.key)
       })
     }
   }
