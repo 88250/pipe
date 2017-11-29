@@ -57,7 +57,7 @@
             </v-list-tile>
             <v-list-tile
               @click="$router.push('/admin');$store.commit('setBodySide', 'body--side')"
-              v-if="$route.path.indexOf('/admin') === -1 && $store.state.role !== 0">
+              v-if="$route.path.indexOf('/admin') === -1 && $store.state.role !== 0 && $store.state.isInit">
                 {{ $t('manage', $store.state.locale) }}
             </v-list-tile>
             <v-list-tile @click="logout">
