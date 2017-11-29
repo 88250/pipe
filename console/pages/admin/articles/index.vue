@@ -1,13 +1,13 @@
 <template>
   <div class="card">
     <div class="card__body fn-flex" v-show="!isBatch">
-      <v-text-field v-if="list.length > 0"
-        @keyup.enter="getList()"
+      <v-text-field v-if="list.length > 0 || isSearch"
+        @keyup.enter="getList();isSearch = true"
         class="fn-flex-1"
         :label="$t('enterSearch', $store.state.locale)"
         v-model="keyword">
       </v-text-field>
-      <nuxt-link to="/admin/articles/post" class="btn btn--success" :class="{'btn--new': list.length > 0}">{{ $t('new', $store.state.locale)
+      <nuxt-link to="/admin/articles/post" class="btn btn--success" :class="{'btn--new': list.length > 0 || isSearch}">{{ $t('new', $store.state.locale)
         }}
       </nuxt-link>
     </div>
@@ -59,16 +59,16 @@
               :nudge-left="60"
               :open-on-hover="true">
               <v-toolbar-title slot="activator">
-                <nuxt-link class="btn btn--small btn--info" :to="`/admin/articles/post?id=${item.id}`">
+                <v-btn class="btn--small btn--info" @click.stop="goEdit(item.id)">
                   {{ $t('edit', $store.state.locale) }}
                   <v-icon>arrow_drop_down</v-icon>
-                </nuxt-link>
+                </v-btn>
               </v-toolbar-title>
               <v-list>
-                <v-list-tile class="list__tile--link" @click="goEdit(item.id)">
+                <v-list-tile class="list__tile--link" @click.stop="goEdit(item.id)">
                   {{ $t('edit', $store.state.locale) }}
                 </v-list-tile>
-                <v-list-tile class="list__tile--link" @click="remove(item.id)">
+                <v-list-tile class="list__tile--link" @click.stop="remove(item.id)">
                   {{ $t('delete', $store.state.locale) }}
                 </v-list-tile>
               </v-list>
@@ -84,6 +84,12 @@
             <time class="fn-nowrap">{{ item.createdAt }}</time>
           </div>
         </div>
+      </li>
+    </ul>
+    <ul class="list" v-else-if="isSearch && !isBatch">
+      <li class="fn-flex fn-pointer" @click="isSearch = false;keyword = '';getList();">
+        {{ $t('searchNull', $store.state.locale) }} &nbsp;
+        <span class="ft-danger">{{keyword}}</span>
       </li>
     </ul>
     <div class="pagination--wrapper fn-clear" v-if="pageCount > 1">
@@ -105,6 +111,7 @@
   export default {
     data () {
       return {
+        isSearch: false,
         isSelectAll: false,
         isBatch: false,
         selectedIds: [],

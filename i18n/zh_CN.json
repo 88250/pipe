@@ -164,5 +164,6 @@
   "orderedList": "有序列表",
   "unorderedList": "无序列表",
   "fullscreen": "全屏",
-  "question": "帮助"
+  "question": "帮助",
+  "searchNull": "搜索结果为空，清空关键字"
 }
