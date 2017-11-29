@@ -164,10 +164,6 @@ func MapRoutes() *gin.Engine {
 	initGroup.Use(fillUser)
 	initGroup.GET("", showInitPageAction)
 
-	searchGroup := ret.Group(util.PathSearch)
-	searchGroup.Use(fillUser)
-	searchGroup.GET("", showSearchPageAction)
-
 	ret.Static(util.PathAssets, "./console/dist")
 
 	return ret
@@ -207,6 +203,10 @@ func routePath(c *gin.Context) {
 		return
 	case util.PathUpload:
 		uploadAction(c)
+
+		return
+	case util.PathSearch:
+		showSearchPageAction(c)
 
 		return
 	}
