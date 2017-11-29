@@ -29,13 +29,14 @@ export const ParseMarkdown = () => {
       MathJax.Hub.Typeset();
     } else {
       $.ajax({
-        method: "GET",
-        url: "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML",
-        dataType: "script"
+        method: 'GET',
+        url: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML',
+        dataType: 'script',
+        cache: true
       }).done(function () {
         MathJax.Hub.Config({
           tex2jax: {
-            inlineMath: [['$', '$'], ["\\(", "\\)"]],
+            inlineMath: [['$', '$'], ['\\(', '\\)']],
             displayMath: [['$$', '$$']],
             processEscapes: true,
             processEnvironments: true,
@@ -66,9 +67,10 @@ export const ParseMarkdown = () => {
       initFlow();
     } else {
       $.ajax({
-        method: "GET",
+        method: 'GET',
         url: $('#pipeScript').attr('src').split('theme')[0] + 'theme/js/lib/flowchart.min.js',
-        dataType: "script"
+        dataType: 'script',
+        cache: true
       }).done(function () {
         initFlow()
       });
