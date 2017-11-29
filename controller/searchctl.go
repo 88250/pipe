@@ -29,7 +29,6 @@ import (
 )
 
 func searchAction(c *gin.Context) {
-	logger.Info(c.Request.Method)
 	if "GET" == c.Request.Method {
 		showSearchPageAction(c)
 

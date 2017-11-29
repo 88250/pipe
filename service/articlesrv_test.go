@@ -92,7 +92,7 @@ func TestConsoleGetArticles(t *testing.T) {
 }
 
 func TestGetArticles(t *testing.T) {
-	articles, pagination := Article.GetArticles(1, 1)
+	articles, pagination := Article.GetArticles("", 1, 1)
 	if 20 != len(articles) {
 		t.Errorf("expected is [%d], actual is [%d]", 20, len(articles))
 
