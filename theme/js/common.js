@@ -305,4 +305,8 @@ ${copyString}${genCopy(author, link).join('<br>')}</div>`)
   LazyLoadImage()
   ParseMarkdown()
   addCopyright()
+
+  if ('serviceWorker' in navigator && 'caches' in window && 'fetch' in window) {
+    navigator.serviceWorker.register('http://localhost:5897/theme/js/sw.js?', {scope: '/theme/js/'});
+  }
 })()
