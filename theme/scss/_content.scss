@@ -2,7 +2,7 @@
  * article content reset.
  *
  * @author <a href="http://vanessa.b3log.org">Liyuan Li</a>
- * @version 0.1.0.0, Oct 11, 2017
+ * @version 0.1.0.1, Nov 29, 2017
  */
 @import 'mixin';
 
@@ -148,11 +148,11 @@
 
   pre > code {
     padding: 0.5em;
-    border-radius: 0;
     color: $black;
     background-color: rgba(0, 0, 0, 0.04);
     background-size: 20px 20px;
-    background-image: url(../../../images/code-bg.png);
+    border-radius: 5px;
+    display: block;
   }
 
   kbd {

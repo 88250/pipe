@@ -39,6 +39,13 @@ a {
   transition: $transition;
 }
 
+.pipe-content__reset {
+  pre > code {
+    background-image: url(../../../images/code-bg.png);
+  }
+}
+
+
 // function
 .fn-bottom {
   padding-bottom: 50px;
@@ -96,7 +103,7 @@ a {
   display: inline-block;
   z-index: 10;
   box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 7px;
-  @include image-bg('../images/image-bg.svg');
+  @include image-bg('../../../images/image-bg.svg');
 
   &--space {
     margin-right: 20px;
@@ -426,7 +433,7 @@ a {
     border-radius: 5px;
     margin-bottom: 30px;
     display: block;
-    @include image-bg('../images/image-bg.svg');
+    @include image-bg('../../../images/image-bg.svg');
 
     &--relevant {
       margin-bottom: 10px;
@@ -679,7 +686,7 @@ a {
       &__thumbnail {
         height: 90px;
         margin: -10px -10px 0;
-        @include image-bg('../images/image-bg.svg');
+        @include image-bg('../../../images/image-bg.svg');
         margin-bottom: 10px;
         display: block;
       }
