@@ -1,6 +1,6 @@
 <template>
   <div class="console" id="particles">
-    <div class="card" v-if="$store.state.role !== 0 && $store.state.role !== 4">
+    <div class="card" v-if="$store.state.role !== 0">
       <h2 class="card__title">{{ $t('welcome', $store.state.locale) }}</h2>
       <ul class="list">
         <li class="fn-flex" v-for="item in $store.state.blogs">
