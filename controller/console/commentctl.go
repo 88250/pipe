@@ -32,7 +32,7 @@ func GetCommentsAction(c *gin.Context) {
 	defer c.JSON(http.StatusOK, result)
 
 	session := util.GetSession(c)
-	commentModels, pagination := service.Comment.ConsoleGetComments(util.GetPage(c), session.BID)
+	commentModels, pagination := service.Comment.ConsoleGetComments(c.Query("key"), util.GetPage(c), session.BID)
 	blogURLSetting := service.Setting.GetSetting(model.SettingCategoryBasic, model.SettingNameBasicBlogURL, session.BID)
 
 	comments := []*ConsoleComment{}

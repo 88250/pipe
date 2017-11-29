@@ -126,11 +126,19 @@ func (srv *commentService) GetReplies(parentCommentID uint, blogID uint) (ret []
 	return
 }
 
-func (srv *commentService) ConsoleGetComments(page int, blogID uint) (ret []*model.Comment, pagination *util.Pagination) {
+func (srv *commentService) ConsoleGetComments(keyword string, page int, blogID uint) (ret []*model.Comment, pagination *util.Pagination) {
 	offset := (page - 1) * adminConsoleCommentListPageSize
 	count := 0
+
+	where := "blog_id = ?"
+	whereArgs := []interface{}{blogID}
+	if "" != keyword {
+		where += " AND content LIKE ?"
+		whereArgs = append(whereArgs, "%"+keyword+"%")
+	}
+
 	if err := db.Model(&model.Comment{}).
-		Where(&model.Comment{BlogID: blogID}).
+		Where(where, whereArgs...).
 		Count(&count).Offset(offset).Limit(adminConsoleCommentListPageSize).Find(&ret).Error; nil != err {
 		logger.Errorf("get comments failed: " + err.Error())
 	}
