@@ -23,19 +23,19 @@ import (
 )
 
 type ThemeArticle struct {
-	ID           uint
-	Abstract     string
-	Author       *ThemeAuthor
-	CreatedAt    string
-	Title        string
-	Tags         []*ThemeTag
-	URL          string
-	Topped       bool
-	ViewCount    int
-	CommentCount int
-	ThumbnailURL string
-	Content      template.HTML
-	Editable     bool
+	ID           uint          `json:",omitempty"`
+	Abstract     string        `json:"abstract"`
+	Author       *ThemeAuthor  `json:",omitempty"`
+	CreatedAt    string        `json:",omitempty"`
+	Title        string        `json:"title"`
+	Tags         []*ThemeTag   `json:",omitempty"`
+	URL          string        `json:"url"`
+	Topped       bool          `json:",omitempty"`
+	ViewCount    int           `json:",omitempty"`
+	CommentCount int           `json:",omitempty"`
+	ThumbnailURL string        `json:",omitempty"`
+	Content      template.HTML `json:",omitempty"`
+	Editable     bool          `json:",omitempty"`
 }
 
 type ThemeTag struct {

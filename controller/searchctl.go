@@ -40,7 +40,6 @@ func searchAction(c *gin.Context) {
 
 	page := util.GetPage(c)
 	blogID := getBlogID(c)
-	session := util.GetSession(c)
 	articleModels, pagination := service.Article.GetArticles(c.Query("key"), page, blogID)
 	articles := []*model.ThemeArticle{}
 	for _, articleModel := range articleModels {
@@ -61,26 +60,11 @@ func searchAction(c *gin.Context) {
 			continue
 		}
 
-		author := &model.ThemeAuthor{
-			Name:      authorModel.Name,
-			URL:       getBlogURL(c) + util.PathAuthors + "/" + authorModel.Name,
-			AvatarURL: authorModel.AvatarURL,
-		}
-
 		mdResult := util.Markdown(articleModel.Content)
 		article := &model.ThemeArticle{
-			ID:           articleModel.ID,
-			Abstract:     mdResult.AbstractText,
-			Author:       author,
-			CreatedAt:    articleModel.CreatedAt.Format("2006-01-02"),
-			Title:        pangu.SpacingText(articleModel.Title),
-			Tags:         themeTags,
-			URL:          getBlogURL(c) + articleModel.Path,
-			Topped:       articleModel.Topped,
-			ViewCount:    articleModel.ViewCount,
-			CommentCount: articleModel.CommentCount,
-			ThumbnailURL: mdResult.ThumbURL,
-			Editable:     session.UID == authorModel.ID,
+			Title:    pangu.SpacingText(articleModel.Title),
+			Abstract: mdResult.AbstractText,
+			URL:      getBlogURL(c) + articleModel.Path,
 		}
 
 		articles = append(articles, article)
