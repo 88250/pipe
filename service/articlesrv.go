@@ -83,7 +83,7 @@ func (srv *articleService) GetArchiveArticles(archiveID uint, page int, blogID u
 
 func (srv *articleService) GetPreviousArticle(id uint, blogID uint) *model.Article {
 	ret := &model.Article{}
-	if err := db.Where("id < ? AND blog_id = ?", id, blogID).Limit(1).Find(ret).Error; nil != err {
+	if err := db.Where("id < ? AND blog_id = ?", id, blogID).Order("id DESC").Limit(1).Find(ret).Error; nil != err {
 		return nil
 	}
 
@@ -177,14 +177,21 @@ func (srv *articleService) AddArticle(article *model.Article) error {
 	return nil
 }
 
-func (srv *articleService) ConsoleGetArticles(page int, blogID uint) (ret []*model.Article, pagination *util.Pagination) {
+func (srv *articleService) ConsoleGetArticles(keyword string, page int, blogID uint) (ret []*model.Article, pagination *util.Pagination) {
 	offset := (page - 1) * adminConsoleArticleListPageSize
 	count := 0
+
+	where := "status = ? AND blog_id = ?"
+	whereArgs := []interface{}{model.ArticleStatusOK, blogID}
+	if "" != keyword {
+		where += " AND title LIKE ?"
+		whereArgs = append(whereArgs, "%"+keyword+"%")
+	}
+
 	if err := db.Model(&model.Article{}).Select("id, created_at, author_id, title, tags, path, topped, view_count, comment_count").
-		Where(model.Article{Status: model.ArticleStatusOK, BlogID: blogID}).
+		Where(where, whereArgs...).
 		Order("topped DESC, id DESC").Count(&count).
-		Offset(offset).Limit(adminConsoleArticleListPageSize).
-		Find(&ret).Error; nil != err {
+		Offset(offset).Limit(adminConsoleArticleListPageSize).Find(&ret).Error; nil != err {
 		logger.Errorf("get articles failed: " + err.Error())
 	}
 
