@@ -22,7 +22,7 @@
     },
     head () {
       return {
-        title: `${this.$store.state.blogTitle} - ${this.$t('home', this.$store.state.locale)}`
+        title: `${this.$t('home', this.$store.state.locale)} - ${this.$store.state.blogTitle}`
       }
     },
     async mounted () {

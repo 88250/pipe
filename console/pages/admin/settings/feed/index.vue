@@ -55,7 +55,7 @@
     },
     head () {
       return {
-        title: `${this.$store.state.blogTitle} - ${this.$t('feed', this.$store.state.locale)}`
+        title: `${this.$t('feed', this.$store.state.locale)} - ${this.$store.state.blogTitle}`
       }
     },
     methods: {

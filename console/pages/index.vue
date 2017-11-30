@@ -21,7 +21,7 @@
   export default {
     head () {
       return {
-        title: this.$t('welcome', this.$store.state.locale)
+        title: this.$t('welcome', this.$store.state.locale) + ' - Pipe'
       }
     },
     mounted () {

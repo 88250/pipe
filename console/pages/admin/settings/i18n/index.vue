@@ -44,7 +44,7 @@
     },
     head () {
       return {
-        title: `${this.$store.state.blogTitle} - ${this.$t('internationalization', this.$store.state.locale)}`
+        title: `${this.$t('internationalization', this.$store.state.locale)} - ${this.$store.state.blogTitle}`
       }
     },
     methods: {

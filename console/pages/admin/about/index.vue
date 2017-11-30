@@ -69,7 +69,7 @@
     },
     head () {
       return {
-        title: `${this.$store.state.blogTitle} - ${this.$t('about', this.$store.state.locale)}`
+        title: `${this.$t('about', this.$store.state.locale)} - ${this.$store.state.blogTitle}`
       }
     },
     async mounted () {

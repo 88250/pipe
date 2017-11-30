@@ -1,7 +1,7 @@
 <template>
   <div class="content">
     <div class="card card__body fn-clear">
-      <v-form ref="form" class="search__form" @submit.prevent="goSearch">
+      <v-form ref="form" @submit.prevent="goSearch">
         <v-text-field
           :label="$t('enterSearch', $store.state.locale)"
           v-model="keyword"
@@ -11,11 +11,13 @@
         ></v-text-field>
       </v-form>
       <ul class="list">
-        <li v-for="item in list" :key="item.id">
-          <a class="search__title" :href="item.url"><b>{{ item.title }}</b></a>
-          <div>
-            {{item.abstract}}
-          </div>
+        <li v-for="item in list" :key="item.id" class="fn-flex">
+          <a :href="item.url">
+              <b>{{ item.title }}</b>
+            <div>
+              {{item.abstract}}
+            </div>
+          </a>
         </li>
       </ul>
       <div class="pagination--wrapper fn-clear" v-if="pageCount > 1">
@@ -40,7 +42,7 @@
   export default {
     head () {
       return {
-        title: this.$t('search', this.$store.state.locale)
+        title: this.$t('search', this.$store.state.locale) + ' - ' + this.$store.state.blogTitle
       }
     },
     data () {
@@ -57,7 +59,7 @@
     },
     methods: {
       async getList (currentPage = 1) {
-        const responseData = await this.axios.post(`${this.$store.state.blogURL}/search`, {
+        const responseData = await this.axios.post(`/search`, {
           key: this.$route.query.key,
           p: currentPage
         })

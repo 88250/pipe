@@ -146,7 +146,7 @@
     },
     head () {
       return {
-        title: `${this.$store.state.blogTitle} - ${this.$t(this.$route.query.id ? 'editArticle' : 'postArticle', this.$store.state.locale)}`
+        title: `${this.$t(this.$route.query.id ? 'editArticle' : 'postArticle', this.$store.state.locale)} - ${this.$store.state.blogTitle}`
       }
     },
     methods: {

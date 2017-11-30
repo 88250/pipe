@@ -79,7 +79,7 @@
     },
     head () {
       return {
-        title: `${this.$store.state.blogTitle} - ${this.$t('navigationList', this.$store.state.locale)}`
+        title: `${this.$t('navigationList', this.$store.state.locale)} - ${this.$store.state.blogTitle}`
       }
     },
     methods: {
