@@ -5,10 +5,12 @@
  * @version 0.1.0.0, Nov 30, 2017
  */
 
-const version = '1512012454645';
-const staticServePath = 'http://locoalhost:5897/';
+import config from '../pipe.json'
+
+const version = config.StaticResourceVersion;
+const staticServePath = config.Server;
 const imgServePath = 'https://img.hacpai.com/';
-const servePath = 'http://locoalhost:5897/';
+const servePath = config.StaticServer || config.Server;
 /**
  * @description add offline cache
  */

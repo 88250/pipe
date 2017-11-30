@@ -307,7 +307,7 @@ ${copyString}${genCopy(author, link).join('<br>')}</div>`)
   ParseMarkdown()
   addCopyright()
 
-  if ('serviceWorker' in navigator && 'caches' in window && 'fetch' in window) {
-    navigator.serviceWorker.register(`${config.Server}/sw.js?${config.StaticResourceVersion}`, {scope: '/'});
+  if ('serviceWorker' in navigator && 'caches' in window && 'fetch' in window ) { // && config.RuntimeMode === 'prod'
+    navigator.serviceWorker.register(`${config.Server}/sw.min.js?${config.StaticResourceVersion}`, {scope: '/'});
   }
 })()

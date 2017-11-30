@@ -53,10 +53,7 @@ gulp.task('watch', function () {
 gulp.task('build', function () {
   // set static version
   const newVersion = (new Date()).getTime()
-  // set sw.js
-  fs.writeFileSync('./sw.js',
-    fs.readFileSync('./sw.js', 'UTF-8')
-      .replace(/const version = '\d{13}'/, `const version = '${newVersion}'`), 'UTF-8')
+
   // set pipe.json
   fs.writeFileSync('../pipe.json',
     fs.readFileSync('../pipe.json', 'UTF-8')
@@ -64,9 +61,12 @@ gulp.task('build', function () {
 
   const minify = composer(uglifyjs)
   // min sw.js
-  gulp.src('./sw.js')
+  browserify({entries: `./sw.js`})
+    .transform('babelify', {presets: ['es2015']})
+    .bundle()
+    .pipe(source('sw.min.js'))
+    .pipe(buffer())
     .pipe(minify().on('error', gulpUtil.log))
-    .pipe(rename({suffix: '.min'}))
     .pipe(gulp.dest('.'))
 
   // theme js
@@ -88,7 +88,6 @@ gulp.task('build', function () {
         .pipe(buffer())
         .pipe(minify().on('error', gulpUtil.log))
         .pipe(gulp.dest(jsPath))
-
     } catch (e) {
     }
   })
