@@ -10,13 +10,14 @@ export default (ctx) => {
   Vue.use(VueAxios, customAxios)
 
   customAxios.interceptors.request.use((config) => {
-    if (config.method === 'get') {
-      let char = '?'
-      if (config.url.split('?').length > 1) {
-        char = '&'
-      }
-      config.url += `${char}${(new Date()).getTime()}`
-    }
+    // clear cache
+    // if (config.method === 'get') {
+    //   let char = '?'
+    //   if (config.url.split('?').length > 1) {
+    //     char = '&'
+    //   }
+    //   config.url += `${char}${(new Date()).getTime()}`
+    // }
     return config
   })
 

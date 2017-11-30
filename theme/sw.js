@@ -30,7 +30,6 @@ self.addEventListener('activate', event => {
 
 // 请求截取
 self.addEventListener('fetch', event => {
-  console.log(event.request.headers.get('accept'), event.request)
   if (event.request.headers.get('accept').indexOf('text/html') === 0 // document
     || (
       event.request.headers.get('accept') === '*/*' &&
