@@ -1,21 +1,14 @@
-/*
- * Symphony - A modern community (forum/SNS/blog) platform written in Java.
- * Copyright (C) 2012-2017,  b3log.org & hacpai.com
- *
- * 本文件属于 Sym 商业版的一部分，请仔细阅读项目根文件夹的 LICENSE 并严格遵守相关约定
- */
 /**
  * @fileoverview service work.
  *
  * @author <a href="http://vanessa.b3log.org">Liyuan Li</a>
- * @version 0.2.1.0, Nov 14, 2017
- * @since 2.2.0
+ * @version 0.1.0.0, Nov 30, 2017
  */
 
-const version = '1511945482232';
-const staticServePath = 'https://static.hacpai.com/';
+const version = '1512012454645';
+const staticServePath = 'http://locoalhost:5897/';
 const imgServePath = 'https://img.hacpai.com/';
-const servePath = 'https://hacpai.com/';
+const servePath = 'http://locoalhost:5897/';
 /**
  * @description add offline cache
  */
@@ -24,8 +17,8 @@ self.addEventListener('activate', event => {
   event.waitUntil(
     caches.keys().then(function (keyList) {
       return Promise.all(keyList.map(function (key) {
-        if (key !== 'hacpai-html' && key !== 'hacpai-image' &&
-          key !== 'hacpai-static-' + version) {
+        if (key !== 'pipe-html' && key !== 'pipe-image' &&
+          key !== 'pipe-static-' + version) {
           return caches.delete(key);
         }
       }));
@@ -37,8 +30,7 @@ self.addEventListener('activate', event => {
 self.addEventListener('fetch', event => {
   if (event.request.headers.get('accept').indexOf('text/html') === 0 || (
       event.request.headers.get('accept') === '*/*' &&
-      event.request.url.indexOf('/js/') === -1 &&
-      event.request.url.indexOf('/notification/unread/count') === -1
+      event.request.url.indexOf('/js/') === -1
     )) {
     // 动态资源
     event.respondWith(
@@ -48,7 +40,7 @@ self.addEventListener('fetch', event => {
         if (event.request.url.indexOf(servePath) === -1) {
           return response;
         }
-        return caches.open('hacpai-html').then(function (cache) {
+        return caches.open('pipe-html').then(function (cache) {
           // 更新动态资源的缓存
           if (event.request.method !== 'POST' && event.request.method !== 'DELETE' &&
             event.request.method !== 'PUT') {
@@ -70,20 +62,15 @@ self.addEventListener('fetch', event => {
         return response ||
           // 没有指定的静态资源从服务器拉取
           fetch(event.request).then(function (fetchResponse) {
-            if (event.request.url.indexOf(imgServePath) > -1 ||
-              event.request.url.indexOf(servePath + 'porter') > -1 ||
-              event.request.url.indexOf(staticServePath + 'emoji/') > -1 ||
-              event.request.url.indexOf(staticServePath + 'images/emotions/') > -1) {
-              // 对用户头像、图片、solo代理图片、emoji、solo emotion 进行缓存
-              return caches.open('hacpai-image').then(function (cache) {
+            if (event.request.url.indexOf(imgServePath) > -1) {
+              // 对用户头像、图片进行缓存
+              return caches.open('pipe-image').then(function (cache) {
                 cache.put(event.request, fetchResponse.clone());
                 return fetchResponse;
               });
-            } else if (event.request.url.indexOf(staticServePath + 'css/') > -1 ||
-              event.request.url.indexOf(staticServePath + 'js/') > -1 ||
-              event.request.url.indexOf(staticServePath + 'images/') > -1) {
-              // 对 css, js, image(不含 emoji) 进行缓存
-              return caches.open('hacpai-static-' + version).then(function (cache) {
+            } else if (event.request.url.indexOf(staticServePath) > -1) {
+              // 对 css, js, image 进行缓存
+              return caches.open('pipe-static-' + version).then(function (cache) {
                 cache.put(event.request, fetchResponse.clone());
                 return fetchResponse;
               });

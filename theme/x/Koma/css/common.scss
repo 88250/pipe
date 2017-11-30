@@ -103,7 +103,7 @@ a {
   width: 50px;
   border-radius: 50%;
   display: inline-block;
-  @include image-bg('../images/image-bg.svg');
+  @include image-bg('../../../images/image-bg.svg');
 
   &--space {
     margin-right: 20px;
@@ -397,7 +397,7 @@ a {
     border-radius: 10px;
     margin-bottom: 30px;
     display: block;
-    @include image-bg('../images/image-bg.svg');
+    @include image-bg('../../../images/image-bg.svg');
 
     &--relevant {
       margin-bottom: 10px;

@@ -48,7 +48,7 @@
     border-radius: 50%;
     display: inline-block;
     z-index: 10;
-    @include image-bg('../images/image-bg.svg');
+    @include image-bg('../../../images/image-bg.svg');
     &:hover {
       border-color: rgba(0, 0, 0, .06);
     }

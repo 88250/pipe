@@ -2,7 +2,7 @@
  * @file themes tool.
  *
  * @author <a href='http://vanessa.b3log.org'>Liyuan Li</a>
- * @version 0.3.0.0, Oct 19, 2017
+ * @version 0.1.0.0, Nov 30, 2017
  */
 
 const gulp = require('gulp')
