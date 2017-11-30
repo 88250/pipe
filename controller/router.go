@@ -129,6 +129,8 @@ func MapRoutes() *gin.Engine {
 	ret.Static(util.PathTheme+"/css", "theme/css")
 	ret.Static(util.PathTheme+"/js", "theme/js")
 	ret.Static(util.PathTheme+"/images", "theme/images")
+	ret.StaticFile("/sw.min.js", "theme/sw.min.js")
+	ret.StaticFile("/halt.html", "theme/halt.html")
 
 	for _, theme := range theme.Themes {
 		themePath := "theme/x/" + theme
