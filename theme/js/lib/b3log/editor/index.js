@@ -144,12 +144,6 @@ export const Editor = (config) => {
 
   // emoji
   const $emoji = $editor.find('.b3log-editor__emoji')
-  $emoji.on('click', 'span', function () {
-    insertTextAtCaret(textarea, $(this).data('value'), '', true);
-    debounceInput(timerId, config.change, $editor)
-  })
-
-  // genEmoji
   let emojiHTML = '';
   const emojiData = {
     "+1": "👍",
@@ -165,6 +159,11 @@ export const Editor = (config) => {
     emojiHTML += `<span data-value="${emojiData[key]} ">${emojiData[key]}</span>`
   });
   $emoji.find('.fn-clear').html(emojiHTML);
+  $emoji.on('click', 'span', function () {
+    insertTextAtCaret(textarea, $(this).data('value'), '', true);
+    debounceInput(timerId, config.change, $editor)
+  })
+
 
   $editor.find('.b3log-editor__toolbar > span').click(function () {
     const $it = $(this);
@@ -240,6 +239,7 @@ export const Editor = (config) => {
               return '';
             }
 
+            // TODO
             $.ajax({
               url: Label.servePath + "/fetch-upload",
               type: "POST",
@@ -321,8 +321,7 @@ export const Editor = (config) => {
       let hintsHTML = ''
       data.forEach((hintData, i) => {
         hintsHTML += `<li data-value="${hintData.value} " class="${i || 'b3log-editor__hints--current'}">
-<img src="${hintData.imageURL}"/>
-${hintData.label}</li>`
+${hintData.value} ${hintData.label}</li>`
       })
 
       if ($hints.length === 0) {
@@ -336,7 +335,7 @@ ${hintData.label}</li>`
         })
       }
 
-      if (y + $hints.outerHeight() > $(window).height() - $textarea.outerHeight()) {
+      if ($hints.outerHeight() > 80) {
         // hint 展现在上部
         $hints.css('top', `${y - $hints.outerHeight() - 18}px`)
       }
@@ -345,7 +344,7 @@ ${hintData.label}</li>`
     const getSearchKey = (splitChar) => {
       const xAtArray = xValue.split(splitChar)
       let searchKey = undefined
-      if (config.at && xAtArray.length > 1) {
+      if (xAtArray.length > 1) {
         if (xAtArray.length === 2 && xAtArray[0] === '') {
           if ((xAtArray[1] === '' || $.trim(xAtArray[1]) !== '') && xAtArray[1].indexOf(' ') === -1 &&
             xAtArray[1].length < 33) {
@@ -379,7 +378,7 @@ ${hintData.label}</li>`
           }
           if (key.indexOf(searchEmoji.toLowerCase()) > -1) {
             matchEmoji.push({
-              value: emojies[key],
+              value: allEmoji[key],
               imageURL: `${config.staticServePath || ''}/emoji/graphics/${key}.png`,
               label: key
             })

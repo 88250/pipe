@@ -2,7 +2,9 @@
 {{if ne .User.UID 0}}
 <div class="pipe-editor" id="pipeEditor">
     <div class="pipe-editor__wrap">
-        <div id="pipeEditorComment" data-blogurl="{{.BlogURL}}" data-placeholder="{{.I18n.CommentPlaceholder}}"></div>
+        <div id="pipeEditorComment"
+             data-label="{{.I18n.Emoji}},{{.I18n.Bold}},{{.I18n.Italic}},{{.I18n.Quote}},{{.I18n.Link}},{{.I18n.Upload}},{{.I18n.UnorderedList}},{{.I18n.OrderedList}},{{.I18n.Preview}},{{.I18n.Question}},{{.I18n.Fullscreen}}"
+             data-blogurl="{{.BlogURL}}" data-placeholder="{{.I18n.CommentPlaceholder}}"></div>
         <div class="fn-clear">
             <div class="fn-left ft-fade" id="pipeEditorReplyTarget"></div>
             <span class="fn-right pipe-btn pipe-btn--space pipe-btn--success"

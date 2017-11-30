@@ -151,7 +151,8 @@
     },
     methods: {
       async fetchUpload (url, succCB) {
-        const responseData = await this.axios.post('/console/markdown', {
+        // TODO
+        const responseData = await this.axios.post('/console/fetchUpload', {
           url
         })
         if (responseData.code === 0) {

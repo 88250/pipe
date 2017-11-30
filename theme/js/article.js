@@ -102,22 +102,22 @@ export const InitComment = () => {
   }
 
   // init Editor
+  const label = $('#pipeEditorComment').data('label').split(',')
   const $b3logEditor = Editor({
     id: 'pipeEditorComment',
     placeholder: $('#pipeEditorComment').data('placeholder'),
     label: {
-      // TODO
-      // emoji: Label.insertEmojiLabel + ' <ctrl+&frasl;>',
-      // bold: Label.addBoldLabel + ' <ctrl+b>',
-      // italic: Label.addItalicLabel + ' <ctrl+i>',
-      // quote: Label.insertQuoteLabel + ' <ctrl+e>',
-      // link: Label.addLinkLabel + ' <ctrl+k>',
-      // upload: Label.uploadFileLabel + Label.commaLabel + Label.canDragLabel,
-      // unorderedList: Label.addBulletedLabel + ' <ctrl+l>',
-      // orderedList: Label.addNumberedListLabel + ' <ctrl+shift+l>',
-      // view: Label.previewLabel + ' <ctrl+d>',
-      // question: Label.helpLabel,
-      // fullscreen: Label.fullscreenLabel + ' <ctrl+shift+a>',
+      emoji: label[0]+ ' <ctrl+&frasl;>',
+      bold: label[1]+ ' <ctrl+b>',
+      italic: label[2]+ ' <ctrl+i>',
+      quote: label[3]+ ' <ctrl+e>',
+      link: label[4]+ ' <ctrl+k>',
+      upload: label[5],
+      unorderedList: label[6]+ ' <ctrl+l>',
+      orderedList: label[7]+ ' <ctrl+shift+l>',
+      view: label[8]+ ' <ctrl+d>',
+      question: label[9],
+      fullscreen: label[10]+ ' <ctrl+shift+a>',
       emojiTip: 'EMOJI CHEAT SHEET'
     },
     height: 100,
