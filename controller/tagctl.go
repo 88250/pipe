@@ -22,6 +22,7 @@ import (
 
 	"strings"
 
+	"github.com/b3log/pipe/i18n"
 	"github.com/b3log/pipe/model"
 	"github.com/b3log/pipe/service"
 	"github.com/b3log/pipe/util"
@@ -32,6 +33,7 @@ import (
 func showTagsAction(c *gin.Context) {
 	dataModel := getDataModel(c)
 	blogID := getBlogID(c)
+	locale := getLocale(c)
 	tagModels := service.Tag.GetTags(math.MaxInt64, blogID)
 	themeTags := []*model.ThemeTag{}
 	for _, tagModel := range tagModels {
@@ -43,6 +45,7 @@ func showTagsAction(c *gin.Context) {
 		themeTags = append(themeTags, themeTag)
 	}
 	dataModel["Tags"] = themeTags
+	dataModel["Title"] = i18n.GetMessage(locale, "tags") + " - " + dataModel["Title"].(string)
 
 	c.HTML(http.StatusOK, getTheme(c)+"/tags.html", dataModel)
 }
@@ -50,6 +53,7 @@ func showTagsAction(c *gin.Context) {
 func showTagArticlesAction(c *gin.Context) {
 	dataModel := getDataModel(c)
 	blogID := getBlogID(c)
+	locale := getLocale(c)
 	session := util.GetSession(c)
 	tagTitle := strings.SplitAfter(c.Request.URL.Path, util.PathTags+"/")[1]
 	tagModel := service.Tag.GetTagByTitle(tagTitle, blogID)
@@ -109,6 +113,7 @@ func showTagArticlesAction(c *gin.Context) {
 		URL:          getBlogURL(c) + util.PathTags + "/" + tagModel.Title,
 		ArticleCount: tagModel.ArticleCount,
 	}
+	dataModel["Title"] = tagModel.Title + " - " + i18n.GetMessage(locale, "tags") + " - " + dataModel["Title"].(string)
 
 	c.HTML(http.StatusOK, getTheme(c)+"/tag-articles.html", dataModel)
 }

@@ -21,6 +21,7 @@ import (
 	"net/http"
 	"strings"
 
+	"github.com/b3log/pipe/i18n"
 	"github.com/b3log/pipe/model"
 	"github.com/b3log/pipe/service"
 	"github.com/b3log/pipe/util"
@@ -31,6 +32,7 @@ import (
 func showCategoriesAction(c *gin.Context) {
 	dataModel := getDataModel(c)
 	blogID := getBlogID(c)
+	locale := getLocale(c)
 	categoryModels := service.Category.GetCategories(math.MaxInt8, blogID)
 	themeCategories := []*model.ThemeCategory{}
 	for _, categoryModel := range categoryModels {
@@ -49,18 +51,21 @@ func showCategoriesAction(c *gin.Context) {
 			URL:          getBlogURL(c) + util.PathCategories + categoryModel.Path,
 			Description:  categoryModel.Description,
 			Tags:         themeTags,
-			ArticleCount: 8,
+			ArticleCount: 8, // TODO: category article count
 		}
 		themeCategories = append(themeCategories, themeCategory)
 	}
 
 	dataModel["Categories"] = themeCategories
+	dataModel["Title"] = i18n.GetMessage(locale, "categories") + " - " + dataModel["Title"].(string)
+
 	c.HTML(http.StatusOK, getTheme(c)+"/categories.html", dataModel)
 }
 
 func showCategoryArticlesArticlesAction(c *gin.Context) {
 	dataModel := getDataModel(c)
 	blogID := getBlogID(c)
+	locale := getLocale(c)
 	session := util.GetSession(c)
 	page := util.GetPage(c)
 	categoryPath := strings.SplitAfter(c.Request.URL.Path, util.PathCategories)[1]
@@ -120,6 +125,7 @@ func showCategoryArticlesArticlesAction(c *gin.Context) {
 		Title:        categoryModel.Title,
 		ArticleCount: pagination.RecordCount,
 	}
+	dataModel["Title"] = categoryModel.Title + " - " + i18n.GetMessage(locale, "categories") + " - " + dataModel["Title"].(string)
 
 	c.HTML(http.StatusOK, getTheme(c)+"/category-articles.html", dataModel)
 }

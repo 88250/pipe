@@ -20,6 +20,7 @@ import (
 	"net/http"
 	"strings"
 
+	"github.com/b3log/pipe/i18n"
 	"github.com/b3log/pipe/model"
 	"github.com/b3log/pipe/service"
 	"github.com/b3log/pipe/util"
@@ -30,19 +31,22 @@ import (
 func showAuthorsAction(c *gin.Context) {
 	dataModel := getDataModel(c)
 	blogID := getBlogID(c)
+	locale := getLocale(c)
 	themeAuthors := []*model.ThemeAuthor{}
 	authorModels, _ := service.User.GetBlogUsers(1, blogID)
 	for _, authorModel := range authorModels {
 		author := &model.ThemeAuthor{
 			Name:         authorModel.Name,
 			URL:          getBlogURL(c) + util.PathAuthors + "/" + authorModel.Name,
-			ArticleCount: 11, // TODO PIPE
+			ArticleCount: 1, // TODO PIPE
 			AvatarURL:    authorModel.AvatarURLWithSize(210),
 		}
 		themeAuthors = append(themeAuthors, author)
 	}
 
 	dataModel["Authors"] = themeAuthors
+	dataModel["Title"] = i18n.GetMessage(locale, "team") + " - " + dataModel["Title"].(string)
+
 	c.HTML(http.StatusOK, getTheme(c)+"/authors.html", dataModel)
 }
 
@@ -59,6 +63,7 @@ func showAuthorArticlesAction(c *gin.Context) {
 	blogID := getBlogID(c)
 	dataModel := getDataModel(c)
 	session := util.GetSession(c)
+	locale := getLocale(c)
 	articleModels, pagination := service.Article.GetAuthorArticles(author.ID, page, blogID)
 	articles := []*model.ThemeArticle{}
 	for _, articleModel := range articleModels {
@@ -104,6 +109,7 @@ func showAuthorArticlesAction(c *gin.Context) {
 		Name:         author.Name,
 		ArticleCount: userBlog.UserArticleCount,
 	}
+	dataModel["Title"] = authorName + " - " + i18n.GetMessage(locale, "team") + " - " + dataModel["Title"].(string)
 
 	c.HTML(http.StatusOK, getTheme(c)+"/author-articles.html", dataModel)
 }

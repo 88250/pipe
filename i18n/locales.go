@@ -78,12 +78,12 @@ func load(localeStr string) {
 func GetMessagef(locale, key string, a ...interface{}) string {
 	msg := GetMessage(locale, key)
 
-	return fmt.Sprintf(msg.(string), a...)
+	return fmt.Sprintf(msg, a...)
 }
 
 // GetMessage gets a message with the specified locale and key.
-func GetMessage(locale, key string) interface{} {
-	return locales[locale].Langs[key]
+func GetMessage(locale, key string) string {
+	return locales[locale].Langs[key].(string)
 }
 
 // GetMessages gets all messages with the specified locale.
