@@ -130,21 +130,32 @@ export const InitComment = () => {
     },
     hasView: false,
     uploadURL: `${$('#pipeEditorComment').data('blogurl')}/upload`,
+    fetchUpload: (url, succCB) => {
+      $.ajax({
+        url: `${$('#pipeEditorComment').data('blogurl')}/fetch-upload`,
+        type: "POST",
+        data: JSON.stringify({
+          url
+        }),
+        success: function (result) {
+          succCB(result.data.originalURL, result.data.url)
+        }
+      });
+    },
     previewClass: 'pipe-content__reset',
     staticServePath: config.StaticServer,
     change: (value, $preview) => {
       if ($.trim(value) === '' || !$preview) {
         return;
       }
-      // TODO
       $.ajax({
         url: `${config.Server}/api/console/markdown`,
         type: "POST",
-        data: {
+        data: JSON.stringify({
           mdText: value
-        },
+        }),
         success: function (result) {
-          $preview.html(result.html);
+          $preview.html(result.data.html);
           LazyLoadImage()
           LazyLoadCSSImage()
           InitHljs()
