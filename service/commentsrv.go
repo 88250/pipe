@@ -61,7 +61,8 @@ func (srv *commentService) UpdateComment(comment *model.Comment) error {
 	defer srv.mutex.Unlock()
 
 	oldComment := &model.Comment{}
-	if err := db.Model(&model.Comment{}).Where("id = ?", comment.ID).Find(oldComment).Error; nil != err {
+	if err := db.Model(&model.Comment{}).Where("id = ? AND blog_id = ?",
+		comment.ID, comment.BlogID).Find(oldComment).Error; nil != err {
 		return err
 	}
 
@@ -150,7 +151,7 @@ func (srv *commentService) ConsoleGetComments(keyword string, page int, blogID u
 
 func (srv *commentService) GetRecentComments(size int, blogID uint) (ret []*model.Comment) {
 	if err := db.Model(&model.Comment{}).Select("id, created_at, content").
-		Where(model.Comment{BlogID: blogID}).
+		Where("blog_id = ?", blogID).
 		Order("created_at DESC, id DESC").Limit(size).Find(&ret).Error; nil != err {
 		logger.Errorf("get recent comments failed: " + err.Error())
 	}
@@ -162,7 +163,7 @@ func (srv *commentService) GetArticleComments(articleID uint, page int, blogID u
 	offset := (page - 1) * themeCommentListPageSize
 	count := 0
 	if err := db.Model(&model.Comment{}).Order("id ASC").
-		Where(model.Comment{ArticleID: articleID, BlogID: blogID}).
+		Where("article_id = ? AND blog_id = ?", articleID, blogID).
 		Count(&count).Offset(offset).Limit(themeCommentListPageSize).Find(&ret).Error; nil != err {
 		logger.Errorf("get comments failed: " + err.Error())
 	}

@@ -107,7 +107,7 @@ func (srv *userService) GetBlogUsers(page int, blogID uint) (ret []*model.User, 
 	offset := (page - 1) * adminConsoleUserListPageSize
 	count := 0
 	if err := db.Model(&model.Correlation{}).
-		Where(&model.Correlation{ID1: blogID, Type: model.CorrelationBlogUser, BlogID: blogID}).
+		Where("id1 = ? AND type = ? AND blog_id = ?", blogID, model.CorrelationBlogUser, blogID).
 		Count(&count).Offset(offset).Limit(adminConsoleUserListPageSize).Find(&correlations).Error; nil != err {
 		logger.Errorf("get users failed: " + err.Error())
 	}

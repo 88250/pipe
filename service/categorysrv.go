@@ -55,7 +55,8 @@ func (srv *categoryService) UpdateCategory(category *model.Category) error {
 	defer srv.mutex.Unlock()
 
 	count := 0
-	if db.Model(&model.Category{}).Where("id = ?", category.ID).Count(&count); 1 > count {
+	if db.Model(&model.Category{}).Where("id = ? AND blog_id = ?", category.ID, category.BlogID).
+		Count(&count); 1 > count {
 		return errors.New(fmt.Sprintf("not found category [id=%d] to update", category.ID))
 	}
 
@@ -134,7 +135,7 @@ func (srv *categoryService) ConsoleGetCategories(page int, blogID uint) (ret []*
 	offset := (page - 1) * adminConsoleCategoryListPageSize
 	count := 0
 	if err := db.Model(&model.Category{}).Order("number ASC, id DESC").
-		Where(model.Category{BlogID: blogID}).
+		Where("blog_id = ?", blogID).
 		Count(&count).Offset(offset).Limit(adminConsoleCategoryListPageSize).Find(&ret).Error; nil != err {
 		logger.Errorf("get categories failed: " + err.Error())
 	}
@@ -203,7 +204,7 @@ func tagCategory(tx *gorm.DB, category *model.Category) error {
 	tags := strings.Split(category.Tags, ",")
 	for _, tagTitle := range tags {
 		tag := &model.Tag{BlogID: category.BlogID}
-		tx.Where("title = ?", tagTitle).First(tag)
+		tx.Where("title = ? AND blog_id = ?", tagTitle, category.BlogID).First(tag)
 		if "" == tag.Title {
 			tag.Title = tagTitle
 			if err := tx.Create(tag).Error; nil != err {

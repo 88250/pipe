@@ -64,7 +64,7 @@ func resolveBlog(c *gin.Context) {
 	if end := strings.Index(path, "?"); 0 < end {
 		path = path[:end]
 	}
-	article := service.Article.GetArticleByPath(path)
+	article := service.Article.GetArticleByPath(path, userBlog.ID)
 	if nil == article {
 		c.Next()
 

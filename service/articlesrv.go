@@ -99,9 +99,9 @@ func (srv *articleService) GetNextArticle(id uint, blogID uint) *model.Article {
 	return ret
 }
 
-func (srv *articleService) GetArticleByPath(path string) *model.Article {
+func (srv *articleService) GetArticleByPath(path string, blogID uint) *model.Article {
 	ret := &model.Article{}
-	if err := db.Where("path = ?", path).Find(ret).Error; nil != err {
+	if err := db.Where("path = ? AND blog_id = ?", path, blogID).Find(ret).Error; nil != err {
 		return nil
 	}
 
@@ -279,7 +279,7 @@ func (srv *articleService) GetTagArticles(tagID uint, page int, blogID uint) (re
 	}
 
 	if err := db.Model(&model.Article{}).
-		Where("id IN (?) AND status = ?", articleIDs, model.ArticleStatusOK).
+		Where("id IN (?) AND status = ? AND blog_id = ?", articleIDs, model.ArticleStatusOK, blogID).
 		Order("topped DESC, id DESC").Count(&count).Offset(offset).Limit(pageSize).
 		Find(&ret).Error; nil != err {
 		logger.Errorf("get tag articles failed: " + err.Error())
@@ -296,7 +296,7 @@ func (srv *articleService) GetAuthorArticles(authorID uint, page int, blogID uin
 	count := 0
 
 	if err := db.Model(&model.Article{}).
-		Where("author_id = ? AND status = ?", authorID, model.ArticleStatusOK).
+		Where("author_id = ? AND status = ? AND blog_id = ?", authorID, model.ArticleStatusOK, blogID).
 		Order("topped DESC, id DESC").Count(&count).
 		Offset(offset).Limit(pageSize).
 		Find(&ret).Error; nil != err {
@@ -310,7 +310,7 @@ func (srv *articleService) GetAuthorArticles(authorID uint, page int, blogID uin
 
 func (srv *articleService) GetMostViewArticles(size int, blogID uint) (ret []*model.Article) {
 	if err := db.Model(&model.Article{}).Select("id, created_at, author_id, title, path").
-		Where(model.Article{Status: model.ArticleStatusOK, BlogID: blogID}).
+		Where("status = ? AND blog_id = ?", model.ArticleStatusOK, blogID).
 		Order("view_count DESC, id DESC").Limit(size).Find(&ret).Error; nil != err {
 		logger.Errorf("get most view articles failed: " + err.Error())
 	}
@@ -320,7 +320,7 @@ func (srv *articleService) GetMostViewArticles(size int, blogID uint) (ret []*mo
 
 func (srv *articleService) GetMostCommentArticles(size int, blogID uint) (ret []*model.Article) {
 	if err := db.Model(&model.Article{}).Select("id, created_at, author_id, title, path").
-		Where(model.Article{Status: model.ArticleStatusOK, BlogID: blogID}).
+		Where("status = ? AND blog_id = ?", model.ArticleStatusOK, blogID).
 		Order("comment_count DESC, id DESC").Limit(size).Find(&ret).Error; nil != err {
 		logger.Errorf("get most comment articles failed: " + err.Error())
 	}
@@ -395,13 +395,13 @@ func (srv *articleService) RemoveArticle(id uint) error {
 		return err
 	}
 	comments := []*model.Comment{}
-	if err := tx.Model(&model.Comment{}).Where("article_id = ?", id).Find(&comments).Error; nil != err {
+	if err := tx.Model(&model.Comment{}).Where("article_id = ? AND blog_id = ?", id, article.BlogID).Find(&comments).Error; nil != err {
 		tx.Rollback()
 
 		return err
 	}
 	if 0 < len(comments) {
-		if err := tx.Where("article_id = ?", id).Delete(&model.Comment{}).Error; nil != err {
+		if err := tx.Where("article_id = ? AND blog_id = ?", id, article.BlogID).Delete(&model.Comment{}).Error; nil != err {
 			tx.Rollback()
 
 			return err
@@ -432,7 +432,8 @@ func (srv *articleService) UpdateArticle(article *model.Article) error {
 	defer srv.mutex.Unlock()
 
 	oldArticle := &model.Article{}
-	if err := db.Model(&model.Article{}).Where("id = ?", article.ID).Find(oldArticle).Error; nil != err {
+	if err := db.Model(&model.Article{}).Where("id = ? AND blog_id = ?", article.ID, article.BlogID).
+		Find(oldArticle).Error; nil != err {
 		return err
 	}
 	newArticle := &model.Article{}

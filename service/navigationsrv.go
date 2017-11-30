@@ -78,7 +78,8 @@ func (srv *navigationService) UpdateNavigation(navigation *model.Navigation) err
 	defer srv.mutex.Unlock()
 
 	count := 0
-	if db.Model(&model.Navigation{}).Where("id = ?", navigation.ID).Count(&count); 1 > count {
+	if db.Model(&model.Navigation{}).Where("id = ? AND blog_id = ?", navigation.ID, navigation.BlogID).
+		Count(&count); 1 > count {
 		return errors.New(fmt.Sprintf("not found navigation [id=%d] to update", navigation.ID))
 	}
 
@@ -97,7 +98,7 @@ func (srv *navigationService) ConsoleGetNavigations(page int, blogID uint) (ret 
 	offset := (page - 1) * adminConsoleNavigationListPageSize
 	count := 0
 	if err := db.Model(&model.Navigation{}).Order("number ASC, id DESC").
-		Where(model.Navigation{BlogID: blogID}).
+		Where("blog_id = ?", blogID).
 		Count(&count).Offset(offset).Limit(adminConsoleNavigationListPageSize).Find(&ret).Error; nil != err {
 		logger.Errorf("get navigations failed: " + err.Error())
 	}
@@ -109,7 +110,7 @@ func (srv *navigationService) ConsoleGetNavigations(page int, blogID uint) (ret 
 
 func (srv *navigationService) GetNavigations(blogID uint) (ret []*model.Navigation) {
 	if err := db.Model(&model.Navigation{}).Order("number ASC, id DESC").
-		Where(model.Navigation{BlogID: blogID}).Find(&ret).Error; nil != err {
+		Where("blog_id = ?", blogID).Find(&ret).Error; nil != err {
 		logger.Errorf("get navigations failed: " + err.Error())
 	}
 

@@ -28,7 +28,7 @@ const (
 )
 
 func TestGetArticleByPath(t *testing.T) {
-	article := Article.GetArticleByPath("/hello-world")
+	article := Article.GetArticleByPath("/hello-world", 1)
 	if nil == article {
 		t.Errorf("article is nil")
 	}
