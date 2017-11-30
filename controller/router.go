@@ -168,6 +168,10 @@ func MapRoutes() *gin.Engine {
 
 	ret.Static(util.PathAssets, "./console/dist")
 
+	ret.NoRoute(func(c *gin.Context) {
+		notFound(c)
+	})
+
 	return ret
 }
 

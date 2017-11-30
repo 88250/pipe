@@ -58,7 +58,7 @@ func showArchiveArticlesAction(c *gin.Context) {
 	month := strings.Split(date, "/")[1]
 	archiveModel := service.Archive.GetArchive(year, month, blogID)
 	if nil == archiveModel {
-		c.Status(http.StatusNotFound)
+		notFound(c)
 
 		return
 	}

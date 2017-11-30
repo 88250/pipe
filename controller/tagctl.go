@@ -58,7 +58,7 @@ func showTagArticlesAction(c *gin.Context) {
 	tagTitle := strings.SplitAfter(c.Request.URL.Path, util.PathTags+"/")[1]
 	tagModel := service.Tag.GetTagByTitle(tagTitle, blogID)
 	if nil == tagModel {
-		c.Status(http.StatusNotFound)
+		notFound(c)
 
 		return
 	}

@@ -35,19 +35,22 @@ import (
 func resolveBlog(c *gin.Context) {
 	username := c.Param("username")
 	if "" == username {
-		c.AbortWithStatus(http.StatusNotFound)
+		notFound(c)
+		c.Abort()
 
 		return
 	}
 	user := service.User.GetUserByName(username)
 	if nil == user {
-		c.AbortWithStatus(http.StatusNotFound)
+		notFound(c)
+		c.Abort()
 
 		return
 	}
 	userBlog := service.User.GetOwnBlog(user.ID)
 	if nil == userBlog {
-		c.AbortWithStatus(http.StatusNotFound)
+		notFound(c)
+		c.Abort()
 
 		return
 	}
@@ -280,4 +283,17 @@ func getLocale(c *gin.Context) string {
 	dataModel := getDataModel(c)
 
 	return dataModel["Setting"].(map[string]interface{})[model.SettingNameI18nLocale].(string)
+}
+
+func notFound(c *gin.Context) {
+	t, err := template.ParseFiles("console/dist/init/index.html")
+	if nil != err {
+		logger.Errorf("load 404 page failed: " + err.Error())
+		c.String(http.StatusNotFound, "load 404 page failed")
+
+		return
+	}
+
+	c.Status(http.StatusNotFound)
+	t.Execute(c.Writer, nil)
 }
