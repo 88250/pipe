@@ -54,6 +54,7 @@ func GetCommentsAction(c *gin.Context) {
 			AvatarURL: commentAuthor.AvatarURL,
 		}
 
+		page := service.Comment.GetCommentPage(commentModel.ArticleID, commentModel.ID, commentModel.BlogID)
 		mdResult := util.Markdown(commentModel.Content)
 		comment := &ConsoleComment{
 			ID:            commentModel.ID,
@@ -62,7 +63,7 @@ func GetCommentsAction(c *gin.Context) {
 			CreatedAt:     commentModel.CreatedAt.Format("2006-01-02"),
 			Title:         article.Title,
 			Content:       template.HTML(mdResult.ContentHTML),
-			URL:           session.BURL + "/todo comment path",
+			URL:           session.BURL + article.Path + "?p=" + strconv.Itoa(page) + "#pipeComment" + strconv.Itoa(int(commentModel.ID)),
 		}
 
 		comments = append(comments, comment)
