@@ -20,6 +20,10 @@ import (
 	"net"
 )
 
+func IsDomain(s string) bool {
+	return !IsIP(s) && "localhost" != s
+}
+
 func IsIP(s string) bool {
 	return nil != net.ParseIP(s)
 }
