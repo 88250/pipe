@@ -1,3 +1,5 @@
+import symbols from '../../../js/symbol'
+
 export default function () {
   document.body.insertAdjacentHTML('afterBegin', `<svg style="position: absolute; width: 0; height: 0; overflow: hidden;" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 <defs>
@@ -28,6 +30,7 @@ export default function () {
 <symbol id="chevron-up" viewBox="0 0 32 32">
 <path d="M31.507 22.571l-3.271 3.251c-0.493 0.493-1.281 0.493-1.773 0l-10.463-10.463-10.463 10.463c-0.493 0.493-1.281 0.493-1.773 0l-3.271-3.251c-0.493-0.493-0.493-1.3 0-1.793l14.621-14.601c0.493-0.493 1.281-0.493 1.773 0l14.621 14.601c0.493 0.493 0.493 1.3 0 1.793z"></path>
 </symbol>
+${symbols}
 </defs>
 </svg>`)
 }

@@ -7,7 +7,9 @@
 
 import $ from 'jquery'
 import hljs from 'highlight.js'
+import {Editor} from "./lib/b3log/editor/index";
 import {LazyLoadCSSImage, LazyLoadImage, ParseMarkdown} from './common'
+import config from '../../pipe.json'
 
 /**
  * @description 初始化目录
@@ -84,30 +86,6 @@ export const ShowEditor = (reply, id, commentId) => {
 
 export const InitComment = () => {
   /**
-   * @description 获取 textarea 光标位置
-   * @param {Bom} textarea textarea 对象
-   * @private
-   */
-  const _getCursorEndPosition = (textarea) => {
-    textarea.focus()
-    if (textarea.setSelectionRange) { // W3C
-      return textarea.selectionEnd
-    } else if (document.selection) { // IE
-      let i
-      const oS = document.selection.createRange()
-      const oR = document.body.createTextRange()
-      oR.moveToElementText(textarea)
-      oS.getBookmark()
-      for (i = 0; oR.compareEndPoints('StartToStart', oS) < 0 && oS.moveStart("character", -1) !== 0; i++) {
-        if (textarea.value.charAt(i) === '\n') {
-          i++
-        }
-      }
-      return i
-    }
-  }
-
-  /**
    * @description 隐藏编辑器
    * @private
    */
@@ -117,9 +95,51 @@ export const InitComment = () => {
     $('body').css('padding-bottom', 0)
   }
 
-  // comment local storage
-  $('#pipeEditorComment').val(localStorage.getItem('pipeEditorComment') || '').keyup(function () {
-    localStorage.setItem('pipeEditorComment', $(this).val())
+  // init Editor
+  const editor = Editor({
+    id: 'pipeEditorComment',
+    placeholder: '请输入评论或回复内容',
+    label: {
+      // emoji: Label.insertEmojiLabel + ' <ctrl+&frasl;>',
+      // bold: Label.addBoldLabel + ' <ctrl+b>',
+      // italic: Label.addItalicLabel + ' <ctrl+i>',
+      // quote: Label.insertQuoteLabel + ' <ctrl+e>',
+      // link: Label.addLinkLabel + ' <ctrl+k>',
+      // upload: Label.uploadFileLabel + Label.commaLabel + Label.canDragLabel,
+      // unorderedList: Label.addBulletedLabel + ' <ctrl+l>',
+      // orderedList: Label.addNumberedListLabel + ' <ctrl+shift+l>',
+      // view: Label.previewLabel + ' <ctrl+d>',
+      // question: Label.helpLabel,
+      // fullscreen: Label.fullscreenLabel + ' <ctrl+shift+a>',
+      // emojiTip: Label.setEmotionLabel
+    },
+    height: 100,
+    keyup: (event) => {
+      localStorage.setItem('pipeEditorComment', event.target.value)
+    },
+    esc: _hideEditor,
+    ctrlEnter: () => {
+      $('#pipeEditorAdd').click();
+    },
+    hasView: false,
+    uploadURL: `${config.Server}/upload`,
+    previewClass: 'pipe-content__reset',
+    staticServePath: config.StaticServer,
+    change: (value, $preview) => {
+      if ($.trim(value) === '' || !$preview) {
+        return;
+      }
+      $.ajax({
+        url: `${config.Server}/markdown`,
+        type: "POST",
+        data: {
+          markdownText: value
+        },
+        success: function (result) {
+          $preview.html(result.html);
+        }
+      });
+    }
   })
 
   // comment null reply
@@ -144,7 +164,7 @@ export const InitComment = () => {
     const $svg = $it.find('svg')
     if ($svg.hasClass('pipe-comment__chevron-down')) {
       $svg.removeClass('pipe-comment__chevron-down')
-      if  ($it.next().find('.pipe-comment__item').length > 0) {
+      if ($it.next().find('.pipe-comment__item').length > 0) {
         $it.next().slideToggle({
           queue: false,
           complete: () => {
@@ -201,7 +221,7 @@ export const InitComment = () => {
     }
   });
 
-  // comment remove
+  // comment reply
   $('body').on('click', '#pipeComments .pipe-comment__btn--danger', function () {
     const $it = $(this)
     if (confirm($it.data('label'))) {
@@ -236,31 +256,6 @@ export const InitComment = () => {
     const $it = $(this)
     ShowEditor($it.data('title'), $it.data('id'), $it.data('commentid'))
   })
-
-  // editor emoji
-  $('.pipe-editor__emotion').find('span').click(function () {
-    const comment = document.getElementById('pipeEditorComment')
-    const endPosition = _getCursorEndPosition(comment)
-    const key = this.title + ' '
-    let textValue = comment.value
-    textValue = textValue.substring(0, endPosition) + key + textValue.substring(endPosition, textValue.length)
-    comment.value = textValue
-  })
-
-  // editor hot key
-  $('#pipeEditorComment').keydown(function (event) {
-    if (event.metaKey && 13 === event.keyCode) {
-      $('#pipeEditorAdd').click()
-    }
-
-    if (27 === event.keyCode) {
-      _hideEditor()
-    }
-  }).keypress(function (event) {
-    if (event.ctrlKey && 10 === event.charCode) {
-      $('#pipeEditorAdd').click()
-    }
-  });
 
   // editor cancel
   $('#pipeEditorCancel').click(function () {
