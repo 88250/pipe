@@ -115,6 +115,7 @@ func showArticleAction(c *gin.Context) {
 			AvatarURL: authorModel.AvatarURL,
 		},
 		ID:           article.ID,
+		Abstract:     mdResult.AbstractText,
 		CreatedAt:    article.CreatedAt.Format("2006-01-02"),
 		Title:        articleTitle,
 		Tags:         themeTags,
@@ -122,6 +123,7 @@ func showArticleAction(c *gin.Context) {
 		Topped:       article.Topped,
 		ViewCount:    article.ViewCount,
 		CommentCount: article.CommentCount,
+		ThumbnailURL: mdResult.ThumbURL,
 		Content:      template.HTML(mdResult.ContentHTML),
 		Editable:     session.UID == authorModel.ID,
 	}
