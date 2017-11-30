@@ -59,6 +59,10 @@ const config = {
       type: Function,
       required: false
     },
+    fetchUpload: {
+      type: Function,
+      required: false
+    },
     esc: {
       type: Function,
       required: false
@@ -93,22 +97,22 @@ export const Editor = (config) => {
     class="b3log-editor"
     style="height: ${config.height || 200}px">
     <div class="b3log-editor__toolbar">
-      <span data-type="emoji" aria-label="${config.label.emoji || 'emoji'}" class="pipe-tooltipped pipe-tooltipped--ne"><svg><use xlink:href="#emoji"></use></svg></span>
-      <span aria-label="${config.label.bold || 'bold'}" class="pipe-tooltipped pipe-tooltipped--ne" data-prefix="**" data-suffix="**"><svg><use xlink:href="#bold"></use></svg></span>
-      <span aria-label="${config.label.italic || 'italic'}" class="pipe-tooltipped pipe-tooltipped--ne" data-prefix="*" data-suffix="*"><svg><use xlink:href="#italic"></use></svg></span>
-      <span aria-label="${config.label.quote || 'quote'}" class="pipe-tooltipped pipe-tooltipped--ne" data-prefix="> " data-suffix=""><svg><use xlink:href="#quote"></use></svg></span>
-      <span aria-label="${config.label.link || 'link'}" class="pipe-tooltipped pipe-tooltipped--ne" data-prefix="[" data-suffix="](http://)"><svg><use xlink:href="#link"></use></svg></span>
-      <span aria-label="${config.label.upload || 'upload'}" class="pipe-tooltipped pipe-tooltipped--ne">
+      <span data-type="emoji" aria-label="${config.label.emoji || 'emoji'}" class="pipe-tooltipped pipe-tooltipped--e"><svg><use xlink:href="#emoji"></use></svg></span>
+      <span aria-label="${config.label.bold || 'bold'}" class="pipe-tooltipped pipe-tooltipped--e" data-prefix="**" data-suffix="**"><svg><use xlink:href="#bold"></use></svg></span>
+      <span aria-label="${config.label.italic || 'italic'}" class="pipe-tooltipped pipe-tooltipped--e" data-prefix="*" data-suffix="*"><svg><use xlink:href="#italic"></use></svg></span>
+      <span aria-label="${config.label.quote || 'quote'}" class="pipe-tooltipped pipe-tooltipped--e" data-prefix="> " data-suffix=""><svg><use xlink:href="#quote"></use></svg></span>
+      <span aria-label="${config.label.link || 'link'}" class="pipe-tooltipped pipe-tooltipped--e" data-prefix="[" data-suffix="](http://)"><svg><use xlink:href="#link"></use></svg></span>
+      <span aria-label="${config.label.upload || 'upload'}" class="pipe-tooltipped pipe-tooltipped--e">
         <label>
           <svg><use xlink:href="#upload"></use></svg>
           <input multiple="multiple" type="file"/>
         </label>
       </span>
-      <span aria-label="${config.label.unorderedList || 'unorderedList'}" class="pipe-tooltipped pipe-tooltipped--ne" data-prefix="* " data-suffix=""><svg><use xlink:href="#unordered-list"></use></svg></span>
-      <span aria-label="${config.label.orderedList || 'orderedList'}" class="pipe-tooltipped pipe-tooltipped--ne" data-prefix="1. " data-suffix=""><svg><use xlink:href="#ordered-list"></use></svg></span>
-      <span aria-label="${config.label.view || 'view'}" class="pipe-tooltipped pipe-tooltipped--ne" data-type="view"><svg><use xlink:href="#view"></use></svg></span>
-      <span aria-label="${config.label.fullscreen || 'fullscreen'}" class="pipe-tooltipped pipe-tooltipped--ne" data-type="fullscreen"><svg><use xlink:href="#fullscreen"></use></svg></span>
-      <a aria-label="${config.label.question || 'question'}" class="pipe-tooltipped pipe-tooltipped--ne" target="_blank" href="https://hacpai.com/guide/markdown">
+      <span aria-label="${config.label.unorderedList || 'unorderedList'}" class="pipe-tooltipped pipe-tooltipped--e" data-prefix="* " data-suffix=""><svg><use xlink:href="#unordered-list"></use></svg></span>
+      <span aria-label="${config.label.orderedList || 'orderedList'}" class="pipe-tooltipped pipe-tooltipped--e" data-prefix="1. " data-suffix=""><svg><use xlink:href="#ordered-list"></use></svg></span>
+      <span aria-label="${config.label.view || 'view'}" class="pipe-tooltipped pipe-tooltipped--e" data-type="view"><svg><use xlink:href="#view"></use></svg></span>
+      <span aria-label="${config.label.fullscreen || 'fullscreen'}" class="pipe-tooltipped pipe-tooltipped--e" data-type="fullscreen"><svg><use xlink:href="#fullscreen"></use></svg></span>
+      <a aria-label="${config.label.question || 'question'}" class="pipe-tooltipped pipe-tooltipped--e" target="_blank" href="https://hacpai.com/guide/markdown">
         <svg><use xlink:href="#question"></use></svg>
       </a> 
       <div class="b3log-editor__emoji">
@@ -239,19 +243,9 @@ export const Editor = (config) => {
               return '';
             }
 
-            // TODO
-            $.ajax({
-              url: Label.servePath + "/fetch-upload",
-              type: "POST",
-              data: JSON.stringify({
-                url: target.src
-              }),
-              success: function (result) {
-                if (result.sc) {
-                  $textarea.val($textarea.val().replace(result.originalURL, result.url))
-                  debounceInput(timerId, config.change, $editor)
-                }
-              }
+            config.fetchUpload && config.fetchUpload(target.src, (originalURL, url) => {
+              $textarea.val($textarea.val().replace(originalURL, url))
+              debounceInput(timerId, config.change, $editor)
             });
 
             return `![${target.alt}](${target.src})`;

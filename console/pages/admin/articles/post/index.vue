@@ -151,8 +151,7 @@
     },
     methods: {
       async fetchUpload (url, succCB) {
-        // TODO
-        const responseData = await this.axios.post('/console/fetchUpload', {
+        const responseData = await this.axios.post(`${this.$store.state.blogURL}/fetch-upload`, {
           url
         })
         if (responseData.code === 0) {
