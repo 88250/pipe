@@ -120,7 +120,7 @@ export const InitComment = () => {
       fullscreen: label[10]+ ' <ctrl+shift+a>',
       emojiTip: 'EMOJI CHEAT SHEET'
     },
-    height: 100,
+    height: 200,
     keyup: (event) => {
       localStorage.setItem('pipeEditorComment', event.target.value)
     },

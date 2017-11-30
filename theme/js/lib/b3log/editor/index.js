@@ -329,7 +329,7 @@ ${hintData.value} ${hintData.label}</li>`
         })
       }
 
-      if ($hints.outerHeight() > 80) {
+      if (y + $hints.outerHeight() > $editor.outerHeight() + 68) {
         // hint 展现在上部
         $hints.css('top', `${y - $hints.outerHeight() - 18}px`)
       }
@@ -428,8 +428,8 @@ ${hintData.value} ${hintData.label}</li>`
 
       debounceInput(timerId, config.change, $editor)
     }
-  }).bind('keyup', 'esc', function (event) {
-    config.esc && config.esc();
+  }).bind('keydown', 'esc', function (event) {
+    config.esc && config.esc(event);
     return false;
   }).bind('keydown', 'Ctrl+/', function (event) {
     event.preventDefault();
