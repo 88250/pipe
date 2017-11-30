@@ -28,7 +28,7 @@ type ThemeArticle struct {
 	Author       *ThemeAuthor  `json:",omitempty"`
 	CreatedAt    string        `json:",omitempty"`
 	Title        string        `json:"title"`
-	Tags         []*ThemeTag   `json:",omitempty"`
+	Tags         []*ThemeTag   `json:"tags"`
 	URL          string        `json:"url"`
 	Topped       bool          `json:",omitempty"`
 	ViewCount    int           `json:",omitempty"`
@@ -39,9 +39,9 @@ type ThemeArticle struct {
 }
 
 type ThemeTag struct {
-	Title        string
-	URL          string
-	ArticleCount int
+	Title        string `json:"title"`
+	URL          string `json:"url"`
+	ArticleCount int    `json:",omitempty"`
 }
 
 type ThemeArchive struct {
