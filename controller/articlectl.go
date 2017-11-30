@@ -107,6 +107,7 @@ func showArticleAction(c *gin.Context) {
 
 	mdResult := util.Markdown(article.Content)
 	authorModel := service.User.GetUser(article.AuthorID)
+	articleTitle := pangu.SpacingText(article.Title)
 	dataModel["Article"] = &model.ThemeArticle{
 		Author: &model.ThemeAuthor{
 			Name:      authorModel.Name,
@@ -115,7 +116,7 @@ func showArticleAction(c *gin.Context) {
 		},
 		ID:           article.ID,
 		CreatedAt:    article.CreatedAt.Format("2006-01-02"),
-		Title:        pangu.SpacingText(article.Title),
+		Title:        articleTitle,
 		Tags:         themeTags,
 		URL:          getBlogURL(c) + article.Path,
 		Topped:       article.Topped,
@@ -181,6 +182,8 @@ func showArticleAction(c *gin.Context) {
 	fillPreviousArticle(c, article, &dataModel)
 	fillNextArticle(c, article, &dataModel)
 	dataModel["ToC"] = template.HTML(toc(dataModel["Article"].(*model.ThemeArticle)))
+	dataModel["Title"] = articleTitle + " - " + dataModel["Title"].(string)
+
 	c.HTML(http.StatusOK, getTheme(c)+"/article.html", dataModel)
 
 	service.Article.IncArticleViewCount(article)

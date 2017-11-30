@@ -43,6 +43,8 @@ func showArchivesAction(c *gin.Context) {
 	}
 
 	dataModel["Archives"] = themeArchives
+	dataModel["Title"] = i18n.GetMessage(locale, "archives") + " - " + dataModel["Title"].(string)
+
 	c.HTML(http.StatusOK, getTheme(c)+"/archives.html", dataModel)
 }
 
@@ -111,6 +113,8 @@ func showArchiveArticlesAction(c *gin.Context) {
 		URL:          getBlogURL(c) + util.PathArchives + "/" + archiveModel.Year + "/" + archiveModel.Month,
 		ArticleCount: archiveModel.ArticleCount,
 	}
+	dataModel["Title"] = i18n.GetMessagef(locale, "archiveYearMonth", archiveModel.Year, archiveModel.Month) +
+		" - " + i18n.GetMessage(locale, "archives") + " - " + dataModel["Title"].(string)
 
 	c.HTML(http.StatusOK, getTheme(c)+"/archive-articles.html", dataModel)
 }
