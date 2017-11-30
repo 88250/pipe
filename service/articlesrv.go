@@ -519,12 +519,13 @@ func normalizeTagStr(tagStr string) (string, error) {
 
 func removeTagArticleRels(tx *gorm.DB, article *model.Article) error {
 	rels := []*model.Correlation{}
-	if err := tx.Where("id1 = ? AND type = ?", article.ID, model.CorrelationArticleTag).Find(&rels).Error; nil != err {
+	if err := tx.Where("id1 = ? AND type = ? AND blog_id = ?",
+		article.ID, model.CorrelationArticleTag, article.BlogID).Find(&rels).Error; nil != err {
 		return err
 	}
 	for _, rel := range rels {
 		tag := &model.Tag{}
-		if err := tx.Where("id = ?", rel.ID2).First(tag).Error; nil != err {
+		if err := tx.Where("id = ? AND blog_id = ?", rel.ID2, article.BlogID).First(tag).Error; nil != err {
 			continue
 		}
 		tag.ArticleCount = tag.ArticleCount - 1
@@ -545,7 +546,7 @@ func tagArticle(tx *gorm.DB, article *model.Article) error {
 	tags := strings.Split(article.Tags, ",")
 	for _, tagTitle := range tags {
 		tag := &model.Tag{BlogID: article.BlogID}
-		tx.Where("title = ?", tagTitle).First(tag)
+		tx.Where("title = ? AND blog_id = ?", tagTitle, article.BlogID).First(tag)
 		if "" == tag.Title {
 			tag.Title = tagTitle
 			tag.ArticleCount = 1
