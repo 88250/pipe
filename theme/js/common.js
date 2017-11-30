@@ -2,7 +2,7 @@
  * @fileoverview common tool for every theme
  *
  * @author <a href="http://vanessa.b3log.org">Liyuan Li</a>
- * @version 0.2.0.0, Oct 19, 2017
+ * @version 0.3.0.0, Nov 30, 2017
  */
 
 import $ from 'jquery'
@@ -69,7 +69,7 @@ export const ParseMarkdown = () => {
     } else {
       $.ajax({
         method: 'GET',
-        url: $('#pipeScript').attr('src').split('theme')[0] + 'theme/js/lib/flowchart.min.js',
+        url: config.StaticServer + '/theme/js/lib/flowchart.min.js',
         dataType: 'script',
         cache: true
       }).done(function () {
