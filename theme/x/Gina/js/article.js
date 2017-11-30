@@ -6,9 +6,8 @@
  */
 
 import $ from 'jquery'
-import hljs from 'highlight.js'
 import QRious from 'qrious'
-import {InitComment, InitToc, ShowEditor} from '../../../js/article'
+import {InitComment, InitToc, ShowEditor, InitHljs} from '../../../js/article'
 import './common'
 
 const Article = {
@@ -29,10 +28,7 @@ const Article = {
     }
 
     InitComment()
-
-    $('pre > code').each(function (i, block) {
-      hljs.highlightBlock(block);
-    });
+    InitHljs()
 
     Article._share();
   },

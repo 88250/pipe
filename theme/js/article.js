@@ -59,6 +59,12 @@ export const InitToc = (tocId, articleId, articleOffset = 0, activeClass = 'toc_
   $(window).scroll()
 }
 
+export const InitHljs = () => {
+  $('pre > code').each(function (i, block) {
+    hljs.highlightBlock(block);
+  });
+}
+
 /**
  * @description 展开编辑器
  * @param {String} reply 回复对象的名称
@@ -96,10 +102,11 @@ export const InitComment = () => {
   }
 
   // init Editor
-  const editor = Editor({
+  const $b3logEditor = Editor({
     id: 'pipeEditorComment',
-    placeholder: '请输入评论或回复内容',
+    placeholder: $('#pipeEditorComment').data('placeholder'),
     label: {
+      // TODO
       // emoji: Label.insertEmojiLabel + ' <ctrl+&frasl;>',
       // bold: Label.addBoldLabel + ' <ctrl+b>',
       // italic: Label.addItalicLabel + ' <ctrl+i>',
@@ -111,7 +118,7 @@ export const InitComment = () => {
       // view: Label.previewLabel + ' <ctrl+d>',
       // question: Label.helpLabel,
       // fullscreen: Label.fullscreenLabel + ' <ctrl+shift+a>',
-      // emojiTip: Label.setEmotionLabel
+      emojiTip: 'EMOJI CHEAT SHEET'
     },
     height: 100,
     keyup: (event) => {
@@ -122,25 +129,32 @@ export const InitComment = () => {
       $('#pipeEditorAdd').click();
     },
     hasView: false,
-    uploadURL: `${config.Server}/upload`,
+    uploadURL: `${$('#pipeEditorComment').data('blogurl')}/upload`,
     previewClass: 'pipe-content__reset',
     staticServePath: config.StaticServer,
     change: (value, $preview) => {
       if ($.trim(value) === '' || !$preview) {
         return;
       }
+      // TODO
       $.ajax({
-        url: `${config.Server}/markdown`,
+        url: `${config.Server}/api/console/markdown`,
         type: "POST",
         data: {
-          markdownText: value
+          mdText: value
         },
         success: function (result) {
           $preview.html(result.html);
+          LazyLoadImage()
+          LazyLoadCSSImage()
+          InitHljs()
+          ParseMarkdown()
         }
       });
     }
   })
+
+  $b3logEditor.val(localStorage.getItem('pipeEditorComment'))
 
   // comment null reply
   $('.pipe-comment__null').click(function () {
@@ -203,6 +217,7 @@ export const InitComment = () => {
             })
             LazyLoadImage()
             LazyLoadCSSImage()
+            InitHljs()
             ParseMarkdown()
           } else {
             alert(result.msg)
@@ -221,7 +236,7 @@ export const InitComment = () => {
     }
   });
 
-  // comment reply
+  // comment remove
   $('body').on('click', '#pipeComments .pipe-comment__btn--danger', function () {
     const $it = $(this)
     if (confirm($it.data('label'))) {
@@ -251,7 +266,7 @@ export const InitComment = () => {
     }
   })
 
-  // comment remove
+  // comment reply
   $('body').on('click', '#pipeComments .pipe-comment__btn--reply', function () {
     const $it = $(this)
     ShowEditor($it.data('title'), $it.data('id'), $it.data('commentid'))
@@ -274,14 +289,14 @@ export const InitComment = () => {
       return;
     }
 
-    if ($.trim($commentContent.val()).length === 0) {
+    if ($.trim($b3logEditor.val()).length === 0) {
       alert(label2)
       return;
     }
 
     let requestData = {
       'articleID': $editor.data('id'),
-      'content': $commentContent.val()
+      'content': $b3logEditor.val()
     }
 
     if ($editor.data('commentid')) {
@@ -308,13 +323,12 @@ export const InitComment = () => {
             $('#pipeComments > div > section').last().after(result.data)
           }
 
-          $comments.find('pre > code').each(function (i, block) {
-            hljs.highlightBlock(block)
-          })
           LazyLoadCSSImage()
           LazyLoadImage()
           ParseMarkdown()
-          $commentContent.val('')
+          InitHljs()
+
+          $b3logEditor.val('')
           localStorage.removeItem('pipeEditorComment')
         } else {
           alert(result.msg)

@@ -105,33 +105,18 @@
     margin: 0 auto;
   }
 
-  &__emotion span {
-    cursor: pointer;
-    float: left;
-    margin: 0 10px 5px 0;
-    font-size: 16px;
-    transition: $transition;
-    background-color: transparent;
-
-    &:hover {
-      transform: scale(1.2) rotate(360deg);
-    }
-  }
-
   position: fixed;
   bottom: -240px;
   width: 100%;
   opacity: 0;
-  background-color: #fff;
-  box-shadow: 0 0px 2px $fade;
+  background-color: #f1f7fe;
   padding: 20px 0;
   transition: $transition;
   z-index: 100;
   left: 0;
 
-  input,
-  textarea {
-    margin-bottom: 20px;
+  #pipeEditorComment {
+    margin-bottom: 15px;
   }
 
   #pipeEditorReplyTarget {
