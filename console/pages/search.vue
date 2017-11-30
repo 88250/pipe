@@ -1,23 +1,24 @@
 <template>
-  <div class="content">
-    <div class="card card__body fn-clear">
-      <v-form ref="form" @submit.prevent="goSearch">
+  <div id="particles" class="console">
+    <div class="card">
+      <v-form ref="form" @submit.prevent="goSearch" class="card__body">
         <v-text-field
           :label="$t('enterSearch', $store.state.locale)"
           v-model="keyword"
-          :rules="keywordRules"
-          required
           @keyup.enter.prevent="goSearch"
         ></v-text-field>
       </v-form>
       <ul class="list">
         <li v-for="item in list" :key="item.id" class="fn-flex">
-          <a :href="item.url">
-              <b>{{ item.title }}</b>
+          <div class="fn-flex-1">
+            <a :href="item.url" class="list__title">{{ item.title }}</a>
+            <div class="tags">
+              <a v-for="tag in item.tags" :href="tag.url" class="tag">{{tag.title}}</a>
+            </div>
             <div>
               {{item.abstract}}
             </div>
-          </a>
+          </div>
         </li>
       </ul>
       <div class="pagination--wrapper fn-clear" v-if="pageCount > 1">
@@ -37,7 +38,8 @@
 </template>
 
 <script>
-  import {required} from '~/plugins/validate'
+  import 'particles.js'
+  import { initParticlesJS } from '~/plugins/utils'
 
   export default {
     head () {
@@ -48,9 +50,6 @@
     data () {
       return {
         keyword: '',
-        keywordRules: [
-          (v) => required.call(this, v)
-        ],
         currentPageNum: 1,
         pageCount: 1,
         windowSize: 1,
@@ -67,7 +66,7 @@
           this.$set(this, 'list', responseData.data.articles)
           this.$set(this, 'currentPageNum', responseData.data.pagination.currentPageNum)
           this.$set(this, 'pageCount', responseData.data.pagination.pageCount)
-          this.$set(this, 'windowSize', document.documentElement.clientWidth < 721 ? 5 : responseData.data.pagination.windowSize)
+          this.$set(this, 'windowSize', 5)
         }
       },
       async goSearch () {
@@ -79,9 +78,10 @@
     },
     mounted () {
       this.getList()
+      initParticlesJS('particles')
       setTimeout(() => {
         this.$set(this, 'keyword', this.$route.query.key)
-      })
+      }, 0)
     }
   }
 </script>
