@@ -54,7 +54,7 @@ func showAuthorArticlesAction(c *gin.Context) {
 	authorName := strings.SplitAfter(c.Request.URL.Path, util.PathAuthors+"/")[1]
 	author := service.User.GetUserByName(authorName)
 	if nil == author {
-		c.Status(404)
+		notFound(c)
 
 		return
 	}
