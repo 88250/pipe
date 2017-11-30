@@ -22,8 +22,8 @@ import (
 	"time"
 )
 
-func ImageSize(avatarURL string, width, height int) string {
-	return avatarURL + "?imageView2/1/w/" + strconv.Itoa(width) + "/h/" + strconv.Itoa(height) + "/interlace/1/q/100"
+func ImageSize(imageURL string, width, height int) string {
+	return imageURL + "?imageView2/1/w/" + strconv.Itoa(width) + "/h/" + strconv.Itoa(height) + "/interlace/1/q/100"
 }
 
 // RandImage returns an image URL randomly for article thumbnail.
