@@ -4,7 +4,7 @@ import Vue from 'vue'
 
 export default (ctx) => {
   const customAxios = axios.create({
-    baseURL: process.env.clientBaseURL
+    baseURL: process.env.AxiosBaseURL
   })
 
   Vue.use(VueAxios, customAxios)

@@ -30,10 +30,17 @@ self.addEventListener('activate', event => {
 
 // 请求截取
 self.addEventListener('fetch', event => {
-  if (event.request.headers.get('accept').indexOf('text/html') === 0 || (
+  console.log(event.request.headers.get('accept'), event.request)
+  if (event.request.headers.get('accept').indexOf('text/html') === 0 // document
+    || (
       event.request.headers.get('accept') === '*/*' &&
-      event.request.url.indexOf('/js/') === -1
-    )) {
+      event.request.url.indexOf('/js/') === -1 && !event.request.url.endsWith('.js')
+    ) // get rid of some static accept header is '*/*'
+    || (
+      event.request.headers.get('accept').indexOf('application/json') === 0 &&
+      event.request.url.indexOf(config.Server + '/api') === 0
+    ) // api
+  ) {
     // 动态资源
     event.respondWith(
       // 动态资源需要每次进行更新

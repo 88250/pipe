@@ -1,4 +1,4 @@
-const env = require(`./config/env.json`)
+const env = require(`../pipe.json`)
 
 module.exports = {
   env,
@@ -14,7 +14,7 @@ module.exports = {
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
-      { rel: 'manifest', href: `${env.staticPath}theme/js/manifest.json` }
+      { rel: 'manifest', href: `${env.StaticServer}/theme/js/manifest.json` }
     ]
   },
   /*
@@ -36,7 +36,7 @@ module.exports = {
   */
   build: {
     vendor: ['babel-polyfill', 'vue-i18n', '~/assets/symbol.js', 'axios', 'vuetify'],
-    publicPath: env.publicPath,
+    publicPath: env.PublicPath,
     extractCSS: true,
     ssr: false,
     /*
@@ -57,7 +57,7 @@ module.exports = {
     middleware: ['initialized', 'authenticated'],
     extendRoutes (routes, resolve) {
       routes.push({
-        name: 'search',
+        name: 'blogSearch',
         path: '/blogs/:username/search',
         component: resolve(__dirname, 'pages/search.vue')
       })
@@ -66,11 +66,11 @@ module.exports = {
   modules: ['@nuxtjs/proxy'],
   proxy: {
     '/api': {
-      target: env.serverBaseURL,
+      target: env.Server,
       changeOrigin: true
     },
     '/mock': {
-      target: env.mockBaseURL,
+      target: env.MockServer,
       changeOrigin: true,
       pathRewrite: {
         '^/mock/': ''
