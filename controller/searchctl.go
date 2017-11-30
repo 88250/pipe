@@ -65,6 +65,7 @@ func searchAction(c *gin.Context) {
 			Title:    pangu.SpacingText(articleModel.Title),
 			Abstract: mdResult.AbstractText,
 			URL:      getBlogURL(c) + articleModel.Path,
+			Tags:     themeTags,
 		}
 
 		articles = append(articles, article)
