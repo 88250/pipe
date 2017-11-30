@@ -210,7 +210,7 @@
           if (typeof (flowchart) !== 'undefined') {
             initFlow()
           } else {
-            asyncLoadScript(process.env.StaticServer + '/theme/js/lib/flowchart.min.js', initFlow)
+            asyncLoadScript((process.env.StaticServer || process.env.Server) + '/theme/js/lib/flowchart.min.js', initFlow)
           }
         }
       },

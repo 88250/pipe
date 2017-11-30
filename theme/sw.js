@@ -8,9 +8,9 @@
 import config from '../pipe.json'
 
 const version = config.StaticResourceVersion;
-const staticServePath = config.Server;
+const staticServePath = config.StaticServer || config.Server;
 const imgServePath = 'https://img.hacpai.com/';
-const servePath = config.StaticServer || config.Server;
+const servePath = config.Server;
 /**
  * @description add offline cache
  */
@@ -37,7 +37,7 @@ self.addEventListener('fetch', event => {
     ) // get rid of some static accept header is '*/*'
     || (
       event.request.headers.get('accept').indexOf('application/json') === 0 &&
-      event.request.url.indexOf(config.Server + '/api') === 0
+      event.request.url.indexOf(servePath + '/api') === 0
     ) // api
   ) {
     // 动态资源

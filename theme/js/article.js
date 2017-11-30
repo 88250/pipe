@@ -143,7 +143,7 @@ export const InitComment = () => {
       });
     },
     previewClass: 'pipe-content__reset',
-    staticServePath: config.StaticServer,
+    staticServePath: config.StaticServer || config.Server,
     change: (value, $preview) => {
       if ($.trim(value) === '' || !$preview) {
         return;

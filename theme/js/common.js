@@ -69,7 +69,7 @@ export const ParseMarkdown = () => {
     } else {
       $.ajax({
         method: 'GET',
-        url: config.StaticServer + '/theme/js/lib/flowchart.min.js',
+        url: (config.StaticServer || config.Server) + '/theme/js/lib/flowchart.min.js',
         dataType: 'script',
         cache: true
       }).done(function () {

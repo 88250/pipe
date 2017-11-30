@@ -14,7 +14,7 @@ module.exports = {
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
-      { rel: 'manifest', href: `${env.StaticServer}/theme/js/manifest.json` }
+      { rel: 'manifest', href: `${env.StaticServer || env.Server}/theme/js/manifest.json` }
     ]
   },
   /*
@@ -36,7 +36,7 @@ module.exports = {
   */
   build: {
     vendor: ['babel-polyfill', 'vue-i18n', '~/assets/symbol.js', 'axios', 'vuetify'],
-    publicPath: env.PublicPath,
+    publicPath: `${env.StaticServer || env.Server}/assets/`,
     extractCSS: true,
     ssr: false,
     /*
