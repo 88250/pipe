@@ -58,7 +58,7 @@
     },
     methods: {
       async getList (currentPage = 1) {
-        const responseData = await this.axios.post(`/search`, {
+        const responseData = await this.axios.post(`${this.$store.state.blogURL}/search`, {
           key: this.$route.query.key,
           p: currentPage
         })
