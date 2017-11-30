@@ -63,7 +63,7 @@ func main() {
 	service.ConnectDB()
 	cron.Start()
 
-	serverURL, err := url.ParseRequestURI(util.Conf.Server)
+	serverURL, err := url.Parse(util.Conf.Server)
 	if nil != err {
 		logger.Fatal("Invalid [Server] configuration item")
 	}
