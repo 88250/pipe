@@ -17,6 +17,7 @@
 package cron
 
 import (
+	"net/url"
 	"time"
 
 	"github.com/b3log/pipe/model"
@@ -37,6 +38,11 @@ func pushArticlesPeriodically() {
 
 func pushArticles() {
 	defer util.Recover()
+
+	server, _ := url.Parse(util.Conf.Server)
+	if !util.IsDomain(server.Hostname()) {
+		return
+	}
 
 	articles := service.Article.GetUnpushedArticles()
 	for _, article := range articles {
@@ -94,6 +100,11 @@ func pushCommentsPeriodically() {
 
 func pushComments() {
 	defer util.Recover()
+
+	server, _ := url.Parse(util.Conf.Server)
+	if !util.IsDomain(server.Hostname()) {
+		return
+	}
 
 	comments := service.Comment.GetUnpushedComments()
 	for _, comment := range comments {
