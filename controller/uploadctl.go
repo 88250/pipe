@@ -121,6 +121,68 @@ func uploadAction(c *gin.Context) {
 	result.Data = data
 }
 
+func fetchUploadAction(c *gin.Context) {
+	result := util.NewResult()
+	defer c.JSON(http.StatusOK, result)
+
+	session := util.GetSession(c)
+	if nil == session {
+		result.Code = -1
+		result.Msg = "please login before upload"
+
+		return
+	}
+
+	arg := map[string]interface{}{}
+	if err := c.BindJSON(&arg); nil != err {
+		result.Code = -1
+		result.Msg = "parses fetch upload request failed"
+
+		return
+	}
+	fileURL := arg["url"].(string)
+	resp, fileData, errs := gorequest.New().Get(fileURL).EndBytes()
+	if nil != errs {
+		result.Code = -1
+		result.Msg = "get data failed"
+
+		return
+	}
+
+	refreshUploadToken()
+
+	platformAdmin := service.User.GetPlatformAdmin()
+	blogID := getBlogID(c)
+	blogAdmin := service.User.GetBlogAdmin(blogID)
+
+	typ := resp.Header.Get("content-type")
+	exts, _ := mime.ExtensionsByType(typ)
+	ext := ""
+	if 0 < len(exts) {
+		ext = exts[0]
+	} else {
+		ext = "." + strings.Split(typ, "/")[1]
+	}
+
+	key := "pipe/" + platformAdmin.Name + "/" + blogAdmin.Name + "/" + session.UName + "/e/" + strings.Replace(uuid.NewV4().String(), "-", "", -1) + ext
+
+	uploadRet := &storage.PutRet{}
+	if err := storage.NewFormUploader(nil).Put(context.Background(), uploadRet, ut.token, key, bytes.NewReader(fileData), int64(len(fileData)), nil); nil != err {
+		msg := "upload file to storage failed: " + err.Error()
+		logger.Errorf(msg)
+
+		result.Code = -1
+		result.Msg = msg
+
+		return
+	}
+
+	data := map[string]interface{}{}
+	data["url"] = ut.domain + "/" + uploadRet.Key
+	data["originalURL"] = fileURL
+	result.Data = data
+}
+
 func refreshUploadToken() {
 	now := time.Now()
 	dur, _ := time.ParseDuration("30m")

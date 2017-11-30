@@ -207,6 +207,10 @@ func routePath(c *gin.Context) {
 		uploadAction(c)
 
 		return
+	case util.PathFetchUpload:
+		fetchUploadAction(c)
+
+		return
 	case util.PathSearch:
 		searchAction(c)
 
