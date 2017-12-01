@@ -7,9 +7,6 @@ npm-debug.log
 # Nuxt build
 .nuxt
 
-# Nuxt generate
-/dist
-
 **/README.md
 
 yarn-error.log
