@@ -94,15 +94,6 @@ export const actions = {
       app.i18n.setLocaleMessage(state.locale, message)
     }
   },
-  setLocaleMessage ({commit}, locale) {
-    if (this.app.i18n.messages[locale]) {
-      this.app.i18n.locale = locale
-    } else {
-      const message = require(`../../i18n/${locale}.json`)
-      this.app.i18n.setLocaleMessage(locale, message)
-    }
-    commit('setLocale', locale)
-  },
   async getTags ({commit, state}) {
     if (state.tagsItems.length > 0) {
       return

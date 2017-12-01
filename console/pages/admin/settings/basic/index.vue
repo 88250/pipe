@@ -109,8 +109,6 @@
             snackMsg: this.$t('setupSuccess', this.$store.state.locale),
             snackModify: 'success'
           })
-
-          this.$store.dispatch('setLocaleMessage', this.locale)
         } else {
           this.$set(this, 'error', true)
           this.$set(this, 'errorMsg', responseData.msg)
