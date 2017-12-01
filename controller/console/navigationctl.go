@@ -115,6 +115,9 @@ func UpdateNavigationAction(c *gin.Context) {
 		return
 	}
 
+	session := util.GetSession(c)
+	navigation.BlogID = session.BID
+
 	if err := service.Navigation.UpdateNavigation(navigation); nil != err {
 		result.Code = -1
 		result.Msg = err.Error()
