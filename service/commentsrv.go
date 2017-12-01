@@ -18,7 +18,6 @@ package service
 
 import (
 	"sync"
-	"time"
 
 	"github.com/b3log/pipe/model"
 	"github.com/b3log/pipe/util"
@@ -52,33 +51,6 @@ func (srv *commentService) UpdatePushedAt(comment *model.Comment) error {
 	if err := db.Model(comment).UpdateColumns(comment).Error; nil != err {
 		return err
 	}
-
-	return nil
-}
-
-func (srv *commentService) UpdateComment(comment *model.Comment) error {
-	srv.mutex.Lock()
-	defer srv.mutex.Unlock()
-
-	oldComment := &model.Comment{}
-	if err := db.Model(&model.Comment{}).Where("id = ? AND blog_id = ?",
-		comment.ID, comment.BlogID).Find(oldComment).Error; nil != err {
-		return err
-	}
-
-	newComment := &model.Comment{}
-	newComment.Content = comment.Content
-	now := time.Now()
-	newComment.PushedAt = now
-	newComment.UpdatedAt = now
-
-	tx := db.Begin()
-	if err := tx.Model(oldComment).UpdateColumns(newComment).Error; nil != err {
-		tx.Rollback()
-
-		return err
-	}
-	tx.Commit()
 
 	return nil
 }
