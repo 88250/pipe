@@ -64,21 +64,23 @@ go build
 ### 编译前端（管理后台）
 
 ```
-cd console && npm install && npm run build
+cd console && npm install 
 ```
 
-console/config/env.json 中 `clientBaseURL` 为 `/api` 时需启动 `./pipe`，为 `/mock` 时需运行 
-```
-npm run mock
-```
+* 部署前需在 console 目录下执行 `npm run build`
+* 开发过程中需在 console 目录下执行 `npm run dev`
+* pipe.json 中 `AxiosBaseURL` 为 `/api` 时需启动 `./pipe`，为 `/mock` 时需运行 `npm run mock`
 
 ### 前台主题
 
 ```
-cd theme && npm install && npm install --global gulp && gulp build
+cd theme && npm install && npm install --global gulp
 ```
 
-theme/js 和 theme/scss 下为基础方法和样式，可按需引入使用。主题开发可参照 theme/x/Gina。
+* 部署前需在 theme 目录下执行 `gulp`
+* 开发过程中需在 theme 目录下执行 `gulp watch`
+* theme/js 和 theme/scss 下为基础方法和样式，可按需引入使用
+* 主题开发可参照 theme/x/Gina
 
 ## 社区
 
