@@ -237,7 +237,7 @@ export const KillBrowser = () => {
  */
 export const Logout = () => {
   $.ajax({
-    url: `${location.origin}/api/logout`,
+    url: `${config.Server}/api/logout`,
     type: 'POST',
     success: (result) => {
       window.location.href = 'https://hacpai.com/logout'
