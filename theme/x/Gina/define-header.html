@@ -22,7 +22,10 @@
             {{.Title}}
         </a>
         {{end}}
-        <a href="{{.BlogURL}}/atom" target="_blank">{{.I18n.Feed}}</a>
+        <a href="{{.BlogURL}}/atom" target="_blank">
+            <svg><use xlink:href="#feed"></use></svg>
+            {{.I18n.Feed}}
+        </a>
         <a href="{{.BlogURL}}/search" class="header__search">
             <svg>
                 <use xlink:href="#search"></use>
