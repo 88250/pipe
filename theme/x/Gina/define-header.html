@@ -13,7 +13,6 @@
             {{.I18n.Team}}
         </a>
         {{end}}
-        <a href="{{.BlogURL}}/atom">{{.I18n.Feed}}</a>
         {{range .Navigations}}
         <a href="{{.URL}}" target="{{.OpenMethod}}">
             {{if ne "" .IconURL}}
@@ -23,6 +22,7 @@
             {{.Title}}
         </a>
         {{end}}
+        <a href="{{.BlogURL}}/atom" target="_blank">{{.I18n.Feed}}</a>
         <a href="{{.BlogURL}}/search" class="header__search">
             <svg>
                 <use xlink:href="#search"></use>

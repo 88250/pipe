@@ -30,8 +30,6 @@ func UpdateCategoryAction(c *gin.Context) {
 	result := util.NewResult()
 	defer c.JSON(http.StatusOK, result)
 
-	session := util.GetSession(c)
-
 	idArg := c.Param("id")
 	id, err := strconv.Atoi(idArg)
 	if nil != err {
@@ -48,6 +46,8 @@ func UpdateCategoryAction(c *gin.Context) {
 
 		return
 	}
+
+	session := util.GetSession(c)
 	category.BlogID = session.BID
 
 	if err := service.Category.UpdateCategory(category); nil != err {

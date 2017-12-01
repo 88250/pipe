@@ -204,6 +204,9 @@ func UpdateArticleAction(c *gin.Context) {
 		return
 	}
 
+	session := util.GetSession(c)
+	article.BlogID = session.BID
+
 	if err := service.Article.UpdateArticle(article); nil != err {
 		result.Code = -1
 		result.Msg = err.Error()

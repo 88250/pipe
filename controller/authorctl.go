@@ -35,10 +35,11 @@ func showAuthorsAction(c *gin.Context) {
 	themeAuthors := []*model.ThemeAuthor{}
 	authorModels, _ := service.User.GetBlogUsers(1, blogID)
 	for _, authorModel := range authorModels {
+		userBlog := service.User.GetUserBlog(authorModel.ID, blogID)
 		author := &model.ThemeAuthor{
 			Name:         authorModel.Name,
 			URL:          getBlogURL(c) + util.PathAuthors + "/" + authorModel.Name,
-			ArticleCount: 1, // TODO PIPE
+			ArticleCount: userBlog.UserArticleCount,
 			AvatarURL:    authorModel.AvatarURLWithSize(210),
 		}
 		themeAuthors = append(themeAuthors, author)

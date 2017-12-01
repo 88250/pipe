@@ -261,7 +261,7 @@ func toc(article *model.ThemeArticle) string {
 func getRecommendArticles() []*model.ThemeArticle {
 	ret := []*model.ThemeArticle{}
 
-	indics := util.RandInts(0, len(cron.RecommendArticles), 5)
+	indics := util.RandInts(0, len(cron.RecommendArticles), 7)
 	for _, index := range indics {
 		article := cron.RecommendArticles[index]
 

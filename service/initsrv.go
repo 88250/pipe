@@ -205,7 +205,7 @@ func initNavigation(tx *gorm.DB, blogID uint) error {
 	navigation := &model.Navigation{
 		Title:      "黑客派",
 		URL:        util.HacPaiURL,
-		IconURL:    "",
+		IconURL:    "https://static.hacpai.com/images/favicon.png",
 		OpenMethod: model.NavigationOpenMethodBlank,
 		Number:     0,
 		BlogID:     blogID,
@@ -264,7 +264,7 @@ Pipe 博客平台是一个开源项目，如果你觉得它很赞，请到[项�
 		return err
 	}
 
-	comment := &model.Comment{  
+	comment := &model.Comment{
 		ArticleID: article.ID,
 		AuthorID:  admin.ID,
 		Content:   "相信积累后必然会有收获 :smile:",
