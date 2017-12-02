@@ -253,7 +253,7 @@ const TrimB3Id = () => {
   if (search.indexOf('b3id') === -1) {
     return
   }
-  history.replaceState('', '', window.location.href.replace(/(&b3id=\w{8})|(b3id=\w{8}&)|(\?b3id=\w{8}$)/, ''))
+  history.replaceState('', '', window.location.href.replace(/(&b3id=\w{8})|(b3id=\w{8}&)|(\?b3id=\w{8})/, ''))
 }
 
 /**

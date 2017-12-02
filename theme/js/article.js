@@ -96,76 +96,10 @@ export const InitComment = () => {
    * @private
    */
   const _hideEditor = () => {
-    const $editor = $('#pipeEditor')
+    const $editor = $('#pipeEd  itor')
     $editor.css({'bottom': `-${$editor.outerHeight()}px`, 'opacity': 0})
     $('body').css('padding-bottom', 0)
   }
-
-  // init Editor
-  const label = $('#pipeEditorComment').data('label').split(',')
-  const $b3logEditor = Editor({
-    id: 'pipeEditorComment',
-    placeholder: $('#pipeEditorComment').data('placeholder'),
-    label: {
-      emoji: label[0]+ ' <ctrl+&frasl;>',
-      bold: label[1]+ ' <ctrl+b>',
-      italic: label[2]+ ' <ctrl+i>',
-      quote: label[3]+ ' <ctrl+e>',
-      link: label[4]+ ' <ctrl+k>',
-      upload: label[5],
-      unorderedList: label[6]+ ' <ctrl+l>',
-      orderedList: label[7]+ ' <ctrl+shift+l>',
-      view: label[8]+ ' <ctrl+d>',
-      question: label[9],
-      fullscreen: label[10]+ ' <ctrl+shift+a>',
-      emojiTip: 'EMOJI CHEAT SHEET'
-    },
-    height: 200,
-    keyup: (event) => {
-      localStorage.setItem('pipeEditorComment', event.target.value)
-    },
-    esc: _hideEditor,
-    ctrlEnter: () => {
-      $('#pipeEditorAdd').click();
-    },
-    hasView: false,
-    uploadURL: `${$('#pipeEditorComment').data('blogurl')}/upload`,
-    fetchUpload: (url, succCB) => {
-      $.ajax({
-        url: `${$('#pipeEditorComment').data('blogurl')}/fetch-upload`,
-        type: "POST",
-        data: JSON.stringify({
-          url
-        }),
-        success: function (result) {
-          succCB(result.data.originalURL, result.data.url)
-        }
-      });
-    },
-    previewClass: 'pipe-content__reset',
-    staticServePath: config.StaticServer || config.Server,
-    change: (value, $preview) => {
-      if ($.trim(value) === '' || !$preview) {
-        return;
-      }
-      $.ajax({
-        url: `${config.Server}/api/console/markdown`,
-        type: "POST",
-        data: JSON.stringify({
-          mdText: value
-        }),
-        success: function (result) {
-          $preview.html(result.data.html);
-          LazyLoadImage()
-          LazyLoadCSSImage()
-          InitHljs()
-          ParseMarkdown()
-        }
-      });
-    }
-  })
-
-  $b3logEditor.val(localStorage.getItem('pipeEditorComment'))
 
   // comment null reply
   $('.pipe-comment__null').click(function () {
@@ -282,6 +216,76 @@ export const InitComment = () => {
     const $it = $(this)
     ShowEditor($it.data('title'), $it.data('id'), $it.data('commentid'))
   })
+
+  if ($('#pipeEditorComment').length === 0) {
+    return;
+  }
+
+  // init Editor
+  const label = $('#pipeEditorComment').data('label').split(',')
+  const $b3logEditor = Editor({
+    id: 'pipeEditorComment',
+    placeholder: $('#pipeEditorComment').data('placeholder'),
+    label: {
+      emoji: label[0]+ ' <ctrl+&frasl;>',
+      bold: label[1]+ ' <ctrl+b>',
+      italic: label[2]+ ' <ctrl+i>',
+      quote: label[3]+ ' <ctrl+e>',
+      link: label[4]+ ' <ctrl+k>',
+      upload: label[5],
+      unorderedList: label[6]+ ' <ctrl+l>',
+      orderedList: label[7]+ ' <ctrl+shift+l>',
+      view: label[8]+ ' <ctrl+d>',
+      question: label[9],
+      fullscreen: label[10]+ ' <ctrl+shift+a>',
+      emojiTip: 'EMOJI CHEAT SHEET'
+    },
+    height: 200,
+    keyup: (event) => {
+      localStorage.setItem('pipeEditorComment', event.target.value)
+    },
+    esc: _hideEditor,
+    ctrlEnter: () => {
+      $('#pipeEditorAdd').click();
+    },
+    hasView: false,
+    uploadURL: `${$('#pipeEditorComment').data('blogurl')}/upload`,
+    fetchUpload: (url, succCB) => {
+      $.ajax({
+        url: `${$('#pipeEditorComment').data('blogurl')}/fetch-upload`,
+        type: "POST",
+        data: JSON.stringify({
+          url
+        }),
+        success: function (result) {
+          succCB(result.data.originalURL, result.data.url)
+        }
+      });
+    },
+    previewClass: 'pipe-content__reset',
+    staticServePath: config.StaticServer || config.Server,
+    change: (value, $preview) => {
+      if ($.trim(value) === '' || !$preview) {
+        return;
+      }
+      $.ajax({
+        url: `${config.Server}/api/console/markdown`,
+        type: "POST",
+        data: JSON.stringify({
+          mdText: value
+        }),
+        success: function (result) {
+          $preview.html(result.data.html);
+          LazyLoadImage()
+          LazyLoadCSSImage()
+          InitHljs()
+          ParseMarkdown()
+        }
+      });
+    }
+  })
+
+  $b3logEditor.val(localStorage.getItem('pipeEditorComment'))
 
   // editor cancel
   $('#pipeEditorCancel').click(function () {
