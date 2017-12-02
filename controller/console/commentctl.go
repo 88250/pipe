@@ -47,9 +47,8 @@ func GetCommentsAction(c *gin.Context) {
 
 		commentAuthor := service.User.GetUser(commentModel.AuthorID)
 		commentAuthorBlog := service.User.GetOwnBlog(commentModel.AuthorID)
-		blogURLSetting = service.Setting.GetSetting(model.SettingCategoryBasic, model.SettingNameBasicBlogURL, commentAuthorBlog.ID)
 		author := &ConsoleAuthor{
-			URL:       blogURLSetting.Value + util.PathAuthors + "/" + commentAuthor.Name,
+			URL:       service.Setting.GetSetting(model.SettingCategoryBasic, model.SettingNameBasicBlogURL, commentAuthorBlog.ID).Value + util.PathAuthors + "/" + commentAuthor.Name,
 			Name:      commentAuthor.Name,
 			AvatarURL: commentAuthor.AvatarURL,
 		}
@@ -63,7 +62,7 @@ func GetCommentsAction(c *gin.Context) {
 			CreatedAt:     commentModel.CreatedAt.Format("2006-01-02"),
 			Title:         article.Title,
 			Content:       template.HTML(mdResult.ContentHTML),
-			URL:           session.BURL + article.Path + "?p=" + strconv.Itoa(page) + "#pipeComment" + strconv.Itoa(int(commentModel.ID)),
+			URL:           blogURLSetting.Value + article.Path + "?p=" + strconv.Itoa(page) + "#pipeComment" + strconv.Itoa(int(commentModel.ID)),
 		}
 
 		comments = append(comments, comment)
