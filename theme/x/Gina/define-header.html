@@ -5,11 +5,21 @@
             <img data-src="{{.LogoURL}}">
             {{.Setting.BasicBlogTitle}}
         </a>
-        <a href="{{.BlogURL}}/categories">{{.I18n.Categories}}</a>
-        <a href="{{.BlogURL}}/tags">{{.I18n.Tags}}</a>
-        <a href="{{.BlogURL}}/archives">{{.I18n.Archives}}</a>
+        <a href="{{.BlogURL}}/categories">
+            <svg><use xlink:href="#folders"></use></svg>
+            {{.I18n.Categories}}
+        </a>
+        <a href="{{.BlogURL}}/tags">
+            <svg><use xlink:href="#tags"></use></svg>
+            {{.I18n.Tags}}
+        </a>
+        <a href="{{.BlogURL}}/archives">
+            <svg><use xlink:href="#bookmark"></use></svg>
+            {{.I18n.Archives}}
+        </a>
         {{if gt .UserCount 1}}
         <a href="{{.BlogURL}}/authors">
+            <svg><use xlink:href="#group"></use></svg>
             {{.I18n.Team}}
         </a>
         {{end}}
