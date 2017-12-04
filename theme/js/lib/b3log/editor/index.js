@@ -1,15 +1,12 @@
 /*
- * Symphony - A modern community (forum/SNS/blog) platform written in Java.
- * Copyright (C) 2012-2017,  b3log.org & hacpai.com
+ * Copyright (C) 2012-2017,  b3log.org
  *
- * 本文件属于 Sym 商业版的一部分，请仔细阅读项目根文件夹的 LICENSE 并严格遵守相关约定
  */
 /**
  * @fileOverview editor
  *
  * @author <a href="http://vanessa.b3log.org">Liyuan Li</a>
- * @version 0.1.0.0, Nov 29, 2017
- * @since 2.2.0
+ * @version 0.2.1.0, Dec 4, 2017
  */
 import toMarkdown from 'to-markdown'
 import $ from 'jquery'
@@ -17,6 +14,7 @@ import hotkeys from '../../hotkeys'
 import {ajaxUpload, debounceInput, genUploaded, genUploading, insertTextAtCaret} from './tool'
 import allEmoji from './emoji.json'
 
+hotkeys();
 const config = {
   props: {
     staticServePath: {
@@ -79,11 +77,17 @@ const config = {
       loading: '',
       error: '',
       over: ''
+    },
+    tipClass: {
+      type: String,
+      required: false
+    },
+    emojiURL: {
+      type: String,
+      required: false
     }
   }
 };
-
-hotkeys();
 
 export const Editor = (config) => {
   if (/Mac/.test(navigator.platform)) {
@@ -97,29 +101,29 @@ export const Editor = (config) => {
     class="b3log-editor"
     style="height: ${config.height || 200}px">
     <div class="b3log-editor__toolbar">
-      <span data-type="emoji" aria-label="${config.label.emoji || 'emoji'}" class="pipe-tooltipped pipe-tooltipped--e"><svg><use xlink:href="#emoji"></use></svg></span>
-      <span aria-label="${config.label.bold || 'bold'}" class="pipe-tooltipped pipe-tooltipped--e" data-prefix="**" data-suffix="**"><svg><use xlink:href="#bold"></use></svg></span>
-      <span aria-label="${config.label.italic || 'italic'}" class="pipe-tooltipped pipe-tooltipped--e" data-prefix="*" data-suffix="*"><svg><use xlink:href="#italic"></use></svg></span>
-      <span aria-label="${config.label.quote || 'quote'}" class="pipe-tooltipped pipe-tooltipped--e" data-prefix="> " data-suffix=""><svg><use xlink:href="#quote"></use></svg></span>
-      <span aria-label="${config.label.link || 'link'}" class="pipe-tooltipped pipe-tooltipped--e" data-prefix="[" data-suffix="](http://)"><svg><use xlink:href="#link"></use></svg></span>
-      <span aria-label="${config.label.upload || 'upload'}" class="pipe-tooltipped pipe-tooltipped--e">
+      <span data-type="emoji" aria-label="${config.label.emoji || 'emoji'}" class="${config.tipClass || 'tooltipped tooltipped-e'}"><svg><use xlink:href="#emoji"></use></svg></span>
+      <span aria-label="${config.label.bold || 'bold'}" class="${config.tipClass || 'tooltipped tooltipped-e'}" data-prefix="**" data-suffix="**"><svg><use xlink:href="#bold"></use></svg></span>
+      <span aria-label="${config.label.italic || 'italic'}" class="${config.tipClass || 'tooltipped tooltipped-e'}" data-prefix="*" data-suffix="*"><svg><use xlink:href="#italic"></use></svg></span>
+      <span aria-label="${config.label.quote || 'quote'}" class="${config.tipClass || 'tooltipped tooltipped-e'}" data-prefix="> " data-suffix=""><svg><use xlink:href="#quote"></use></svg></span>
+      <span aria-label="${config.label.link || 'link'}" class="${config.tipClass || 'tooltipped tooltipped-e'}" data-prefix="[" data-suffix="](http://)"><svg><use xlink:href="#link"></use></svg></span>
+      <span aria-label="${config.label.upload || 'upload'}" class="${config.tipClass || 'tooltipped tooltipped-e'}">
         <label>
           <svg><use xlink:href="#upload"></use></svg>
           <input multiple="multiple" type="file"/>
         </label>
       </span>
-      <span aria-label="${config.label.unorderedList || 'unorderedList'}" class="pipe-tooltipped pipe-tooltipped--e" data-prefix="* " data-suffix=""><svg><use xlink:href="#unordered-list"></use></svg></span>
-      <span aria-label="${config.label.orderedList || 'orderedList'}" class="pipe-tooltipped pipe-tooltipped--e" data-prefix="1. " data-suffix=""><svg><use xlink:href="#ordered-list"></use></svg></span>
-      <span aria-label="${config.label.view || 'view'}" class="pipe-tooltipped pipe-tooltipped--e" data-type="view"><svg><use xlink:href="#view"></use></svg></span>
-      <span aria-label="${config.label.fullscreen || 'fullscreen'}" class="pipe-tooltipped pipe-tooltipped--e" data-type="fullscreen"><svg><use xlink:href="#fullscreen"></use></svg></span>
-      <a aria-label="${config.label.question || 'question'}" class="pipe-tooltipped pipe-tooltipped--e" target="_blank" href="https://hacpai.com/guide/markdown">
+      <span aria-label="${config.label.unorderedList || 'unorderedList'}" class="${config.tipClass || 'tooltipped tooltipped-e'}" data-prefix="* " data-suffix=""><svg><use xlink:href="#unordered-list"></use></svg></span>
+      <span aria-label="${config.label.orderedList || 'orderedList'}" class="${config.tipClass || 'tooltipped tooltipped-e'}" data-prefix="1. " data-suffix=""><svg><use xlink:href="#ordered-list"></use></svg></span>
+      <span aria-label="${config.label.view || 'view'}" class="${config.tipClass || 'tooltipped tooltipped-e'}" data-type="view"><svg><use xlink:href="#view"></use></svg></span>
+      <span aria-label="${config.label.fullscreen || 'fullscreen'}" class="${config.tipClass || 'tooltipped tooltipped-e'}" data-type="fullscreen"><svg><use xlink:href="#fullscreen"></use></svg></span>
+      <a aria-label="${config.label.question || 'question'}" class="${config.tipClass || 'tooltipped tooltipped-e'}" target="_blank" href="https://hacpai.com/guide/markdown">
         <svg><use xlink:href="#question"></use></svg>
       </a> 
       <div class="b3log-editor__emoji">
         <div class="fn-clear">
         </div>
         <div class="b3log-editor__emoji-tip">
-          <a href="https://www.webpagefx.com/tools/emoji-cheat-sheet/" target="_blank">${config.label.emojiTip || 'Tip'}</a>
+          <a href="${config.emojiURL || 'https://hacpai.com/settings/function'}" target="_blank">${config.label.emojiTip || 'Tip'}</a>
         </div>
       </div>
     </div>
@@ -149,25 +153,41 @@ export const Editor = (config) => {
   // emoji
   const $emoji = $editor.find('.b3log-editor__emoji')
   let emojiHTML = '';
-  const emojiData = {
-    "+1": "👍",
-    "-1": "👎",
-    "100": "💯",
-    "1234": "🔢",
-    "8ball": "🎱",
-    "a": "🅰",
-    "ab": "🆎",
-    "abc": "🔤"
+
+  if (config.emoji) {
+    const genEmoji = (data) => {
+      Object.keys(data).forEach((key) => {
+        emojiHTML += `<span data-value="${data[key]} "><img src="${config.staticServePath || ''}/emoji/graphics/${key}.png"></span>`
+      });
+      $emoji.find('.fn-clear').html(emojiHTML);
+      config._emojiData = data;
+    }
+    config.emoji(genEmoji)
+  } else {
+    config._emojiData = {
+      "smile": "😄",
+      "joy": "😂",
+      "sob": "😭",
+      "yum": "😋",
+      "tada": "🎉",
+      "heart": "❤",
+      "+1": "👍",
+      "ok_hand": "👌",
+      "pray": "🙏",
+      "scream": "😱",
+      "smiling_imp": "😈",
+      "punch": "👊",
+      "heart_eyes": "😍"
+    }
+    Object.keys(config._emojiData).forEach((key) => {
+      emojiHTML += `<span data-value="${config._emojiData[key]} ">${config._emojiData[key]}</span>`
+    });
   }
-  Object.keys(emojiData).forEach((key) => {
-    emojiHTML += `<span data-value="${emojiData[key]} ">${emojiData[key]}</span>`
-  });
   $emoji.find('.fn-clear').html(emojiHTML);
   $emoji.on('click', 'span', function () {
     insertTextAtCaret(textarea, $(this).data('value'), '', true);
     debounceInput(timerId, config.change, $editor)
   })
-
 
   $editor.find('.b3log-editor__toolbar > span').click(function () {
     const $it = $(this);
@@ -315,7 +335,7 @@ export const Editor = (config) => {
       let hintsHTML = ''
       data.forEach((hintData, i) => {
         hintsHTML += `<li data-value="${hintData.value} " class="${i || 'b3log-editor__hints--current'}">
-${hintData.value} ${hintData.label}</li>`
+${hintData.imageURL ? '<img src="' + hintData.imageURL + '"/>' : hintData.value} ${hintData.label}</li>`
       })
 
       if ($hints.length === 0) {
@@ -362,20 +382,27 @@ ${hintData.value} ${hintData.label}</li>`
       $hints.hide()
     } else {
       if (searchAt !== undefined) {
-        config.at(searchAt, genHintsHTML)
+        config.at && config.at(searchAt, genHintsHTML)
       }
       if (searchEmoji !== undefined) {
         const matchEmoji = []
-        Object.keys(allEmoji).forEach((key) => {
+        let emojies = allEmoji
+        if (searchEmoji === '') {
+          emojies = config._emojiData
+        }
+        Object.keys(emojies).forEach((key) => {
           if (matchEmoji.length > 4) {
             return
           }
           if (key.indexOf(searchEmoji.toLowerCase()) > -1) {
-            matchEmoji.push({
-              value: allEmoji[key],
-              imageURL: `${config.staticServePath || ''}/emoji/graphics/${key}.png`,
+            const emojiItem = {
+              value: emojies[key],
               label: key
-            })
+            }
+            if (config.emoji) {
+              emojiItem.imageURL = `${config.staticServePath || ''}/emoji/graphics/${key}.png`
+            }
+            matchEmoji.push(emojiItem)
           }
         })
         genHintsHTML(matchEmoji)
@@ -482,6 +509,48 @@ ${hintData.value} ${hintData.label}</li>`
     $editor.find('.b3log-editor__toolbar > span:eq(9)').click()
     return false;
   })
+
+  if (typeof Audio.init !== 'undefined') {
+    $textarea.bind('keydown', 'Alt+s', function (event) {
+      event.preventDefault();
+      event.stopPropagation();
+      if (!Audio.availabel) {
+        Audio.init(function () {
+          Audio.handleStartRecording();
+          insertTextAtCaret(textarea, '\n[Start Recording]\n', '');
+          debounceInput(timerId, config.change, $editor)
+        })
+      } else {
+        Audio.handleStartRecording();
+      }
+      return false;
+    }).bind('keydown', 'Alt+r', function (event) {
+      event.preventDefault();
+      event.stopPropagation();
+
+      if (!Audio.availabel) {
+        return;
+      }
+
+      Audio.handleStopRecording();
+
+      textarea.value = textarea.value.replace('\n[Start Recording]\n', '\n[End Recording, Start Uploading]\n');
+      debounceInput(timerId, config.change, $editor)
+
+      ajaxUpload(config.uploadURL, [Audio.wavFileBlob.getDataBlob()], (response) => {
+        if (response.data.errFiles.length > 0) {
+          textarea.value = textarea.value.replace('\n[End Recording, Start Uploading]\n',
+            `\n[Record Upload Error]\n`)
+        } else if (response.data.succMap) {
+          textarea.value = textarea.value.replace('\n[End Recording, Start Uploading]\n',
+            `\n<audio controls="controls" src="${response.data.succMap.blob}">\n`)
+        }
+
+        debounceInput(timerId, config.change, $editor)
+      }, config.uploadMax)
+      return false;
+    })
+  }
 
   return $textarea
 }

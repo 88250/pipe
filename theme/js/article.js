@@ -87,7 +87,7 @@ export const ShowEditor = (reply, id, commentId) => {
   $editor.css({'bottom': '0', 'opacity': 1}).data('id', id)
   $('body').css('padding-bottom', $editor.outerHeight() + 'px')
   $('#pipeEditorReplyTarget').text(reply)
-  $('#pipeEditorComment').focus()
+  $('#pipeEditorComment textarea').focus()
 };
 
 export const InitComment = () => {
@@ -96,7 +96,7 @@ export const InitComment = () => {
    * @private
    */
   const _hideEditor = () => {
-    const $editor = $('#pipeEd  itor')
+    const $editor = $('#pipeEditor')
     $editor.css({'bottom': `-${$editor.outerHeight()}px`, 'opacity': 0})
     $('body').css('padding-bottom', 0)
   }
@@ -226,6 +226,8 @@ export const InitComment = () => {
   const $b3logEditor = Editor({
     id: 'pipeEditorComment',
     placeholder: $('#pipeEditorComment').data('placeholder'),
+    tipClass: 'pipe-tooltipped pipe-tooltipped--e',
+    emojiURL: 'https://www.webpagefx.com/tools/emoji-cheat-sheet/',
     label: {
       emoji: label[0]+ ' <ctrl+&frasl;>',
       bold: label[1]+ ' <ctrl+b>',
