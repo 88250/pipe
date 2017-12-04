@@ -116,6 +116,23 @@ func addCommentAction(c *gin.Context) {
 		CreatedAt: comment.CreatedAt.Format("2006-01-02"),
 		Removable: false,
 	}
+	if 0 != comment.ParentCommentID {
+		parentCommentModel := service.Comment.GetComment(comment.ParentCommentID)
+		if nil != parentCommentModel {
+			parentCommentAuthorModel := service.User.GetUser(parentCommentModel.AuthorID)
+			page := service.Comment.GetCommentPage(comment.ArticleID, comment.ID, comment.BlogID)
+			article := service.Article.ConsoleGetArticle(comment.ArticleID)
+
+			parentComment := &model.ThemeComment{
+				ID:  parentCommentModel.ID,
+				URL: getBlogURL(c) + article.Path + "?p=" + strconv.Itoa(page) + "#pipeComment" + strconv.Itoa(int(parentCommentModel.ID)),
+				Author: &model.ThemeAuthor{
+					Name: parentCommentAuthorModel.Name,
+				},
+			}
+			themeComment.Parent = parentComment
+		}
+	}
 	dataModel["Item"] = themeComment
 	dataModel["ArticleID"] = comment.ArticleID
 

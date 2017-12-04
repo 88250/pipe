@@ -10,7 +10,7 @@
             <a href="{{.Item.Author.AvatarURL}}" class="ft-gray">{{.Item.Author.Name}}</a>
             {{if .Item.Parent}}
             <a class="ft-nowrap ft-12 ft-gray" href="{{.Item.Parent.URL}}">
-                <svg><use xlink:href="#reply"></use></svg> {{.I18n.Reply}} Vanessa
+                <svg><use xlink:href="#reply"></use></svg> {{.I18n.Reply}} {{.Item.Parent.Author.Name}}
             </a>
             {{end}}
             <span class="ft-nowrap ft-12 ft-fade"> • {{.Item.CreatedAt}} </span>
