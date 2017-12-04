@@ -15,7 +15,7 @@
           :uploadURL="`${$store.state.blogURL}/upload`"
           :uploadMax="10"
           :height="300"
-          v-model="content"
+          :value="content"
           :label="label"
           :fetchUpload="fetchUpload"
           @change="parseMarkdown"></v-editor>
@@ -110,17 +110,17 @@
           loading: this.$t('uploading', this.$store.state.locale),
           error: this.$t('uploadError', this.$store.state.locale),
           over: this.$t('uploadOver', this.$store.state.locale),
-          emoji: this.$t('emoji', this.$store.state.locale),
-          bold: this.$t('bold', this.$store.state.locale),
-          italic: this.$t('italic', this.$store.state.locale),
-          quote: this.$t('quote', this.$store.state.locale),
-          link: this.$t('link', this.$store.state.locale),
+          emoji: this.$t('emoji', this.$store.state.locale) + ' <ctrl+/>',
+          bold: this.$t('bold', this.$store.state.locale) + ' <ctrl+b>',
+          italic: this.$t('italic', this.$store.state.locale) + ' <ctrl+i>',
+          quote: this.$t('quote', this.$store.state.locale) + ' <ctrl+e>',
+          link: this.$t('link', this.$store.state.locale) + ' <ctrl+k>',
           upload: this.$t('upload', this.$store.state.locale),
-          unorderedList: this.$t('unorderedList', this.$store.state.locale),
-          orderedList: this.$t('orderedList', this.$store.state.locale),
-          view: this.$t('preview', this.$store.state.locale),
-          fullscreen: this.$t('fullscreen', this.$store.state.locale),
-          question: this.$t('question', this.$store.state.locale)
+          unorderedList: this.$t('unorderedList', this.$store.state.locale) + ' <ctrl+l>',
+          orderedList: this.$t('orderedList', this.$store.state.locale) + ' <ctrl+shift+k>',
+          preview: this.$t('preview', this.$store.state.locale) + ' <ctrl+d>',
+          fullscreen: this.$t('fullscreen', this.$store.state.locale) + ' <ctrl+shift+a>',
+          help: this.$t('question', this.$store.state.locale)
         },
         error: false,
         errorMsg: '',

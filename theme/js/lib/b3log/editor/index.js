@@ -171,15 +171,14 @@ export const Editor = (config) => {
     config._emojiData = {
       "smile": "😄",
       "joy": "😂",
+      "+1": "👍",
+      "scream": "😱",
+      "smiling_imp": "😈",
       "sob": "😭",
       "yum": "😋",
       "tada": "🎉",
-      "heart": "❤",
-      "+1": "👍",
       "ok_hand": "👌",
       "pray": "🙏",
-      "scream": "😱",
-      "smiling_imp": "😈",
       "punch": "👊",
       "heart_eyes": "😍"
     }
