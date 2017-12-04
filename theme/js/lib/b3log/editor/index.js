@@ -85,7 +85,11 @@ const config = {
     emojiURL: {
       type: String,
       required: false
-    }
+    },
+    hintsBottom: {
+      type: Number,
+      required: false
+    },
   }
 };
 
@@ -349,7 +353,23 @@ ${hintData.imageURL ? '<img src="' + hintData.imageURL + '"/>' : hintData.value}
         })
       }
 
-      if (y + $hints.outerHeight() > $editor.outerHeight() + 68) {
+      $hints.find('li').click(function () {
+        $hints.hide()
+        const $it = $(this)
+        if ($it.data('value').indexOf('@') === 0) {
+          const valueArray = textarea.value.substr(0, textarea.selectionStart).split('@')
+          valueArray.pop()
+          textarea.value = valueArray.join('@') + $it.data('value') + textarea.value.substr(textarea.selectionStart)
+          textarea.selectionEnd = textarea.selectionStart = (valueArray.join('@') + $it.data('value')).length
+        } else {
+          const valueArray = textarea.value.substr(0, textarea.selectionStart).split(':')[0]
+          textarea.value = valueArray + $it.data('value') + textarea.value.substr(textarea.selectionStart)
+          textarea.selectionEnd = textarea.selectionStart = valueArray.length + 3
+        }
+        $textarea.focus()
+      });
+
+      if (y + $hints.outerHeight() > $editor.outerHeight() + (config.hintsBottom || 68)) {
         // hint 展现在上部
         $hints.css('top', `${y - $hints.outerHeight() - 18}px`)
       }
