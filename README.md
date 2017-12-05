@@ -1,5 +1,13 @@
 # <img src="https://user-images.githubusercontent.com/873584/33324159-c3ea5050-d489-11e7-9f4b-75ee806a7538.png"> [Pipe](https://github.com/b3log/pipe) 
 
+* [简介](#简介)
+* [特性](#特性)
+* [文档](#文档)
+* [构建](#构建)
+* [社区](#社区)
+* [开源协议](#开源协议)
+* [鸣谢](#鸣谢)
+
 ## 简介
 
 小而美的博客平台，通过[黑客派](https://hacpai.com)账号登录即可使用。
@@ -16,7 +24,7 @@
 * 在博客系统这个轮子上充分发挥 golang 的优势
 * 使用流行的框架和开发方式，比如 Vue.js，前后端分离
 
-作者个人层面：
+作者层面：
 
 * 之前的产品 [Solo](https://github.com/b3log/solo) 在一些设计上不够理想
 * 希望这是[我](https://github.com/88250)和 [V](https://github.com/vanessa219) 最后一次造博客轮子了
