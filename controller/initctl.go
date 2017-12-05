@@ -81,7 +81,8 @@ func initAction(c *gin.Context) {
 	_, _, errs := request.Post(util.HacPaiURL+"/apis/check-b3key").Send(map[string]interface{}{
 		"userName":  session.UName,
 		"userB3Key": b3key,
-	}).Set("user-agent", util.UserAgent).Timeout(30 * time.Second).EndStruct(checkResult)
+	}).Set("user-agent", util.UserAgent).Timeout(30*time.Second).
+		Retry(3, 5*time.Second, http.StatusInternalServerError).EndStruct(checkResult)
 	if nil != errs {
 		logger.Errorf("check b3 key failed: %s", errs)
 		result.Code = -1

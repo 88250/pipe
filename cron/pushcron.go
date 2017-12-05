@@ -24,6 +24,7 @@ import (
 	"github.com/b3log/pipe/service"
 	"github.com/b3log/pipe/util"
 	"github.com/parnurzeal/gorequest"
+	"net/http"
 )
 
 func pushArticlesPeriodically() {
@@ -78,7 +79,8 @@ func pushArticles() {
 		}
 		result := &map[string]interface{}{}
 		_, _, errs := gorequest.New().Post("https://rhythm.b3log.org/api/article").SendMap(requestJSON).
-			Set("user-agent", util.UserAgent).Timeout(30 * time.Second).EndStruct(result)
+			Set("user-agent", util.UserAgent).Timeout(30 * time.Second).
+			Retry(3, 5*time.Second, http.StatusInternalServerError).EndStruct(result)
 		if nil != errs && time.Duration(7*24*time.Hour) > article.UpdatedAt.Sub(article.PushedAt) {
 			continue
 		}
@@ -138,7 +140,8 @@ func pushComments() {
 		}
 		result := &map[string]interface{}{}
 		_, _, errs := gorequest.New().Post("https://rhythm.b3log.org/api/comment").SendMap(requestJSON).
-			Set("user-agent", util.UserAgent).Timeout(30 * time.Second).EndStruct(result)
+			Set("user-agent", util.UserAgent).Timeout(30 * time.Second).
+			Retry(3, 5*time.Second, http.StatusInternalServerError).EndStruct(result)
 		if nil != errs && time.Duration(7*24*time.Hour) > comment.UpdatedAt.Sub(comment.PushedAt) {
 			continue
 		}

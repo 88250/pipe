@@ -22,6 +22,7 @@ import (
 	"github.com/b3log/pipe/model"
 	"github.com/b3log/pipe/util"
 	"github.com/parnurzeal/gorequest"
+	"net/http"
 )
 
 var RecommendArticles []*model.ThemeArticle
@@ -30,7 +31,7 @@ func refreshRecommendArticlesPeriodically() {
 	go refreshRecommendArticles()
 
 	go func() {
-		for _ = range time.Tick(time.Minute * 30) {
+		for _ = range time.Tick(time.Minute*30) {
 			refreshRecommendArticles()
 		}
 	}()
@@ -42,8 +43,9 @@ func refreshRecommendArticles() {
 	recommendations := []*model.ThemeArticle{}
 
 	result := util.NewResult()
-	_, _, errs := gorequest.New().Get(util.HacPaiURL+"/apis/recommend/articles").
-		Set("user-agent", util.UserAgent).Timeout(5 * time.Second).EndStruct(result)
+	_, _, errs := gorequest.New().Get(util.HacPaiURL + "/apis/recommend/articles").
+		Set("user-agent", util.UserAgent).Timeout(5 * time.Second).
+		Retry(3, 5*time.Second, http.StatusInternalServerError).EndStruct(result)
 	if nil != errs {
 		logger.Errorf("get recommend articles: %s", errs)
 
