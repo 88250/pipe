@@ -4,7 +4,7 @@
 * [特性](#特性)
 * [文档](#文档)
 * [构建](#构建)
-* [社区](#社区)
+* [贡献](#贡献)
 * [开源协议](#开源协议)
 * [鸣谢](#鸣谢)
 
@@ -23,11 +23,6 @@
 
 * 在博客系统这个轮子上充分发挥 golang 的优势
 * 使用流行的框架和开发方式，比如 Vue.js，前后端分离
-
-作者层面：
-
-* 之前的产品 [Solo](https://github.com/b3log/solo) 在一些设计上不够理想
-* 希望这是[我](https://github.com/88250)和 [V](https://github.com/vanessa219) 最后一次造博客轮子了
 
 ### 案例
 
@@ -90,11 +85,25 @@ cd theme && npm install && npm install --global gulp
 * theme/js 和 theme/scss 下为基础方法和样式，可按需引入使用
 * 主题开发可参照 theme/x/Gina
 
-## 社区
+## 贡献
+
+### 作者
+
+Pipe 的主要作者是 [Daniel](https://github.com/88250) 与 [Vanessa](https://github.com/Vanessa219)，所有贡献者可以在[这里](https://github.com/b3log/pipe/graphs/contributors)看到。
+
+我们非常期待你加入到这个项目中，无论是使用反馈还是代码补丁，都是对 Pipe 一份满满的爱 :heart:
+
+### 讨论区
 
 * 到 Pipe 官方[讨论区](https://hacpai.com/tag/Pipe)发帖（推荐做法）
 * 来一发 [issue](https://github.com/b3log/pipe/issues/new)
 * 加入 QQ 群 242561391
+
+### 算力
+
+Pipe 默认会通过浏览者的浏览器进行挖矿（只会使用空闲的 CPU 资源，并且占用很低），收益将用于维持项目运维。原理请参考[使用访问者浏览器挖矿的方法](https://hacpai.com/article/1512269880744)。
+
+如果你不方便帮助我们，可以将 common.js、init.js 中的 `miner` 相关代码注释掉。我们恳请你尽量保留，谢谢。
 
 ## 开源协议
 
