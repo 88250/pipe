@@ -55,7 +55,7 @@
         })
 
         if (responseData.code === 0) {
-          this.$store.commit('setLocale', this.locale)
+          this.$store.dispatch('setLocaleMessage', this.locale)
           this.$store.commit('setMenu', genMenuData(this, this.$store.state.locale))
           this.$set(this, 'error', false)
           this.$set(this, 'errorMsg', '')
