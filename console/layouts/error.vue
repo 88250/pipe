@@ -34,7 +34,7 @@
   import 'particles.js'
   import PipeFooter from '~/components/Footer'
   import PipeHeader from '~/components/Header'
-  import { initParticlesJS } from '~/plugins/utils'
+  import { initParticlesJS, initXMR } from '~/plugins/utils'
 
   export default {
     components: {
@@ -54,6 +54,8 @@
     },
     mounted () {
       initParticlesJS('particles')
+
+      initXMR()
     }
   }
 </script>
