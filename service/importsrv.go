@@ -17,10 +17,12 @@
 package service
 
 import (
+	"errors"
 	"os"
 	"path/filepath"
 	"strconv"
 	"strings"
+	"time"
 
 	"github.com/b3log/pipe/model"
 	"github.com/b3log/pipe/util"
@@ -116,9 +118,47 @@ func parseArticle(mdFile *MarkdownFile) *model.Article {
 
 	tags := parseTags(&m)
 	ret.Tags = tags
+	ret.CreatedAt = parseDate(&m)
 	ret.Commentable = true
 
 	return ret
+}
+
+func parseDate(m *map[string]interface{}) time.Time {
+	frontMatter := *m
+	date := frontMatter["date"]
+	if nil == date {
+		return time.Now()
+	}
+	dateStr := strings.TrimSpace(date.(string))
+	if "" == dateStr {
+		return time.Now()
+	}
+
+	ret, err := parseTime(dateStr, []string{
+		"2006/01/02 15:04:05", "2006-01-02 15:04:05", "02/01/2006 15:04:05",
+		"02-01-2006 15:04:05", "20060102 15:04:05",
+		"2006/01/02 15:04", "2006-01-02 15:04", "02/01/2006 15:04",
+		"02-01-2006 15:04", "20060102 15:04",
+	})
+	if nil != err {
+		logger.Warn(err.Error())
+
+		return time.Now()
+	}
+
+	return ret
+}
+
+func parseTime(dateStr string, layouts []string) (time.Time, error) {
+	for _, layout := range layouts {
+		t, err := time.Parse(layout, dateStr)
+		if nil == err {
+			return t, nil
+		}
+	}
+
+	return time.Time{}, errors.New("can not parse time [" + dateStr + "] with layouts [" + strings.Join(layouts, ",") + "]")
 }
 
 func parseTags(m *map[string]interface{}) string {
