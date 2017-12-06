@@ -112,19 +112,7 @@ func (srv *articleService) AddArticle(article *model.Article) error {
 	srv.mutex.Lock()
 	defer srv.mutex.Unlock()
 
-	if util.IsReservedPath(article.Path) {
-		return errors.New("invalid path [" + article.Path + "]")
-	}
-
-	tagStr, err := normalizeTagStr(article.Tags)
-	if nil != err {
-		return err
-	}
-	article.Tags = tagStr
-
-	article.ID = util.CurrentMillisecond()
-
-	if err := normalizeArticlePath(article); nil != err {
+	if err := normalizeArticle(article); nil != err {
 		return err
 	}
 
@@ -437,8 +425,8 @@ func (srv *articleService) UpdateArticle(article *model.Article) error {
 		return err
 	}
 	newArticle := &model.Article{}
-	newArticle.Title = article.Title
-	newArticle.Content = article.Content
+	newArticle.Title = strings.TrimSpace(article.Title)
+	newArticle.Content = strings.TrimSpace(article.Content)
 	newArticle.Commentable = article.Commentable
 	newArticle.Topped = article.Topped
 	now := time.Now()
@@ -482,6 +470,44 @@ func (srv *articleService) IncArticleViewCount(article *model.Article) error {
 
 	article.ViewCount = article.ViewCount + 1
 	if err := db.Model(&model.Article{}).Select("view_count").Updates(article).Error; nil != err {
+		return err
+	}
+
+	return nil
+}
+
+func normalizeArticle(article *model.Article) error {
+	title := strings.TrimSpace(article.Title)
+	if "" == title {
+		return errors.New("title can not be empty")
+	}
+	count := 0
+	if err := db.Model(&model.Article{}).Where("title = ?", title).Count(&count).Error; nil != err {
+		return err
+	}
+	if 0 < count {
+		return errors.New("title is reduplicated")
+	}
+
+	content := strings.TrimSpace(article.Content)
+	if "" == content {
+		return errors.New("content can not be empty")
+	}
+	article.Content = content
+
+	if util.IsReservedPath(article.Path) {
+		return errors.New("invalid path [" + article.Path + "]")
+	}
+
+	tagStr, err := normalizeTagStr(article.Tags)
+	if nil != err {
+		return err
+	}
+	article.Tags = tagStr
+
+	article.ID = util.CurrentMillisecond()
+
+	if err := normalizeArticlePath(article); nil != err {
 		return err
 	}
 
