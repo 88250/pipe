@@ -204,6 +204,9 @@
         }
       },
       async remove (id) {
+        if (!confirm(this.$t('confirmDelete', this.$store.state.locale))) {
+          return
+        }
         const responseData = await this.axios.delete(`/console/articles/${id}`)
         if (responseData === null) {
           this.$store.commit('setSnackBar', {
