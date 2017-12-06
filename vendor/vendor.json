@@ -57,6 +57,12 @@
 			"revisionTime": "2017-10-09T00:43:22Z"
 		},
 		{
+			"checksumSHA1": "fyy4HWkNU72iDn0elKoKXC/dI3k=",
+			"path": "github.com/ghodss/yaml",
+			"revision": "0ca9ea5df5451ffdf184b4428c902747c2c11cd7",
+			"revisionTime": "2017-03-27T23:54:44Z"
+		},
+		{
 			"checksumSHA1": "iByQWxuHkpxVM9eidNXzSpWyACg=",
 			"path": "github.com/gin-contrib/sessions",
 			"revision": "cccdeef56346e7037ca92de250c2b55ef5e7ffe3",
@@ -281,6 +287,31 @@
 			"path": "golang.org/x/sys/unix",
 			"revision": "0b25a408a50076fbbcae6b7ac0ea5fbb0b085e79",
 			"revisionTime": "2017-06-08T11:43:49Z"
+		},
+		{
+			"checksumSHA1": "xe5hMqClV1HmKZ4GVg4bmSsVRE8=",
+			"path": "golang.org/x/text/encoding",
+			"revision": ""
+		},
+		{
+			"checksumSHA1": "d4g160kDwJesjZxpevi5Q41OG7o=",
+			"path": "golang.org/x/text/encoding/internal",
+			"revision": ""
+		},
+		{
+			"checksumSHA1": "wvwBoRLwt0iQqBP7tu0/M4vQCQo=",
+			"path": "golang.org/x/text/encoding/internal/identifier",
+			"revision": ""
+		},
+		{
+			"checksumSHA1": "YY+9reJJZdiidVtCfOGV2iWsXSw=",
+			"path": "golang.org/x/text/encoding/simplifiedchinese",
+			"revision": ""
+		},
+		{
+			"checksumSHA1": "baiYjEQuZN5kEgOBJPSsZCecTE8=",
+			"path": "golang.org/x/text/transform",
+			"revision": ""
 		},
 		{
 			"checksumSHA1": "q190bL03wQok3wVwYmMub2XhOiU=",
