@@ -1,5 +1,5 @@
 /**
- * @fileoverview common tool for every theme
+ * @fileoverview article tool for every theme
  *
  * @author <a href="http://vanessa.b3log.org">Liyuan Li</a>
  * @version 0.2.0.0, Oct 19, 2017
