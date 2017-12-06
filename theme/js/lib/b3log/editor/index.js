@@ -222,7 +222,6 @@ export const Editor = (config) => {
   $editor.find('.b3log-editor__toolbar > span input').change(function (event) {
     insertTextAtCaret(textarea,
       genUploading(event.target.files, config.uploadMax, config.label.loading, config.label.over), '')
-    textarea.blur();
     ajaxUpload(config.uploadURL, event.target.files, (response) => {
       textarea.value = genUploaded(response.data, textarea.value, config.label.loading, config.label.error)
       debounceInput(timerId, config.change, $editor)
