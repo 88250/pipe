@@ -56,10 +56,12 @@ func ConnectDB() {
 
 	if err = db.AutoMigrate(tables...).Error; nil != err {
 		logger.Fatal("auto migrate tables failed: " + err.Error())
+		os.Exit(-1)
 	}
 
-	if err = db.Model(&model.Article{}).AddIndex("idx_article_path", "path").Error; nil != err {
+	if err = db.Model(&model.Article{}).AddIndex("idx_b3_pipe_articles_created_at", "created_at").Error; nil != err {
 		logger.Fatal("adds index failed: " + err.Error())
+		os.Exit(-1)
 	}
 }
 

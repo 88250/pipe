@@ -28,7 +28,7 @@ type Article struct {
 	Title        string    `gorm:"size:128" json:"title"`
 	Tags         string    `gorm:"size:128" json:"tags"`
 	Content      string    `gorm:"type:text" json:"content"`
-	Path         string    `gorm:"size:255" json:"path"`
+	Path         string    `sql:"index" gorm:"size:255" json:"path"`
 	Status       int       `json:"status"`
 	Topped       bool      `json:"topped"`
 	Commentable  bool      `json:"commentable"`
