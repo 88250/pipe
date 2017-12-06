@@ -139,6 +139,9 @@
         if (this.selectedIds.length === 0) {
           return
         }
+        if (!confirm(this.$t('confirmDelete', this.$store.state.locale))) {
+          return
+        }
         const responseData = await this.axios.post('/console/comments/batch-delete', {
           ids: this.selectedIds
         })
@@ -188,6 +191,9 @@
         }
       },
       async remove (id) {
+        if (!confirm(this.$t('confirmDelete', this.$store.state.locale))) {
+          return
+        }
         const responseData = await this.axios.delete(`/console/comments/${id}`)
         if (responseData === null) {
           this.$store.commit('setSnackBar', {

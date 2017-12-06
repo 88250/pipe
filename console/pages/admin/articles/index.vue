@@ -155,6 +155,9 @@
         if (this.selectedIds.length === 0) {
           return
         }
+        if (!confirm(this.$t('confirmDelete', this.$store.state.locale))) {
+          return
+        }
         const responseData = await this.axios.post('/console/articles/batch-delete', {
           ids: this.selectedIds
         })
