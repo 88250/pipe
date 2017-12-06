@@ -33,11 +33,14 @@ type MarkdownFile struct {
 	Content  string
 }
 
-func ImportMarkdowns(mdFiles []*MarkdownFile) {
+func ImportMarkdowns(mdFiles []*MarkdownFile, authorID, blogID uint) {
 	succCnt, failCnt := 0, 0
 	fails := []string{}
 	for _, mdFile := range mdFiles {
 		article := parseArticle(mdFile)
+		article.AuthorID = authorID
+		article.BlogID = blogID
+
 		if err := Article.AddArticle(article); nil != err {
 			failCnt++
 			fails = append(fails, mdFile.Filename)
@@ -86,15 +89,15 @@ func parseArticle(mdFile *MarkdownFile) *model.Article {
 		ret.Title = strings.Split(mdFile.Filename, ext)[0]
 		ret.Content = content
 		ret.Commentable = true
-		ret.Tags = "Note"
+		ret.Tags = "笔记"
 
 		return ret
 	}
 
-	title := strings.TrimSpace(m["title"].(string))
-	if "" == title {
-		ext := filepath.Ext(mdFile.Filename)
-		title = strings.Split(mdFile.Filename, ext)[0]
+	ext := filepath.Ext(mdFile.Filename)
+	title := strings.Split(mdFile.Filename, ext)[0]
+	if t, ok := m["title"]; ok {
+		title = strings.TrimSpace(t.(string))
 	}
 	ret.Title = title
 
@@ -105,10 +108,11 @@ func parseArticle(mdFile *MarkdownFile) *model.Article {
 	}
 	ret.Content = content
 
-	permalink := strings.TrimSpace(m["permalink"].(string))
-	if "" != permalink {
-		ret.Path = permalink
+	permalink := ""
+	if p, ok := m["permalink"]; ok {
+		permalink = strings.TrimSpace(p.(string))
 	}
+	ret.Path = permalink
 
 	tags := parseTags(&m)
 	ret.Tags = tags
@@ -119,24 +123,28 @@ func parseArticle(mdFile *MarkdownFile) *model.Article {
 
 func parseTags(m *map[string]interface{}) string {
 	frontMatter := *m
-	tags := strings.TrimSpace(frontMatter["tags"].(string))
-	if "" == tags {
-		tags = strings.TrimSpace(frontMatter["category"].(string))
+	tags := frontMatter["tags"]
+	if nil == tags {
+		tags = frontMatter["category"]
 	}
-	if "" == tags {
-		tags = strings.TrimSpace(frontMatter["categories"].(string))
+	if nil == tags {
+		tags = frontMatter["categories"]
 	}
-	if "" == tags {
-		tags = strings.TrimSpace(frontMatter["keyword"].(string))
+	if nil == tags {
+		tags = frontMatter["keyword"]
 	}
-	if "" == tags {
-		tags = strings.TrimSpace(frontMatter["keywords"].(string))
+	if nil == tags {
+		tags = frontMatter["keywords"]
 	}
-	if "" == tags {
-		tags = "Note"
-
-		return tags
+	if nil == tags {
+		return "笔记"
 	}
 
-	return "Note"
+	ts := tags.([]interface{})
+	tagStrs := []string{}
+	for _, t := range ts {
+		tagStrs = append(tagStrs, t.(string))
+	}
+
+	return strings.Join(tagStrs, ",")
 }

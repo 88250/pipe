@@ -17,17 +17,18 @@
 package console
 
 import (
+	"io"
+	"io/ioutil"
+	"net/http"
+	"os"
+	"path/filepath"
+
+	"github.com/b3log/pipe/service"
 	"github.com/b3log/pipe/util"
 	"github.com/gin-gonic/gin"
-	"io/ioutil"
-	"mime"
-	"net/http"
-	"path/filepath"
-	"os"
-	"io"
 )
 
-func uploadAction(c *gin.Context) {
+func ImportMarkdownAction(c *gin.Context) {
 	result := util.NewResult()
 	defer c.JSON(http.StatusOK, result)
 
@@ -43,7 +44,6 @@ func uploadAction(c *gin.Context) {
 	if nil != err {
 		msg := "parse upload file header failed"
 		logger.Errorf(msg + ": " + err.Error())
-
 		result.Code = -1
 		result.Msg = msg
 
@@ -55,7 +55,6 @@ func uploadAction(c *gin.Context) {
 	if nil != err {
 		msg := "open upload file failed"
 		logger.Errorf(msg + ": " + err.Error())
-
 		result.Code = -1
 		result.Msg = msg
 
@@ -66,19 +65,17 @@ func uploadAction(c *gin.Context) {
 	tempDir := os.TempDir()
 	logger.Trace("temp dir path is [" + tempDir + "]")
 	zipFilePath := filepath.Join(tempDir, session.UName+"-md.zip")
-	zipFile,err := os.Create(zipFilePath)
+	zipFile, err := os.Create(zipFilePath)
 	if nil != err {
 		logger.Errorf("create temp file [" + zipFilePath + "] failed: " + err.Error())
-
 		result.Code = -1
 		result.Msg = "create temp file failed"
 
 		return
 	}
 	_, err = io.Copy(zipFile, f)
-	if nil !=err{
+	if nil != err {
 		logger.Errorf("write temp file [" + zipFilePath + "] failed: " + err.Error())
-
 		result.Code = -1
 		result.Msg = "write temp file failed"
 
@@ -87,35 +84,57 @@ func uploadAction(c *gin.Context) {
 	defer zipFile.Close()
 
 	unzipPath := filepath.Join(tempDir, session.UName+"-md")
-	if err = os.RemoveAll(unzipPath);nil!=err {
+	if err = os.RemoveAll(unzipPath); nil != err {
 		logger.Errorf("remove temp dir [" + unzipPath + "] failed: " + err.Error())
-
 		result.Code = -1
 		result.Msg = "remove temp dir failed"
 
 		return
 	}
-	if err = os.Mkdir(unzipPath, 0755);nil!=err{
+	if err = os.Mkdir(unzipPath, 0755); nil != err {
 		logger.Errorf("make temp dir [" + unzipPath + "] failed: " + err.Error())
-
 		result.Code = -1
 		result.Msg = "make temp dir failed"
 
 		return
 	}
-	if err = util.Zip.Unzip(zipFilePath, unzipPath);nil!=err{
+	if err = util.Zip.Unzip(zipFilePath, unzipPath); nil != err {
 		logger.Errorf("unzip [" + zipFilePath + "] to [" + unzipPath + "] failed: " + err.Error())
-
 		result.Code = -1
 		result.Msg = "unzip failed"
 
 		return
 	}
 
+	logger.Info("importing markdowns [zipFilePath=" + zipFilePath + ", unzipPath=" + unzipPath + "]")
 
+	files, err := ioutil.ReadDir(unzipPath)
+	if nil != err {
+		logger.Errorf("read dir [" + unzipPath + "] failed: " + err.Error())
+		result.Code = -1
+		result.Msg = "read dir failed"
 
-	data := map[string]interface{}{}
-	data["succMap"] = succMap
-	data["errFiles"] = errFiles
-	result.Data = data
+		return
+	}
+
+	mdFiles := []*service.MarkdownFile{}
+	for _, file := range files {
+		filePath := filepath.Join(unzipPath, file.Name())
+		data, err := ioutil.ReadFile(filePath)
+		if nil != err {
+			logger.Errorf("read file [" + filePath + "] failed")
+
+			continue
+		}
+
+		mdFile := &service.MarkdownFile{
+			Filename: file.Name(),
+			Filepath: filePath,
+			Content:  string(data),
+		}
+
+		mdFiles = append(mdFiles, mdFile)
+	}
+
+	service.ImportMarkdowns(mdFiles, session.UID, session.BID)
 }
