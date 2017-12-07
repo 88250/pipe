@@ -17,10 +17,11 @@
 package console
 
 import (
-	"github.com/gin-gonic/gin"
-	"github.com/b3log/pipe/util"
-	"net/http"
 	"github.com/b3log/pipe/service"
+	"github.com/b3log/pipe/util"
+	"github.com/gin-gonic/gin"
+	"io/ioutil"
+	"net/http"
 	"os"
 	"path/filepath"
 )
@@ -37,19 +38,49 @@ func ExportMarkdownAction(c *gin.Context) {
 		return
 	}
 
-	mdFiles:=service.Export.ExportMarkdowns(session.BID)
-
 	tempDir := os.TempDir()
 	logger.Trace("temp dir path is [" + tempDir + "]")
 	zipFilePath := filepath.Join(tempDir, session.UName+"-export-md.zip")
-	zipFile, err := os.Create(zipFilePath)
+	zipFile, err := util.Zip.Create(zipFilePath)
 	if nil != err {
-		logger.Errorf("create temp file [" + zipFilePath + "] failed: " + err.Error())
+		logger.Errorf("create zip file [" + zipFilePath + "] failed: " + err.Error())
 		result.Code = -1
-		result.Msg = "create temp file failed"
+		result.Msg = "create zip file failed"
 
 		return
 	}
-	util.Zip.Create()
+	defer zipFile.Close()
 
+	c.Header("Content-Disposition", "attachment; filename="+session.UName+"-export-md.zip")
+	c.Header("Content-Type", "application/zip")
+	http.ServeFile(c.Writer, c.Request, zipFilePath)
+
+	mdFiles := service.Export.ExportMarkdowns(session.BID)
+	if 1 > len(mdFiles) {
+		return
+	}
+
+	zipPath := filepath.Join(tempDir, session.UName+"-export-md")
+	if err = os.RemoveAll(zipPath); nil != err {
+		logger.Errorf("remove temp dir [" + zipPath + "] failed: " + err.Error())
+		result.Code = -1
+		result.Msg = "remove temp dir failed"
+
+		return
+	}
+	if err = os.Mkdir(zipPath, 0755); nil != err {
+		logger.Errorf("make temp dir [" + zipPath + "] failed: " + err.Error())
+		result.Code = -1
+		result.Msg = "make temp dir failed"
+
+		return
+	}
+	for _, mdFile := range mdFiles {
+		filename := filepath.Join(zipPath, mdFile.Name+".md")
+		if err := ioutil.WriteFile(filename, []byte(mdFile.Content), 0644); nil != err {
+			logger.Errorf("write file [" + filename + "] failed: " + err.Error())
+		}
+	}
+
+	zipFile.AddDirectory(session.UName+"-export-md", zipPath)
 }

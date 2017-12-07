@@ -17,8 +17,9 @@
 package service
 
 import (
+	"regexp"
+
 	"github.com/b3log/pipe/model"
-	"github.com/kennygrant/sanitize"
 )
 
 var Export = &exportService{}
@@ -39,7 +40,7 @@ func (srv *exportService) ExportMarkdowns(blogID uint) (ret []*MarkdownFile) {
 
 	for _, article := range articles {
 		mdFile := &MarkdownFile{
-			Name:    sanitize.Name(article.Title),
+			Name:    sanitizeFilename(article.Title),
 			Content: article.Content,
 		}
 
@@ -49,6 +50,8 @@ func (srv *exportService) ExportMarkdowns(blogID uint) (ret []*MarkdownFile) {
 	return ret
 }
 
-func sanitizeFilename(filename string) string {
+func sanitizeFilename(unsanitized string) string {
+	unsanitized = regexp.MustCompile("[\\?\\\\/:|<>\\*]").ReplaceAllString(unsanitized, " ") // filter out ? \ / : | < > *
 
+	return regexp.MustCompile("\\s+").ReplaceAllString(unsanitized, "_") // white space as underscores
 }
