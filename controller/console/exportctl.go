@@ -16,4 +16,40 @@
 
 package console
 
+import (
+	"github.com/gin-gonic/gin"
+	"github.com/b3log/pipe/util"
+	"net/http"
+	"github.com/b3log/pipe/service"
+	"os"
+	"path/filepath"
+)
 
+func ExportMarkdownAction(c *gin.Context) {
+	result := util.NewResult()
+	defer c.JSON(http.StatusOK, result)
+
+	session := util.GetSession(c)
+	if nil == session {
+		result.Code = -1
+		result.Msg = "please login before export"
+
+		return
+	}
+
+	mdFiles:=service.Export.ExportMarkdowns(session.BID)
+
+	tempDir := os.TempDir()
+	logger.Trace("temp dir path is [" + tempDir + "]")
+	zipFilePath := filepath.Join(tempDir, session.UName+"-export-md.zip")
+	zipFile, err := os.Create(zipFilePath)
+	if nil != err {
+		logger.Errorf("create temp file [" + zipFilePath + "] failed: " + err.Error())
+		result.Code = -1
+		result.Msg = "create temp file failed"
+
+		return
+	}
+	util.Zip.Create()
+
+}

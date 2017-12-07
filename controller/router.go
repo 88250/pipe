@@ -110,8 +110,8 @@ func MapRoutes() *gin.Engine {
 	consoleGroup.GET("/thumbs", console.GetArticleThumbsAction)
 	consoleGroup.POST("/markdown", console.MarkdownAction)
 	consoleGroup.POST("/import/md", console.ImportMarkdownAction)
-
-	consoleGroup.POST("/blogs/switch/:id", console.BlogSwitchAction)
+	consoleGroup.POST("/export/md", console.ExportMarkdownAction)
+	// consoleGroup.POST("/blogs/switch/:id", console.BlogSwitchAction)
 
 	consoleSettingsGroup := consoleGroup.Group("/settings")
 	consoleSettingsGroup.GET("/basic", console.GetBasicSettingsAction)
