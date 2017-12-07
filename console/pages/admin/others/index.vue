@@ -16,30 +16,9 @@
           <div class="fn-flex-1">
             {{ $t('export', $store.state.locale) }}
           </div>
-          <v-menu
-            v-if="$store.state.role < 3"
-            :nudge-bottom="28"
-            :nudge-width="60"
-            :nudge-left="60"
-            :open-on-hover="true">
-            <v-toolbar-title slot="activator">
-              <v-btn class="btn--small btn--info" @click="">
-                JSON
-                <v-icon>arrow_drop_down</v-icon>
-              </v-btn>
-            </v-toolbar-title>
-            <v-list>
-              <v-list-tile @click="">
-                JSON
-              </v-list-tile>
-              <v-list-tile @click="">
-                {{ $t('staticBlog', $store.state.locale) }}
-              </v-list-tile>
-              <v-list-tile @click="">
-                SQL
-              </v-list-tile>
-            </v-list>
-          </v-menu>
+          <a class="btn--small btn--info btn" href="/api/console/export/md">
+            {{ $t('staticBlog', $store.state.locale) }}
+          </a>
         </li>
       </ul>
     </div>
