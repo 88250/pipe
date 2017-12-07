@@ -17,13 +17,15 @@
 package console
 
 import (
-	"github.com/b3log/pipe/service"
-	"github.com/b3log/pipe/util"
-	"github.com/gin-gonic/gin"
+	"io"
 	"io/ioutil"
 	"net/http"
 	"os"
 	"path/filepath"
+
+	"github.com/b3log/pipe/service"
+	"github.com/b3log/pipe/util"
+	"github.com/gin-gonic/gin"
 )
 
 func ExportMarkdownAction(c *gin.Context) {
@@ -49,14 +51,25 @@ func ExportMarkdownAction(c *gin.Context) {
 
 		return
 	}
-	defer zipFile.Close()
 
 	c.Header("Content-Disposition", "attachment; filename="+session.UName+"-export-md.zip")
 	c.Header("Content-Type", "application/zip")
-	http.ServeFile(c.Writer, c.Request, zipFilePath)
 
 	mdFiles := service.Export.ExportMarkdowns(session.BID)
 	if 1 > len(mdFiles) {
+		zipFile.Close()
+		file, err := os.Open(zipFilePath)
+		if nil != err {
+			logger.Errorf("open zip file [" + zipFilePath + " failed: " + err.Error())
+			result.Code = -1
+			result.Msg = "open zip file failed"
+
+			return
+		}
+		defer file.Close()
+
+		io.Copy(c.Writer, file)
+
 		return
 	}
 
@@ -83,4 +96,22 @@ func ExportMarkdownAction(c *gin.Context) {
 	}
 
 	zipFile.AddDirectory(session.UName+"-export-md", zipPath)
+	if err := zipFile.Close(); nil != err {
+		logger.Errorf("zip failed: " + err.Error())
+		result.Code = -1
+		result.Msg = "zip failed"
+
+		return
+	}
+	file, err := os.Open(zipFilePath)
+	if nil != err {
+		logger.Errorf("open zip file [" + zipFilePath + " failed: " + err.Error())
+		result.Code = -1
+		result.Msg = "open zip file failed"
+
+		return
+	}
+	defer file.Close()
+
+	io.Copy(c.Writer, file)
 }
