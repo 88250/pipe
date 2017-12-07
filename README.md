@@ -10,7 +10,7 @@
 
 ## 简介
 
-小而美的博客平台，通过[黑客派](https://hacpai.com)账号登录即可使用。
+[Pipe](https://github.com/b3log/pipe) 是一款小而美的博客平台，通过[黑客派](https://hacpai.com)账号登录即可使用。
 
 ### 动机
 
@@ -22,24 +22,23 @@
 技术层面：
 
 * 在博客系统这个轮子上充分发挥 golang 的优势
-* 使用流行的框架和开发方式，比如 Vue.js，前后端分离
+* 后台使用 Vue.js 进行前后端分离
 
 ### 案例
 
-TBD
+http://pipe.b3log.org
 
 ## 特性
 
-- [X] 多用户博客平台
-- [X] Markdown / Emoji
-- [X] [聚合分类](https://github.com/b3log/solo/issues/12256) / 标签
-- [X] 自定义导航
-- [X] 多主题 / 多语言
-- [X] Atom 订阅
-- [X] 可配置动静分离
-- [X] 搜索
-- [ ] Sitemap
-- [ ] Hexo/Jekyll 导入
+- 多用户博客平台
+- Markdown / Emoji
+- [聚合分类](https://github.com/b3log/solo/issues/12256) / 标签
+- 自定义导航
+- 多主题 / 多语言
+- Atom 订阅
+- 可配置动静分离
+- 搜索
+- Hexo/Jekyll 导入 / 导出
 
 ## 文档
 
