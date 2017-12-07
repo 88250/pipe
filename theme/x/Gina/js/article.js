@@ -24,6 +24,8 @@ const Article = {
       InitToc('toc', 'articleContent')
       if ($('body').width() > 768) {
         $('body').addClass('body--side')
+      } else {
+        $('body').removeClass('body--side')
       }
     }
 

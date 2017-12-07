@@ -146,13 +146,34 @@
     word-break: break-word;
   }
 
-  pre > code {
-    padding: 0.5em;
-    color: $black;
-    background-color: rgba(0, 0, 0, 0.04);
-    background-size: 20px 20px;
-    border-radius: 5px;
-    display: block;
+  pre {
+    position: relative;
+    &:hover > .pipe-code__copy {
+      display: block;
+    }
+    & > textarea {
+      position: absolute;
+      left: -100000px;
+    }
+    & > .pipe-code__copy {
+      position: absolute;
+      top: 5px;
+      background-color: #3b3e43;
+      right: 5px;
+      display: none;
+      cursor: pointer;
+      padding: 0 7px;
+      color: #fff;
+      border-radius: 3px;
+    }
+    &  > code {
+      padding: 0.5em;
+      color: $black;
+      background-color: rgba(0, 0, 0, 0.04);
+      background-size: 20px 20px;
+      border-radius: 5px;
+      display: block;
+    }
   }
 
   kbd {
