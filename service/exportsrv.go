@@ -18,8 +18,10 @@ package service
 
 import (
 	"regexp"
+	"strings"
 
 	"github.com/b3log/pipe/model"
+	"gopkg.in/yaml.v2"
 )
 
 var Export = &exportService{}
@@ -39,9 +41,29 @@ func (srv *exportService) ExportMarkdowns(blogID uint) (ret []*MarkdownFile) {
 	}
 
 	for _, article := range articles {
+		front := struct {
+			Title     string   `yaml:"title"`
+			Date      string   `yaml:"date"`
+			Updated   string   `yaml:"updated"`
+			Tags      []string `yaml:"tags"`
+			Permalink string   `yaml:"permalink"`
+		}{
+			article.Title,
+			article.CreatedAt.Format("2006-01-02 15:04:05"),
+			article.UpdatedAt.Format("2006-01-02 15:04:05"),
+			strings.Split(article.Tags, ","),
+			article.Path,
+		}
+		frontData, err := yaml.Marshal(front)
+		if nil != err {
+			logger.Errorf("marshal front matter failed: " + err.Error())
+
+			continue
+		}
+
 		mdFile := &MarkdownFile{
 			Name:    sanitizeFilename(article.Title),
-			Content: article.Content,
+			Content: string(frontData) + "----\n" + article.Content,
 		}
 
 		ret = append(ret, mdFile)
