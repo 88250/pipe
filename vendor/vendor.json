@@ -153,6 +153,12 @@
 			"revisionTime": "2017-01-02T12:52:26Z"
 		},
 		{
+			"checksumSHA1": "kmauqEUBVMGn4JHpDR8ThKCIUEo=",
+			"path": "github.com/kennygrant/sanitize",
+			"revision": "2e6820834a1f36c626bf19a253b7d3cc060e9b8b",
+			"revisionTime": "2017-10-05T16:48:50Z"
+		},
+		{
 			"checksumSHA1": "/Q5KGOoR0chE5R6XRjeciyrTJ0Y=",
 			"path": "github.com/kidstuff/mongostore",
 			"revision": "256d65ac5b0e35e7c5ebb3f175c0bed1e5c2b253",
