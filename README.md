@@ -26,19 +26,19 @@
 
 ### 案例
 
-http://pipe.b3log.org
+TBD
 
 ## 特性
 
-- 多用户博客平台
-- Markdown / Emoji
-- [聚合分类](https://github.com/b3log/solo/issues/12256) / 标签
-- 自定义导航
-- 多主题 / 多语言
-- Atom 订阅
-- 可配置动静分离
-- 搜索
-- Hexo/Jekyll 导入 / 导出
+* 多用户博客平台
+* Markdown / Emoji
+* [聚合分类](https://github.com/b3log/solo/issues/12256) / 标签
+* 自定义导航
+* 多主题 / 多语言
+* Atom 订阅
+* 可配置动静分离
+* 搜索
+* Hexo/Jekyll 导入 / 导出
 
 ## 文档
 
@@ -113,7 +113,7 @@ Pipe 的诞生离不开以下开源项目：
 * [jQuery](https://github.com/jquery/jquery)：JavaScript 工具库，用于主题页面
 * [Vue.js](https://github.com/vuejs/vue)：渐进式 JavaScript 框架
 * [Nuxt.js](https://github.com/nuxt/nuxt.js)：Vue.js 框架
-* [Vuetify](https://github.com/vanessa219/vuetify)：修改自 [Vuetify](https://github.com/vuetifyjs/vuetify)
+* [Vuetify](https://github.com/vanessa219/vuetify)：Vue.js 的 Material 组件框架
 * [Gin](https://github.com/gin-gonic/gin)：又快又好用的 golang HTTP web 框架
 * [GORM](https://github.com/jinzhu/gorm)：极好的 golang ORM 库
 * [Blackfriday](github.com/russross/blackfriday)：golang Markdown 处理器
