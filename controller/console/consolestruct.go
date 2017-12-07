@@ -16,7 +16,11 @@
 
 package console
 
-import "html/template"
+import (
+	"html/template"
+
+	"github.com/b3log/pipe/util"
+)
 
 type ConsoleArticle struct {
 	ID           uint           `json:"id"`
@@ -39,6 +43,10 @@ type ConsoleAuthor struct {
 	URL       string `json:"url"`
 	Name      string `json:"name"`
 	AvatarURL string `json:"avatarURL"`
+}
+
+func (u *ConsoleAuthor) AvatarURLWithSize(size int) string {
+	return util.ImageSize(u.AvatarURL, size, size)
 }
 
 type ConsoleCategory struct {
