@@ -87,7 +87,7 @@ func GetCategoriesAction(c *gin.Context) {
 	categoryModels, pagination := service.Category.ConsoleGetCategories(util.GetPage(c), session.BID)
 	blogURLSetting := service.Setting.GetSetting(model.SettingCategoryBasic, model.SettingNameBasicBlogURL, session.BID)
 
-	categories := []*ConsoleCategory{}
+	var categories []*ConsoleCategory
 	for _, categoryModel := range categoryModels {
 		categories = append(categories, &ConsoleCategory{
 			ID:          categoryModel.ID,

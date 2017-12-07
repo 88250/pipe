@@ -104,9 +104,9 @@ func GetArticlesAction(c *gin.Context) {
 	articleModels, pagination := service.Article.ConsoleGetArticles(c.Query("key"), util.GetPage(c), session.BID)
 	blogURLSetting := service.Setting.GetSetting(model.SettingCategoryBasic, model.SettingNameBasicBlogURL, session.BID)
 
-	articles := []*ConsoleArticle{}
+	var articles []*ConsoleArticle
 	for _, articleModel := range articleModels {
-		consoleTags := []*ConsoleTag{}
+		var consoleTags []*ConsoleTag
 		tagStrs := strings.Split(articleModel.Tags, ",")
 		for _, tagStr := range tagStrs {
 			consoleTag := &ConsoleTag{
@@ -231,7 +231,7 @@ func GetArticleThumbsAction(c *gin.Context) {
 		h = 520
 	}
 
-	styledURLs := []string{}
+	var styledURLs []string
 	for _, url := range urls {
 		styledURLs = append(styledURLs, url+"?imageView2/1/w/"+strconv.Itoa(w)+
 			"/h/"+strconv.Itoa(h)+"/interlace/1/q/100")

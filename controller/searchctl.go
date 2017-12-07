@@ -41,9 +41,9 @@ func searchAction(c *gin.Context) {
 	page := util.GetPage(c)
 	blogID := getBlogID(c)
 	articleModels, pagination := service.Article.GetArticles(c.Query("key"), page, blogID)
-	articles := []*model.ThemeArticle{}
+	var articles []*model.ThemeArticle
 	for _, articleModel := range articleModels {
-		themeTags := []*model.ThemeTag{}
+		var themeTags []*model.ThemeTag
 		tagStrs := strings.Split(articleModel.Tags, ",")
 		for _, tagStr := range tagStrs {
 			themeTag := &model.ThemeTag{

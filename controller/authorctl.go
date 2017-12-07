@@ -32,7 +32,7 @@ func showAuthorsAction(c *gin.Context) {
 	dataModel := getDataModel(c)
 	blogID := getBlogID(c)
 	locale := getLocale(c)
-	themeAuthors := []*model.ThemeAuthor{}
+	var themeAuthors []*model.ThemeAuthor
 	authorModels, _ := service.User.GetBlogUsers(1, blogID)
 	for _, authorModel := range authorModels {
 		userBlog := service.User.GetUserBlog(authorModel.ID, blogID)
@@ -66,9 +66,9 @@ func showAuthorArticlesAction(c *gin.Context) {
 	session := util.GetSession(c)
 	locale := getLocale(c)
 	articleModels, pagination := service.Article.GetAuthorArticles(author.ID, page, blogID)
-	articles := []*model.ThemeArticle{}
+	var articles []*model.ThemeArticle
 	for _, articleModel := range articleModels {
-		themeTags := []*model.ThemeTag{}
+		var themeTags []*model.ThemeTag
 		tagStrs := strings.Split(articleModel.Tags, ",")
 		for _, tagStr := range tagStrs {
 			themeTag := &model.ThemeTag{

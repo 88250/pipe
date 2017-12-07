@@ -33,7 +33,7 @@ type statisticService struct {
 }
 
 func (srv *statisticService) GetAllStatistics(blogID uint) []*model.Setting {
-	ret := []*model.Setting{}
+	var ret []*model.Setting
 
 	if err := db.Where("category = ? AND blog_id = ?", model.SettingCategoryStatistic, blogID).Find(&ret).Error; nil != err {
 		logger.Errorf("get all statistics failed: " + err.Error())
@@ -57,7 +57,7 @@ func (srv *statisticService) GetStatistic(statisticName string, blogID uint) *mo
 
 func (srv *statisticService) GetStatistics(blogID uint, statisticNames ...string) map[string]*model.Setting {
 	ret := map[string]*model.Setting{}
-	settings := []*model.Setting{}
+	var settings []*model.Setting
 	if err := db.Where("name IN (?) AND category = ? AND blog_id = ?", statisticNames, model.SettingCategoryStatistic, blogID).Find(&settings).Error; nil != err {
 		logger.Errorf("get statistics failed: " + err.Error())
 

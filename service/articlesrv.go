@@ -57,13 +57,13 @@ func (srv *articleService) GetArchiveArticles(archiveID uint, page int, blogID u
 	offset := (page - 1) * pageSize
 	count := 0
 
-	rels := []*model.Correlation{}
+	var rels []*model.Correlation
 	if err := db.Where("id2 = ? AND type = ? AND blog_id = ?", archiveID, model.CorrelationArticleTag, blogID).
 		Find(&rels).Error; nil != err {
 		return
 	}
 
-	articleIDs := []uint{}
+	var articleIDs []uint
 	for _, articleTagRel := range rels {
 		articleIDs = append(articleIDs, articleTagRel.ID1)
 	}
@@ -217,13 +217,13 @@ func (srv *articleService) GetCategoryArticles(categoryID uint, page int, blogID
 	pageSize, windowSize := getPageWindowSize(blogID)
 	offset := (page - 1) * pageSize
 
-	rels := []*model.Correlation{}
+	var rels []*model.Correlation
 	if err := db.Model(&model.Correlation{}).Where("id1 = ? AND type = ? AND blog_id = ?", categoryID, model.CorrelationCategoryTag, blogID).
 		Find(&rels).Error; nil != err {
 		return
 	}
 
-	tagIDs := []uint{}
+	var tagIDs []uint
 	for _, categoryTagRel := range rels {
 		tagIDs = append(tagIDs, categoryTagRel.ID2)
 	}
@@ -238,7 +238,7 @@ func (srv *articleService) GetCategoryArticles(categoryID uint, page int, blogID
 
 	pagination = util.NewPagination(page, pageSize, windowSize, count)
 
-	articleIDs := []uint{}
+	var articleIDs []uint
 	for _, articleTagRel := range rels {
 		articleIDs = append(articleIDs, articleTagRel.ID1)
 	}
@@ -255,13 +255,13 @@ func (srv *articleService) GetTagArticles(tagID uint, page int, blogID uint) (re
 	offset := (page - 1) * pageSize
 	count := 0
 
-	rels := []*model.Correlation{}
+	var rels []*model.Correlation
 	if err := db.Where("id2 = ? AND type = ? AND blog_id = ?", tagID, model.CorrelationArticleTag, blogID).
 		Find(&rels).Error; nil != err {
 		return
 	}
 
-	articleIDs := []uint{}
+	var articleIDs []uint
 	for _, articleTagRel := range rels {
 		articleIDs = append(articleIDs, articleTagRel.ID1)
 	}
@@ -382,7 +382,7 @@ func (srv *articleService) RemoveArticle(id uint) error {
 
 		return err
 	}
-	comments := []*model.Comment{}
+	var comments []*model.Comment
 	if err := tx.Model(&model.Comment{}).Where("article_id = ? AND blog_id = ?", id, article.BlogID).Find(&comments).Error; nil != err {
 		tx.Rollback()
 
@@ -394,7 +394,7 @@ func (srv *articleService) RemoveArticle(id uint) error {
 
 			return err
 		}
-		for _, _ = range comments {
+		for range comments {
 			Statistic.DecCommentCountWithoutTx(tx, article.BlogID)
 		}
 	}
@@ -524,7 +524,7 @@ func normalizeTagStr(tagStr string) (string, error) {
 
 	reg = regexp.MustCompile(`[\\u4e00-\\u9fa5,\\w,&,\\+,-,\\.]+`)
 	tags := strings.Split(tagStrTmp, ",")
-	retTags := []string{}
+	var retTags []string
 	for _, tag := range tags {
 		if contains(retTags, tag) {
 			continue
@@ -545,7 +545,7 @@ func normalizeTagStr(tagStr string) (string, error) {
 }
 
 func removeTagArticleRels(tx *gorm.DB, article *model.Article) error {
-	rels := []*model.Correlation{}
+	var rels []*model.Correlation
 	if err := tx.Where("id1 = ? AND type = ? AND blog_id = ?",
 		article.ID, model.CorrelationArticleTag, article.BlogID).Find(&rels).Error; nil != err {
 		return err

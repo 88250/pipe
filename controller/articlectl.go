@@ -38,9 +38,9 @@ func showArticlesAction(c *gin.Context) {
 	blogID := getBlogID(c)
 	session := util.GetSession(c)
 	articleModels, pagination := service.Article.GetArticles("", page, blogID)
-	articles := []*model.ThemeArticle{}
+	var articles []*model.ThemeArticle
 	for _, articleModel := range articleModels {
-		themeTags := []*model.ThemeTag{}
+		var themeTags []*model.ThemeTag
 		tagStrs := strings.Split(articleModel.Tags, ",")
 		for _, tagStr := range tagStrs {
 			themeTag := &model.ThemeTag{
@@ -95,7 +95,7 @@ func showArticleAction(c *gin.Context) {
 	a, _ := c.Get("article")
 	article := a.(*model.Article)
 
-	themeTags := []*model.ThemeTag{}
+	var themeTags []*model.ThemeTag
 	tagStrs := strings.Split(article.Tags, ",")
 	for _, tagStr := range tagStrs {
 		themeTag := &model.ThemeTag{
@@ -130,7 +130,7 @@ func showArticleAction(c *gin.Context) {
 
 	page := util.GetPage(c)
 	commentModels, pagination := service.Comment.GetArticleComments(article.ID, page, blogID)
-	comments := []*model.ThemeComment{}
+	var comments []*model.ThemeComment
 	for _, commentModel := range commentModels {
 		commentAuthor := service.User.GetUser(commentModel.AuthorID)
 		if nil == commentAuthor {
@@ -259,7 +259,7 @@ func toc(article *model.ThemeArticle) string {
 }
 
 func getRecommendArticles() []*model.ThemeArticle {
-	ret := []*model.ThemeArticle{}
+	var ret []*model.ThemeArticle
 
 	indics := util.RandInts(0, len(cron.RecommendArticles), 7)
 	for _, index := range indics {

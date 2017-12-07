@@ -144,7 +144,7 @@ func fillCommon(c *gin.Context) {
 
 func fillMostUseCategories(settingMap *map[string]interface{}, dataModel *DataModel, blogID uint) {
 	categories := service.Category.GetCategories(math.MaxInt8, blogID)
-	themeCategories := []*model.ThemeCategory{}
+	var themeCategories []*model.ThemeCategory
 	for _, category := range categories {
 		themeCategory := &model.ThemeCategory{
 			Title: category.Title,
@@ -163,7 +163,7 @@ func fillMostUseTags(settingMap *map[string]interface{}, dataModel *DataModel, b
 		tagSize = model.SettingPreferenceMostUseTagListSizeDefault
 	}
 	tags := service.Tag.GetTags(tagSize, blogID)
-	themeTags := []*model.ThemeTag{}
+	var themeTags []*model.ThemeTag
 	for _, tag := range tags {
 		themeTag := &model.ThemeTag{
 			Title: tag.Title,
@@ -182,7 +182,7 @@ func fillMostViewArticles(settingMap *map[string]interface{}, dataModel *DataMod
 		mostViewArticleSize = model.SettingPreferenceMostViewArticleListSizeDefault
 	}
 	mostViewArticles := service.Article.GetMostViewArticles(mostViewArticleSize, blogID)
-	themeMostViewArticles := []*model.ThemeArticle{}
+	var themeMostViewArticles []*model.ThemeArticle
 	for _, article := range mostViewArticles {
 		author := &model.ThemeAuthor{
 			Name:      "Vanessa",
@@ -209,7 +209,7 @@ func fillRecentComments(settingMap *map[string]interface{}, dataModel *DataModel
 		recentCommentSize = model.SettingPreferenceRecentCommentListSizeDefault
 	}
 	recentComments := service.Comment.GetRecentComments(recentCommentSize, blogID)
-	themeRecentComments := []*model.ThemeComment{}
+	var themeRecentComments []*model.ThemeComment
 	for _, comment := range recentComments {
 		themeComment := &model.ThemeComment{
 			Title:     util.Markdown(comment.Content).AbstractText,
@@ -236,7 +236,7 @@ func fillMostCommentArticles(settingMap *map[string]interface{}, dataModel *Data
 		mostCommentArticleSize = model.SettingPreferenceMostCommentArticleListSizeDefault
 	}
 	mostCommentArticles := service.Article.GetMostCommentArticles(mostCommentArticleSize, blogID)
-	themeMostCommentArticles := []*model.ThemeArticle{}
+	var themeMostCommentArticles []*model.ThemeArticle
 	for _, article := range mostCommentArticles {
 		author := &model.ThemeAuthor{
 			Name:      "Vanessa",

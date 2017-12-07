@@ -35,7 +35,7 @@ func GetCommentsAction(c *gin.Context) {
 	commentModels, pagination := service.Comment.ConsoleGetComments(c.Query("key"), util.GetPage(c), session.BID)
 	blogURLSetting := service.Setting.GetSetting(model.SettingCategoryBasic, model.SettingNameBasicBlogURL, session.BID)
 
-	comments := []*ConsoleComment{}
+	var comments []*ConsoleComment
 	for _, commentModel := range commentModels {
 		article := service.Article.ConsoleGetArticle(commentModel.ArticleID)
 		articleAuthor := service.User.GetUser(article.AuthorID)

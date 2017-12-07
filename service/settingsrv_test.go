@@ -72,7 +72,7 @@ func TestUpdateSettings(t *testing.T) {
 	settings := Setting.GetSettings(model.SettingCategoryBasic,
 		[]string{model.SettingNameBasicBlogTitle, model.SettingNameBasicBlogSubtitle}, 1)
 	settings[model.SettingNameBasicBlogTitle].Value = "更新后的标题"
-	basics := []*model.Setting{}
+	var basics []*model.Setting
 	for _, setting := range settings {
 		basics = append(basics, setting)
 	}

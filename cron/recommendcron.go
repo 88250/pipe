@@ -31,7 +31,7 @@ func refreshRecommendArticlesPeriodically() {
 	go refreshRecommendArticles()
 
 	go func() {
-		for _ = range time.Tick(time.Minute*30) {
+		for range time.Tick(time.Minute*30) {
 			refreshRecommendArticles()
 		}
 	}()
@@ -39,8 +39,6 @@ func refreshRecommendArticlesPeriodically() {
 
 func refreshRecommendArticles() {
 	defer util.Recover()
-
-	recommendations := []*model.ThemeArticle{}
 
 	result := util.NewResult()
 	_, _, errs := gorequest.New().Get(util.HacPaiURL + "/apis/recommend/articles").
@@ -64,7 +62,7 @@ func refreshRecommendArticles() {
 	indics := util.RandInts(0, len(entries), size)
 	images := util.RandImages(size)
 	indics = indics[:len(images)]
-
+	var recommendations []*model.ThemeArticle
 	for i, index := range indics {
 		article := entries[index].(map[string]interface{})
 		author := &model.ThemeAuthor{

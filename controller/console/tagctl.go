@@ -31,7 +31,7 @@ func GetTagsAction(c *gin.Context) {
 
 	session := util.GetSession(c)
 
-	tags := []*ConsoleTag{}
+	var tags []*ConsoleTag
 	tagModels := service.Tag.GetTags(math.MaxInt64, session.BID)
 	for _, tagModel := range tagModels {
 		tags = append(tags, &ConsoleTag{Title: tagModel.Title})
