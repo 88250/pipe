@@ -20,7 +20,6 @@ import (
 	"io"
 	"math/rand"
 	"net/http"
-	"net/url"
 	"os"
 	"os/signal"
 	"syscall"
@@ -63,14 +62,9 @@ func main() {
 	service.ConnectDB()
 	cron.Start()
 
-	serverURL, err := url.Parse(util.Conf.Server)
-	if nil != err {
-		logger.Fatal("Invalid [Server] configuration item")
-	}
-
 	router := controller.MapRoutes()
 	server := &http.Server{
-		Addr:    serverURL.Host,
+		Addr:    "0.0.0.0:" + util.Conf.Port,
 		Handler: router,
 	}
 
