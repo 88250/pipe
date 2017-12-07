@@ -52,7 +52,7 @@
 <style lang="sass">
   .other__upload
     cursor: pointer
-    padding: 0 13px
+    padding: 0 10px
     margin-left: 20px
     input
       position: absolute
