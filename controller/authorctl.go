@@ -40,7 +40,7 @@ func showAuthorsAction(c *gin.Context) {
 			Name:         authorModel.Name,
 			URL:          getBlogURL(c) + util.PathAuthors + "/" + authorModel.Name,
 			ArticleCount: userBlog.UserArticleCount,
-			AvatarURL:    authorModel.AvatarURLWithSize(210),
+			AvatarURL:    authorModel.AvatarURL,
 		}
 		themeAuthors = append(themeAuthors, author)
 	}
