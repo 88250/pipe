@@ -128,7 +128,7 @@
             </svg>
             <span class="avatar pipe-tooltipped pipe-tooltipped--n fn-absolute"
                   aria-label="{{.PreviousArticle.Author.Name}}"
-                  data-src="{{.PreviousArticle.Author.AvatarURL}}"></span>
+                  data-src="{{.PreviousArticle.Author.AvatarURLWithSize 128}}"></span>
             <span class="near__title">
                      {{.I18n.PreArticle}}<br>
                     <b class="ft-break">{{.PreviousArticle.Title}}</b>
@@ -143,7 +143,7 @@
             </svg>
             <span class="avatar pipe-tooltipped pipe-tooltipped--n fn-absolute"
                   aria-label="{{.NextArticle.Author.Name}}"
-                  data-src="{{.NextArticle.Author.AvatarURL}}"></span>
+                  data-src="{{.NextArticle.Author.AvatarURLWithSize 128}}"></span>
             <span class="near__title">
                     {{.I18n.NextArticle}}<br>
                     <b class="ft-break">{{.NextArticle.Title}}</b>
@@ -198,7 +198,7 @@
             </a>
             {{end}}
             <div class="fn-relative">
-                <a class="avatar fn-absolute" data-src="{{$item.Author.AvatarURL}}"
+                <a class="avatar fn-absolute" data-src="{{$item.Author.AvatarURLWithSize 74}}"
                    href="{{$item.Author.URL}}"></a>
                 <div class="relevant__content">
                     <a href="{{$item.Author.URL}}" class="ft-gray">{{$item.Author.Name}}</a> <br>

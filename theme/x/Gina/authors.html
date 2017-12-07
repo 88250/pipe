@@ -14,7 +14,7 @@
     {{range .Authors}}
         <a class="author__item" href="{{.URL}}">
             <div class="author__header">
-                <div class="avatar" data-src="{{.AvatarURL}}"></div>
+                <div class="avatar" data-src="{{.AvatarURLWithSize 404}}"></div>
             </div>
             <h3 class="author__name">{{.Name}}</h3>
             <span class="ft-12">{{.ArticleCount}} {{$.I18n.Article2}}</span>
