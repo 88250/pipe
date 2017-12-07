@@ -81,7 +81,7 @@ func NewPagination(currentPageNum, pageSize, windowSize, recordCount int) *Pagin
 }
 
 func paginate(currentPageNum, pageSize, pageCount, windowSize int) []int {
-	ret := []int{}
+	var ret []int
 
 	if pageCount < windowSize {
 		for i := 0; i < pageCount; i++ {

@@ -31,11 +31,10 @@ func UpdateThemeAction(c *gin.Context) {
 	defer c.JSON(http.StatusOK, result)
 
 	theme := c.Param("id")
-
 	session := util.GetSession(c)
 
 	settings := []*model.Setting{
-		&model.Setting{
+		{
 			Category: model.SettingCategoryTheme,
 			Name:     model.SettingNameThemeName,
 			Value:    theme,
@@ -62,11 +61,11 @@ func GetThemesAction(c *gin.Context) {
 		currentID = themeNameSetting.Value
 	}
 
-	themes := []*ConsoleTheme{}
+	var themes []*ConsoleTheme
 	for _, themeName := range theme.Themes {
 		consoleTheme := &ConsoleTheme{
 			Name:         themeName,
-			ThumbnailURL: util.Conf.Server+ "/theme/x/" + themeName + "/thumbnail.jpg",
+			ThumbnailURL: util.Conf.Server + "/theme/x/" + themeName + "/thumbnail.jpg",
 		}
 
 		themes = append(themes, consoleTheme)

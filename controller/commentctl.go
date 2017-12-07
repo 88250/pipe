@@ -39,7 +39,7 @@ func getRepliesAction(c *gin.Context) {
 	parentCmtID, _ := strconv.Atoi(parentCmtIDArg)
 
 	replyComments := service.Comment.GetReplies(uint(parentCmtID), blogID)
-	replies := []*model.ThemeReply{}
+	var replies []*model.ThemeReply
 	for _, replyComment := range replyComments {
 		commentAuthor := service.User.GetUser(replyComment.AuthorID)
 		if nil == commentAuthor {

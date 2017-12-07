@@ -31,7 +31,7 @@ func showArchivesAction(c *gin.Context) {
 	dataModel := getDataModel(c)
 	blogID := getBlogID(c)
 	locale := getLocale(c)
-	themeArchives := []*model.ThemeArchive{}
+	var themeArchives []*model.ThemeArchive
 	archiveModels := service.Archive.GetArchives(blogID)
 	for _, archiveModel := range archiveModels {
 		archive := &model.ThemeArchive{
@@ -63,9 +63,9 @@ func showArchiveArticlesAction(c *gin.Context) {
 		return
 	}
 	articleModels, pagination := service.Article.GetArchiveArticles(archiveModel.ID, util.GetPage(c), blogID)
-	articles := []*model.ThemeArticle{}
+	var articles []*model.ThemeArticle
 	for _, articleModel := range articleModels {
-		themeTags := []*model.ThemeTag{}
+		var themeTags []*model.ThemeTag
 		tagStrs := strings.Split(articleModel.Tags, ",")
 		for _, tagStr := range tagStrs {
 			themeTag := &model.ThemeTag{

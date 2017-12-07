@@ -72,7 +72,7 @@ func Markdown(mdText string) *MarkdownResult {
 	contentHTML, _ = doc.Find("body").Html()
 
 	text := doc.Text()
-	runes := []rune{}
+	var runes []rune
 	for i, w := 0, 0; i < len(text); i += w {
 		runeValue, width := utf8.DecodeRuneInString(text[i:])
 		w = width

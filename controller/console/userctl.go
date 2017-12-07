@@ -62,7 +62,7 @@ func GetUsersAction(c *gin.Context) {
 	session := util.GetSession(c)
 	blogURLSetting := service.Setting.GetSetting(model.SettingCategoryBasic, model.SettingNameBasicBlogURL, session.BID)
 
-	users := []*ConsoleUser{}
+	var users []*ConsoleUser
 	userModels, pagination := service.User.GetBlogUsers(util.GetPage(c), session.BID)
 	for _, userModel := range userModels {
 		userBlog := service.User.GetUserBlog(userModel.ID, session.BID)

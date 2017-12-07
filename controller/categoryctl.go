@@ -34,9 +34,9 @@ func showCategoriesAction(c *gin.Context) {
 	blogID := getBlogID(c)
 	locale := getLocale(c)
 	categoryModels := service.Category.GetCategories(math.MaxInt8, blogID)
-	themeCategories := []*model.ThemeCategory{}
+	var themeCategories []*model.ThemeCategory
 	for _, categoryModel := range categoryModels {
-		themeTags := []*model.ThemeTag{}
+		var themeTags []*model.ThemeTag
 		tagStrs := strings.Split(categoryModel.Tags, ",")
 		for _, tagTitle := range tagStrs {
 			themeTag := &model.ThemeTag{
@@ -76,9 +76,9 @@ func showCategoryArticlesArticlesAction(c *gin.Context) {
 		return
 	}
 	articleModels, pagination := service.Article.GetCategoryArticles(categoryModel.ID, page, blogID)
-	articles := []*model.ThemeArticle{}
+	var articles []*model.ThemeArticle
 	for _, articleModel := range articleModels {
-		themeTags := []*model.ThemeTag{}
+		var themeTags []*model.ThemeTag
 		tagStrs := strings.Split(articleModel.Tags, ",")
 		for _, tagStr := range tagStrs {
 			themeTag := &model.ThemeTag{

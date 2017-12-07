@@ -103,7 +103,7 @@ type UserBlog struct {
 }
 
 func (srv *userService) GetBlogUsers(page int, blogID uint) (ret []*model.User, pagination *util.Pagination) {
-	correlations := []*model.Correlation{}
+	var correlations []*model.Correlation
 	offset := (page - 1) * adminConsoleUserListPageSize
 	count := 0
 	if err := db.Model(&model.Correlation{}).
@@ -159,7 +159,7 @@ func (srv *userService) GetRole(userID, blogID uint) int {
 }
 
 func (srv *userService) GetUserBlogs(userID uint) (ret []*UserBlog) {
-	correlations := []*model.Correlation{}
+	var correlations []*model.Correlation
 	if err := db.Where("id2 = ? AND type = ?", userID, model.CorrelationBlogUser).
 		Find(&correlations).Error; nil != err {
 		return

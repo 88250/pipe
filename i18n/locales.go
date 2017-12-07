@@ -93,7 +93,7 @@ func GetMessages(locale string) map[string]interface{} {
 
 // GetLocalesNames gets names of all locales. Returns ["zh_CN", "en_US"] for example.
 func GetLocalesNames() []string {
-	ret := []string{}
+	var ret []string
 
 	for name := range locales {
 		ret = append(ret, name)

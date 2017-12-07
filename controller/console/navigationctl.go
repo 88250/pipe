@@ -33,7 +33,7 @@ func GetNavigationsAction(c *gin.Context) {
 	session := util.GetSession(c)
 	navigationModels, pagination := service.Navigation.ConsoleGetNavigations(util.GetPage(c), session.BID)
 
-	navigations := []*ConsoleNavigation{}
+	var navigations []*ConsoleNavigation
 	for _, navigationModel := range navigationModels {
 		comment := &ConsoleNavigation{
 			ID:         navigationModel.ID,

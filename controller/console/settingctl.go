@@ -64,7 +64,7 @@ func UpdateBasicSettingsAction(c *gin.Context) {
 	}
 
 	session := util.GetSession(c)
-	basics := []*model.Setting{}
+	var basics []*model.Setting
 	for k, v := range args {
 		var value interface{}
 		switch v.(type) {
@@ -126,7 +126,7 @@ func UpdatePreferenceSettingsAction(c *gin.Context) {
 	}
 
 	session := util.GetSession(c)
-	prefs := []*model.Setting{}
+	var prefs []*model.Setting
 	for k, v := range args {
 		var value interface{}
 		switch v.(type) {
@@ -173,7 +173,7 @@ func UpdateSignSettingsAction(c *gin.Context) {
 	}
 
 	session := util.GetSession(c)
-	signs := []*model.Setting{}
+	var signs []*model.Setting
 	sign := &model.Setting{
 		Category: model.SettingCategorySign,
 		BlogID:   session.BID,
@@ -214,7 +214,7 @@ func UpdateI18nSettingsAction(c *gin.Context) {
 	}
 
 	session := util.GetSession(c)
-	i18ns := []*model.Setting{}
+	var i18ns []*model.Setting
 	for k, v := range args {
 		i18n := &model.Setting{
 			Category: model.SettingCategoryI18n,
@@ -267,7 +267,7 @@ func UpdateFeedSettingsAction(c *gin.Context) {
 	}
 
 	session := util.GetSession(c)
-	feeds := []*model.Setting{}
+	var feeds []*model.Setting
 	for k, v := range args {
 		var value interface{}
 		switch v.(type) {

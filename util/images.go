@@ -38,7 +38,7 @@ func RandImage() string {
 }
 
 func RandImages(n int) []string {
-	ret := []string{}
+	var ret []string
 
 	i := 0
 	for {

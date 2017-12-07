@@ -37,7 +37,7 @@ type MarkdownFile struct {
 
 func ImportMarkdowns(mdFiles []*MarkdownFile, authorID, blogID uint) {
 	succCnt, failCnt := 0, 0
-	fails := []string{}
+	var fails []string
 	for _, mdFile := range mdFiles {
 		article := parseArticle(mdFile)
 		article.AuthorID = authorID
@@ -181,7 +181,7 @@ func parseTags(m *map[string]interface{}) string {
 	}
 
 	ts := tags.([]interface{})
-	tagStrs := []string{}
+	var tagStrs []string
 	for _, t := range ts {
 		tagStrs = append(tagStrs, t.(string))
 	}

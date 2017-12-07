@@ -36,7 +36,7 @@ func outputAtomAction(c *gin.Context) {
 		Description: blogSubtitleSetting.Value,
 	}
 
-	items := []*feeds.Item{}
+	var items []*feeds.Item
 	articles, _ := service.Article.GetArticles("", 1, blogID)
 	for _, article := range articles {
 		user := service.User.GetUser(article.AuthorID)

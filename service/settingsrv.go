@@ -40,7 +40,7 @@ func (srv *settingService) GetSetting(category, name string, blogID uint) *model
 }
 
 func (srv *settingService) GetCategorySettings(category string, blogID uint) []*model.Setting {
-	ret := []*model.Setting{}
+	var ret []*model.Setting
 
 	if err := db.Where("category = ? AND blog_id = ?", category, blogID).Find(&ret).Error; nil != err {
 		return nil
@@ -50,7 +50,7 @@ func (srv *settingService) GetCategorySettings(category string, blogID uint) []*
 }
 
 func (srv *settingService) GetAllSettings(blogID uint) []*model.Setting {
-	ret := []*model.Setting{}
+	var ret []*model.Setting
 
 	if err := db.Where("category != ? AND blog_id = ?", model.SettingCategoryStatistic, blogID).Find(&ret).Error; nil != err {
 		return nil
@@ -61,7 +61,7 @@ func (srv *settingService) GetAllSettings(blogID uint) []*model.Setting {
 
 func (srv *settingService) GetSettings(category string, names []string, blogID uint) map[string]*model.Setting {
 	ret := map[string]*model.Setting{}
-	settings := []*model.Setting{}
+	var settings []*model.Setting
 	if err := db.Where("category = ? AND name IN (?) AND blog_id = ?", category, names, blogID).Find(&settings).Error; nil != err {
 		return nil
 	}

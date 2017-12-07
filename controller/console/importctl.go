@@ -117,7 +117,7 @@ func ImportMarkdownAction(c *gin.Context) {
 		return
 	}
 
-	mdFiles := []*service.MarkdownFile{}
+	var mdFiles []*service.MarkdownFile
 	for _, file := range files {
 		filePath := filepath.Join(unzipPath, file.Name())
 		data, err := ioutil.ReadFile(filePath)

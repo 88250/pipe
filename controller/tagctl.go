@@ -35,7 +35,7 @@ func showTagsAction(c *gin.Context) {
 	blogID := getBlogID(c)
 	locale := getLocale(c)
 	tagModels := service.Tag.GetTags(math.MaxInt64, blogID)
-	themeTags := []*model.ThemeTag{}
+	var themeTags []*model.ThemeTag
 	for _, tagModel := range tagModels {
 		themeTag := &model.ThemeTag{
 			Title:        tagModel.Title,
@@ -63,9 +63,9 @@ func showTagArticlesAction(c *gin.Context) {
 		return
 	}
 	articleModels, pagination := service.Article.GetTagArticles(tagModel.ID, util.GetPage(c), blogID)
-	articles := []*model.ThemeArticle{}
+	var articles []*model.ThemeArticle
 	for _, articleModel := range articleModels {
-		themeTags := []*model.ThemeTag{}
+		var themeTags []*model.ThemeTag
 		tagStrs := strings.Split(articleModel.Tags, ",")
 		for _, tagStr := range tagStrs {
 			themeTag := &model.ThemeTag{

@@ -25,12 +25,12 @@ func RandInts(from, to, size int) []int {
 		size = to - from
 	}
 
-	slice := []int{}
+	var slice []int
 	for i := from; i < to; i++ {
 		slice = append(slice, i)
 	}
 
-	ret := []int{}
+	var ret []int
 	for i := 0; i < size; i++ {
 		idx := rand.Intn(len(slice))
 		ret = append(ret, slice[idx])
