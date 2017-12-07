@@ -29,13 +29,18 @@ import (
 	"github.com/ghodss/yaml"
 )
 
-type MarkdownFile struct {
-	Name string
-	Path string
-	Content  string
+var Import = &importService{}
+
+type importService struct {
 }
 
-func ImportMarkdowns(mdFiles []*MarkdownFile, authorID, blogID uint) {
+type MarkdownFile struct {
+	Name    string
+	Path    string
+	Content string
+}
+
+func (srv *importService) ImportMarkdowns(mdFiles []*MarkdownFile, authorID, blogID uint) {
 	succCnt, failCnt := 0, 0
 	var fails []string
 	for _, mdFile := range mdFiles {
