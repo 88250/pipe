@@ -30,8 +30,8 @@ import (
 )
 
 type MarkdownFile struct {
-	Filename string
-	Filepath string
+	Name string
+	Path string
 	Content  string
 }
 
@@ -45,13 +45,13 @@ func ImportMarkdowns(mdFiles []*MarkdownFile, authorID, blogID uint) {
 
 		if err := Article.AddArticle(article); nil != err {
 			failCnt++
-			fails = append(fails, mdFile.Filename)
+			fails = append(fails, mdFile.Name)
 			logger.Errorf("import article failed: " + err.Error())
 
 			continue
 		}
 
-		os.Rename(mdFile.Filepath, mdFile.Filepath+"."+strconv.Itoa(int(article.ID)))
+		os.Rename(mdFile.Path, mdFile.Path+"."+strconv.Itoa(int(article.ID)))
 		succCnt++
 	}
 
@@ -87,8 +87,8 @@ func parseArticle(mdFile *MarkdownFile) *model.Article {
 	m := map[string]interface{}{}
 	err := yaml.Unmarshal([]byte(frontMatter), &m)
 	if nil != err {
-		ext := filepath.Ext(mdFile.Filename)
-		ret.Title = strings.Split(mdFile.Filename, ext)[0]
+		ext := filepath.Ext(mdFile.Name)
+		ret.Title = strings.Split(mdFile.Name, ext)[0]
 		ret.Content = content
 		ret.Commentable = true
 		ret.Tags = "笔记"
@@ -96,8 +96,8 @@ func parseArticle(mdFile *MarkdownFile) *model.Article {
 		return ret
 	}
 
-	ext := filepath.Ext(mdFile.Filename)
-	title := strings.Split(mdFile.Filename, ext)[0]
+	ext := filepath.Ext(mdFile.Name)
+	title := strings.Split(mdFile.Name, ext)[0]
 	if t, ok := m["title"]; ok {
 		title = strings.TrimSpace(t.(string))
 	}
