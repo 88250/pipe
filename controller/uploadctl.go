@@ -73,7 +73,7 @@ func uploadAction(c *gin.Context) {
 
 	files := form.File["file[]"]
 
-	var errFiles []string
+	errFiles := []string{}
 	succMap := map[string]string{}
 	for _, file := range files {
 		ext := filepath.Ext(file.Filename)
