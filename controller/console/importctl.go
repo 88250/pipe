@@ -35,7 +35,7 @@ func ImportMarkdownAction(c *gin.Context) {
 	session := util.GetSession(c)
 	if nil == session {
 		result.Code = -1
-		result.Msg = "please login before upload"
+		result.Msg = "please login before import"
 
 		return
 	}
@@ -64,7 +64,7 @@ func ImportMarkdownAction(c *gin.Context) {
 
 	tempDir := os.TempDir()
 	logger.Trace("temp dir path is [" + tempDir + "]")
-	zipFilePath := filepath.Join(tempDir, session.UName+"-md.zip")
+	zipFilePath := filepath.Join(tempDir, session.UName+"-import-md.zip")
 	zipFile, err := os.Create(zipFilePath)
 	if nil != err {
 		logger.Errorf("create temp file [" + zipFilePath + "] failed: " + err.Error())
@@ -83,7 +83,7 @@ func ImportMarkdownAction(c *gin.Context) {
 	}
 	defer zipFile.Close()
 
-	unzipPath := filepath.Join(tempDir, session.UName+"-md")
+	unzipPath := filepath.Join(tempDir, session.UName+"-import-md")
 	if err = os.RemoveAll(unzipPath); nil != err {
 		logger.Errorf("remove temp dir [" + unzipPath + "] failed: " + err.Error())
 		result.Code = -1
@@ -136,5 +136,5 @@ func ImportMarkdownAction(c *gin.Context) {
 		mdFiles = append(mdFiles, mdFile)
 	}
 
-	service.ImportMarkdowns(mdFiles, session.UID, session.BID)
+	service.Import.ImportMarkdowns(mdFiles, session.UID, session.BID)
 }
