@@ -162,5 +162,6 @@
   "unorderedList": "无序列表",
   "fullscreen": "全屏",
   "question": "帮助",
-  "searchNull": "搜索结果为空，清空关键字"
+  "searchNull": "搜索结果为空，清空关键字",
+  "refresh": "换一批"
 }

@@ -162,5 +162,6 @@
   "unorderedList": "Unordered List",
   "fullscreen": "Fullscreen",
   "question": "Help",
-  "searchNull": "Empty, Clear Keyword"
+  "searchNull": "Empty, Clear Keyword",
+  "refresh": "Refresh"
 }

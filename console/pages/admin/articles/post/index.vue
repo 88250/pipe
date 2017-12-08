@@ -82,6 +82,10 @@
           right-control-icon="angle-right">
           <v-carousel-item v-for="(item,i) in thumbs" v-bind:src="item" :key="i"></v-carousel-item>
         </v-carousel>
+        <span
+          :aria-label="$t('refresh', $store.state.locale)"
+          class="article-post__carousel-refresh pipe-tooltipped pipe-tooltipped--n"
+          @click="getThumbs"><v-icon>refresh</v-icon></span>
       </div>
 
       <div class="fn-right">
@@ -372,8 +376,18 @@
   .article-post__carousel
     margin: 0 auto
     width: 720px
-    .editor
-      margin: 30px 0
+    position: relative
+    &-refresh
+      position: absolute
+      right: 15px
+      bottom: 15px
+      cursor: pointer
+      z-index: 10
+      svg
+        color: #fff
+        height: 20px
+        width: 20px
+
     .pipe-content__reset img
-      cursor: auto
+    cursor: auto
 </style>
