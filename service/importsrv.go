@@ -26,7 +26,7 @@ import (
 
 	"github.com/b3log/pipe/model"
 	"github.com/b3log/pipe/util"
-	"github.com/ghodss/yaml"
+	"gopkg.in/yaml.v2"
 )
 
 var Import = &importService{}

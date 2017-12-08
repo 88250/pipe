@@ -51,6 +51,7 @@ type Configuration struct {
 	SessionMaxAge         int    // HTTP session max age (in seciond)
 	RuntimeMode           string // runtime mode (dev/prod)
 	DataFilePath          string // database file path
+	Port                  string // listen port
 }
 
 // LoadConf loads the configurations. Command-line arguments will override configuration file.
@@ -60,7 +61,9 @@ func LoadConf() {
 	confStaticServer := flag.String("static_server", "", "this will override Conf.StaticServer if specified")
 	confStaticResourceVer := flag.String("static_resource_ver", "", "this will override Conf.StaticResourceVersion if specified")
 	confLogLevel := flag.String("log_level", "", "this will override Conf.LogLevel if specified")
+	confRuntimeMode := flag.String("runtime_mode", "", "this will override Conf.RuntimeMode if specified")
 	confDataFilePath := flag.String("data_file_path", "", "this will override Conf.DataFilePath if specified")
+	confPort := flag.String("port", "", "this will override Conf.Port if specified")
 
 	flag.Parse()
 
@@ -74,19 +77,21 @@ func LoadConf() {
 		logger.Fatal("parses [pipe.json] failed: ", err)
 	}
 
-	home, err := UserHome()
-	if nil != err {
-		logger.Fatal("can't find user home directory: " + err.Error())
-	}
-
-	// Logging Level
 	log.SetLevel(Conf.LogLevel)
 	if "" != *confLogLevel {
 		Conf.LogLevel = *confLogLevel
 		log.SetLevel(*confLogLevel)
 	}
 
+	home, err := UserHome()
+	if nil != err {
+		logger.Fatal("can't find user home directory: " + err.Error())
+	}
 	logger.Debugf("${home} [%s]", home)
+
+	if "" != *confRuntimeMode {
+		Conf.RuntimeMode = *confRuntimeMode
+	}
 
 	if "" != *confServer {
 		Conf.Server = *confServer
@@ -106,6 +111,10 @@ func LoadConf() {
 	Conf.DataFilePath = strings.Replace(Conf.DataFilePath, "${home}", home, 1)
 	if "" != *confDataFilePath {
 		Conf.DataFilePath = *confDataFilePath
+	}
+
+	if "" != *confPort {
+		Conf.Port = *confPort
 	}
 
 	logger.Debugf("configurations [%#v]", Conf)
