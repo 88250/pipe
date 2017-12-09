@@ -17,9 +17,9 @@
 package controller
 
 import (
+	"html/template"
 	"math"
 	"net/http"
-
 	"strings"
 
 	"github.com/b3log/pipe/i18n"
@@ -91,7 +91,7 @@ func showTagArticlesAction(c *gin.Context) {
 		mdResult := util.Markdown(articleModel.Content)
 		article := &model.ThemeArticle{
 			ID:           articleModel.ID,
-			Abstract:     mdResult.AbstractText,
+			Abstract:     template.HTML(mdResult.AbstractText),
 			Author:       author,
 			CreatedAt:    articleModel.CreatedAt.Format("2006-01-02"),
 			Title:        pangu.SpacingText(articleModel.Title),

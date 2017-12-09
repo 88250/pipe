@@ -63,7 +63,7 @@ func searchAction(c *gin.Context) {
 		mdResult := util.Markdown(articleModel.Content)
 		article := &model.ThemeArticle{
 			Title:    pangu.SpacingText(articleModel.Title),
-			Abstract: mdResult.AbstractText,
+			Abstract: template.HTML(mdResult.AbstractText),
 			URL:      getBlogURL(c) + articleModel.Path,
 			Tags:     themeTags,
 		}

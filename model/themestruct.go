@@ -24,7 +24,7 @@ import (
 
 type ThemeArticle struct {
 	ID           uint          `json:",omitempty"`
-	Abstract     string        `json:"abstract"`
+	Abstract     template.HTML `json:"abstract"`
 	Author       *ThemeAuthor  `json:",omitempty"`
 	CreatedAt    string        `json:",omitempty"`
 	Title        string        `json:"title"`

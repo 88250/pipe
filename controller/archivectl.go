@@ -17,6 +17,7 @@
 package controller
 
 import (
+	"html/template"
 	"net/http"
 	"strings"
 
@@ -91,7 +92,7 @@ func showArchiveArticlesAction(c *gin.Context) {
 		mdResult := util.Markdown(articleModel.Content)
 		article := &model.ThemeArticle{
 			ID:           articleModel.ID,
-			Abstract:     mdResult.AbstractText,
+			Abstract:     template.HTML(mdResult.AbstractText),
 			Author:       author,
 			CreatedAt:    articleModel.CreatedAt.Format("2006-01-02"),
 			Title:        articleModel.Title,
