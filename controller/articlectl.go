@@ -37,6 +37,7 @@ func showArticlesAction(c *gin.Context) {
 	dataModel := getDataModel(c)
 	blogID := getBlogID(c)
 	session := util.GetSession(c)
+	articleListStyleSetting := service.Setting.GetSetting(model.SettingCategoryPreference, model.SettingNamePreferenceArticleListStyle, blogID)
 	articleModels, pagination := service.Article.GetArticles("", page, blogID)
 	var articles []*model.ThemeArticle
 	for _, articleModel := range articleModels {
@@ -64,9 +65,18 @@ func showArticlesAction(c *gin.Context) {
 		}
 
 		mdResult := util.Markdown(articleModel.Content)
+		abstract := template.HTML("")
+		thumbnailURL := mdResult.ThumbURL
+		if strconv.Itoa(model.SettingPreferenceArticleListStyleValueTitleAbstract) == articleListStyleSetting.Value {
+			abstract = template.HTML(mdResult.AbstractText)
+		}
+		if strconv.Itoa(model.SettingPreferenceArticleListStyleValueTitleContent) == articleListStyleSetting.Value {
+			abstract = template.HTML(mdResult.ContentHTML)
+			thumbnailURL = ""
+		}
 		article := &model.ThemeArticle{
 			ID:           articleModel.ID,
-			Abstract:     template.HTML(mdResult.AbstractText),
+			Abstract:     abstract,
 			Author:       author,
 			CreatedAt:    articleModel.CreatedAt.Format("2006-01-02"),
 			Title:        pangu.SpacingText(articleModel.Title),
@@ -75,7 +85,7 @@ func showArticlesAction(c *gin.Context) {
 			Topped:       articleModel.Topped,
 			ViewCount:    articleModel.ViewCount,
 			CommentCount: articleModel.CommentCount,
-			ThumbnailURL: mdResult.ThumbURL,
+			ThumbnailURL: thumbnailURL,
 			Editable:     session.UID == authorModel.ID,
 		}
 

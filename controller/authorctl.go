@@ -19,6 +19,7 @@ package controller
 import (
 	"html/template"
 	"net/http"
+	"strconv"
 	"strings"
 
 	"github.com/b3log/pipe/i18n"
@@ -66,6 +67,7 @@ func showAuthorArticlesAction(c *gin.Context) {
 	dataModel := getDataModel(c)
 	session := util.GetSession(c)
 	locale := getLocale(c)
+	articleListStyleSetting := service.Setting.GetSetting(model.SettingCategoryPreference, model.SettingNamePreferenceArticleListStyle, blogID)
 	articleModels, pagination := service.Article.GetAuthorArticles(author.ID, page, blogID)
 	var articles []*model.ThemeArticle
 	for _, articleModel := range articleModels {
@@ -87,9 +89,18 @@ func showAuthorArticlesAction(c *gin.Context) {
 		}
 
 		mdResult := util.Markdown(articleModel.Content)
+		abstract := template.HTML("")
+		thumbnailURL := mdResult.ThumbURL
+		if strconv.Itoa(model.SettingPreferenceArticleListStyleValueTitleAbstract) == articleListStyleSetting.Value {
+			abstract = template.HTML(mdResult.AbstractText)
+		}
+		if strconv.Itoa(model.SettingPreferenceArticleListStyleValueTitleContent) == articleListStyleSetting.Value {
+			abstract = template.HTML(mdResult.ContentHTML)
+			thumbnailURL = ""
+		}
 		article := &model.ThemeArticle{
 			ID:           articleModel.ID,
-			Abstract:     template.HTML(mdResult.AbstractText),
+			Abstract:     abstract,
 			Author:       author,
 			CreatedAt:    articleModel.CreatedAt.Format("2006-01-02"),
 			Title:        pangu.SpacingText(articleModel.Title),
@@ -98,7 +109,7 @@ func showAuthorArticlesAction(c *gin.Context) {
 			Topped:       articleModel.Topped,
 			ViewCount:    articleModel.ViewCount,
 			CommentCount: articleModel.CommentCount,
-			ThumbnailURL: mdResult.ThumbURL,
+			ThumbnailURL: thumbnailURL,
 			Editable:     session.UID == authorModel.ID,
 		}
 

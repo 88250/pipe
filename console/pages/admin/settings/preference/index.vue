@@ -70,13 +70,13 @@
         preferenceArticleListStyle: 'title',
         preferenceArticleListStyleItems: [{
           'text': this.$t('title', this.$store.state.locale),
-          'value': 'title'
+          'value': '0'
         }, {
           'text': `${this.$t('title', this.$store.state.locale)}+${this.$t('abstract', this.$store.state.locale)}`,
-          'value': 'titleAbstract'
+          'value': '1'
         }, {
           'text': `${this.$t('title', this.$store.state.locale)}+${this.$t('content', this.$store.state.locale)}`,
-          'value': 'titleContent'
+          'value': '2'
         }],
         preferenceMostUseTagListSize: 10,
         preferenceRecentCommentListSize: 10,
