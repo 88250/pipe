@@ -402,7 +402,7 @@ func initPreferenceSettings(tx *gorm.DB, blogID uint) error {
 	if err := tx.Create(&model.Setting{
 		Category: model.SettingCategoryPreference,
 		Name:     model.SettingNamePreferenceArticleListStyle,
-		Value:    model.SettingPreferenceArticleListStyleDefault,
+		Value:    strconv.Itoa(model.SettingPreferenceArticleListStyleDefault),
 		BlogID:   blogID}).Error; nil != err {
 		return err
 	}
@@ -480,7 +480,7 @@ func initFeedSettings(tx *gorm.DB, blogID uint) error {
 	if err := tx.Create(&model.Setting{
 		Category: model.SettingCategoryFeed,
 		Name:     model.SettingNameFeedOutputMode,
-		Value:    model.SettingFeedOutputModeValueAbstract,
+		Value:    strconv.Itoa(model.SettingFeedOutputModeValueAbstract),
 		BlogID:   blogID}).Error; nil != err {
 		return err
 	}

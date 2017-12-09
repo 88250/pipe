@@ -96,8 +96,8 @@ const (
 
 // Setting value of category "feed".
 const (
-	SettingFeedOutputModeValueAbstract = "abstract"
-	SettingFeedOutputModeValueFull     = "full"
+	SettingFeedOutputModeValueAbstract = 0
+	SettingFeedOutputModeValueFull     = 1
 )
 
 // Setting names of category "statistic".
@@ -111,9 +111,9 @@ const (
 
 // Setting values of category "preference".
 const (
-	SettingPreferenceArticleListStyleValueTitle         = "title"
-	SettingPreferenceArticleListStyleValueTitleAbstract = "titleAbstract"
-	SettingPreferenceArticleListStyleValueTitleContent  = "titleContent"
+	SettingPreferenceArticleListStyleValueTitle         = 0
+	SettingPreferenceArticleListStyleValueTitleAbstract = 1
+	SettingPreferenceArticleListStyleValueTitleContent  = 2
 
 	SettingPreferenceArticleListPageSizeDefault        = 20
 	SettingPreferenceArticleListWindowSizeDefault      = 7
