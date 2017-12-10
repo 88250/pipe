@@ -85,7 +85,7 @@
   export default {
     data () {
       return {
-        step: this.$store.state.name === '' ? 1 : 2,
+        step: '1',
         postInitError: false,
         postInitErrorMsg: '',
         b3key: '',
@@ -122,6 +122,7 @@
     },
     mounted () {
       initParticlesJS('particles')
+      console.log(this.$store.state.name, this.step)
     }
   }
 </script>

@@ -10,13 +10,6 @@
           :items="feedOutputModeItems"
           append-icon=""
         ></v-select>
-        <v-text-field
-          :label="$t('feedOutputCnt', $store.state.locale)"
-          v-model="feedOutputCnt"
-          required
-          :rules="requiredRules"
-          @keyup.enter="update"
-        ></v-text-field>
 
         <div class="alert alert--danger" v-show="error">
           <v-icon>danger</v-icon>
@@ -40,15 +33,14 @@
         requiredRules: [
           (v) => numberOnly.call(this, v)
         ],
-        feedOutputMode: 'abstract',
+        feedOutputMode: 0,
         feedOutputModeItems: [{
           'text': `${this.$t('abstract', this.$store.state.locale)}`,
-          'value': 'abstract'
+          'value': 0
         }, {
           'text': `${this.$t('fullArticle', this.$store.state.locale)}`,
-          'value': 'full'
+          'value': 1
         }],
-        feedOutputCnt: 10,
         error: false,
         errorMsg: ''
       }
@@ -64,8 +56,7 @@
           return
         }
         const responseData = await this.axios.put('/console/settings/feed', {
-          feedOutputMode: this.feedOutputMode,
-          feedOutputSize: this.feedOutputCnt
+          feedOutputMode: this.feedOutputMode
         })
 
         if (responseData.code === 0) {
@@ -86,7 +77,6 @@
       const responseData = await this.axios.get('/console/settings/feed')
       if (responseData) {
         this.$set(this, 'feedOutputMode', responseData.feedOutputMode)
-        this.$set(this, 'feedOutputCnt', responseData.feedOutputSize)
       }
     }
   }

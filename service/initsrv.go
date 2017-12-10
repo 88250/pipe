@@ -472,13 +472,6 @@ func initI18nSettings(tx *gorm.DB, blogID uint) error {
 func initFeedSettings(tx *gorm.DB, blogID uint) error {
 	if err := tx.Create(&model.Setting{
 		Category: model.SettingCategoryFeed,
-		Name:     model.SettingNameFeedOutputSize,
-		Value:    "20",
-		BlogID:   blogID}).Error; nil != err {
-		return err
-	}
-	if err := tx.Create(&model.Setting{
-		Category: model.SettingCategoryFeed,
 		Name:     model.SettingNameFeedOutputMode,
 		Value:    strconv.Itoa(model.SettingFeedOutputModeValueAbstract),
 		BlogID:   blogID}).Error; nil != err {

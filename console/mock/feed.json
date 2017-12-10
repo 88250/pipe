@@ -2,7 +2,6 @@
   "code": 0,
   "msg": "",
   "data": {
-    "feedOutputMode": "full",
-    "feedOutputSize": 10
+    "feedOutputMode": 0
   }
 }

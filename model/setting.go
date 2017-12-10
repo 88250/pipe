@@ -90,7 +90,6 @@ const (
 const (
 	SettingCategoryFeed = "feed"
 
-	SettingNameFeedOutputSize = "feedOutputSize"
 	SettingNameFeedOutputMode = "feedOutputMode"
 )
 

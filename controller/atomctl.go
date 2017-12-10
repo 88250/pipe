@@ -17,6 +17,8 @@
 package controller
 
 import (
+	"strconv"
+
 	"github.com/b3log/pipe/model"
 	"github.com/b3log/pipe/service"
 	"github.com/b3log/pipe/util"
@@ -27,6 +29,7 @@ import (
 func outputAtomAction(c *gin.Context) {
 	blogID := getBlogID(c)
 
+	feedOutputModeSetting := service.Setting.GetSetting(model.SettingCategoryFeed, model.SettingNameFeedOutputMode, blogID)
 	blogTitleSetting := service.Setting.GetSetting(model.SettingCategoryBasic, model.SettingNameBasicBlogTitle, blogID)
 	blogURLSetting := service.Setting.GetSetting(model.SettingCategoryBasic, model.SettingNameBasicBlogURL, blogID)
 	blogSubtitleSetting := service.Setting.GetSetting(model.SettingCategoryBasic, model.SettingNameBasicBlogSubtitle, blogID)
@@ -39,11 +42,16 @@ func outputAtomAction(c *gin.Context) {
 	var items []*feeds.Item
 	articles, _ := service.Article.GetArticles("", 1, blogID)
 	for _, article := range articles {
+		mdResult := util.Markdown(article.Content)
+		description := mdResult.AbstractText
+		if strconv.Itoa(model.SettingFeedOutputModeValueFull) == feedOutputModeSetting.Value {
+			description = mdResult.ContentHTML
+		}
 		user := service.User.GetUser(article.AuthorID)
 		items = append(items, &feeds.Item{
 			Title:       article.Title,
 			Link:        &feeds.Link{Href: blogURLSetting.Value + article.Path},
-			Description: util.Markdown(article.Content).AbstractText,
+			Description: description,
 			Author:      &feeds.Author{Name: user.Name},
 			Created:     article.CreatedAt,
 		})

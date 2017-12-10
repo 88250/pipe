@@ -239,7 +239,7 @@ func GetFeedSettingsAction(c *gin.Context) {
 	settings := service.Setting.GetCategorySettings(model.SettingCategoryFeed, session.BID)
 	data := map[string]interface{}{}
 	for _, setting := range settings {
-		if model.SettingNameFeedOutputSize == setting.Name {
+		if model.SettingNameFeedOutputMode == setting.Name {
 			v, err := strconv.ParseInt(setting.Value, 10, 64)
 			if nil != err {
 				logger.Errorf("value of feed setting [name=%s] must be an integer", setting.Name)
