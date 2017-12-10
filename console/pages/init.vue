@@ -78,6 +78,7 @@
 </template>
 
 <script>
+  import Vue from 'vue'
   import 'particles.js'
   import {initParticlesJS} from '~/plugins/utils'
   import { required, maxSize } from '~/plugins/validate'
@@ -85,7 +86,7 @@
   export default {
     data () {
       return {
-        step: this.$store.state.name === '' ? 1 : 2,
+        step: 0,
         postInitError: false,
         postInitErrorMsg: '',
         b3key: '',
@@ -122,6 +123,9 @@
     },
     mounted () {
       initParticlesJS('particles')
+      Vue.nextTick(() => {
+        this.$set(this, 'step', this.$store.state.name === '' ? 1 : 2)
+      })
     }
   }
 </script>
