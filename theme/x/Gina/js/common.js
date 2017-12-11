@@ -9,7 +9,6 @@ import $ from 'jquery'
 import Icon from './symbol'
 import {
   KillBrowser,
-  Logout,
   PreviewImg,
 } from '../../../js/common'
 
@@ -22,10 +21,6 @@ const Common = {
     KillBrowser()
     $('#sidebarIcon').click(() => {
       Common.toggleSide()
-    })
-
-    $('#logout').click(function () {
-      Logout()
     })
   },
   toggleSide: () => {
