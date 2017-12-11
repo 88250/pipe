@@ -71,6 +71,30 @@
         </article>
         {{end}}
     </div>
-    {{template "Gina/pagination" .}}
+
+    {{if gt (len $.Pagination.PageNums) 1}}
+    <nav class="pagination">
+        {{if gt $.Pagination.PreviousPageNum 0}}
+        <a class="pagination__near" href="?p={{$.Pagination.PreviousPageNum}}">
+            <svg><use xlink:href="#chevron-left"></use></svg>
+        </a>
+        {{end}}
+        {{if gt $.Pagination.FirstPageNum 1}}
+        <a class="pagination__item" href="?p=1">1</a>{{if ne $.Pagination.FirstPageNum 2}}<span class="pagination__omit">...</span>{{end}}
+        {{end}}
+        {{range $.Pagination.PageNums}}
+        <a href="?p={{.}}" class="pagination__item {{if eq . $.Pagination.CurrentPageNum}}pagination__item--active{{end}}">{{.}}</a>
+        {{end}}
+        {{if lt $.Pagination.LastPageNum $.Pagination.PageCount}}
+        {{if ne $.Pagination.LastPageNum (minus $.Pagination.PageCount 1)}}<span class="pagination__omit">...</span>{{end}}
+        <a class="pagination__item" href="?p={{$.Pagination.PageCount}}">{{$.Pagination.PageCount}}</a>
+        {{end}}
+        {{if lt $.Pagination.CurrentPageNum $.Pagination.PageCount}}
+        <a class="pagination__near" href="?p={{$.Pagination.NextPageNum}}">
+            <svg><use xlink:href="#chevron-right"></use></svg>
+        </a>
+        {{end}}
+    </nav>
+    {{end}}
 </div>
 {{end}}
