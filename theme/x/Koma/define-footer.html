@@ -3,16 +3,15 @@
     <div class="wrapper">
         <div class="footer__side fn-clear fn-three">
             <div>
-                {{if eq .Setting.BasicNoticeBoard ""}}
-                {{template "Koma/module-list"  dict "List" .MostUseCategories "Title" .I18n.Categories "UserCount" .UserCount}}
-                {{else}}
                 <div class="module__header">
                     {{.I18n.NoticeBoard}}
                 </div>
                 <div>
+                    {{if eq .Setting.BasicNoticeBoard ""}}
+                    {{.I18n.NoData}}
+                    {{end}}
                     {{.Setting.BasicNoticeBoard}}
                 </div>
-                {{end}}
             </div>
             <div class="fn-three--mid">
                 <div class="module__header">
@@ -20,6 +19,19 @@
                 </div>
                 <div>
                     {{range .MostUseTags}}
+                    <a class="tag" href="{{.URL}}">{{.Title}}</a>
+                    {{end}}
+                </div>
+            </div>
+            <div>
+                <div class="module__header">
+                    {{.I18n.Categories}}
+                </div>
+                <div>
+                    {{if eq 0 (len .MostUseCategories)}}
+                    {{.I18n.NoData}}
+                    {{end}}
+                    {{range .MostUseCategories}}
                     <a class="tag" href="{{.URL}}">{{.Title}}</a>
                     {{end}}
                 </div>
@@ -45,7 +57,7 @@
                 <div class="fn-right ft-gray">
                     Powered by <a href="http://b3log.org/" target="_blank">B3log 开源</a> •
                     <a href="https://hacpai.com/tag/Pipe" target="_blank">Pipe</a> •
-                    Theme <a href="https://github.com/b3log/pipe-themes" target="_blank">Gina</a>
+                    Theme <a href="https://github.com/b3log/pipe-themes" target="_blank">Koma</a>
                 </div>
             </div>
         </div>

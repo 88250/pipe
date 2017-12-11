@@ -9,8 +9,24 @@
     {{if .NextArticle}}
     <link rel="next" title="{{.NextArticle.Title}}" href="{{.NextArticle.URL}}">
     {{end}}
+    <!-- Open Graph -->
+    <meta property="og:locale" content="zh_CN" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="{{.Title}}" />
+    <meta property="og:description" content="{{.Article.Abstract}}" />
+    <meta property="og:image" content="{{.Article.ThumbnailURL}}" />
+    <meta property="og:url" content="{{.Article.URL}}" />
+    <meta property="og:site_name" content="Pipe" />
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:description" content="{{.Article.Abstract}}" />
+    <meta name="twitter:title" content="{{.Title}}" />
+    <meta name="twitter:image" content="{{.Article.ThumbnailURL}}" />
+    <meta name="twitter:url" content="{{.Article.URL}}" />
+    <meta name="twitter:site" content="@DL88250" />
+    <meta name="twitter:creator" content="@DL88250" />
 </head>
-<body>
+<body{{if .ToC}} class="body--side"{{end}}>
 {{template "Koma/header" .}}
 {{template "Koma/side" .}}
 <div class="wrapper content">
@@ -36,7 +52,7 @@
                     <time class="ft-nowrap">{{.Article.CreatedAt}}</time>
                     •
                     <span class="ft-nowrap">{{.Article.ViewCount}} {{$.I18n.View}}</span> •
-                    <a href="{{.URL}}#comments" class="ft-nowrap ft-gray">{{.Article.CommentCount}}
+                    <a href="{{.Article.URL}}#comments" class="ft-nowrap ft-gray">{{.Article.CommentCount}}
                         {{$.I18n.Comment}}</a>
                 </div>
 
@@ -82,8 +98,8 @@
                     <div class="action__code"
                          data-title="{{.Title}}"
                          data-blogtitle="{{$.Setting.BasicBlogTitle}}"
-                         data-url="{{.URL}}"
-                         data-avatar="{{.Author.AvatarURL}}"></div>
+                         data-url="{{.Article.URL}}"
+                         data-avatar="{{.Article.Author.AvatarURLWithSize 128}}"></div>
                 </span>
             </span>
             <span class="fn-right action__btn action__btn--space action__btn--active fn-clear"
@@ -97,51 +113,6 @@
             </span>
         </div>
     </article>
-</div>
-<div class="article__relevant">
-    {{if ne (len .RecommendArticles) 0}}
-    <div class="module__header">
-        {{$.I18n.RelcommendArticle}}
-    </div>
-    <div class="relevant__panel">
-        {{range $index, $item := .RecommendArticles}}
-        <div class="relevant__item">
-            {{if $item.ThumbnailURL}}
-            <a class="relevant__thumbnail"
-               href="{{$item.URL}}"
-               data-src="https://img.hacpai.com/bing/20171109.jpg?imageView2/1/w/960/h/520/interlace/1/q/100"></a>
-            <a class="module__list-title fn-ellipsis" href="{{$item.URL}}">{{$item.Title}}</a>
-            {{else}}
-            <a class="module__list-title fn-ellipsis" href="{{$item.URL}}">{{$item.Title}}</a>
-            <a href="{{$item.URL}}" class="ft-fade relevant__abstract">
-                我是摘要我是摘要我是摘要我是摘要我是摘要我是摘要我是摘要我是摘要我是摘要我是摘要
-            </a>
-            {{end}}
-            <div class="fn-relative">
-                <a class="avatar fn-absolute" data-src="{{$item.Author.AvatarURL}}"
-                   href="{{$item.Author.URL}}"></a>
-                <div class="relevant__content">
-                    <a href="{{$item.Author.URL}}" class="ft-gray">{{$item.Author.Name}}</a> <br>
-                    <span class="ft-12 ft-fade fn-clear">
-                        {{$item.CreatedAt}}
-                       <a href="{{$item.URL}}#pipeComments" class="fn-right ft-fade">
-                           {{if ne 0 $item.CommentCount}}
-                           {{$item.CommentCount}}
-                           {{$.I18n.Comment}}
-                           {{else}}
-                           {{$.I18n.Comment}}
-                           <svg><use xlink:href="#comment"></use></svg>
-                           {{end}}
-                       </a>
-                   </span>
-                </div>
-            </div>
-        </div>
-        {{end}}
-    </div>
-    {{else}}
-    {{.I18n.NoData}}
-    {{end}}
 </div>
 <div class="wrapper content">
     {{template "comment/comments" .}}
@@ -157,7 +128,7 @@
             </svg>
             <span class="avatar pipe-tooltipped pipe-tooltipped--n fn-absolute"
                   aria-label="{{.PreviousArticle.Author.Name}}"
-                  data-src="{{.PreviousArticle.Author.AvatarURL}}"></span>
+                  data-src="{{.PreviousArticle.Author.AvatarURLWithSize 128}}"></span>
             <span class="near__title">
                      {{.I18n.PreArticle}}<br>
                     <b class="ft-break">{{.PreviousArticle.Title}}</b>
@@ -172,7 +143,7 @@
             </svg>
             <span class="avatar pipe-tooltipped pipe-tooltipped--n fn-absolute"
                   aria-label="{{.NextArticle.Author.Name}}"
-                  data-src="{{.NextArticle.Author.AvatarURL}}"></span>
+                  data-src="{{.NextArticle.Author.AvatarURLWithSize 128}}"></span>
             <span class="near__title">
                     {{.I18n.NextArticle}}<br>
                     <b class="ft-break">{{.NextArticle.Title}}</b>
@@ -206,8 +177,50 @@
     </div>
     {{end}}
     {{end}}
-
 </div>
+{{if gt (len .RecommendArticles) 0}}
+<div class="article__relevant">
+    <div class="module__header">
+        {{$.I18n.RecommendArticle}}
+    </div>
+    <div class="relevant__panel">
+        {{range $index, $item := .RecommendArticles}}
+        <div class="relevant__item">
+            {{if $item.ThumbnailURL}}
+            <a class="relevant__thumbnail"
+               href="{{$item.URL}}"
+               data-src="{{$item.ThumbnailURL}}"></a>
+            <a class="module__list-title fn-ellipsis" href="{{$item.URL}}">{{$item.Title}}</a>
+            {{else}}
+            <a class="module__list-title fn-ellipsis" href="{{$item.URL}}">{{$item.Title}}</a>
+            <a href="{{$item.URL}}" class="ft-fade relevant__abstract">
+                {{$item.Abstract}}
+            </a>
+            {{end}}
+            <div class="fn-relative">
+                <a class="avatar fn-absolute" data-src="{{$item.Author.AvatarURL}}"
+                   href="{{$item.Author.URL}}"></a>
+                <div class="relevant__content">
+                    <a href="{{$item.Author.URL}}" class="ft-gray">{{$item.Author.Name}}</a> <br>
+                    <span class="ft-12 ft-fade fn-clear">
+                        {{$item.CreatedAt}}
+                       <a href="{{$item.URL}}#pipeComments" class="fn-right ft-fade">
+                           {{if ne 0 $item.CommentCount}}
+                           {{$item.CommentCount}}
+                           {{$.I18n.Comment}}
+                           {{else}}
+                           {{$.I18n.Comment}}
+                           <svg><use xlink:href="#comment"></use></svg>
+                           {{end}}
+                       </a>
+                   </span>
+                </div>
+            </div>
+        </div>
+        {{end}}
+    </div>
+</div>
+{{end}}
 
 {{template "comment/editor" .}}
 
