@@ -981,6 +981,9 @@ a {
       &.header__search {
         display: block;
         float: right;
+        span {
+          display: none;
+        }
       }
     }
   }
