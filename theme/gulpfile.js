@@ -26,7 +26,7 @@ gulp.task('sass', function () {
 })
 
 gulp.task('dev', function () {
-  const theme = gulpUtil.env.theme || 'gina'
+  const theme = gulpUtil.env.theme || 'Koma'
   const files = [`./x/${theme}/js/common.js`, `./x/${theme}/js/article.js`]
 
   const tasks = files.map(function (entry) {

@@ -6,8 +6,10 @@
 </head>
 <body>
 {{template "Koma/side" .}}
-{{template "Koma/article-list" .}}
-{{template "Koma/footer" .}}
+<div class="main">
+    {{template "Koma/article-list" .}}
+    {{template "Koma/footer" .}}
+</div>
 </body>
 </html>
 {{end}}

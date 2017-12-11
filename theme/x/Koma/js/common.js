@@ -2,14 +2,13 @@
  * @fileoverview util and every page should be used.
  *
  * @author <a href="http://vanessa.b3log.org">Liyuan Li</a>
- * @version 0.2.0.0, Oct 19, 2017
+ * @version 0.1.0.0, Dec 11, 2017
  */
 
 import $ from 'jquery'
 import Icon from './symbol'
 import {
   KillBrowser,
-  Logout,
   PreviewImg,
 } from '../../../js/common'
 
@@ -20,13 +19,29 @@ const Common = {
   init: () => {
     PreviewImg()
     KillBrowser()
-    $('#sidebarIcon').click(() => {
-      Common.toggleSide()
-    })
 
-    $('#logout').click(function () {
-      Logout()
-    })
+    $("a.tag").each(function (i) {
+      $(this).addClass("tag--color" + Math.ceil(Math.random() * 4));
+    });
+
+    $(window).scroll(function () {
+      if ($('.article__item').length > 0) {
+        $('.article__item:not(.article__item--show)').each(function () {
+          if ($(this).offset().top <= $(window).scrollTop() + $(window).height() - $(this).height() / 7) {
+            $(this).addClass('article__item--show');
+          }
+        });
+      }
+
+      // TODO
+      if ($(window).scrollTop() > $(window).height()) {
+        $('.icon-goup').show();
+      } else {
+        $('.icon-goup').hide();
+      }
+    });
+
+    $(window).scroll();
   },
   toggleSide: () => {
     const $body = $('body')
