@@ -108,7 +108,14 @@ func ImportMarkdownAction(c *gin.Context) {
 
 	logger.Info("importing markdowns [zipFilePath=" + zipFilePath + ", unzipPath=" + unzipPath + "]")
 
-	files, err := ioutil.ReadDir(unzipPath)
+	var filePaths []string
+	err = filepath.Walk(unzipPath, func(path string, f os.FileInfo, err error) error {
+		if !f.IsDir() {
+			filePaths = append(filePaths, path)
+		}
+
+		return err
+	})
 	if nil != err {
 		logger.Errorf("read dir [" + unzipPath + "] failed: " + err.Error())
 		result.Code = -1
@@ -118,8 +125,7 @@ func ImportMarkdownAction(c *gin.Context) {
 	}
 
 	var mdFiles []*service.MarkdownFile
-	for _, file := range files {
-		filePath := filepath.Join(unzipPath, file.Name())
+	for _, filePath := range filePaths {
 		data, err := ioutil.ReadFile(filePath)
 		if nil != err {
 			logger.Errorf("read file [" + filePath + "] failed")
@@ -128,7 +134,7 @@ func ImportMarkdownAction(c *gin.Context) {
 		}
 
 		mdFile := &service.MarkdownFile{
-			Name:    file.Name(),
+			Name:    filepath.Base(filePath),
 			Path:    filePath,
 			Content: string(data),
 		}
