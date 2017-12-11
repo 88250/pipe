@@ -63,7 +63,7 @@ func (srv *exportService) ExportMarkdowns(blogID uint) (ret []*MarkdownFile) {
 
 		mdFile := &MarkdownFile{
 			Name:    sanitizeFilename(article.Title),
-			Content: string(frontData) + "----\n" + article.Content,
+			Content: string(frontData) + "---\n" + article.Content,
 		}
 
 		ret = append(ret, mdFile)
