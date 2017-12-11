@@ -31,7 +31,7 @@ func refreshRecommendArticlesPeriodically() {
 	go refreshRecommendArticles()
 
 	go func() {
-		for range time.Tick(time.Minute*30) {
+		for range time.Tick(time.Minute * 30) {
 			refreshRecommendArticles()
 		}
 	}()
@@ -41,8 +41,8 @@ func refreshRecommendArticles() {
 	defer util.Recover()
 
 	result := util.NewResult()
-	_, _, errs := gorequest.New().Get(util.HacPaiURL + "/apis/recommend/articles").
-		Set("user-agent", util.UserAgent).Timeout(30 * time.Second).
+	_, _, errs := gorequest.New().Get(util.HacPaiURL+"/apis/recommend/articles").
+		Set("user-agent", util.UserAgent).Timeout(30*time.Second).
 		Retry(3, 5*time.Second, http.StatusInternalServerError).EndStruct(result)
 	if nil != errs {
 		logger.Errorf("get recommend articles: %s", errs)

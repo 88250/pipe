@@ -80,7 +80,7 @@ func CheckVersion(c *gin.Context) {
 	rhyResult := map[string]interface{}{}
 	request := gorequest.New()
 	_, _, errs := request.Get("http://rhythm.b3log.org/version/pipe/latest/"+util.Version).
-		Set("user-agent", util.UserAgent).Timeout(30 * time.Second).
+		Set("user-agent", util.UserAgent).Timeout(30*time.Second).
 		Retry(3, 5*time.Second, http.StatusInternalServerError).EndStruct(&rhyResult)
 	if nil != errs {
 		result.Code = -1

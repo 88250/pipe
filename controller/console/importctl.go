@@ -128,9 +128,9 @@ func ImportMarkdownAction(c *gin.Context) {
 		}
 
 		mdFile := &service.MarkdownFile{
-			Name: file.Name(),
-			Path: filePath,
-			Content:  string(data),
+			Name:    file.Name(),
+			Path:    filePath,
+			Content: string(data),
 		}
 
 		mdFiles = append(mdFiles, mdFile)
