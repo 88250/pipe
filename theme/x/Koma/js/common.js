@@ -48,10 +48,6 @@ const Common = {
 
     $(window).scroll();
   },
-  toggleSide: () => {
-    const $body = $('body')
-    $body.toggleClass('body--side')
-  },
   increase(max, time, id, count) {
     if (count < max) {
       setTimeout(() => {

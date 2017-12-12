@@ -10,7 +10,7 @@
             <a href="{{.Item.Author.AvatarURL}}" class="ft-gray">{{.Item.Author.Name}}</a>
             {{if .Item.Parent}}
             <a class="ft-nowrap ft-12 ft-gray" href="{{.Item.Parent.URL}}">
-                <svg><use xlink:href="#reply"></use></svg> {{.I18n.Reply}} {{.Item.Parent.Author.Name}}
+                <svg><use xlink:href="#icon-reply"></use></svg> {{.I18n.Reply}} {{.Item.Parent.Author.Name}}
             </a>
             {{end}}
             <span class="ft-nowrap ft-12 ft-fade"> • {{.Item.CreatedAt}} </span>
@@ -19,14 +19,14 @@
                       data-title="{{.I18n.Reply}}{{.I18n.Colon}}{{.Item.Author.Name}}"
                       data-id="{{.ArticleID}}"
                       data-commentid="{{.Item.ID}}">
-                    {{.I18n.Reply}} <svg class="fn-right"><use xlink:href="#comment"></use></svg>
+                    <svg><use xlink:href="#icon-reply"></use></svg> {{.I18n.Reply}}
                 </span>
                 {{if .Item.Removable}}
                 <span class="pipe-comment__btn pipe-comment__btn--danger"
                       data-id="{{.Item.ID}}"
                       data-label="{{.I18n.ConfirmDelete}}"
                       data-label2="{{.I18n.StayStep}}">
-                    {{.I18n.Delete}} <svg class="fn-right"><use xlink:href="#remove"></use></svg>
+                    {{.I18n.Delete}}
                 </span>
                 {{end}}
             </div>
@@ -40,7 +40,7 @@
         <div>
             <span class="ft-gray ft-12 fn-pointer pipe-comment__reply-icon" data-id="{{.Item.ID}}">
                 {{.Item.ReplyCount}} {{.I18n.Reply}}
-                <svg class="pipe-comment__chevron-down"><use xlink:href="#chevron-up"></use></svg>
+                <svg class="pipe-comment__chevron-down"><use xlink:href="#icon-chevron-up"></use></svg>
             </span>
             <div class="pipe-comment__reply fn-none">
             </div>

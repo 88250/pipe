@@ -176,7 +176,7 @@ a {
   bottom: 35px;
   right: 5px;
   animation: upbounce 4s 2s infinite;
-  z-index: 10;
+  z-index: 101;
   cursor: pointer;
   color: #b0a0aa;
   transition: $transition;
@@ -293,6 +293,7 @@ a {
     border-top: 1px solid #ddd;
     margin: 15px 30px;
     padding-top: 15px;
+    position: relative;
 
     .fn-left svg {
       float: left;
@@ -301,16 +302,74 @@ a {
       width: 18px;
     }
 
-    .fn-right a {
-      color: $text-hover-color;
-      transition: $transition;
-      margin-left: 15px;
+    .fn-right {
+      a {
+        color: $text-hover-color;
+        transition: $transition;
+        margin-left: 15px;
 
-      &:hover {
-        text-decoration: none;
-        color: $gray;
+        &:hover {
+          text-decoration: none;
+          color: $gray;
+        }
+      }
+
+      span {
+        color: $blue;
+        cursor: pointer;
+        margin-left: 15px;
+        transition: $transition;
+
+        &:hover {
+          color: $gray;
+        }
       }
     }
+  }
+
+  &__share {
+    position: absolute;
+    bottom: -4px;
+    text-align: center;
+    left: 50%;
+    margin-left: -75px;
+    &-btn {
+      transition: $transition;
+      color: rgba(0,0,0,0.18);
+      margin-left: 15px;
+      cursor: pointer;
+      &--wechat:hover {
+        color: #3caf36;
+      }
+
+      &--weibo:hover {
+        color: #ff9933;
+      }
+
+      &--twitter:hover {
+        color: #18a3fa;
+      }
+
+      &--google:hover {
+        color: #dc4A3d;
+      }
+
+      svg {
+        height: 18px;
+        width: 18px;
+      }
+    }
+  }
+
+  &__code {
+    height: 128px;
+    width: 128px;
+    position: absolute;
+    left: 50%;
+    margin-left: -58px;
+    display: none;
+    top: 25px;
+    border: 1px solid #b0a0aa
   }
 }
 
@@ -528,4 +587,10 @@ a {
     font-size: 16px;
     margin: 13px 0 3px;
   }
+}
+
+
+// comment
+#pipeComments {
+  padding: 15px 30px;
 }

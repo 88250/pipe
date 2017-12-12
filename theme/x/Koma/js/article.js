@@ -20,6 +20,7 @@ const Article = {
       ShowEditor($this.data('title'), $this.data('id'))
     })
 
+    // TODO
     if ($('#toc').length === 1) {
       InitToc('toc', 'articleContent')
       if ($('body').width() > 768) {
@@ -35,8 +36,8 @@ const Article = {
     Article._share();
   },
   _share: () => {
-    const $this = $('.action__share')
-    const $qrCode = $this.find('.action__code')
+    const $this = $('.article__share')
+    const $qrCode = $this.find('.article__code')
     const shareURL = $qrCode.data('url')
     const avatarURL = $qrCode.data('avatar')
     const title = encodeURIComponent($qrCode.data('title') + ' - ' + $qrCode.data('blogtitle')),
@@ -50,7 +51,7 @@ const Article = {
     urls.google = 'https://plus.google.com/share?url=' + url
     urls.twitter = 'https://twitter.com/intent/tweet?status=' + title + ' ' + url
 
-    $this.find('.action__btn').click(function () {
+    $this.find('.article__share-btn').click(function () {
       const key = $(this).data('type')
 
       if (!key) {
