@@ -24,6 +24,7 @@ import (
 	"github.com/b3log/pipe/service"
 	"github.com/b3log/pipe/util"
 	"github.com/gin-gonic/gin"
+	"math/rand"
 )
 
 func GenArticlesAction(c *gin.Context) {
@@ -32,7 +33,7 @@ func GenArticlesAction(c *gin.Context) {
 	for i := 0; i < 100; i++ {
 		article := &model.Article{
 			AuthorID: session.UID,
-			Title:    "title " + strconv.Itoa(i),
+			Title:    "title " + strconv.Itoa(i) + "_" + strconv.Itoa(rand.Int()),
 			Tags:     "开发生成",
 			Content:  "开发生成",
 			BlogID:   session.BID,
