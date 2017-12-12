@@ -11,6 +11,7 @@
 $text-color: rgba(0, 0, 0, .6);
 $text-hover-color: #b0a0aa;
 $transition: all .3s ease;
+$blue: #88acdb;
 
 // reset
 html {
@@ -32,6 +33,10 @@ body {
   }
 }
 
+a {
+  color: $blue;
+}
+
 // framework
 .side {
   position: fixed;
@@ -51,6 +56,48 @@ body {
   left: 300px;
   width: auto;
   position: absolute;
+}
+
+.footer {
+  font-size: 14px;
+  text-shadow: 0 1px #fff;
+  margin: 30px;
+  color: #b0a0aa;
+}
+
+#goTop {
+  position: fixed;
+  bottom: 35px;
+  right: 5px;
+  animation: upbounce 4s 2s infinite;
+  z-index: 10;
+  cursor: pointer;
+  color: #b0a0aa;
+  transition: $transition;
+  height: 20px;
+  width: 20px;
+
+  &:hover {
+    color: rgba(0,0,0,0.54);
+    animation-name: inherit;
+  }
+}
+
+@keyframes upbounce {
+  0%,10%,25%,40%,50% {
+    -webkit-transform: translateY(0);
+    transform: translateY(0)
+  }
+
+  20% {
+    -webkit-transform: translateY(-10px);
+    transform: translateY(-10px)
+  }
+
+  30% {
+    -webkit-transform: translateY(-5px);
+    transform: translateY(-5px)
+  }
 }
 
 // article
@@ -173,6 +220,42 @@ body {
 
   100% {
     -webkit-transform: scale(1)
+  }
+}
+
+// pagination
+.pagination {
+  text-align: center;
+  font-size: 14px;
+  line-height: 30px;
+  &__item {
+    height: 30px;
+    background: #4d4d4d;
+    border-radius: 15px;
+    display: inline-block;
+    color: #fff;
+    margin: 0 3px;
+    transition: $transition;
+    min-width: 30px;
+    &:hover {
+      opacity: .7;
+      text-decoration: none;
+    }
+
+    &--active {
+      background: $blue;
+      &:hover {
+        opacity: 1;
+      }
+    }
+  }
+  &__near {
+    visibility: hidden;
+    color: #4d4d4d;
+  }
+
+  &:hover .pagination__near {
+    visibility: visible;
   }
 }
 

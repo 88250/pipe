@@ -24,6 +24,12 @@ const Common = {
       $(this).addClass("tag--color" + Math.ceil(Math.random() * 4));
     });
 
+    $('#goTop').click(function () {
+      $("html, body").animate({
+        scrollTop: 0
+      }, 800)
+    });
+
     $(window).scroll(function () {
       if ($('.article__item').length > 0) {
         $('.article__item:not(.article__item--show)').each(function () {
@@ -33,11 +39,10 @@ const Common = {
         });
       }
 
-      // TODO
       if ($(window).scrollTop() > $(window).height()) {
-        $('.icon-goup').show();
+        $('#goTop').show();
       } else {
-        $('.icon-goup').hide();
+        $('#goTop').hide();
       }
     });
 
