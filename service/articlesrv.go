@@ -58,7 +58,7 @@ func (srv *articleService) GetArchiveArticles(archiveID uint, page int, blogID u
 	count := 0
 
 	var rels []*model.Correlation
-	if err := db.Where("id2 = ? AND type = ? AND blog_id = ?", archiveID, model.CorrelationArticleTag, blogID).
+	if err := db.Where("id2 = ? AND type = ? AND blog_id = ?", archiveID, model.CorrelationArticleArchive, blogID).
 		Find(&rels).Error; nil != err {
 		return
 	}
