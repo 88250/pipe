@@ -67,7 +67,7 @@
         requiredRules: [
           (v) => numberOnly.call(this, v)
         ],
-        preferenceArticleListStyle: 'title',
+        preferenceArticleListStyle: '1',
         preferenceArticleListStyleItems: [{
           'text': this.$t('title', this.$store.state.locale),
           'value': '0'
