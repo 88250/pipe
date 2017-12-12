@@ -186,45 +186,37 @@
         {{end}}
 
         {{if gt (len .RecommendArticles) 0}}
-        <div class="article__relevant">
-            <div class="module__header">
-                {{$.I18n.RecommendArticle}}
+        <header class="article__header">
+            <h2>{{$.I18n.RecommendArticle}}</h2>
+        </header>
+        {{range $index, $item := .RecommendArticles}}
+        <div class="relevant__item">
+            <a class="relevant__thumbnail"
+               href="{{$item.URL}}"
+               data-src="{{$item.ThumbnailURL}}"></a>
+            <a class="module__list-title fn-ellipsis" href="{{$item.URL}}">{{$item.Title}}</a>
+            <a href="{{$item.URL}}" class="ft-fade relevant__abstract">
+                {{$item.Abstract}}
+            </a>
+            <a class="avatar" data-src="{{$item.Author.AvatarURL}}"
+               href="{{$item.Author.URL}}"></a>
+            <div class="relevant__content">
+                <a href="{{$item.Author.URL}}" class="ft-gray">{{$item.Author.Name}}</a> <br>
+                <span class="ft-12 ft-fade fn-clear">
+                    {{$item.CreatedAt}}
+                   <a href="{{$item.URL}}#comments" class="fn-right ft-fade">
+                       {{if ne 0 $item.CommentCount}}
+                       {{$item.CommentCount}}
+                       {{$.I18n.Comment}}
+                       {{else}}
+                       {{$.I18n.Comment}}
+                       <svg><use xlink:href="#icon-comment"></use></svg>
+                       {{end}}
+                   </a>
+               </span>
             </div>
-            <div class="relevant__panel">
-                {{range $index, $item := .RecommendArticles}}
-                <div class="relevant__item">
-                    {{if $item.ThumbnailURL}}
-                    <a class="relevant__thumbnail"
-                       href="{{$item.URL}}"
-                       data-src="{{$item.ThumbnailURL}}"></a>
-                    <a class="module__list-title fn-ellipsis" href="{{$item.URL}}">{{$item.Title}}</a>
-                    {{else}}
-                    <a class="module__list-title fn-ellipsis" href="{{$item.URL}}">{{$item.Title}}</a>
-                    <a href="{{$item.URL}}" class="ft-fade relevant__abstract">
-                        {{$item.Abstract}}
-                    </a>
-                    {{end}}
-                    <div class="fn-relative">
-                        <a class="avatar fn-absolute" data-src="{{$item.Author.AvatarURL}}"
-                           href="{{$item.Author.URL}}"></a>
-                        <div class="relevant__content">
-                            <a href="{{$item.Author.URL}}" class="ft-gray">{{$item.Author.Name}}</a> <br>
-                            <span class="ft-12 ft-fade fn-clear">
-                                {{$item.CreatedAt}}
-                               <a href="{{$item.URL}}#pipeComments" class="fn-right ft-fade">
-                                   {{if ne 0 $item.CommentCount}}
-                                   {{$item.CommentCount}}
-                                   {{$.I18n.Comment}}
-                                   {{else}}
-                                   {{$.I18n.Comment}}
-                                   <svg><use xlink:href="#comment"></use></svg>
-                                   {{end}}
-                               </a>
-                           </span>
-                        </div>
-                    </div>
-                </div>
-                {{end}}
+        </div>
+        {{end}}
     </article>
     {{template "comment/editor" .}}
 
