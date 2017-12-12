@@ -45,8 +45,114 @@ a {
   width: 300px;
   overflow: auto;
 
-  &::-webkit-scrollbar {
-    display: none;
+  &__overlay {
+    height: 180px;
+    background-color: rgba(0, 0, 0, .7);
+    position: absolute;
+    width: 100%;
+  }
+
+  &__content {
+    width: 100%;
+    text-align: center;
+    top: 0;
+    position: absolute;
+    z-index: 1;
+    bottom: 60px;
+    overflow: auto;
+    padding: 112px 30px 0;
+    box-sizing: border-box;
+    word-break: break-all;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    h1 a {
+      color: $text-color;
+      font-size: 28px;
+      font-weight: normal;
+      margin: 15px 0;
+      display: block;
+      transition: $transition;
+      &:hover {
+        text-decoration: none;
+        color: $text-hover-color;
+      }
+    }
+
+    ul {
+      list-style: none;
+
+      a {
+        color: $text-color;
+        transition: $transition;
+        &:hover {
+          color: $text-hover-color;
+          text-decoration: none;
+        }
+      }
+
+      img {
+        height: 18px;
+        width: 18px;
+        vertical-align: text-bottom;
+      }
+    }
+  }
+
+  &__logo img {
+    display: block;
+    border: 5px solid #fff;
+    border-radius: 50%;
+    width: 128px;
+    height: 128px;
+    margin: 0 auto;
+    transition: $transition;
+
+    &:hover {
+      border-color: $text-hover-color;
+    }
+  }
+
+  &__notice {
+    margin: 15px 0;
+  }
+
+  &__footer {
+    position: absolute;
+    bottom: 0;
+    padding: 0 30px 15px;
+    height: 45px;
+    width: 100%;
+    box-sizing: border-box;
+    a {
+      line-height: 26px;
+      height: 26px;
+      float: left;
+      color: $text-color;
+      transition: $transition;
+      width: 25%;
+      text-align: center;
+      &:hover {
+        color: $text-hover-color;
+      }
+      svg {
+        height: 26px;
+        width: 26px;
+      }
+    }
+  }
+
+  .avatar {
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
+    @include image-bg('../../../images/image-bg.svg');
+    &:hover {
+      transform: rotate(360deg);
+      transition: all .2s ease-out 0s;
+    }
   }
 }
 
@@ -78,13 +184,13 @@ a {
   width: 20px;
 
   &:hover {
-    color: rgba(0,0,0,0.54);
+    color: rgba(0, 0, 0, 0.54);
     animation-name: inherit;
   }
 }
 
 @keyframes upbounce {
-  0%,10%,25%,40%,50% {
+  0%, 10%, 25%, 40%, 50% {
     -webkit-transform: translateY(0);
     transform: translateY(0)
   }
@@ -134,6 +240,7 @@ a {
       color: $text-color;
       font-weight: 300;
       transition: $transition;
+      word-break: break-all;
       &:hover {
         color: $text-hover-color;
         text-decoration: none;
@@ -297,7 +404,7 @@ a {
     height: 4px;
     background-color: #fff;
     border-radius: 4px;
-    box-shadow: 0 0 0 1px rgba(0,0,0,.3);
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, .3);
     top: 7px;
     left: 2px
   }
