@@ -5,16 +5,16 @@
     {{template "Koma/head" .}}
 </head>
 <body>
-{{template "Koma/header" .}}
-<div class="wrapper">
-    <h1 class="page__headline">
+{{template "Koma/side" .}}
+<div class="main">
+    <h2 class="page__title">
         {{.Category.Title}}
         <span id="categoryArticleCount" class="ft-fade">0</span> <span class="ft-fade ft-13">{{.I18n.Article2}}</span>
-    </h1>
+    </h2>
+    {{template "Koma/article-list" .}}
+
+    {{template "Koma/footer" .}}
 </div>
-{{template "Koma/article-list" .}}
-{{template "Koma/side" .}}
-{{template "Koma/footer" .}}
 <script>
   increase({{.Category.ArticleCount}}, 1000, 'categoryArticleCount', 0)
 </script>

@@ -5,25 +5,29 @@
     {{template "Koma/head" .}}
 </head>
 <body>
-{{template "Koma/header" .}}
-<div class="wrapper page">
-    <h1 class="page__title">
-        <span id="authorCount">0</span> <span class="ft-fade ft-13">{{.I18n.TeamMember2}}</span>
-    </h1>
-    <div class="author fn-clear">
-    {{range .Authors}}
-        <a class="author__item" href="{{.URL}}">
-            <div class="author__header">
-                <div class="avatar" data-src="{{.AvatarURLWithSize 404}}"></div>
-            </div>
-            <h3 class="author__name">{{.Name}}</h3>
-            <span class="ft-12">{{.ArticleCount}} {{$.I18n.Article2}}</span>
-        </a>
-    {{end}}
-    </div>
-</div>
 {{template "Koma/side" .}}
-{{template "Koma/footer" .}}
+<div class="main">
+    <article class="article__item">
+        <header class="article__header">
+            <h2>
+                <span id="authorCount">0</span> <span class="ft-fade ft-13">{{.I18n.TeamMember2}}</span>
+            </h2>
+        </header>
+        <div class="author fn-clear">
+            {{range .Authors}}
+            <a class="author__item" href="{{.URL}}">
+                <div class="author__header">
+                    <div class="avatar" data-src="{{.AvatarURLWithSize 404}}"></div>
+                </div>
+                <h3 class="author__name">{{.Name}}</h3>
+                <span class="ft-12">{{.ArticleCount}} {{$.I18n.Article2}}</span>
+            </a>
+            {{end}}
+        </div>
+    </article>
+
+    {{template "Koma/footer" .}}
+</div>
 <script>
   increase({{len .Authors}}, 1000, 'authorCount', 0)
 </script>
