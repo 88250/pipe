@@ -469,6 +469,11 @@ a {
     line-height: 20px;
     margin-top: 15px;
   }
+
+  &__title {
+    font-weight: 300;
+    font-size: 18px;
+  }
 }
 
 // pagination
@@ -846,7 +851,7 @@ a {
     margin-top: 15px;
   }
 
-  .relevant__content>div {
+  .relevant__content > div {
     margin-right: 0;
   }
 
