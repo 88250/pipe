@@ -20,16 +20,6 @@ const Article = {
       ShowEditor($this.data('title'), $this.data('id'))
     })
 
-    // TODO
-    if ($('#toc').length === 1) {
-      InitToc('toc', 'articleContent')
-      if ($('body').width() > 768) {
-        $('body').addClass('body--side')
-      } else {
-        $('body').removeClass('body--side')
-      }
-    }
-
     InitComment()
     InitHljs()
 

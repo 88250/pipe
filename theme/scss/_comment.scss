@@ -58,7 +58,7 @@
     padding-left: 81px;
 
     & > .fn-clear {
-      line-height: 21px;
+      line-height: 28px;
     }
   }
 
@@ -67,6 +67,8 @@
   }
 
   &__reply-icon {
+    line-height: 18px;
+    display: block;
     &:hover {
       opacity: .8;
     }
@@ -88,11 +90,14 @@
     display: none;
     transition: $transition;
     padding-left: 10px;
+    font-size: 14px;
+    line-height: 28px;
     &--danger {
       color: $red;
     }
     svg {
-      margin-top: 2px;
+      margin: 7px 5px 0 0;
+      float: left;
     }
 
     &:hover {
@@ -126,5 +131,25 @@
 
   #pipeEditorReplyTarget {
     line-height: 33px;
+  }
+}
+
+@media (max-width: 768px) {
+  .pipe-comment__avatar {
+    height: 26px;
+    width: 26px;
+  }
+
+  .pipe-comment__body {
+    padding-left: 36px;
+  }
+
+  .pipe-comment__btn {
+    display: inline-block;
+    padding: 0 10px 0 0;
+  }
+
+  .pipe-comment__body>.fn-clear>.fn-right {
+    float: none;
   }
 }

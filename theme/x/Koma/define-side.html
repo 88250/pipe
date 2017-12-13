@@ -14,14 +14,11 @@
             <a href="{{.BlogURL}}" class="side__logo">
                 <img data-src="{{.LogoURL}}">
             </a>
-
             <h1><a href="{{.BlogURL}}">{{.Setting.BasicBlogTitle}}</a></h1>
-
             <div>
                 {{.Setting.BasicNoticeBoard}}
             </div>
-
-            <ul>
+            <ul class="fn-clear">
                 <li>
                     <a href="{{.BlogURL}}/categories">
                         <svg>
@@ -63,6 +60,24 @@
         </div>
 
         <div class="side__footer">
+            <a href="{{.BlogURL}}/categories" class="mobile--show fn-none">
+                <svg>
+                    <use xlink:href="#icon-folders"></use>
+                </svg>
+            </a>
+            {{if gt .UserCount 1}}
+            <a href="{{.BlogURL}}/authors" class="mobile--show fn-none">
+                <svg>
+                    <use xlink:href="#icon-group"></use>
+                </svg>
+            </a>
+            {{end}}
+            <a href="{{.BlogURL}}/tags" class="mobile--show fn-none">
+                <svg>
+                    <use xlink:href="#icon-tag"></use>
+                </svg>
+            </a>
+
             <a href="{{.BlogURL}}/archives" aria-label="{{.I18n.Archives}}" class="pipe-tooltipped pipe-tooltipped--n">
                 <svg>
                     <use xlink:href="#icon-bookmark"></use>

@@ -151,6 +151,9 @@
         <div class="relevant__item">
             <a href="{{$item.URL}}">{{$item.Title}}</a>
             <div class="relevant__content">
+                <a class="relevant__thumbnail"
+                   href="{{$item.URL}}"
+                   data-src="{{$item.ThumbnailURL}}"></a>
                 <div>
                     <a href="{{$item.URL}}" class="relevant__abstract">
                         {{$item.Abstract}}
@@ -168,10 +171,6 @@
                         </a>
                     </div>
                 </div>
-
-                <a class="relevant__thumbnail"
-                   href="{{$item.URL}}"
-                   data-src="{{$item.ThumbnailURL}}"></a>
             </div>
         </div>
         {{end}}

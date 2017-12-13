@@ -31,6 +31,9 @@ const Common = {
     });
 
     $('#hideToc').click(function () {
+      if ($('.side > .fn-none').css('display') !== 'none') {
+        return
+      }
       $('.side > .fn-none').show()
       $('.toc__panel').addClass('toc__panel--hide')
       setTimeout(function () {
@@ -39,6 +42,9 @@ const Common = {
     });
 
     $('#showToc').click(function () {
+      if ($('.toc__panel').css('display') !== 'none') {
+        return
+      }
       $('.toc__panel').show().removeClass('toc__panel--hide')
       setTimeout(function () {
         $('.side > .fn-none').hide()
