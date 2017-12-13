@@ -87,5 +87,7 @@
 
     .card
       min-height: 500px
-
+  @media (max-width: 768px)
+    .search
+      padding: 15px
 </style>
