@@ -282,7 +282,8 @@
         if (this.useThumbs) {
           document.querySelectorAll('.carousel__item').forEach((item, index) => {
             if (item.style.display !== 'none') {
-              content = `![](${this.thumbs[index]})\n\n` + content
+              content = `![](${this.thumbs[index].replace('imageView2/1/w/768/h/180/interlace/1/q/100',
+                'imageView2/1/w/960/h/520/interlace/1/q/100')})\n\n` + content
             }
           })
         }
