@@ -38,9 +38,16 @@ func searchAction(c *gin.Context) {
 	result := util.NewResult()
 	defer c.JSON(http.StatusOK, result)
 
-	page := util.GetPage(c)
+	args := map[string]interface{}{}
+	if err := c.BindJSON(&args); nil != err {
+		result.Code = -1
+		result.Msg = "parses search request failed"
+
+		return
+	}
+
 	blogID := getBlogID(c)
-	articleModels, pagination := service.Article.GetArticles(c.Query("key"), page, blogID)
+	articleModels, pagination := service.Article.GetArticles(args["key"].(string), int(args["p"].(float64)), blogID)
 	var articles []*model.ThemeArticle
 	for _, articleModel := range articleModels {
 		var themeTags []*model.ThemeTag
