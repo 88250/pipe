@@ -184,7 +184,7 @@
         const responseData = await this.axios.get(`/console/comments?p=${currentPage}&key=${this.keyword}`)
         if (responseData) {
           this.$set(this, 'userCount', responseData.userCount)
-          this.$set(this, 'list', responseData.comments)
+          this.$set(this, 'list', responseData.comments || [])
           this.$set(this, 'currentPageNum', responseData.pagination.currentPageNum)
           this.$set(this, 'pageCount', responseData.pagination.pageCount)
           this.$set(this, 'windowSize', document.documentElement.clientWidth < 721 ? 5 : responseData.pagination.windowSize)
