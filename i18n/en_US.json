@@ -163,5 +163,7 @@
   "fullscreen": "Fullscreen",
   "question": "Help",
   "searchNull": "Empty, Clear Keyword",
-  "refresh": "Refresh"
+  "refresh": "Refresh",
+  "closeToc": "Close ToC",
+  "toc": "ToC"
 }

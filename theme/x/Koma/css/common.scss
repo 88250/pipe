@@ -45,11 +45,24 @@ a {
   width: 300px;
   overflow: auto;
 
+  #showToc,
+  #hideToc {
+    position: absolute;
+    cursor: pointer;
+    z-index: 4;
+    color: #fff;
+    height: 20px;
+    width: 20px;
+    top: 15px;
+    right: 15px;
+  }
+
   &__overlay {
     height: 180px;
-    background-color: rgba(0, 0, 0, .7);
+    background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEgAAABIAgMAAAAog1vUAAAACVBMVEUAAAABAQETExM20mnVAAAAA3RSTlMOECJvSrphAAABBElEQVR4AWyRwQ3CQAwEJ5/rIVQTyuAfHunmXlRAoaxkMfJJkQ4Dznl3x+G4xlzOxvZ5vZdzMJ7fx3Im+7a2jpNzrINzZ+6r/DnIp7dyg9zsg9Ehel0+bsS1t5KJZOuDSU4Iunz4qC8BU6nLAqZSkgKmUsYCplLxBEylIARMxV8+w/sqoKo+6G0aTGhm5JAM//gARxxHYU3Q3igY0sCIIhYCC49rcUW4PBeJK3bd+CIKsDle8H91N62bwTv5Xxv1QQAAAAQQsH9rAU6DH3CIG9WFbm2Pcyf00PcOn3avFYDDRJgOOcE8fIX8VFCY00r5TlFFPt2NwqXDwFyGjNUlzfBdHo1oSKi9zm79GKMAAAAASUVORK5CYII=) #5d5d5d;
     position: absolute;
     width: 100%;
+    top: 0;
   }
 
   &__content {
@@ -83,6 +96,8 @@ a {
 
     ul {
       list-style: none;
+      line-height: 36px;
+      margin-top: 15px;
 
       a {
         color: $text-color;
@@ -113,10 +128,6 @@ a {
     &:hover {
       border-color: $text-hover-color;
     }
-  }
-
-  &__notice {
-    margin: 15px 0;
   }
 
   &__footer {
@@ -371,6 +382,15 @@ a {
     top: 25px;
     border: 1px solid #b0a0aa
   }
+
+  &__neighbor {
+    margin-left: 15px;
+    transition: $transition;
+    &:hover {
+      text-decoration: none;
+      color: $text-color;
+    }
+  }
 }
 
 @keyframes bounce {
@@ -386,6 +406,68 @@ a {
 
   100% {
     -webkit-transform: scale(1)
+  }
+}
+
+// relevant
+.relevant {
+  &__item {
+    margin: 15px 30px;
+    padding-top: 15px;
+    border-top: 1px solid #ddd;
+  }
+
+  &__thumbnail {
+    @include image-bg('../../../images/image-bg.svg');
+    width: 180px;
+    height: 90px;
+    border-radius: 2px;
+    position: absolute;
+    right: 0;
+    top: 0;
+    display: block;
+  }
+
+  &__avatar {
+    @include image-bg('../../../images/image-bg.svg');
+    width: 20px;
+    height: 20px;
+    border-radius: 15px;
+    display: inline-block;
+    float: left;
+    margin-right: 15px;
+
+    &:hover {
+      transform: rotate(360deg);
+      transition: all .2s ease-out 0s;
+    }
+  }
+
+  &__content {
+    position: relative;
+    & > div {
+      margin-right: 195px;
+    }
+  }
+
+  &__abstract {
+    height: 55px;
+    word-break: break-all;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    color: $text-color;
+    &:hover {
+      text-decoration: none;
+    }
+  }
+
+  &__meta {
+    font-size: 12px;
+    line-height: 20px;
+    margin-top: 15px;
   }
 }
 
@@ -589,8 +671,71 @@ a {
   }
 }
 
-
 // comment
 #pipeComments {
   padding: 15px 30px;
+}
+
+// toc
+.toc {
+  &__panel {
+    z-index: 10;
+    position: relative;
+    height: 100%;
+    background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEgAAABIAgMAAAAog1vUAAAACVBMVEUAAAABAQETExM20mnVAAAAA3RSTlMOECJvSrphAAABBElEQVR4AWyRwQ3CQAwEJ5/rIVQTyuAfHunmXlRAoaxkMfJJkQ4Dznl3x+G4xlzOxvZ5vZdzMJ7fx3Im+7a2jpNzrINzZ+6r/DnIp7dyg9zsg9Ehel0+bsS1t5KJZOuDSU4Iunz4qC8BU6nLAqZSkgKmUsYCplLxBEylIARMxV8+w/sqoKo+6G0aTGhm5JAM//gARxxHYU3Q3igY0sCIIhYCC49rcUW4PBeJK3bd+CIKsDle8H91N62bwTv5Xxv1QQAAAAQQsH9rAU6DH3CIG9WFbm2Pcyf00PcOn3avFYDDRJgOOcE8fIX8VFCY00r5TlFFPt2NwqXDwFyGjNUlzfBdHo1oSKi9zm79GKMAAAAASUVORK5CYII=) #5d5d5d;
+    transition: $transition;
+
+    .toc {
+      position: absolute;
+      top: 50px;
+      bottom: 0;
+      width: 100%;
+      overflow: auto;
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
+    }
+    li.toc__item--active a {
+      background-color: rgba(0, 0, 0, .3);
+      color: $text-hover-color;
+      border-right-color: $text-hover-color;
+    }
+
+    a {
+      display: block;
+      line-height: 36px;
+      color: #fafafa;
+      border-right: 2px solid transparent;
+      &:hover {
+        text-decoration: none;
+        background-color: rgba(0, 0, 0, .3);
+        color: $text-hover-color;
+        border-right-color: $text-hover-color;
+      }
+    }
+
+    @for $i from 1 through 5 {
+      .toc__h#{$i} a {
+        padding-left: 20px * $i
+      }
+    }
+
+    &--hide {
+      transform: translate(-300px);
+    }
+  }
+
+  &__close {
+    svg {
+      color: #fff;
+      height: 20px;
+      width: 20px;
+      cursor: pointer;
+    }
+
+    padding: 15px 15px 0 0;
+    height: 50px;
+    box-sizing: border-box;
+  }
 }

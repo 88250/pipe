@@ -163,5 +163,7 @@
   "fullscreen": "全屏",
   "question": "帮助",
   "searchNull": "搜索结果为空，清空关键字",
-  "refresh": "换一批"
+  "refresh": "换一批",
+  "closeToc": "关闭目录",
+  "toc": "目录"
 }

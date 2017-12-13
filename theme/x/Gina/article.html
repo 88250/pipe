@@ -204,7 +204,7 @@
                     <a href="{{$item.Author.URL}}" class="ft-gray">{{$item.Author.Name}}</a> <br>
                     <span class="ft-12 ft-fade fn-clear">
                         {{$item.CreatedAt}}
-                       <a href="{{$item.URL}}#pipeComments" class="fn-right ft-fade">
+                       <a href="{{$item.URL}}#comments" class="fn-right ft-fade">
                            {{if ne 0 $item.CommentCount}}
                            {{$item.CommentCount}}
                            {{$.I18n.Comment}}
