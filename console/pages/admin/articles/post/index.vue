@@ -313,6 +313,9 @@
         }
       },
       async remove () {
+        if (!confirm(this.$t('confirmDelete', this.$store.state.locale))) {
+          return
+        }
         const responseData = await this.axios.delete(`/console/articles/${this.$route.query.id}`)
         if (responseData === null) {
           this.$store.commit('setSnackBar', {
