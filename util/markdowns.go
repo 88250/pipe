@@ -27,7 +27,7 @@ import (
 	"github.com/bluele/gcache"
 	"github.com/hackebrot/turtle"
 	"github.com/microcosm-cc/bluemonday"
-	"github.com/russross/blackfriday"
+	"gopkg.in/russross/blackfriday.v2"
 	"github.com/vinta/pangu"
 )
 
@@ -50,10 +50,11 @@ func Markdown(mdText string) *MarkdownResult {
 	}
 
 	mdText = emojify(mdText)
+	mdText = strings.Replace(mdText, "<", "&lt;", -1)
+	mdText = strings.Replace(mdText, ">", "&gt;", -1)
 	mdTextBytes := []byte(mdText)
-	unsafe := blackfriday.MarkdownCommon(mdTextBytes)
-	contentHTML := string(bluemonday.UGCPolicy().AllowAttrs("class").Matching(regexp.MustCompile("^language-[a-zA-Z0-9]+$")).OnElements("code").SanitizeBytes(unsafe))
-
+	unsafe := blackfriday.Run(mdTextBytes)
+	contentHTML := string(unsafe)
 	doc, _ := goquery.NewDocumentFromReader(strings.NewReader(contentHTML))
 	doc.Find("img").Each(func(i int, ele *goquery.Selection) {
 		src, _ := ele.Attr("src")
@@ -70,6 +71,7 @@ func Markdown(mdText string) *MarkdownResult {
 	})
 
 	contentHTML, _ = doc.Find("body").Html()
+	contentHTML = bluemonday.UGCPolicy().AllowAttrs("class").Matching(regexp.MustCompile("^language-[a-zA-Z0-9]+$")).OnElements("code").Sanitize(contentHTML)
 
 	text := doc.Text()
 	var runes []rune
