@@ -17,12 +17,13 @@
 package cron
 
 import (
+	"html/template"
+	"net/http"
 	"time"
 
 	"github.com/b3log/pipe/model"
 	"github.com/b3log/pipe/util"
 	"github.com/parnurzeal/gorequest"
-	"net/http"
 )
 
 var RecommendArticles []*model.ThemeArticle
@@ -73,6 +74,7 @@ func refreshRecommendArticles() {
 
 		recommendations = append(recommendations, &model.ThemeArticle{
 			Author:       author,
+			Abstract:     template.HTML(article["articlePreviewContent"].(string)),
 			CreatedAt:    time.Unix(int64(article["articleCreateTime"].(float64)/1000), 0).Format("2006-01-02"),
 			Title:        article["articleTitle"].(string),
 			URL:          article["articlePermalink"].(string),
