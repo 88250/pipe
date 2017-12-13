@@ -1,5 +1,5 @@
 <template>
-  <div id="particles" class="console">
+  <div class="search">
     <div class="card">
       <v-form ref="form" @submit.prevent="goSearch" class="card__body">
         <v-text-field
@@ -38,9 +38,6 @@
 </template>
 
 <script>
-  import 'particles.js'
-  import { initParticlesJS } from '~/plugins/utils'
-
   export default {
     head () {
       return {
@@ -70,18 +67,23 @@
         }
       },
       async goSearch () {
-        if (!this.$refs.form.validate()) {
-          return
-        }
-        this.$router.push(`${location.pathname}?key=${this.keyword}`)
+        this.$router.push(`${location.pathname}?key=${this.keyword || ''}`)
       }
     },
     mounted () {
       this.getList()
-      initParticlesJS('particles')
       setTimeout(() => {
         this.$set(this, 'keyword', this.$route.query.key)
       }, 0)
     }
   }
 </script>
+
+<style lang="sass">
+  @import '~assets/scss/_variables'
+  .search
+    padding: 50px
+    background-color: $blue-lighter
+    min-height: 500px
+
+</style>
