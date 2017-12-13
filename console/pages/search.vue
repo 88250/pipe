@@ -84,6 +84,8 @@
   .search
     padding: 50px
     background-color: $blue-lighter
-    min-height: 500px
+
+    .card
+      min-height: 500px
 
 </style>
