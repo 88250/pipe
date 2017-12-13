@@ -229,16 +229,16 @@
 			"revision": ""
 		},
 		{
-			"checksumSHA1": "/S8zNEoVOsnNV+R4drTOrW/Br3s=",
-			"path": "github.com/russross/blackfriday",
-			"revision": "6d1ef893fcb01b4f50cb6e57ed7df3e2e627b6b2",
-			"revisionTime": "2017-10-11T18:22:19Z"
-		},
-		{
 			"checksumSHA1": "HUXE+Nrcau8FSaVEvPYHMvDjxOE=",
 			"path": "github.com/satori/go.uuid",
 			"revision": "5bf94b69c6b68ee1b541973bb8e1144db23a194b",
 			"revisionTime": "2017-03-21T23:07:31Z"
+		},
+		{
+			"checksumSHA1": "X3R5z03Pvf1cvnG5ahdS7E9+mcg=",
+			"path": "github.com/shurcooL/sanitized_anchor_name",
+			"revision": "86672fcb3f950f35f2e675df2240550f2a50762f",
+			"revisionTime": "2017-09-05T02:47:45Z"
 		},
 		{
 			"checksumSHA1": "JZg5xzRGyrBVqPliurGJpamZ1rg=",
@@ -342,6 +342,12 @@
 			"path": "gopkg.in/mgo.v2/internal/scram",
 			"revision": "3f83fa5005286a7fe593b055f0d7771a7dce4655",
 			"revisionTime": "2016-08-18T02:01:20Z"
+		},
+		{
+			"checksumSHA1": "wt05kqKUV7SCvZtOJbqKfFE5n2M=",
+			"path": "gopkg.in/russross/blackfriday.v2",
+			"revision": "cadec560ec52d93835bf2f15bd794700d3a2473b",
+			"revisionTime": "2017-08-06T17:10:14Z"
 		},
 		{
 			"checksumSHA1": "QpWY2ygzClg3Bw+GHjD7yXlcTxw=",
