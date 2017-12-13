@@ -17,13 +17,13 @@
 package cron
 
 import (
+	"html/template"
+	"net/http"
 	"time"
 
 	"github.com/b3log/pipe/model"
 	"github.com/b3log/pipe/util"
 	"github.com/parnurzeal/gorequest"
-	"net/http"
-	"html/template"
 )
 
 var RecommendArticles []*model.ThemeArticle
