@@ -10,7 +10,7 @@
 
 ## 简介
 
-[Pipe](https://github.com/b3log/pipe) 是一款小而美的博客平台，通过[黑客派](https://hacpai.com)账号登录即可使用。
+[Pipe](https://github.com/b3log/pipe) 是一款小而美的开源博客平台，通过[黑客派](https://hacpai.com)账号登录即可使用。
 
 ### 动机
 
