@@ -276,23 +276,31 @@ const addCopyright = () => {
       return
     }
 
-    let copyString = window.getSelection().toString()
+    let selectionObj = window.getSelection()
     const author = $(this).data('author') || 'Pipe'
     let link = $(this).data('link') || location.href
 
-    if (copyString.length < 128) {
+    if (selectionObj.toString().length < 128) {
       return
     }
 
+    if (selectionObj.rangeCount) {
+      var container = document.createElement("div");
+      for (var i = 0, len = selectionObj.rangeCount; i < len; ++i) {
+        container.appendChild(selectionObj.getRangeAt(i).cloneContents());
+      }
+    }
+
     if ('object' === typeof event.originalEvent.clipboardData) {
-      event.originalEvent.clipboardData.setData('text/html', copyString + genCopy(author, link).join('<br>'))
-      event.originalEvent.clipboardData.setData('text/plain', copyString + genCopy(author, link).join('\n'))
+      event.originalEvent.clipboardData.setData('text/html', container.innerHTML + genCopy(author, link).join('<br>'))
+      event.originalEvent.clipboardData.setData('text/plain', selectionObj.toString() + genCopy(author, link).join('\n'))
+      container.remove()
       event.preventDefault()
       return
     }
 
     $('body').append(`<div id="pipeFixCopy" style="position: fixed; left: -9999px;">
-${copyString}${genCopy(author, link).join('<br>')}</div>`)
+${selectionObj}${genCopy(author, link).join('<br>')}</div>`)
     window.getSelection().selectAllChildren($('#pipeFixCopy')[0])
     setTimeout(function() {
       $('#pipeFixCopy').remove()
