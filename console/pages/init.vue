@@ -65,10 +65,10 @@
           <div class="ft-center init__content fn-clear">
             <a href="https://github.com/b3log/pipe"
                :aria-label="$t('openPipeTravel', $store.state.locale)"
-               class="card init__image pipe-tooltipped pipe-tooltipped--n">
+               class="card init__image init__image--step3 pipe-tooltipped pipe-tooltipped--n">
                 <img src="~/static/images/logo.png"/>
             </a>
-            <div>你的点赞是我们最大的动力</div>
+            <div class="init__text">{{$t('starIsMotivation', $store.state.locale)}}</div>
             <iframe src="https://ghbtns.com/github-btn.html?user=b3log&repo=pipe&type=star&count=true&size=large"
                     frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
           </div>
@@ -153,4 +153,8 @@
           padding: 10px
       &--step2.card
         margin: 20px auto 0
+      &--step3.card
+        margin: 30px auto 36px
+    &__text
+      margin-bottom: 30px
 </style>
