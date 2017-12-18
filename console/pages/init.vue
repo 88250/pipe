@@ -86,7 +86,7 @@
   export default {
     data () {
       return {
-        step: 0,
+        step: 4,
         postInitError: false,
         postInitErrorMsg: '',
         b3key: '',
