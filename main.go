@@ -130,34 +130,28 @@ func replaceServerConf() {
 		os.Exit(-1)
 	}
 
-	err = filepath.Walk("theme", func(path string, f os.FileInfo, err error) error {
-		if strings.HasSuffix(path, ".min.js") {
+	paths, err := filepath.Glob("console/dist/app.*.js")
+	if 0 < len(paths) {
+		for _, path := range paths {
 			data, e := ioutil.ReadFile(path)
 			if nil != e {
 				logger.Fatal("read file [" + path + "] failed: " + err.Error())
 				os.Exit(-1)
 			}
 			content := string(data)
-			if !strings.Contains(content, "exports={Server:") {
-				return err
+			if !strings.Contains(content, "{rel:\"manifest") {
+				continue
 			}
 
-			json := "{Server:" + strings.Split(content, "{Server:")[1]
-			json = strings.Split(json, "}}")[0] + "}"
-			newJSON := "{Server:\"" + util.Conf.Server + "\",StaticServer:\"" + util.Conf.StaticServer + "\",StaticResourceVersion:\"" +
-				util.Conf.StaticResourceVersion + "\",RuntimeMode:\"" + util.Conf.RuntimeMode + "\",AxiosBaseURL:\"" + util.Conf.AxiosBaseURL +
-				"\",MockServer:\"" + util.Conf.MockServer + "\"}"
+			json := "{rel:\"manifest\",href:\"" + strings.Split(content, "{rel:\"manifest\",href:\"")[1]
+			json = strings.Split(json, "}]")[0] + "}"
+			newJSON := "{rel:\"manifest\",href:\"" + util.Conf.StaticServer + "/theme/js/manifest.json\"}"
 			content = strings.Replace(content, json, newJSON, -1)
 			if e = ioutil.WriteFile(path, []byte(content), 0644); nil != e {
 				logger.Fatal("replace server conf in [" + path + "] failed: " + err.Error())
 				os.Exit(-1)
 			}
 		}
-
-		return err
-	})
-	if nil != err {
-		logger.Fatal("replace server conf in [theme] failed: " + err.Error())
-		os.Exit(-1)
 	}
+
 }

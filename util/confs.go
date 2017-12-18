@@ -99,6 +99,7 @@ func LoadConf() {
 		Conf.Server = *confServer
 	}
 
+	Conf.StaticServer = Conf.Server
 	if "" != *confStaticServer {
 		Conf.StaticServer = *confStaticServer
 	}
