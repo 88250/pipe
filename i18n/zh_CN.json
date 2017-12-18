@@ -28,7 +28,7 @@
   "loginHacpai": "登录黑客派",
   "register": "注册",
   "hacpai": "黑客派",
-  "reportIssue": "上报错误",
+  "reportIssue": "报告问题",
   "title": "标题",
   "required": "不能为空",
   "validateRule": "不能超过{{size}}个字",
