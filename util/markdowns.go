@@ -27,8 +27,8 @@ import (
 	"github.com/bluele/gcache"
 	"github.com/hackebrot/turtle"
 	"github.com/microcosm-cc/bluemonday"
-	"gopkg.in/russross/blackfriday.v2"
 	"github.com/vinta/pangu"
+	"gopkg.in/russross/blackfriday.v2"
 )
 
 var markdownCache = gcache.New(1024).LRU().Build()
@@ -71,7 +71,8 @@ func Markdown(mdText string) *MarkdownResult {
 	})
 
 	contentHTML, _ = doc.Find("body").Html()
-	contentHTML = bluemonday.UGCPolicy().AllowAttrs("class").Matching(regexp.MustCompile("^language-[a-zA-Z0-9]+$")).OnElements("code").Sanitize(contentHTML)
+	contentHTML = bluemonday.UGCPolicy().AllowAttrs("class").Matching(regexp.MustCompile("^language-[a-zA-Z0-9]+$")).OnElements("code").
+		AllowAttrs("data-src").OnElements("img").Sanitize(contentHTML)
 
 	text := doc.Text()
 	var runes []rune
