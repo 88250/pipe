@@ -125,7 +125,7 @@
     mounted () {
       initParticlesJS('particles')
       Vue.nextTick(() => {
-        this.$set(this, 'step', this.$store.state.name === '' ? 1 : 3)
+        this.$set(this, 'step', this.$store.state.name === '' ? 1 : 2)
       })
     }
   }
