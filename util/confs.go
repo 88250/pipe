@@ -52,6 +52,8 @@ type Configuration struct {
 	RuntimeMode           string // runtime mode (dev/prod)
 	DataFilePath          string // database file path
 	Port                  string // listen port
+	AxiosBaseURL          string // axio base URL
+	MockServer            string // mock server
 }
 
 // LoadConf loads the configurations. Command-line arguments will override configuration file.
