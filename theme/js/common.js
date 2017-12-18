@@ -300,7 +300,7 @@ const addCopyright = () => {
     }
 
     $('body').append(`<div id="pipeFixCopy" style="position: fixed; left: -9999px;">
-${selectionObj}${genCopy(author, link).join('<br>')}</div>`)
+${selectionObj.toString()}${genCopy(author, link).join('<br>')}</div>`)
     window.getSelection().selectAllChildren($('#pipeFixCopy')[0])
     setTimeout(function() {
       $('#pipeFixCopy').remove()
