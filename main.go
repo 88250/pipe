@@ -154,4 +154,33 @@ func replaceServerConf() {
 		}
 	}
 
+	err = filepath.Walk("console/dist/", func(path string, f os.FileInfo, err error) error {
+		if strings.HasSuffix(path, ".html") {
+			data, e := ioutil.ReadFile(path)
+			if nil != e {
+				logger.Fatal("read file [" + path + "] failed: " + err.Error())
+				os.Exit(-1)
+			}
+			content := string(data)
+			if !strings.Contains(content, "rel=\"manifest\" href=\"") {
+				return err
+			}
+
+			json := "rel=\"manifest\" href=\"" + strings.Split(content, "rel=\"manifest\" href=\"")[1]
+			json = strings.Split(json, "/>")[0] + "/>"
+			newJSON := "rel=\"manifest\" href=\"" + util.Conf.StaticServer + "/theme/js/manifest.json\"/>"
+			content = strings.Replace(content, json, newJSON, -1)
+			if e = ioutil.WriteFile(path, []byte(content), 0644); nil != e {
+				logger.Fatal("replace server conf in [" + path + "] failed: " + err.Error())
+				os.Exit(-1)
+			}
+		}
+
+		return err
+	})
+	if nil != err {
+		logger.Fatal("replace server conf in [theme] failed: " + err.Error())
+		os.Exit(-1)
+	}
+
 }
