@@ -198,7 +198,7 @@ func showArticleAction(c *gin.Context) {
 
 	c.HTML(http.StatusOK, getTheme(c)+"/article.html", dataModel)
 
-	service.Article.IncArticleViewCount(article)
+	go service.Article.IncArticleViewCount(article)
 }
 
 func fillPreviousArticle(c *gin.Context, article *model.Article, dataModel *DataModel) {

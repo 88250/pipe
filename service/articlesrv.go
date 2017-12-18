@@ -469,7 +469,7 @@ func (srv *articleService) IncArticleViewCount(article *model.Article) error {
 	defer srv.mutex.Unlock()
 
 	article.ViewCount = article.ViewCount + 1
-	if err := db.Model(&model.Article{}).Select("view_count").Updates(article).Error; nil != err {
+	if err := db.Model(&model.Article{}).Where("id = ?", article.ID).Select("view_count").Updates(article).Error; nil != err {
 		return err
 	}
 

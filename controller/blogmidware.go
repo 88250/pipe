@@ -57,7 +57,7 @@ func resolveBlog(c *gin.Context) {
 	c.Set("userBlog", userBlog)
 
 	fillCommon(c)
-	service.Statistic.IncViewCount(userBlog.ID)
+	go service.Statistic.IncViewCount(userBlog.ID)
 
 	path := strings.Split(c.Request.RequestURI, username)[1]
 	path = strings.TrimSpace(path)
