@@ -139,20 +139,20 @@ func replaceServerConf() {
 				os.Exit(-1)
 			}
 			content := string(data)
-			if !strings.Contains(content, "{rel:\"manifest") {
-				continue
+			if strings.Contains(content, "{rel:\"manifest") {
+				json := "{rel:\"manifest\",href:\"" + strings.Split(content, "{rel:\"manifest\",href:\"")[1]
+				json = strings.Split(json, "}]")[0] + "}"
+				newJSON := "{rel:\"manifest\",href:\"" + util.Conf.StaticServer + "/theme/js/manifest.json\"}"
+				content = strings.Replace(content, json, newJSON, -1)
 			}
-
-			json := "{rel:\"manifest\",href:\"" + strings.Split(content, "{rel:\"manifest\",href:\"")[1]
-			json = strings.Split(json, "}]")[0] + "}"
-			newJSON := "{rel:\"manifest\",href:\"" + util.Conf.StaticServer + "/theme/js/manifest.json\"}"
-			content = strings.Replace(content, json, newJSON, -1)
-			json = "env:{Server:" + strings.Split(content, "env:{Server:")[1]
-			json = strings.Split(json, "}}")[0] + "}"
-			newJSON = "env:{Server:\"" + util.Conf.Server + "\",StaticServer:\"" + util.Conf.StaticServer + "\",StaticResourceVersion:\"" +
-				util.Conf.StaticResourceVersion + "\",RuntimeMode:\"" + util.Conf.RuntimeMode + "\",AxiosBaseURL:\"" + util.Conf.AxiosBaseURL +
-				"\",MockServer:\"" + util.Conf.MockServer + "\"}"
-			content = strings.Replace(content, json, newJSON, -1)
+			if strings.Contains(content, "env:{Server:") {
+				json := "env:{Server:" + strings.Split(content, "env:{Server:")[1]
+				json = strings.Split(json, "}}")[0] + "}"
+				newJSON := "env:{Server:\"" + util.Conf.Server + "\",StaticServer:\"" + util.Conf.StaticServer + "\",StaticResourceVersion:\"" +
+					util.Conf.StaticResourceVersion + "\",RuntimeMode:\"" + util.Conf.RuntimeMode + "\",AxiosBaseURL:\"" + util.Conf.AxiosBaseURL +
+					"\",MockServer:\"" + util.Conf.MockServer + "\"}"
+				content = strings.Replace(content, json, newJSON, -1)
+			}
 			if strings.Contains(content, "/console/dist/") {
 				part := strings.Split(content, "/console/dist/")[0]
 				part = part[strings.LastIndex(part, "\"")+1:]
