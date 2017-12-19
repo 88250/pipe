@@ -122,7 +122,7 @@ func (srv *commentService) ConsoleGetComments(keyword string, page int, blogID u
 }
 
 func (srv *commentService) GetRecentComments(size int, blogID uint) (ret []*model.Comment) {
-	if err := db.Model(&model.Comment{}).Select("id, created_at, content").
+	if err := db.Model(&model.Comment{}).Select("id, created_at, content, author_id, article_id").
 		Where("blog_id = ?", blogID).
 		Order("created_at DESC, id DESC").Limit(size).Find(&ret).Error; nil != err {
 		logger.Errorf("get recent comments failed: " + err.Error())

@@ -135,9 +135,9 @@ func fillCommon(c *gin.Context) {
 
 	fillMostUseCategories(&settingMap, dataModel, blogID)
 	fillMostUseTags(&settingMap, dataModel, blogID)
-	fillMostViewArticles(&settingMap, dataModel, blogID)
-	fillRecentComments(&settingMap, dataModel, blogID)
-	fillMostCommentArticles(&settingMap, dataModel, blogID)
+	fillMostViewArticles(c, &settingMap, dataModel, blogID)
+	fillRecentComments(c, &settingMap, dataModel, blogID)
+	fillMostCommentArticles(c, &settingMap, dataModel, blogID)
 
 	c.Set("dataModel", dataModel)
 }
@@ -174,7 +174,7 @@ func fillMostUseTags(settingMap *map[string]interface{}, dataModel *DataModel, b
 	(*dataModel)["MostUseTags"] = themeTags
 }
 
-func fillMostViewArticles(settingMap *map[string]interface{}, dataModel *DataModel, blogID uint) {
+func fillMostViewArticles(c *gin.Context, settingMap *map[string]interface{}, dataModel *DataModel, blogID uint) {
 	mostViewArticleSize, err := strconv.Atoi((*settingMap)[model.SettingNamePreferenceMostViewArticleListSize].(string))
 	if nil != err {
 		logger.Errorf("setting [%s] should be an integer, actual is [%v]", model.SettingNamePreferenceMostViewArticleListSize,
@@ -184,10 +184,16 @@ func fillMostViewArticles(settingMap *map[string]interface{}, dataModel *DataMod
 	mostViewArticles := service.Article.GetMostViewArticles(mostViewArticleSize, blogID)
 	var themeMostViewArticles []*model.ThemeArticle
 	for _, article := range mostViewArticles {
+		authorModel := service.User.GetUser(article.AuthorID)
+		if nil == authorModel {
+			logger.Errorf("not found author of article [id=%d, authorID=%d]", article.ID, article.AuthorID)
+
+			continue
+		}
 		author := &model.ThemeAuthor{
-			Name:      "Vanessa",
-			URL:       "http://localhost:5879/blogs/pipe/vanessa",
-			AvatarURL: "https://img.hacpai.com/20170818zhixiaoyun.jpeg",
+			Name:      authorModel.Name,
+			URL:       getBlogURL(c) + util.PathAuthors + "/" + authorModel.Name,
+			AvatarURL: authorModel.AvatarURL,
 		}
 		themeArticle := &model.ThemeArticle{
 			Title:     article.Title,
@@ -201,7 +207,7 @@ func fillMostViewArticles(settingMap *map[string]interface{}, dataModel *DataMod
 	(*dataModel)["MostViewArticles"] = themeMostViewArticles
 }
 
-func fillRecentComments(settingMap *map[string]interface{}, dataModel *DataModel, blogID uint) {
+func fillRecentComments(c *gin.Context, settingMap *map[string]interface{}, dataModel *DataModel, blogID uint) {
 	recentCommentSize, err := strconv.Atoi((*settingMap)[model.SettingNamePreferenceRecentCommentListSize].(string))
 	if nil != err {
 		logger.Errorf("setting [%s] should be an integer, actual is [%v]", model.SettingNamePreferenceRecentCommentListSize,
@@ -211,16 +217,27 @@ func fillRecentComments(settingMap *map[string]interface{}, dataModel *DataModel
 	recentComments := service.Comment.GetRecentComments(recentCommentSize, blogID)
 	var themeRecentComments []*model.ThemeComment
 	for _, comment := range recentComments {
+		commentAuthor := service.User.GetUser(comment.AuthorID)
+		if nil == commentAuthor {
+			logger.Errorf("not found comment author [userID=%d]", comment.AuthorID)
+
+			continue
+		}
+		commentAuthorBlog := service.User.GetOwnBlog(commentAuthor.ID)
+		blogURLSetting := service.Setting.GetSetting(model.SettingCategoryBasic, model.SettingNameBasicBlogURL, commentAuthorBlog.ID)
+		commentAuthorURL := blogURLSetting.Value + util.PathAuthors + "/" + commentAuthor.Name
+		author := &model.ThemeAuthor{
+			Name:      commentAuthor.Name,
+			URL:       commentAuthorURL,
+			AvatarURL: commentAuthor.AvatarURL,
+		}
+		page := service.Comment.GetCommentPage(comment.ArticleID, comment.ID, blogID)
+		article := service.Article.ConsoleGetArticle(comment.ArticleID)
 		themeComment := &model.ThemeComment{
 			Title:     util.Markdown(comment.Content).AbstractText,
-			Content:   "",
-			URL:       "todo",
+			URL:       getBlogURL(c) + article.Path + "?p=" + strconv.Itoa(page) + "#pipeComment" + strconv.Itoa(int(comment.ID)),
 			CreatedAt: humanize.Time(comment.CreatedAt),
-			Author: &model.ThemeAuthor{
-				Name:      "Vanessa",
-				URL:       "http://localhost:5879/blogs/pipe/vanessa",
-				AvatarURL: "https://img.hacpai.com/20170818zhixiaoyun.jpeg",
-			},
+			Author:    author,
 		}
 		themeRecentComments = append(themeRecentComments, themeComment)
 	}
@@ -228,7 +245,7 @@ func fillRecentComments(settingMap *map[string]interface{}, dataModel *DataModel
 	(*dataModel)["RecentComments"] = themeRecentComments
 }
 
-func fillMostCommentArticles(settingMap *map[string]interface{}, dataModel *DataModel, blogID uint) {
+func fillMostCommentArticles(c *gin.Context, settingMap *map[string]interface{}, dataModel *DataModel, blogID uint) {
 	mostCommentArticleSize, err := strconv.Atoi((*settingMap)[model.SettingNamePreferenceMostCommentArticleListSize].(string))
 	if nil != err {
 		logger.Errorf("setting [%s] should be an integer, actual is [%v]", model.SettingNamePreferenceMostCommentArticleListSize,
@@ -238,10 +255,16 @@ func fillMostCommentArticles(settingMap *map[string]interface{}, dataModel *Data
 	mostCommentArticles := service.Article.GetMostCommentArticles(mostCommentArticleSize, blogID)
 	var themeMostCommentArticles []*model.ThemeArticle
 	for _, article := range mostCommentArticles {
+		authorModel := service.User.GetUser(article.AuthorID)
+		if nil == authorModel {
+			logger.Errorf("not found author of article [id=%d, authorID=%d]", article.ID, article.AuthorID)
+
+			continue
+		}
 		author := &model.ThemeAuthor{
-			Name:      "Vanessa",
-			URL:       "http://localhost:5879/blogs/pipe/vanessa",
-			AvatarURL: "https://img.hacpai.com/20170818zhixiaoyun.jpeg",
+			Name:      authorModel.Name,
+			URL:       getBlogURL(c) + util.PathAuthors + "/" + authorModel.Name,
+			AvatarURL: authorModel.AvatarURL,
 		}
 		themeArticle := &model.ThemeArticle{
 			Title:     article.Title,
