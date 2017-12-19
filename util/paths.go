@@ -26,7 +26,7 @@ const (
 	PathInit        = "/init"
 	PathSearch      = "/search"
 	PathBlogs       = "/blogs"
-	PathAssets      = "/assets"
+	PathConsoleDist      = "/console/dist"
 	PathAdmin       = "/admin"
 	PathAPI         = "/api"
 	PathFavicon     = "/favicon.ico"
@@ -44,7 +44,7 @@ const (
 )
 
 var reservedPaths = []string{
-	PathInit, PathSearch, PathBlogs, PathAssets, PathAdmin, PathAPI,
+	PathInit, PathSearch, PathBlogs, PathConsoleDist, PathAdmin, PathAPI,
 	PathFavicon, PathTheme, PathActivities, PathArchives, PathArticles, PathAuthors,
 	PathCategories, PathTags, PathComments, PathAtom, PathUpload,
 }

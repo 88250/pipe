@@ -167,7 +167,7 @@ func MapRoutes() *gin.Engine {
 	initGroup.Use(fillUser)
 	initGroup.GET("", showInitPageAction)
 
-	ret.Static(util.PathAssets, "./console/dist")
+	ret.Static(util.PathConsoleDist, "./console/dist")
 
 	ret.NoRoute(func(c *gin.Context) {
 		notFound(c)
