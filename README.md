@@ -58,23 +58,27 @@ TBD
 ### 编译后端
 
 ```
-go build
+go build -i -v
 ```
 
-### 编译前端（管理后台）
+### 编译管理后台前端
+
+进入 console 目录，然后：
 
 ```
-cd console && npm install 
+npm install 
 ```
 
 * 部署前需在 console 目录下执行 `npm run build`
 * 开发过程中需在 console 目录下执行 `npm run dev`
 * pipe.json 中 `AxiosBaseURL` 为 `/api` 时需启动 `./pipe`，为 `/mock` 时需运行 `npm run mock`
 
-### 前台主题
+### 打包前台主题
+
+进入 theme 目录，然后：
 
 ```
-cd theme && npm install && npm install --global gulp
+npm install && npm install --global gulp
 ```
 
 * 部署前需在 theme 目录下执行 `gulp`
