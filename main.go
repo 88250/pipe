@@ -130,7 +130,7 @@ func replaceServerConf() {
 		os.Exit(-1)
 	}
 
-	paths, err := filepath.Glob("console/dist/app.*.js")
+	paths, err := filepath.Glob("console/dist/*.js")
 	if 0 < len(paths) {
 		for _, path := range paths {
 			data, e := ioutil.ReadFile(path)
@@ -153,6 +153,10 @@ func replaceServerConf() {
 				util.Conf.StaticResourceVersion + "\",RuntimeMode:\"" + util.Conf.RuntimeMode + "\",AxiosBaseURL:\"" + util.Conf.AxiosBaseURL +
 				"\",MockServer:\"" + util.Conf.MockServer + "\"}"
 			content = strings.Replace(content, json, newJSON, -1)
+				part := strings.Split(content, "/console/dist/")[0]
+				part = part[strings.LastIndex(part, "\"")+1:]
+				content = strings.Replace(content, part, util.Conf.StaticServer, -1)
+			}
 			if e = ioutil.WriteFile(path, []byte(content), 0644); nil != e {
 				logger.Fatal("replace server conf in [" + path + "] failed: " + err.Error())
 				os.Exit(-1)
