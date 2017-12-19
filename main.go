@@ -153,6 +153,7 @@ func replaceServerConf() {
 				util.Conf.StaticResourceVersion + "\",RuntimeMode:\"" + util.Conf.RuntimeMode + "\",AxiosBaseURL:\"" + util.Conf.AxiosBaseURL +
 				"\",MockServer:\"" + util.Conf.MockServer + "\"}"
 			content = strings.Replace(content, json, newJSON, -1)
+			if strings.Contains(content, "/console/dist/") {
 				part := strings.Split(content, "/console/dist/")[0]
 				part = part[strings.LastIndex(part, "\"")+1:]
 				content = strings.Replace(content, part, util.Conf.StaticServer, -1)
