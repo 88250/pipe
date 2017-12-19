@@ -316,7 +316,7 @@ ${selectionObj.toString()}${genCopy(author, link).join('<br>')}</div>`)
   addCopyright()
 
   if ('serviceWorker' in navigator && 'caches' in window && 'fetch' in window && config.RuntimeMode === 'prod') {
-    navigator.serviceWorker.register(`${config.Server}/sw.min.js?${config.StaticResourceVersion}`, {scope: '/'})
+    // navigator.serviceWorker.register(`${config.Server}/sw.min.js?${config.StaticResourceVersion}`, {scope: '/'})
   }
 
   if (navigator.userAgent.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)) {

@@ -33,6 +33,9 @@
     },
     methods: {
       async setup (name) {
+        if (name === this.currentName) {
+          return
+        }
         const responseData = await this.axios.put(`/console/themes/${name}`)
         if (responseData.code === 0) {
           this.$store.commit('setSnackBar', {
@@ -67,7 +70,7 @@
     .card
       margin: 0 30px 30px 0
       float: left
-      width: 300px
+      width: 455px
       cursor: pointer
     .theme
       &--current
