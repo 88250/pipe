@@ -162,14 +162,17 @@ func replaceServerConf() {
 				os.Exit(-1)
 			}
 			content := string(data)
-			if !strings.Contains(content, "rel=\"manifest\" href=\"") {
-				return err
+			if strings.Contains(content, "rel=\"manifest\" href=\"") {
+				rel := "rel=\"manifest\" href=\"" + strings.Split(content, "rel=\"manifest\" href=\"")[1]
+				rel = strings.Split(rel, "/>")[0] + "/>"
+				newRel := "rel=\"manifest\" href=\"" + util.Conf.StaticServer + "/theme/js/manifest.json\"/>"
+				content = strings.Replace(content, rel, newRel, -1)
 			}
-
-			json := "rel=\"manifest\" href=\"" + strings.Split(content, "rel=\"manifest\" href=\"")[1]
-			json = strings.Split(json, "/>")[0] + "/>"
-			newJSON := "rel=\"manifest\" href=\"" + util.Conf.StaticServer + "/theme/js/manifest.json\"/>"
-			content = strings.Replace(content, json, newJSON, -1)
+			if strings.Contains(content, "/console/dist/") {
+				part := strings.Split(content, "/console/dist/")[0]
+				part = part[strings.LastIndex(part, "\"")+1:]
+				content = strings.Replace(content, part, util.Conf.StaticServer, -1)
+			}
 			if e = ioutil.WriteFile(path, []byte(content), 0644); nil != e {
 				logger.Fatal("replace server conf in [" + path + "] failed: " + err.Error())
 				os.Exit(-1)
@@ -182,5 +185,4 @@ func replaceServerConf() {
 		logger.Fatal("replace server conf in [theme] failed: " + err.Error())
 		os.Exit(-1)
 	}
-
 }
