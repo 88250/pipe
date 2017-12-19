@@ -147,6 +147,12 @@ func replaceServerConf() {
 			json = strings.Split(json, "}]")[0] + "}"
 			newJSON := "{rel:\"manifest\",href:\"" + util.Conf.StaticServer + "/theme/js/manifest.json\"}"
 			content = strings.Replace(content, json, newJSON, -1)
+			json = "env:{Server:" + strings.Split(content, "env:{Server:")[1]
+			json = strings.Split(json, "}}")[0] + "}"
+			newJSON = "env{Server:\"" + util.Conf.Server + "\",StaticServer:\"" + util.Conf.StaticServer + "\",StaticResourceVersion:\"" +
+				util.Conf.StaticResourceVersion + "\",RuntimeMode:\"" + util.Conf.RuntimeMode + "\",AxiosBaseURL:\"" + util.Conf.AxiosBaseURL +
+				"\",MockServer:\"" + util.Conf.MockServer + "\"}"
+			content = strings.Replace(content, json, newJSON, -1)
 			if e = ioutil.WriteFile(path, []byte(content), 0644); nil != e {
 				logger.Fatal("replace server conf in [" + path + "] failed: " + err.Error())
 				os.Exit(-1)
