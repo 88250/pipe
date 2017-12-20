@@ -26,7 +26,9 @@
 
 ### 案例
 
-TBD
+* http://pipe.b3log.org
+
+你也在使用的话欢迎通过 PR 更新该列表。
 
 ## 特性
 
@@ -44,7 +46,7 @@ TBD
 
 * 用户指南 TBD
 * 开发指南 TBD
-* 主题开发指南 TBD
+* [主题开发指南](https://hacpai.com/article/1512550354920)
 
 ## 构建
 
