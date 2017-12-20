@@ -9,43 +9,42 @@
              href="http://b3log.org/donate.html">{{ $t('becomeSponsor', $store.state.locale) }}</a>
         </div>
         <div class="fn-flex-1 pipe-content__reset">
-          <h2 v-if="isLatest">
-            {{ $t('about1', $store.state.locale) }}
-            <a :href="download" target="_blank">{{ version }}</a>
-          </h2>
-          <h2 v-else>
-            {{ $t('about2', $store.state.locale) }}
-            <a class="ft-danger" :href="download" target="_blank">{{ version }}</a>
-          </h2>
-          <p class="fn-clear">
+          <h2 class="fn-clear" v-if="isLatest">
             <span class="fn-left">
-              <a href='https://hacpai.com/tag/Pipe' target='_blank'>Pipe</a> 是一款开源（<a
-              href='http://www.gnu.org/licenses/gpl-3.0.html' target='_blank'>GPLv3</a>）的博客平台，由
-              <a href="https://github.com/b3log" target="_blank">B3log 开源</a>组织维护。
+              {{ $t('about1', $store.state.locale) }}
+              <a :href="download" target="_blank">{{ version }}</a>
             </span>
             <iframe class="about__github fn-left"
                     src="https://ghbtns.com/github-btn.html?user=b3log&repo=pipe&type=star&count=true&size=large"
                     frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
-          </p>
-          <p>
-            如果你对开源感兴趣，想贡献自己的一份力量，欢迎<a
-              href='https://hacpai.com/article/1463025124998' target='_blank'>加入我们</a>！</p>
+          </h2>
+          <h2 class="fn-clear" v-else>
+            <span class="fn-left">
+               {{ $t('about2', $store.state.locale) }}
+              <a class="ft-danger" :href="download" target="_blank">{{ version }}</a>
+            </span>
+            <iframe class="about__github fn-left"
+                    src="https://ghbtns.com/github-btn.html?user=b3log&repo=pipe&type=star&count=true&size=large"
+                    frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+          </h2>
+          <p v-html="$t('about4', $store.state.locale)"></p>
+          <p v-html="$t('about3', $store.state.locale)"></p>
           <p>
             <a href="http://b3log.org/services/index.html#pipe" target="_blank" class="about__link btn btn--info">
               <v-icon>user-circle</v-icon>
-              服务
+              {{ $t('service', $store.state.locale) }}
             </a>
             <a href="https://github.com/b3log/pipe-themes" target="_blank" class="about__link btn btn--info">
               <v-icon>github</v-icon>
-              主题
+              {{ $t('theme', $store.state.locale) }}
             </a>
             <a href="https://hacpai.com/article/1492881378588" target="_blank" class="about__link btn btn--info">
               <v-icon>file-text</v-icon>
-              文档
+              {{ $t('doc', $store.state.locale) }}
             </a>
             <a href="https://hacpai.com" target="_blank" class="about__link btn btn--info">
               <v-icon>hacpai-logo2</v-icon>
-              社区
+              {{ $t('community', $store.state.locale) }}
             </a>
             <a href="http://b3log.org" target="_blank" class="about__link btn btn--info">
               <v-icon>b3log-logo2</v-icon>
@@ -86,27 +85,35 @@
 <style lang="sass">
   @import '~assets/scss/_variables'
 
-  .admin__about .about
-    &__side
-      margin: 30px 50px 0 30px
-      width: 112px
-    &__github
-      border: 0
-      margin: -4px 0 0 10px
-    &__link
-      margin: 10px 20px 10px 20px
-      .icon
-        border-right: 1px dotted #fff
-        padding-right: 10px
-        margin: 0 10px 0 0
-        height: 18px
-        width: 18px
+  .admin__about
+    .pipe-content__reset h2
+      font-size: 1.4em
+    .about
+      &__side
+        margin: 30px 50px 0 30px
+        width: 112px
+      &__github
+        border: 0
+        margin-left: 20px
+      &__link
+        margin: 10px 20px 10px 20px
+        .icon
+          border-right: 1px dotted #fff
+          padding-right: 10px
+          margin: 0 10px 0 0
+          height: 18px
+          width: 18px
 
   @media (max-width: 768px)
     .admin__about
       display: block
+      .about__github
+        float: none
+        margin: 10px 0 0 0
       .about__side
         text-align: center
         margin: 15px
         width: auto
+      .pipe-content__reset h2
+        font-size: 1.2em
 </style>

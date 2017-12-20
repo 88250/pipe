@@ -71,7 +71,7 @@
   "setupSuccess": "Setup success",
   "publish": "Publish",
   "communityRecommend": "Recommendations",
-  "becomeSponsor": "Become Sponsor",
+  "becomeSponsor": "Sponsor",
   "about1": "Pipe is up to date, ",
   "about2": "Pipe is out to date, Please download",
   "setup": "Setup",
@@ -166,5 +166,12 @@
   "searchNull": "Empty, Clear Keyword",
   "refresh": "Refresh",
   "closeToc": "Close ToC",
-  "toc": "ToC"
+  "toc": "ToC",
+  "theme": "Theme",
+  "doc": "Document",
+  "service": "Services",
+  "community": "Community",
+  "about3": "If you are interested in open source, want to contribute, welcome to<a href='https://hacpai.com/article/1463025124998' target='_blank'>join us</a>!",
+  "about4": "<a href='https://hacpai.com/tag/Pipe' target='_blank'>Pipe</a> is an open source（<a href='http://www.gnu.org/licenses/gpl-3.0.html' target='_blank'>GPLv3</a>）blogging platform，maintained by <a href='https://github.com/b3log' target='_blank'>B3log Open Source</a>."
+
 }
