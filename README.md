@@ -3,6 +3,7 @@
 * [简介](#简介)
 * [特性](#特性)
 * [文档](#文档)
+* [界面](#界面)
 * [构建](#构建)
 * [贡献](#贡献)
 * [开源协议](#开源协议)
@@ -140,6 +141,7 @@ Pipe 的诞生离不开以下开源项目：
 * [Blackfriday](github.com/russross/blackfriday)：golang Markdown 处理器
 * [SQLite](https://www.sqlite.org)：使用广泛的嵌入式 SQL 引擎
 * [GCache](github.com/bluele/gcache)：golang 缓存库
+* [GoLand](https://www.jetbrains.com/go)：全宇宙暂时排名第一的 golang IDE
 
 ----
 
