@@ -44,7 +44,7 @@ TBD
 
 * 用户指南 TBD
 * 开发指南 TBD
-* 主题开发指南 TBD
+* [主题开发指南](https://hacpai.com/article/1512550354920)
 
 ## 构建
 
