@@ -45,7 +45,7 @@
 
 ## 文档
 
-* 用户指南 TBD
+* [用户指南](https://hacpai.com/article/1513761942333)
 * [主题开发指南](https://hacpai.com/article/1512550354920)
 
 ## 界面
