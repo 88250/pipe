@@ -149,23 +149,23 @@
         </header>
         {{range $index, $item := .RecommendArticles}}
         <div class="relevant__item">
-            <a href="{{$item.URL}}">{{$item.Title}}</a>
+            <a href="{{$item.URL}}" target="_blank">{{$item.Title}}</a>
             <div class="relevant__content">
                 <a class="relevant__thumbnail"
                    href="{{$item.URL}}"
-                   data-src="{{$item.ThumbnailURL}}"></a>
+                   data-src="{{$item.ThumbnailURL}}" target="_blank"></a>
                 <div>
-                    <a href="{{$item.URL}}" class="relevant__abstract">
+                    <a href="{{$item.URL}}" class="relevant__abstract" target="_blank">
                         {{$item.Abstract}}
                     </a>
                     <div class="relevant__meta fn-clear">
                         <a class="relevant__avatar pipe-tooltipped pipe-tooltipped--w"
                            aria-label="{{$item.Author.Name}}"
                            data-src="{{$item.Author.AvatarURL}}"
-                           href="{{$item.Author.URL}}"></a>
+                           href="{{$item.Author.URL}}" target="_blank"></a>
                         <span class="fn-left ft-fade">{{$item.CreatedAt}} &nbsp; &nbsp;</span>
                         <a href="{{$item.URL}}#comments"
-                           class="ft-fade">
+                           class="ft-fade" target="_blank">
                             {{if ne 0 $item.CommentCount}}{{$item.CommentCount}}{{end}}
                             {{$.I18n.Comment}}
                         </a>

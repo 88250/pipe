@@ -189,22 +189,23 @@
             {{if $item.ThumbnailURL}}
             <a class="relevant__thumbnail"
                href="{{$item.URL}}"
-               data-src="{{$item.ThumbnailURL}}"></a>
-            <a class="module__list-title fn-ellipsis" href="{{$item.URL}}">{{$item.Title}}</a>
+               data-src="{{$item.ThumbnailURL}}"
+               target="_blank"></a>
+            <a class="module__list-title fn-ellipsis" href="{{$item.URL}}" target="_blank">{{$item.Title}}</a>
             {{else}}
-            <a class="module__list-title fn-ellipsis" href="{{$item.URL}}">{{$item.Title}}</a>
-            <a href="{{$item.URL}}" class="ft-fade relevant__abstract">
+            <a class="module__list-title fn-ellipsis" href="{{$item.URL}}" target="_blank">{{$item.Title}}</a>
+            <a href="{{$item.URL}} target="_blank class="ft-fade relevant__abstract">
                 {{$item.Abstract}}
             </a>
             {{end}}
             <div class="fn-relative">
                 <a class="avatar fn-absolute" data-src="{{$item.Author.AvatarURL}}"
-                   href="{{$item.Author.URL}}"></a>
+                   href="{{$item.Author.URL}}" target="_blank"></a>
                 <div class="relevant__content">
-                    <a href="{{$item.Author.URL}}" class="ft-gray">{{$item.Author.Name}}</a> <br>
+                    <a href="{{$item.Author.URL}}" class="ft-gray" target="_blank">{{$item.Author.Name}}</a> <br>
                     <span class="ft-12 ft-fade fn-clear">
                         {{$item.CreatedAt}}
-                       <a href="{{$item.URL}}#comments" class="fn-right ft-fade">
+                       <a href="{{$item.URL}}#comments" class="fn-right ft-fade" target="_blank">
                            {{if ne 0 $item.CommentCount}}
                            {{$item.CommentCount}}
                            {{$.I18n.Comment}}

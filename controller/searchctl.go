@@ -47,7 +47,15 @@ func searchAction(c *gin.Context) {
 	}
 
 	blogID := getBlogID(c)
-	articleModels, pagination := service.Article.GetArticles(args["key"].(string), int(args["p"].(float64)), blogID)
+	key := ""
+	if nil != args["key"] {
+		key = args["key"].(string)
+	}
+	page := 1
+	if nil != args["p"] {
+		page = int(args["p"].(float64))
+	}
+	articleModels, pagination := service.Article.GetArticles(key, page, blogID)
 	var articles []*model.ThemeArticle
 	for _, articleModel := range articleModels {
 		var themeTags []*model.ThemeTag
