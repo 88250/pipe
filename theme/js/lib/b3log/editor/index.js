@@ -222,11 +222,14 @@ export const Editor = (config) => {
   $editor.find('.b3log-editor__toolbar > span input').change(function (event) {
     insertTextAtCaret(textarea,
       genUploading(event.target.files, config.uploadMax, config.label.loading, config.label.over), '')
-    ajaxUpload(config.uploadURL, event.target.files, (response) => {
+    ajaxUpload(config.uploadURL, event.target.files, config.uploadMax, (response) => {
       textarea.value = genUploaded(response.data, textarea.value, config.label.loading, config.label.error)
       debounceInput(timerId, config.change, $editor)
       event.target.value = ''
-    }, config.uploadMax);
+    }, (response) => {
+      event.target.value = ''
+      response && alert(response.msg)
+    });
   })
 
   $textarea.focus(() => {
@@ -296,11 +299,14 @@ export const Editor = (config) => {
         insertTextAtCaret(textarea,
           genUploading(event.originalEvent.clipboardData.files, config.uploadMax, config.label.loading, config.label.over),
           '', true)
-        ajaxUpload(config.uploadURL, event.originalEvent.clipboardData.files, (response) => {
+        ajaxUpload(config.uploadURL, event.originalEvent.clipboardData.files, config.uploadMax, (response) => {
           event.target.value = genUploaded(response.data, event.target.value,
             config.label.loading, config.label.error)
           debounceInput(timerId, config.change, $editor)
-        }, config.uploadMax)
+        }, (response) => {
+          event.target.value = ''
+          response && alert(response.msg)
+        })
       }
     }
     event.preventDefault();
@@ -314,11 +320,14 @@ export const Editor = (config) => {
     }
     insertTextAtCaret(textarea,
       genUploading(files, config.uploadMax, config.label.loading, config.label.over), '')
-    ajaxUpload(config.uploadURL, files, (response) => {
+    ajaxUpload(config.uploadURL, files, config.uploadMax, (response) => {
       textarea.value = genUploaded(response.data, textarea.value,
         config.label.loading, config.label.error)
       debounceInput(timerId, config.change, $editor)
-    }, config.uploadMax)
+    }, (response) => {
+      event.target.value = ''
+      response && alert(response.msg)
+    })
   }).bind('input', function (event) {
     // at and emoji hints
     const valueArray = this.value.substr(0, this.selectionStart).split('\n')
@@ -555,7 +564,7 @@ ${hintData.imageURL ? '<img src="' + hintData.imageURL + '"/>' : hintData.value}
       textarea.value = textarea.value.replace('\n[Start Recording]\n', '\n[End Recording, Start Uploading]\n');
       debounceInput(timerId, config.change, $editor)
 
-      ajaxUpload(config.uploadURL, [Audio.wavFileBlob.getDataBlob()], (response) => {
+      ajaxUpload(config.uploadURL, [Audio.wavFileBlob.getDataBlob()], config.uploadMax, (response) => {
         if (response.data.errFiles.length > 0) {
           textarea.value = textarea.value.replace('\n[End Recording, Start Uploading]\n',
             `\n[Record Upload Error]\n`)
@@ -565,7 +574,10 @@ ${hintData.imageURL ? '<img src="' + hintData.imageURL + '"/>' : hintData.value}
         }
 
         debounceInput(timerId, config.change, $editor)
-      }, config.uploadMax)
+      }, (response) => {
+        event.target.value = ''
+        response && alert(response.msg)
+      })
       return false;
     })
   }
