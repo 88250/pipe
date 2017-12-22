@@ -135,10 +135,10 @@ func MapRoutes() *gin.Engine {
 
 	for _, theme := range theme.Themes {
 		themePath := staticPath("theme/x/" + theme)
-		ret.Static("/"+themePath+"/css", themePath+"/css")
-		ret.Static("/"+themePath+"/js", themePath+"/js")
-		ret.Static("/"+themePath+"/images", themePath+"/images")
-		ret.StaticFile("/"+themePath+"/thumbnail.jpg", themePath+"/thumbnail.jpg")
+		ret.Static("/theme/x/"+theme+"/css", themePath+"/css")
+		ret.Static("/theme/x/"+theme+"/js", themePath+"/js")
+		ret.Static("/theme/x/"+theme+"/images", themePath+"/images")
+		ret.StaticFile("/theme/x/"+theme+"/thumbnail.jpg", themePath+"/thumbnail.jpg")
 	}
 	themeTemplates, err := filepath.Glob(staticPath("theme/x/*/*.html"))
 	if nil != err {
