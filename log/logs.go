@@ -33,6 +33,7 @@ import (
 	"fmt"
 	"io"
 	stdlog "log"
+	"os"
 	"strings"
 )
 
@@ -222,7 +223,7 @@ func (l *Logger) Errorf(format string, v ...interface{}) {
 	l.logger.Output(2, fmt.Sprintf(format, v...))
 }
 
-// Fatal prints fatail level message.
+// Fatal prints fatal level message.
 func (l *Logger) Fatal(v ...interface{}) {
 	if Fatal < l.level {
 		return
@@ -230,6 +231,7 @@ func (l *Logger) Fatal(v ...interface{}) {
 
 	l.logger.SetPrefix("F ")
 	l.logger.Output(2, fmt.Sprint(v...))
+	os.Exit(1)
 }
 
 // Fatalf prints fatal level message with format.
@@ -240,4 +242,5 @@ func (l *Logger) Fatalf(format string, v ...interface{}) {
 
 	l.logger.SetPrefix("F ")
 	l.logger.Output(2, fmt.Sprintf(format, v...))
+	os.Exit(1)
 }

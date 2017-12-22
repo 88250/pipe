@@ -103,7 +103,6 @@ func replaceServerConf() {
 			data, e := ioutil.ReadFile(path)
 			if nil != e {
 				logger.Fatal("read file [" + path + "] failed: " + err.Error())
-				os.Exit(-1)
 			}
 			content := string(data)
 			if !strings.Contains(content, "exports={Server:") {
@@ -118,7 +117,6 @@ func replaceServerConf() {
 			content = strings.Replace(content, json, newJSON, -1)
 			if e = ioutil.WriteFile(path, []byte(content), 0644); nil != e {
 				logger.Fatal("replace server conf in [" + path + "] failed: " + err.Error())
-				os.Exit(-1)
 			}
 		}
 
@@ -126,7 +124,6 @@ func replaceServerConf() {
 	})
 	if nil != err {
 		logger.Fatal("replace server conf in [theme] failed: " + err.Error())
-		os.Exit(-1)
 	}
 
 	paths, err := filepath.Glob(filepath.ToSlash(filepath.Join(util.Conf.StaticRoot, "console/dist/*.js")))
@@ -135,7 +132,6 @@ func replaceServerConf() {
 			data, e := ioutil.ReadFile(path)
 			if nil != e {
 				logger.Fatal("read file [" + path + "] failed: " + err.Error())
-				os.Exit(-1)
 			}
 			content := string(data)
 			if strings.Contains(content, "{rel:\"manifest") {
@@ -159,7 +155,6 @@ func replaceServerConf() {
 			}
 			if e = ioutil.WriteFile(path, []byte(content), 0644); nil != e {
 				logger.Fatal("replace server conf in [" + path + "] failed: " + err.Error())
-				os.Exit(-1)
 			}
 		}
 	}
@@ -169,7 +164,6 @@ func replaceServerConf() {
 			data, e := ioutil.ReadFile(path)
 			if nil != e {
 				logger.Fatal("read file [" + path + "] failed: " + err.Error())
-				os.Exit(-1)
 			}
 			content := string(data)
 			if strings.Contains(content, "rel=\"manifest\" href=\"") {
@@ -185,7 +179,6 @@ func replaceServerConf() {
 			}
 			if e = ioutil.WriteFile(path, []byte(content), 0644); nil != e {
 				logger.Fatal("replace server conf in [" + path + "] failed: " + err.Error())
-				os.Exit(-1)
 			}
 		}
 
@@ -193,6 +186,5 @@ func replaceServerConf() {
 	})
 	if nil != err {
 		logger.Fatal("replace server conf in [theme] failed: " + err.Error())
-		os.Exit(-1)
 	}
 }

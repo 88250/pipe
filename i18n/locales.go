@@ -22,10 +22,9 @@ import (
 	"fmt"
 	"io/ioutil"
 	"os"
+	"path/filepath"
 	"sort"
 	"strings"
-
-	"path/filepath"
 
 	"github.com/b3log/pipe/log"
 	"github.com/b3log/pipe/util"
@@ -61,7 +60,7 @@ func Load() {
 }
 
 func load(localeStr string) {
-	bytes, err := ioutil.ReadFile("i18n/" + localeStr + ".json")
+	bytes, err := ioutil.ReadFile(filepath.ToSlash(filepath.Join(util.Conf.StaticRoot, "i18n/"+localeStr+".json")))
 	if nil != err {
 		logger.Fatal("reads i18n configurations fialed: " + err.Error())
 	}
