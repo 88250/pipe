@@ -98,7 +98,7 @@ func handleSignal(server *http.Server) {
 }
 
 func replaceServerConf() {
-	err := filepath.Walk("theme", func(path string, f os.FileInfo, err error) error {
+	err := filepath.Walk(filepath.ToSlash(filepath.Join(util.Conf.StaticRoot, "theme")), func(path string, f os.FileInfo, err error) error {
 		if strings.HasSuffix(path, ".min.js") {
 			data, e := ioutil.ReadFile(path)
 			if nil != e {
@@ -129,7 +129,7 @@ func replaceServerConf() {
 		os.Exit(-1)
 	}
 
-	paths, err := filepath.Glob("console/dist/*.js")
+	paths, err := filepath.Glob(filepath.ToSlash(filepath.Join(util.Conf.StaticRoot, "console/dist/*.js")))
 	if 0 < len(paths) {
 		for _, path := range paths {
 			data, e := ioutil.ReadFile(path)
@@ -164,7 +164,7 @@ func replaceServerConf() {
 		}
 	}
 
-	err = filepath.Walk("console/dist/", func(path string, f os.FileInfo, err error) error {
+	err = filepath.Walk(filepath.ToSlash(filepath.Join(util.Conf.StaticRoot, "console/dist/")), func(path string, f os.FileInfo, err error) error {
 		if strings.HasSuffix(path, ".html") {
 			data, e := ioutil.ReadFile(path)
 			if nil != e {
