@@ -68,12 +68,12 @@
 
 ## 构建
 
-### 前提
-
 需要预先安装好如下编译环境，请尽量都使用最新版：
 
 1. [Go](https://golang.org)
 2. [Node.js](https://nodejs.org)
+
+然后执行 build.sh 或者按照下面步骤手动构建。
 
 ### 编译后端
 
