@@ -48,6 +48,10 @@ func (srv *importService) ImportMarkdowns(mdFiles []*MarkdownFile, authorID, blo
 		article.AuthorID = authorID
 		article.BlogID = blogID
 
+		if strings.HasPrefix(article.Path, util.PathArticles) && len(util.PathArticles+"/") < len(article.Path) {
+			article.Path = ""
+		}
+
 		if err := Article.AddArticle(article); nil != err {
 			failCnt++
 			fails = append(fails, mdFile.Name)
