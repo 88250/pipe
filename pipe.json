@@ -7,6 +7,7 @@
     "SessionSecret": "BEYOND",
     "SessionMaxAge": 86400,
     "DataFilePath": "${home}/pipe.db",
+    "StaticRoot": "",
     "Port": "5897",
     "AxiosBaseURL": "/api",
     "MockServer": "http://localhost:8888"

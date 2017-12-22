@@ -22,6 +22,7 @@ import (
 	"flag"
 	"io/ioutil"
 	"os"
+	"path/filepath"
 	"strconv"
 	"strings"
 	"time"
@@ -121,6 +122,7 @@ func LoadConf() {
 	Conf.StaticRoot = ""
 	if "" != *confStaticRoot {
 		Conf.StaticRoot = *confStaticRoot
+		Conf.StaticRoot = filepath.Dir(Conf.StaticRoot)
 	}
 
 	if "" != *confPort {
