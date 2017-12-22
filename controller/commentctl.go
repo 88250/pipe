@@ -27,6 +27,7 @@ import (
 	"github.com/b3log/pipe/service"
 	"github.com/b3log/pipe/util"
 	"github.com/gin-gonic/gin"
+	"path/filepath"
 )
 
 func getRepliesAction(c *gin.Context) {
@@ -136,7 +137,7 @@ func addCommentAction(c *gin.Context) {
 	dataModel["Item"] = themeComment
 	dataModel["ArticleID"] = comment.ArticleID
 
-	t := template.Must(template.New("").ParseFiles("theme/comment/comment.html"))
+	t := template.Must(template.New("").ParseFiles(filepath.ToSlash(filepath.Join(util.Conf.StaticRoot, "theme/comment/comment.html"))))
 
 	htmlBuilder := bytes.Buffer{}
 	if err := t.ExecuteTemplate(&htmlBuilder, "comment/comment", dataModel); nil != err {
