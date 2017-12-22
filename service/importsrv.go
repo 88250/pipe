@@ -18,8 +18,8 @@ package service
 
 import (
 	"errors"
-	"os"
 	"path/filepath"
+	"sort"
 	"strconv"
 	"strings"
 	"time"
@@ -40,9 +40,23 @@ type MarkdownFile struct {
 	Content string
 }
 
+type importArticles []*model.Article
+
+func (a importArticles) Len() int {
+	return len(a)
+}
+func (a importArticles) Swap(i, j int) {
+	a[i], a[j] = a[j], a[i]
+}
+func (a importArticles) Less(i, j int) bool {
+	return a[j].UpdatedAt.After(a[i].UpdatedAt)
+}
+
 func (srv *importService) ImportMarkdowns(mdFiles []*MarkdownFile, authorID, blogID uint) {
 	succCnt, failCnt := 0, 0
 	var fails []string
+
+	var articles importArticles
 	for _, mdFile := range mdFiles {
 		article := parseArticle(mdFile)
 		article.AuthorID = authorID
@@ -52,15 +66,20 @@ func (srv *importService) ImportMarkdowns(mdFiles []*MarkdownFile, authorID, blo
 			article.Path = ""
 		}
 
+		articles = append(articles, article)
+	}
+
+	sort.Sort(articles)
+
+	for _, article := range articles {
 		if err := Article.AddArticle(article); nil != err {
 			failCnt++
-			fails = append(fails, mdFile.Name)
-			logger.Errorf("import article failed: " + err.Error())
+			fails = append(fails, article.Title)
+			logger.Errorf("import article [" + article.Title + "] failed: " + err.Error())
 
 			continue
 		}
 
-		os.Rename(mdFile.Path, mdFile.Path+"."+strconv.Itoa(int(article.ID)))
 		succCnt++
 	}
 
