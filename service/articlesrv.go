@@ -486,7 +486,7 @@ func normalizeArticle(article *model.Article) error {
 		return err
 	}
 	if 0 < count {
-		return errors.New("title is reduplicated")
+		return errors.New("title [" + title + "] is reduplicated")
 	}
 
 	content := strings.TrimSpace(article.Content)
@@ -625,7 +625,7 @@ func normalizeArticlePath(article *model.Article) error {
 
 	count := 0
 	if db.Model(&model.Article{}).Where("path = ? AND id != ? AND blog_id = ?", path, article.ID, article.BlogID).Count(&count); 0 < count {
-		return errors.New("path is reduplicated")
+		return errors.New("path [" + path + "] is reduplicated")
 	}
 
 	article.Path = path
