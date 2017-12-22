@@ -25,6 +25,8 @@ import (
 	"sort"
 	"strings"
 
+	"path/filepath"
+
 	"github.com/b3log/pipe/log"
 	"github.com/b3log/pipe/util"
 )
@@ -42,7 +44,7 @@ var locales = map[string]locale{}
 
 // Load loads i18n message configurations.
 func Load() {
-	f, _ := os.Open("i18n")
+	f, _ := os.Open(filepath.ToSlash(filepath.Join(util.Conf.StaticRoot, "i18n")))
 	names, _ := f.Readdirnames(-1)
 	f.Close()
 
