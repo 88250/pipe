@@ -128,6 +128,8 @@ func parseArticle(mdFile *MarkdownFile) *model.Article {
 	tags := parseTags(&m)
 	ret.Tags = tags
 	ret.CreatedAt = parseDate(&m)
+	ret.UpdatedAt = ret.CreatedAt
+	ret.PushedAt = ret.CreatedAt
 	ret.Commentable = true
 
 	return ret
