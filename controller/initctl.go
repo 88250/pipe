@@ -20,6 +20,7 @@ package controller
 import (
 	"fmt"
 	"net/http"
+	"path/filepath"
 	"strings"
 	"text/template"
 	"time"
@@ -32,7 +33,7 @@ import (
 )
 
 func showInitPageAction(c *gin.Context) {
-	t, err := template.ParseFiles("console/dist/init/index.html")
+	t, err := template.ParseFiles(filepath.ToSlash(filepath.Join(util.Conf.StaticRoot, "console/dist/init/index.html")))
 	if nil != err {
 		logger.Errorf("load init page failed: " + err.Error())
 		c.String(http.StatusNotFound, "load init page failed")
