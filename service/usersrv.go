@@ -19,6 +19,7 @@ package service
 import (
 	"sync"
 
+	"github.com/b3log/pipe/cache"
 	"github.com/b3log/pipe/model"
 	"github.com/b3log/pipe/util"
 )
@@ -85,10 +86,17 @@ func (srv *userService) GetUserByName(name string) *model.User {
 }
 
 func (srv *userService) GetUser(userID uint) *model.User {
-	ret := &model.User{}
+	ret := cache.User.Get(userID)
+	if nil != ret {
+		return ret
+	}
+
+	ret = &model.User{}
 	if err := db.First(ret, userID).Error; nil != err {
 		return nil
 	}
+
+	cache.User.Put(ret)
 
 	return ret
 }
