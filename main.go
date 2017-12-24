@@ -177,8 +177,8 @@ func replaceServerConf() {
 				part = part[strings.LastIndex(part, "\"")+1:]
 				content = strings.Replace(content, part, util.Conf.StaticServer, -1)
 			}
-			content = strings.Replace(content, ".js\"", ".js?"+util.Conf.StaticResourceVersion, -1)
-			content = strings.Replace(content, ".json\"", ".json?"+util.Conf.StaticResourceVersion, -1)
+			content = strings.Replace(content, ".js\"", ".js?"+util.Conf.StaticResourceVersion+"\"", -1)
+			content = strings.Replace(content, ".json\"", ".json?"+util.Conf.StaticResourceVersion+"\"", -1)
 			if e = ioutil.WriteFile(path, []byte(content), 0644); nil != e {
 				logger.Fatal("replace server conf in [" + path + "] failed: " + err.Error())
 			}
