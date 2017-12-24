@@ -37,7 +37,7 @@ func (cache *commentCache) Put(comment *model.Comment) {
 
 func (cache *commentCache) Get(id uint) *model.Comment {
 	ret, err := cache.idHolder.Get(id)
-	if nil != err {
+	if nil != err && gcache.KeyNotFoundError != err {
 		logger.Errorf("get comment [id=%d] from cache failed: %s", id, err)
 
 		return nil

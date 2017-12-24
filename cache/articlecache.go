@@ -44,7 +44,7 @@ func (cache *articleCache) Put(article *model.Article) {
 
 func (cache *articleCache) Get(id uint) *model.Article {
 	ret, err := cache.idHolder.Get(id)
-	if nil != err {
+	if nil != err && gcache.KeyNotFoundError != err {
 		logger.Errorf("get article [id=%d] from cache failed: %s", id, err)
 
 		return nil

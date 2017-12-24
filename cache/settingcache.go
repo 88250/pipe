@@ -22,7 +22,7 @@ func (cache *settingCache) Put(setting *model.Setting) {
 
 func (cache *settingCache) Get(category, name string, blogID uint) *model.Setting {
 	ret, err := cache.categoryNameHolder.Get(fmt.Sprintf("%s-%s-%d", category, name, blogID))
-	if nil != err {
+	if nil != err && gcache.KeyNotFoundError != err {
 		logger.Errorf("get setting [name=%s, category=%s, blogID=%d] from cache failed: %s", category, name, blogID, err)
 
 		return nil
