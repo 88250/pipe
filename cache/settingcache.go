@@ -27,6 +27,9 @@ func (cache *settingCache) Get(category, name string, blogID uint) *model.Settin
 
 		return nil
 	}
+	if nil == ret {
+		return nil
+	}
 
 	return ret.(*model.Setting)
 }

@@ -42,6 +42,9 @@ func (cache *commentCache) Get(id uint) *model.Comment {
 
 		return nil
 	}
+	if nil == ret {
+		return nil
+	}
 
 	return ret.(*model.Comment)
 }

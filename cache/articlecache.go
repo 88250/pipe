@@ -49,6 +49,9 @@ func (cache *articleCache) Get(id uint) *model.Article {
 
 		return nil
 	}
+	if nil == ret {
+		return nil
+	}
 
 	return ret.(*model.Article)
 }

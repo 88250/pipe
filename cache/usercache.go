@@ -26,6 +26,9 @@ func (cache *userCache) Get(id uint) *model.User {
 
 		return nil
 	}
+	if nil == ret {
+		return nil
+	}
 
 	return ret.(*model.User)
 }
