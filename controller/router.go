@@ -247,6 +247,11 @@ func routePath(c *gin.Context) {
 
 		return
 	}
+	if "/" == path {
+		showArticlesAction(c)
+
+		return
+	}
 
 	logger.Infof("can't handle path [" + path + "]")
 }
