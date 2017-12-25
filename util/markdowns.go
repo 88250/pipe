@@ -50,8 +50,6 @@ func Markdown(mdText string) *MarkdownResult {
 	}
 
 	mdText = emojify(mdText)
-	mdText = strings.Replace(mdText, "<", "&lt;", -1)
-	mdText = strings.Replace(mdText, ">", "&gt;", -1)
 	mdTextBytes := []byte(mdText)
 	unsafe := blackfriday.Run(mdTextBytes)
 	contentHTML := string(unsafe)
@@ -70,9 +68,30 @@ func Markdown(mdText string) *MarkdownResult {
 		ele.ReplaceWithHtml(text)
 	})
 
+	doc.Find("code").Each(func(i int, ele *goquery.Selection) {
+		code, err := ele.Html()
+		if nil != err {
+			logger.Errorf("get element [%+v]' HTML failed: %s", ele, err)
+		} else {
+			code = strings.Replace(code, "<", "&lt;", -1)
+			code = strings.Replace(code, ">", "&gt;", -1)
+			ele.SetHtml(code)
+		}
+	})
+
 	contentHTML, _ = doc.Find("body").Html()
 	contentHTML = bluemonday.UGCPolicy().AllowAttrs("class").Matching(regexp.MustCompile("^language-[a-zA-Z0-9]+$")).OnElements("code").
-		AllowAttrs("data-src").OnElements("img").Sanitize(contentHTML)
+		AllowAttrs("data-src").OnElements("img").
+		AllowAttrs("class", "target", "id").Globally().
+		AllowAttrs("src", "width", "height", "border", "marginwidth", "marginheight").OnElements("iframe").
+		AllowAttrs("controls", "src").OnElements("audio").
+		AllowAttrs("color").OnElements("font").
+		AllowAttrs("controls", "src", "width", "height").OnElements("video").
+		AllowAttrs("src", "media", "type").OnElements("source").
+		AllowAttrs("width", "height", "data", "type").OnElements("object").
+		AllowAttrs("name", "value").OnElements("param").
+		AllowAttrs("src", "type", "width", "height", "wmode", "allowNetworking").OnElements("embed").
+		Sanitize(contentHTML)
 
 	text := doc.Text()
 	var runes []rune

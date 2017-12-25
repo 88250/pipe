@@ -61,6 +61,8 @@ func ConnectDB() {
 	if err = db.Model(&model.Article{}).AddIndex("idx_b3_pipe_articles_created_at", "created_at").Error; nil != err {
 		logger.Fatal("adds index failed: " + err.Error())
 	}
+
+	db.LogMode(true)
 }
 
 func DisconnectDB() {
