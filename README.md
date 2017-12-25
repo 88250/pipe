@@ -116,7 +116,7 @@ Pipe 的主要作者是 [Daniel](https://github.com/88250) 与 [Vanessa](https:/
 
 * 到 Pipe 官方[讨论区](https://hacpai.com/tag/Pipe)发帖（推荐做法）
 * 来一发 [issue](https://github.com/b3log/pipe/issues/new)
-* 加入 QQ 群 242561391
+* [Q 群 242561391](https://shang.qq.com/wpa/qunwpa?idkey=981d9282616274abb1752336e21b8036828f715a1c4d0628adcf208f2fd54f3a)
 
 ### 算力
 
