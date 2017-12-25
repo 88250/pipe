@@ -63,6 +63,7 @@ func fillUser(c *gin.Context) {
 		if strings.HasPrefix(c.Request.URL.Path, util.PathBlogs) {
 			name := c.Request.URL.Path[len(util.PathBlogs)+1:]
 			name = strings.Split(name, "?")[0]
+			name = strings.Replace(name, "/", "", -1)
 			name = strings.TrimSpace(name)
 			if "" != name {
 				user := service.User.GetUserByName(name)
