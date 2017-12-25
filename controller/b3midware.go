@@ -57,7 +57,7 @@ func fillUser(c *gin.Context) {
 
 		return
 	case "":
-		redirectURL := util.Conf.Server + c.Request.URL.Path
+		redirectURL := c.Request.Referer()
 		c.Redirect(http.StatusSeeOther, util.HacPaiURL+"/apis/b3-identity?goto="+redirectURL)
 		c.Abort()
 
