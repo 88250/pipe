@@ -20,6 +20,7 @@ import (
 	"errors"
 	"strconv"
 	"sync"
+	"time"
 
 	"github.com/b3log/pipe/model"
 	"github.com/b3log/pipe/theme"
@@ -224,6 +225,7 @@ func helloWorld(tx *gorm.DB, admin *model.User, blogID uint) error {
 
 Pipe 博客平台是一个开源项目，如果你觉得它很赞，请到[项目首页](https://github.com/b3log/pipe)给颗星鼓励一下！`
 
+	now := time.Now()
 	article := &model.Article{
 		AuthorID:     admin.ID,
 		Title:        "世界，你好！",
@@ -236,6 +238,9 @@ Pipe 博客平台是一个开源项目，如果你觉得它很赞，请到[项�
 		CommentCount: 1,
 		BlogID:       blogID,
 	}
+	article.CreatedAt = now
+	article.UpdatedAt = now
+	article.PushedAt = now
 	article.ID = util.CurrentMillisecond()
 	if err := tx.Create(article).Error; nil != err {
 		return err
@@ -270,6 +275,9 @@ Pipe 博客平台是一个开源项目，如果你觉得它很赞，请到[项�
 		Content:   "相信积累后必然会有收获 :smile:",
 		BlogID:    blogID,
 	}
+	comment.CreatedAt = now
+	comment.UpdatedAt = now
+	comment.PushedAt = now
 	comment.ID = util.CurrentMillisecond()
 	if err := tx.Create(comment).Error; nil != err {
 		return err

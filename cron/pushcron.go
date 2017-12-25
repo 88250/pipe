@@ -142,7 +142,7 @@ func pushComments() {
 		_, _, errs := gorequest.New().Post("https://rhythm.b3log.org/api/comment").SendMap(requestJSON).
 			Set("user-agent", util.UserAgent).Timeout(30*time.Second).
 			Retry(3, 5*time.Second, http.StatusInternalServerError).EndStruct(result)
-		if nil != errs{
+		if nil != errs {
 			logger.Errorf("push comment to Rhythm failed: " + errs[0].Error())
 		}
 

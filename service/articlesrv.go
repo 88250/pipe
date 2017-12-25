@@ -45,7 +45,8 @@ const (
 )
 
 func (srv *articleService) GetUnpushedArticles() (ret []*model.Article) {
-	if err := db.Where("pushed_at < updated_at").Find(&ret).Error; nil != err {
+	t, _ := time.Parse("2006-01-02 15:04:05", "2006-01-02 15:04:05")
+	if err := db.Where("pushed_at <= ?", t).Find(&ret).Error; nil != err {
 		return
 	}
 
@@ -431,6 +432,7 @@ func (srv *articleService) UpdateArticle(article *model.Article) error {
 	newArticle.Topped = article.Topped
 	now := time.Now()
 	newArticle.UpdatedAt = now
+	newArticle.PushedAt, _ = time.Parse("2006-01-02 15:04:05", "2006-01-02 15:04:05")
 
 	tagStr, err := normalizeTagStr(article.Tags)
 	if nil != err {

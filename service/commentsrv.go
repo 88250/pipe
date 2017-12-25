@@ -21,6 +21,7 @@ import (
 
 	"github.com/b3log/pipe/model"
 	"github.com/b3log/pipe/util"
+	"time"
 )
 
 var Comment = &commentService{
@@ -56,7 +57,8 @@ func (srv *commentService) UpdatePushedAt(comment *model.Comment) error {
 }
 
 func (srv *commentService) GetUnpushedComments() (ret []*model.Comment) {
-	if err := db.Where("pushed_at < updated_at").Find(&ret).Error; nil != err {
+	t, _ := time.Parse("2006-01-02 15:04:05", "2006-01-02 15:04:05")
+	if err := db.Where("pushed_at <= ?", t).Find(&ret).Error; nil != err {
 		return
 	}
 
