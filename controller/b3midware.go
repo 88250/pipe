@@ -20,6 +20,8 @@ import (
 	"net/http"
 	"time"
 
+	"strings"
+
 	"github.com/b3log/pipe/model"
 	"github.com/b3log/pipe/service"
 	"github.com/b3log/pipe/util"
@@ -58,6 +60,26 @@ func fillUser(c *gin.Context) {
 		return
 	case "":
 		redirectURL := c.Request.Referer()
+		if strings.HasPrefix(c.Request.URL.Path, util.PathBlogs) {
+			name := c.Request.URL.Path[len(util.PathBlogs)+1:]
+			name = strings.Split(name, "?")[0]
+			name = strings.TrimSpace(name)
+			if "" != name {
+				user := service.User.GetUserByName(name)
+				if nil != user {
+					userBlog := service.User.GetOwnBlog(user.ID)
+					blogURLSetting := service.Setting.GetSetting(model.SettingCategoryBasic, model.SettingNameBasicBlogURL, userBlog.ID)
+					redirectURL = blogURLSetting.Value + strings.Split(c.Request.URL.Path, util.PathBlogs+"/"+name)[1]
+					if "" != c.Request.URL.RawQuery {
+						redirectURL += "?" + c.Request.URL.RawQuery
+					}
+				}
+			}
+		}
+		redirectURL = strings.TrimSpace(redirectURL)
+		if "" == redirectURL {
+			redirectURL = util.Conf.Server + c.Request.URL.Path
+		}
 		c.Redirect(http.StatusSeeOther, util.HacPaiURL+"/apis/b3-identity?goto="+redirectURL)
 		c.Abort()
 
