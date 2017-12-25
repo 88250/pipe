@@ -118,6 +118,7 @@ func showArticleAction(c *gin.Context) {
 	mdResult := util.Markdown(article.Content)
 	authorModel := service.User.GetUser(article.AuthorID)
 	articleTitle := pangu.SpacingText(article.Title)
+	articleSignSetting := service.Setting.GetSetting(model.SettingCategorySign, model.SettingNameArticleSign, blogID)
 	dataModel["Article"] = &model.ThemeArticle{
 		Author: &model.ThemeAuthor{
 			Name:      authorModel.Name,
@@ -134,7 +135,7 @@ func showArticleAction(c *gin.Context) {
 		ViewCount:    article.ViewCount,
 		CommentCount: article.CommentCount,
 		ThumbnailURL: mdResult.ThumbURL,
-		Content:      template.HTML(mdResult.ContentHTML),
+		Content:      template.HTML(mdResult.ContentHTML + "\n" + articleSignSetting.Value),
 		Editable:     session.UID == authorModel.ID,
 	}
 
