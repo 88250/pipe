@@ -25,6 +25,7 @@ import (
 	"github.com/b3log/pipe/util"
 	"github.com/parnurzeal/gorequest"
 	"net/http"
+	"strings"
 )
 
 func pushArticlesPeriodically() {
@@ -50,7 +51,7 @@ func pushArticles() {
 		author := service.User.GetUser(article.AuthorID)
 		b3Key := author.B3Key
 		b3Name := author.Name
-		if "" == b3Key {
+		if "" == b3Key && !strings.Contains(util.Conf.Server, "pipe.b3log.org") {
 			pa := service.User.GetPlatformAdmin()
 			b3Key = pa.B3Key
 			b3Name = pa.Name
