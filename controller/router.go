@@ -128,7 +128,7 @@ func MapRoutes() *gin.Engine {
 
 	ret.StaticFile(util.PathFavicon, staticPath("console/static/favicon.ico"))
 
-	ret.Static(util.PathTheme+"/css", staticPath("theme/css"))
+	ret.Static(util.PathTheme+"/css", staticPath("theme/scss"))
 	ret.Static(util.PathTheme+"/js", staticPath("theme/js"))
 	ret.Static(util.PathTheme+"/images", staticPath("theme/images"))
 	ret.StaticFile("/sw.min.js", staticPath("theme/sw.min.js"))
