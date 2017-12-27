@@ -61,6 +61,7 @@ func pushArticles() {
 		}
 
 		blogTitleSetting := service.Setting.GetSetting(model.SettingCategoryBasic, model.SettingNameBasicBlogTitle, article.BlogID)
+		blogURLSetting := service.Setting.GetSetting(model.SettingCategoryBasic, model.SettingNameBasicBlogURL, article.BlogID)
 		requestJSON := map[string]interface{}{
 			"article": map[string]interface{}{
 				"id":        article.ID,
@@ -73,7 +74,7 @@ func pushArticles() {
 				"name":  "Pipe",
 				"ver":   util.Version,
 				"title": blogTitleSetting.Value,
-				"host":  util.Conf.Server,
+				"host":  blogURLSetting.Value,
 				"email": b3Name,
 				"key":   b3Key,
 			},
