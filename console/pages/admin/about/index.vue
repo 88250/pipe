@@ -30,19 +30,15 @@
           <p v-html="$t('about4', $store.state.locale)"></p>
           <p v-html="$t('about3', $store.state.locale)"></p>
           <p>
-            <a href="http://b3log.org/services/index.html#pipe" target="_blank" class="about__link btn btn--info">
-              <v-icon>user-circle</v-icon>
-              {{ $t('service', $store.state.locale) }}
-            </a>
             <a href="https://github.com/b3log/pipe-themes" target="_blank" class="about__link btn btn--info">
               <v-icon>github</v-icon>
               {{ $t('theme', $store.state.locale) }}
             </a>
-            <a href="https://hacpai.com/article/1492881378588" target="_blank" class="about__link btn btn--info">
+            <a href="https://hacpai.com/article/1513761942333" target="_blank" class="about__link btn btn--info">
               <v-icon>file-text</v-icon>
               {{ $t('doc', $store.state.locale) }}
             </a>
-            <a href="https://hacpai.com" target="_blank" class="about__link btn btn--info">
+            <a href="https://hacpai.com/tag/Pipe" target="_blank" class="about__link btn btn--info">
               <v-icon>hacpai-logo2</v-icon>
               {{ $t('community', $store.state.locale) }}
             </a>
