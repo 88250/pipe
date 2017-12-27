@@ -18,42 +18,79 @@
 </head>
 <body>
 <nav class="header">
+    <a href="{{.BlogURL}}" class="header__logo">
+        <img src="{{.LogoURL}}">
+    </a>
     <div class="wrapper">
-        <div class="search fn-clear">
-            <input
-                    onblur="this.parentNode.className='search fn-clear'"
-                    onfocus="this.parentNode.className='search fn-clear search--focus'">
-            <button>
+        <form action="" class="search fn-clear">
+            <input name="key"
+                   value="{{.Key}}"
+                   onblur="this.parentNode.className='search fn-clear'"
+                   onfocus="this.parentNode.className='search fn-clear search--focus'">
+            <button type="submit">
                 {{.I18n.Search}}
             </button>
-        </div>
+        </form>
+    </div>
+    <div class="header__status">
+        {{if eq .User.URole 0}}
+        <a href="https://hacpai.com/login">{{.I18n.Login}}</a>
+        <a href="https://hacpai.com/register">{{.I18n.Register}}</a>
+        {{else}}
+        <a class="avatar"
+           href="{{.Conf.Server}}/{{if ne .User.URole 4}}admin{{end}}"
+           style="background-image: url('{{.User.AvatarURLWithSize 64}}')"></a>
+        {{end}}
     </div>
 </nav>
-<div class="wrapper search-list">
-    {{if gt (len $.Pagination.PageNums) 1}}
-    <nav class="pagination">
-        {{if gt $.Pagination.PreviousPageNum 0}}
-        <a class="pagination__near" href="?p={{$.Pagination.PreviousPageNum}}">
-            <svg><use xlink:href="#chevron-left"></use></svg>
-        </a>
+<div class="wrapper fn-clear">
+    <div class="articles">
+        {{range .Articles}}
+        <article class="article__item">
+            <h2 class="article__title">
+                <a rel="bookmark" href="{{.URL}}">
+                    {{.Title}}
+                </a>
+            </h2>
+            {{if .Abstract}}
+            <a href="{{.URL}}" class="pipe-content__reset">
+                {{.Abstract}}
+            </a>
+            {{end}}
+            <div>
+                {{range .Tags}}
+                <a class="ft-fade ft-12" rel="tag" href="{{.URL}}">{{.Title}}</a>
+                {{end}}
+            </div>
+        </article>
         {{end}}
-        {{if gt $.Pagination.FirstPageNum 1}}
-        <a class="pagination__item" href="?p=1">1</a>{{if ne $.Pagination.FirstPageNum 2}}<span class="pagination__omit">...</span>{{end}}
+        {{if gt (len $.Pagination.PageNums) 1}}
+        <nav class="pagination">
+            {{if gt $.Pagination.PreviousPageNum 0}}
+            <a class="pagination__near" href="?key={{$.Key}}&p={{$.Pagination.PreviousPageNum}}"><svg viewBox="0 0 28 28" width="100%" height="100%">
+                    <path d="M22.603 4.845l-9.155 9.155 9.155 9.155c0.431 0.431 0.431 1.121 0 1.552l-2.862 2.862c-0.431 0.431-1.121 0.431-1.552 0l-12.793-12.793c-0.431-0.431-0.431-1.121 0-1.552l12.793-12.793c0.431-0.431 1.121-0.431 1.552 0l2.862 2.862c0.431 0.431 0.431 1.121 0 1.552z"></path>
+                </svg></a>
+            {{end}}
+            {{if gt $.Pagination.FirstPageNum 1}}
+            <a class="pagination__item" href="?key={{$.Key}}&p=1">1</a>{{if ne $.Pagination.FirstPageNum 2}}<span
+                class="pagination__omit">...</span>{{end}}
+            {{end}}
+            {{range $.Pagination.PageNums}}
+            <a href="?key={{$.Key}}&p={{.}}"
+               class="pagination__item {{if eq . $.Pagination.CurrentPageNum}}pagination__item--active{{end}}">{{.}}</a>
+            {{end}}
+            {{if lt $.Pagination.LastPageNum $.Pagination.PageCount}}
+            {{if ne $.Pagination.LastPageNum (minus $.Pagination.PageCount 1)}}<span class="pagination__omit">...</span>{{end}}
+            <a class="pagination__item" href="?key={{$.Key}}&p={{$.Pagination.PageCount}}">{{$.Pagination.PageCount}}</a>
+            {{end}}
+            {{if lt $.Pagination.CurrentPageNum $.Pagination.PageCount}}
+            <a class="pagination__near" href="?key={{$.Key}}&p={{$.Pagination.NextPageNum}}"><svg viewBox="0 0 28 28" width="100%" height="100%">
+                    <path d="M22.603 14.776l-12.793 12.793c-0.431 0.431-1.121 0.431-1.552 0l-2.862-2.862c-0.431-0.431-0.431-1.121 0-1.552l9.155-9.155-9.155-9.155c-0.431-0.431-0.431-1.121 0-1.552l2.862-2.862c0.431-0.431 1.121-0.431 1.552 0l12.793 12.793c0.431 0.431 0.431 1.121 0 1.552z"></path>
+                </svg></a>
+            {{end}}
+        </nav>
         {{end}}
-        {{range $.Pagination.PageNums}}
-        <a href="?p={{.}}" class="pagination__item {{if eq . $.Pagination.CurrentPageNum}}pagination__item--active{{end}}">{{.}}</a>
-        {{end}}
-        {{if lt $.Pagination.LastPageNum $.Pagination.PageCount}}
-        {{if ne $.Pagination.LastPageNum (minus $.Pagination.PageCount 1)}}<span class="pagination__omit">...</span>{{end}}
-        <a class="pagination__item" href="?p={{$.Pagination.PageCount}}">{{$.Pagination.PageCount}}</a>
-        {{end}}
-        {{if lt $.Pagination.CurrentPageNum $.Pagination.PageCount}}
-        <a class="pagination__near" href="?p={{$.Pagination.NextPageNum}}">
-            <svg><use xlink:href="#chevron-right"></use></svg>
-        </a>
-        {{end}}
-    </nav>
-    {{end}}
+    </div>
 </div>
 <footer class="footer">
     <div class="wrapper">
@@ -65,13 +102,13 @@
             </div>
         </div>
         <div class="fn-clear">
-            <span>{{.Statistic.StatisticViewCount}}</span>
+            <b>{{.Statistic.StatisticViewCount}}</b>
             {{.I18n.View}}
             &nbsp;
-            <span>{{.Statistic.StatisticArticleCount}}</span>
+            <b>{{.Statistic.StatisticArticleCount}}</b>
             {{.I18n.Article}}
             &nbsp;
-            <span>{{.Statistic.StatisticCommentCount}}</span>
+            <b>{{.Statistic.StatisticCommentCount}}</b>
             {{.I18n.Comment}}
             <div class="fn-right">
                 Powered by <a href="http://b3log.org/" target="_blank">B3log 开源</a> •

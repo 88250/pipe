@@ -66,5 +66,6 @@ func searchAction(c *gin.Context) {
 	dataModel := getDataModel(c)
 	dataModel["Articles"] = articles
 	dataModel["Pagination"] = pagination
+	dataModel["Key"] = key
 	c.HTML(http.StatusOK, "search.html", dataModel)
 }
