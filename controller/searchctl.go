@@ -30,32 +30,17 @@ import (
 )
 
 func searchAction(c *gin.Context) {
-	if "GET" == c.Request.Method {
-		showSearchPageAction(c)
-
-		return
-	}
-
-	result := util.NewResult()
-	defer c.JSON(http.StatusOK, result)
-
-	args := map[string]interface{}{}
-	if err := c.BindJSON(&args); nil != err {
-		result.Code = -1
-		result.Msg = "parses search request failed"
+	t, err := template.ParseFiles(filepath.ToSlash(filepath.Join(util.Conf.StaticRoot, "theme/search/index.html")))
+	if nil != err {
+		logger.Errorf("load search page failed: " + err.Error())
+		c.String(http.StatusNotFound, "load search page failed")
 
 		return
 	}
 
 	blogID := getBlogID(c)
-	key := ""
-	if nil != args["key"] {
-		key = args["key"].(string)
-	}
-	page := 1
-	if nil != args["p"] {
-		page = int(args["p"].(float64))
-	}
+	key := c.Query("key")
+	page := util.GetPage(c)
 	articleModels, pagination := service.Article.GetArticles(key, page, blogID)
 	var articles []*model.ThemeArticle
 	for _, articleModel := range articleModels {
@@ -87,20 +72,9 @@ func searchAction(c *gin.Context) {
 		articles = append(articles, article)
 	}
 
-	data := map[string]interface{}{}
-	data["articles"] = articles
-	data["pagination"] = pagination
-	result.Data = data
-}
+	dataModel := getDataModel(c)
+	dataModel["articles"] = articles
+	dataModel["pagination"] = pagination
 
-func showSearchPageAction(c *gin.Context) {
-	t, err := template.ParseFiles(filepath.ToSlash(filepath.Join(util.Conf.StaticRoot, "console/dist/search/index.html")))
-	if nil != err {
-		logger.Errorf("load search page failed: " + err.Error())
-		c.String(http.StatusNotFound, "load search page failed")
-
-		return
-	}
-
-	t.Execute(c.Writer, nil)
+	t.Execute(c.Writer, dataModel)
 }
