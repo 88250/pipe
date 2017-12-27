@@ -39,10 +39,10 @@ const Common = {
     const $tags = $('#tags');
     const tagsArray = $tags.find('.tag')
     // 根据引用次数添加样式，产生云效果
-    const max = parseInt(tagsArray.last().data('count'));
+    const max = parseInt(tagsArray.first().data('count'));
     const distance = Math.ceil(max / 5);
     for (let i = 0; i < tagsArray.length; i++) {
-      const count = parseInt(tagsArray.data('count'));
+      const count = parseInt($(tagsArray[i]).data('count'));
       // 算出当前 tag 数目所在的区间，加上 class
       for (let j = 0; j < 5; j++) {
         if (count > j * distance && count <= (j + 1) * distance) {
