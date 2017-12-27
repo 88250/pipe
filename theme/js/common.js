@@ -132,7 +132,7 @@ export const LazyLoadImage = () => {
   }
 
   if (!('IntersectionObserver' in window)) {
-    $('img').each(() => {
+    $('img').each(function () {
       if (this.getAttribute('data-src')) {
         loadImg(this)
       }
@@ -175,12 +175,12 @@ export const LazyLoadCSSImage = () => {
 
   const $cssImage = $('*[data-src]')
   if (!('IntersectionObserver' in window)) {
-    $cssImage.each((item) => {
-      if (item.tagName.toLowerCase() === 'img') {
+    $cssImage.each(function () {
+      if (this.tagName.toLowerCase() === 'img') {
         return
       }
-      if (item.getAttribute('data-src')) {
-        loadCSSImage(item)
+      if (this.getAttribute('data-src')) {
+        loadCSSImage(this)
       }
     })
     return
