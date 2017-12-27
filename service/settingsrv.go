@@ -19,6 +19,7 @@ package service
 import (
 	"sync"
 
+	"github.com/b3log/pipe/cache"
 	"github.com/b3log/pipe/model"
 )
 
@@ -31,10 +32,17 @@ type settingService struct {
 }
 
 func (srv *settingService) GetSetting(category, name string, blogID uint) *model.Setting {
-	ret := &model.Setting{}
+	ret := cache.Setting.Get(category, name, blogID)
+	if nil != ret {
+		return ret
+	}
+
+	ret = &model.Setting{}
 	if err := db.Where("category = ? AND name = ? AND blog_id = ?", category, name, blogID).Find(ret).Error; nil != err {
 		return nil
 	}
+
+	cache.Setting.Put(ret)
 
 	return ret
 }
@@ -85,6 +93,8 @@ func (srv *settingService) UpdateSettings(category string, settings []*model.Set
 
 			return err
 		}
+
+		cache.Setting.Put(setting)
 	}
 	tx.Commit()
 

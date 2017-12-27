@@ -25,6 +25,7 @@ import (
 	"github.com/b3log/pipe/util"
 	"github.com/parnurzeal/gorequest"
 	"net/http"
+	"strings"
 )
 
 func pushArticlesPeriodically() {
@@ -50,7 +51,7 @@ func pushArticles() {
 		author := service.User.GetUser(article.AuthorID)
 		b3Key := author.B3Key
 		b3Name := author.Name
-		if "" == b3Key {
+		if "" == b3Key && !strings.Contains(util.Conf.Server, "pipe.b3log.org") {
 			pa := service.User.GetPlatformAdmin()
 			b3Key = pa.B3Key
 			b3Name = pa.Name
@@ -60,6 +61,7 @@ func pushArticles() {
 		}
 
 		blogTitleSetting := service.Setting.GetSetting(model.SettingCategoryBasic, model.SettingNameBasicBlogTitle, article.BlogID)
+		blogURLSetting := service.Setting.GetSetting(model.SettingCategoryBasic, model.SettingNameBasicBlogURL, article.BlogID)
 		requestJSON := map[string]interface{}{
 			"article": map[string]interface{}{
 				"id":        article.ID,
@@ -72,7 +74,7 @@ func pushArticles() {
 				"name":  "Pipe",
 				"ver":   util.Version,
 				"title": blogTitleSetting.Value,
-				"host":  util.Conf.Server,
+				"host":  blogURLSetting.Value,
 				"email": b3Name,
 				"key":   b3Key,
 			},
@@ -81,8 +83,8 @@ func pushArticles() {
 		_, _, errs := gorequest.New().Post("https://rhythm.b3log.org/api/article").SendMap(requestJSON).
 			Set("user-agent", util.UserAgent).Timeout(30*time.Second).
 			Retry(3, 5*time.Second, http.StatusInternalServerError).EndStruct(result)
-		if nil != errs && time.Duration(7*24*time.Hour) > article.UpdatedAt.Sub(article.PushedAt) {
-			continue
+		if nil != errs {
+			logger.Errorf("push article to Rhythm failed: " + errs[0].Error())
 		}
 
 		article.PushedAt = article.UpdatedAt
@@ -142,8 +144,8 @@ func pushComments() {
 		_, _, errs := gorequest.New().Post("https://rhythm.b3log.org/api/comment").SendMap(requestJSON).
 			Set("user-agent", util.UserAgent).Timeout(30*time.Second).
 			Retry(3, 5*time.Second, http.StatusInternalServerError).EndStruct(result)
-		if nil != errs && time.Duration(7*24*time.Hour) > comment.UpdatedAt.Sub(comment.PushedAt) {
-			continue
+		if nil != errs {
+			logger.Errorf("push comment to Rhythm failed: " + errs[0].Error())
 		}
 
 		comment.PushedAt = comment.UpdatedAt

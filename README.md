@@ -68,12 +68,12 @@
 
 ## 构建
 
-### 前提
-
 需要预先安装好如下编译环境，请尽量都使用最新版：
 
 1. [Go](https://golang.org)
 2. [Node.js](https://nodejs.org)
+
+然后执行 build.sh 或者按照下面步骤手动构建。
 
 ### 编译后端
 
@@ -116,7 +116,7 @@ Pipe 的主要作者是 [Daniel](https://github.com/88250) 与 [Vanessa](https:/
 
 * 到 Pipe 官方[讨论区](https://hacpai.com/tag/Pipe)发帖（推荐做法）
 * 来一发 [issue](https://github.com/b3log/pipe/issues/new)
-* 加入 QQ 群 242561391
+* [Q 群 242561391](https://shang.qq.com/wpa/qunwpa?idkey=981d9282616274abb1752336e21b8036828f715a1c4d0628adcf208f2fd54f3a)
 
 ### 算力
 

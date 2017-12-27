@@ -125,26 +125,26 @@ func MapRoutes() *gin.Engine {
 	consoleSettingsGroup.GET("/feed", console.GetFeedSettingsAction)
 	consoleSettingsGroup.PUT("/feed", console.UpdateFeedSettingsAction)
 
-	ret.StaticFile(util.PathFavicon, "console/static/favicon.ico")
+	ret.StaticFile(util.PathFavicon, staticPath("console/static/favicon.ico"))
 
-	ret.Static(util.PathTheme+"/css", "theme/css")
-	ret.Static(util.PathTheme+"/js", "theme/js")
-	ret.Static(util.PathTheme+"/images", "theme/images")
-	ret.StaticFile("/sw.min.js", "theme/sw.min.js")
-	ret.StaticFile("/halt.html", "theme/halt.html")
+	ret.Static(util.PathTheme+"/css", staticPath("theme/css"))
+	ret.Static(util.PathTheme+"/js", staticPath("theme/js"))
+	ret.Static(util.PathTheme+"/images", staticPath("theme/images"))
+	ret.StaticFile("/sw.min.js", staticPath("theme/sw.min.js"))
+	ret.StaticFile("/halt.html", staticPath("theme/halt.html"))
 
 	for _, theme := range theme.Themes {
-		themePath := "theme/x/" + theme
-		ret.Static("/"+themePath+"/css", themePath+"/css")
-		ret.Static("/"+themePath+"/js", themePath+"/js")
-		ret.Static("/"+themePath+"/images", themePath+"/images")
-		ret.StaticFile("/"+themePath+"/thumbnail.jpg", themePath+"/thumbnail.jpg")
+		themePath := staticPath("theme/x/" + theme)
+		ret.Static("/theme/x/"+theme+"/css", themePath+"/css")
+		ret.Static("/theme/x/"+theme+"/js", themePath+"/js")
+		ret.Static("/theme/x/"+theme+"/images", themePath+"/images")
+		ret.StaticFile("/theme/x/"+theme+"/thumbnail.jpg", themePath+"/thumbnail.jpg")
 	}
-	themeTemplates, err := filepath.Glob("theme/x/*/*.html")
+	themeTemplates, err := filepath.Glob(staticPath("theme/x/*/*.html"))
 	if nil != err {
 		logger.Fatal("load theme templates failed: " + err.Error())
 	}
-	commentTemplates, err := filepath.Glob("theme/comment/*.html")
+	commentTemplates, err := filepath.Glob(staticPath("theme/comment/*.html"))
 	if nil != err {
 		logger.Fatal("load comment templates failed: " + err.Error())
 	}
@@ -167,7 +167,7 @@ func MapRoutes() *gin.Engine {
 	initGroup.Use(fillUser)
 	initGroup.GET("", showInitPageAction)
 
-	ret.Static(util.PathConsoleDist, "./console/dist")
+	ret.Static(util.PathConsoleDist, staticPath("console/dist"))
 
 	ret.NoRoute(func(c *gin.Context) {
 		notFound(c)
@@ -247,6 +247,15 @@ func routePath(c *gin.Context) {
 
 		return
 	}
+	if "/" == path {
+		showArticlesAction(c)
+
+		return
+	}
 
 	logger.Infof("can't handle path [" + path + "]")
+}
+
+func staticPath(relativePath string) string {
+	return filepath.ToSlash(filepath.Join(util.Conf.StaticRoot, relativePath))
 }

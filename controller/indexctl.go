@@ -18,13 +18,15 @@ package controller
 
 import (
 	"net/http"
+	"path/filepath"
 	"text/template"
 
+	"github.com/b3log/pipe/util"
 	"github.com/gin-gonic/gin"
 )
 
 func showIndexAction(c *gin.Context) {
-	t, err := template.ParseFiles("console/dist/index.html")
+	t, err := template.ParseFiles(filepath.ToSlash(filepath.Join(util.Conf.StaticRoot, "console/dist/index.html")))
 	if nil != err {
 		logger.Errorf("load index page failed: " + err.Error())
 		c.String(http.StatusNotFound, "load index page failed")

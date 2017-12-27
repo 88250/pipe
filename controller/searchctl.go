@@ -19,6 +19,7 @@ package controller
 import (
 	"html/template"
 	"net/http"
+	"path/filepath"
 	"strings"
 
 	"github.com/b3log/pipe/model"
@@ -93,7 +94,7 @@ func searchAction(c *gin.Context) {
 }
 
 func showSearchPageAction(c *gin.Context) {
-	t, err := template.ParseFiles("console/dist/search/index.html")
+	t, err := template.ParseFiles(filepath.ToSlash(filepath.Join(util.Conf.StaticRoot, "console/dist/search/index.html")))
 	if nil != err {
 		logger.Errorf("load search page failed: " + err.Error())
 		c.String(http.StatusNotFound, "load search page failed")

@@ -34,7 +34,7 @@ type archiveService struct {
 
 func (srv *archiveService) GetArchives(blogID uint) []*model.Archive {
 	var ret []*model.Archive
-	if err := db.Where("blog_id = ?", blogID).Find(&ret).Error; nil != err {
+	if err := db.Where("blog_id = ?", blogID).Order("year DESC, month DESC").Find(&ret).Error; nil != err {
 		logger.Error("get archives failed: " + err.Error())
 	}
 

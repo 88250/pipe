@@ -22,6 +22,7 @@ import (
 	"flag"
 	"io/ioutil"
 	"os"
+	"path/filepath"
 	"strconv"
 	"strings"
 	"time"
@@ -51,6 +52,7 @@ type Configuration struct {
 	SessionMaxAge         int    // HTTP session max age (in seciond)
 	RuntimeMode           string // runtime mode (dev/prod)
 	DataFilePath          string // database file path
+	StaticRoot            string // static resources file root path
 	Port                  string // listen port
 	AxiosBaseURL          string // axio base URL
 	MockServer            string // mock server
@@ -65,6 +67,7 @@ func LoadConf() {
 	confLogLevel := flag.String("log_level", "", "this will override Conf.LogLevel if specified")
 	confRuntimeMode := flag.String("runtime_mode", "", "this will override Conf.RuntimeMode if specified")
 	confDataFilePath := flag.String("data_file_path", "", "this will override Conf.DataFilePath if specified")
+	confStaticRoot := flag.String("static_root", "", "this will override Conf.StaticRoot if specified")
 	confPort := flag.String("port", "", "this will override Conf.Port if specified")
 
 	flag.Parse()
@@ -114,6 +117,12 @@ func LoadConf() {
 	Conf.DataFilePath = strings.Replace(Conf.DataFilePath, "${home}", home, 1)
 	if "" != *confDataFilePath {
 		Conf.DataFilePath = *confDataFilePath
+	}
+
+	Conf.StaticRoot = ""
+	if "" != *confStaticRoot {
+		Conf.StaticRoot = *confStaticRoot
+		Conf.StaticRoot = filepath.Dir(Conf.StaticRoot)
 	}
 
 	if "" != *confPort {

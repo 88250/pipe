@@ -22,6 +22,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"os"
+	"path/filepath"
 	"sort"
 	"strings"
 
@@ -42,7 +43,7 @@ var locales = map[string]locale{}
 
 // Load loads i18n message configurations.
 func Load() {
-	f, _ := os.Open("i18n")
+	f, _ := os.Open(filepath.ToSlash(filepath.Join(util.Conf.StaticRoot, "i18n")))
 	names, _ := f.Readdirnames(-1)
 	f.Close()
 
@@ -59,7 +60,7 @@ func Load() {
 }
 
 func load(localeStr string) {
-	bytes, err := ioutil.ReadFile("i18n/" + localeStr + ".json")
+	bytes, err := ioutil.ReadFile(filepath.ToSlash(filepath.Join(util.Conf.StaticRoot, "i18n/"+localeStr+".json")))
 	if nil != err {
 		logger.Fatal("reads i18n configurations fialed: " + err.Error())
 	}

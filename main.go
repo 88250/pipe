@@ -17,6 +17,7 @@
 package main
 
 import (
+	"fmt"
 	"io"
 	"io/ioutil"
 	"math/rand"
@@ -75,7 +76,6 @@ func main() {
 	handleSignal(server)
 
 	logger.Infof("Pipe (v%s) is running [%s]", util.Version, util.Conf.Server)
-
 	server.ListenAndServe()
 }
 
@@ -99,12 +99,11 @@ func handleSignal(server *http.Server) {
 }
 
 func replaceServerConf() {
-	err := filepath.Walk("theme", func(path string, f os.FileInfo, err error) error {
+	err := filepath.Walk(filepath.ToSlash(filepath.Join(util.Conf.StaticRoot, "theme")), func(path string, f os.FileInfo, err error) error {
 		if strings.HasSuffix(path, ".min.js") {
 			data, e := ioutil.ReadFile(path)
 			if nil != e {
 				logger.Fatal("read file [" + path + "] failed: " + err.Error())
-				os.Exit(-1)
 			}
 			content := string(data)
 			if !strings.Contains(content, "exports={Server:") {
@@ -119,7 +118,6 @@ func replaceServerConf() {
 			content = strings.Replace(content, json, newJSON, -1)
 			if e = ioutil.WriteFile(path, []byte(content), 0644); nil != e {
 				logger.Fatal("replace server conf in [" + path + "] failed: " + err.Error())
-				os.Exit(-1)
 			}
 		}
 
@@ -127,16 +125,14 @@ func replaceServerConf() {
 	})
 	if nil != err {
 		logger.Fatal("replace server conf in [theme] failed: " + err.Error())
-		os.Exit(-1)
 	}
 
-	paths, err := filepath.Glob("console/dist/*.js")
+	paths, err := filepath.Glob(filepath.ToSlash(filepath.Join(util.Conf.StaticRoot, "console/dist/*.js")))
 	if 0 < len(paths) {
 		for _, path := range paths {
 			data, e := ioutil.ReadFile(path)
 			if nil != e {
 				logger.Fatal("read file [" + path + "] failed: " + err.Error())
-				os.Exit(-1)
 			}
 			content := string(data)
 			if strings.Contains(content, "{rel:\"manifest") {
@@ -160,17 +156,15 @@ func replaceServerConf() {
 			}
 			if e = ioutil.WriteFile(path, []byte(content), 0644); nil != e {
 				logger.Fatal("replace server conf in [" + path + "] failed: " + err.Error())
-				os.Exit(-1)
 			}
 		}
 	}
 
-	err = filepath.Walk("console/dist/", func(path string, f os.FileInfo, err error) error {
+	err = filepath.Walk(filepath.ToSlash(filepath.Join(util.Conf.StaticRoot, "console/dist/")), func(path string, f os.FileInfo, err error) error {
 		if strings.HasSuffix(path, ".html") {
 			data, e := ioutil.ReadFile(path)
 			if nil != e {
 				logger.Fatal("read file [" + path + "] failed: " + err.Error())
-				os.Exit(-1)
 			}
 			content := string(data)
 			if strings.Contains(content, "rel=\"manifest\" href=\"") {
@@ -184,9 +178,11 @@ func replaceServerConf() {
 				part = part[strings.LastIndex(part, "\"")+1:]
 				content = strings.Replace(content, part, util.Conf.StaticServer, -1)
 			}
+			v := fmt.Sprintf("%d", time.Now().Unix())
+			content = strings.Replace(content, ".js\"", ".js?"+v+"\"", -1)
+			content = strings.Replace(content, ".json\"", ".json?"+v+"\"", -1)
 			if e = ioutil.WriteFile(path, []byte(content), 0644); nil != e {
 				logger.Fatal("replace server conf in [" + path + "] failed: " + err.Error())
-				os.Exit(-1)
 			}
 		}
 
@@ -194,6 +190,5 @@ func replaceServerConf() {
 	})
 	if nil != err {
 		logger.Fatal("replace server conf in [theme] failed: " + err.Error())
-		os.Exit(-1)
 	}
 }

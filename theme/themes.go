@@ -19,6 +19,7 @@ package theme
 
 import (
 	"os"
+	"path/filepath"
 
 	"github.com/b3log/pipe/log"
 	"github.com/b3log/pipe/util"
@@ -33,7 +34,7 @@ var Themes = []string{}
 
 // Load loads themes.
 func Load() {
-	f, _ := os.Open("theme/x")
+	f, _ := os.Open(filepath.ToSlash(filepath.Join(util.Conf.StaticRoot, "theme/x")))
 	names, _ := f.Readdirnames(-1)
 	f.Close()
 

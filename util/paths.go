@@ -26,7 +26,7 @@ const (
 	PathInit        = "/init"
 	PathSearch      = "/search"
 	PathBlogs       = "/blogs"
-	PathConsoleDist      = "/console/dist"
+	PathConsoleDist = "/console/dist"
 	PathAdmin       = "/admin"
 	PathAPI         = "/api"
 	PathFavicon     = "/favicon.ico"

@@ -543,6 +543,7 @@ a {
       &__share {
         height: 30px;
         width: 240px;
+        overflow: hidden;
 
         &:hover {
           .action__btn--share {

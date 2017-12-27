@@ -1,12 +1,13 @@
 {
     "Server": "http://localhost:5897",
     "StaticServer": "",
-    "StaticResourceVersion": "1513762528538",
+    "StaticResourceVersion": "1514292923314",
     "RuntimeMode": "dev",
     "LogLevel": "debug",
     "SessionSecret": "BEYOND",
     "SessionMaxAge": 86400,
     "DataFilePath": "${home}/pipe.db",
+    "StaticRoot": "",
     "Port": "5897",
     "AxiosBaseURL": "/api",
     "MockServer": "http://localhost:8888"
