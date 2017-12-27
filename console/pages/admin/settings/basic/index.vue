@@ -33,13 +33,16 @@
         ></v-text-field>
         <v-text-field
           label="HTML head"
+          multi-line
           v-model="header"
         ></v-text-field>
         <v-text-field
+          multi-line
           :label="$t('footer', $store.state.locale)"
           v-model="footer"
         ></v-text-field>
         <v-text-field
+          multi-line
           :label="$t('noticeBoard', $store.state.locale)"
           v-model="noticeBoard"
         ></v-text-field>

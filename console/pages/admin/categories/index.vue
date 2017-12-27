@@ -15,7 +15,9 @@
       <li v-for="item in list" :key="item.id" class="fn-flex">
         <div class="fn-flex-1">
           <div class="fn-flex">
-            <a class="list__title fn-flex-1" :href="item.url">
+            <a class="list__title fn-flex-1"
+               @click.stop="openURL(item.url)"
+               href="javascript:void(0)">
               {{ item.title }}
             </a>
             <v-menu

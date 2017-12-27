@@ -9,11 +9,14 @@
       <ul class="list" v-if="list.length > 0">
         <li v-for="item in list" :key="item.id" class="fn-flex">
           <a class="avatar avatar--mid avatar--space"
-             :href="`${item.url}`"
+             @click.stop="openURL(item.url)"
+             href="javascript:void(0)"
              :style="`background-image: url(${item.iconURL})`"></a>
           <div class="fn-flex-1">
             <div class="fn-flex">
-              <a target="_blank" class="list__title fn-flex-1" :href="`${item.url}`">
+              <a target="_blank" class="list__title fn-flex-1"
+                 @click.stop="openURL(item.url)"
+                 href="javascript:void(0)">
                 {{ item.title }}
               </a>
               <v-menu
