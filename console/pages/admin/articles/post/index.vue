@@ -12,7 +12,7 @@
         ></v-text-field>
 
         <v-editor
-          :uploadURL="`${$store.state.blogURL}/upload`"
+          :uploadURL="`/upload`"
           :uploadMax="10"
           :height="300"
           :value="content"

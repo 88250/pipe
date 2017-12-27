@@ -68,9 +68,12 @@ func uploadAction(c *gin.Context) {
 	}
 
 	platformAdmin := service.User.GetPlatformAdmin()
-	blogID := getBlogID(c)
-	blogAdmin := service.User.GetBlogAdmin(blogID)
-
+	blogAdminName := session.UName
+	if strings.Contains(c.Request.URL.Path, util.PathBlogs) {
+		blogID := getBlogID(c)
+		blogAdmin := service.User.GetBlogAdmin(blogID)
+		blogAdminName = blogAdmin.Name
+	}
 	files := form.File["file[]"]
 
 	errFiles := []string{}
@@ -102,7 +105,7 @@ func uploadAction(c *gin.Context) {
 			continue
 		}
 
-		key := "pipe/" + platformAdmin.Name + "/" + blogAdmin.Name + "/" + session.UName + "/" + strings.Replace(uuid.NewV4().String(), "-", "", -1) + ext
+		key := "pipe/" + platformAdmin.Name + "/" + blogAdminName + "/" + session.UName + "/" + strings.Replace(uuid.NewV4().String(), "-", "", -1) + ext
 
 		uploadRet := &storage.PutRet{}
 		if err := storage.NewFormUploader(nil).Put(context.Background(), uploadRet, ut.token, key, bytes.NewReader(data), int64(len(data)), nil); nil != err {
