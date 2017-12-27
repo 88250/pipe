@@ -2,7 +2,7 @@
  * @file themes tool.
  *
  * @author <a href='http://vanessa.b3log.org'>Liyuan Li</a>
- * @version 0.1.0.0, Nov 30, 2017
+ * @version 0.1.0.1, Dec 27, 2017
  */
 
 const gulp = require('gulp')
@@ -20,6 +20,10 @@ const sourcemaps = require('gulp-sourcemaps')
 const es = require('event-stream')
 
 gulp.task('sass', function () {
+  gulp.src('./scss/*.scss')
+    .pipe(sass({outputStyle: 'compressed'}).on('error', sass.logError))
+    .pipe(gulp.dest('./scss'))
+
   return gulp.src('./x/*/css/*.scss')
     .pipe(sass({outputStyle: 'compressed'}).on('error', sass.logError))
     .pipe(gulp.dest('./x'))

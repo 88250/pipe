@@ -12,13 +12,48 @@
     <link rel="icon" type="image/x-icon" href="{{.FaviconURL}}">
     <link href="{{.BlogURL}}/atom" type="application/rss+xml" rel="alternate"/>
     <link type="text/css" rel="stylesheet"
-          href="{{.Conf.StaticServer}}/theme/x/{{.Setting.ThemeName}}/css/search.css?{{.Conf.StaticResourceVersion}}"/>
+          href="{{.Conf.StaticServer}}/theme/css/search.css?{{.Conf.StaticResourceVersion}}"/>
     <link rel="manifest" href="{{.Conf.Server}}/theme/js/manifest.json">
 </head>
 <body>
-<nav>
-    <input>
+<nav class="header">
+    <div class="wrapper">
+        <div class="search fn-clear">
+            <input
+                    onblur="this.parentNode.className='search fn-clear'"
+                    onfocus="this.parentNode.className='search fn-clear search--focus'">
+            <button>
+                {{.I18n.Search}}
+            </button>
+        </div>
+    </div>
 </nav>
+<div class="wrapper search-list">
+    {{if gt (len $.Pagination.PageNums) 1}}
+    <nav class="pagination">
+        {{if gt $.Pagination.PreviousPageNum 0}}
+        <a class="pagination__near" href="?p={{$.Pagination.PreviousPageNum}}">
+            <svg><use xlink:href="#chevron-left"></use></svg>
+        </a>
+        {{end}}
+        {{if gt $.Pagination.FirstPageNum 1}}
+        <a class="pagination__item" href="?p=1">1</a>{{if ne $.Pagination.FirstPageNum 2}}<span class="pagination__omit">...</span>{{end}}
+        {{end}}
+        {{range $.Pagination.PageNums}}
+        <a href="?p={{.}}" class="pagination__item {{if eq . $.Pagination.CurrentPageNum}}pagination__item--active{{end}}">{{.}}</a>
+        {{end}}
+        {{if lt $.Pagination.LastPageNum $.Pagination.PageCount}}
+        {{if ne $.Pagination.LastPageNum (minus $.Pagination.PageCount 1)}}<span class="pagination__omit">...</span>{{end}}
+        <a class="pagination__item" href="?p={{$.Pagination.PageCount}}">{{$.Pagination.PageCount}}</a>
+        {{end}}
+        {{if lt $.Pagination.CurrentPageNum $.Pagination.PageCount}}
+        <a class="pagination__near" href="?p={{$.Pagination.NextPageNum}}">
+            <svg><use xlink:href="#chevron-right"></use></svg>
+        </a>
+        {{end}}
+    </nav>
+    {{end}}
+</div>
 <footer class="footer">
     <div class="wrapper">
         <div class="fn-clear">
@@ -29,15 +64,15 @@
             </div>
         </div>
         <div class="fn-clear">
-            <span class="ft-gray">{{.Statistic.StatisticViewCount}}</span>
+            <span>{{.Statistic.StatisticViewCount}}</span>
             {{.I18n.View}}
             &nbsp;
-            <span class="ft-gray">{{.Statistic.StatisticArticleCount}}</span>
+            <span>{{.Statistic.StatisticArticleCount}}</span>
             {{.I18n.Article}}
             &nbsp;
-            <span class="ft-gray">{{.Statistic.StatisticCommentCount}}</span>
+            <span>{{.Statistic.StatisticCommentCount}}</span>
             {{.I18n.Comment}}
-            <div class="fn-right ft-gray">
+            <div class="fn-right">
                 Powered by <a href="http://b3log.org/" target="_blank">B3log 开源</a> •
                 <a href="https://hacpai.com/tag/Pipe" target="_blank">Pipe</a> •
                 Theme <a href="https://github.com/b3log/pipe-themes" target="_blank">Gina</a>
@@ -45,7 +80,5 @@
         </div>
     </div>
 </footer>
-<script type="text/javascript"
-        src="http://localhost:5897/js/search.min.js?{{.Conf.StaticResourceVersion}}"></script>
 </body>
 </html>

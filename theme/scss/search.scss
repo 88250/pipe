@@ -1,0 +1,93 @@
+/**
+ * basic.
+ *
+ * @author <a href="http://vanessa.b3log.org">Liyuan Li</a>
+ * @version 0.1.0.0, Dec 27, 2017
+ */
+@import 'variables';
+@import "reset";
+@import 'function';
+@import 'form';
+@import 'tip';
+
+.wrapper {
+  width: 90%;
+  margin: 0 auto;
+  min-width: 720px;
+  max-width: 1100px;
+}
+
+.header {
+  height: 88px;
+  width: 100%;
+  background-color: #3b3e43;
+  padding: 22px 0;
+  box-sizing: border-box;
+
+  .search {
+    background-color: #fff;
+    height: 44px;
+    width: 632px;
+    vertical-align: top;
+    border-radius: 3px;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.08);
+    position: relative;
+    transition: box-shadow 200ms cubic-bezier(0.4, 0.0, 0.2, 1);
+
+    &--focus,
+    &:hover {
+      box-shadow: 0 3px 8px 0 rgba(0,0,0,0.2), 0 0 0 1px rgba(0,0,0,0.08);
+    }
+
+    input {
+      border-radius: 3px 0 0 3px;
+      margin: 0;
+      height: 44px;
+      width: 560px;
+      box-sizing: border-box;
+      padding: 10px;
+    }
+
+    button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      border-radius: 0 3px 3px 0;
+      cursor: pointer;
+      color: rgba(0, 0, 0, 0.87);
+      padding: 0 20px;
+      line-height: 44px;
+      background-color: rgba(0, 0, 0, 0.02);
+      transition: box-shadow 200ms cubic-bezier(0.4, 0.0, 0.2, 1);
+
+      &:hover {
+        background-color: #eee;
+      }
+
+      &:active {
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25) inset;
+      }
+    }
+  }
+}
+
+.search-list {
+  margin: 50px 0;
+  min-height: 600px;
+}
+
+.footer {
+  font-size: 14px;
+  color: #7d8186;
+  line-height: 24px;
+  padding: 30px 0;
+  background-color: #3b3e43;
+
+  a {
+    color: #afb1b3;
+    &:hover {
+      color: #888f91;
+      text-decoration: none;
+    }
+  }
+}
