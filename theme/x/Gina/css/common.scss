@@ -183,10 +183,6 @@ a {
     box-shadow: rgba(0,0,0,0.05) 0px 1px 7px;
   }
 
-  .header__logo {
-    display: none;
-  }
-
   .side {
     right: 0;
   }
@@ -1022,5 +1018,9 @@ a {
 
   .article__relevant {
     padding: 50px 20px;
+  }
+
+  .article-detail__header .article__action {
+    position: inherit;
   }
 }

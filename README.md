@@ -100,7 +100,7 @@ npm install && npm run build
 npm install && npm install --global gulp && gulp
 ```
 
-* 开发环境执行 `gulp watch`
+* 开发环境执行 `gulp watch --theme=ThemeName`
 * theme/js 和 theme/scss 下为基础方法和样式，可按需引入使用
 * 主题开发请参考 theme/x/Gina
 
