@@ -145,6 +145,7 @@ func MapRoutes() *gin.Engine {
 	if nil != err {
 		logger.Fatal("load theme templates failed: " + err.Error())
 	}
+	themeTemplates = append(themeTemplates, "theme/search/index.html")
 	commentTemplates, err := filepath.Glob(staticPath("theme/comment/*.html"))
 	if nil != err {
 		logger.Fatal("load comment templates failed: " + err.Error())

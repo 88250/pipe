@@ -19,7 +19,6 @@ package controller
 import (
 	"html/template"
 	"net/http"
-	"path/filepath"
 	"strings"
 
 	"github.com/b3log/pipe/model"
@@ -30,14 +29,6 @@ import (
 )
 
 func searchAction(c *gin.Context) {
-	t, err := template.ParseFiles(filepath.ToSlash(filepath.Join(util.Conf.StaticRoot, "theme/search/index.html")))
-	if nil != err {
-		logger.Errorf("load search page failed: " + err.Error())
-		c.String(http.StatusNotFound, "load search page failed")
-
-		return
-	}
-
 	blogID := getBlogID(c)
 	key := c.Query("key")
 	page := util.GetPage(c)
@@ -73,8 +64,7 @@ func searchAction(c *gin.Context) {
 	}
 
 	dataModel := getDataModel(c)
-	dataModel["articles"] = articles
-	dataModel["pagination"] = pagination
-
-	t.Execute(c.Writer, dataModel)
+	dataModel["Articles"] = articles
+	dataModel["Pagination"] = pagination
+	c.HTML(http.StatusOK, "search.html", dataModel)
 }
