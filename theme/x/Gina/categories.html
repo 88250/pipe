@@ -19,15 +19,18 @@
     <ul>
         {{range .Categories}}
         <li class="categories__item">
-            <a href="{{.URL}}" class="categories__header">
+            <div class="categories__description">
+                <a href="{{.URL}}" class="categories__header">
                <span class="categories__title">
                    {{.Title}}
                </span>
-                <span class="fn-13 ft-fade">
+                    <span class="fn-13 ft-fade">
                     <!--{{.ArticleCount}} {{$.I18n.Article2}}-->
                 </span>
-            </a>
-            <div class="ft-gray ft-13">{{.Description}}</div>
+                </a>
+                <div class="ft-gray ft-13">{{.Description}}</div>
+            </div>
+
             <div>
                 {{range .Tags}}
                 <a href="{{.URL}}" class="tag">{{.Title}}</a>
