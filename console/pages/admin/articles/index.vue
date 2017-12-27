@@ -44,12 +44,13 @@
         <a class="avatar avatar--mid avatar--space pipe-tooltipped pipe-tooltipped--s"
            v-if="userCount > 1"
            :aria-label="item.author.name"
-           :href="item.author.url"
+           @click.stop="openURL(item.author.url)"
+           href="javascript:void(0)"
            :style="`background-image: url(${item.author.avatarURL})`"></a>
         <div class="fn-flex-1">
           <div class="fn-flex">
             <span class="fn-flex-1">
-              <a class="list__title" :href="item.url">{{ item.title }}</a>
+              <a class="list__title" @click.stop="openURL(item.url)" href="javascript:void(0)">{{ item.title }}</a>
             </span>
             <v-menu
               v-show="!isBatch"
@@ -76,7 +77,9 @@
           </div>
           <div class="list__meta">
             <span class="tags">
-              <a class="tag" :key="tag.title" v-for="tag in item.tags" :href="tag.url">{{ tag.title
+              <a class="tag" :key="tag.title" v-for="tag in item.tags"
+                 @click.stop="openURL(tag.url)"
+                 href="javascript:void(0)">{{ tag.title
                 }}</a>
             </span>
             <span class="fn-nowrap">{{ item.commentCount }} {{ $t('comment', $store.state.locale) }}</span> •
@@ -129,6 +132,9 @@
       }
     },
     methods: {
+      openURL (url) {
+        window.location.href = url
+      },
       selectAll () {
         this.$set(this, 'isSelectAll', !this.isSelectAll)
         if (!this.isSelectAll) {
