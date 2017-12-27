@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>{{.I18n.Search}} - {{.Title}}</title>
+    <meta name="keywords" content="{{.MetaKeywords}}"/>
+    <meta name="description" content="{{.MetaDescription}}"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta name="owner" content="B3log Team"/>
+    <meta name="copyright" content="B3log"/>
+    <meta http-equiv="Window-target" content="_top"/>
+    <link rel="icon" type="image/x-icon" href="{{.FaviconURL}}">
+    <link href="{{.BlogURL}}/atom" type="application/rss+xml" rel="alternate"/>
+    <link type="text/css" rel="stylesheet"
+          href="{{.Conf.StaticServer}}/theme/x/{{.Setting.ThemeName}}/css/search.css?{{.Conf.StaticResourceVersion}}"/>
+    <link rel="manifest" href="{{.Conf.Server}}/theme/js/manifest.json">
+</head>
+<body>
+<nav>
+    <input>
+</nav>
+<footer class="footer">
+    <div class="wrapper">
+        <div class="fn-clear">
+            {{.Setting.BasicBlogSubtitle}}
+            <div class="fn-right">
+                <a href="{{.BlogURL}}">{{.Setting.BasicBlogTitle}}</a> &copy; {{.Year}}
+                {{.Setting.BasicFooter}}
+            </div>
+        </div>
+        <div class="fn-clear">
+            <span class="ft-gray">{{.Statistic.StatisticViewCount}}</span>
+            {{.I18n.View}}
+            &nbsp;
+            <span class="ft-gray">{{.Statistic.StatisticArticleCount}}</span>
+            {{.I18n.Article}}
+            &nbsp;
+            <span class="ft-gray">{{.Statistic.StatisticCommentCount}}</span>
+            {{.I18n.Comment}}
+            <div class="fn-right ft-gray">
+                Powered by <a href="http://b3log.org/" target="_blank">B3log 开源</a> •
+                <a href="https://hacpai.com/tag/Pipe" target="_blank">Pipe</a> •
+                Theme <a href="https://github.com/b3log/pipe-themes" target="_blank">Gina</a>
+            </div>
+        </div>
+    </div>
+</footer>
+<script type="text/javascript"
+        src="http://localhost:5897/js/search.min.js?{{.Conf.StaticResourceVersion}}"></script>
+</body>
+</html>
