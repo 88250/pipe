@@ -141,6 +141,22 @@ func fillCommon(c *gin.Context) {
 	fillMostCommentArticles(c, &settingMap, dataModel, blogID)
 
 	c.Set("dataModel", dataModel)
+
+	//blogURL := getBlogURL(c)
+	host := c.GetHeader("X-Host") // set by reserve proxy
+	logger.Info("host: ", host)
+	if "" != host { // Bind custom domain
+		path := c.Request.URL.Path
+		if "" != c.Request.URL.RawQuery {
+			path += "?" + c.Request.URL.RawQuery
+		}
+		path = strings.Replace(path, util.PathBlogs+"/"+c.Param("username"), "", -1)
+
+		c.Redirect(http.StatusFound, path)
+		c.Abort()
+
+		return
+	}
 }
 
 func fillMostUseCategories(settingMap *map[string]interface{}, dataModel *DataModel, blogID uint) {
