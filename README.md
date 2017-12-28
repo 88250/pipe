@@ -96,7 +96,7 @@ go build -i -v
 npm install && npm run build
 ```
 
-* 开发环境执行 `npm run dev`
+* 开发环境执行 `npm run dev`，有点链接需要手动修改访问端口为 :3000
 * pipe.json 中 `AxiosBaseURL` 为 `/api` 时需启动 `./pipe`，为 `/mock` 时需运行 `npm run mock`
 
 ### 打包前台主题

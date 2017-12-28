@@ -160,35 +160,37 @@ func replaceServerConf() {
 		}
 	}
 
-	err = filepath.Walk(filepath.ToSlash(filepath.Join(util.Conf.StaticRoot, "console/dist/")), func(path string, f os.FileInfo, err error) error {
-		if strings.HasSuffix(path, ".html") {
-			data, e := ioutil.ReadFile(path)
-			if nil != e {
-				logger.Fatal("read file [" + path + "] failed: " + err.Error())
+	if util.File.IsExist("console/dist/") { // dose not exist if npm run dev
+		err = filepath.Walk(filepath.ToSlash(filepath.Join(util.Conf.StaticRoot, "console/dist/")), func(path string, f os.FileInfo, err error) error {
+			if strings.HasSuffix(path, ".html") {
+				data, e := ioutil.ReadFile(path)
+				if nil != e {
+					logger.Fatal("read file [" + path + "] failed: " + err.Error())
+				}
+				content := string(data)
+				if strings.Contains(content, "rel=\"manifest\" href=\"") {
+					rel := "rel=\"manifest\" href=\"" + strings.Split(content, "rel=\"manifest\" href=\"")[1]
+					rel = strings.Split(rel, "/>")[0] + "/>"
+					newRel := "rel=\"manifest\" href=\"" + util.Conf.StaticServer + "/theme/js/manifest.json\"/>"
+					content = strings.Replace(content, rel, newRel, -1)
+				}
+				if strings.Contains(content, "/console/dist/") {
+					part := strings.Split(content, "/console/dist/")[0]
+					part = part[strings.LastIndex(part, "\"")+1:]
+					content = strings.Replace(content, part, util.Conf.StaticServer, -1)
+				}
+				v := fmt.Sprintf("%d", time.Now().Unix())
+				content = strings.Replace(content, ".js\"", ".js?"+v+"\"", -1)
+				content = strings.Replace(content, ".json\"", ".json?"+v+"\"", -1)
+				if e = ioutil.WriteFile(path, []byte(content), 0644); nil != e {
+					logger.Fatal("replace server conf in [" + path + "] failed: " + err.Error())
+				}
 			}
-			content := string(data)
-			if strings.Contains(content, "rel=\"manifest\" href=\"") {
-				rel := "rel=\"manifest\" href=\"" + strings.Split(content, "rel=\"manifest\" href=\"")[1]
-				rel = strings.Split(rel, "/>")[0] + "/>"
-				newRel := "rel=\"manifest\" href=\"" + util.Conf.StaticServer + "/theme/js/manifest.json\"/>"
-				content = strings.Replace(content, rel, newRel, -1)
-			}
-			if strings.Contains(content, "/console/dist/") {
-				part := strings.Split(content, "/console/dist/")[0]
-				part = part[strings.LastIndex(part, "\"")+1:]
-				content = strings.Replace(content, part, util.Conf.StaticServer, -1)
-			}
-			v := fmt.Sprintf("%d", time.Now().Unix())
-			content = strings.Replace(content, ".js\"", ".js?"+v+"\"", -1)
-			content = strings.Replace(content, ".json\"", ".json?"+v+"\"", -1)
-			if e = ioutil.WriteFile(path, []byte(content), 0644); nil != e {
-				logger.Fatal("replace server conf in [" + path + "] failed: " + err.Error())
-			}
-		}
 
-		return err
-	})
-	if nil != err {
-		logger.Fatal("replace server conf in [theme] failed: " + err.Error())
+			return err
+		})
+		if nil != err {
+			logger.Fatal("replace server conf in [theme] failed: " + err.Error())
+		}
 	}
 }
