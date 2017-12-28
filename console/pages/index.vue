@@ -10,6 +10,12 @@
     </div>
     <div class="card" v-else>
       <h2 class="card__body">{{ $t('welcome', $store.state.locale) }}</h2>
+      <div class="ft-center">
+        <div v-html="$t('index2', $store.state.locale)"></div>
+        <br>
+        <iframe src="https://ghbtns.com/github-btn.html?user=b3log&repo=pipe&type=star&count=true&size=large"
+                frameborder="0" scrolling="0" width="160px" height="30px"></iframe><br><br>
+      </div>
     </div>
   </div>
 </template>
