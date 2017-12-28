@@ -641,16 +641,17 @@ func normalizeArticlePath(article *model.Article) error {
 }
 
 func getPageWindowSize(blogID uint) (pageSize, windowSize int) {
-	settings := Setting.GetSettings(model.SettingCategoryPreference, []string{model.SettingNamePreferenceArticleListPageSize, model.SettingNamePreferenceArticleListWindowSize}, blogID)
-	pageSize, err := strconv.Atoi(settings[model.SettingNamePreferenceArticleListPageSize].Value)
+	pageSizeSetting := Setting.GetSetting(model.SettingCategoryPreference, model.SettingNamePreferenceArticleListPageSize, blogID)
+	pageSize, err := strconv.Atoi(pageSizeSetting.Value)
 	if nil != err {
-		logger.Errorf("value of setting [%s] is not an integer, actual is [%v]", model.SettingNamePreferenceArticleListPageSize, settings[model.SettingNamePreferenceArticleListPageSize].Value)
+		logger.Errorf("value of setting [%s] is not an integer, actual is [%v]", model.SettingNamePreferenceArticleListPageSize, pageSizeSetting.Value)
 		pageSize = adminConsoleArticleListPageSize
 	}
 
-	windowSize, err = strconv.Atoi(settings[model.SettingNamePreferenceArticleListWindowSize].Value)
+	windowSizeSetting := Setting.GetSetting(model.SettingCategoryPreference, model.SettingNamePreferenceArticleListWindowSize, blogID)
+	windowSize, err = strconv.Atoi(windowSizeSetting.Value)
 	if nil != err {
-		logger.Errorf("value of setting [%s] is not an integer, actual is [%v]", model.SettingNamePreferenceArticleListWindowSize, settings[model.SettingNamePreferenceArticleListWindowSize].Value)
+		logger.Errorf("value of setting [%s] is not an integer, actual is [%v]", model.SettingNamePreferenceArticleListWindowSize, windowSizeSetting.Value)
 		windowSize = adminConsoleArticleListWindowSize
 	}
 
