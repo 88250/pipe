@@ -45,7 +45,7 @@ const (
 
 var reservedPaths = []string{
 	PathInit, PathSearch, PathBlogs, PathConsoleDist, PathAdmin, PathAPI,
-	PathFavicon, PathTheme, PathActivities, PathArchives, PathArticles, PathAuthors,
+	PathFavicon, PathTheme, PathActivities, PathArchives, PathAuthors,
 	PathCategories, PathTags, PathComments, PathAtom, PathUpload,
 }
 
