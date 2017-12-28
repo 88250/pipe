@@ -26,14 +26,14 @@ func TestMarkdown(t *testing.T) {
 1. first item
 2. second item
 `
-	html := Markdown(mdText)
+	html := Markdown(mdText).ContentHTML
 
 	shouldContains := "<li>second item</li>"
 	if !strings.Contains(html, shouldContains) {
 		t.Error("Should contain [" + shouldContains + "]")
 	}
 
-	html = Markdown(mdText)
+	html = Markdown(mdText).ContentHTML
 }
 
 func TestMarkdownAbstract(t *testing.T) {
@@ -135,8 +135,8 @@ Issue 最好先建立模板，让用户提问的时候有章可循。不过即�
 
 https://github.com/88250 ，欢迎关注。`
 
-	abstract := MarkdownAbstract(mdText)
-	if !strings.HasPrefix(abstract, "Bootstrap古话说得好") {
-		t.Fatalf("markdown abstract failed")
+	abstract := Markdown(mdText).AbstractText
+	if !strings.HasPrefix(abstract, "Bootstrap 古话说得好：“万事开头难”。") {
+		t.Fatalf("markdown abstract failed: " + abstract)
 	}
 }

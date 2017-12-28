@@ -18,7 +18,7 @@ package util
 
 import "testing"
 
-func TestPaginate(t *testing.T) {
+func TestIsReservedPath(t *testing.T) {
 	if !IsReservedPath("/api") {
 		t.Errorf("[/api] is a reserved path")
 
