@@ -21,12 +21,7 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
-
-	"github.com/b3log/wide/log"
 )
-
-// Logger.
-var fileLogger = log.NewLogger(os.Stdout)
 
 type myfile struct{}
 
@@ -37,7 +32,7 @@ var File = myfile{}
 func (*myfile) GetFileSize(path string) int64 {
 	fi, err := os.Stat(path)
 	if nil != err {
-		fileLogger.Error(err)
+		logger.Error(err)
 
 		return -1
 	}
@@ -79,7 +74,7 @@ func (*myfile) IsImg(extension string) bool {
 func (*myfile) IsDir(path string) bool {
 	fio, err := os.Lstat(path)
 	if nil != err {
-		fileLogger.Warnf("Determines whether [%s] is a directory failed: [%v]", path, err)
+		logger.Warnf("Determines whether [%s] is a directory failed: [%v]", path, err)
 
 		return false
 	}
@@ -147,12 +142,12 @@ func (*myfile) CopyDir(source string, dest string) (err error) {
 			// create sub-directories - recursively
 			err = File.CopyDir(srcFilePath, destFilePath)
 			if err != nil {
-				fileLogger.Error(err)
+				logger.Error(err)
 			}
 		} else {
 			err = File.CopyFile(srcFilePath, destFilePath)
 			if err != nil {
-				fileLogger.Error(err)
+				logger.Error(err)
 			}
 		}
 	}

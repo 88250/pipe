@@ -99,7 +99,7 @@ export const genUploaded = (response, text, loadingLabel = 'Uploading', errorLab
 }
 
 export const debounceInput = (timerId, configChange, $editor) => {
-  const debounce = 1000
+  const debounce = 500
   if (timerId !== undefined) {
     clearTimeout(timerId)
   }

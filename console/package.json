@@ -23,7 +23,7 @@
     "particles.js": "^2.0.0",
     "vue-axios": "^2.0.2",
     "vue-i18n": "^7.2.0",
-    "vuetify": "git+https://github.com/Vanessa219/vuetify.git#v1.1.0"
+    "vuetify": "git+https://github.com/Vanessa219/vuetify.git#v1.2.0"
   },
   "devDependencies": {
     "@nuxtjs/proxy": "^1.1.2",
