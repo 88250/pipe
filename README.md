@@ -147,7 +147,7 @@ Pipe 的诞生离不开以下开源项目：
 * [GORM](https://github.com/jinzhu/gorm)：极好的 golang ORM 库
 * [Blackfriday](github.com/russross/blackfriday)：golang Markdown 处理器
 * [SQLite](https://www.sqlite.org)：使用广泛的嵌入式 SQL 引擎
-* [GCache](github.com/bluele/gcache)：golang 缓存库
+* [GCache](https://github.com/bluele/gcache)：golang 缓存库
 * [GoLand](https://www.jetbrains.com/go)：全宇宙暂时排名第一的 golang IDE
 
 ----
