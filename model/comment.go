@@ -30,5 +30,5 @@ type Comment struct {
 	UserAgent       string    `gorm:"size:255" json:"userAgent"`
 	PushedAt        time.Time `json:"pushedAt"`
 
-	BlogID uint `json:"blogID"`
+	BlogID uint `sql:"index" json:"blogID"`
 }

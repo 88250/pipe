@@ -24,7 +24,7 @@ type Setting struct {
 	Name     string `gorm:"size:32" json:"name"`
 	Value    string `gorm:"type:text" json:"value"`
 
-	BlogID uint `json:"blogID"`
+	BlogID uint `sql:"index" json:"blogID"`
 }
 
 // Setting names of category "system".

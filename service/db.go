@@ -57,7 +57,7 @@ func ConnectDB() {
 		logger.Fatal("adds index failed: " + err.Error())
 	}
 
-	// db.LogMode(true)
+	db.LogMode(true)
 }
 
 func DisconnectDB() {

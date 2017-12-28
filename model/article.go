@@ -29,7 +29,7 @@ type Article struct {
 	Tags         string    `gorm:"size:128" json:"tags"`
 	Content      string    `gorm:"type:text" json:"content"`
 	Path         string    `sql:"index" gorm:"size:255" json:"path"`
-	Status       int       `json:"status"`
+	Status       int       `sql:"index" json:"status"`
 	Topped       bool      `json:"topped"`
 	Commentable  bool      `json:"commentable"`
 	ViewCount    int       `json:"viewCount"`
@@ -38,7 +38,7 @@ type Article struct {
 	UserAgent    string    `gorm:"size:255" json:"userAgent"`
 	PushedAt     time.Time `json:"pushedAt"`
 
-	BlogID uint `json:"blogID"`
+	BlogID uint `sql:"index" json:"blogID"`
 }
 
 // Article statuses.

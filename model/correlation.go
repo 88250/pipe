@@ -44,5 +44,5 @@ type Correlation struct {
 	Int4 int    `json:int4`
 	Type int    `json:"type"`
 
-	BlogID uint `json:"blogID"`
+	BlogID uint `sql:"index" json:"blogID"`
 }
