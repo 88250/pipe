@@ -100,7 +100,7 @@ func TestErrorf(t *testing.T) {
 
 func TestFatalf(t *testing.T) {
 	logger.SetLevel("fatal")
-	logger.Fatalf("fatalf")
+//	logger.Fatalf("fatalf")
 	logger.SetLevel("off")
 	logger.Fatalf("fatalf")
 }
