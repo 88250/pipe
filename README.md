@@ -1,4 +1,4 @@
-# <img src="https://user-images.githubusercontent.com/873584/33324159-c3ea5050-d489-11e7-9f4b-75ee806a7538.png"> [Pipe](https://github.com/b3log/pipe) [![Build Status](https://img.shields.io/travis/b3log/pipe.svg?style=flat)](https://travis-ci.org/b3log/pipe) [![Coverage Status](https://img.shields.io/coveralls/b3log/pipe.svg?style=flat)](https://coveralls.io/r/b3log/pipe)
+# <img src="https://user-images.githubusercontent.com/873584/33324159-c3ea5050-d489-11e7-9f4b-75ee806a7538.png"> [Pipe](https://github.com/b3log/pipe) [![Build Status](https://img.shields.io/travis/b3log/pipe.svg?style=flat)](https://travis-ci.org/b3log/pipe) 
 
 * [简介](#简介)
 * [特性](#特性)
