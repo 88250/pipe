@@ -44,15 +44,10 @@ func ConnectDB() {
 		logger.Fatalf("opens database file [%s] failed: "+err.Error(), util.Conf.DataFilePath)
 	}
 
-	// TODO: D, remove it after release 1.0.0
 	tables := []interface{}{
 		&model.User{}, &model.Article{}, &model.Comment{}, &model.Navigation{}, &model.Tag{},
 		&model.Category{}, &model.Archive{}, &model.Setting{}, &model.Correlation{},
 	}
-
-	//	if err = db.DropTableIfExists(tables...).Error; nil != err {
-	//		logger.Fatal("drops tables failed: " + err.Error())
-	//	}
 
 	if err = db.AutoMigrate(tables...).Error; nil != err {
 		logger.Fatal("auto migrate tables failed: " + err.Error())
