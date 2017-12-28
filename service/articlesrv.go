@@ -102,7 +102,7 @@ func (srv *articleService) GetNextArticle(id uint, blogID uint) *model.Article {
 
 func (srv *articleService) GetArticleByPath(path string, blogID uint) *model.Article {
 	path = strings.TrimSpace(path)
-	if "" == path {
+	if "" == path || util.IsReservedPath(path) {
 		return nil
 	}
 
