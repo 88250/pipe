@@ -54,14 +54,7 @@ module.exports = {
     }
   },
   router: {
-    middleware: ['initialized', 'authenticated'],
-    extendRoutes (routes, resolve) {
-      routes.push({
-        name: 'blogSearch',
-        path: '/blogs/:username/search',
-        component: resolve(__dirname, 'pages/search.vue')
-      })
-    }
+    middleware: ['initialized', 'authenticated']
   },
   modules: ['@nuxtjs/proxy'],
   proxy: {
