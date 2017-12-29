@@ -117,7 +117,7 @@ func parseArticle(mdFile *MarkdownFile) *model.Article {
 	if nil != err {
 		ext := filepath.Ext(mdFile.Name)
 		ret.Title = strings.Split(mdFile.Name, ext)[0]
-		ret.Content = content
+		ret.Content = mdFile.Content
 		ret.Commentable = true
 		ret.Tags = "笔记"
 
@@ -131,9 +131,9 @@ func parseArticle(mdFile *MarkdownFile) *model.Article {
 	}
 	ret.Title = title
 
-	content = strings.TrimSpace(strings.Split(content, frontMatter)[1])
+	content = strings.TrimSpace(strings.Split(mdFile.Content, frontMatter)[1])
 	if strings.HasPrefix(content, "---") {
-		content = strings.Split(content, "---")[1]
+		content = content[len("---"):]
 		content = strings.TrimSpace(content)
 	}
 	ret.Content = content
@@ -210,11 +210,20 @@ func parseTags(m *map[string]interface{}) string {
 		return "笔记"
 	}
 
-	ts := tags.([]interface{})
-	var tagStrs []string
-	for _, t := range ts {
-		tagStrs = append(tagStrs, t.(string))
-	}
+	switch tags.(type) {
+	case []interface{}:
+		ts := tags.([]interface{})
+		var tagStrs []string
+		for _, t := range ts {
+			tagStrs = append(tagStrs, t.(string))
+		}
 
-	return strings.Join(tagStrs, ",")
+		return strings.Join(tagStrs, ",")
+	case string:
+		return tags.(string)
+	default:
+		logger.Warnf("unknown type of tags in front matter [%+v]", frontMatter)
+
+		return "笔记"
+	}
 }
