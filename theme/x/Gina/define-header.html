@@ -48,7 +48,7 @@
             <a href="https://hacpai.com/login" class="fn-right">{{.I18n.Login}}</a>
             {{else}}
             <a class="avatar fn-right"
-               href="{{.Conf.Server}}/{{if ne .User.URole 4}}admin{{end}}"
+               href="{{.Conf.Server}}/{{if ne .User.URole 4}}admin/{{end}}"
                data-src="{{.User.AvatarURLWithSize 64}}"></a>
             {{end}}
         </div>
