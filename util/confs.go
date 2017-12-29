@@ -51,7 +51,8 @@ type Configuration struct {
 	SessionSecret         string // HTTP session secret
 	SessionMaxAge         int    // HTTP session max age (in seciond)
 	RuntimeMode           string // runtime mode (dev/prod)
-	DataFilePath          string // database file path
+	SQLite                string // SQLite database file path
+	MySQL                 string // MySQL connection URL
 	StaticRoot            string // static resources file root path
 	Port                  string // listen port
 	AxiosBaseURL          string // axio base URL
@@ -66,7 +67,8 @@ func LoadConf() {
 	confStaticResourceVer := flag.String("static_resource_ver", "", "this will override Conf.StaticResourceVersion if specified")
 	confLogLevel := flag.String("log_level", "", "this will override Conf.LogLevel if specified")
 	confRuntimeMode := flag.String("runtime_mode", "", "this will override Conf.RuntimeMode if specified")
-	confDataFilePath := flag.String("data_file_path", "", "this will override Conf.DataFilePath if specified")
+	confSQLite := flag.String("sqlite", "", "this will override Conf.SQLite if specified")
+	confMySQL := flag.String("mysql", "", "this will override Conf.MySQL if specified")
 	confStaticRoot := flag.String("static_root", "", "this will override Conf.StaticRoot if specified")
 	confPort := flag.String("port", "", "this will override Conf.Port if specified")
 
@@ -114,9 +116,12 @@ func LoadConf() {
 		Conf.StaticResourceVersion = *confStaticResourceVer
 	}
 
-	Conf.DataFilePath = strings.Replace(Conf.DataFilePath, "${home}", home, 1)
-	if "" != *confDataFilePath {
-		Conf.DataFilePath = *confDataFilePath
+	Conf.SQLite = strings.Replace(Conf.SQLite, "${home}", home, 1)
+	if "" != *confSQLite {
+		Conf.SQLite = *confSQLite
+	}
+	if "" != *confMySQL {
+		Conf.MySQL = *confMySQL
 	}
 
 	Conf.StaticRoot = ""

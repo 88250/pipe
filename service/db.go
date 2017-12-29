@@ -23,6 +23,7 @@ import (
 	"github.com/b3log/pipe/model"
 	"github.com/b3log/pipe/util"
 	"github.com/jinzhu/gorm"
+	_ "github.com/jinzhu/gorm/dialects/mysql"
 	_ "github.com/jinzhu/gorm/dialects/sqlite"
 )
 
@@ -39,9 +40,22 @@ func ConnectDB() {
 	}
 
 	var err error
-	db, err = gorm.Open("sqlite3", util.Conf.DataFilePath)
+	useSQLite := false
+	if "" != util.Conf.SQLite {
+		db, err = gorm.Open("sqlite3", util.Conf.SQLite)
+		useSQLite = true
+	} else if "" != util.Conf.MySQL {
+		db, err = gorm.Open("mysql", util.Conf.MySQL)
+	} else {
+		logger.Fatal("please specify database")
+	}
 	if nil != err {
-		logger.Fatalf("opens database file [%s] failed: "+err.Error(), util.Conf.DataFilePath)
+		logger.Fatalf("opens database failed: " + err.Error())
+	}
+	if useSQLite {
+		logger.Debug("used [SQLite] as underlying database")
+	} else {
+		logger.Debug("used [MySQL] as underlying database")
 	}
 
 	tables := []interface{}{
