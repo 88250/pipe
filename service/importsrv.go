@@ -114,7 +114,7 @@ func parseArticle(mdFile *MarkdownFile) *model.Article {
 
 	m := map[string]interface{}{}
 	err := yaml.Unmarshal([]byte(frontMatter), &m)
-	if nil != err {
+	if nil != err || 0 == len(m) {
 		ext := filepath.Ext(mdFile.Name)
 		ret.Title = strings.Split(mdFile.Name, ext)[0]
 		ret.Content = mdFile.Content

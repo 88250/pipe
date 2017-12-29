@@ -125,12 +125,21 @@ func ImportMarkdownAction(c *gin.Context) {
 	}
 
 	var mdFiles []*service.MarkdownFile
+	const (
+		bom0 = 0xef
+		bom1 = 0xbb
+		bom2 = 0xbf
+	)
 	for _, filePath := range filePaths {
 		data, err := ioutil.ReadFile(filePath)
 		if nil != err {
 			logger.Errorf("read file [" + filePath + "] failed")
 
 			continue
+		}
+
+		if len(data) >= 3 && data[0] == bom0 && data[1] == bom1 && data[2] == bom2 {
+			data = data[3:]
 		}
 
 		mdFile := &service.MarkdownFile{
