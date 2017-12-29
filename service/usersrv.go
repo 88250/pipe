@@ -138,7 +138,7 @@ func (srv *userService) GetBlogUsers(page int, blogID uint) (ret []*model.User, 
 
 func (srv *userService) GetOwnBlog(userID uint) *UserBlog {
 	rel := &model.Correlation{}
-	if err := db.Where("id2 = ? AND type = ? AND int1 = ?",
+	if err := db.Where("id2 = ? AND type = ? AND `int1` = ?",
 		userID, model.CorrelationBlogUser, model.UserRoleBlogAdmin).First(rel).Error; nil != err {
 		return nil
 	}

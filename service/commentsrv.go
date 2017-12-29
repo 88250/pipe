@@ -58,7 +58,7 @@ func (srv *commentService) UpdatePushedAt(comment *model.Comment) error {
 
 func (srv *commentService) GetUnpushedComments() (ret []*model.Comment) {
 	t, _ := time.Parse("2006-01-02 15:04:05", "2006-01-02 15:04:05")
-	if err := db.Where("pushed_at <= ?", t).Find(&ret).Error; nil != err {
+	if err := db.Where("`pushed_at` <= ?", t).Find(&ret).Error; nil != err {
 		return
 	}
 
@@ -76,7 +76,7 @@ func (srv *commentService) GetComment(commentID uint) *model.Comment {
 
 func (srv *commentService) GetCommentPage(articleID, commentID uint, blogID uint) int {
 	count := 0
-	if err := db.Model(&model.Comment{}).Where("article_id = ? AND id < ? AND blog_id = ?", articleID, commentID, blogID).
+	if err := db.Model(&model.Comment{}).Where("`article_id` = ? AND `id` < ? AND `blog_id` = ?", articleID, commentID, blogID).
 		Count(&count).Error; nil != err {
 		return 1
 	}

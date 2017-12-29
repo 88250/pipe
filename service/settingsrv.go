@@ -38,7 +38,7 @@ func (srv *settingService) GetSetting(category, name string, blogID uint) *model
 	}
 
 	ret = &model.Setting{}
-	if err := db.Where("category = ? AND name = ? AND blog_id = ?", category, name, blogID).Find(ret).Error; nil != err {
+	if err := db.Where("`category` = ? AND `name` = ? AND `blog_id` = ?", category, name, blogID).Find(ret).Error; nil != err {
 		return nil
 	}
 
