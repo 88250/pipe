@@ -149,7 +149,7 @@ func fillMostUseCategories(settingMap *map[string]interface{}, dataModel *DataMo
 	for _, category := range categories {
 		themeCategory := &model.ThemeCategory{
 			Title: category.Title,
-			URL:   (*settingMap)[model.SettingNameBasicBlogURL].(string) + "/" + category.Title,
+			URL:   (*settingMap)[model.SettingNameBasicBlogURL].(string) + util.PathCategories + category.Path,
 		}
 		themeCategories = append(themeCategories, themeCategory)
 	}
