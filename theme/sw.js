@@ -2,7 +2,7 @@
  * @fileoverview service work.
  *
  * @author <a href="http://vanessa.b3log.org">Liyuan Li</a>
- * @version 0.1.0.0, Nov 30, 2017
+ * @version 0.1.1.0, Jan 2, 2018
  */
 
 import config from '../pipe.json'
@@ -18,9 +18,13 @@ self.addEventListener('activate', event => {
   // delete all caches
   event.waitUntil(
     caches.keys().then(function (keyList) {
-      return Promise.all(keyList.map(function (key) {
+      return Promise.all(keyList.map(async function (key) {
+        const storageStats = await navigator.storage.estimate();
         if (key !== 'pipe-html' && key !== 'pipe-image' &&
           key !== 'pipe-static-' + version) {
+          return caches.delete(key);
+        } else if (storageStats.usage / storageStats.quota > 0.8 && (key === 'pipe-html' || key === 'pipe-image')) {
+          console.log(`clear ${key} cache`);
           return caches.delete(key);
         }
       }));
