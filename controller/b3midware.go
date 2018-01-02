@@ -60,12 +60,10 @@ func fillUser(c *gin.Context) {
 		return
 	case "":
 		redirectURL := c.Request.Referer()
-		logger.Info(redirectURL)
 		if strings.HasPrefix(c.Request.URL.Path, util.PathBlogs) {
 			name := c.Request.URL.Path[len(util.PathBlogs)+1:]
 			name = strings.Split(name, "?")[0]
-			name = strings.Replace(name, "/", "", -1)
-			name = strings.TrimSpace(name)
+			name = strings.Split(name, "/")[0]
 			if "" != name {
 				user := service.User.GetUserByName(name)
 				if nil != user {
@@ -78,7 +76,6 @@ func fillUser(c *gin.Context) {
 				}
 			}
 		}
-		logger.Info(redirectURL, c.Request.URL.Path)
 		redirectURL = strings.TrimSpace(redirectURL)
 		if "" == redirectURL {
 			redirectURL = util.Conf.Server + c.Request.URL.Path
