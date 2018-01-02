@@ -37,9 +37,9 @@ func getRepliesAction(c *gin.Context) {
 	blogID := getBlogID(c)
 	parentCmtIDArg := strings.SplitAfter(c.Request.URL.Path, util.PathComments+"/")[1]
 	parentCmtIDArg = strings.Split(parentCmtIDArg, "/replies")[0]
-	parentCmtID, _ := strconv.Atoi(parentCmtIDArg)
+	parentCmtID, _ := strconv.ParseUint(parentCmtIDArg, 10, 64)
 
-	replyComments := service.Comment.GetReplies(uint(parentCmtID), blogID)
+	replyComments := service.Comment.GetReplies(parentCmtID, blogID)
 	var replies []*model.ThemeReply
 	for _, replyComment := range replyComments {
 		commentAuthor := service.User.GetUser(replyComment.AuthorID)

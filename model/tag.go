@@ -23,5 +23,5 @@ type Tag struct {
 	Title        string `gorm:"size:128" json:"title"`
 	ArticleCount int    `json:"articleCount"`
 
-	BlogID uint `sql:"index" json:"blogID"`
+	BlogID uint64 `sql:"index" json:"blogID"`
 }

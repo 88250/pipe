@@ -79,7 +79,7 @@ func RemoveCommentAction(c *gin.Context) {
 	defer c.JSON(http.StatusOK, result)
 
 	idArg := c.Param("id")
-	id, err := strconv.Atoi(idArg)
+	id, err := strconv.ParseUint(idArg, 10, 64)
 	if nil != err {
 		result.Code = -1
 		result.Msg = err.Error()
@@ -87,7 +87,7 @@ func RemoveCommentAction(c *gin.Context) {
 		return
 	}
 
-	if err := service.Comment.RemoveComment(uint(id)); nil != err {
+	if err := service.Comment.RemoveComment(id); nil != err {
 		result.Code = -1
 		result.Msg = err.Error()
 	}
@@ -107,7 +107,7 @@ func RemoveCommentsAction(c *gin.Context) {
 
 	ids := arg["ids"].([]interface{})
 	for _, id := range ids {
-		if err := service.Comment.RemoveComment(uint(id.(float64))); nil != err {
+		if err := service.Comment.RemoveComment(uint64(id.(float64))); nil != err {
 			logger.Errorf("remove comment failed: " + err.Error())
 		}
 	}

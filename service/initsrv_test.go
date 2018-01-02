@@ -44,7 +44,11 @@ func setup() {
 	}
 
 	util.Conf = &util.Configuration{}
-	util.Conf.DataFilePath = home + "/pipe.test.db"
+	util.Conf.SQLite = home + "/pipe.test.db"
+
+	if util.File.IsExist(util.Conf.SQLite) {
+		os.Remove(util.Conf.SQLite)
+	}
 
 	ConnectDB()
 

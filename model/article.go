@@ -24,7 +24,7 @@ import (
 type Article struct {
 	Model
 
-	AuthorID     uint      `json:"authorID"`
+	AuthorID     uint64    `json:"authorID"`
 	Title        string    `gorm:"size:128" json:"title"`
 	Tags         string    `gorm:"size:128" json:"tags"`
 	Content      string    `gorm:"type:text" json:"content"`
@@ -38,7 +38,7 @@ type Article struct {
 	UserAgent    string    `gorm:"size:255" json:"userAgent"`
 	PushedAt     time.Time `json:"pushedAt"`
 
-	BlogID uint `sql:"index" json:"blogID"`
+	BlogID uint64 `sql:"index" json:"blogID"`
 }
 
 // Article statuses.

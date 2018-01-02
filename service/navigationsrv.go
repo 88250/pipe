@@ -54,7 +54,7 @@ func (srv *navigationService) AddNavigation(navigation *model.Navigation) error 
 	return nil
 }
 
-func (srv *navigationService) RemoveNavigation(id uint) error {
+func (srv *navigationService) RemoveNavigation(id uint64) error {
 	srv.mutex.Lock()
 	defer srv.mutex.Unlock()
 
@@ -94,7 +94,7 @@ func (srv *navigationService) UpdateNavigation(navigation *model.Navigation) err
 	return nil
 }
 
-func (srv *navigationService) ConsoleGetNavigations(page int, blogID uint) (ret []*model.Navigation, pagination *util.Pagination) {
+func (srv *navigationService) ConsoleGetNavigations(page int, blogID uint64) (ret []*model.Navigation, pagination *util.Pagination) {
 	offset := (page - 1) * adminConsoleNavigationListPageSize
 	count := 0
 	if err := db.Model(&model.Navigation{}).Order("number ASC, id DESC").
@@ -108,7 +108,7 @@ func (srv *navigationService) ConsoleGetNavigations(page int, blogID uint) (ret 
 	return
 }
 
-func (srv *navigationService) GetNavigations(blogID uint) (ret []*model.Navigation) {
+func (srv *navigationService) GetNavigations(blogID uint64) (ret []*model.Navigation) {
 	if err := db.Model(&model.Navigation{}).Order("number ASC, id DESC").
 		Where("blog_id = ?", blogID).Find(&ret).Error; nil != err {
 		logger.Errorf("get navigations failed: " + err.Error())
@@ -117,7 +117,7 @@ func (srv *navigationService) GetNavigations(blogID uint) (ret []*model.Navigati
 	return
 }
 
-func (srv *navigationService) ConsoleGetNavigation(id uint) *model.Navigation {
+func (srv *navigationService) ConsoleGetNavigation(id uint64) *model.Navigation {
 	ret := &model.Navigation{}
 	if err := db.First(ret, id).Error; nil != err {
 		return nil

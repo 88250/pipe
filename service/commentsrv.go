@@ -65,7 +65,7 @@ func (srv *commentService) GetUnpushedComments() (ret []*model.Comment) {
 	return
 }
 
-func (srv *commentService) GetComment(commentID uint) *model.Comment {
+func (srv *commentService) GetComment(commentID uint64) *model.Comment {
 	ret := &model.Comment{}
 	if err := db.First(ret, commentID).Error; nil != err {
 		return nil
@@ -74,7 +74,7 @@ func (srv *commentService) GetComment(commentID uint) *model.Comment {
 	return ret
 }
 
-func (srv *commentService) GetCommentPage(articleID, commentID uint, blogID uint) int {
+func (srv *commentService) GetCommentPage(articleID, commentID uint64, blogID uint64) int {
 	count := 0
 	if err := db.Model(&model.Comment{}).Where("`article_id` = ? AND `id` < ? AND `blog_id` = ?", articleID, commentID, blogID).
 		Count(&count).Error; nil != err {
@@ -84,7 +84,7 @@ func (srv *commentService) GetCommentPage(articleID, commentID uint, blogID uint
 	return (count / adminConsoleCommentListPageSize) + 1
 }
 
-func (srv *commentService) GetRepliesCount(parentCommentID uint, blogID uint) int {
+func (srv *commentService) GetRepliesCount(parentCommentID uint64, blogID uint64) int {
 	ret := 0
 	if err := db.Model(&model.Comment{}).Where("parent_comment_id = ? AND blog_id = ?", parentCommentID, blogID).Count(&ret).Error; nil != err {
 		logger.Errorf("count comment [id=%d]'s replies failed: "+err.Error(), parentCommentID)
@@ -93,7 +93,7 @@ func (srv *commentService) GetRepliesCount(parentCommentID uint, blogID uint) in
 	return ret
 }
 
-func (srv *commentService) GetReplies(parentCommentID uint, blogID uint) (ret []*model.Comment) {
+func (srv *commentService) GetReplies(parentCommentID uint64, blogID uint64) (ret []*model.Comment) {
 	if err := db.Where("parent_comment_id = ? AND blog_id = ?", parentCommentID, blogID).Find(&ret).Error; nil != err {
 		logger.Errorf("get comment [id=%d]'s replies failed: "+err.Error(), parentCommentID)
 	}
@@ -101,7 +101,7 @@ func (srv *commentService) GetReplies(parentCommentID uint, blogID uint) (ret []
 	return
 }
 
-func (srv *commentService) ConsoleGetComments(keyword string, page int, blogID uint) (ret []*model.Comment, pagination *util.Pagination) {
+func (srv *commentService) ConsoleGetComments(keyword string, page int, blogID uint64) (ret []*model.Comment, pagination *util.Pagination) {
 	offset := (page - 1) * adminConsoleCommentListPageSize
 	count := 0
 
@@ -123,7 +123,7 @@ func (srv *commentService) ConsoleGetComments(keyword string, page int, blogID u
 	return
 }
 
-func (srv *commentService) GetRecentComments(size int, blogID uint) (ret []*model.Comment) {
+func (srv *commentService) GetRecentComments(size int, blogID uint64) (ret []*model.Comment) {
 	if err := db.Model(&model.Comment{}).Select("id, created_at, content, author_id, article_id").
 		Where("blog_id = ?", blogID).
 		Order("created_at DESC, id DESC").Limit(size).Find(&ret).Error; nil != err {
@@ -133,7 +133,7 @@ func (srv *commentService) GetRecentComments(size int, blogID uint) (ret []*mode
 	return
 }
 
-func (srv *commentService) GetArticleComments(articleID uint, page int, blogID uint) (ret []*model.Comment, pagination *util.Pagination) {
+func (srv *commentService) GetArticleComments(articleID uint64, page int, blogID uint64) (ret []*model.Comment, pagination *util.Pagination) {
 	offset := (page - 1) * themeCommentListPageSize
 	count := 0
 	if err := db.Model(&model.Comment{}).Order("id ASC").
@@ -176,7 +176,7 @@ func (srv *commentService) AddComment(comment *model.Comment) error {
 	return nil
 }
 
-func (srv *commentService) RemoveComment(id uint) error {
+func (srv *commentService) RemoveComment(id uint64) error {
 	srv.mutex.Lock()
 	defer srv.mutex.Unlock()
 

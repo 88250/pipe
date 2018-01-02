@@ -25,5 +25,5 @@ type Archive struct {
 	Month        string `gorm:"size:2" json:"month"`
 	ArticleCount int    `json:"articleCount"`
 
-	BlogID uint `sql:"index" json:"blogID"`
+	BlogID uint64 `sql:"index" json:"blogID"`
 }

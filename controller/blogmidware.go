@@ -143,7 +143,7 @@ func fillCommon(c *gin.Context) {
 	c.Set("dataModel", dataModel)
 }
 
-func fillMostUseCategories(settingMap *map[string]interface{}, dataModel *DataModel, blogID uint) {
+func fillMostUseCategories(settingMap *map[string]interface{}, dataModel *DataModel, blogID uint64) {
 	categories := service.Category.GetCategories(math.MaxInt8, blogID)
 	var themeCategories []*model.ThemeCategory
 	for _, category := range categories {
@@ -156,7 +156,7 @@ func fillMostUseCategories(settingMap *map[string]interface{}, dataModel *DataMo
 	(*dataModel)["MostUseCategories"] = themeCategories
 }
 
-func fillMostUseTags(settingMap *map[string]interface{}, dataModel *DataModel, blogID uint) {
+func fillMostUseTags(settingMap *map[string]interface{}, dataModel *DataModel, blogID uint64) {
 	tagSize, err := strconv.Atoi((*settingMap)[model.SettingNamePreferenceMostUseTagListSize].(string))
 	if nil != err {
 		logger.Errorf("setting [%s] should be an integer, actual is [%v]", model.SettingNamePreferenceMostUseTagListSize,
@@ -175,7 +175,7 @@ func fillMostUseTags(settingMap *map[string]interface{}, dataModel *DataModel, b
 	(*dataModel)["MostUseTags"] = themeTags
 }
 
-func fillMostViewArticles(c *gin.Context, settingMap *map[string]interface{}, dataModel *DataModel, blogID uint) {
+func fillMostViewArticles(c *gin.Context, settingMap *map[string]interface{}, dataModel *DataModel, blogID uint64) {
 	mostViewArticleSize, err := strconv.Atoi((*settingMap)[model.SettingNamePreferenceMostViewArticleListSize].(string))
 	if nil != err {
 		logger.Errorf("setting [%s] should be an integer, actual is [%v]", model.SettingNamePreferenceMostViewArticleListSize,
@@ -208,7 +208,7 @@ func fillMostViewArticles(c *gin.Context, settingMap *map[string]interface{}, da
 	(*dataModel)["MostViewArticles"] = themeMostViewArticles
 }
 
-func fillRecentComments(c *gin.Context, settingMap *map[string]interface{}, dataModel *DataModel, blogID uint) {
+func fillRecentComments(c *gin.Context, settingMap *map[string]interface{}, dataModel *DataModel, blogID uint64) {
 	recentCommentSize, err := strconv.Atoi((*settingMap)[model.SettingNamePreferenceRecentCommentListSize].(string))
 	if nil != err {
 		logger.Errorf("setting [%s] should be an integer, actual is [%v]", model.SettingNamePreferenceRecentCommentListSize,
@@ -246,7 +246,7 @@ func fillRecentComments(c *gin.Context, settingMap *map[string]interface{}, data
 	(*dataModel)["RecentComments"] = themeRecentComments
 }
 
-func fillMostCommentArticles(c *gin.Context, settingMap *map[string]interface{}, dataModel *DataModel, blogID uint) {
+func fillMostCommentArticles(c *gin.Context, settingMap *map[string]interface{}, dataModel *DataModel, blogID uint64) {
 	mostCommentArticleSize, err := strconv.Atoi((*settingMap)[model.SettingNamePreferenceMostCommentArticleListSize].(string))
 	if nil != err {
 		logger.Errorf("setting [%s] should be an integer, actual is [%v]", model.SettingNamePreferenceMostCommentArticleListSize,
@@ -285,7 +285,7 @@ func getBlogURL(c *gin.Context) string {
 	return dataModel["Setting"].(map[string]interface{})[model.SettingNameBasicBlogURL].(string)
 }
 
-func getBlogID(c *gin.Context) uint {
+func getBlogID(c *gin.Context) uint64 {
 	userBlogVal, _ := c.Get("userBlog")
 
 	return userBlogVal.(*service.UserBlog).ID

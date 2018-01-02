@@ -82,7 +82,7 @@ func (srv *initService) Status() (platformStatus *PlatformStatus, err error) {
 	return
 }
 
-func (srv *initService) initBlog(tx *gorm.DB, admin *model.User, blogID uint) error {
+func (srv *initService) initBlog(tx *gorm.DB, admin *model.User, blogID uint64) error {
 	if err := initBlogAdmin(tx, admin, blogID); nil != err {
 		return err
 	}
@@ -149,7 +149,7 @@ func (srv *initService) InitPlatform(platformAdmin *model.User) error {
 	srv.mutex.Lock()
 	defer srv.mutex.Unlock()
 
-	blogID := uint(1)
+	blogID := uint64(1)
 
 	saCount := 0
 	db.Model(&model.Correlation{}).Where("`id1` = ? AND `type` = ? AND `int1` = ? AND `blog_id` = ?",
@@ -174,7 +174,7 @@ func (srv *initService) InitPlatform(platformAdmin *model.User) error {
 	return nil
 }
 
-func initBlogAdmin(tx *gorm.DB, admin *model.User, blogID uint) error {
+func initBlogAdmin(tx *gorm.DB, admin *model.User, blogID uint64) error {
 	admin.Locale = "zh_CN"
 	admin.TotalArticleCount = 1 // article "Hello, World!"
 
@@ -202,7 +202,7 @@ func initBlogAdmin(tx *gorm.DB, admin *model.User, blogID uint) error {
 	return nil
 }
 
-func initNavigation(tx *gorm.DB, blogID uint) error {
+func initNavigation(tx *gorm.DB, blogID uint64) error {
 	navigation := &model.Navigation{
 		Title:      "黑客派",
 		URL:        util.HacPaiURL,
@@ -218,7 +218,7 @@ func initNavigation(tx *gorm.DB, blogID uint) error {
 	return nil
 }
 
-func helloWorld(tx *gorm.DB, admin *model.User, blogID uint) error {
+func helloWorld(tx *gorm.DB, admin *model.User, blogID uint64) error {
 	content := `![Hello](` + util.RandImage() + `?imageView2/1/w/960/h/520/interlace/1/q/100)
 
 欢迎使用 [Pipe](https://github.com/b3log/pipe) 博客平台。这是一篇自动生成的演示文章，编辑或者删除它，然后开始你的独立博客之旅！
@@ -286,7 +286,7 @@ Pipe 博客平台是一个开源项目，如果你觉得它很赞，请到[项�
 	return nil
 }
 
-func initSystemSettings(tx *gorm.DB, blogID uint) error {
+func initSystemSettings(tx *gorm.DB, blogID uint64) error {
 	if err := tx.Create(&model.Setting{
 		Category: model.SettingCategorySystem,
 		Name:     model.SettingNameSystemVer,
@@ -298,7 +298,7 @@ func initSystemSettings(tx *gorm.DB, blogID uint) error {
 	return nil
 }
 
-func initThemeSettings(tx *gorm.DB, blogID uint) error {
+func initThemeSettings(tx *gorm.DB, blogID uint64) error {
 	if err := tx.Create(&model.Setting{
 		Category: model.SettingCategoryTheme,
 		Name:     model.SettingNameThemeName,
@@ -310,7 +310,7 @@ func initThemeSettings(tx *gorm.DB, blogID uint) error {
 	return nil
 }
 
-func initBasicSettings(tx *gorm.DB, blogAdmin *model.User, blogID uint) error {
+func initBasicSettings(tx *gorm.DB, blogAdmin *model.User, blogID uint64) error {
 	if err := tx.Create(&model.Setting{
 		Category: model.SettingCategoryBasic,
 		Name:     model.SettingNameBasicBlogURL,
@@ -392,7 +392,7 @@ func initBasicSettings(tx *gorm.DB, blogAdmin *model.User, blogID uint) error {
 	return nil
 }
 
-func initPreferenceSettings(tx *gorm.DB, blogID uint) error {
+func initPreferenceSettings(tx *gorm.DB, blogID uint64) error {
 	if err := tx.Create(&model.Setting{
 		Category: model.SettingCategoryPreference,
 		Name:     model.SettingNamePreferenceArticleListPageSize,
@@ -446,7 +446,7 @@ func initPreferenceSettings(tx *gorm.DB, blogID uint) error {
 	return nil
 }
 
-func initSignSettings(tx *gorm.DB, blogID uint) error {
+func initSignSettings(tx *gorm.DB, blogID uint64) error {
 	if err := tx.Create(&model.Setting{
 		Category: model.SettingCategorySign,
 		Name:     model.SettingNameArticleSign,
@@ -458,7 +458,7 @@ func initSignSettings(tx *gorm.DB, blogID uint) error {
 	return nil
 }
 
-func initI18nSettings(tx *gorm.DB, blogID uint) error {
+func initI18nSettings(tx *gorm.DB, blogID uint64) error {
 	if err := tx.Create(&model.Setting{
 		Category: model.SettingCategoryI18n,
 		Name:     model.SettingNameI18nLocale,
@@ -477,7 +477,7 @@ func initI18nSettings(tx *gorm.DB, blogID uint) error {
 	return nil
 }
 
-func initFeedSettings(tx *gorm.DB, blogID uint) error {
+func initFeedSettings(tx *gorm.DB, blogID uint64) error {
 	if err := tx.Create(&model.Setting{
 		Category: model.SettingCategoryFeed,
 		Name:     model.SettingNameFeedOutputMode,
@@ -489,7 +489,7 @@ func initFeedSettings(tx *gorm.DB, blogID uint) error {
 	return nil
 }
 
-func initStatisticSettings(tx *gorm.DB, blogID uint) error {
+func initStatisticSettings(tx *gorm.DB, blogID uint64) error {
 	if err := tx.Create(&model.Setting{
 		Category: model.SettingCategoryStatistic,
 		Name:     model.SettingNameStatisticArticleCount,

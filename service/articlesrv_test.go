@@ -34,7 +34,7 @@ func TestGetArticleByPath(t *testing.T) {
 	}
 }
 
-var lastArticleID uint
+var lastArticleID uint64
 
 func TestAddArticle(t *testing.T) {
 	for i := 0; i < articleRecordSize; i++ {

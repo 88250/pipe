@@ -41,7 +41,7 @@ const (
 	adminConsoleCategoryListWindowSize = 20
 )
 
-func (srv *categoryService) GetCategoryByPath(path string, blogID uint) *model.Category {
+func (srv *categoryService) GetCategoryByPath(path string, blogID uint64) *model.Category {
 	ret := &model.Category{}
 	if err := db.Where("path = ? AND blog_ID = ?", path, blogID).First(ret).Error; nil != err {
 		return nil
@@ -92,7 +92,7 @@ func (srv *categoryService) UpdateCategory(category *model.Category) error {
 	return nil
 }
 
-func (srv *categoryService) ConsoleGetCategory(id uint) *model.Category {
+func (srv *categoryService) ConsoleGetCategory(id uint64) *model.Category {
 	ret := &model.Category{}
 	if err := db.First(ret, id).Error; nil != err {
 		return nil
@@ -131,7 +131,7 @@ func (srv *categoryService) AddCategory(category *model.Category) error {
 	return nil
 }
 
-func (srv *categoryService) ConsoleGetCategories(page int, blogID uint) (ret []*model.Category, pagination *util.Pagination) {
+func (srv *categoryService) ConsoleGetCategories(page int, blogID uint64) (ret []*model.Category, pagination *util.Pagination) {
 	offset := (page - 1) * adminConsoleCategoryListPageSize
 	count := 0
 	if err := db.Model(&model.Category{}).Order("number ASC, id DESC").
@@ -145,7 +145,7 @@ func (srv *categoryService) ConsoleGetCategories(page int, blogID uint) (ret []*
 	return
 }
 
-func (srv *categoryService) GetCategories(size int, blogID uint) (ret []*model.Category) {
+func (srv *categoryService) GetCategories(size int, blogID uint64) (ret []*model.Category) {
 	if err := db.Where("blog_id = ?", blogID).Order("number asc").Limit(size).Find(&ret).Error; nil != err {
 		logger.Errorf("get categories failed: " + err.Error())
 	}
@@ -153,7 +153,7 @@ func (srv *categoryService) GetCategories(size int, blogID uint) (ret []*model.C
 	return
 }
 
-func (srv *categoryService) RemoveCategory(id uint) error {
+func (srv *categoryService) RemoveCategory(id uint64) error {
 	srv.mutex.Lock()
 	defer srv.mutex.Unlock()
 

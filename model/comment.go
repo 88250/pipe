@@ -22,13 +22,13 @@ import "time"
 type Comment struct {
 	Model
 
-	ArticleID       uint      `json:"articleID"`
-	AuthorID        uint      `json:"authorID"`
+	ArticleID       uint64    `json:"articleID"`
+	AuthorID        uint64    `json:"authorID"`
 	Content         string    `gorm:"type:text" json:"content"`
-	ParentCommentID uint      `json:"parentCommentID"` // ID of replied comment
+	ParentCommentID uint64    `json:"parentCommentID"` // ID of replied comment
 	IP              string    `gorm:"size:128" json:"ip"`
 	UserAgent       string    `gorm:"size:255" json:"userAgent"`
 	PushedAt        time.Time `json:"pushedAt"`
 
-	BlogID uint `sql:"index" json:"blogID"`
+	BlogID uint64 `sql:"index" json:"blogID"`
 }

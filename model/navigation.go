@@ -26,7 +26,7 @@ type Navigation struct {
 	OpenMethod string `gorm:"size:32" json:"openMethod"`
 	Number     int    `json:"number"` // for sorting
 
-	BlogID uint `sql:"index" json:"blogID"`
+	BlogID uint64 `sql:"index" json:"blogID"`
 }
 
 // Navigation open methods.

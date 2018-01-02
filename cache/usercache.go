@@ -35,7 +35,7 @@ func (cache *userCache) Put(user *model.User) {
 	}
 }
 
-func (cache *userCache) Get(id uint) *model.User {
+func (cache *userCache) Get(id uint64) *model.User {
 	ret, err := cache.idHolder.Get(id)
 	if nil != err && gcache.KeyNotFoundError != err {
 		logger.Errorf("get user [id=%d] from cache failed: %s", id, err)

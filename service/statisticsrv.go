@@ -32,7 +32,7 @@ type statisticService struct {
 	mutex *sync.Mutex
 }
 
-func (srv *statisticService) GetAllStatistics(blogID uint) []*model.Setting {
+func (srv *statisticService) GetAllStatistics(blogID uint64) []*model.Setting {
 	var ret []*model.Setting
 
 	if err := db.Where("category = ? AND blog_id = ?", model.SettingCategoryStatistic, blogID).Find(&ret).Error; nil != err {
@@ -71,7 +71,7 @@ func (srv *statisticService) GetStatistics(blogID uint, statisticNames ...string
 	return ret
 }
 
-func (srv *statisticService) IncViewCount(blogID uint) error {
+func (srv *statisticService) IncViewCount(blogID uint64) error {
 	tx := db.Begin()
 	if err := srv.IncViewCountWithoutTx(tx, blogID); nil != err {
 		tx.Rollback()
@@ -83,7 +83,7 @@ func (srv *statisticService) IncViewCount(blogID uint) error {
 	return nil
 }
 
-func (srv *statisticService) IncViewCountWithoutTx(tx *gorm.DB, blogID uint) error {
+func (srv *statisticService) IncViewCountWithoutTx(tx *gorm.DB, blogID uint64) error {
 	srv.mutex.Lock()
 	defer srv.mutex.Unlock()
 
@@ -105,7 +105,7 @@ func (srv *statisticService) IncViewCountWithoutTx(tx *gorm.DB, blogID uint) err
 	return nil
 }
 
-func (srv *statisticService) IncArticleCount(blogID uint) error {
+func (srv *statisticService) IncArticleCount(blogID uint64) error {
 	tx := db.Begin()
 	if err := srv.IncArticleCountWithoutTx(tx, blogID); nil != err {
 		tx.Rollback()
@@ -117,7 +117,7 @@ func (srv *statisticService) IncArticleCount(blogID uint) error {
 	return nil
 }
 
-func (srv *statisticService) IncArticleCountWithoutTx(tx *gorm.DB, blogID uint) error {
+func (srv *statisticService) IncArticleCountWithoutTx(tx *gorm.DB, blogID uint64) error {
 	srv.mutex.Lock()
 	defer srv.mutex.Unlock()
 
@@ -139,7 +139,7 @@ func (srv *statisticService) IncArticleCountWithoutTx(tx *gorm.DB, blogID uint) 
 	return nil
 }
 
-func (srv *statisticService) DecArticleCount(blogID uint) error {
+func (srv *statisticService) DecArticleCount(blogID uint64) error {
 	tx := db.Begin()
 	if err := srv.DecArticleCountWithoutTx(tx, blogID); nil != err {
 		tx.Rollback()
@@ -151,7 +151,7 @@ func (srv *statisticService) DecArticleCount(blogID uint) error {
 	return nil
 }
 
-func (srv *statisticService) DecArticleCountWithoutTx(tx *gorm.DB, blogID uint) error {
+func (srv *statisticService) DecArticleCountWithoutTx(tx *gorm.DB, blogID uint64) error {
 	srv.mutex.Lock()
 	defer srv.mutex.Unlock()
 
@@ -173,7 +173,7 @@ func (srv *statisticService) DecArticleCountWithoutTx(tx *gorm.DB, blogID uint) 
 	return nil
 }
 
-func (srv *statisticService) IncCommentCount(blogID uint) error {
+func (srv *statisticService) IncCommentCount(blogID uint64) error {
 	tx := db.Begin()
 	if err := srv.IncCommentCountWithoutTx(tx, blogID); nil != err {
 		tx.Rollback()
@@ -185,7 +185,7 @@ func (srv *statisticService) IncCommentCount(blogID uint) error {
 	return nil
 }
 
-func (srv *statisticService) IncCommentCountWithoutTx(tx *gorm.DB, blogID uint) error {
+func (srv *statisticService) IncCommentCountWithoutTx(tx *gorm.DB, blogID uint64) error {
 	srv.mutex.Lock()
 	defer srv.mutex.Unlock()
 
@@ -207,7 +207,7 @@ func (srv *statisticService) IncCommentCountWithoutTx(tx *gorm.DB, blogID uint) 
 	return nil
 }
 
-func (srv *statisticService) DecCommentCount(blogID uint) error {
+func (srv *statisticService) DecCommentCount(blogID uint64) error {
 	tx := db.Begin()
 	if err := srv.DecCommentCountWithoutTx(tx, blogID); nil != err {
 		tx.Rollback()
@@ -219,7 +219,7 @@ func (srv *statisticService) DecCommentCount(blogID uint) error {
 	return nil
 }
 
-func (srv *statisticService) DecCommentCountWithoutTx(tx *gorm.DB, blogID uint) error {
+func (srv *statisticService) DecCommentCountWithoutTx(tx *gorm.DB, blogID uint64) error {
 	srv.mutex.Lock()
 	defer srv.mutex.Unlock()
 

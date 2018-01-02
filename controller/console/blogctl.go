@@ -32,7 +32,7 @@ func BlogSwitchAction(c *gin.Context) {
 	defer c.JSON(http.StatusOK, result)
 
 	idArg := c.Param("id")
-	blogID, err := strconv.Atoi(idArg)
+	blogID, err := strconv.ParseUint(idArg, 10, 64)
 	if nil != err {
 		result.Code = -1
 
@@ -52,7 +52,7 @@ func BlogSwitchAction(c *gin.Context) {
 
 	role := -1
 	for _, userBlog := range userBlogs {
-		if userBlog.ID == uint(blogID) {
+		if userBlog.ID == uint64(blogID) {
 			role = userBlog.UserRole
 
 			break
@@ -69,7 +69,7 @@ func BlogSwitchAction(c *gin.Context) {
 	result.Data = role
 
 	session.URole = role
-	session.BID = uint(blogID)
+	session.BID = uint64(blogID)
 	session.Save(c)
 }
 

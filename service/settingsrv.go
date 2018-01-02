@@ -31,7 +31,7 @@ type settingService struct {
 	mutex *sync.Mutex
 }
 
-func (srv *settingService) GetSetting(category, name string, blogID uint) *model.Setting {
+func (srv *settingService) GetSetting(category, name string, blogID uint64) *model.Setting {
 	ret := cache.Setting.Get(category, name, blogID)
 	if nil != ret {
 		return ret
@@ -47,7 +47,7 @@ func (srv *settingService) GetSetting(category, name string, blogID uint) *model
 	return ret
 }
 
-func (srv *settingService) GetCategorySettings(category string, blogID uint) []*model.Setting {
+func (srv *settingService) GetCategorySettings(category string, blogID uint64) []*model.Setting {
 	var ret []*model.Setting
 
 	if err := db.Where("category = ? AND blog_id = ?", category, blogID).Find(&ret).Error; nil != err {
@@ -57,7 +57,7 @@ func (srv *settingService) GetCategorySettings(category string, blogID uint) []*
 	return ret
 }
 
-func (srv *settingService) GetAllSettings(blogID uint) []*model.Setting {
+func (srv *settingService) GetAllSettings(blogID uint64) []*model.Setting {
 	var ret []*model.Setting
 
 	if err := db.Where("category != ? AND blog_id = ?", model.SettingCategoryStatistic, blogID).Find(&ret).Error; nil != err {
@@ -67,7 +67,7 @@ func (srv *settingService) GetAllSettings(blogID uint) []*model.Setting {
 	return ret
 }
 
-func (srv *settingService) GetSettings(category string, names []string, blogID uint) map[string]*model.Setting {
+func (srv *settingService) GetSettings(category string, names []string, blogID uint64) map[string]*model.Setting {
 	ret := map[string]*model.Setting{}
 	var settings []*model.Setting
 	if err := db.Where("category = ? AND name IN (?) AND blog_id = ?", category, names, blogID).Find(&settings).Error; nil != err {
@@ -81,7 +81,7 @@ func (srv *settingService) GetSettings(category string, names []string, blogID u
 	return ret
 }
 
-func (srv *settingService) UpdateSettings(category string, settings []*model.Setting, blogID uint) error {
+func (srv *settingService) UpdateSettings(category string, settings []*model.Setting, blogID uint64) error {
 	srv.mutex.Lock()
 	defer srv.mutex.Unlock()
 

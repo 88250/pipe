@@ -23,7 +23,7 @@ import (
 )
 
 type ThemeArticle struct {
-	ID           uint          `json:",omitempty"`
+	ID           uint64        `json:",omitempty"`
 	Abstract     template.HTML `json:"abstract"`
 	Author       *ThemeAuthor  `json:",omitempty"`
 	CreatedAt    string        `json:",omitempty"`
@@ -70,7 +70,7 @@ type ThemeCategory struct {
 }
 
 type ThemeComment struct {
-	ID         uint
+	ID         uint64
 	Title      string
 	Content    template.HTML
 	URL        string
@@ -82,7 +82,7 @@ type ThemeComment struct {
 }
 
 type ThemeReply struct {
-	ID        uint
+	ID        uint64
 	Content   template.HTML
 	URL       string
 	Author    *ThemeAuthor

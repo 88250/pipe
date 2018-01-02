@@ -52,7 +52,7 @@ func (a importArticles) Less(i, j int) bool {
 	return a[j].UpdatedAt.After(a[i].UpdatedAt)
 }
 
-func (srv *importService) ImportMarkdowns(mdFiles []*MarkdownFile, authorID, blogID uint) {
+func (srv *importService) ImportMarkdowns(mdFiles []*MarkdownFile, authorID, blogID uint64) {
 	succCnt, failCnt := 0, 0
 	var fails []string
 

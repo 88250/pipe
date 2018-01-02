@@ -32,7 +32,7 @@ type archiveService struct {
 	mutex *sync.Mutex
 }
 
-func (srv *archiveService) GetArchives(blogID uint) []*model.Archive {
+func (srv *archiveService) GetArchives(blogID uint64) []*model.Archive {
 	var ret []*model.Archive
 	if err := db.Where("blog_id = ?", blogID).Order("year DESC, month DESC").Find(&ret).Error; nil != err {
 		logger.Error("get archives failed: " + err.Error())
@@ -98,7 +98,7 @@ func (srv *archiveService) ArchiveArticleWithoutTx(tx *gorm.DB, article *model.A
 	return nil
 }
 
-func (srv *archiveService) GetArchive(year, month string, blogID uint) *model.Archive {
+func (srv *archiveService) GetArchive(year, month string, blogID uint64) *model.Archive {
 	ret := &model.Archive{}
 	if err := db.Where("year = ? AND month = ? AND blog_id = ?",
 		year, month, blogID).First(ret).Error; nil != err {

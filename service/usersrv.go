@@ -38,7 +38,7 @@ const (
 	adminConsoleUserListWindowSize = 20
 )
 
-func (srv *userService) GetBlogAdmin(blogID uint) *model.User {
+func (srv *userService) GetBlogAdmin(blogID uint64) *model.User {
 	rel := &model.Correlation{}
 	if err := db.Where("id1 = ? AND type = ? AND blog_id = ?",
 		blogID, model.UserRoleBlogAdmin, blogID).First(rel).Error; nil != err {
@@ -85,7 +85,7 @@ func (srv *userService) GetUserByName(name string) *model.User {
 	return ret
 }
 
-func (srv *userService) GetUser(userID uint) *model.User {
+func (srv *userService) GetUser(userID uint64) *model.User {
 	ret := cache.User.Get(userID)
 	if nil != ret {
 		return ret
@@ -102,15 +102,15 @@ func (srv *userService) GetUser(userID uint) *model.User {
 }
 
 type UserBlog struct {
-	ID               uint   `json:"id"`    // blog ID
+	ID               uint64 `json:"id"`    // blog ID
 	Title            string `json:"title"` // blog title
 	URL              string `json:"url"`   // blog URL
-	UserID           uint   `json:"userId"`
+	UserID           uint64 `json:"userId"`
 	UserRole         int    `json:"userRole"`
 	UserArticleCount int    `json:"userArticleCount"`
 }
 
-func (srv *userService) GetBlogUsers(page int, blogID uint) (ret []*model.User, pagination *util.Pagination) {
+func (srv *userService) GetBlogUsers(page int, blogID uint64) (ret []*model.User, pagination *util.Pagination) {
 	var correlations []*model.Correlation
 	offset := (page - 1) * adminConsoleUserListPageSize
 	count := 0
@@ -136,7 +136,7 @@ func (srv *userService) GetBlogUsers(page int, blogID uint) (ret []*model.User, 
 	return
 }
 
-func (srv *userService) GetOwnBlog(userID uint) *UserBlog {
+func (srv *userService) GetOwnBlog(userID uint64) *UserBlog {
 	rel := &model.Correlation{}
 	if err := db.Where("id2 = ? AND type = ? AND `int1` = ?",
 		userID, model.CorrelationBlogUser, model.UserRoleBlogAdmin).First(rel).Error; nil != err {
@@ -166,7 +166,7 @@ func (srv *userService) GetRole(userID, blogID uint) int {
 	return rel.Int1
 }
 
-func (srv *userService) GetUserBlogs(userID uint) (ret []*UserBlog) {
+func (srv *userService) GetUserBlogs(userID uint64) (ret []*UserBlog) {
 	var correlations []*model.Correlation
 	if err := db.Where("id2 = ? AND type = ?", userID, model.CorrelationBlogUser).
 		Find(&correlations).Error; nil != err {
@@ -191,7 +191,7 @@ func (srv *userService) GetUserBlogs(userID uint) (ret []*UserBlog) {
 	return ret
 }
 
-func (srv *userService) GetUserBlog(userID, blogID uint) *UserBlog {
+func (srv *userService) GetUserBlog(userID, blogID uint64) *UserBlog {
 	rel := &model.Correlation{}
 	if err := db.Where("id1 = ? AND id2 = ? AND type = ? AND blog_id = ?", blogID, userID, model.CorrelationBlogUser, blogID).
 		First(&rel).Error; nil != err {
@@ -211,7 +211,7 @@ func (srv *userService) GetUserBlog(userID, blogID uint) *UserBlog {
 	}
 }
 
-func (srv *userService) AddUserToBlog(userID, blogID uint) error {
+func (srv *userService) AddUserToBlog(userID, blogID uint64) error {
 	srv.mutex.Lock()
 	defer srv.mutex.Unlock()
 

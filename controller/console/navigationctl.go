@@ -58,14 +58,14 @@ func GetNavigationAction(c *gin.Context) {
 	defer c.JSON(http.StatusOK, result)
 
 	idArg := c.Param("id")
-	id, err := strconv.Atoi(idArg)
+	id, err := strconv.ParseUint(idArg, 10, 64)
 	if nil != err {
 		result.Code = -1
 
 		return
 	}
 
-	data := service.Navigation.ConsoleGetNavigation(uint(id))
+	data := service.Navigation.ConsoleGetNavigation(uint64(id))
 	if nil == data {
 		result.Code = -1
 
@@ -80,7 +80,7 @@ func RemoveNavigationAction(c *gin.Context) {
 	defer c.JSON(http.StatusOK, result)
 
 	idArg := c.Param("id")
-	id, err := strconv.Atoi(idArg)
+	id, err := strconv.ParseUint(idArg, 10, 64)
 	if nil != err {
 		result.Code = -1
 		result.Msg = err.Error()
@@ -88,7 +88,7 @@ func RemoveNavigationAction(c *gin.Context) {
 		return
 	}
 
-	if err := service.Navigation.RemoveNavigation(uint(id)); nil != err {
+	if err := service.Navigation.RemoveNavigation(uint64(id)); nil != err {
 		result.Code = -1
 		result.Msg = err.Error()
 	}
@@ -99,7 +99,7 @@ func UpdateNavigationAction(c *gin.Context) {
 	defer c.JSON(http.StatusOK, result)
 
 	idArg := c.Param("id")
-	id, err := strconv.Atoi(idArg)
+	id, err := strconv.ParseUint(idArg, 10, 64)
 	if nil != err {
 		result.Code = -1
 		result.Msg = err.Error()
@@ -107,7 +107,7 @@ func UpdateNavigationAction(c *gin.Context) {
 		return
 	}
 
-	navigation := &model.Navigation{Model: model.Model{ID: uint(id)}}
+	navigation := &model.Navigation{Model: model.Model{ID: uint64(id)}}
 	if err := c.BindJSON(navigation); nil != err {
 		result.Code = -1
 		result.Msg = "parses update navigation request failed"

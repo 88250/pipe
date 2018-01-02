@@ -31,7 +31,7 @@ func UpdateCategoryAction(c *gin.Context) {
 	defer c.JSON(http.StatusOK, result)
 
 	idArg := c.Param("id")
-	id, err := strconv.Atoi(idArg)
+	id, err := strconv.ParseUint(idArg, 10, 64)
 	if nil != err {
 		result.Code = -1
 		result.Msg = err.Error()
@@ -39,7 +39,7 @@ func UpdateCategoryAction(c *gin.Context) {
 		return
 	}
 
-	category := &model.Category{Model: model.Model{ID: uint(id)}}
+	category := &model.Category{Model: model.Model{ID: uint64(id)}}
 	if err := c.BindJSON(category); nil != err {
 		result.Code = -1
 		result.Msg = "parses update category request failed"
@@ -61,7 +61,7 @@ func GetCategoryAction(c *gin.Context) {
 	defer c.JSON(http.StatusOK, result)
 
 	idArg := c.Param("id")
-	id, err := strconv.Atoi(idArg)
+	id, err := strconv.ParseUint(idArg, 10, 64)
 	if nil != err {
 		result.Code = -1
 		result.Msg = err.Error()
@@ -69,7 +69,7 @@ func GetCategoryAction(c *gin.Context) {
 		return
 	}
 
-	data := service.Category.ConsoleGetCategory(uint(id))
+	data := service.Category.ConsoleGetCategory(id)
 	if nil == data {
 		result.Code = -1
 
@@ -131,7 +131,7 @@ func RemoveCategoryAction(c *gin.Context) {
 	defer c.JSON(http.StatusOK, result)
 
 	idArg := c.Param("id")
-	id, err := strconv.Atoi(idArg)
+	id, err := strconv.ParseUint(idArg, 10, 64)
 	if nil != err {
 		result.Code = -1
 		result.Msg = err.Error()
@@ -139,7 +139,7 @@ func RemoveCategoryAction(c *gin.Context) {
 		return
 	}
 
-	if err := service.Category.RemoveCategory(uint(id)); nil != err {
+	if err := service.Category.RemoveCategory(uint64(id)); nil != err {
 		result.Code = -1
 		result.Msg = err.Error()
 	}

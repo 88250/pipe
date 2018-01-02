@@ -23,7 +23,7 @@ import (
 )
 
 type ConsoleArticle struct {
-	ID           uint           `json:"id"`
+	ID           uint64         `json:"id"`
 	Author       *ConsoleAuthor `json:"author"`
 	CreatedAt    string         `json:"createdAt"`
 	Title        string         `json:"title"`
@@ -50,7 +50,7 @@ func (u *ConsoleAuthor) AvatarURLWithSize(size int) string {
 }
 
 type ConsoleCategory struct {
-	ID          uint   `json:"id"`
+	ID          uint64 `json:"id"`
 	Title       string `json:"title"`
 	URL         string `json:"url"`
 	Description string `json:"description"`
@@ -59,7 +59,7 @@ type ConsoleCategory struct {
 }
 
 type ConsoleComment struct {
-	ID            uint           `json:"id"`
+	ID            uint64         `json:"id"`
 	Author        *ConsoleAuthor `json:"author"`
 	ArticleAuthor *ConsoleAuthor `json:"articleAuthor"`
 	CreatedAt     string         `json:"createdAt"`
@@ -69,7 +69,7 @@ type ConsoleComment struct {
 }
 
 type ConsoleNavigation struct {
-	ID         uint   `json:"id"`
+	ID         uint64 `json:"id"`
 	Title      string `json:"title"`
 	URL        string `json:"url"`
 	IconURL    string `json:"iconURL"`
@@ -83,7 +83,7 @@ type ConsoleTheme struct {
 }
 
 type ConsoleUser struct {
-	ID           uint   `json:"id"`
+	ID           uint64 `json:"id"`
 	Name         string `json:"name"`
 	Nickname     string `json:"nickname"`
 	Role         int    `json:"role"`

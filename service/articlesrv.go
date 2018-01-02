@@ -53,7 +53,7 @@ func (srv *articleService) GetUnpushedArticles() (ret []*model.Article) {
 	return
 }
 
-func (srv *articleService) GetArchiveArticles(archiveID uint, page int, blogID uint) (ret []*model.Article, pagination *util.Pagination) {
+func (srv *articleService) GetArchiveArticles(archiveID uint64, page int, blogID uint64) (ret []*model.Article, pagination *util.Pagination) {
 	pageSize, windowSize := getPageWindowSize(blogID)
 	offset := (page - 1) * pageSize
 	count := 0
@@ -64,7 +64,7 @@ func (srv *articleService) GetArchiveArticles(archiveID uint, page int, blogID u
 		return
 	}
 
-	var articleIDs []uint
+	var articleIDs []uint64
 	for _, articleTagRel := range rels {
 		articleIDs = append(articleIDs, articleTagRel.ID1)
 	}
@@ -82,7 +82,7 @@ func (srv *articleService) GetArchiveArticles(archiveID uint, page int, blogID u
 	return
 }
 
-func (srv *articleService) GetPreviousArticle(id uint, blogID uint) *model.Article {
+func (srv *articleService) GetPreviousArticle(id uint64, blogID uint64) *model.Article {
 	ret := &model.Article{}
 	if err := db.Where("id < ? AND blog_id = ?", id, blogID).Order("created_at DESC").Limit(1).Find(ret).Error; nil != err {
 		return nil
@@ -91,7 +91,7 @@ func (srv *articleService) GetPreviousArticle(id uint, blogID uint) *model.Artic
 	return ret
 }
 
-func (srv *articleService) GetNextArticle(id uint, blogID uint) *model.Article {
+func (srv *articleService) GetNextArticle(id uint64, blogID uint64) *model.Article {
 	ret := &model.Article{}
 	if err := db.Where("id > ? AND blog_id = ?", id, blogID).Limit(1).Find(ret).Error; nil != err {
 		return nil
@@ -100,7 +100,7 @@ func (srv *articleService) GetNextArticle(id uint, blogID uint) *model.Article {
 	return ret
 }
 
-func (srv *articleService) GetArticleByPath(path string, blogID uint) *model.Article {
+func (srv *articleService) GetArticleByPath(path string, blogID uint64) *model.Article {
 	path = strings.TrimSpace(path)
 	if "" == path || util.IsReservedPath(path) {
 		return nil
@@ -171,7 +171,7 @@ func (srv *articleService) AddArticle(article *model.Article) error {
 	return nil
 }
 
-func (srv *articleService) ConsoleGetArticles(keyword string, page int, blogID uint) (ret []*model.Article, pagination *util.Pagination) {
+func (srv *articleService) ConsoleGetArticles(keyword string, page int, blogID uint64) (ret []*model.Article, pagination *util.Pagination) {
 	offset := (page - 1) * adminConsoleArticleListPageSize
 	count := 0
 
@@ -194,7 +194,7 @@ func (srv *articleService) ConsoleGetArticles(keyword string, page int, blogID u
 	return
 }
 
-func (srv *articleService) GetArticles(keyword string, page int, blogID uint) (ret []*model.Article, pagination *util.Pagination) {
+func (srv *articleService) GetArticles(keyword string, page int, blogID uint64) (ret []*model.Article, pagination *util.Pagination) {
 	pageSize, windowSize := getPageWindowSize(blogID)
 	offset := (page - 1) * pageSize
 	count := 0
@@ -219,7 +219,7 @@ func (srv *articleService) GetArticles(keyword string, page int, blogID uint) (r
 	return
 }
 
-func (srv *articleService) GetCategoryArticles(categoryID uint, page int, blogID uint) (ret []*model.Article, pagination *util.Pagination) {
+func (srv *articleService) GetCategoryArticles(categoryID uint64, page int, blogID uint64) (ret []*model.Article, pagination *util.Pagination) {
 	pageSize, windowSize := getPageWindowSize(blogID)
 	offset := (page - 1) * pageSize
 
@@ -229,7 +229,7 @@ func (srv *articleService) GetCategoryArticles(categoryID uint, page int, blogID
 		return
 	}
 
-	var tagIDs []uint
+	var tagIDs []uint64
 	for _, categoryTagRel := range rels {
 		tagIDs = append(tagIDs, categoryTagRel.ID2)
 	}
@@ -244,7 +244,7 @@ func (srv *articleService) GetCategoryArticles(categoryID uint, page int, blogID
 
 	pagination = util.NewPagination(page, pageSize, windowSize, count)
 
-	var articleIDs []uint
+	var articleIDs []uint64
 	for _, articleTagRel := range rels {
 		articleIDs = append(articleIDs, articleTagRel.ID1)
 	}
@@ -256,7 +256,7 @@ func (srv *articleService) GetCategoryArticles(categoryID uint, page int, blogID
 	return
 }
 
-func (srv *articleService) GetTagArticles(tagID uint, page int, blogID uint) (ret []*model.Article, pagination *util.Pagination) {
+func (srv *articleService) GetTagArticles(tagID uint64, page int, blogID uint64) (ret []*model.Article, pagination *util.Pagination) {
 	pageSize, windowSize := getPageWindowSize(blogID)
 	offset := (page - 1) * pageSize
 	count := 0
@@ -267,7 +267,7 @@ func (srv *articleService) GetTagArticles(tagID uint, page int, blogID uint) (re
 		return
 	}
 
-	var articleIDs []uint
+	var articleIDs []uint64
 	for _, articleTagRel := range rels {
 		articleIDs = append(articleIDs, articleTagRel.ID1)
 	}
@@ -284,7 +284,7 @@ func (srv *articleService) GetTagArticles(tagID uint, page int, blogID uint) (re
 	return
 }
 
-func (srv *articleService) GetAuthorArticles(authorID uint, page int, blogID uint) (ret []*model.Article, pagination *util.Pagination) {
+func (srv *articleService) GetAuthorArticles(authorID uint64, page int, blogID uint64) (ret []*model.Article, pagination *util.Pagination) {
 	pageSize, windowSize := getPageWindowSize(blogID)
 	offset := (page - 1) * pageSize
 	count := 0
@@ -302,7 +302,7 @@ func (srv *articleService) GetAuthorArticles(authorID uint, page int, blogID uin
 	return
 }
 
-func (srv *articleService) GetMostViewArticles(size int, blogID uint) (ret []*model.Article) {
+func (srv *articleService) GetMostViewArticles(size int, blogID uint64) (ret []*model.Article) {
 	if err := db.Model(&model.Article{}).Select("id, created_at, author_id, title, path").
 		Where("status = ? AND blog_id = ?", model.ArticleStatusOK, blogID).
 		Order("view_count DESC, created_at DESC").Limit(size).Find(&ret).Error; nil != err {
@@ -312,7 +312,7 @@ func (srv *articleService) GetMostViewArticles(size int, blogID uint) (ret []*mo
 	return
 }
 
-func (srv *articleService) GetMostCommentArticles(size int, blogID uint) (ret []*model.Article) {
+func (srv *articleService) GetMostCommentArticles(size int, blogID uint64) (ret []*model.Article) {
 	if err := db.Model(&model.Article{}).Select("id, created_at, author_id, title, path").
 		Where("status = ? AND blog_id = ?", model.ArticleStatusOK, blogID).
 		Order("comment_count DESC, id DESC").Limit(size).Find(&ret).Error; nil != err {
@@ -322,7 +322,7 @@ func (srv *articleService) GetMostCommentArticles(size int, blogID uint) (ret []
 	return
 }
 
-func (srv *articleService) ConsoleGetArticle(id uint) *model.Article {
+func (srv *articleService) ConsoleGetArticle(id uint64) *model.Article {
 	ret := &model.Article{}
 	if err := db.First(ret, id).Error; nil != err {
 		return nil
@@ -331,7 +331,7 @@ func (srv *articleService) ConsoleGetArticle(id uint) *model.Article {
 	return ret
 }
 
-func (srv *articleService) RemoveArticle(id uint) error {
+func (srv *articleService) RemoveArticle(id uint64) error {
 	srv.mutex.Lock()
 	defer srv.mutex.Unlock()
 
@@ -640,7 +640,7 @@ func normalizeArticlePath(article *model.Article) error {
 	return nil
 }
 
-func getPageWindowSize(blogID uint) (pageSize, windowSize int) {
+func getPageWindowSize(blogID uint64) (pageSize, windowSize int) {
 	pageSizeSetting := Setting.GetSetting(model.SettingCategoryPreference, model.SettingNamePreferenceArticleListPageSize, blogID)
 	pageSize, err := strconv.Atoi(pageSizeSetting.Value)
 	if nil != err {

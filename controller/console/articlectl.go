@@ -79,14 +79,14 @@ func GetArticleAction(c *gin.Context) {
 	defer c.JSON(http.StatusOK, result)
 
 	idArg := c.Param("id")
-	id, err := strconv.Atoi(idArg)
+	id, err := strconv.ParseUint(idArg, 10, 64)
 	if nil != err {
 		result.Code = -1
 
 		return
 	}
 
-	data := service.Article.ConsoleGetArticle(uint(id))
+	data := service.Article.ConsoleGetArticle(uint64(id))
 	if nil == data {
 		result.Code = -1
 
@@ -149,7 +149,7 @@ func RemoveArticleAction(c *gin.Context) {
 	defer c.JSON(http.StatusOK, result)
 
 	idArg := c.Param("id")
-	id, err := strconv.Atoi(idArg)
+	id, err := strconv.ParseUint(idArg, 10, 64)
 	if nil != err {
 		result.Code = -1
 		result.Msg = err.Error()
@@ -157,7 +157,7 @@ func RemoveArticleAction(c *gin.Context) {
 		return
 	}
 
-	if err := service.Article.RemoveArticle(uint(id)); nil != err {
+	if err := service.Article.RemoveArticle(uint64(id)); nil != err {
 		result.Code = -1
 		result.Msg = err.Error()
 	}
@@ -177,7 +177,7 @@ func RemoveArticlesAction(c *gin.Context) {
 
 	ids := arg["ids"].([]interface{})
 	for _, id := range ids {
-		if err := service.Article.RemoveArticle(uint(id.(float64))); nil != err {
+		if err := service.Article.RemoveArticle(uint64(id.(float64))); nil != err {
 			logger.Errorf("remove article failed: " + err.Error())
 		}
 	}
@@ -188,7 +188,7 @@ func UpdateArticleAction(c *gin.Context) {
 	defer c.JSON(http.StatusOK, result)
 
 	idArg := c.Param("id")
-	id, err := strconv.Atoi(idArg)
+	id, err := strconv.ParseUint(idArg, 10, 64)
 	if nil != err {
 		result.Code = -1
 		result.Msg = err.Error()
@@ -196,7 +196,7 @@ func UpdateArticleAction(c *gin.Context) {
 		return
 	}
 
-	article := &model.Article{Model: model.Model{ID: uint(id)}}
+	article := &model.Article{Model: model.Model{ID: uint64(id)}}
 	if err := c.BindJSON(article); nil != err {
 		result.Code = -1
 		result.Msg = "parses update article request failed"

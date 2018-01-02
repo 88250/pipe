@@ -20,6 +20,6 @@ import (
 	"time"
 )
 
-func CurrentMillisecond() uint {
-	return uint(time.Now().UnixNano() / int64(time.Millisecond))
+func CurrentMillisecond() uint64 {
+	return uint64(time.Now().UnixNano() / int64(time.Millisecond))
 }

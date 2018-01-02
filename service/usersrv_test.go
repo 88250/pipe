@@ -33,7 +33,7 @@ func TestGetUserByName(t *testing.T) {
 }
 
 func TestGetUser(t *testing.T) {
-	user := User.GetUser(uint(1))
+	user := User.GetUser(uint64(1))
 	if nil == user {
 		t.Errorf("user is nil")
 

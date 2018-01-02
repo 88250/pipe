@@ -28,5 +28,5 @@ type Category struct {
 	Tags            string `gorm:"size:128" json:"tags"`
 	Number          int    `json:"number"` // for sorting
 
-	BlogID uint `sql:"index" json:"blogID"`
+	BlogID uint64 `sql:"index" json:"blogID"`
 }

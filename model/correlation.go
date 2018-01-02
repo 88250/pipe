@@ -32,8 +32,8 @@ const (
 type Correlation struct {
 	Model
 
-	ID1  uint   `json:"id1"`
-	ID2  uint   `json:"id2"`
+	ID1  uint64 `json:"id1"`
+	ID2  uint64 `json:"id2"`
 	Str1 string `gorm:"size:255" json:"str1"`
 	Str2 string `gorm:"size:255" json:"str2"`
 	Str3 string `gorm:"size:255" json:"str3"`
@@ -44,5 +44,5 @@ type Correlation struct {
 	Int4 int    `json:int4`
 	Type int    `json:"type"`
 
-	BlogID uint `sql:"index" json:"blogID"`
+	BlogID uint64 `sql:"index" json:"blogID"`
 }
