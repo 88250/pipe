@@ -62,7 +62,7 @@ func importCategories(sqlite, mysql *gorm.DB, models []*model.Category) {
 			logger.Fatalf("saves data failed: ", err.Error())
 		}
 	}
-	logger.Infof("imported [%d] articles", len(models))
+	logger.Infof("imported [%d] categories", len(models))
 }
 
 func importComments(sqlite, mysql *gorm.DB, models []*model.Comment) {
@@ -74,7 +74,7 @@ func importComments(sqlite, mysql *gorm.DB, models []*model.Comment) {
 			logger.Fatalf("saves data failed: ", err.Error())
 		}
 	}
-	logger.Infof("imported [%d] articles", len(models))
+	logger.Infof("imported [%d] comments", len(models))
 }
 
 func importCorrelations(sqlite, mysql *gorm.DB, models []*model.Correlation) {
@@ -86,7 +86,7 @@ func importCorrelations(sqlite, mysql *gorm.DB, models []*model.Correlation) {
 			logger.Fatalf("saves data failed: ", err.Error())
 		}
 	}
-	logger.Infof("imported [%d] articles", len(models))
+	logger.Infof("imported [%d] correlations", len(models))
 }
 
 func importNavigations(sqlite, mysql *gorm.DB, models []*model.Navigation) {
@@ -98,7 +98,7 @@ func importNavigations(sqlite, mysql *gorm.DB, models []*model.Navigation) {
 			logger.Fatalf("saves data failed: ", err.Error())
 		}
 	}
-	logger.Infof("imported [%d] articles", len(models))
+	logger.Infof("imported [%d] navigations", len(models))
 }
 
 func importSettings(sqlite, mysql *gorm.DB, models []*model.Setting) {
@@ -110,7 +110,7 @@ func importSettings(sqlite, mysql *gorm.DB, models []*model.Setting) {
 			logger.Fatalf("saves data failed: ", err.Error())
 		}
 	}
-	logger.Infof("imported [%d] articles", len(models))
+	logger.Infof("imported [%d] settings", len(models))
 }
 
 func importTags(sqlite, mysql *gorm.DB, models []*model.Tag) {
@@ -122,7 +122,7 @@ func importTags(sqlite, mysql *gorm.DB, models []*model.Tag) {
 			logger.Fatalf("saves data failed: ", err.Error())
 		}
 	}
-	logger.Infof("imported [%d] articles", len(models))
+	logger.Infof("imported [%d] tags", len(models))
 }
 
 func importUsers(sqlite, mysql *gorm.DB, models []*model.User) {
@@ -134,5 +134,5 @@ func importUsers(sqlite, mysql *gorm.DB, models []*model.User) {
 			logger.Fatalf("saves data failed: ", err.Error())
 		}
 	}
-	logger.Infof("imported [%d] articles", len(models))
+	logger.Infof("imported [%d] users", len(models))
 }
