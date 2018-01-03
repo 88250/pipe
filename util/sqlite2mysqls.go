@@ -3,7 +3,6 @@ package util
 import (
 	"github.com/b3log/pipe/model"
 	"github.com/jinzhu/gorm"
-	"time"
 )
 
 func sqlite2MySQL(sqliteDataFilePath, mysqlConn string) {
