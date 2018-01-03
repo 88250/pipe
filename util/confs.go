@@ -165,9 +165,7 @@ func LoadConf() {
 			logger.Fatal("please specify -mysql")
 		}
 
-		if err := sqlite2MySQL(Conf.SQLite, Conf.MySQL); nil != err {
-			logger.Fatal("Import data from SQLite ["+Conf.SQLite+"] to MySQL ["+Conf.MySQL+"] failed: ", err)
-		}
+		sqlite2MySQL(Conf.SQLite, Conf.MySQL)
 
 		os.Exit(0)
 	}
