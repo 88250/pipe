@@ -6,12 +6,12 @@
  * @fileOverview editor
  *
  * @author <a href="http://vanessa.b3log.org">Liyuan Li</a>
- * @version 0.2.1.0, Dec 4, 2017
+ * @version 0.3.0.0, Jun 3, 2018
  */
 import toMarkdown from 'to-markdown'
 import $ from 'jquery'
 import hotkeys from '../../hotkeys'
-import {ajaxUpload, debounceInput, genUploaded, genUploading, insertTextAtCaret} from './tool'
+import {ajaxUpload, debounceInput, genUploaded, genUploading, insertTextAtCaret, replaceTextareaValue} from './tool'
 import allEmoji from './emoji.json'
 
 hotkeys();
@@ -188,15 +188,13 @@ export const Editor = (config) => {
   }
   $emoji.find('.fn-clear').html(emojiHTML);
   $emoji.on('click', 'span', function () {
-    insertTextAtCaret(textarea, $(this).data('value'), '', true);
-    debounceInput(timerId, config.change, $editor)
+    insertTextAtCaret(textarea, $(this).data('value'), '', true)
   })
 
   $editor.find('.b3log-editor__toolbar > span').click(function () {
     const $it = $(this);
     if ($it.data('prefix')) {
       insertTextAtCaret(textarea, $it.data('prefix'), $it.data('suffix'));
-      debounceInput(timerId, config.change, $editor)
     } else if ($it.data('type') === 'view') {
       if ($it.hasClass('b3log-editor__icon--current')) {
         $it.removeClass('b3log-editor__icon--current');
@@ -223,8 +221,7 @@ export const Editor = (config) => {
     insertTextAtCaret(textarea,
       genUploading(event.target.files, config.uploadMax, config.label.loading, config.label.over), '')
     ajaxUpload(config.uploadURL, event.target.files, config.uploadMax, (response) => {
-      textarea.value = genUploaded(response.data, textarea.value, config.label.loading, config.label.error)
-      debounceInput(timerId, config.change, $editor)
+      genUploaded(response.data, textarea, config.label.loading, config.label.error)
       event.target.value = ''
     }, (response) => {
       event.target.value = ''
@@ -269,8 +266,7 @@ export const Editor = (config) => {
             }
 
             config.fetchUpload && config.fetchUpload(target.src, (originalURL, url) => {
-              $textarea.val($textarea.val().replace(originalURL, url))
-              debounceInput(timerId, config.change, $editor)
+              replaceTextareaValue(textarea, originalURL, url)
             });
 
             return `![${target.alt}](${target.src})`;
@@ -280,19 +276,16 @@ export const Editor = (config) => {
       })
       if (hasCode) {
         insertTextAtCaret(event.target, event.originalEvent.clipboardData.getData('text/plain'), '', true)
-        debounceInput(timerId, config.change, $editor)
       } else {
         const div = document.createElement('div')
         div.innerHTML = markdownStr
         markdownStr = div.innerText.replace(/\n{2,}/g, '\n\n').replace(/(^\s*)|(\s*)$/g, '')
         insertTextAtCaret(event.target, markdownStr, '', true)
-        debounceInput(timerId, config.change, $editor)
         div.remove()
       }
     } else if (event.originalEvent.clipboardData.getData('text/plain').replace(/(^\s*)|(\s*)$/g, '') !== '' &&
       event.originalEvent.clipboardData.files.length === 0) {
       insertTextAtCaret(event.target, event.originalEvent.clipboardData.getData('text/plain'), '', true)
-      debounceInput(timerId, config.change, $editor)
     } else if (event.originalEvent.clipboardData.files.length > 0) {
       // upload file
       if (config.uploadURL) {
@@ -300,11 +293,8 @@ export const Editor = (config) => {
           genUploading(event.originalEvent.clipboardData.files, config.uploadMax, config.label.loading, config.label.over),
           '', true)
         ajaxUpload(config.uploadURL, event.originalEvent.clipboardData.files, config.uploadMax, (response) => {
-          event.target.value = genUploaded(response.data, event.target.value,
-            config.label.loading, config.label.error)
-          debounceInput(timerId, config.change, $editor)
+          genUploaded(response.data, event.target, config.label.loading, config.label.error)
         }, (response) => {
-          event.target.value = ''
           response && alert(response.msg)
         })
       }
@@ -321,11 +311,8 @@ export const Editor = (config) => {
     insertTextAtCaret(textarea,
       genUploading(files, config.uploadMax, config.label.loading, config.label.over), '')
     ajaxUpload(config.uploadURL, files, config.uploadMax, (response) => {
-      textarea.value = genUploaded(response.data, textarea.value,
-        config.label.loading, config.label.error)
-      debounceInput(timerId, config.change, $editor)
+      genUploaded(response.data, textarea, config.label.loading, config.label.error)
     }, (response) => {
-      event.target.value = ''
       response && alert(response.msg)
     })
   }).bind('input', function (event) {
@@ -370,10 +357,11 @@ ${hintData.imageURL ? '<img src="' + hintData.imageURL + '"/>' : hintData.value}
           splitChar = '@'
         }
 
-        while (!textarea.value.substr(0, textarea.selectionEnd).endsWith(splitChar)) {
-          document.execCommand("delete", false)
+        while (!textarea.value.substr(0, textarea.selectionEnd).endsWith(splitChar) &&
+          textarea.value.substr(0, textarea.selectionEnd) !== '') {
+          document.execCommand('delete', false)
         }
-        document.execCommand("delete", false)
+        document.execCommand('delete', false)
         document.execCommand('insertText', false, $it.data('value'))
       });
 
@@ -474,13 +462,12 @@ ${hintData.imageURL ? '<img src="' + hintData.imageURL + '"/>' : hintData.value}
       if ($currentHint.data('value').indexOf('@') === 0) {
         splitChar = '@'
       }
-      while (!this.value.substr(0, this.selectionEnd).endsWith(splitChar)) {
-        document.execCommand("delete", false)
+      while (!this.value.substr(0, this.selectionEnd).endsWith(splitChar) &&
+      this.value.substr(0, textarea.selectionEnd) !== '') {
+        document.execCommand('delete', false)
       }
-      document.execCommand("delete", false)
+      document.execCommand('delete', false)
       document.execCommand('insertText', false, $currentHint.data('value'))
-
-      debounceInput(timerId, config.change, $editor)
     }
   }).bind('keydown', 'esc', function (event) {
     config.esc && config.esc(event);
@@ -545,7 +532,6 @@ ${hintData.imageURL ? '<img src="' + hintData.imageURL + '"/>' : hintData.value}
         Audio.init(function () {
           Audio.handleStartRecording();
           insertTextAtCaret(textarea, '\n[Start Recording]\n', '');
-          debounceInput(timerId, config.change, $editor)
         })
       } else {
         Audio.handleStartRecording();
@@ -561,21 +547,16 @@ ${hintData.imageURL ? '<img src="' + hintData.imageURL + '"/>' : hintData.value}
 
       Audio.handleStopRecording();
 
-      textarea.value = textarea.value.replace('\n[Start Recording]\n', '\n[End Recording, Start Uploading]\n');
-      debounceInput(timerId, config.change, $editor)
+      replaceTextareaValue(textarea, '\n[Start Recording]\n', '\n[End Recording, Start Uploading]\n');
 
       ajaxUpload(config.uploadURL, [Audio.wavFileBlob.getDataBlob()], config.uploadMax, (response) => {
         if (response.data.errFiles.length > 0) {
-          textarea.value = textarea.value.replace('\n[End Recording, Start Uploading]\n',
-            `\n[Record Upload Error]\n`)
+          replaceTextareaValue(textarea, '\n[End Recording, Start Uploading]\n', `\n[Record Upload Error]\n`)
         } else if (response.data.succMap) {
-          textarea.value = textarea.value.replace('\n[End Recording, Start Uploading]\n',
+          replaceTextareaValue(textarea, '\n[End Recording, Start Uploading]\n',
             `\n<audio controls="controls" src="${response.data.succMap.blob}">\n`)
         }
-
-        debounceInput(timerId, config.change, $editor)
       }, (response) => {
-        event.target.value = ''
         response && alert(response.msg)
       })
       return false;
