@@ -20,6 +20,7 @@ package util
 import (
 	"encoding/json"
 	"flag"
+	"fmt"
 	"io/ioutil"
 	"os"
 	"path/filepath"
@@ -28,19 +29,30 @@ import (
 	"time"
 
 	"github.com/b3log/pipe/log"
+	"github.com/b3log/pipe/model"
+	"github.com/jinzhu/gorm"
 )
 
 // Logger
 var logger = log.NewLogger(os.Stdout)
 
 // Pipe version.
-var Version = "1.0.0"
+const Version = "1.0.0"
 
 // Pipe configuration.
 var Conf *Configuration
 
 // HTTP client user agent.
 var UserAgent = "Mozilla/5.0 (compatible; Pipe" + Version + "; +" + HacPaiURL + ")"
+
+// Database models.
+var Models = []interface{}{
+	&model.User{}, &model.Article{}, &model.Comment{}, &model.Navigation{}, &model.Tag{},
+	&model.Category{}, &model.Archive{}, &model.Setting{}, &model.Correlation{},
+}
+
+// Table prefix.
+const tablePrefix = "b3_pipe_"
 
 // Configuration (pipe.json).
 type Configuration struct {
@@ -61,6 +73,7 @@ type Configuration struct {
 
 // LoadConf loads the configurations. Command-line arguments will override configuration file.
 func LoadConf() {
+	version := flag.Bool("version", false, "prints current pipe version")
 	confPath := flag.String("conf", "pipe.json", "path of pipe.json")
 	confServer := flag.String("server", "", "this will override Conf.Server if specified")
 	confStaticServer := flag.String("static_server", "", "this will override Conf.StaticServer if specified")
@@ -71,8 +84,15 @@ func LoadConf() {
 	confMySQL := flag.String("mysql", "", "this will override Conf.MySQL if specified")
 	confStaticRoot := flag.String("static_root", "", "this will override Conf.StaticRoot if specified")
 	confPort := flag.String("port", "", "this will override Conf.Port if specified")
+	s2m := flag.Bool("s2m", false, "dumps SQLite data to MySQL SQL script file")
 
 	flag.Parse()
+
+	if *version {
+		fmt.Println(Version)
+
+		os.Exit(0)
+	}
 
 	bytes, err := ioutil.ReadFile(*confPath)
 	if nil != err {
@@ -132,6 +152,22 @@ func LoadConf() {
 
 	if "" != *confPort {
 		Conf.Port = *confPort
+	}
+
+	gorm.DefaultTableNameHandler = func(db *gorm.DB, defaultTableName string) string {
+		return tablePrefix + defaultTableName
+	}
+	if *s2m {
+		if "" == Conf.SQLite {
+			logger.Fatal("please specify -sqlite")
+		}
+		if "" == Conf.MySQL {
+			logger.Fatal("please specify -mysql")
+		}
+
+		sqlite2MySQL(Conf.SQLite, Conf.MySQL)
+
+		os.Exit(0)
 	}
 
 	logger.Debugf("configurations [%#v]", Conf)

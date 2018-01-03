@@ -18,8 +18,7 @@ package model
 
 import (
 	"html/template"
-
-	"github.com/b3log/pipe/util"
+	"strconv"
 )
 
 type ThemeArticle struct {
@@ -58,7 +57,7 @@ type ThemeAuthor struct {
 }
 
 func (author *ThemeAuthor) AvatarURLWithSize(size int) string {
-	return util.ImageSize(author.AvatarURL, size, size)
+	return author.AvatarURL + "?imageView2/1/w/" + strconv.Itoa(size) + "/h/" + strconv.Itoa(size) + "/interlace/1/q/100"
 }
 
 type ThemeCategory struct {
