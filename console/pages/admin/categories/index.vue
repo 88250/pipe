@@ -87,6 +87,9 @@
       }
     },
     methods: {
+      openURL (url) {
+        window.location.href = url
+      },
       async getList (currentPage = 1) {
         const responseData = await this.axios.get(`/console/categories?p=${currentPage}&key=${this.keyword}`)
         if (responseData) {
