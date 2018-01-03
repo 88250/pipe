@@ -55,6 +55,12 @@ a {
     width: 20px;
     top: 15px;
     right: 15px;
+    transition: $transition;
+  }
+
+  #showToc:hover,
+  #hideToc:hover {
+    color: $text-hover-color;
   }
 
   &__overlay {
