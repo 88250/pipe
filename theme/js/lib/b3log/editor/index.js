@@ -362,18 +362,19 @@ ${hintData.imageURL ? '<img src="' + hintData.imageURL + '"/>' : hintData.value}
 
       $hints.find('li').click(function () {
         $hints.hide()
-        const $it = $(this)
-        if ($it.data('value').indexOf('@') === 0) {
-          const valueArray = textarea.value.substr(0, textarea.selectionStart).split('@')
-          valueArray.pop()
-          textarea.value = valueArray.join('@') + $it.data('value') + textarea.value.substr(textarea.selectionStart)
-          textarea.selectionEnd = textarea.selectionStart = (valueArray.join('@') + $it.data('value')).length
-        } else {
-          const valueArray = textarea.value.substr(0, textarea.selectionStart).split(':')[0]
-          textarea.value = valueArray + $it.data('value') + textarea.value.substr(textarea.selectionStart)
-          textarea.selectionEnd = textarea.selectionStart = valueArray.length + 3
-        }
         $textarea.focus()
+
+        const $it = $(this)
+        let splitChar = ':'
+        if ($it.data('value').indexOf('@') === 0) {
+          splitChar = '@'
+        }
+
+        while (!textarea.value.substr(0, textarea.selectionEnd).endsWith(splitChar)) {
+          document.execCommand("delete", false)
+        }
+        document.execCommand("delete", false)
+        document.execCommand('insertText', false, $it.data('value'))
       });
 
       if (y + $hints.outerHeight() > $editor.outerHeight() + (config.hintsBottom || 68)) {
@@ -465,20 +466,19 @@ ${hintData.imageURL ? '<img src="' + hintData.imageURL + '"/>' : hintData.value}
       $currentHint.removeClass('b3log-editor__hints--current')
     } else if (event.keyCode === 13) {
       // enter
-      event.preventDefault();
+      event.preventDefault()
       $hints.hide()
       $currentHint.removeClass('b3log-editor__hints--current')
 
+      let splitChar = ':'
       if ($currentHint.data('value').indexOf('@') === 0) {
-        const valueArray = this.value.substr(0, this.selectionStart).split('@')
-        valueArray.pop()
-        this.value = valueArray.join('@') + $currentHint.data('value') + this.value.substr(this.selectionStart)
-        this.selectionEnd = this.selectionStart = (valueArray.join('@') + $currentHint.data('value')).length
-      } else {
-        const valueArray = this.value.substr(0, this.selectionStart).split(':')[0]
-        this.value = valueArray + $currentHint.data('value') + this.value.substr(this.selectionStart)
-        this.selectionEnd = this.selectionStart = valueArray.length + 3
+        splitChar = '@'
       }
+      while (!this.value.substr(0, this.selectionEnd).endsWith(splitChar)) {
+        document.execCommand("delete", false)
+      }
+      document.execCommand("delete", false)
+      document.execCommand('insertText', false, $currentHint.data('value'))
 
       debounceInput(timerId, config.change, $editor)
     }
