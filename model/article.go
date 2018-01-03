@@ -27,7 +27,7 @@ type Article struct {
 	AuthorID     uint64    `json:"authorID"`
 	Title        string    `gorm:"size:128" json:"title"`
 	Tags         string    `gorm:"size:128" json:"tags"`
-	Content      string    `gorm:"type:text" json:"content"`
+	Content      string    `gorm:"type:mediumtext" json:"content"`
 	Path         string    `sql:"index" gorm:"size:255" json:"path"`
 	Status       int       `sql:"index" json:"status"`
 	Topped       bool      `json:"topped"`
