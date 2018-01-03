@@ -30,15 +30,9 @@ import (
 // Logger
 var logger = log.NewLogger(os.Stdout)
 
-const tablePrefix = "b3_pipe_"
-
 var db *gorm.DB
 
 func ConnectDB() {
-	gorm.DefaultTableNameHandler = func(db *gorm.DB, defaultTableName string) string {
-		return tablePrefix + defaultTableName
-	}
-
 	var err error
 	useSQLite := false
 	if "" != util.Conf.SQLite {
@@ -58,12 +52,7 @@ func ConnectDB() {
 		logger.Debug("used [MySQL] as underlying database")
 	}
 
-	tables := []interface{}{
-		&model.User{}, &model.Article{}, &model.Comment{}, &model.Navigation{}, &model.Tag{},
-		&model.Category{}, &model.Archive{}, &model.Setting{}, &model.Correlation{},
-	}
-
-	if err = db.AutoMigrate(tables...).Error; nil != err {
+	if err = db.AutoMigrate(util.Models...).Error; nil != err {
 		logger.Fatal("auto migrate tables failed: " + err.Error())
 	}
 
