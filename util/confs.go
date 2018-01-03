@@ -54,6 +54,9 @@ var Models = []interface{}{
 // Table prefix.
 const tablePrefix = "b3_pipe_"
 
+// Zero push time.
+var ZeroPushTime, _ = time.Parse("2006-01-02 15:04:05", "2006-01-02 15:04:05")
+
 // Configuration (pipe.json).
 type Configuration struct {
 	Server                string // server scheme, host and port

@@ -46,10 +46,9 @@ func importArticles(sqlite, mysql *gorm.DB, models []*model.Article) {
 	if err := sqlite.Find(&models).Error; nil != err {
 		logger.Fatalf("queries data failed: " + err.Error())
 	}
-	noPushTime, _ := time.Parse("2006-01-02 15:04:05", "2006-01-02 15:04:05")
 	for _, model := range models {
-		if model.PushedAt.Before(noPushTime) {
-			model.PushedAt = noPushTime
+		if model.PushedAt.Before(ZeroPushTime) {
+			model.PushedAt = ZeroPushTime
 		}
 		if err := mysql.Save(model).Error; nil != err {
 			logger.Fatalf("saves data failed: "+err.Error()+": %+v", model)
