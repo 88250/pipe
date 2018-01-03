@@ -174,14 +174,14 @@ func (srv *commentService) AddComment(comment *model.Comment) error {
 	return nil
 }
 
-func (srv *commentService) RemoveComment(id uint64) error {
+func (srv *commentService) RemoveComment(id, blogID uint64) error {
 	srv.mutex.Lock()
 	defer srv.mutex.Unlock()
 
 	comment := &model.Comment{}
 
 	tx := db.Begin()
-	if err := tx.First(comment, id).Error; nil != err {
+	if err := tx.Where("id = ? AND blog_id = ?", id, blogID).Find(comment).Error; nil != err {
 		tx.Rollback()
 
 		return err

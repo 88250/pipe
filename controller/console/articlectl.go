@@ -68,6 +68,7 @@ func AddArticleAction(c *gin.Context) {
 
 	article.BlogID = session.BID
 	article.AuthorID = session.UID
+
 	if err := service.Article.AddArticle(article); nil != err {
 		result.Code = -1
 		result.Msg = err.Error()
@@ -157,7 +158,10 @@ func RemoveArticleAction(c *gin.Context) {
 		return
 	}
 
-	if err := service.Article.RemoveArticle(uint64(id)); nil != err {
+	session := util.GetSession(c)
+	blogID := session.BID
+
+	if err := service.Article.RemoveArticle(id, blogID); nil != err {
 		result.Code = -1
 		result.Msg = err.Error()
 	}
@@ -175,9 +179,12 @@ func RemoveArticlesAction(c *gin.Context) {
 		return
 	}
 
+	session := util.GetSession(c)
+	blogID := session.BID
+
 	ids := arg["ids"].([]interface{})
 	for _, id := range ids {
-		if err := service.Article.RemoveArticle(uint64(id.(float64))); nil != err {
+		if err := service.Article.RemoveArticle(uint64(id.(float64)), blogID); nil != err {
 			logger.Errorf("remove article failed: " + err.Error())
 		}
 	}
@@ -196,7 +203,7 @@ func UpdateArticleAction(c *gin.Context) {
 		return
 	}
 
-	article := &model.Article{Model: model.Model{ID: uint64(id)}}
+	article := &model.Article{Model: model.Model{ID: id}}
 	if err := c.BindJSON(article); nil != err {
 		result.Code = -1
 		result.Msg = "parses update article request failed"

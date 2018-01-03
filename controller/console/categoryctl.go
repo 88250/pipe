@@ -139,7 +139,9 @@ func RemoveCategoryAction(c *gin.Context) {
 		return
 	}
 
-	if err := service.Category.RemoveCategory(uint64(id)); nil != err {
+	session := util.GetSession(c)
+	blogID := session.BID
+	if err := service.Category.RemoveCategory(id, blogID); nil != err {
 		result.Code = -1
 		result.Msg = err.Error()
 	}

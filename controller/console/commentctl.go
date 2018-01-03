@@ -87,7 +87,10 @@ func RemoveCommentAction(c *gin.Context) {
 		return
 	}
 
-	if err := service.Comment.RemoveComment(id); nil != err {
+	session := util.GetSession(c)
+	blogID := session.BID
+
+	if err := service.Comment.RemoveComment(id, blogID); nil != err {
 		result.Code = -1
 		result.Msg = err.Error()
 	}
@@ -105,9 +108,11 @@ func RemoveCommentsAction(c *gin.Context) {
 		return
 	}
 
+	session := util.GetSession(c)
+	blogID := session.BID
 	ids := arg["ids"].([]interface{})
 	for _, id := range ids {
-		if err := service.Comment.RemoveComment(uint64(id.(float64))); nil != err {
+		if err := service.Comment.RemoveComment(uint64(id.(float64)), blogID); nil != err {
 			logger.Errorf("remove comment failed: " + err.Error())
 		}
 	}

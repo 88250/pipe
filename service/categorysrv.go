@@ -153,14 +153,14 @@ func (srv *categoryService) GetCategories(size int, blogID uint64) (ret []*model
 	return
 }
 
-func (srv *categoryService) RemoveCategory(id uint64) error {
+func (srv *categoryService) RemoveCategory(id, blogID uint64) error {
 	srv.mutex.Lock()
 	defer srv.mutex.Unlock()
 
 	category := &model.Category{}
 
 	tx := db.Begin()
-	if err := tx.First(category, id).Error; nil != err {
+	if err := tx.Where("id = ? AND blog_id = ?", id, blogID).Find(category).Error; nil != err {
 		return err
 	}
 
