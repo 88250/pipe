@@ -88,7 +88,10 @@ func RemoveNavigationAction(c *gin.Context) {
 		return
 	}
 
-	if err := service.Navigation.RemoveNavigation(uint64(id)); nil != err {
+	session := util.GetSession(c)
+	blogID := session.BID
+
+	if err := service.Navigation.RemoveNavigation(uint64(id), blogID); nil != err {
 		result.Code = -1
 		result.Msg = err.Error()
 	}

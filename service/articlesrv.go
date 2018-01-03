@@ -331,14 +331,14 @@ func (srv *articleService) ConsoleGetArticle(id uint64) *model.Article {
 	return ret
 }
 
-func (srv *articleService) RemoveArticle(id uint64) error {
+func (srv *articleService) RemoveArticle(id, blogID uint64) error {
 	srv.mutex.Lock()
 	defer srv.mutex.Unlock()
 
 	article := &model.Article{}
 
 	tx := db.Begin()
-	if err := tx.First(article, id).Error; nil != err {
+	if err := tx.Where("id = ? AND blog_id = ?", id, blogID).Find(article).Error; nil != err {
 		tx.Rollback()
 
 		return err

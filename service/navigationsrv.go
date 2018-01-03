@@ -54,15 +54,18 @@ func (srv *navigationService) AddNavigation(navigation *model.Navigation) error 
 	return nil
 }
 
-func (srv *navigationService) RemoveNavigation(id uint64) error {
+func (srv *navigationService) RemoveNavigation(id, blogID uint64) error {
 	srv.mutex.Lock()
 	defer srv.mutex.Unlock()
 
-	navigation := &model.Navigation{
-		Model: model.Model{ID: id},
-	}
+	navigation := &model.Navigation{}
 
 	tx := db.Begin()
+	if err := tx.Where("id = ? AND blog_id = ?", id, blogID).Find(navigation).Error; nil != err {
+		tx.Rollback()
+
+		return err
+	}
 	if err := db.Delete(navigation).Error; nil != err {
 		tx.Rollback()
 
