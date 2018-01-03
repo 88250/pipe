@@ -86,6 +86,9 @@
       }
     },
     methods: {
+      openURL (url) {
+        window.location.href = url
+      },
       getOpenMethodName (openMethod) {
         let openMethodName = this.$t('openMethod1', this.$store.state.locale)
         switch (openMethod) {

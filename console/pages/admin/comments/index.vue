@@ -117,6 +117,9 @@
       }
     },
     methods: {
+      openURL (url) {
+        window.location.href = url
+      },
       selectAll () {
         this.$set(this, 'isSelectAll', !this.isSelectAll)
         if (!this.isSelectAll) {
