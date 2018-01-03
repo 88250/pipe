@@ -144,7 +144,8 @@ func fetchUploadAction(c *gin.Context) {
 		return
 	}
 	fileURL := arg["url"].(string)
-	resp, fileData, errs := gorequest.New().Get(fileURL).
+	timeout := time.Duration(5 * time.Second)
+	resp, fileData, errs := gorequest.New().Get(fileURL).Timeout(timeout).
 		Retry(3, 1*time.Second, http.StatusInternalServerError).EndBytes()
 	if nil != errs {
 		result.Code = -1
@@ -153,13 +154,35 @@ func fetchUploadAction(c *gin.Context) {
 		return
 	}
 
+	typ := resp.Header.Get("content-type")
+	if !strings.Contains(typ, "image") {
+		client := http.Client{
+			Timeout: timeout,
+		}
+		res, err := client.Get(fileURL)
+		if nil != err {
+			result.Code = -1
+			result.Msg = "get data failed"
+
+			return
+		}
+		defer res.Body.Close()
+		fileData, err = ioutil.ReadAll(res.Body)
+		if nil != err {
+			result.Code = -1
+			result.Msg = "get data failed"
+
+			return
+		}
+		typ = res.Header.Get("content-type")
+	}
+
 	refreshUploadToken()
 
 	platformAdmin := service.User.GetPlatformAdmin()
 	blogID := getBlogID(c)
 	blogAdmin := service.User.GetBlogAdmin(blogID)
 
-	typ := resp.Header.Get("content-type")
 	exts, _ := mime.ExtensionsByType(typ)
 	ext := ""
 	if 0 < len(exts) {
