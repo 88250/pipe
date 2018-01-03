@@ -1,15 +1,12 @@
 /*
- * Symphony - A modern community (forum/SNS/blog) platform written in Java.
- * Copyright (C) 2012-2017,  b3log.org & hacpai.com
+ * Copyright (C) 2012-2017,  b3log.org
  *
- * 本文件属于 Sym 商业版的一部分，请仔细阅读项目根文件夹的 LICENSE 并严格遵守相关约定
  */
 /**
  * @fileOverview editor tool
  *
  * @author <a href="http://vanessa.b3log.org">Liyuan Li</a>
- * @version 1.0.1.0, Dec 21, 2017
- * @since 2.2.0
+ * @version 1.1.0.0, Jan 3, 2018
  */
 
 export const insertTextAtCaret = (textarea, prefix, suffix, replace) => {
@@ -17,35 +14,36 @@ export const insertTextAtCaret = (textarea, prefix, suffix, replace) => {
     const startPos = textarea.selectionStart
     const endPos = textarea.selectionEnd
     const tmpStr = textarea.value
+    textarea.focus()
     if (startPos === endPos) {
       // no selection
-      textarea.value = tmpStr.substring(0, startPos) + prefix + suffix + tmpStr.substring(endPos, tmpStr.length)
-      textarea.selectionStart = startPos + prefix.length
-      textarea.selectionEnd = startPos + (prefix.length)
+      document.execCommand('insertText', false, prefix + suffix)
     } else {
       if (replace) {
-        textarea.value = tmpStr.substring(0, startPos) + prefix +
-          suffix + tmpStr.substring(endPos, tmpStr.length)
-        textarea.selectionStart = textarea.selectionEnd = startPos + (endPos - startPos + prefix.length)
+        document.execCommand('insertText', false, prefix + suffix)
       } else {
         if (tmpStr.substring(startPos - prefix.length, startPos) === prefix &&
           tmpStr.substring(endPos, endPos + suffix.length) === suffix) {
           // broke circle, avoid repeat
-          textarea.value = tmpStr.substring(0, startPos - prefix.length) +
-            tmpStr.substring(startPos, endPos) + tmpStr.substring(endPos + suffix.length, tmpStr.length)
+          document.execCommand('delete', false)
+          for (let i = 0, iMax = prefix.length; i < iMax; i++) {
+            document.execCommand('delete', false)
+          }
+          for (let j = 0, jMax = suffix.length; j < jMax; j++) {
+            document.execCommand('forwardDelete', false)
+          }
+          document.execCommand('insertText', false, tmpStr.substring(startPos, endPos))
           textarea.selectionStart = startPos - prefix.length
           textarea.selectionEnd = endPos - prefix.length
         } else {
           // insert
-          textarea.value = tmpStr.substring(0, startPos) + prefix + tmpStr.substring(startPos, endPos) +
-            suffix + tmpStr.substring(endPos, tmpStr.length)
+          document.execCommand('insertText', false, prefix + tmpStr.substring(startPos, endPos) + suffix)
           textarea.selectionStart = startPos + prefix.length
-          textarea.selectionEnd = startPos + (endPos - startPos + prefix.length)
+          textarea.selectionEnd = endPos + prefix.length
         }
       }
     }
   }
-  textarea.focus()
 }
 
 export const ajaxUpload = (url, files, uploadMax = 5, succCB, errorCB) => {
@@ -85,17 +83,17 @@ export const genUploading = (files, uploadMax = 5, loadingLabel = 'Uploading', o
   return uploadingStr
 }
 
-export const genUploaded = (response, text, loadingLabel = 'Uploading', errorLabel = 'Error') => {
+export const genUploaded = (response, textarea, loadingLabel = 'Uploading', errorLabel = 'Error') => {
+  textarea.focus()
   response.errFiles.forEach((data) => {
-    text = text.replace(`[${data.replace(/\W/g, '')}](${loadingLabel})\n`,
+    replaceTextareaValue(textarea, `[${data.replace(/\W/g, '')}](${loadingLabel})\n`,
       `[${data.replace(/\W/g, '')}](${errorLabel})\n`)
   })
 
   Object.keys(response.succMap).forEach((key) => {
-    text = text.replace(`[${key.replace(/\W/g, '')}](${loadingLabel})\n`,
+    replaceTextareaValue(textarea, `[${key.replace(/\W/g, '')}](${loadingLabel})\n`,
       `[${key.replace(/\W/g, '')}](${response.succMap[key]})\n`)
   })
-  return text
 }
 
 export const debounceInput = (timerId, configChange, $editor) => {
@@ -108,4 +106,11 @@ export const debounceInput = (timerId, configChange, $editor) => {
     configChange && configChange($editor.find('textarea').val(),
       $editor.find('.b3log-editor__icon--current').length === 0 ? undefined : $editor.find('.b3log-editor__markdown'))
   }, debounce)
+}
+
+export const replaceTextareaValue = (textarea, original, value) => {
+  textarea.selectionStart = textarea.value.split(original)[0].length
+  textarea.selectionEnd = textarea.selectionStart + original.length
+  document.execCommand('delete', false)
+  document.execCommand('insertText', false, value)
 }
