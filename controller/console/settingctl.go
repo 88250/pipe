@@ -20,6 +20,7 @@ package console
 import (
 	"net/http"
 	"strconv"
+	"strings"
 
 	"github.com/b3log/pipe/model"
 	"github.com/b3log/pipe/service"
@@ -72,6 +73,15 @@ func UpdateBasicSettingsAction(c *gin.Context) {
 			value = strconv.FormatBool(v.(bool))
 		default:
 			value = v.(string)
+		}
+
+		if model.SettingNameBasicBlogURL == k {
+			blogURL := value.(string)
+			if strings.HasSuffix(blogURL, "/") {
+				blogURL = blogURL[:len(blogURL)-1]
+			}
+
+			value = blogURL
 		}
 
 		basic := &model.Setting{
