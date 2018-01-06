@@ -1,0 +1,15 @@
+{{define "Next/index.html"}}
+<!DOCTYPE html>
+<html>
+<head>
+    {{template "Next/head" .}}
+</head>
+<body>
+{{template "Next/side" .}}
+<div class="main">
+    {{template "Next/article-list" .}}
+    {{template "Next/footer" .}}
+</div>
+</body>
+</html>
+{{end}}

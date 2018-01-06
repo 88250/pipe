@@ -1,0 +1,186 @@
+{{define "Next/article.html"}}
+<!DOCTYPE html>
+<html>
+<head>
+    {{template "Next/head" .}}
+    {{if .PreviousArticle}}
+    <link rel="prev" title="{{.PreviousArticle.Title}}" href="{{.PreviousArticle.URL}}">
+    {{end}}
+    {{if .NextArticle}}
+    <link rel="next" title="{{.NextArticle.Title}}" href="{{.NextArticle.URL}}">
+    {{end}}
+    <!-- Open Graph -->
+    <meta property="og:locale" content="zh_CN" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="{{.Title}}" />
+    <meta property="og:description" content="{{.Article.Abstract}}" />
+    <meta property="og:image" content="{{.Article.ThumbnailURL}}" />
+    <meta property="og:url" content="{{.Article.URL}}" />
+    <meta property="og:site_name" content="Pipe" />
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:description" content="{{.Article.Abstract}}" />
+    <meta name="twitter:title" content="{{.Title}}" />
+    <meta name="twitter:image" content="{{.Article.ThumbnailURL}}" />
+    <meta name="twitter:url" content="{{.Article.URL}}" />
+    <meta name="twitter:site" content="@DL88250" />
+    <meta name="twitter:creator" content="@DL88250" />
+</head>
+<body>
+{{template "Next/side" .}}
+<div class="main">
+    <article class="article__item">
+        <header class="article__header{{if gt $.UserCount 1}} article__header--user{{end}}">
+            <h2>
+                <a class="article__title" rel="bookmark" href="{{.Article.URL}}">
+                    {{if .Article.Topped}}
+                    <svg>
+                        <use xlink:href="#icon-focus"></use>
+                    </svg>
+                    {{end}}
+                    {{.Article.Title}}
+                </a>
+            </h2>
+            <time class="article__time{{if gt $.UserCount 1}} article__time--user{{end}}">{{.Article.CreatedAt}}</time>
+            {{if gt $.UserCount 1}}
+            <a rel="nofollow"
+               class="avatar pipe-tooltipped pipe-tooltipped--n"
+               aria-label="{{.Article.Author.Name}}"
+               data-src="{{.Article.Author.AvatarURLWithSize 116}}"
+               href="{{.Article.Author.URL}}">
+            </a>
+            {{end}}
+        </header>
+        <section class="pipe-content__reset article__abstract" id="articleContent" data-author="{{.Article.Author.Name}}">
+            {{.Article.Content}}
+        </section>
+        <div class="article__footer fn-clear">
+            <span class="article__share">
+                <span class="article__share-btn article__share-btn--wechat" data-type="wechat">
+                    <svg><use xlink:href="#wechat"></use></svg>
+                </span>
+                <span class="article__share-btn article__share-btn--weibo" data-type="weibo">
+                    <svg><use xlink:href="#weibo"></use></svg>
+                </span>
+                <span class="article__share-btn article__share-btn--twitter" data-type="twitter">
+                    <svg><use xlink:href="#twitter"></use></svg>
+                </span>
+                <span class="article__share-btn article__share-btn--google" data-type="google">
+                    <svg><use xlink:href="#google"></use></svg>
+                </span>
+                <div class="article__code"
+                     data-title="{{.Article.Title}}"
+                     data-blogtitle="{{$.Setting.BasicBlogTitle}}"
+                     data-url="{{.Article.URL}}"
+                     data-avatar="{{.Article.Author.AvatarURLWithSize 128}}"></div>
+            </span>
+            <div class="fn-left">
+                <svg>
+                    <use xlink:href="#icon-tag"></use>
+                </svg>
+                {{range .Article.Tags}}
+                <a class="tag" rel="tag" href="{{.URL}}">{{.Title}}</a>
+                {{end}}
+            </div>
+            <span class="fn-right">
+                <a href="{{.Article.URL}}" aria-label="{{$.I18n.View}}"
+                   class="pipe-tooltipped pipe-tooltipped--w">
+                    {{.Article.ViewCount}}
+                    <svg>
+                        <use xlink:href="#icon-view"></use>
+                    </svg>
+                </a>
+
+                <a href="{{.Article.URL}}#comments" aria-label="{{$.I18n.Comment}}"
+                   class="pipe-tooltipped pipe-tooltipped--w">
+                    {{.Article.CommentCount}}
+                    <svg>
+                        <use xlink:href="#icon-comment"></use>
+                    </svg>
+                </a>
+                {{if .Article.Editable}}
+                <a href="{{$.Conf.Server}}/admin/articles/post?id={{.Article.ID}}"
+                   aria-label="{{$.I18n.Edit}}"
+                   class="pipe-tooltipped pipe-tooltipped--w">&nbsp;<svg>
+                        <use xlink:href="#icon-edit"></use>
+                    </svg>
+                </a>
+                {{end}}
+                <span id="articleCommentBtn"
+                      data-title="{{$.I18n.Comment}}{{$.I18n.Colon}}{{.Article.Title}}"
+                      data-id="{{.Article.ID}}">
+                    <svg>
+                        <use xlink:href="#icon-reply"></use>
+                    </svg>
+                    {{$.I18n.Comment}}
+                </span>
+            </span>
+        </div>
+    </article>
+
+    <article class="article__item">
+        {{template "comment/comments" .}}
+    </article>
+
+    <article class="article__item">
+        {{if gt (len .RecommendArticles) 0}}
+        <header class="article__header">
+            <h2 class="relevant__title">{{$.I18n.RecommendArticle}}</h2>
+
+            <div class="article__time">
+                {{if .PreviousArticle}}
+                <a href="{{.PreviousArticle.URL}}" rel="prev"
+                   class="pipe-tooltipped pipe-tooltipped--w article__neighbor"
+                   aria-label="{{.I18n.PreArticle}}{{.I18n.Colon}}{{.PreviousArticle.Title}}">&nbsp;<svg>
+                        <use xlink:href="#icon-chevron-left"></use>
+                    </svg>
+                </a>
+                {{end}}
+                {{if .NextArticle}}
+                <a href="{{.NextArticle.URL}}" rel="next"
+                   class="pipe-tooltipped pipe-tooltipped--w article__neighbor"
+                   aria-label="{{.I18n.NextArticle}}{{.I18n.Colon}}{{.NextArticle.Title}}">
+                    <svg>
+                        <use xlink:href="#icon-chevron-right"></use>
+                    </svg>
+                </a>
+                {{end}}
+            </div>
+        </header>
+        {{range $index, $item := .RecommendArticles}}
+        <div class="relevant__item">
+            <a href="{{$item.URL}}" target="_blank">{{$item.Title}}</a>
+            <div class="relevant__content">
+                <a class="relevant__thumbnail"
+                   href="{{$item.URL}}"
+                   data-src="{{$item.ThumbnailURL}}" target="_blank"></a>
+                <div>
+                    <a href="{{$item.URL}}" class="relevant__abstract" target="_blank">
+                        {{$item.Abstract}}
+                    </a>
+                    <div class="relevant__meta fn-clear">
+                        <a class="relevant__avatar pipe-tooltipped pipe-tooltipped--w"
+                           aria-label="{{$item.Author.Name}}"
+                           data-src="{{$item.Author.AvatarURL}}"
+                           href="{{$item.Author.URL}}" target="_blank"></a>
+                        <span class="fn-left ft-fade">{{$item.CreatedAt}} &nbsp; &nbsp;</span>
+                        <a href="{{$item.URL}}#comments"
+                           class="ft-fade" target="_blank">
+                            {{if ne 0 $item.CommentCount}}{{$item.CommentCount}}{{end}}
+                            {{$.I18n.Comment}}
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{end}}
+    </article>
+    {{template "comment/editor" .}}
+
+    {{template "Next/footer" .}}
+</div>
+{{end}}
+
+</body>
+</html>
+{{end}}

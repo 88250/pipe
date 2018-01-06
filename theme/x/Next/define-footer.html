@@ -1,0 +1,38 @@
+{{define "Next/footer"}}
+<footer class="footer">
+    <div class="fn-clear">
+        {{.Setting.BasicBlogSubtitle}}
+        <div class="fn-right">
+            <a href="{{.BlogURL}}">{{.Setting.BasicBlogTitle}}</a> &copy; {{.Year}}
+            {{.Setting.BasicFooter}}
+        </div>
+    </div>
+    <div class="fn-clear">
+        {{.Statistic.StatisticViewCount}}
+        {{.I18n.View}}
+        &nbsp;
+        {{.Statistic.StatisticArticleCount}}
+        {{.I18n.Article}}
+        &nbsp;
+        {{.Statistic.StatisticCommentCount}}
+        {{.I18n.Comment}}
+        <div class="fn-right">
+            Powered by <a href="http://b3log.org/" target="_blank">B3log 开源</a> •
+            <a href="https://hacpai.com/tag/Pipe" target="_blank">Pipe</a> •
+            Theme <a href="https://github.com/b3log/pipe-themes" target="_blank">Next</a>
+        </div>
+    </div>
+</footer>
+<svg id="goTop"><use xlink:href="#icon-top"></use></svg>
+
+<script type="text/javascript"
+        id="script"
+        data-isLogin="{{if eq .User.URole 0}}false{{else}}true{{end}}"
+        {{if .Article}}
+        src="{{.Conf.StaticServer}}/theme/x/{{.Setting.ThemeName}}/js/article.min.js?{{.Conf.StaticResourceVersion}}"
+        {{else}}
+        src="{{.Conf.StaticServer}}/theme/x/{{.Setting.ThemeName}}/js/common.min.js?{{.Conf.StaticResourceVersion}}"
+        {{end}}
+></script>
+
+{{end}}

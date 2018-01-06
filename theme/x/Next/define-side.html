@@ -1,0 +1,117 @@
+{{define "Next/side"}}
+<aside class="side">
+    {{if .ToC}}
+    <div class="toc__panel">
+        <svg id="hideToc" class="fn-right"><use xlink:href="#icon-close"></use></svg>
+        {{.ToC}}
+    </div>
+    {{end}}
+
+    <div{{if .ToC}} class="fn-none"{{end}}>
+        <div class="side__overlay"></div>
+        {{if .ToC}}<svg id="showToc" class="fn-right"><use xlink:href="#icon-toc"></use></svg>{{end}}
+        <div class="side__content">
+            <a href="{{.BlogURL}}" class="side__logo">
+                <img data-src="{{.LogoURL}}">
+            </a>
+            <h1><a href="{{.BlogURL}}">{{.Setting.BasicBlogTitle}}</a></h1>
+            <div>
+                {{.Setting.BasicNoticeBoard}}
+            </div>
+            <ul class="fn-clear">
+                <li>
+                    <a href="{{.BlogURL}}/categories">
+                        <svg>
+                            <use xlink:href="#icon-folders"></use>
+                        </svg>
+                        {{.I18n.Categories}}
+                    </a>
+                </li>
+                {{if gt .UserCount 1}}
+                <li>
+                    <a href="{{.BlogURL}}/authors">
+                        <svg>
+                            <use xlink:href="#icon-group"></use>
+                        </svg>
+                        {{.I18n.Team}}
+                    </a>
+                </li>
+                {{end}}
+                <li>
+                    <a href="{{.BlogURL}}/tags">
+                        <svg>
+                            <use xlink:href="#icon-tag"></use>
+                        </svg>
+                        {{.I18n.Tags}}
+                    </a>
+                </li>
+                {{range .Navigations}}
+                <li>
+                    <a href="{{.URL}}" target="{{.OpenMethod}}">
+                        {{if ne "" .IconURL}}
+                        <img class="header__icon"
+                             data-src="{{.IconURL}}"/>
+                        {{end}}
+                        {{.Title}}
+                    </a>
+                </li>
+                {{end}}
+            </ul>
+        </div>
+
+        <div class="side__footer">
+            <a href="{{.BlogURL}}/categories" class="mobile--show fn-none">
+                <svg>
+                    <use xlink:href="#icon-folders"></use>
+                </svg>
+            </a>
+            {{if gt .UserCount 1}}
+            <a href="{{.BlogURL}}/authors" class="mobile--show fn-none">
+                <svg>
+                    <use xlink:href="#icon-group"></use>
+                </svg>
+            </a>
+            {{end}}
+            <a href="{{.BlogURL}}/tags" class="mobile--show fn-none">
+                <svg>
+                    <use xlink:href="#icon-tag"></use>
+                </svg>
+            </a>
+
+            <a href="{{.BlogURL}}/archives" aria-label="{{.I18n.Archives}}" class="pipe-tooltipped pipe-tooltipped--n">
+                <svg>
+                    <use xlink:href="#icon-bookmark"></use>
+                </svg>
+            </a>
+
+            <a href="{{.BlogURL}}/atom" target="_blank" aria-label="{{.I18n.Feed}}"
+               class="pipe-tooltipped pipe-tooltipped--n">
+                <svg>
+                    <use xlink:href="#icon-feed"></use>
+                </svg>
+            </a>
+            <a href="{{.BlogURL}}/search" aria-label="{{.I18n.search}}" class="pipe-tooltipped pipe-tooltipped--n">
+                <svg>
+                    <use xlink:href="#icon-search"></use>
+                </svg>
+            </a>
+
+            {{if eq .User.URole 0}}
+            <a href="https://hacpai.com/register" aria-label="{{.I18n.Register}}"
+               class="pipe-tooltipped pipe-tooltipped--n">
+                <svg>
+                    <use xlink:href="#icon-logout"></use>
+                </svg>
+            </a>
+            {{else}}
+            <span class="fn-right">
+        <a class="avatar pipe-tooltipped pipe-tooltipped--n"
+           aria-label="{{.User.UName}}"
+           href="{{.Conf.Server}}/{{if ne .User.URole 4}}admin/{{end}}"
+           data-src="{{.User.AvatarURLWithSize 64}}"></a>
+        </span>
+            {{end}}
+        </div>
+    </div>
+</aside>
+{{end}}

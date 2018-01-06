@@ -1,0 +1,23 @@
+{{define "Next/category-articles.html"}}
+<!DOCTYPE html>
+<html>
+<head>
+    {{template "Next/head" .}}
+</head>
+<body>
+{{template "Next/side" .}}
+<div class="main">
+    <h2 class="page__title">
+        {{.Category.Title}}
+        <span id="categoryArticleCount" class="ft-fade">0</span> <span class="ft-fade ft-13">{{.I18n.Article2}}</span>
+    </h2>
+    {{template "Next/article-list" .}}
+
+    {{template "Next/footer" .}}
+</div>
+<script>
+  increase({{.Category.ArticleCount}}, 1000, 'categoryArticleCount', 0)
+</script>
+</body>
+</html>
+{{end}}
