@@ -34,7 +34,6 @@
     "gulp-sourcemaps": "^2.6.1",
     "gulp-uglify": "^3.0.0",
     "gulp-util": "^3.0.8",
-    "marked": "^0.3.6",
     "uglify-es": "^3.0.26",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0"
