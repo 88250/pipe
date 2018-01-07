@@ -66,6 +66,7 @@ func AddArticleAction(c *gin.Context) {
 		return
 	}
 
+	article.IP = util.GetRemoteAddr(c)
 	article.BlogID = session.BID
 	article.AuthorID = session.UID
 
@@ -211,6 +212,7 @@ func UpdateArticleAction(c *gin.Context) {
 		return
 	}
 
+	article.IP = util.GetRemoteAddr(c)
 	session := util.GetSession(c)
 	article.BlogID = session.BID
 

@@ -93,6 +93,8 @@ func addCommentAction(c *gin.Context) {
 		return
 	}
 
+	comment.IP = util.GetRemoteAddr(c)
+
 	if err := service.Comment.AddComment(comment); nil != err {
 		result.Code = -1
 		result.Msg = err.Error()
