@@ -1,0 +1,70 @@
+<template>
+  <div>
+    <div class="card fn-clear card__body">
+
+      <v-form>
+        <v-text-field
+          :label="$t('baiduStatistic', $store.state.locale)"
+          :rules="linkRules"
+          :counter="32"
+          v-model="thirdStatisticBaidu"
+        ></v-text-field>
+        <div class="alert alert--danger" v-show="error">
+          <v-icon>danger</v-icon>
+          <span>{{ errorMsg }}</span>
+        </div>
+      </v-form>
+      <v-btn class="fn-right btn--margin-t30 btn--info btn--space" @click="update">
+        {{ $t('confirm', $store.state.locale) }}
+      </v-btn>
+    </div>
+  </div>
+</template>
+
+<script>
+  import {maxSize} from '~/plugins/validate'
+
+  export default {
+    data () {
+      return {
+        thirdStatisticBaidu: '',
+        linkRules: [
+          (v) => maxSize.call(this, v, 32)
+        ],
+        error: false,
+        errorMsg: ''
+      }
+    },
+    head () {
+      return {
+        title: `${this.$t('3rdStatistic', this.$store.state.locale)} - ${this.$store.state.blogTitle}`
+      }
+    },
+    methods: {
+      async update () {
+        const responseData = await this.axios.put('/console/settings/third-stat', {
+          thirdStatisticBaidu: this.thirdStatisticBaidu
+        })
+
+        if (responseData.code === 0) {
+          this.$set(this, 'error', false)
+          this.$set(this, 'errorMsg', '')
+          this.$store.commit('setSnackBar', {
+            snackBar: true,
+            snackMsg: this.$t('setupSuccess', this.$store.state.locale),
+            snackModify: 'success'
+          })
+        } else {
+          this.$set(this, 'error', true)
+          this.$set(this, 'errorMsg', responseData.msg)
+        }
+      }
+    },
+    async mounted () {
+      const responseData = await this.axios.get('/console/settings/third-stat')
+      if (responseData) {
+        this.$set(this, 'thirdStatisticBaidu', responseData.thirdStatisticBaidu)
+      }
+    }
+  }
+</script>

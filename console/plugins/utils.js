@@ -42,6 +42,7 @@ export const LazyLoadImage = () => {
   }
 }
 
+// 1 - supre admin, 2 - blog admin, 3 - blog user, 4 - prohibit user, 0 - un login user
 export const genMenuData = (app, locale) => [
   {
     title: app.$t('home', locale),
@@ -128,6 +129,11 @@ export const genMenuData = (app, locale) => [
       {
         title: app.$t('feed', locale),
         link: '/admin/settings/feed',
+        role: 2
+      },
+      {
+        title: app.$t('3rdStatistic', locale),
+        link: '/admin/settings/3rd-statistic',
         role: 2
       }
     ]
