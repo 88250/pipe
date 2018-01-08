@@ -312,6 +312,19 @@
         }
       }
     },
+    "console/settings/third-stat": {
+      "verbs": [
+        "get", "put"
+      ],
+      "responses": {
+        "put": {
+          "mockFile": "success.json"
+        },
+        "get": {
+          "mockFile": "third-stat.json"
+        }
+      }
+    },
     "hp/apis/articles": {
       "verbs": [
         "get"
