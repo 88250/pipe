@@ -271,7 +271,7 @@ const addCopyright = () => {
     ]
   }
 
-  $('.pipe-content__reset').on('copy', function (event) {
+  $('body').on('copy', '.pipe-content__reset', function (event) {
     if (!window.getSelection) {
       return
     }
