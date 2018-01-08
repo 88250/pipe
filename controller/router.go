@@ -150,7 +150,12 @@ func MapRoutes() *gin.Engine {
 	if nil != err {
 		logger.Fatal("load comment templates failed: " + err.Error())
 	}
+	scriptTemplates, err := filepath.Glob(staticPath("theme/script/*.html"))
+	if nil != err {
+		logger.Fatal("load script templates failed: " + err.Error())
+	}
 	templates := append(themeTemplates, commentTemplates...)
+	templates = append(templates, scriptTemplates...)
 	ret.LoadHTMLFiles(templates...)
 	themeGroup := ret.Group(util.PathBlogs + "/:username")
 	themeGroup.Use(fillUser, resolveBlog)
