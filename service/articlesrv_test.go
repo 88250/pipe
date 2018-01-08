@@ -192,7 +192,7 @@ func TestRemoveArticle(t *testing.T) {
 		return
 	}
 
-	if err := Article.RemoveArticle(lastArticleID); nil != err {
+	if err := Article.RemoveArticle(lastArticleID, 1); nil != err {
 		t.Error(err)
 	}
 

@@ -109,22 +109,3 @@ func TestConsoleUpdateNavigation(t *testing.T) {
 	}
 }
 
-func TestConsoleRemoveNavigation(t *testing.T) {
-	navigation := Navigation.ConsoleGetNavigation(2)
-	if nil == navigation {
-		t.Errorf("navigation is nil")
-
-		return
-	}
-
-	if err := Navigation.RemoveNavigation(2); nil != err {
-		t.Errorf("remove navigation failed: " + err.Error())
-
-		return
-	}
-
-	navigation = Navigation.ConsoleGetNavigation(2)
-	if nil != navigation {
-		t.Errorf("expected is [nil], actual is [%v]", navigation)
-	}
-}

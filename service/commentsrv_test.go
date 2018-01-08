@@ -69,7 +69,7 @@ func TestRemoveComment(t *testing.T) {
 		return
 	}
 
-	if err := Comment.RemoveComment(comment.ID); nil != err {
+	if err := Comment.RemoveComment(comment.ID, 1); nil != err {
 		t.Error(err)
 
 		return
