@@ -64,7 +64,7 @@ func TestGetGetCategories(t *testing.T) {
 }
 
 func TestRemoveCategory(t *testing.T) {
-	if err := Category.RemoveCategory(1); nil != err {
+	if err := Category.RemoveCategory(1, 1); nil != err {
 		t.Errorf("remove category failed: " + err.Error())
 	}
 }
