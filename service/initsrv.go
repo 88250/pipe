@@ -107,6 +107,9 @@ func (srv *initService) initBlog(tx *gorm.DB, admin *model.User, blogID uint64) 
 	if err := initFeedSettings(tx, blogID); nil != err {
 		return err
 	}
+	if err := init3rdStatistic(tx, blogID); nil != err {
+		return err
+	}
 	if err := initStatisticSettings(tx, blogID); nil != err {
 		return err
 	}
@@ -482,6 +485,18 @@ func initFeedSettings(tx *gorm.DB, blogID uint64) error {
 		Category: model.SettingCategoryFeed,
 		Name:     model.SettingNameFeedOutputMode,
 		Value:    strconv.Itoa(model.SettingFeedOutputModeValueAbstract),
+		BlogID:   blogID}).Error; nil != err {
+		return err
+	}
+
+	return nil
+}
+
+func init3rdStatistic(tx *gorm.DB, blogID uint64) error {
+	if err := tx.Create(&model.Setting{
+		Category: model.SettingCategory3rdStatistic,
+		Name:     model.SettingName3rdStatisticBaidu,
+		Value:    "",
 		BlogID:   blogID}).Error; nil != err {
 		return err
 	}
