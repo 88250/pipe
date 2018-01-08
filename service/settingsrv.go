@@ -88,7 +88,7 @@ func (srv *settingService) UpdateSettings(category string, settings []*model.Set
 	tx := db.Begin()
 	for _, setting := range settings {
 		if err := tx.Model(&model.Setting{}).Where("category = ? AND name = ? AND blog_id = ?",
-			category, setting.Name, blogID).Updates(setting).Error; nil != err {
+			category, setting.Name, blogID).Select("value").Updates(map[string]interface{}{"value": setting.Value}).Error; nil != err {
 			tx.Rollback()
 
 			return err
