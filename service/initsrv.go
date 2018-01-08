@@ -342,14 +342,14 @@ func initBasicSettings(tx *gorm.DB, blogAdmin *model.User, blogID uint64) error 
 	if err := tx.Create(&model.Setting{
 		Category: model.SettingCategoryBasic,
 		Name:     model.SettingNameBasicFooter,
-		Value:    "<!-- 这里可用于放置备案信息等，支持 HTML、脚本 -->",
+		Value:    model.SettingBasicFooterDefault,
 		BlogID:   blogID}).Error; nil != err {
 		return err
 	}
 	if err := tx.Create(&model.Setting{
 		Category: model.SettingCategoryBasic,
 		Name:     model.SettingNameBasicHeader,
-		Value:    "<!-- 这里可用于插入第三方统计等，支持 HTML、脚本 -->",
+		Value:    model.SettingBasicHeaderDefault,
 		BlogID:   blogID}).Error; nil != err {
 		return err
 	}
@@ -370,7 +370,7 @@ func initBasicSettings(tx *gorm.DB, blogAdmin *model.User, blogID uint64) error 
 	if err := tx.Create(&model.Setting{
 		Category: model.SettingCategoryBasic,
 		Name:     model.SettingNameBasicNoticeBoard,
-		Value:    "<!-- 支持 HTML、脚本 -->本博客由 <a href=\"https://github.com/b3log/pipe\" target=\"_blank\">Pipe</a> 强力驱动",
+		Value:    model.SettingBasicBasicNoticeBoardDefault,
 		BlogID:   blogID}).Error; nil != err {
 		return err
 	}
@@ -450,7 +450,7 @@ func initSignSettings(tx *gorm.DB, blogID uint64) error {
 	if err := tx.Create(&model.Setting{
 		Category: model.SettingCategorySign,
 		Name:     model.SettingNameArticleSign,
-		Value:    "<!-- 支持 HTML、脚本 -->",
+		Value:    model.SettingArticleSignDefault,
 		BlogID:   blogID}).Error; nil != err {
 		return err
 	}

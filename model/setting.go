@@ -41,7 +41,7 @@ const (
 	SettingNameThemeName = "themeName"
 )
 
-// Setting names of catgory "basic".
+// Setting names of category "basic".
 const (
 	SettingCategoryBasic = "basic"
 
@@ -50,12 +50,19 @@ const (
 	SettingNameBasicBlogTitle       = "basicBlogTitle"
 	SettingNameBasicCommentable     = "basicCommentable"
 	SettingNameBasicFooter          = "basicFooter"
-	SettingNameBasicHeader          = "basicHeader"
+	SettingNameBasicHeader          = "basicHeader" // Removed from UI since v1.1.0 caused by issue 54 (https://github.com/b3log/pipe/issues/54)
 	SettingNameBasicNoticeBoard     = "basicNoticeBoard"
 	SettingNameBasicMetaDescription = "basicMetaDescription"
 	SettingNameBasicMetaKeywords    = "basicMetaKeywords"
 	SettingNameBasicFaviconURL      = "basicFaviconURL"
 	SettingNameBasicLogoURL         = "basicLogoURL"
+)
+
+// Setting values of category "basic".
+const (
+	SettingBasicFooterDefault = "<!-- 这里可用于放置备案信息等，支持 Markdown -->"
+	SettingBasicHeaderDefault = "<!-- https://github.com/b3log/pipe/issues/54 -->"
+	SettingBasicBasicNoticeBoardDefault = "<!-- 支持 Markdown -->本博客由 [Pipe](https://github.com/b3log/pipe) 强力驱动"
 )
 
 // Setting names of category "preference".
@@ -71,11 +78,31 @@ const (
 	SettingNamePreferenceRecentCommentListSize      = "preferenceRecentCommentListSize"
 )
 
+// Setting values of category "preference".
+const (
+	SettingPreferenceArticleListStyleValueTitle         = 0
+	SettingPreferenceArticleListStyleValueTitleAbstract = 1
+	SettingPreferenceArticleListStyleValueTitleContent  = 2
+
+	SettingPreferenceArticleListPageSizeDefault        = 20
+	SettingPreferenceArticleListWindowSizeDefault      = 7
+	SettingPreferenceArticleListStyleDefault           = SettingPreferenceArticleListStyleValueTitleAbstract
+	SettingPreferenceMostCommentArticleListSizeDefault = 7
+	SettingPreferenceMostUseTagListSizeDefault         = 15
+	SettingPreferenceMostViewArticleListSizeDefault    = 15
+	SettingPreferenceRecentCommentListSizeDefault      = 7
+)
+
 // Setting names of category "sign".
 const (
 	SettingCategorySign = "sign"
 
 	SettingNameArticleSign = "signArticle"
+)
+
+// Setting values of category "sign".
+const (
+	SettingArticleSignDefault = "<!-- 支持 Markdown；可用变量 {title}, {author}, {url} -->"
 )
 
 // Setting names of category "i18n".
@@ -93,7 +120,7 @@ const (
 	SettingNameFeedOutputMode = "feedOutputMode"
 )
 
-// Setting value of category "feed".
+// Setting values of category "feed".
 const (
 	SettingFeedOutputModeValueAbstract = 0
 	SettingFeedOutputModeValueFull     = 1
@@ -106,19 +133,4 @@ const (
 	SettingNameStatisticArticleCount = "statisticArticleCount"
 	SettingNameStatisticCommentCount = "statisticCommentCount"
 	SettingNameStatisticViewCount    = "statisticViewCount"
-)
-
-// Setting values of category "preference".
-const (
-	SettingPreferenceArticleListStyleValueTitle         = 0
-	SettingPreferenceArticleListStyleValueTitleAbstract = 1
-	SettingPreferenceArticleListStyleValueTitleContent  = 2
-
-	SettingPreferenceArticleListPageSizeDefault        = 20
-	SettingPreferenceArticleListWindowSizeDefault      = 7
-	SettingPreferenceArticleListStyleDefault           = SettingPreferenceArticleListStyleValueTitleAbstract
-	SettingPreferenceMostCommentArticleListSizeDefault = 7
-	SettingPreferenceMostUseTagListSizeDefault         = 15
-	SettingPreferenceMostViewArticleListSizeDefault    = 15
-	SettingPreferenceRecentCommentListSizeDefault      = 7
 )

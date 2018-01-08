@@ -72,7 +72,7 @@ func UpdateBasicSettingsAction(c *gin.Context) {
 		case bool:
 			value = strconv.FormatBool(v.(bool))
 		default:
-			value = v.(string)
+			value = strings.TrimSpace( v.(string))
 		}
 
 		if model.SettingNameBasicBlogURL == k {

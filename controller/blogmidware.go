@@ -101,8 +101,17 @@ func fillCommon(c *gin.Context) {
 	settings := service.Setting.GetAllSettings(blogID)
 	settingMap := map[string]interface{}{}
 	for _, setting := range settings {
-		settingMap[strings.Title(setting.Name)] = setting.Value
-		settingMap[setting.Name] = setting.Value
+		v := setting.Value
+		if model.SettingNameBasicHeader == setting.Name || model.SettingNameBasicFooter == setting.Name || model.SettingNameBasicNoticeBoard == setting.Name {
+			mdResult := util.Markdown(v)
+			v = mdResult.ContentHTML
+			v = strings.TrimPrefix(v, "<p>")
+			v = strings.TrimSuffix(v, "</p>")
+			v = strings.TrimSpace(v)
+		}
+
+		settingMap[strings.Title(setting.Name)] = v
+		settingMap[setting.Name] = v
 	}
 	settingMap[strings.Title(model.SettingNameBasicHeader)] = template.HTML(settingMap[model.SettingNameBasicHeader].(string))
 	settingMap[strings.Title(model.SettingNameBasicFooter)] = template.HTML(settingMap[model.SettingNameBasicFooter].(string))
