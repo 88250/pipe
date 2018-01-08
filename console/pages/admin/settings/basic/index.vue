@@ -32,11 +32,6 @@
           v-model="metaDescription"
         ></v-text-field>
         <v-text-field
-          label="HTML head"
-          multi-line
-          v-model="header"
-        ></v-text-field>
-        <v-text-field
           multi-line
           :label="$t('footer', $store.state.locale)"
           v-model="footer"
@@ -73,7 +68,6 @@
         blogSubtitle: '',
         logoURL: '',
         faviconURL: '',
-        header: '',
         footer: '',
         metaKeywords: '',
         metaDescription: '',
@@ -96,7 +90,6 @@
           basicBlogSubtitle: this.blogSubtitle,
           basicLogoURL: this.logoURL,
           basicFaviconURL: this.faviconURL,
-          basicHeader: this.header,
           basicFooter: this.footer,
           basicMetaKeywords: this.metaKeywords,
           basicMetaDescription: this.metaDescription,
@@ -126,7 +119,6 @@
         this.$set(this, 'blogSubtitle', responseData.basicBlogSubtitle)
         this.$set(this, 'logoURL', responseData.basicLogoURL)
         this.$set(this, 'faviconURL', responseData.basicFaviconURL)
-        this.$set(this, 'header', responseData.basicHeader)
         this.$set(this, 'footer', responseData.basicFooter)
         this.$set(this, 'metaKeywords', responseData.basicMetaKeywords)
         this.$set(this, 'metaDescription', responseData.basicMetaDescription)
