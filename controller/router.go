@@ -125,6 +125,8 @@ func MapRoutes() *gin.Engine {
 	consoleSettingsGroup.PUT("/i18n", console.UpdateI18nSettingsAction)
 	consoleSettingsGroup.GET("/feed", console.GetFeedSettingsAction)
 	consoleSettingsGroup.PUT("/feed", console.UpdateFeedSettingsAction)
+	consoleSettingsGroup.GET("/third-stat", console.GetThirdStatisticSettingsAction)
+	consoleSettingsGroup.PUT("/third-stat", console.UpdateThirdStatisticSettingsAction)
 
 	ret.StaticFile(util.PathFavicon, staticPath("console/static/favicon.ico"))
 

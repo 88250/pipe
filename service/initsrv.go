@@ -494,8 +494,8 @@ func initFeedSettings(tx *gorm.DB, blogID uint64) error {
 
 func init3rdStatistic(tx *gorm.DB, blogID uint64) error {
 	if err := tx.Create(&model.Setting{
-		Category: model.SettingCategory3rdStatistic,
-		Name:     model.SettingName3rdStatisticBaidu,
+		Category: model.SettingCategoryThirdStatistic,
+		Name:     model.SettingNameThirdStatisticBaidu,
 		Value:    "",
 		BlogID:   blogID}).Error; nil != err {
 		return err

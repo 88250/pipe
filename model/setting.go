@@ -60,8 +60,8 @@ const (
 
 // Setting values of category "basic".
 const (
-	SettingBasicFooterDefault = "<!-- 这里可用于放置备案信息等，支持 Markdown -->"
-	SettingBasicHeaderDefault = "<!-- https://github.com/b3log/pipe/issues/54 -->"
+	SettingBasicFooterDefault           = "<!-- 这里可用于放置备案信息等，支持 Markdown -->"
+	SettingBasicHeaderDefault           = "<!-- https://github.com/b3log/pipe/issues/54 -->"
 	SettingBasicBasicNoticeBoardDefault = "<!-- 支持 Markdown -->本博客由 [Pipe](https://github.com/b3log/pipe) 强力驱动"
 )
 
@@ -128,9 +128,9 @@ const (
 
 // Setting names of category "3rdStatistic".
 const (
-	SettingCategory3rdStatistic = "3rdStatistic"
+	SettingCategoryThirdStatistic = "thirdStatistic"
 
-	SettingName3rdStatisticBaidu = "3rdStatisticBaidu"
+	SettingNameThirdStatisticBaidu = "thirdStatisticBaidu"
 )
 
 // Setting names of category "statistic".

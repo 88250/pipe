@@ -301,3 +301,40 @@ func UpdateFeedSettingsAction(c *gin.Context) {
 		result.Msg = err.Error()
 	}
 }
+
+func GetThirdStatisticSettingsAction(c *gin.Context) {
+	result := util.NewResult()
+	defer c.JSON(http.StatusOK, result)
+
+	session := util.GetSession(c)
+	baiduStatisticSetting := service.Setting.GetSetting(model.SettingCategoryThirdStatistic, model.SettingNameThirdStatisticBaidu, session.BID)
+	result.Data = baiduStatisticSetting.Value
+}
+
+func UpdateThirdStatisticSettingsAction(c *gin.Context) {
+	result := util.NewResult()
+	defer c.JSON(http.StatusOK, result)
+
+	args := map[string]interface{}{}
+	if err := c.BindJSON(&args); nil != err {
+		result.Code = -1
+		result.Msg = "parses update third statistic settings request failed"
+
+		return
+	}
+
+	session := util.GetSession(c)
+	var thridStatistics []*model.Setting
+	baiduStatistic := &model.Setting{
+		Category: model.SettingCategoryThirdStatistic,
+		BlogID:   session.BID,
+		Name:     model.SettingNameThirdStatisticBaidu,
+		Value:    args["thirdStatisticBaidu"].(string),
+	}
+	thridStatistics = append(thridStatistics, baiduStatistic)
+
+	if err := service.Setting.UpdateSettings(model.SettingCategoryThirdStatistic, thridStatistics, session.BID); nil != err {
+		result.Code = -1
+		result.Msg = err.Error()
+	}
+}
