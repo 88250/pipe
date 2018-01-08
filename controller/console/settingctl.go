@@ -308,7 +308,10 @@ func GetThirdStatisticSettingsAction(c *gin.Context) {
 
 	session := util.GetSession(c)
 	baiduStatisticSetting := service.Setting.GetSetting(model.SettingCategoryThirdStatistic, model.SettingNameThirdStatisticBaidu, session.BID)
-	result.Data = baiduStatisticSetting.Value
+	data := map[string]string{
+		model.SettingNameThirdStatisticBaidu: baiduStatisticSetting.Value,
+	}
+	result.Data = data
 }
 
 func UpdateThirdStatisticSettingsAction(c *gin.Context) {
