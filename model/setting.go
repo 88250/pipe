@@ -126,7 +126,7 @@ const (
 	SettingFeedOutputModeValueFull     = 1
 )
 
-// Setting names of category "3rdStatistic".
+// Setting names of category "thirdStatistic".
 const (
 	SettingCategoryThirdStatistic = "thirdStatistic"
 
