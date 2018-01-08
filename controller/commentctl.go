@@ -112,9 +112,12 @@ func addCommentAction(c *gin.Context) {
 		URL:       commentAuthorURL,
 		AvatarURL: session.UAvatar,
 	}
+	page := service.Comment.GetCommentPage(comment.ArticleID, comment.ID, comment.BlogID)
+	article := service.Article.ConsoleGetArticle(comment.ArticleID)
 	themeComment := &model.ThemeComment{
 		ID:        comment.ID,
 		Content:   template.HTML(util.Markdown(comment.Content).ContentHTML),
+		URL:       getBlogURL(c) + article.Path + "?p=" + strconv.Itoa(page) + "#pipeComment" + strconv.Itoa(int(comment.ID)),
 		Author:    author,
 		CreatedAt: comment.CreatedAt.Format("2006-01-02"),
 		Removable: false,
@@ -123,9 +126,6 @@ func addCommentAction(c *gin.Context) {
 		parentCommentModel := service.Comment.GetComment(comment.ParentCommentID)
 		if nil != parentCommentModel {
 			parentCommentAuthorModel := service.User.GetUser(parentCommentModel.AuthorID)
-			page := service.Comment.GetCommentPage(comment.ArticleID, comment.ID, comment.BlogID)
-			article := service.Article.ConsoleGetArticle(comment.ArticleID)
-
 			parentComment := &model.ThemeComment{
 				ID:  parentCommentModel.ID,
 				URL: getBlogURL(c) + article.Path + "?p=" + strconv.Itoa(page) + "#pipeComment" + strconv.Itoa(int(parentCommentModel.ID)),
