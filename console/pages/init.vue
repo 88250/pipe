@@ -64,6 +64,7 @@
           <h1>{{ $t('welcome', $store.state.locale) }} Pipe</h1>
           <div class="ft-center init__content fn-clear">
             <a href="https://github.com/b3log/pipe"
+               target="_blank"
                :aria-label="$t('openPipeTravel', $store.state.locale)"
                class="card init__image init__image--step3 pipe-tooltipped pipe-tooltipped--n">
                 <img src="~/static/images/logo.png"/>

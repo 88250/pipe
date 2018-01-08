@@ -19,59 +19,6 @@ const Common = {
   init: () => {
     PreviewImg()
     KillBrowser()
-
-    $("a.tag").each(function (i) {
-      $(this).addClass("tag--color" + Math.ceil(Math.random() * 4));
-    });
-
-    $('#goTop').click(function () {
-      $("html, body").animate({
-        scrollTop: 0
-      }, 800)
-    });
-
-    $('#hideToc').click(function () {
-      if ($('.side > .fn-none').css('display') !== 'none') {
-        return
-      }
-      $('.side > .fn-none').show()
-      $('.toc__panel').addClass('toc__panel--hide')
-      setTimeout(function () {
-        $('.toc__panel').hide();
-      }, 300)
-    });
-
-    $('#showToc').click(function () {
-      if ($('.toc__panel').css('display') !== 'none') {
-        return
-      }
-      $('.toc__panel').show().removeClass('toc__panel--hide')
-      setTimeout(function () {
-        $('.side > .fn-none').hide()
-      }, 300)
-    });
-
-    $(window).scroll(function () {
-      if ($('.article__item').length > 0) {
-        $('.article__item:not(.article__item--show)').each(function (index) {
-          if (index === 0) {
-            $(this).addClass('article__item--show');
-            return
-          }
-          if ($(this).offset().top <= $(window).scrollTop() + $(window).height() - $(this).height() / 7) {
-            $(this).addClass('article__item--show');
-          }
-        });
-      }
-
-      if ($(window).scrollTop() > $(window).height()) {
-        $('#goTop').show();
-      } else {
-        $('#goTop').hide();
-      }
-    });
-
-    $(window).scroll();
   },
   increase(max, time, id, count) {
     if (count < max) {

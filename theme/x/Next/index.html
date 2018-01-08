@@ -5,10 +5,13 @@
     {{template "Next/head" .}}
 </head>
 <body>
-{{template "Next/side" .}}
 <div class="main">
-    {{template "Next/article-list" .}}
+    {{template "Next/header" .}}
+    <div class="wrapper">
+        {{template "Next/article-list" .}}
+    </div>
     {{template "Next/footer" .}}
+    {{template "Next/side" .}}
 </div>
 </body>
 </html>

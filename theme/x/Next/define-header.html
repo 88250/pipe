@@ -1,0 +1,62 @@
+{{define "Next/header"}}
+<header class="header">
+    <div class="wrapper fn-clear">
+        <a href="{{.BlogURL}}" class="header__logo">
+            <div>
+                <img data-src="{{.LogoURL}}">
+                {{.Setting.BasicBlogTitle}}
+            </div>
+        </a>
+        <nav>
+            <a href="{{.BlogURL}}/categories">
+                <svg><use xlink:href="#icon-folders"></use></svg>
+                {{.I18n.Categories}}
+            </a>
+            <a href="{{.BlogURL}}/tags">
+                <svg><use xlink:href="#icon-tag"></use></svg>
+                {{.I18n.Tags}}
+            </a>
+            <a href="{{.BlogURL}}/archives">
+                <svg><use xlink:href="#icon-bookmark"></use></svg>
+                {{.I18n.Archives}}
+            </a>
+            {{if gt .UserCount 1}}
+            <a href="{{.BlogURL}}/authors">
+                <svg><use xlink:href="#icon-group"></use></svg>
+                {{.I18n.Team}}
+            </a>
+            {{end}}
+            {{range .Navigations}}
+            <a href="{{.URL}}" target="{{.OpenMethod}}">
+                {{if ne "" .IconURL}}
+                <img class="header__icon"
+                     data-src="{{.IconURL}}"/>
+                {{end}}
+                {{.Title}}
+            </a>
+            {{end}}
+            <a href="{{.BlogURL}}/atom" target="_blank">
+                <svg><use xlink:href="#icon-feed"></use></svg>
+                {{.I18n.Feed}}
+            </a>
+            <a href="{{.BlogURL}}/search" class="header__search">
+                <svg>
+                    <use xlink:href="#icon-search"></use>
+                </svg>
+                <span>{{.I18n.Search}}</span>
+            </a>
+        </nav>
+
+        <div class="header__tool">
+            {{if eq .User.URole 0}}
+            <a href="https://hacpai.com/register" class="fn-right ft-orange">{{.I18n.Register}}</a>
+            <a href="https://hacpai.com/login" class="fn-right">{{.I18n.Login}}</a>
+            {{else}}
+            <a class="avatar fn-right"
+               href="{{.Conf.Server}}/{{if ne .User.URole 4}}admin/{{end}}"
+               data-src="{{.User.AvatarURLWithSize 64}}"></a>
+            {{end}}
+        </div>
+    </div>
+</header>
+{{end}}
