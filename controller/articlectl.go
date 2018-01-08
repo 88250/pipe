@@ -118,7 +118,15 @@ func showArticleAction(c *gin.Context) {
 	mdResult := util.Markdown(article.Content)
 	authorModel := service.User.GetUser(article.AuthorID)
 	articleTitle := pangu.SpacingText(article.Title)
-	articleSignSetting := service.Setting.GetSetting(model.SettingCategorySign, model.SettingNameArticleSign, blogID)
+	articleURL := getBlogURL(c) + article.Path
+	articleSignSetting := dataModel["Setting"].(map[string]interface{})[model.SettingNameArticleSign].(string)
+	articleSignSetting = strings.Replace(articleSignSetting, "{title}", articleTitle, -1)
+	articleSignSetting = strings.Replace(articleSignSetting, "{author}", authorModel.Name, -1)
+	articleSignSetting = strings.Replace(articleSignSetting, "{url}", articleURL, -1)
+	articleSignSetting = util.Markdown(articleSignSetting).ContentHTML
+	articleSignSetting = strings.TrimPrefix(articleSignSetting, "<p>")
+	articleSignSetting = strings.TrimSuffix(articleSignSetting, "</p>")
+	articleSignSetting = strings.TrimSpace(articleSignSetting)
 	dataModel["Article"] = &model.ThemeArticle{
 		Author: &model.ThemeAuthor{
 			Name:      authorModel.Name,
@@ -130,12 +138,12 @@ func showArticleAction(c *gin.Context) {
 		CreatedAt:    article.CreatedAt.Format("2006-01-02"),
 		Title:        articleTitle,
 		Tags:         themeTags,
-		URL:          getBlogURL(c) + article.Path,
+		URL:          articleURL,
 		Topped:       article.Topped,
 		ViewCount:    article.ViewCount,
 		CommentCount: article.CommentCount,
 		ThumbnailURL: mdResult.ThumbURL,
-		Content:      template.HTML(mdResult.ContentHTML + "\n" + articleSignSetting.Value),
+		Content:      template.HTML(mdResult.ContentHTML + "\n" + articleSignSetting),
 		Editable:     session.UID == authorModel.ID,
 	}
 
