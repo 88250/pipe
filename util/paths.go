@@ -41,12 +41,13 @@ const (
 	PathAtom        = "/atom"
 	PathUpload      = "/upload"
 	PathFetchUpload = "/fetch-upload"
+	PathChangelogs  = "/changelogs"
 )
 
 var reservedPaths = []string{
 	PathInit, PathSearch, PathBlogs, PathConsoleDist, PathAdmin, PathAPI,
 	PathFavicon, PathTheme, PathActivities, PathArchives, PathAuthors,
-	PathCategories, PathTags, PathComments, PathAtom, PathUpload,
+	PathCategories, PathTags, PathComments, PathAtom, PathUpload, PathFetchUpload, PathChangelogs,
 }
 
 func IsReservedPath(path string) bool {

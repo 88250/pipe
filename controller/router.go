@@ -178,7 +178,7 @@ func MapRoutes() *gin.Engine {
 	initGroup.GET("", showInitPageAction)
 
 	ret.Static(util.PathConsoleDist, staticPath("console/dist"))
-
+	ret.StaticFile(util.PathChangelogs, staticPath("changelogs.html"))
 	ret.NoRoute(func(c *gin.Context) {
 		notFound(c)
 	})
