@@ -179,6 +179,7 @@ func MapRoutes() *gin.Engine {
 
 	ret.Static(util.PathConsoleDist, staticPath("console/dist"))
 	ret.StaticFile(util.PathChangelogs, staticPath("changelogs.html"))
+	ret.StaticFile(util.PathRobots, staticPath("theme/robots.txt"))
 	ret.NoRoute(func(c *gin.Context) {
 		notFound(c)
 	})
