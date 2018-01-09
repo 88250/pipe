@@ -37,8 +37,11 @@ const (
 )
 
 func (srv *upgradeService) Perform() {
+	if !Init.Inited() {
+		return
+	}
 	sysVerSetting := Setting.GetSetting(model.SettingCategorySystem, model.SettingNameSystemVer, 1)
-	if Init.Inited() && nil == sysVerSetting {
+	if nil == sysVerSetting {
 		logger.Fatalf("system state is error, please contact developer: https://github.com/b3log/pipe/issues/new")
 	}
 
