@@ -65,6 +65,7 @@ func init() {
 // Entry point.
 func main() {
 	service.ConnectDB()
+	service.Upgrade.Perform()
 	cron.Start()
 
 	router := controller.MapRoutes()
