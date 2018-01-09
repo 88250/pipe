@@ -18,9 +18,9 @@ package controller
 
 import (
 	"net/http"
-	"time"
-
+	"net/url"
 	"strings"
+	"time"
 
 	"github.com/b3log/pipe/model"
 	"github.com/b3log/pipe/service"
@@ -80,6 +80,7 @@ func fillUser(c *gin.Context) {
 		if "" == redirectURL {
 			redirectURL = util.Conf.Server + c.Request.URL.Path
 		}
+		redirectURL = url.QueryEscape(redirectURL)
 		c.Redirect(http.StatusSeeOther, util.HacPaiURL+"/apis/b3-identity?goto="+redirectURL)
 		c.Abort()
 
