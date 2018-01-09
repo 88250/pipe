@@ -119,6 +119,12 @@
 </footer>
 <script>
   (function () {
+    const search = location.search
+    if (search.indexOf('b3id') === -1) {
+      return
+    }
+    history.replaceState('', '', window.location.href.replace(/(&b3id=\w{8})|(b3id=\w{8}&)|(\?b3id=\w{8})/, ''))
+
     if (navigator.userAgent.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)) {
       return
     }
