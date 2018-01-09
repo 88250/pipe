@@ -509,13 +509,13 @@ ${hintData.imageURL ? '<img src="' + hintData.imageURL + '"/>' : hintData.value}
       if (document.execCommand('insertText', false, '') === false) {
         const valueArray = this.value.substr(0, this.selectionStart).split(splitChar)
         valueArray.pop()
-        this.value = valueArray.join(splitChar) + $currentHint.data('value') + this.value.substr(textarea.selectionStart)
+        this.value = valueArray.join(splitChar) + $currentHint.data('value') + this.value.substr(this.selectionStart)
         this.selectionEnd = this.selectionStart = (valueArray.join(splitChar) + $currentHint.data('value')).length
         timerId = debounceInput(timerId, config.change, $editor)
         return;
       }
       while (!this.value.substr(0, this.selectionEnd).endsWith(splitChar) &&
-      this.value.substr(0, textarea.selectionEnd) !== '') {
+      this.value.substr(0, this.selectionEnd) !== '') {
         document.execCommand('delete', false)
       }
       document.execCommand('delete', false)
