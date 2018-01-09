@@ -6,7 +6,7 @@
  * @fileOverview editor tool
  *
  * @author <a href="http://vanessa.b3log.org">Liyuan Li</a>
- * @version 1.1.0.0, Jan 3, 2018
+ * @version 1.1.1.0, Jan 9, 2018
  */
 
 export const insertTextAtCaret = (textarea, prefix, suffix, replace) => {
@@ -97,15 +97,13 @@ export const genUploaded = (response, textarea, loadingLabel = 'Uploading', erro
 }
 
 export const debounceInput = (timerId, configChange, $editor) => {
-  const debounce = 500
   if (timerId !== undefined) {
     clearTimeout(timerId)
   }
-  timerId = undefined
-  timerId = setTimeout(() => {
+  return setTimeout(() => {
     configChange && configChange($editor.find('textarea').val(),
       $editor.find('.b3log-editor__icon--current').length === 0 ? undefined : $editor.find('.b3log-editor__markdown'))
-  }, debounce)
+  }, 500)
 }
 
 export const replaceTextareaValue = (textarea, original, value) => {

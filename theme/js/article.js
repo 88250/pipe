@@ -301,6 +301,7 @@ export const InitComment = () => {
     staticServePath: config.StaticServer || config.Server,
     change: (value, $preview) => {
       if ($.trim(value) === '' || !$preview) {
+        $preview.html('');
         return;
       }
       $.ajax({
