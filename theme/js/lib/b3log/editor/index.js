@@ -6,7 +6,7 @@
  * @fileOverview editor
  *
  * @author <a href="http://vanessa.b3log.org">Liyuan Li</a>
- * @version 0.3.0.0, Jun 3, 2018
+ * @version 0.3.1.0, Jun 9, 2018
  */
 import toMarkdown from 'to-markdown'
 import $ from 'jquery'
@@ -151,7 +151,7 @@ export const Editor = (config) => {
   if (config.hasView) {
     $editor.find('.b3log-editor__toolbar > span[data-type="view"]').addClass('b3log-editor__icon--current');
     $editor.find('.b3log-editor__markdown').show();
-    debounceInput(timerId, config.change, $editor)
+    timerId = debounceInput(timerId, config.change, $editor)
   }
 
   // emoji
@@ -202,7 +202,7 @@ export const Editor = (config) => {
       } else {
         $it.addClass('b3log-editor__icon--current');
         $editor.find('.b3log-editor__markdown').show();
-        debounceInput(timerId, config.change, $editor)
+        timerId = debounceInput(timerId, config.change, $editor)
       }
     } else if ($it.data('type') === 'fullscreen') {
       if ($it.find('use').attr('xlink:href') === '#fullscreen') {
@@ -424,7 +424,7 @@ ${hintData.imageURL ? '<img src="' + hintData.imageURL + '"/>' : hintData.value}
         genHintsHTML(matchEmoji)
       }
     }
-    debounceInput(timerId, config.change, $editor)
+    timerId = debounceInput(timerId, config.change, $editor)
   }).bind('keyup', function (event) {
     config.keyup && config.keyup(event)
   }).bind('keydown', function (event) {
