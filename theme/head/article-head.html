@@ -1,0 +1,24 @@
+{{define "head/article"}}
+{{if .PreviousArticle}}
+<link rel="prev" title="{{.PreviousArticle.Title}}" href="{{.PreviousArticle.URL}}">
+{{end}}
+{{if .NextArticle}}
+<link rel="next" title="{{.NextArticle.Title}}" href="{{.NextArticle.URL}}">
+{{end}}
+<!-- Open Graph -->
+<meta property="og:locale" content="zh_CN" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="{{.Title}}" />
+<meta property="og:description" content="{{.Article.Abstract}}" />
+<meta property="og:image" content="{{.Article.ThumbnailURL}}" />
+<meta property="og:url" content="{{.Article.URL}}" />
+<meta property="og:site_name" content="Pipe" />
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:description" content="{{.Article.Abstract}}" />
+<meta name="twitter:title" content="{{.Title}}" />
+<meta name="twitter:image" content="{{.Article.ThumbnailURL}}" />
+<meta name="twitter:url" content="{{.Article.URL}}" />
+<meta name="twitter:site" content="@DL88250" />
+<meta name="twitter:creator" content="@DL88250" />
+{{end}}

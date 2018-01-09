@@ -69,7 +69,7 @@ a:hover {
 
 @keyframes downHalf {
   0% {
-    transform: translateY(-20px);
+    transform: translateY(-10px);
     opacity: 1;
   }
 
@@ -99,7 +99,7 @@ a:hover {
 .main {
   position: relative;
   & > .wrapper {
-    animation: downBig .8s 1.4s forwards;
+    animation: downBig .8s forwards;
     opacity: 0;
   }
 }
@@ -195,14 +195,10 @@ a:hover {
       height: 30px;
       width: 30px;
     }
-
-    &:hover {
-     // transform: scaleX(x);
-    }
   }
 
   nav {
-    animation: down .8s 1.2s forwards;
+    animation: down .8s forwards;
     float: right;
     opacity: 0;
 
