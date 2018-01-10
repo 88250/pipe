@@ -26,6 +26,11 @@ body {
   text-rendering: geometricPrecision;
 }
 
+::selection {
+  background: #262a30;
+  color: #fff;
+}
+
 .pipe-content__reset {
   pre > code {
     background-image: url(../../../images/code-bg.png);
@@ -33,14 +38,13 @@ body {
 }
 
 a {
-  color: $text-color;
-  border-bottom: 1px solid #999;
+  color: #222;
+  border-bottom: 1px solid #ccc;
   transition: $transition;
 }
 
 a:hover {
   text-decoration: none;
-  color: $text-hover-color;
   border-bottom-color: $text-hover-color;
 }
 
@@ -208,7 +212,7 @@ a:hover {
     }
 
     a {
-      padding: 5px 10px;
+      padding: 5px 8px;
       border: none;
       transition-property: background;
       margin-left: 5px;
@@ -219,6 +223,7 @@ a:hover {
 
       svg {
         vertical-align: -2px;
+        color: #555;
       }
     }
   }
@@ -227,191 +232,145 @@ a:hover {
 // article
 .article {
   &__item {
-    margin: 30px;
-    border: 1px solid #ddd;
-    background: #fff;
-    position: relative;
-    transition: all .2s ease-in;
-
-    &--show {
-      animation: bounce .6s;
-      visibility: visible;
-    }
+    margin-bottom: 80px;
   }
 
   &__header {
-    border-left: 5px solid $text-color;
-    padding: 15px 130px 15px 25px;
-    line-height: 36px;
-    font-size: 26px;
-    transition: $transition;
-    &--user {
-      padding-right: 181px;
-    }
-
-    &:hover {
-      border-color: $text-hover-color;
-    }
-
-    .article__title {
-      color: $text-color;
-      font-weight: 300;
-      transition: $transition;
-      word-break: break-all;
-      &:hover {
-        color: $text-hover-color;
-        text-decoration: none;
-      }
-      svg {
-        height: 26px;
-        width: 26px;
-      }
-    }
-
-    .article__time {
-      position: absolute;
-      right: 30px;
-      font-size: 16px;
-      top: 15px;
-      color: $gray;
-
-      &--user {
-        right: 81px;
-      }
-    }
+    margin-bottom: 10px;
 
     .avatar {
-      height: 36px;
-      width: 36px;
-      border-radius: 50%;
-      position: absolute;
-      box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 7px;
-      right: 30px;
-      top: 15px;
+      height: 20px;
+      width: 20px;
+      float: left;
       @include image-bg('../../../images/image-bg.svg');
-      &:hover {
-        transform: rotate(360deg);
-        transition: all .2s ease-out 0s;
-      }
+      border-bottom: 0;
+      margin: 2px 5px 0 0;
+      border-radius: 10px;
     }
   }
 
-  &__abstract {
-    padding: 15px 30px 0;
+  &__title {
+    position: relative;
+    color: #555;
+    border-bottom: none;
+    line-height: 1.2;
+    font-size: 28px;
+
+    &:before {
+      content: "";
+      position: absolute;
+      width: 100%;
+      height: 2px;
+      bottom: 0;
+      left: 0;
+      background-color: #000;
+      visibility: hidden;
+      transform: scaleX(0);
+      transition-duration: 0.2s;
+      transition-timing-function: ease-in-out;
+      transition-delay: 0s;
+    }
+
+    &:hover:before {
+      visibility: visible;
+      transform: scaleX(1);
+    }
+
+    svg {
+      height: 24px;
+      width: 24px;
+      float: left;
+      margin: 5px 5px 0 0;
+    }
+  }
+
+  &__meta {
+    margin: 5px 0 20px 0;
+    color: #999;
+    font-size: 12px;
   }
 
   &__thumb {
-    height: 180px;
     display: block;
+    height: 180px;
+    width: 100%;
     @include image-bg('../../../images/image-bg.svg');
+    border-bottom: 0;
+    margin-bottom: 10px;
   }
 
   &__footer {
-    border-top: 1px solid #ddd;
-    margin: 15px 30px;
-    padding-top: 15px;
-    position: relative;
-
-    .fn-left svg {
-      float: left;
-      margin: 6px 15px 0 0;
-      height: 18px;
-      width: 18px;
-    }
-
-    .fn-right {
-      a {
-        color: $text-hover-color;
-        transition: $transition;
-        margin-left: 15px;
-
-        &:hover {
-          text-decoration: none;
-          color: $gray;
-        }
-      }
-
-      span {
-        color: $blue;
-        cursor: pointer;
-        margin-left: 15px;
-        transition: $transition;
-
-        &:hover {
-          color: $gray;
-        }
-      }
-    }
+    margin-top: 20px;
   }
 
-  &__share {
-    position: absolute;
-    bottom: -4px;
-    text-align: center;
-    left: 50%;
-    margin-left: -75px;
-    &-btn {
-      transition: $transition;
-      color: rgba(0, 0, 0, 0.18);
-      margin-left: 15px;
-      cursor: pointer;
-      &--wechat:hover {
-        color: #3caf36;
-      }
-
-      &--weibo:hover {
-        color: #ff9933;
-      }
-
-      &--twitter:hover {
-        color: #18a3fa;
-      }
-
-      &--google:hover {
-        color: #dc4A3d;
-      }
-
-      svg {
-        height: 18px;
-        width: 18px;
-      }
-    }
-  }
-
-  &__code {
-    height: 128px;
-    width: 128px;
-    position: absolute;
-    left: 50%;
-    margin-left: -58px;
-    display: none;
-    top: 25px;
-    border: 1px solid #b0a0aa
-  }
-
-  &__neighbor {
-    margin-left: 15px;
+  &__read {
+    padding: 0;
+    font-size: 16px;
+    color: #666;
+    border-bottom: 2px solid #666;
     transition: $transition;
     &:hover {
-      text-decoration: none;
-      color: $text-color;
+      color: #222;
+    }
+  }
+
+  &__edit {
+    color: #666;
+    border-bottom-width: 0;
+    margin-top: 2px;
+    &:hover {
+      color: #222;
     }
   }
 }
 
-@keyframes bounce {
-  0% {
-    opacity: 0;
-    -webkit-transform: scale(1)
+// pagination
+.pagination {
+  font-size: 16px;
+  border-top: 1px solid #eee;
+
+  &__item {
+    text-align: center;
+    border-bottom: 0;
+    border-top: 1px solid #eee;
+    transition-property: border-color;
+    transition-duration: 0.2s;
+    transition-timing-function: ease-in-out;
+    transition-delay: 0s;
+    display: inline-block;
+    position: relative;
+    top: -1px;
+    margin: 0 10px;
+    padding: 0 10px;
+    line-height: 30px;
+    &:hover {
+      border-top-color: #222;
+    }
+
+    &--active {
+      color: #fff;
+      background: #ccc;
+      border-top-color: #ccc;
+      &:hover {
+        border-top-color: #ccc;
+      }
+    }
+
+    &:first-child {
+      margin-left: 0;
+    }
+
+    &:last-child {
+      margin-right: 0;
+    }
   }
 
-  60% {
-    opacity: 1;
-    -webkit-transform: scale(1.02)
-  }
-
-  100% {
-    -webkit-transform: scale(1)
+  &__omit {
+    top: -5px;
+    margin: 0;
+    border: 0;
+    padding: 0;
+    color: #ccc;
   }
 }
 
@@ -482,41 +441,6 @@ a:hover {
   }
 }
 
-// pagination
-.pagination {
-  text-align: center;
-  font-size: 14px;
-  line-height: 30px;
-  &__item {
-    height: 30px;
-    background: #4d4d4d;
-    border-radius: 15px;
-    display: inline-block;
-    color: #fff;
-    margin: 0 3px;
-    transition: $transition;
-    min-width: 30px;
-    &:hover {
-      opacity: .7;
-      text-decoration: none;
-    }
-
-    &--active {
-      background: $blue;
-      &:hover {
-        opacity: 1;
-      }
-    }
-  }
-  &__near {
-    visibility: hidden;
-    color: #4d4d4d;
-  }
-
-  &:hover .pagination__near {
-    visibility: visible;
-  }
-}
 
 // tags
 .tag {
