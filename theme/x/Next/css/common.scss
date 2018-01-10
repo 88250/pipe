@@ -125,11 +125,30 @@ a:hover {
   font-size: 13px;
   overflow: auto;
 
+  &--active {
+    right: 0;
+
+    .toc,
+    .side__logo,
+    .side__sub-title,
+    .side__board,
+    div > a.side__btn,
+    .side__title,
+    .side__a,
+    .side__tab {
+      transform: translateX(0px);
+      opacity: 1;
+    }
+  }
+
   &::-webkit-scrollbar {
     display: none;
   }
 
   &__logo {
+    transform: translateX(10px);
+    opacity: 0;
+    transition: all 1s .3s ease-in-out;
     display: block;
     margin: 20px auto 0;
     max-width: 96px;
@@ -140,9 +159,18 @@ a:hover {
   }
 
   &__sub-title {
+    transform: translateX(15px);
+    opacity: 0;
+    transition: all 1s .35s ease-in-out;
     margin-top: 10px;
     color: #f5f5f5;
     font-size: 16px;
+  }
+
+  &__board {
+    transform: translateX(20px);
+    opacity: 0;
+    transition: all 1s .4s ease-in-out;
   }
 
   a {
@@ -157,6 +185,10 @@ a:hover {
   &__a {
     margin-right: 10px;
     margin-bottom: 10px;
+    transform: translateX(35px);
+    opacity: 0;
+    transition: all 1s .55s ease-in-out, color .2s ease-in-out;
+    display: inline-block;
 
     &:before {
       display: inline-block;
@@ -171,11 +203,17 @@ a:hover {
   }
 
   &__title {
+    transform: translateX(30px);
+    opacity: 0;
+    transition: all 1s .5s ease-in-out;
     margin-top: 20px;
     color: #f5f5f5;
   }
 
   a.side__btn {
+    transform: translateX(25px);
+    opacity: 0;
+    transition: all 1s .45s ease-in-out, background-color .2s ease-in-out, color .2s ease-in-out;
     color: #fc6423;
     margin: 20px 10px 0 10px;
     display: inline-block;
@@ -186,6 +224,46 @@ a:hover {
     &:hover {
       background-color: #fc6423;
       color: #fff;
+    }
+  }
+
+  &__tab {
+    display: inline-block;
+    cursor: pointer;
+    margin-left: 40px;
+    border-bottom: 2px solid transparent;
+    line-height: 30px;
+    font-size: 14px;
+    margin-bottom: 20px;
+    transition: all 1s .2s ease-in-out, color .2s ease-in-out, border .2s ease-in-out;
+    font-weight: bold;
+    padding: 0 10px;
+    opacity: 0;
+    transform: translateX(10px);
+
+    &:hover {
+      color: #eee;
+    }
+
+    &:first-child {
+      margin-left: 0;
+    }
+
+    &--current {
+      color: #87daff;
+      border-bottom-color: #87daff
+    }
+  }
+
+  #sideGist,
+  #sideToc {
+    transform: translateY(-20px);
+    opacity: 0;
+    transition: all .1s linear;
+
+    &.current {
+      transform: translateY(0);
+      opacity: 1;
     }
   }
 }
@@ -489,19 +567,6 @@ a:hover {
     }
   }
 
-  &__tag {
-    padding: 1px 5px;
-    background: #f5f5f5;
-    border-bottom: none;
-    margin-right: 10px;
-    font-size: 13px;
-    display: inline-block;
-
-    &:hover {
-      background: #ccc;
-    }
-  }
-
   &__share {
     display: inline-block;
     position: relative;
@@ -671,13 +736,14 @@ a:hover {
 
 // toc
 .toc {
-  &__panel {
-    font-size: 14px;
-    text-align: left;
+  font-size: 14px;
+  text-align: left;
+  transform: translateX(20px);
+  transition: all 1s .3s ease-in-out;
+  opacity: 0;
 
-    li {
-      list-style: none;
-    }
+  li {
+    list-style: none;
   }
   @for $i from 1 through 5 {
     .toc__h#{$i} {
@@ -691,47 +757,69 @@ a:hover {
   }
 }
 
-
-
-
-
-
-
-
-
-// tags
-.tag {
-}
-
+// page
 .page {
-  &__content {
-    padding: 15px 30px;
+  position: relative;
 
-    .categories {
-      &__item {
-        list-style: none;
-        border-top: 1px solid #ddd;
-        padding: 15px 0;
-      }
+  .tag {
+    margin-top: 10px;
+  }
 
-      &__header {
-        font-size: 24px;
-        font-weight: normal;
-        transition: $transition;
-        &:hover {
-          text-decoration: none;
-          color: $text-hover-color;
-        }
-      }
-    }
+  &:before {
+    position: absolute;
+    content: "";
+    height: 100%;
+    width: 4px;
+    top: 8px;
+    left: 16px;
+    background-color: #f5f5f5;
+  }
 
-    &--archive {
-      padding: 30px 30px 0 48px;
+  &__articles {
+    margin-bottom: 40px;
+    text-align: center;
+  }
+
+  &__title {
+    position: relative;
+    padding-left: 40px;
+    margin-bottom: 40px;
+
+    &:before {
+      content: "";
+      position: absolute;
+      top: 7px;
+      left: -8px;
+      width: 10px;
+      height: 10px;
+      opacity: .5;
+      background: #555;
+      border: 1px solid #fff;
+      border-radius: 50%;
     }
   }
-  &__title {
-    font-size: 26px;
-    margin: 30px;
+
+  &__item {
+    transition: $transition;
+    display: block;
+    padding: 20px 0 20px 40px ;
+    border-bottom: 1px dashed #ccc;
+    position: relative;
+    color: #666;
+
+    &:before {
+      content: "";
+      position: absolute;
+      top: 29px;
+      left: -6px;
+      width: 6px;
+      height: 6px;
+      opacity: .5;
+      background: #bbb;
+      border: 1px solid #fff;
+      border-radius: 50%;
+    }
+
   }
 }
 
@@ -748,6 +836,7 @@ a:hover {
     color: $text-color;
     box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 7px;
     line-height: 18px;
+    border-bottom: 0;
     &:hover {
       text-decoration: none;
       color: $text-hover-color;
@@ -775,6 +864,52 @@ a:hover {
     margin: 13px 0 3px;
   }
 }
+
+// tag
+#tags {
+  .tag {
+    margin-bottom: 10px;
+  }
+}
+.tag {
+  padding: 1px 5px;
+  background: #f5f5f5;
+  border-bottom: none;
+  margin-right: 10px;
+  font-size: 13px;
+  display: inline-block;
+  line-height: initial;
+
+  &:hover {
+    background: #ccc;
+  }
+
+  &__level0 {
+    font-size: 12px;
+    color: $fade
+  }
+
+  &__level1 {
+    font-size: 16px;
+    color: $gray
+  }
+
+  &__level2 {
+    font-size: 21px;
+    color: #6f6f6f
+  }
+
+  &__level3 {
+    font-size: 24px;
+    color: $black
+  }
+
+  &__level4 {
+    font-size: 30px;
+    color: #000
+  }
+}
+
 
 @media (max-width: 768px) {
   .toc__panel,

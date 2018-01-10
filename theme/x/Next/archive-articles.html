@@ -6,17 +6,18 @@
     {{template "head/3rdstatistic" .}}
 </head>
 <body>
-{{template "Next/side" .}}
 <div class="main">
-    <h2 class="page__title">
+    {{template "Next/header" .}}
+    <div class="wrapper">
+        <h2 class="page__articles">
         {{.Archive.Title}}
         <span id="archiveArticleCount" class="ft-fade">0</span> <span class="ft-fade ft-13">{{.I18n.Article2}}</span>
-    </h2>
-    {{template "Next/article-list" .}}
-
+        </h2>
+        {{template "Next/article-list" .}}
+    </div>
+    {{template "Next/side" .}}
     {{template "Next/footer" .}}
 </div>
-
 <script>
   increase({{.Archive.ArticleCount}}, 1000, 'archiveArticleCount', 0)
 </script>

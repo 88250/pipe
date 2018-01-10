@@ -1,13 +1,17 @@
 {{define "Next/side"}}
 <aside class="side">
     {{if .ToC}}
+    <div>
+        <div class="side__tab side__tab--current" data-type="toc">{{.I18n.Toc}}</div>
+        <div class="side__tab" data-type="gist">{{.I18n.Gist}}</div>
+    </div>
 
-    <div class="toc__panel">
+    <div id="sideToc" class="current">
         {{.ToC}}
     </div>
     {{end}}
 
-    <div{{if .ToC}} class="fn-none"{{end}}>
+    <div id="sideGist"{{if .ToC}}{{else}} class="current"{{end}}>
         <a href="{{.BlogURL}}" class="side__logo">
             <img data-src="{{.LogoURL}}">
         </a>
@@ -15,7 +19,7 @@
         <div class="side__sub-title">{{.Setting.BasicBlogSubtitle}}</div>
         <div class="side__board">{{.Setting.BasicNoticeBoard}}</div>
 
-        {{if eq .User.URole 1}}
+        {{if eq .User.URole 0}}
         <a href="https://hacpai.com/register" class="side__btn">{{.I18n.Register}}</a>
         <a href="https://hacpai.com/login" class="side__btn">{{.I18n.Login}}</a>
         {{else}}

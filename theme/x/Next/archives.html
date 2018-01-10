@@ -6,25 +6,21 @@
     {{template "head/3rdstatistic" .}}
 </head>
 <body>
-{{template "Next/side" .}}
 <div class="main">
-    <article class="article__item">
-        <header class="article__header">
-            <h2>
-                <span id="archiveMonthCount">0</span> <span class="ft-fade ft-13">{{.I18n.Month2}}</span>
-                <span id="archiveArticleCount">0</span> <span class="ft-fade ft-13">{{.I18n.Article2}}</span>
-            </h2>
-        </header>
-        <div class="page__content--archive">
-            {{range .Archives}}
-            <a href="{{.URL}}" class="tag tag--page">
-                {{.Title}}
-                <span class="ft-fade">{{.ArticleCount}} {{$.I18n.Space}}</span>
-            </a>
-            {{end}}
-        </div>
-    </article>
-
+    {{template "Next/header" .}}
+    <div class="wrapper page">
+        <h2 class="page__title">
+            <span id="archiveMonthCount">0</span> <span class="ft-fade ft-13">{{.I18n.Month2}}</span>
+            <span id="archiveArticleCount">0</span> <span class="ft-fade ft-13">{{.I18n.Article2}}</span>
+        </h2>
+        {{range .Archives}}
+        <a href="{{.URL}}" class="page__item">
+            {{.Title}}
+            <span class="ft-fade">{{.ArticleCount}} {{$.I18n.Space}}</span>
+        </a>
+        {{end}}
+    </div>
+    {{template "Next/side" .}}
     {{template "Next/footer" .}}
 </div>
 <script>

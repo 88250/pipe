@@ -25,9 +25,32 @@ const Article = {
 
     Article._share();
 
-    if ($('.toc__panel').length === 1) {
+    if ($('#sideToc').length === 1) {
       $('.sidebar').click();
       InitToc('toc', 'articleContent')
+
+      $('.side__tab').click(function () {
+        $('.side__tab').removeClass('side__tab--current')
+        $(this).addClass('side__tab--current')
+
+        if ($(this).data('type') === 'toc') {
+          $('#sideGist').removeClass('current');
+          setTimeout(function () {
+            $('#sideGist').hide();
+            $('#sideToc').show(function () {
+              $(this).addClass('current');
+            });
+          }, 0);
+        } else {
+          $('#sideToc').removeClass('current');
+          setTimeout(function () {
+            $('#sideToc').hide();
+            $('#sideGist').show(function () {
+              $(this).addClass('current');
+            });
+          }, 0)
+        }
+      });
     }
   },
   _share: () => {
