@@ -41,7 +41,7 @@ const Article = {
     urls.google = 'https://plus.google.com/share?url=' + url
     urls.twitter = 'https://twitter.com/intent/tweet?status=' + title + ' ' + url
 
-    $this.find('.article__share-btn').click(function () {
+    $this.find('span').click(function () {
       const key = $(this).data('type')
 
       if (!key) {

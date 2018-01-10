@@ -16,7 +16,7 @@
         {{if gt $.Pagination.PageCount 0}}
         {{if gt $.Pagination.PreviousPageNum 0}}
         <a class="pipe-comment__btn" href="?p={{$.Pagination.PreviousPageNum}}">
-            <svg class="fn-left"><use xlink:href="#iconchevron-left"></use></svg> {{$.I18n.prePage}}
+            <svg class="fn-left"><use xlink:href="#icon-chevron-left"></use></svg> {{$.I18n.prePage}}
         </a>
         {{end}}
         {{if lt $.Pagination.CurrentPageNum $.Pagination.PageCount}}

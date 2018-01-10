@@ -8,7 +8,7 @@
  * editor
  *
  * @author <a href="http://vanessa.b3log.org">Liyuan Li</ta>
- * @version 0.1.1.1, Nov 29, 2017
+ * @version 0.1.1.2, Jan 10, 2018
  */
 
 .b3log-editor {
@@ -41,6 +41,7 @@
       text-align: center;
       display: inline-block;
       cursor: pointer;
+      border-bottom: 0;
 
       svg {
         color: $black-light;

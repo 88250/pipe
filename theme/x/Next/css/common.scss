@@ -394,6 +394,18 @@ a:hover {
       margin: 2px 5px 0 0;
       border-radius: 10px;
     }
+
+    &--center {
+      text-align: center;
+
+      h2 {
+        font-size: 28px;
+      }
+
+      .article__meta {
+        margin: 10px 0 40px;
+      }
+    }
   }
 
   &__title {
@@ -465,9 +477,42 @@ a:hover {
     color: #666;
     border-bottom-width: 0;
     margin-top: 2px;
+    cursor: pointer;
     &:hover {
       color: #222;
     }
+  }
+
+  &__tag {
+    padding: 1px 5px;
+    background: #f5f5f5;
+    border-bottom: none;
+    margin-right: 10px;
+    font-size: 13px;
+    display: inline-block;
+
+    &:hover {
+      background: #ccc;
+    }
+  }
+
+  &__share {
+    display: inline-block;
+    position: relative;
+
+    svg {
+      height: 16px;
+      width: 16px;
+    }
+  }
+
+  &__code {
+    display: none;
+    position: absolute;
+    top: 16px;
+    left: -12px;
+    height: 128px;
+    width: 128px;
   }
 }
 
@@ -521,7 +566,16 @@ a:hover {
   }
 }
 
-// side
+// reset comment
+#pipeComments {
+  a {
+    border-bottom: 0;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
 
 
 
@@ -682,11 +736,6 @@ a:hover {
     font-size: 16px;
     margin: 13px 0 3px;
   }
-}
-
-// comment
-#pipeComments {
-  padding: 15px 30px;
 }
 
 // toc

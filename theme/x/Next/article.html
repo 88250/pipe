@@ -11,97 +11,87 @@
     {{template "Next/header" .}}
     <div class="wrapper">
         <article class="article__item">
-            <header class="article__header{{if gt $.UserCount 1}} article__header--user{{end}}">
+            <header class="article__header article__header--center">
                 <h2>
-                    <a class="article__title" rel="bookmark" href="{{.Article.URL}}">
-                        {{if .Article.Topped}}
-                        <svg>
-                            <use xlink:href="#icon-focus"></use>
-                        </svg>
-                        {{end}}
-                        {{.Article.Title}}
-                    </a>
+                    {{if .Article.Topped}}
+                    <svg>
+                        <use xlink:href="#icon-focus"></use>
+                    </svg>
+                    {{end}}
+                    {{.Article.Title}}
                 </h2>
-                <time class="article__time{{if gt $.UserCount 1}} article__time--user{{end}}">{{.Article.CreatedAt}}</time>
-                {{if gt $.UserCount 1}}
-                <a rel="nofollow"
-                   class="avatar pipe-tooltipped pipe-tooltipped--n"
-                   aria-label="{{.Article.Author.Name}}"
-                   data-src="{{.Article.Author.AvatarURLWithSize 116}}"
-                   href="{{.Article.Author.URL}}">
-                </a>
-                {{end}}
+                <div class="article__meta">
+                    {{if gt $.UserCount 1}}
+                    <a rel="nofollow"
+                       class="avatar pipe-tooltipped pipe-tooltipped--n"
+                       aria-label="{{.Article.Author.Name}}"
+                       data-src="{{.Article.Author.AvatarURLWithSize 116}}"
+                       href="{{.Article.Author.URL}}">
+                    </a>
+                    {{end}}
+                    <time>{{.Article.CreatedAt}}</time> &nbsp;
+                    |  &nbsp;
+                    <a href="{{.URL}}">{{.Article.ViewCount}}</a> {{$.I18n.View}}  &nbsp;
+                    |  &nbsp;
+                    <a href="{{.URL}}#comments">{{.Article.CommentCount}}</a> {{$.I18n.Comment}}
+                </div>
             </header>
-            <section class="pipe-content__reset article__abstract" id="articleContent" data-author="{{.Article.Author.Name}}">
+            <section class="pipe-content__reset" data-author="{{.Article.Author.Name}}">
                 {{.Article.Content}}
             </section>
             <div class="article__footer fn-clear">
-            <span class="article__share">
-                <span class="article__share-btn article__share-btn--wechat" data-type="wechat">
-                    <svg><use xlink:href="#wechat"></use></svg>
-                </span>
-                <span class="article__share-btn article__share-btn--weibo" data-type="weibo">
-                    <svg><use xlink:href="#weibo"></use></svg>
-                </span>
-                <span class="article__share-btn article__share-btn--twitter" data-type="twitter">
-                    <svg><use xlink:href="#twitter"></use></svg>
-                </span>
-                <span class="article__share-btn article__share-btn--google" data-type="google">
-                    <svg><use xlink:href="#google"></use></svg>
-                </span>
-                <div class="article__code"
-                     data-title="{{.Article.Title}}"
-                     data-blogtitle="{{$.Setting.BasicBlogTitle}}"
-                     data-url="{{.Article.URL}}"
-                     data-avatar="{{.Article.Author.AvatarURLWithSize 128}}"></div>
-            </span>
-                <div class="fn-left">
-                    <svg>
-                        <use xlink:href="#icon-tag"></use>
-                    </svg>
+                <span class="fn-left">
                     {{range .Article.Tags}}
-                    <a class="tag" rel="tag" href="{{.URL}}">{{.Title}}</a>
+                    <a class="article__tag" rel="tag" href="{{.URL}}">{{.Title}}</a>
                     {{end}}
-                </div>
-                <span class="fn-right">
-                <a href="{{.Article.URL}}" aria-label="{{$.I18n.View}}"
-                   class="pipe-tooltipped pipe-tooltipped--w">
-                    {{.Article.ViewCount}}
-                    <svg>
-                        <use xlink:href="#icon-view"></use>
-                    </svg>
-                </a>
-
-                <a href="{{.Article.URL}}#comments" aria-label="{{$.I18n.Comment}}"
-                   class="pipe-tooltipped pipe-tooltipped--w">
-                    {{.Article.CommentCount}}
-                    <svg>
-                        <use xlink:href="#icon-comment"></use>
-                    </svg>
-                </a>
-                {{if .Article.Editable}}
-                <a href="{{$.Conf.Server}}/admin/articles/post?id={{.Article.ID}}"
-                   aria-label="{{$.I18n.Edit}}"
-                   class="pipe-tooltipped pipe-tooltipped--w">&nbsp;<svg>
-                        <use xlink:href="#icon-edit"></use>
-                    </svg>
-                </a>
-                {{end}}
-                <span id="articleCommentBtn"
-                      data-title="{{$.I18n.Comment}}{{$.I18n.Colon}}{{.Article.Title}}"
-                      data-id="{{.Article.ID}}">
-                    <svg>
-                        <use xlink:href="#icon-reply"></use>
-                    </svg>
-                    {{$.I18n.Comment}}
                 </span>
-            </span>
+
+                <span class="fn-right">
+                    {{if .Article.Editable}}
+                    <a href="{{$.Conf.Server}}/admin/articles/post?id={{.Article.ID}}"
+                       aria-label="{{$.I18n.Edit}}"
+                       class="pipe-tooltipped pipe-tooltipped--n article__edit">
+                        <svg>
+                            <use xlink:href="#icon-edit"></use>
+                        </svg>
+                    </a>
+                    &nbsp; &nbsp;
+                    {{end}}
+
+                    <span class="article__share">
+                        <span class="article__edit" data-type="wechat">
+                            <svg><use xlink:href="#wechat"></use></svg>
+                        </span> &nbsp; &nbsp;
+                        <span class="article__edit" data-type="weibo">
+                            <svg><use xlink:href="#weibo"></use></svg>
+                        </span> &nbsp; &nbsp;
+                        <span class="article__edit" data-type="twitter">
+                            <svg><use xlink:href="#twitter"></use></svg>
+                        </span> &nbsp; &nbsp;
+                        <span class="article__edit" data-type="google">
+                            <svg><use xlink:href="#google"></use></svg>
+                        </span> &nbsp; &nbsp;
+                        <div class="article__code"
+                             data-title="{{.Article.Title}}"
+                             data-blogtitle="{{$.Setting.BasicBlogTitle}}"
+                             data-url="{{.Article.URL}}"
+                             data-avatar="{{.Article.Author.AvatarURLWithSize 128}}"></div>
+                    </span>
+
+                    <span id="articleCommentBtn" class="article__edit"
+                          data-title="{{$.I18n.Comment}}{{$.I18n.Colon}}{{.Article.Title}}"
+                          data-id="{{.Article.ID}}">
+                        <svg>
+                            <use xlink:href="#icon-reply"></use>
+                        </svg>
+                        {{$.I18n.Comment}}
+                    </span>
+
+                </span>
             </div>
         </article>
 
-        <article class="article__item">
-            {{template "comment/comments" .}}
-        </article>
+        {{template "comment/comments" .}}
     </div>
     {{template "comment/editor" .}}
     {{template "Next/side" .}}
