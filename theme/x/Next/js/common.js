@@ -19,6 +19,23 @@ const Common = {
   init: () => {
     PreviewImg()
     KillBrowser()
+    $('.sidebar').click(function () {
+      if ($(this).hasClass('sidebar--active')) {
+        $(this).removeClass('sidebar--active')
+        $('.main').css('margin-right', '0')
+        $('.side').css('right', '-320px')
+      } else {
+        $(this).addClass('sidebar--active')
+        $('.main').css('margin-right', '320px')
+        $('.side').css('right', '0')
+      }
+    })
+
+    $('.top__btn').click(function () {
+      $("html, body").animate({
+        scrollTop: 0
+      }, 800)
+    })
   },
   increase(max, time, id, count) {
     if (count < max) {

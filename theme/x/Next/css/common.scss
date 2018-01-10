@@ -102,6 +102,7 @@ a:hover {
 
 .main {
   position: relative;
+  transition: $transition;
   & > .wrapper {
     animation: downBig .8s forwards;
     opacity: 0;
@@ -118,6 +119,9 @@ a:hover {
   text-align: center;
   box-sizing: border-box;
   position: fixed;
+  transition: $transition;
+  bottom: 0;
+  background-color: #222;
 }
 
 .footer {
@@ -130,6 +134,88 @@ a:hover {
   .wrapper {
     animation: up .8s forwards;
     opacity: 0;
+  }
+}
+
+.sidebar {
+  position: fixed;
+  bottom: 45px;
+  width: 15px;
+  height: 15px;
+  background-color: #222;
+  line-height: 0;
+  right: 50px;
+  padding: 5px;
+  cursor: pointer;
+  z-index: 10;
+
+  &__line {
+    position: relative;
+    vertical-align: top;
+    height: 2px;
+    width: 100%;
+    background-color: #fff;
+    margin-top: 4px;
+    display: block;
+    transition: $transition;
+
+    &:first-child {
+      margin-top: 0;
+    }
+  }
+
+  &:hover {
+    .sidebar__line--first {
+      width: 50%;
+      transform: rotateZ(-45deg);
+      top: 3px
+    }
+
+    .sidebar__line--middle {
+      width: 90%
+    }
+
+    .sidebar__line--last {
+      width: 50%;
+      transform: rotateZ(45deg);
+      top: -3px
+    }
+  }
+
+  &--active,
+  &--active:hover {
+    .sidebar__line--first {
+      width: 100%;
+      transform: rotateZ(-45deg);
+      top: 6px
+    }
+
+    .sidebar__line--middle {
+      opacity: 0
+    }
+
+    .sidebar__line--last {
+      width: 100%;
+      transform: rotateZ(45deg);
+      top: -6px
+    }
+  }
+}
+
+.top__btn {
+  position: fixed;
+  bottom: 15px;
+  width: 15px;
+  height: 15px;
+  background-color: #222;
+  line-height: 0;
+  right: 50px;
+  padding: 5px;
+  cursor: pointer;
+  z-index: 10;
+
+  svg {
+    color: #fff;
   }
 }
 
@@ -373,6 +459,24 @@ a:hover {
     color: #ccc;
   }
 }
+
+// side
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // relevant
 .relevant {
