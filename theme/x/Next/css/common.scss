@@ -293,6 +293,18 @@ a:hover {
   cursor: pointer;
   z-index: 10;
 
+  &--header {
+    position: inherit;
+    display: none;
+    float: right;
+    background-color: transparent;
+    transform: scale(1.5);
+
+    .sidebar__line {
+      background-color: #555;
+    }
+  }
+
   &__line {
     position: relative;
     vertical-align: top;
@@ -354,7 +366,8 @@ a:hover {
 
 .top__btn {
   position: fixed;
-  bottom: 34px;
+  bottom: -25px;
+  opacity: 0;
   width: 15px;
   height: 15px;
   background-color: #222;
@@ -363,6 +376,7 @@ a:hover {
   padding: 5px;
   cursor: pointer;
   z-index: 10;
+  transition: $transition;
 
   svg {
     color: #fff;
@@ -802,7 +816,7 @@ a:hover {
   &__item {
     transition: $transition;
     display: block;
-    padding: 20px 0 20px 40px ;
+    padding: 20px 0 20px 40px;
     border-bottom: 1px dashed #ccc;
     position: relative;
     color: #666;
@@ -871,6 +885,7 @@ a:hover {
     margin-bottom: 10px;
   }
 }
+
 .tag {
   padding: 1px 5px;
   background: #f5f5f5;
@@ -910,121 +925,57 @@ a:hover {
   }
 }
 
-
 @media (max-width: 768px) {
-  .toc__panel,
-  #showToc,
-  .side__overlay,
-  .article__share,
-  .article__neighbor,
-  .relevant__abstract {
-    display: none;
+  .header {
+    padding: 20px 0;
+    nav {
+      display: none;
+      transition: $transition;
+      width: 100%;
+      border-top: 1px solid rgb(221, 221, 221);
+      margin-top: 23px;
+
+      a {
+        display: block;
+      }
+    }
+    .sidebar--header {
+      display: block;
+    }
   }
 
-  .side > .fn-none,
-  .mobile--show {
-    display: block;
+  .footer {
+    .fn-right {
+      float: none;
+    }
   }
 
-  .side,
-  .side__content,
-  .main,
-  .side__footer,
-  .article__header .article__time {
-    position: inherit;
+  .article__relevant .relevant__panel {
+    white-space: initial;
+
+    .relevant__item {
+      width: 100%;
+      box-sizing: border-box;
+      margin-right: 0;
+      margin-bottom: 10px;
+    }
+  }
+
+  .author {
+    padding: 0;
+
+    &__item {
+      width: 100%;
+      margin: 0 0 20px 0;
+    }
   }
 
   .side {
     width: 100%;
+    right: -100%;
 
-    &__content {
-      padding: 15px;
-
-      h1 a {
-        margin-top: 0;
-      }
-
-      ul {
-        display: none;
-      }
+    &--active {
+      right: 0;
     }
-
-    &__footer > a {
-      width: auto;
-      margin-right: 15px;
-      svg {
-        height: 14px;
-        width: 14px;
-      }
-    }
-
-    &__logo img {
-      position: absolute;
-      top: 9px;
-      height: 30px;
-      width: 30px;
-    }
-  }
-
-  .article__item {
-    margin: 15px;
-  }
-
-  .article__footer > .fn-left,
-  .article__footer > .fn-right,
-  .footer .fn-right {
-    float: none;
-  }
-
-  .article__footer > .fn-right a {
-    margin: 15px 15px 0 0;
-    display: inline-block;
-  }
-
-  .article__header {
-    padding: 10px 15px 10px 10px;
-  }
-
-  .article__header .avatar {
-    position: inherit;
-    display: inline-block;
-    height: 20px;
-    width: 20px;
-    float: left;
-    margin: 11px 15px 0 0;
-  }
-
-  .pagination__item {
-    min-width: 18px;
-    margin: 0;
-    height: 20px;
-    line-height: 20px;
-  }
-
-  .pagination__near {
-    visibility: visible;
-  }
-
-  .page__title,
-  .relevant__item {
-    margin: 15px;
-  }
-
-  .article__abstract {
-    padding: 15px 15px 0;
-  }
-
-  .relevant__thumbnail {
-    position: inherit;
-    width: 100%;
-    margin-top: 15px;
-  }
-
-  .relevant__content > div {
-    margin-right: 0;
-  }
-
-  #pipeComments {
-    padding: 15px;
   }
 }

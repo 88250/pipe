@@ -19,7 +19,7 @@ const Common = {
   init: () => {
     PreviewImg()
     KillBrowser()
-    $('.sidebar').click(function () {
+    $('#sideBar').click(function () {
       if ($(this).hasClass('sidebar--active')) {
         $(this).removeClass('sidebar--active')
         $('.main').css('margin-right', '0')
@@ -31,11 +31,38 @@ const Common = {
       }
     })
 
+    $('.sidebar--header').click(function () {
+      if ($(this).hasClass('sidebar--active')) {
+        $(this).removeClass('sidebar--active')
+        $('.header nav').hide()
+
+      } else {
+        $(this).addClass('sidebar--active')
+        $('.header nav').show()
+      }
+    })
+
     $('.top__btn').click(function () {
       $("html, body").animate({
         scrollTop: 0
       }, 800)
     })
+
+    $(window).scroll(function () {
+      if ($(window).scrollTop() > $(window).height()) {
+        $('.top__btn').css({
+          'bottom': '34px',
+          'opacity': '1'
+        });
+      } else {
+        $('.top__btn').css({
+          'bottom': '-25px',
+          'opacity': '0'
+        });
+      }
+    });
+
+    $(window).scroll();
   },
   increase(max, time, id, count) {
     if (count < max) {

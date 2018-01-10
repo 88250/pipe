@@ -26,7 +26,9 @@ const Article = {
     Article._share();
 
     if ($('#sideToc').length === 1) {
-      $('.sidebar').click();
+      if ($(window).width() > 768) {
+        $('#sideBar').click();
+      }
       InitToc('toc', 'articleContent')
 
       $('.side__tab').click(function () {
