@@ -114,7 +114,7 @@ a:hover {
   right: -320px;
   top: 0;
   box-shadow: inset 0 2px 6px #000;
-  padding: 20px 10px;
+  padding: 20px;
   color: #999;
   text-align: center;
   box-sizing: border-box;
@@ -122,6 +122,72 @@ a:hover {
   transition: $transition;
   bottom: 0;
   background-color: #222;
+  font-size: 13px;
+  overflow: auto;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  &__logo {
+    display: block;
+    margin: 20px auto 0;
+    max-width: 96px;
+    height: auto;
+    border: 2px solid #333;
+    padding: 2px;
+    background-color: #fff;
+  }
+
+  &__sub-title {
+    margin-top: 10px;
+    color: #f5f5f5;
+    font-size: 16px;
+  }
+
+  a {
+    border-bottom-color: #555;
+    color: #999;
+
+    &:hover {
+      color: #eee;
+    }
+  }
+
+  &__a {
+    margin-right: 10px;
+    margin-bottom: 10px;
+
+    &:before {
+      display: inline-block;
+      vertical-align: middle;
+      margin-right: 3px;
+      content: " ";
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: #01e0e7;
+    }
+  }
+
+  &__title {
+    margin-top: 20px;
+    color: #f5f5f5;
+  }
+
+  a.side__btn {
+    color: #fc6423;
+    margin: 20px 10px 0 10px;
+    display: inline-block;
+    border: 1px solid #fc6423;
+    border-radius: 5px;
+    padding: 0 10px;
+
+    &:hover {
+      background-color: #fc6423;
+      color: #fff;
+    }
+  }
 }
 
 .footer {
@@ -139,7 +205,7 @@ a:hover {
 
 .sidebar {
   position: fixed;
-  bottom: 45px;
+  bottom: 64px;
   width: 15px;
   height: 15px;
   background-color: #222;
@@ -204,7 +270,7 @@ a:hover {
 
 .top__btn {
   position: fixed;
-  bottom: 15px;
+  bottom: 34px;
   width: 15px;
   height: 15px;
   background-color: #222;
@@ -279,11 +345,6 @@ a:hover {
     &:hover:before,
     &:hover:after {
       animation: logoLineHover .8s forwards;
-    }
-
-    img {
-      height: 30px;
-      width: 30px;
     }
   }
 
@@ -548,92 +609,6 @@ a:hover {
 
 // tags
 .tag {
-  color: #fff;
-  font-size: 10px;
-  height: 18px;
-  line-height: 18px;
-  display: inline-block;
-  padding: 0 5px 0 10px;
-  position: relative;
-  border-radius: 0 5px 5px 0;
-  margin: 5px 9px 5px 8px;
-  background-color: #7b5d5f;
-  transtion: $transition;
-  &:hover {
-    opacity: .7;
-    text-decoration: none;
-  }
-
-  &:after,
-  &:before {
-    content: " ";
-    position: absolute
-  }
-
-  &:before {
-    width: 0;
-    height: 0;
-    top: 0;
-    left: -18px;
-    border: 9px solid transparent;
-    border-right-color: #7b5d5f
-  }
-
-  &:after {
-    width: 4px;
-    height: 4px;
-    background-color: #fff;
-    border-radius: 4px;
-    box-shadow: 0 0 0 1px rgba(0, 0, 0, .3);
-    top: 7px;
-    left: 2px
-  }
-
-  &--color1 {
-    background: #ff945c;
-    &:before {
-      border-right-color: #ff945c
-    }
-  }
-
-  &--color2 {
-    background: #f5c7b7;
-    &:before {
-      border-right-color: #f5c7b7
-    }
-  }
-
-  &--color3 {
-    background: #ba8f6c;
-    &:before {
-      border-right-color: #ba8f6c
-    }
-  }
-
-  &--color4 {
-    background: #cfb7c4;
-    &:before {
-      border-right-color: #cfb7c4
-    }
-  }
-
-  &--page {
-    font-size: 18px;
-    line-height: 36px;
-    height: 36px;
-    padding: 0 10px 0 20px;
-    margin: 0 48px 30px 0;
-
-    &:before {
-      left: -36px;
-      border-width: 18px;
-    }
-
-    &:after {
-      top: 16px;
-      left: 6px;
-    }
-  }
 }
 
 .page {
