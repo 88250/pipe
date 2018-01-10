@@ -24,6 +24,11 @@ const Article = {
     InitHljs()
 
     Article._share();
+
+    if ($('.toc__panel').length === 1) {
+      $('.sidebar').click();
+      InitToc('toc', 'articleContent')
+    }
   },
   _share: () => {
     const $this = $('.article__share')

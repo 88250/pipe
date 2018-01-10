@@ -141,7 +141,7 @@ export const InitComment = () => {
   })
 
   // bottom reply
-  $('#pipeCommentBottomComment').click(function () {
+  $('body').on('click', '#pipeCommentBottomComment', function () {
     const $bottomComment = $(this)
     ShowEditor($bottomComment.text(), $bottomComment.data('id'))
   })
@@ -229,7 +229,8 @@ export const InitComment = () => {
 
             if ($('#pipeComments > div > section').length === 1) {
               $comments.addClass('pipe-comment__null')
-                .html(`${$it.data('label2')} <svg><use xlink:href="#comment"></use></svg>`).click(function () {
+                .html(`<svg><use xlink:href="#icon-reply"></use></svg>
+${$it.data('label2')}`).click(function () {
                 ShowEditor($comments.data('title'), $comments.data('id'))
               })
             } else {
@@ -368,7 +369,12 @@ export const InitComment = () => {
 
           if ($commentsCnt.length === 0) {
             $comments.removeClass('pipe-comment__null').unbind('click')
-              .html(`<div class="pipe-comment__header"><span id="pipeCommentsCnt">1</span>${label}</div><div>${result.data}</div>`)
+              .html(`<div class="pipe-comment__header"><span id="pipeCommentsCnt">1</span>${label}</div><div>${result.data}</div>
+<nav class="pipe-comment__pagination fn-clear">
+    <span class="fn-right pipe-comment__btn" data-id="${$editor.data('id')}" id="pipeCommentBottomComment">
+         <svg><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-reply"></use></svg> ${$comments.data('title')}
+    </span>
+</nav>`)
           } else {
             $commentsCnt.text(parseInt($commentsCnt.text()) + 1)
             $('#pipeComments > div > section').last().after(result.data)

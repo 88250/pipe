@@ -266,6 +266,12 @@ a:hover {
       top: -6px
     }
   }
+
+  &--toc {
+    .sidebar__line {
+      background-color: #87daff;
+    }
+  }
 }
 
 .top__btn {
@@ -552,37 +558,41 @@ a:hover {
         }
         a {
           border-bottom: 0;
+          &:hover {
+            color: #333;
+          }
         }
       }
 
       &__item {
         width: 260px;
-        box-shadow: 0 1px 7px rgba(0,0,0,0.05);
+        box-shadow: 0 1px 7px rgba(0, 0, 0, 0.05);
         display: inline-block;
         overflow: hidden;
         background-color: #fff;
         padding: 10px;
         margin-right: 20px;
-        border-radius: 5px;
 
         .avatar {
-          height: 38px;
+          height: 20px;
+          width: 20px;
           float: left;
-          width: 38px;
-          border-radius: 20px;
+          border-radius: 10px;
+          margin: 2px 5px 0 0;
           @include image-bg('../../../images/image-bg.svg');
         }
+      }
 
-        .module__list-title {
-          font-size: 18px;
-          display: block;
-          margin-bottom: 10px;
+      &__title {
+        font-size: 18px;
+        display: block;
+        margin-bottom: 5px;
+
+        &:hover {
+          color: #555;
         }
       }
-      &__content {
-        padding-left: 48px;
-        line-height: 20px;
-      }
+
       &__thumbnail {
         height: 90px;
         margin: -10px -10px 10px -10px;
@@ -659,16 +669,27 @@ a:hover {
   }
 }
 
+// toc
+.toc {
+  &__panel {
+    font-size: 14px;
+    text-align: left;
 
+    li {
+      list-style: none;
+    }
+  }
+  @for $i from 1 through 5 {
+    .toc__h#{$i} {
+      padding-left: 20px * $i
+    }
+  }
 
-
-
-
-
-
-
-
-
+  &__item--active a,
+  &__item--active a:hover {
+    color: #87daff;
+  }
+}
 
 
 
@@ -752,70 +773,6 @@ a:hover {
   &__name {
     font-size: 16px;
     margin: 13px 0 3px;
-  }
-}
-
-// toc
-.toc {
-  &__panel {
-    z-index: 10;
-    position: relative;
-    height: 100%;
-    background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEgAAABIAgMAAAAog1vUAAAACVBMVEUAAAABAQETExM20mnVAAAAA3RSTlMOECJvSrphAAABBElEQVR4AWyRwQ3CQAwEJ5/rIVQTyuAfHunmXlRAoaxkMfJJkQ4Dznl3x+G4xlzOxvZ5vZdzMJ7fx3Im+7a2jpNzrINzZ+6r/DnIp7dyg9zsg9Ehel0+bsS1t5KJZOuDSU4Iunz4qC8BU6nLAqZSkgKmUsYCplLxBEylIARMxV8+w/sqoKo+6G0aTGhm5JAM//gARxxHYU3Q3igY0sCIIhYCC49rcUW4PBeJK3bd+CIKsDle8H91N62bwTv5Xxv1QQAAAAQQsH9rAU6DH3CIG9WFbm2Pcyf00PcOn3avFYDDRJgOOcE8fIX8VFCY00r5TlFFPt2NwqXDwFyGjNUlzfBdHo1oSKi9zm79GKMAAAAASUVORK5CYII=) #5d5d5d;
-    transition: $transition;
-
-    .toc {
-      position: absolute;
-      top: 50px;
-      bottom: 0;
-      width: 100%;
-      overflow: auto;
-
-      &::-webkit-scrollbar {
-        display: none;
-      }
-    }
-    li.toc__item--active a {
-      background-color: rgba(0, 0, 0, .3);
-      color: $text-hover-color;
-      border-right-color: $text-hover-color;
-    }
-
-    a {
-      display: block;
-      line-height: 36px;
-      color: #fafafa;
-      border-right: 2px solid transparent;
-      &:hover {
-        text-decoration: none;
-        background-color: rgba(0, 0, 0, .3);
-        color: $text-hover-color;
-        border-right-color: $text-hover-color;
-      }
-    }
-
-    @for $i from 1 through 5 {
-      .toc__h#{$i} a {
-        padding-left: 20px * $i
-      }
-    }
-
-    &--hide {
-      transform: translate(-300px);
-    }
-  }
-
-  &__close {
-    svg {
-      color: #fff;
-      height: 20px;
-      width: 20px;
-      cursor: pointer;
-    }
-
-    padding: 15px 15px 0 0;
-    height: 50px;
-    box-sizing: border-box;
   }
 }
 

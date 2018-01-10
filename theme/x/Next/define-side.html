@@ -1,15 +1,13 @@
 {{define "Next/side"}}
 <aside class="side">
     {{if .ToC}}
+
     <div class="toc__panel">
-        <svg id="hideToc" class="fn-right">
-            <use xlink:href="#icon-close"></use>
-        </svg>
         {{.ToC}}
     </div>
     {{end}}
 
-    <div>
+    <div{{if .ToC}} class="fn-none"{{end}}>
         <a href="{{.BlogURL}}" class="side__logo">
             <img data-src="{{.LogoURL}}">
         </a>
