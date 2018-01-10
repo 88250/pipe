@@ -43,5 +43,5 @@ func GenArticlesAction(c *gin.Context) {
 		}
 	}
 
-	c.Status(http.StatusOK)
+	c.Redirect(http.StatusTemporaryRedirect, util.Conf.Server)
 }
