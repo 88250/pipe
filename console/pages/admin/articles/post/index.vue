@@ -222,6 +222,10 @@
         this.$set(this, 'content', value)
         this.setLocalstorage('content')
         if (previewRef) {
+          if (value.replace(/(^\s*)|(\s*)$/g, '') === '') {
+            this._paseMD('', previewRef)
+            return
+          }
           const responseData = await this.axios.post('/console/markdown', {
             mdText: value
           })
