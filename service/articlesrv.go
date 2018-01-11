@@ -19,6 +19,7 @@ package service
 import (
 	"errors"
 	"fmt"
+	"net/url"
 	"regexp"
 	"strconv"
 	"strings"
@@ -328,6 +329,8 @@ func (srv *articleService) ConsoleGetArticle(id uint64) *model.Article {
 		return nil
 	}
 
+	ret.Path, _ = url.PathUnescape(ret.Path)
+
 	return ret
 }
 
@@ -625,10 +628,10 @@ func normalizeArticlePath(article *model.Article) error {
 		path = util.PathArticles + time.Now().Format("/2006/01/02/") +
 			fmt.Sprintf("%d", article.ID)
 	}
-
 	if !strings.HasPrefix(path, "/") {
 		path = "/" + path
 	}
+	path = "/" + url.PathEscape(path[1:])
 
 	count := 0
 	if db.Model(&model.Article{}).Where("path = ? AND id != ? AND blog_id = ?", path, article.ID, article.BlogID).Count(&count); 0 < count {
