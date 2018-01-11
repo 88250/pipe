@@ -15,7 +15,7 @@ export const insertTextAtCaret = (textarea, prefix, suffix, replace) => {
     const endPos = textarea.selectionEnd
     const tmpStr = textarea.value
     textarea.focus()
-    if (document.execCommand('insertText', false, '') === false) {
+    if (/firefox/i.test(navigator.userAgent)) {
       if (startPos === endPos) {
         // no selection
         textarea.value = tmpStr.substring(0, startPos) + prefix + suffix + tmpStr.substring(endPos, tmpStr.length)
@@ -137,7 +137,7 @@ export const debounceInput = (timerId, configChange, $editor) => {
 export const replaceTextareaValue = (textarea, original, value) => {
   textarea.selectionStart = textarea.value.split(original)[0].length
   textarea.selectionEnd = textarea.selectionStart + original.length
-  if (document.execCommand('insertText', false, '') === false) {
+  if (/firefox/i.test(navigator.userAgent)) {
     textarea.value = textarea.value.replace(original, value)
     return;
   }
