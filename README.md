@@ -57,6 +57,7 @@
 
 * [用户指南](https://hacpai.com/article/1513761942333)
 * [主题开发指南](https://hacpai.com/article/1512550354920)
+* [Postman 测试集](https://www.getpostman.com/collections/c466e81beb7acd5685ec)
 
 ## 界面
 
