@@ -105,6 +105,7 @@ func (srv *articleService) GetArticleByPath(path string, blogID uint64) *model.A
 	if "" == path || util.IsReservedPath(path) {
 		return nil
 	}
+	path, _ = url.PathUnescape(path)
 
 	ret := &model.Article{}
 	if err := db.Where("path = ? AND blog_id = ?", path, blogID).Find(ret).Error; nil != err {
@@ -328,8 +329,6 @@ func (srv *articleService) ConsoleGetArticle(id uint64) *model.Article {
 	if err := db.First(ret, id).Error; nil != err {
 		return nil
 	}
-
-	ret.Path, _ = url.PathUnescape(ret.Path)
 
 	return ret
 }
@@ -631,7 +630,6 @@ func normalizeArticlePath(article *model.Article) error {
 	if !strings.HasPrefix(path, "/") {
 		path = "/" + path
 	}
-	path = "/" + url.PathEscape(path[1:])
 
 	count := 0
 	if db.Model(&model.Article{}).Where("path = ? AND id != ? AND blog_id = ?", path, article.ID, article.BlogID).Count(&count); 0 < count {
