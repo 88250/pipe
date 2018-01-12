@@ -264,7 +264,8 @@ func routePath(c *gin.Context) {
 		return
 	}
 
-	logger.Infof("can't handle path [" + path + "]")
+	logger.Tracef("can't handle path [" + path + "]")
+	notFound(c)
 }
 
 func staticPath(relativePath string) string {
