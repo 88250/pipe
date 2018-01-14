@@ -142,7 +142,7 @@ func emojify(text string) string {
 		emojiASCII = strings.Replace(emojiASCII, ":", "", -1)
 		emoji := turtle.Emojis[emojiASCII]
 		if nil == emoji {
-			logger.Warn("not found [" + emojiASCII + "]")
+			//logger.Warn("not found [" + emojiASCII + "]")
 
 			return emojiASCII
 		}
