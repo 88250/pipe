@@ -61,7 +61,7 @@ func (srv *navigationService) RemoveNavigation(id, blogID uint64) error {
 	navigation := &model.Navigation{}
 
 	tx := db.Begin()
-	if err := tx.Where("id = ? AND blog_id = ?", id, blogID).Find(navigation).Error; nil != err {
+	if err := tx.Where("`id` = ? AND `blog_id` = ?", id, blogID).Find(navigation).Error; nil != err {
 		tx.Rollback()
 
 		return err
@@ -81,7 +81,7 @@ func (srv *navigationService) UpdateNavigation(navigation *model.Navigation) err
 	defer srv.mutex.Unlock()
 
 	count := 0
-	if db.Model(&model.Navigation{}).Where("id = ? AND blog_id = ?", navigation.ID, navigation.BlogID).
+	if db.Model(&model.Navigation{}).Where("`id` = ? AND `blog_id` = ?", navigation.ID, navigation.BlogID).
 		Count(&count); 1 > count {
 		return errors.New(fmt.Sprintf("not found navigation [id=%d] to update", navigation.ID))
 	}
@@ -100,8 +100,8 @@ func (srv *navigationService) UpdateNavigation(navigation *model.Navigation) err
 func (srv *navigationService) ConsoleGetNavigations(page int, blogID uint64) (ret []*model.Navigation, pagination *util.Pagination) {
 	offset := (page - 1) * adminConsoleNavigationListPageSize
 	count := 0
-	if err := db.Model(&model.Navigation{}).Order("number ASC, id DESC").
-		Where("blog_id = ?", blogID).
+	if err := db.Model(&model.Navigation{}).Order("`number` ASC, `id` DESC").
+		Where("`blog_id` = ?", blogID).
 		Count(&count).Offset(offset).Limit(adminConsoleNavigationListPageSize).Find(&ret).Error; nil != err {
 		logger.Errorf("get navigations failed: " + err.Error())
 	}
@@ -112,8 +112,8 @@ func (srv *navigationService) ConsoleGetNavigations(page int, blogID uint64) (re
 }
 
 func (srv *navigationService) GetNavigations(blogID uint64) (ret []*model.Navigation) {
-	if err := db.Model(&model.Navigation{}).Order("number ASC, id DESC").
-		Where("blog_id = ?", blogID).Find(&ret).Error; nil != err {
+	if err := db.Model(&model.Navigation{}).Order("`number` ASC, `id` DESC").
+		Where("`blog_id` = ?", blogID).Find(&ret).Error; nil != err {
 		logger.Errorf("get navigations failed: " + err.Error())
 	}
 
