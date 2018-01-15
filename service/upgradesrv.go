@@ -101,7 +101,7 @@ func perform() {
 		}
 	}
 
-	rows, err := db.Model(&model.Setting{}).Select("blog_id").Group("blog_id").Rows()
+	rows, err := db.Model(&model.Setting{}).Select("`blog_id`").Group("`blog_id`").Rows()
 	if nil != err {
 		logger.Fatalf("load blogs failed: %s", err)
 	}
