@@ -142,6 +142,8 @@ func (srv *articleService) AddArticle(article *model.Article) error {
 	}
 	author := &model.User{}
 	if err := tx.First(author, article.AuthorID).Error; nil != err {
+		tx.Rollback()
+
 		return err
 	}
 	author.TotalArticleCount += 1
