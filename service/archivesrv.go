@@ -34,7 +34,7 @@ type archiveService struct {
 
 func (srv *archiveService) GetArchives(blogID uint64) []*model.Archive {
 	var ret []*model.Archive
-	if err := db.Where("blog_id = ?", blogID).Order("year DESC, month DESC").Find(&ret).Error; nil != err {
+	if err := db.Where("`blog_id` = ?", blogID).Order("`year` DESC, `month` DESC").Find(&ret).Error; nil != err {
 		logger.Error("get archives failed: " + err.Error())
 	}
 
@@ -47,9 +47,8 @@ func (srv *archiveService) UnarchiveArticleWithoutTx(tx *gorm.DB, article *model
 
 	year := article.CreatedAt.Format("2006")
 	month := article.CreatedAt.Format("01")
-
 	archive := &model.Archive{Year: year, Month: month, BlogID: article.BlogID}
-	if err := db.Where("year = ? AND month = ? AND blog_id = ?",
+	if err := db.Where("`year` = ? AND `month` = ? AND `blog_id` = ?",
 		year, month, article.BlogID).First(archive).Error; nil != err {
 		return err
 	}
@@ -57,7 +56,7 @@ func (srv *archiveService) UnarchiveArticleWithoutTx(tx *gorm.DB, article *model
 	if err := tx.Save(archive).Error; nil != err {
 		return err
 	}
-	if err := tx.Where("id1 = ? AND id2 = ? AND type = ? AND blog_id = ?",
+	if err := tx.Where("`id1` = ? AND `id2` = ? AND `type` = ? AND `blog_id` = ?",
 		article.ID, archive.ID, model.CorrelationArticleArchive, article.BlogID).
 		Delete(&model.Correlation{}).Error; nil != err {
 		return err
@@ -74,7 +73,7 @@ func (srv *archiveService) ArchiveArticleWithoutTx(tx *gorm.DB, article *model.A
 	month := article.CreatedAt.Format("01")
 
 	archive := &model.Archive{Year: year, Month: month, BlogID: article.BlogID}
-	if err := db.Where("year = ? AND month = ? AND blog_id = ?",
+	if err := db.Where("`year` = ? AND `month` = ? AND `blog_id` = ?",
 		year, month, article.BlogID).First(archive).Error; nil != err {
 		if gorm.ErrRecordNotFound != err {
 			return err
@@ -100,7 +99,7 @@ func (srv *archiveService) ArchiveArticleWithoutTx(tx *gorm.DB, article *model.A
 
 func (srv *archiveService) GetArchive(year, month string, blogID uint64) *model.Archive {
 	ret := &model.Archive{}
-	if err := db.Where("year = ? AND month = ? AND blog_id = ?",
+	if err := db.Where("`year` = ? AND `month` = ? AND `blog_id` = ?",
 		year, month, blogID).First(ret).Error; nil != err {
 		return nil
 	}
