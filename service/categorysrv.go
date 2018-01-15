@@ -43,7 +43,7 @@ const (
 
 func (srv *categoryService) GetCategoryByPath(path string, blogID uint64) *model.Category {
 	ret := &model.Category{}
-	if err := db.Where("path = ? AND blog_ID = ?", path, blogID).First(ret).Error; nil != err {
+	if err := db.Where("`path` = ? AND `blog_ID` = ?", path, blogID).First(ret).Error; nil != err {
 		return nil
 	}
 
@@ -55,7 +55,7 @@ func (srv *categoryService) UpdateCategory(category *model.Category) error {
 	defer srv.mutex.Unlock()
 
 	count := 0
-	if db.Model(&model.Category{}).Where("id = ? AND blog_id = ?", category.ID, category.BlogID).
+	if db.Model(&model.Category{}).Where("`id` = ? AND `blog_id` = ?", category.ID, category.BlogID).
 		Count(&count); 1 > count {
 		return errors.New(fmt.Sprintf("not found category [id=%d] to update", category.ID))
 	}
@@ -76,7 +76,7 @@ func (srv *categoryService) UpdateCategory(category *model.Category) error {
 
 		return err
 	}
-	if err := tx.Where("id1 = ? AND type = ? AND blog_id = ?",
+	if err := tx.Where("`id1` = ? AND `type` = ? AND `blog_id` = ?",
 		category.ID, model.CorrelationCategoryTag, category.BlogID).Delete(model.Correlation{}).Error; nil != err {
 		tx.Rollback()
 
@@ -134,8 +134,8 @@ func (srv *categoryService) AddCategory(category *model.Category) error {
 func (srv *categoryService) ConsoleGetCategories(page int, blogID uint64) (ret []*model.Category, pagination *util.Pagination) {
 	offset := (page - 1) * adminConsoleCategoryListPageSize
 	count := 0
-	if err := db.Model(&model.Category{}).Order("number ASC, id DESC").
-		Where("blog_id = ?", blogID).
+	if err := db.Model(&model.Category{}).Order("`number` ASC, `id` DESC").
+		Where("`blog_id` = ?", blogID).
 		Count(&count).Offset(offset).Limit(adminConsoleCategoryListPageSize).Find(&ret).Error; nil != err {
 		logger.Errorf("get categories failed: " + err.Error())
 	}
@@ -146,7 +146,7 @@ func (srv *categoryService) ConsoleGetCategories(page int, blogID uint64) (ret [
 }
 
 func (srv *categoryService) GetCategories(size int, blogID uint64) (ret []*model.Category) {
-	if err := db.Where("blog_id = ?", blogID).Order("number asc").Limit(size).Find(&ret).Error; nil != err {
+	if err := db.Where("`blog_id` = ?", blogID).Order("`number` asc").Limit(size).Find(&ret).Error; nil != err {
 		logger.Errorf("get categories failed: " + err.Error())
 	}
 
@@ -160,11 +160,11 @@ func (srv *categoryService) RemoveCategory(id, blogID uint64) error {
 	category := &model.Category{}
 
 	tx := db.Begin()
-	if err := tx.Where("id = ? AND blog_id = ?", id, blogID).Find(category).Error; nil != err {
+	if err := tx.Where("`id` = ? AND `blog_id` = ?", id, blogID).Find(category).Error; nil != err {
 		return err
 	}
 
-	if err := tx.Where("id1 = ? AND type = ? AND blog_id = ?",
+	if err := tx.Where("`id1` = ? AND `type` = ? AND `blog_id` = ?",
 		category.ID, model.CorrelationCategoryTag, category.BlogID).Delete(model.Correlation{}).Error; nil != err {
 		tx.Rollback()
 
@@ -191,7 +191,7 @@ func normalizeCategoryPath(category *model.Category) error {
 	}
 
 	count := 0
-	if db.Model(&model.Category{}).Where("path = ? AND id != ? AND blog_id = ?", path, category.ID, category.BlogID).Count(&count); 0 < count {
+	if db.Model(&model.Category{}).Where("`path` = ? AND `id` != ? AND `blog_id` = ?", path, category.ID, category.BlogID).Count(&count); 0 < count {
 		return errors.New("path is reduplicated")
 	}
 
@@ -204,7 +204,7 @@ func tagCategory(tx *gorm.DB, category *model.Category) error {
 	tags := strings.Split(category.Tags, ",")
 	for _, tagTitle := range tags {
 		tag := &model.Tag{BlogID: category.BlogID}
-		tx.Where("title = ? AND blog_id = ?", tagTitle, category.BlogID).First(tag)
+		tx.Where("`title` = ? AND `blog_id` = ?", tagTitle, category.BlogID).First(tag)
 		if "" == tag.Title {
 			tag.Title = tagTitle
 			if err := tx.Create(tag).Error; nil != err {
