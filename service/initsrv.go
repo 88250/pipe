@@ -63,7 +63,7 @@ func (srv *initService) Status() (platformStatus *PlatformStatus, err error) {
 	}
 
 	localeSetting := &model.Setting{}
-	if err = db.Where("name = ? AND value IS NOT NULL AND blog_id = ?", model.SettingNameI18nLocale, uint(1)).
+	if err = db.Where("`name` = ? AND `value` IS NOT NULL AND `blog_id` = ?", model.SettingNameI18nLocale, uint(1)).
 		Find(localeSetting).Error; nil != err {
 		if gorm.ErrRecordNotFound == err {
 			err = nil
@@ -182,7 +182,7 @@ func initBlogAdmin(tx *gorm.DB, admin *model.User, blogID uint64) error {
 	admin.TotalArticleCount = 1 // article "Hello, World!"
 
 	exist := &model.User{}
-	tx.Where("name = ?", admin.Name).First(exist)
+	tx.Where("`name` = ?", admin.Name).First(exist)
 	admin.ID = exist.ID
 	admin.CreatedAt = exist.CreatedAt
 
