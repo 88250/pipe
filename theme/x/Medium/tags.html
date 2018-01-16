@@ -1,0 +1,33 @@
+{{define "Medium/tags.html"}}
+<!DOCTYPE html>
+<html>
+<head>
+    {{template "head/head" .}}
+    {{template "head/3rdstatistic" .}}
+</head>
+<body>
+<div class="main">
+    {{template "Medium/header" .}}
+    <div class="wrapper">
+        <h2 class="page__articles">
+            <span id="tagArticleCount">0</span> <span class="ft-fade ft-13">{{.I18n.Tags2}}</span>
+        </h2>
+        <div id="tags">
+            {{range .Tags}}
+            <a href="{{.URL}}" data-count="{{.ArticleCount}}" class="tag">
+                {{.Title}}
+                <span class="ft-fade">{{.ArticleCount}} {{$.I18n.Space}}</span>
+            </a>
+            {{end}}
+        </div>
+    </div>
+    {{template "Medium/side" .}}
+    {{template "Medium/footer" .}}
+</div>
+<script>
+  increase({{len .Tags}}, 1000, 'tagArticleCount', 0)
+  addLevelToTag()
+</script>
+</body>
+</html>
+{{end}}

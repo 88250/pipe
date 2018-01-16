@@ -1,0 +1,156 @@
+{{define "Medium/article.html"}}
+<!DOCTYPE html>
+<html>
+<head>
+    {{template "head/head" .}}
+    {{template "head/3rdstatistic" .}}
+    {{template "head/article" .}}
+</head>
+<body>
+<div class="main">
+    {{template "Medium/header" .}}
+    <div class="wrapper">
+        <article class="article__item">
+            <header class="article__header article__header--center">
+                <h2>
+                    {{if .Article.Topped}}
+                    <svg>
+                        <use xlink:href="#icon-focus"></use>
+                    </svg>
+                    {{end}}
+                    {{.Article.Title}}
+                </h2>
+                <div class="article__meta">
+                    {{if gt $.UserCount 1}}
+                    <a rel="nofollow"
+                       class="avatar pipe-tooltipped pipe-tooltipped--n"
+                       aria-label="{{.Article.Author.Name}}"
+                       data-src="{{.Article.Author.AvatarURLWithSize 116}}"
+                       href="{{.Article.Author.URL}}">
+                    </a>
+                    {{end}}
+                    <time>{{.Article.CreatedAt}}</time> &nbsp;
+                    | &nbsp;
+                    <a href="{{.URL}}">{{.Article.ViewCount}}</a> {{$.I18n.View}} &nbsp;
+                    | &nbsp;
+                    <a href="{{.URL}}#comments">{{.Article.CommentCount}}</a> {{$.I18n.Comment}}
+                </div>
+            </header>
+            <section class="pipe-content__reset" id="articleContent" data-author="{{.Article.Author.Name}}">
+                {{.Article.Content}}
+            </section>
+            <div class="article__footer fn-clear">
+                <span class="fn-left">
+                    {{range .Article.Tags}}
+                    <a class="tag" rel="tag" href="{{.URL}}">{{.Title}}</a>
+                    {{end}}
+                </span>
+
+                <span class="fn-right">
+                    {{if .Article.Editable}}
+                    <a href="{{$.Conf.Server}}/admin/articles/post?id={{.Article.ID}}"
+                       aria-label="{{$.I18n.Edit}}"
+                       class="pipe-tooltipped pipe-tooltipped--n article__edit">
+                        <svg>
+                            <use xlink:href="#icon-edit"></use>
+                        </svg>
+                    </a>
+                    &nbsp; &nbsp;
+                    {{end}}
+
+                    <span class="article__share">
+                        <span class="article__edit" data-type="wechat">
+                            <svg><use xlink:href="#wechat"></use></svg>
+                        </span> &nbsp; &nbsp;
+                        <span class="article__edit" data-type="weibo">
+                            <svg><use xlink:href="#weibo"></use></svg>
+                        </span> &nbsp; &nbsp;
+                        <span class="article__edit" data-type="twitter">
+                            <svg><use xlink:href="#twitter"></use></svg>
+                        </span> &nbsp; &nbsp;
+                        <span class="article__edit" data-type="google">
+                            <svg><use xlink:href="#google"></use></svg>
+                        </span> &nbsp; &nbsp;
+                        <div class="article__code"
+                             data-title="{{.Article.Title}}"
+                             data-blogtitle="{{$.Setting.BasicBlogTitle}}"
+                             data-url="{{.Article.URL}}"
+                             data-avatar="{{.Article.Author.AvatarURLWithSize 128}}"></div>
+                    </span>
+
+                    <span id="articleCommentBtn" class="article__edit"
+                          data-title="{{$.I18n.Comment}}{{$.I18n.Colon}}{{.Article.Title}}"
+                          data-id="{{.Article.ID}}">
+                        <svg>
+                            <use xlink:href="#icon-reply"></use>
+                        </svg>
+                        {{$.I18n.Comment}}
+                    </span>
+
+                </span>
+            </div>
+        </article>
+
+        {{template "comment/comments" .}}
+
+        {{if and .PreviousArticle .NextArticle}}
+        <div class="article__neighbor fn-clear">
+            {{if .PreviousArticle}}
+            <a href="{{.PreviousArticle.URL}}"
+               class="pipe-tooltipped pipe-tooltipped--w"
+               rel="prev" aria-label="{{.I18n.PreArticle}}">
+                <svg>
+                    <use xlink:href="#icon-chevron-left"></use>
+                </svg>
+                {{.PreviousArticle.Title}}
+            </a>
+            {{end}}
+            {{if .NextArticle}}
+            <a href="{{.NextArticle.URL}}" aria-label="{{.I18n.NextArticle}}" rel="next"
+               class="fn-right pipe-tooltipped pipe-tooltipped--e">
+                {{.NextArticle.Title}}
+                <svg>
+                    <use xlink:href="#icon-chevron-right"></use>
+                </svg>
+            </a>
+            {{end}}
+        </div>
+        {{end}}
+    </div>
+    {{if gt (len .RecommendArticles) 0}}
+    <div class="article__relevant">
+        {{$.I18n.RecommendArticle}}
+        <div class="relevant__panel">
+            {{range $index, $item := .RecommendArticles}}
+            <div class="relevant__item">
+                <a class="relevant__thumbnail"
+                   href="{{$item.URL}}"
+                   data-src="{{$item.ThumbnailURL}}"
+                   target="_blank"></a>
+                <a class="relevant__title fn-ellipsis" href="{{$item.URL}}" target="_blank">{{$item.Title}}</a>
+                <div class="fn-clear">
+                    <a class="avatar" data-src="{{$item.Author.AvatarURL}}"
+                       href="{{$item.Author.URL}}" target="_blank"></a>
+                    <a href="{{$item.Author.URL}}" class="ft-gray" target="_blank">{{$item.Author.Name}}</a>
+                    <a href="{{$item.URL}}#comments" class="ft-fade fn-right" target="_blank">
+                           {{if ne 0 $item.CommentCount}}
+                           {{$item.CommentCount}}
+                           {{$.I18n.Comment}}
+                           {{else}}
+                           {{$.I18n.Comment}}
+                           <svg><use xlink:href="#icon-comment"></use></svg>
+                           {{end}}
+                       </a>
+                </div>
+            </div>
+            {{end}}
+        </div>
+    </div>
+    {{end}}
+    {{template "comment/editor" .}}
+    {{template "Medium/side" .}}
+    {{template "Medium/footer" .}}
+</div>
+</body>
+</html>
+{{end}}

@@ -1,0 +1,54 @@
+{{define "Medium/header"}}
+<header class="header">
+    <div class="wrapper fn-clear">
+        <a href="{{.BlogURL}}" class="header__logo">
+            <div>
+                {{.Setting.BasicBlogTitle}}
+            </div>
+        </a>
+        <div class="sidebar sidebar--header">
+            <span class="sidebar__line sidebar__line--first"></span>
+            <span class="sidebar__line sidebar__line--middle"></span>
+            <span class="sidebar__line sidebar__line--last"></span>
+        </div>
+        <nav>
+            <a href="{{.BlogURL}}/categories">
+                <svg><use xlink:href="#icon-folders"></use></svg>
+                {{.I18n.Categories}}
+            </a>
+            <a href="{{.BlogURL}}/tags">
+                <svg><use xlink:href="#icon-tag"></use></svg>
+                {{.I18n.Tags}}
+            </a>
+            <a href="{{.BlogURL}}/archives">
+                <svg><use xlink:href="#icon-bookmark"></use></svg>
+                {{.I18n.Archives}}
+            </a>
+            {{if gt .UserCount 1}}
+            <a href="{{.BlogURL}}/authors">
+                <svg><use xlink:href="#icon-group"></use></svg>
+                {{.I18n.Team}}
+            </a>
+            {{end}}
+            {{range .Navigations}}
+            <a href="{{.URL}}" target="{{.OpenMethod}}">
+                {{if ne "" .IconURL}}
+                <img data-src="{{.IconURL}}"/>
+                {{end}}
+                {{.Title}}
+            </a>
+            {{end}}
+            <a href="{{.BlogURL}}/atom" target="_blank">
+                <svg><use xlink:href="#icon-feed"></use></svg>
+                {{.I18n.Feed}}
+            </a>
+            <a href="{{.BlogURL}}/search">
+                <svg>
+                    <use xlink:href="#icon-search"></use>
+                </svg>
+                <span>{{.I18n.Search}}</span>
+            </a>
+        </nav>
+    </div>
+</header>
+{{end}}

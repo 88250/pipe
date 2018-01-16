@@ -1,0 +1,19 @@
+{{define "Medium/index.html"}}
+<!DOCTYPE html>
+<html>
+<head>
+    {{template "head/head" .}}
+    {{template "head/3rdstatistic" .}}
+</head>
+<body>
+<div class="main">
+    {{template "Medium/header" .}}
+    <div class="wrapper">
+        {{template "Medium/article-list" .}}
+    </div>
+    {{template "Medium/side" .}}
+    {{template "Medium/footer" .}}
+</div>
+</body>
+</html>
+{{end}}
