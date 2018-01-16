@@ -33,8 +33,8 @@ body {
 
 // tag
 .tag {
-  background-color: rgba(0,0,0,.05);
-  color: rgba(0,0,0,.68);
+  background-color: rgba(0, 0, 0, .05);
+  color: rgba(0, 0, 0, .68);
   padding: 5px 10px;
   line-height: 22px;
   font-weight: 400;
@@ -47,15 +47,15 @@ body {
 
   &:hover {
     text-decoration: none;
-    background: rgba(0,0,0,.1);
-    color: rgba(0,0,0,.68);
+    background: rgba(0, 0, 0, .1);
+    color: rgba(0, 0, 0, .68);
   }
 }
 
 // module
 .module {
   &__title {
-    border-bottom: 1px solid rgba(0,0,0,.15);
+    border-bottom: 1px solid rgba(0, 0, 0, .15);
     margin-bottom: 25px;
     line-height: 26px;
     font-size: 22px;
@@ -63,7 +63,7 @@ body {
     height: 46px;
 
     span {
-      border-bottom: 1px solid rgba(0,0,0,0.54);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.54);
       position: absolute;
       padding-bottom: 20px;
     }
@@ -179,7 +179,7 @@ body {
       width: 100%;
       top: 0;
       background-color: #fff;
-      box-shadow: 0 2px 2px -2px rgba(0,0,0,.15);
+      box-shadow: 0 2px 2px -2px rgba(0, 0, 0, .15);
 
       a.header__nav-btn {
         display: block;
@@ -237,6 +237,71 @@ body {
     & > div {
       width: 490px;
     }
+  }
+}
+
+// article
+.article {
+  &__item {
+    border: 1px solid rgba(0,0,0,.1);
+    border-radius: 2px;
+    margin-bottom: 20px;
+  }
+
+  &__thumb {
+    @include image-bg('../../../images/image-bg.svg');
+    height: 100px;
+    width: 100%;
+    display: block;
+  }
+
+  &__panel {
+    padding: 16px;
+  }
+
+  &__title {
+    line-height: 24px;
+    font-size: 21px;
+    font-weight: 600;
+    color: $text-color;
+    &:hover {
+      text-decoration: none;
+    }
+  }
+
+  &__content {
+    margin-top: 4px;
+    font-size: 16px;
+    color: $gray;
+  }
+
+  &__meta {
+    font-size: 15px;
+  }
+
+  &__edit {
+    color: $gray;
+
+    &--mid svg {
+      margin-top: 15px;
+    }
+    &:hover {
+      color: rgba(0,0,0,.68);
+    }
+  }
+
+  &__author {
+    color: $text-color;
+    font-size: 15px;
+  }
+
+  &__avatar {
+    height: 40px;
+    width: 40px;
+    @include image-bg('../../../images/image-bg.svg');
+    display: block;
+    border-radius: 20px;
+    margin-right: 10px;
   }
 }
 

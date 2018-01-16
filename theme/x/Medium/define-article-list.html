@@ -2,62 +2,76 @@
 {{if eq (len .Articles) 0}}
 {{.I18n.NoData}}
 {{end}}
-{{range .Articles}}
-<article class="article__item">
-    <header class="article__header">
+
+{{range $index, $item := .Articles}}
+<article class="article__item
+    {{if and (ge $index 0) (le $index 4)}}article__item--five
+    {{else if (and (ge $index 5) (le $index 7))}}article__item--three
+    {{else if (and (ge $index 8) (le $index 9))}}article__item--two
+    {{else if (and (ge $index 10) (le $index 14))}}article__item--five
+    {{else if (and (ge $index 15) (le $index 17))}}article__item--three
+    {{else if (and (ge $index 18) (le $index 19))}}article__item--two
+    {{else}}article__item--three{{end}}
+    ">
+    {{if $item.ThumbnailURL}}
+    <a class="article__thumb"
+       href="{{$item.URL}}"
+       data-src="{{$item.ThumbnailURL}}"></a>
+    {{end}}
+
+    <header class="article__panel">
         <h2>
-            <a class="article__title" rel="bookmark" href="{{.URL}}">
-                {{if .Topped}}
+            <a class="article__title" rel="bookmark" href="{{$item.URL}}">
+                {{if $item.Topped}}
                 <svg>
                     <use xlink:href="#icon-focus"></use>
                 </svg>
                 {{end}}
-                {{.Title}}
+                {{$item.Title}}
             </a>
         </h2>
-        <div class="article__meta">
+
+        {{if $item.ThumbnailURL}}
+        {{else}}
+        {{if $item.Abstract}}
+        <section
+            data-link="{{$item.URL}}"
+            class="pipe-content__reset article__content"
+            data-author="{{$item.Author.Name}}">
+            {{$item.Abstract}}
+        </section>
+        {{end}}
+        {{end}}
+
+        <div class="article__meta ft-gray fn-flex">
             {{if gt $.UserCount 1}}
             <a rel="nofollow"
-               class="avatar pipe-tooltipped pipe-tooltipped--n"
-               aria-label="{{.Author.Name}}"
-               data-src="{{.Author.AvatarURLWithSize 116}}"
-               href="{{.Author.URL}}">
+               class="article__avatar"
+               data-src="{{.Author.AvatarURLWithSize 64}}"
+               href="{{$item.Author.URL}}">
             </a>
             {{end}}
-            <time>{{.CreatedAt}}</time> &nbsp;
-            |  &nbsp;
-            <a href="{{.URL}}">{{.ViewCount}}</a> {{$.I18n.View}}  &nbsp;
-            |  &nbsp;
-            <a href="{{.URL}}#comments">{{.CommentCount}}</a> {{$.I18n.Comment}}
+            <div class="fn-flex-1">
+                {{if gt $.UserCount 1}}
+                <a href="{{$item.Author.URL}}" class="article__author">{{$item.Author.Name}}</a><br>
+                {{end}}
+                <time>{{$item.CreatedAt}}</time> •
+                <a href="{{.URL}}" class="ft-gray">{{$item.ViewCount}} {{$.I18n.View}}</a> •
+                <a href="{{.URL}}#comments" class="ft-gray">{{$item.CommentCount}} {{$.I18n.Comment}}</a>
+            </div>
+
+            {{if .Editable}}
+            <a href="{{$.Conf.Server}}/admin/articles/post?id={{.ID}}"
+               aria-label="{{$.I18n.Edit}}"
+               class="pipe-tooltipped pipe-tooltipped--n fn-right article__edit
+               {{if gt $.UserCount 1}} article__edit--mid{{end}}">
+                <svg>
+                    <use xlink:href="#icon-edit"></use>
+                </svg>
+            </a>
+            {{end}}
         </div>
     </header>
-    {{if .ThumbnailURL}}
-    <a class="article__thumb"
-       href="{{.URL}}"
-       data-src="{{.ThumbnailURL}}"></a>
-    {{end}}
-    {{if .Abstract}}
-    <section
-            data-link="{{.URL}}"
-            class="pipe-content__reset"
-            data-author="{{.Author.Name}}">
-        {{.Abstract}}
-    </section>
-    {{end}}
-    <div class="fn-clear article__footer">
-        <a href="{{.URL}}" class="fn-left article__read">
-            {{$.I18n.ReadMore}}  »
-        </a>
-        {{if .Editable}}
-        <a href="{{$.Conf.Server}}/admin/articles/post?id={{.ID}}"
-           aria-label="{{$.I18n.Edit}}"
-           class="pipe-tooltipped pipe-tooltipped--n fn-right article__edit">
-            <svg>
-                <use xlink:href="#icon-edit"></use>
-            </svg>
-        </a>
-        {{end}}
-    </div>
 </article>
 {{end}}
 
