@@ -1,0 +1,50 @@
+{{define "Medium/nav"}}
+<nav id="headerNav" class="header__nav">
+    <div class="wrapper">
+        <a href="{{.BlogURL}}/categories">
+            <svg>
+                <use xlink:href="#icon-folders"></use>
+            </svg>
+            {{.I18n.Categories}}
+        </a>
+        <a href="{{.BlogURL}}/tags">
+            <svg>
+                <use xlink:href="#icon-tag"></use>
+            </svg>
+            {{.I18n.Tags}}
+        </a>
+        <a href="{{.BlogURL}}/archives">
+            <svg>
+                <use xlink:href="#icon-bookmark"></use>
+            </svg>
+            {{.I18n.Archives}}
+        </a>
+        {{if gt .UserCount 1}}
+        <a href="{{.BlogURL}}/authors">
+            <svg>
+                <use xlink:href="#icon-group"></use>
+            </svg>
+            {{.I18n.Team}}
+        </a>
+        {{end}}
+        {{range .Navigations}}
+        <a href="{{.URL}}" target="{{.OpenMethod}}">
+            {{if ne "" .IconURL}}
+            <img data-src="{{.IconURL}}"/>
+            {{end}}
+            {{.Title}}
+        </a>
+        {{end}}
+        <a href="{{.BlogURL}}/atom" target="_blank">
+            <svg>
+                <use xlink:href="#icon-feed"></use>
+            </svg>
+            {{.I18n.Feed}}
+        </a>
+
+        {{if eq .User.URole 0}}
+        <a href="https://hacpai.com/register" class="header__nav-btn">{{.I18n.Register}}</a>
+        {{end}}
+    </div>
+</nav>
+{{end}}

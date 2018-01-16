@@ -6,14 +6,19 @@
     {{template "head/3rdstatistic" .}}
 </head>
 <body>
-<div class="main">
     {{template "Medium/header" .}}
-    <div class="wrapper">
-        {{template "Medium/article-list" .}}
+    {{template "Medium/nav" .}}
+    <div class="main">
+        {{if .Setting.BasicNoticeBoard}}
+        <div class="board">
+            {{.Setting.BasicNoticeBoard}}
+        </div>
+        {{end}}
+        <div class="wrapper content">
+            {{template "Medium/article-list" .}}
+        </div>
     </div>
-    {{template "Medium/side" .}}
     {{template "Medium/footer" .}}
-</div>
 </body>
 </html>
 {{end}}

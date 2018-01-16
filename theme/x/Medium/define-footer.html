@@ -1,6 +1,32 @@
 {{define "Medium/footer"}}
-<footer class="footer">
-    <div class="wrapper">
+<div class="wrapper">
+    <div class="footer__tag fn-clear">
+        {{if le 1 (len .MostUseCategories)}}
+        <div class="fn-left">
+            <div class="module__title">
+                <span>{{.I18n.Categories}}</span>
+            </div>
+            <div>
+                {{range .MostUseCategories}}
+                <a class="tag" href="{{.URL}}">{{.Title}}</a>
+                {{end}}
+            </div>
+        </div>
+        {{end}}
+        {{if le 1 (len .MostUseTags)}}
+        <div class="fn-right">
+            <div class="module__title">
+                <span>{{.I18n.Tags}}</span>
+            </div>
+            <div>
+                {{range .MostUseTags}}
+                <a class="tag" href="{{.URL}}">{{.Title}}</a>
+                {{end}}
+            </div>
+        </div>
+        {{end}}
+    </div>
+    <footer class="footer">
         <div class="fn-clear">
             {{.Setting.BasicBlogSubtitle}}
             <div class="fn-right">
@@ -23,20 +49,8 @@
                 Theme <a href="https://github.com/b3log/pipe-themes" target="_blank">Medium</a>
             </div>
         </div>
-    </div>
-</footer>
-
-<div class="sidebar{{if .ToC}} sidebar--toc{{end}}" id="sideBar">
-    <span class="sidebar__line sidebar__line--first"></span>
-    <span class="sidebar__line sidebar__line--middle"></span>
-    <span class="sidebar__line sidebar__line--last"></span>
+    </footer>
 </div>
-
-<div class="top__btn">
-    <svg><use xlink:href="#icon-top"></use></svg>
-</div>
-
-
 <script type="text/javascript"
         id="script"
         data-isLogin="{{if eq .User.URole 0}}false{{else}}true{{end}}"
