@@ -21,6 +21,9 @@ const Common = {
     KillBrowser()
 
     $(window).scroll(function () {
+      if ($('#headerNav').length === 0) {
+        return
+      }
       if ($(window).scrollTop() > 64) {
         $('#headerNav').addClass('header__nav--fixed');
         $('.main').css('padding-top', '50px');

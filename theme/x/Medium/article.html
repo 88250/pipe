@@ -8,7 +8,6 @@
 </head>
 <body>
 {{template "Medium/header" .}}
-{{template "Medium/nav" .}}
 <div class="main">
     {{if .Setting.BasicNoticeBoard}}
     <div class="board">
@@ -16,44 +15,50 @@
     </div>
     {{end}}
 
-    <div class="wrapper content">
-        <article class="article__item">
-            <header class="article__header article__header--center">
-                <h2>
-                    {{if .Article.Topped}}
-                    <svg>
-                        <use xlink:href="#icon-focus"></use>
-                    </svg>
-                    {{end}}
-                    {{.Article.Title}}
-                </h2>
-                <div class="article__meta">
-                    {{if gt $.UserCount 1}}
-                    <a rel="nofollow"
-                       class="avatar pipe-tooltipped pipe-tooltipped--n"
-                       aria-label="{{.Article.Author.Name}}"
-                       data-src="{{.Article.Author.AvatarURLWithSize 116}}"
-                       href="{{.Article.Author.URL}}">
-                    </a>
-                    {{end}}
-                    <time>{{.Article.CreatedAt}}</time> &nbsp;
-                    | &nbsp;
-                    <a href="{{.URL}}">{{.Article.ViewCount}}</a> {{$.I18n.View}} &nbsp;
-                    | &nbsp;
-                    <a href="{{.URL}}#pipeComments">{{.Article.CommentCount}}</a> {{$.I18n.Comment}}
-                </div>
-            </header>
-            <section class="pipe-content__reset" id="articleContent" data-author="{{.Article.Author.Name}}">
-                {{.Article.Content}}
-            </section>
-            <div class="article__footer fn-clear">
+    <article class="post">
+        {{if gt $.UserCount 0}}
+        <div class="fn-flex">
+            <a rel="nofollow"
+               class="avatar"
+               data-src="{{.Article.Author.AvatarURLWithSize 116}}"
+               href="{{.Article.Author.URL}}">
+            </a>
+            <div class="fn-flex-1 post__user">
+                <a href="{{.Article.Author.URL}}">{{.Article.Author.Name}}</a>
+                <time>{{.Article.CreatedAt}}</time>  •
+                <a href="{{.URL}}#pipeComments">{{.Article.CommentCount}}</a> {{$.I18n.Comment}}
+            </div>
+        </div>
+        {{end}}
+        <header class="article__header article__header--center">
+            <h2>
+                {{if .Article.Topped}}
+                <svg>
+                    <use xlink:href="#icon-focus"></use>
+                </svg>
+                {{end}}
+                {{.Article.Title}}
+            </h2>
+            <div class="article__meta">
+
+                 &nbsp;
+                | &nbsp;
+                <a href="{{.URL}}">{{.Article.ViewCount}}</a> {{$.I18n.View}} &nbsp;
+                | &nbsp;
+
+            </div>
+        </header>
+        <section class="pipe-content__reset" id="articleContent" data-author="{{.Article.Author.Name}}">
+            {{.Article.Content}}
+        </section>
+        <div class="article__footer fn-clear">
                 <span class="fn-left">
                     {{range .Article.Tags}}
                     <a class="tag" rel="tag" href="{{.URL}}">{{.Title}}</a>
                     {{end}}
                 </span>
 
-                <span class="fn-right">
+            <span class="fn-right">
                     {{if .Article.Editable}}
                     <a href="{{$.Conf.Server}}/admin/articles/post?id={{.Article.ID}}"
                        aria-label="{{$.I18n.Edit}}"
@@ -95,34 +100,32 @@
                     </span>
 
                 </span>
-            </div>
-        </article>
-
-
-        {{if and .PreviousArticle .NextArticle}}
-        <div class="article__neighbor fn-clear">
-            {{if .PreviousArticle}}
-            <a href="{{.PreviousArticle.URL}}"
-               class="pipe-tooltipped pipe-tooltipped--w"
-               rel="prev" aria-label="{{.I18n.PreArticle}}">
-                <svg>
-                    <use xlink:href="#icon-chevron-left"></use>
-                </svg>
-                {{.PreviousArticle.Title}}
-            </a>
-            {{end}}
-            {{if .NextArticle}}
-            <a href="{{.NextArticle.URL}}" aria-label="{{.I18n.NextArticle}}" rel="next"
-               class="fn-right pipe-tooltipped pipe-tooltipped--e">
-                {{.NextArticle.Title}}
-                <svg>
-                    <use xlink:href="#icon-chevron-right"></use>
-                </svg>
-            </a>
-            {{end}}
         </div>
+    </article>
+
+    {{if and .PreviousArticle .NextArticle}}
+    <div class="article__neighbor fn-clear">
+        {{if .PreviousArticle}}
+        <a href="{{.PreviousArticle.URL}}"
+           class="pipe-tooltipped pipe-tooltipped--w"
+           rel="prev" aria-label="{{.I18n.PreArticle}}">
+            <svg>
+                <use xlink:href="#icon-chevron-left"></use>
+            </svg>
+            {{.PreviousArticle.Title}}
+        </a>
+        {{end}}
+        {{if .NextArticle}}
+        <a href="{{.NextArticle.URL}}" aria-label="{{.I18n.NextArticle}}" rel="next"
+           class="fn-right pipe-tooltipped pipe-tooltipped--e">
+            {{.NextArticle.Title}}
+            <svg>
+                <use xlink:href="#icon-chevron-right"></use>
+            </svg>
+        </a>
         {{end}}
     </div>
+    {{end}}
 
 
     <div class="article__bottom">
@@ -143,15 +146,6 @@
                                     {{.Title}}
                                 </a>
                             </h2>
-
-                            {{if .Abstract}}
-                            <section
-                                data-link="{{$item.URL}}"
-                                class="pipe-content__reset article__content"
-                                data-author="{{$item.Author.Name}}">
-                                {{.Abstract}}
-                            </section>
-                            {{end}}
                         </div>
 
                         <div class="article__meta ft-gray fn-flex">
@@ -164,44 +158,21 @@
 
                             <div class="fn-flex-1">
                                 <a href="{{.Author.URL}}" class="article__author">{{.Author.Name}}</a><br>
-                                <time>{{.CreatedAt}}</time> •
+                                <time>{{.CreatedAt}}</time>
+                                •
                                 <a href="{{.URL}}" class="ft-gray">{{.ViewCount}} {{$.I18n.View}}</a> •
                                 <a href="{{.URL}}#comments" class="ft-gray">{{.CommentCount}} {{$.I18n.Comment}}</a>
                             </div>
-
-                            {{if .Editable}}
-                            <a href="{{$.Conf.Server}}/admin/articles/post?id={{.ID}}"
-                               aria-label="{{$.I18n.Edit}}"
-                               class="pipe-tooltipped pipe-tooltipped--n fn-right article__edit
-               {{if gt $.UserCount 1}} article__edit--mid{{end}}">
-                                <svg>
-                                    <use xlink:href="#icon-edit"></use>
-                                </svg>
-                            </a>
-                            {{end}}
                         </div>
                     </header>
-
-
-
-                        <a href="{{.Author.URL}}" class="ft-gray" target="_blank">{{.Author.Name}}</a>
-                        <a href="{{.URL}}#comments" class="ft-fade fn-right" target="_blank">
-                            {{if ne 0 .CommentCount}}
-                            {{.CommentCount}}
-                            {{$.I18n.Comment}}
-                            {{else}}
-                            {{$.I18n.Comment}}
-                            <svg>
-                                <use xlink:href="#icon-comment"></use>
-                            </svg>
-                            {{end}}
-                        </a>
-                    </div>
                 </article>
                 {{end}}
             </div>
             {{end}}
+        </div>
 
+        <div class="article__comment">
+            <div class="comment__title">{{.I18n.Comment}}</div>
             {{template "comment/comments" .}}
         </div>
     </div>
@@ -209,6 +180,11 @@
 
     {{template "comment/editor" .}}
 </div>
+<script type="text/javascript"
+        id="script"
+        data-isLogin="{{if eq .User.URole 0}}false{{else}}true{{end}}"
+        src="{{.Conf.StaticServer}}/theme/x/{{.Setting.ThemeName}}/js/article.min.js?{{.Conf.StaticResourceVersion}}"
+></script>
 </body>
 </html>
 {{end}}
