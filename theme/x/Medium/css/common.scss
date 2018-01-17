@@ -2,7 +2,7 @@
  * skin Medium style
  *
  * @author <a href="http://vanessa.b3log.org">Liyuan Li</a>
- * @version 0.1.0.0, Jan 8, 2018
+ * @version 0.1.0.0, Jan 18, 2018
 */
 @import '../../../scss/basic';
 @import '../../../scss/github';
@@ -485,7 +485,7 @@ body {
 .article__toolbar {
   box-shadow: 0 0 1px rgba(0,0,0,.54);
   position: fixed;
-  bottom: 0;
+  bottom: -44px;
   width: 100%;
   background-color: #fff;
   height: 44px;

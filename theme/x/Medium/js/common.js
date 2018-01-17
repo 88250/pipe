@@ -2,7 +2,7 @@
  * @fileoverview util and every page should be used.
  *
  * @author <a href="http://vanessa.b3log.org">Liyuan Li</a>
- * @version 0.1.0.0, Dec 11, 2017
+ * @version 0.1.0.0, Jan 18, 2018
  */
 
 import $ from 'jquery'

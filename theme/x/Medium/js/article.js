@@ -2,7 +2,7 @@
  * @fileoverview article.
  *
  * @author <a href="http://vanessa.b3log.org">Liyuan Li</a>
- * @version 0.1.0.0, Oct 19, 2017
+ * @version 0.1.0.0, Jan 18, 2018
  */
 
 import $ from 'jquery'
@@ -28,7 +28,7 @@ const Article = {
     })
 
     const $postSide = $('.post__side')
-    if ($(window).height() >= $('body').height()) {
+    if ($(window).height() >= $('.post').height()) {
       $postSide.css('opacity', 1)
     }
 
@@ -46,7 +46,9 @@ const Article = {
           // up
           $('.header').addClass('header--fixed').css({'top': '0'})
           $('.main').css('padding-top', '64px')
-          $('.article__toolbar').css('bottom', '0')
+          if ($(window).height() <= $('.post').height() && scrollTop < bottomTop - $(window).height()) {
+            $('.article__toolbar').css('bottom', '0')
+          }
         } else if (beforScrollTop - scrollTop < 0) {
           // down
           $('.header').css({'top': '-64px'}).removeClass('header--fixed')
@@ -55,17 +57,26 @@ const Article = {
         }
 
       } else {
-        $postSide.css('opacity', 0)
+        if ($(window).height() <= $('.post').height()) {
+          $postSide.css('opacity', 0)
+        }
 
         $('.header').removeClass('header--fixed').css('top', '-64px')
         $('.main').css('padding-top', '0')
       }
 
       if (scrollTop > bottomTop - $(window).height()) {
-        $postSide.css({
-          'position': 'absolute',
-          'top': (bottomTop - sideAbsoluteTop) + 'px'
-        })
+        if (bottomTop < $(window).height()) {
+          $postSide.css({
+            'position': 'absolute',
+            'top': (bottomTop - 105) + 'px'
+          })
+        } else {
+          $postSide.css({
+            'position': 'absolute',
+            'top': (bottomTop - sideAbsoluteTop) + 'px'
+          })
+        }
       } else {
         $postSide.css({
           'position': 'fixed',
