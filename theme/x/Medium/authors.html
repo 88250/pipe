@@ -6,11 +6,19 @@
     {{template "head/3rdstatistic" .}}
 </head>
 <body>
+{{template "Medium/header" .}}
+{{template "Medium/nav" .}}
 <div class="main">
-    {{template "Medium/header" .}}
-    <div class="wrapper">
-        <h2 class="page__articles">
-            <span id="authorCount">0</span> <span class="ft-fade ft-13">{{.I18n.TeamMember2}}</span>
+    {{if .Setting.BasicNoticeBoard}}
+    <div class="board">
+        {{.Setting.BasicNoticeBoard}}
+    </div>
+    {{end}}
+    <div class="wrapper content">
+        <h2 class="module__title">
+            <span>
+                <span id="authorCount">0</span> <span class="ft-fade ft-13">{{.I18n.TeamMember2}}</span>
+            </span>
         </h2>
         <div class="author fn-clear">
             {{range .Authors}}
@@ -24,9 +32,9 @@
             {{end}}
         </div>
     </div>
-    {{template "Medium/side" .}}
-    {{template "Medium/footer" .}}
 </div>
+{{template "Medium/bottom2" .}}
+{{template "Medium/footer" .}}
 <script>
   increase({{len .Authors}}, 1000, 'authorCount', 0)
 </script>

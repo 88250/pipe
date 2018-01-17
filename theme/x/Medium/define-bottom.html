@@ -1,0 +1,28 @@
+{{define "Medium/bottom"}}
+<div class="footer__tag wrapper fn-flex">
+    {{if le 1 (len .MostUseCategories)}}
+    <div class="fn-flex-1">
+        <div class="module__title">
+            <span>{{.I18n.Categories}}</span>
+        </div>
+        <div>
+            {{range .MostUseCategories}}
+            <a class="tag" href="{{.URL}}">{{.Title}}</a>
+            {{end}}
+        </div>
+    </div>
+    {{end}}
+    {{if le 1 (len .MostUseTags)}}
+    <div class="fn-flex-1">
+        <div class="module__title">
+            <span>{{.I18n.Tags}}</span>
+        </div>
+        <div>
+            {{range .MostUseTags}}
+            <a class="tag" href="{{.URL}}">{{.Title}}</a>
+            {{end}}
+        </div>
+    </div>
+    {{end}}
+</div>
+{{end}}

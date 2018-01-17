@@ -1,13 +1,5 @@
 {{define "Medium/footer"}}
 <div class="wrapper">
-    <div class="footer__tag">
-        {{range .MostUseCategories}}
-        <a class="tag" href="{{.URL}}">{{.Title}}</a>
-        {{end}}
-        {{range .MostUseTags}}
-        <a class="tag" href="{{.URL}}">{{.Title}}</a>
-        {{end}}
-    </div>
     <footer class="footer">
         <div class="fn-clear">
             {{.Setting.BasicBlogSubtitle}}

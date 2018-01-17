@@ -5,11 +5,19 @@
     {{template "head/head" .}}
     {{template "head/3rdstatistic" .}}
 <body>
+{{template "Medium/header" .}}
+{{template "Medium/nav" .}}
 <div class="main">
-    {{template "Medium/header" .}}
-    <div class="wrapper page">
-        <h2 class="page__title">
-            <span id="categoriesCount">0</span> <span class="ft-fade ft-13">{{.I18n.Categories2}}</span>
+    {{if .Setting.BasicNoticeBoard}}
+    <div class="board">
+        {{.Setting.BasicNoticeBoard}}
+    </div>
+    {{end}}
+    <div class="wrapper content">
+        <h2 class="module__title">
+            <span>
+                <span id="categoriesCount">0</span> <span class="ft-fade ft-13">{{.I18n.Categories2}}</span>
+            </span>
         </h2>
         {{if eq (len .Categories) 0}}
         <div class="ft-center">
@@ -19,21 +27,23 @@
         {{range .Categories}}
         <div class="page__item">
             <h3>
-                <a href="{{.URL}}" class="categories__header">
+                <a href="{{.URL}}">
                     {{.Title}}
                     <span class="ft-13 ft-gray"><!--{{.ArticleCount}} {{$.I18n.Article2}}--></span>
                 </a>
             </h3>
-            <div class="ft-gray ft-13">{{.Description}}</div>
+            {{if .Description}}
+            <div class="ft-gray ft-13 page__desc">{{.Description}}</div>
+            {{end}}
             {{range .Tags}}
             <a href="{{.URL}}" class="tag">{{.Title}}</a>
             {{end}}
         </div>
         {{end}}
     </div>
-    {{template "Medium/side" .}}
-    {{template "Medium/footer" .}}
 </div>
+{{template "Medium/bottom" .}}
+{{template "Medium/footer" .}}
 <script>
   increase({{len .Categories}}, 1000, 'categoriesCount', 0)
 </script>

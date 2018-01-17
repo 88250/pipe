@@ -1,0 +1,10 @@
+{{define "Medium/bottom2"}}
+<div class="footer__tag wrapper">
+    {{range .MostUseCategories}}
+    <a class="tag" href="{{.URL}}">{{.Title}}</a>
+    {{end}}
+    {{range .MostUseTags}}
+    <a class="tag" href="{{.URL}}">{{.Title}}</a>
+    {{end}}
+</div>
+{{end}}

@@ -6,18 +6,26 @@
     {{template "head/3rdstatistic" .}}
 </head>
 <body>
+{{template "Medium/header" .}}
+{{template "Medium/nav" .}}
 <div class="main">
-    {{template "Medium/header" .}}
-    <div class="wrapper">
-        <h2 class="page__articles">
-            {{.Tag.Title}}
-            <span id="tagArticlesCount" class="ft-fade">0</span> <span class="ft-fade ft-13">{{.I18n.Article2}}</span>
+    {{if .Setting.BasicNoticeBoard}}
+    <div class="board">
+        {{.Setting.BasicNoticeBoard}}
+    </div>
+    {{end}}
+    <div class="wrapper content">
+        <h2 class="module__title">
+            <span>
+                {{.Tag.Title}}
+                <span id="tagArticlesCount" class="ft-fade">0</span> <span class="ft-fade ft-13">{{.I18n.Article2}}</span>
+            </span>
         </h2>
         {{template "Medium/article-list" .}}
     </div>
-    {{template "Medium/side" .}}
-    {{template "Medium/footer" .}}
 </div>
+{{template "Medium/bottom2" .}}
+{{template "Medium/footer" .}}
 <script>
   increase({{.Tag.ArticleCount}}, 1000, 'tagArticlesCount', 0)
 </script>
