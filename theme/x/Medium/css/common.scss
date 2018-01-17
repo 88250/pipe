@@ -63,7 +63,7 @@ body {
     height: 46px;
 
     span {
-      border-bottom: 1px solid rgba(0, 0, 0, 0.54);
+      border-bottom: 1px solid $gray;
       position: absolute;
       padding-bottom: 20px;
     }
@@ -233,10 +233,6 @@ body {
 
   &__tag {
     margin-top: 50px;
-
-    & > div {
-      width: 490px;
-    }
   }
 }
 
@@ -247,7 +243,7 @@ body {
   }
 
   &__item {
-    border: 1px solid rgba(0,0,0,.1);
+    border: 1px solid rgba(0, 0, 0, .1);
     border-radius: 2px;
     margin-bottom: 20px;
     float: left;
@@ -354,7 +350,7 @@ body {
       margin-top: 15px;
     }
     &:hover {
-      color: rgba(0,0,0,.68);
+      color: rgba(0, 0, 0, .68);
     }
   }
 
@@ -370,6 +366,56 @@ body {
     display: block;
     border-radius: 20px;
     margin-right: 10px;
+  }
+}
+
+// pagination
+.pagination {
+  margin-top: 30px;
+  font-size: 16px;
+  border-top: 1px solid rgba(0,0,0,0.15);
+
+  &__item {
+    text-align: center;
+    border-top: 1px solid transparent;
+    transition: $transition;
+    display: inline-block;
+    position: relative;
+    top: -1px;
+    margin: 0 10px;
+    padding: 0 10px;
+    line-height: 30px;
+    color: $gray;
+    &:hover {
+      border-top-color: $gray;
+      color: $text-color;
+      text-decoration: none;
+    }
+
+    &--active {
+      background: rgba(0,0,0,0.05);
+      border-top-color: $gray;
+      &:hover {
+        color: $gray;
+        border-top-color: $gray;
+      }
+    }
+
+    &:first-child {
+      margin-left: 0;
+    }
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+
+  &__omit {
+    top: -5px;
+    margin: 0;
+    border: 0;
+    padding: 0;
+    color: #ccc;
   }
 }
 

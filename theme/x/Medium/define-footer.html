@@ -1,29 +1,11 @@
 {{define "Medium/footer"}}
 <div class="wrapper">
-    <div class="footer__tag fn-clear">
-        {{if le 1 (len .MostUseCategories)}}
-        <div class="fn-left">
-            <div class="module__title">
-                <span>{{.I18n.Categories}}</span>
-            </div>
-            <div>
-                {{range .MostUseCategories}}
-                <a class="tag" href="{{.URL}}">{{.Title}}</a>
-                {{end}}
-            </div>
-        </div>
+    <div class="footer__tag">
+        {{range .MostUseCategories}}
+        <a class="tag" href="{{.URL}}">{{.Title}}</a>
         {{end}}
-        {{if le 1 (len .MostUseTags)}}
-        <div class="fn-right">
-            <div class="module__title">
-                <span>{{.I18n.Tags}}</span>
-            </div>
-            <div>
-                {{range .MostUseTags}}
-                <a class="tag" href="{{.URL}}">{{.Title}}</a>
-                {{end}}
-            </div>
-        </div>
+        {{range .MostUseTags}}
+        <a class="tag" href="{{.URL}}">{{.Title}}</a>
         {{end}}
     </div>
     <footer class="footer">
