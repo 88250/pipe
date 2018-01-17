@@ -18,11 +18,46 @@ const Article = {
     InitComment()
     InitHljs()
 
-    Article._share();
+    Article._share('#articleShare');
+    Article._share('#articleSideShare');
 
+    $('#articleCommentBtn, #articleSideCommentBtn').click(function () {
+      const $this = $(this)
+      ShowEditor($this.data('title'), $this.data('id'))
+    })
+
+    if ($(window).height() >= $('body').height()) {
+      $('.post__side').css('opacity', 1)
+    }
+
+    $('.post__side').css('left', (($('.post').offset().left - 20) / 2 - 27) + 'px');
+
+    const windowHeight = $(window).height();
+
+    $(window).scroll(function () {
+      if ($(window).scrollTop() > 65) {
+        $('.post__side').css('opacity', 1)
+      } else {
+        $('.post__side').css('opacity', 0)
+      }
+
+      if ($(window).scrollTop() > $('.article__bottom').offset().top -  windowHeight) {
+        $('.post__side').css({
+          'position': 'absolute',
+          'top': $('.post').height() + 'px'
+        })
+      } else {
+        $('.post__side').css({
+          'position': 'fixed',
+          'top': '50%'
+        })
+      }
+    });
+
+    $(window).scroll();
   },
-  _share: () => {
-    const $this = $('.article__share')
+  _share: (id) => {
+    const $this = $(id)
     const $qrCode = $this.find('.article__code')
     const shareURL = $qrCode.data('url')
     const avatarURL = $qrCode.data('avatar')
