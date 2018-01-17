@@ -55,8 +55,8 @@
                 <a href="{{$item.Author.URL}}" class="article__author">{{$item.Author.Name}}</a><br>
                 {{end}}
                 <time>{{$item.CreatedAt}}</time> •
-                <a href="{{.URL}}" class="ft-gray">{{$item.ViewCount}} {{$.I18n.View}}</a> •
-                <a href="{{.URL}}#comments" class="ft-gray">{{$item.CommentCount}} {{$.I18n.Comment}}</a>
+                <a href="{{$item.URL}}" class="ft-gray">{{$item.ViewCount}} {{$.I18n.View}}</a> •
+                <a href="{{$item.URL}}#pipeComments" class="ft-gray">{{$item.CommentCount}} {{$.I18n.Comment}}</a>
             </div>
 
             {{if .Editable}}

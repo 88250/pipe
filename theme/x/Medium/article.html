@@ -7,9 +7,16 @@
     {{template "head/article" .}}
 </head>
 <body>
+{{template "Medium/header" .}}
+{{template "Medium/nav" .}}
 <div class="main">
-    {{template "Medium/header" .}}
-    <div class="wrapper">
+    {{if .Setting.BasicNoticeBoard}}
+    <div class="board">
+        {{.Setting.BasicNoticeBoard}}
+    </div>
+    {{end}}
+
+    <div class="wrapper content">
         <article class="article__item">
             <header class="article__header article__header--center">
                 <h2>
@@ -33,7 +40,7 @@
                     | &nbsp;
                     <a href="{{.URL}}">{{.Article.ViewCount}}</a> {{$.I18n.View}} &nbsp;
                     | &nbsp;
-                    <a href="{{.URL}}#comments">{{.Article.CommentCount}}</a> {{$.I18n.Comment}}
+                    <a href="{{.URL}}#pipeComments">{{.Article.CommentCount}}</a> {{$.I18n.Comment}}
                 </div>
             </header>
             <section class="pipe-content__reset" id="articleContent" data-author="{{.Article.Author.Name}}">
@@ -91,7 +98,6 @@
             </div>
         </article>
 
-        {{template "comment/comments" .}}
 
         {{if and .PreviousArticle .NextArticle}}
         <div class="article__neighbor fn-clear">
@@ -117,39 +123,91 @@
         </div>
         {{end}}
     </div>
-    {{if gt (len .RecommendArticles) 0}}
-    <div class="article__relevant">
-        {{$.I18n.RecommendArticle}}
-        <div class="relevant__panel">
-            {{range $index, $item := .RecommendArticles}}
-            <div class="relevant__item">
-                <a class="relevant__thumbnail"
-                   href="{{$item.URL}}"
-                   data-src="{{$item.ThumbnailURL}}"
-                   target="_blank"></a>
-                <a class="relevant__title fn-ellipsis" href="{{$item.URL}}" target="_blank">{{$item.Title}}</a>
-                <div class="fn-clear">
-                    <a class="avatar" data-src="{{$item.Author.AvatarURL}}"
-                       href="{{$item.Author.URL}}" target="_blank"></a>
-                    <a href="{{$item.Author.URL}}" class="ft-gray" target="_blank">{{$item.Author.Name}}</a>
-                    <a href="{{$item.URL}}#comments" class="ft-fade fn-right" target="_blank">
-                           {{if ne 0 $item.CommentCount}}
-                           {{$item.CommentCount}}
-                           {{$.I18n.Comment}}
-                           {{else}}
-                           {{$.I18n.Comment}}
-                           <svg><use xlink:href="#icon-comment"></use></svg>
-                           {{end}}
-                       </a>
-                </div>
+
+
+    <div class="article__bottom">
+        <div class="wrapper">
+            {{if lt 0 (len .RecommendArticles)}}
+            <div class="fn-clear article__wrap">
+                {{range .RecommendArticles}}
+                <article class="article__item article__item--small">
+                    <a class="article__thumb"
+                       href="{{.URL}}"
+                       target="_blank"
+                       data-src="{{.ThumbnailURL}}"></a>
+
+                    <header class="article__panel">
+                        <div class="article__main article__main--user">
+                            <h2 class="article__title">
+                                <a rel="bookmark" href="{{.URL}}">
+                                    {{.Title}}
+                                </a>
+                            </h2>
+
+                            {{if .Abstract}}
+                            <section
+                                data-link="{{$item.URL}}"
+                                class="pipe-content__reset article__content"
+                                data-author="{{$item.Author.Name}}">
+                                {{.Abstract}}
+                            </section>
+                            {{end}}
+                        </div>
+
+                        <div class="article__meta ft-gray fn-flex">
+                            <a rel="nofollow"
+                               class="article__avatar"
+                               target="_blank"
+                               data-src="{{.Author.AvatarURL}}"
+                               href="{{.Author.URL}}">
+                            </a>
+
+                            <div class="fn-flex-1">
+                                <a href="{{.Author.URL}}" class="article__author">{{.Author.Name}}</a><br>
+                                <time>{{.CreatedAt}}</time> •
+                                <a href="{{.URL}}" class="ft-gray">{{.ViewCount}} {{$.I18n.View}}</a> •
+                                <a href="{{.URL}}#comments" class="ft-gray">{{.CommentCount}} {{$.I18n.Comment}}</a>
+                            </div>
+
+                            {{if .Editable}}
+                            <a href="{{$.Conf.Server}}/admin/articles/post?id={{.ID}}"
+                               aria-label="{{$.I18n.Edit}}"
+                               class="pipe-tooltipped pipe-tooltipped--n fn-right article__edit
+               {{if gt $.UserCount 1}} article__edit--mid{{end}}">
+                                <svg>
+                                    <use xlink:href="#icon-edit"></use>
+                                </svg>
+                            </a>
+                            {{end}}
+                        </div>
+                    </header>
+
+
+
+                        <a href="{{.Author.URL}}" class="ft-gray" target="_blank">{{.Author.Name}}</a>
+                        <a href="{{.URL}}#comments" class="ft-fade fn-right" target="_blank">
+                            {{if ne 0 .CommentCount}}
+                            {{.CommentCount}}
+                            {{$.I18n.Comment}}
+                            {{else}}
+                            {{$.I18n.Comment}}
+                            <svg>
+                                <use xlink:href="#icon-comment"></use>
+                            </svg>
+                            {{end}}
+                        </a>
+                    </div>
+                </article>
+                {{end}}
             </div>
             {{end}}
+
+            {{template "comment/comments" .}}
         </div>
     </div>
-    {{end}}
+
+
     {{template "comment/editor" .}}
-    {{template "Medium/side" .}}
-    {{template "Medium/footer" .}}
 </div>
 </body>
 </html>
