@@ -242,10 +242,73 @@ body {
 
 // article
 .article {
+  &__wrap {
+    margin-right: -20px;
+  }
+
   &__item {
     border: 1px solid rgba(0,0,0,.1);
     border-radius: 2px;
     margin-bottom: 20px;
+    float: left;
+
+    &--big {
+      width: 318px;
+      margin-right: 20px;
+      .article__thumb {
+        height: 280px;
+        background-image: url("https://img.hacpai.com/bing/20171124.jpg?imageView2/1/w/318/h/280/interlace/1/q/100");;
+      }
+
+      .article__main {
+        height: 203px;
+        overflow: hidden;
+        &--user {
+          height: 184px;
+        }
+      }
+    }
+
+    &--small {
+      width: 318px;
+      margin-right: 20px;
+      .article__thumb {
+        height: 100px;
+        background-image: url("https://img.hacpai.com/bing/20171206.jpg?imageView2/1/w/318/h/100/interlace/1/q/100");
+      }
+
+      .article__main {
+        height: 104px;
+        overflow: hidden;
+        &--user {
+          height: 84px;
+        }
+      }
+    }
+
+    &--mid {
+      width: 488px;
+      margin-right: 20px;
+      .article__thumb {
+        float: left;
+        width: 200px;
+        height: 258px;
+        background-image: url("https://img.hacpai.com/bing/20171215.jpg?imageView2/1/w/200/h/258/interlace/1/q/100");
+      }
+
+      .article__panel {
+        float: left;
+        width: 256px;
+      }
+
+      .article__main {
+        height: 205px;
+        overflow: hidden;
+        &--user {
+          height: 184px;
+        }
+      }
+    }
   }
 
   &__thumb {
@@ -260,12 +323,16 @@ body {
   }
 
   &__title {
+    overflow: hidden;
     line-height: 24px;
     font-size: 21px;
     font-weight: 600;
-    color: $text-color;
-    &:hover {
-      text-decoration: none;
+    word-break: break-all;
+    a {
+      color: $text-color;
+      &:hover {
+        text-decoration: none;
+      }
     }
   }
 
@@ -273,6 +340,7 @@ body {
     margin-top: 4px;
     font-size: 16px;
     color: $gray;
+    overflow: hidden;
   }
 
   &__meta {

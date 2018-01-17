@@ -3,45 +3,44 @@
 {{.I18n.NoData}}
 {{end}}
 
+<div class="fn-clear article__wrap">
 {{range $index, $item := .Articles}}
 <article class="article__item
-    {{if and (ge $index 0) (le $index 4)}}article__item--five
-    {{else if (and (ge $index 5) (le $index 7))}}article__item--three
-    {{else if (and (ge $index 8) (le $index 9))}}article__item--two
-    {{else if (and (ge $index 10) (le $index 14))}}article__item--five
-    {{else if (and (ge $index 15) (le $index 17))}}article__item--three
-    {{else if (and (ge $index 18) (le $index 19))}}article__item--two
-    {{else}}article__item--three{{end}}
+    {{if or (eq $index 0) (eq $index 10)}}article__item--big
+    {{else if and (ge $index 1) (le $index 4)}}article__item--small
+    {{else if (and (ge $index 5) (le $index 7))}}article__item--big
+    {{else if (or (eq $index 8) (eq $index 9))}}article__item--mid
+    {{else if (and (gt $index 10) (le $index 14))}}article__item--small
+    {{else if (and (ge $index 15) (le $index 17))}}article__item--big
+    {{else if (and (ge $index 18) (le $index 19))}}article__item--mid
+    {{else}}article__item--big{{end}}
     ">
-    {{if $item.ThumbnailURL}}
     <a class="article__thumb"
        href="{{$item.URL}}"
        data-src="{{$item.ThumbnailURL}}"></a>
-    {{end}}
 
     <header class="article__panel">
-        <h2>
-            <a class="article__title" rel="bookmark" href="{{$item.URL}}">
-                {{if $item.Topped}}
-                <svg>
-                    <use xlink:href="#icon-focus"></use>
-                </svg>
-                {{end}}
-                {{$item.Title}}
-            </a>
-        </h2>
+        <div class="article__main{{if gt $.UserCount 1}} article__main--user{{end}}">
+            <h2 class="article__title">
+                <a rel="bookmark" href="{{$item.URL}}">
+                    {{if $item.Topped}}
+                    <svg>
+                        <use xlink:href="#icon-focus"></use>
+                    </svg>
+                    {{end}}
+                    {{$item.Title}}
+                </a>
+            </h2>
 
-        {{if $item.ThumbnailURL}}
-        {{else}}
-        {{if $item.Abstract}}
-        <section
-            data-link="{{$item.URL}}"
-            class="pipe-content__reset article__content"
-            data-author="{{$item.Author.Name}}">
-            {{$item.Abstract}}
-        </section>
-        {{end}}
-        {{end}}
+            {{if $item.Abstract}}
+            <section
+                data-link="{{$item.URL}}"
+                class="pipe-content__reset article__content"
+                data-author="{{$item.Author.Name}}">
+                {{$item.Abstract}}
+            </section>
+            {{end}}
+        </div>
 
         <div class="article__meta ft-gray fn-flex">
             {{if gt $.UserCount 1}}
@@ -74,6 +73,7 @@
     </header>
 </article>
 {{end}}
+</div>
 
 {{if gt (len $.Pagination.PageNums) 1}}
 <nav class="pagination">
