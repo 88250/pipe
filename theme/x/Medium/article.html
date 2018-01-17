@@ -117,30 +117,60 @@
         {{end}}
     </article>
 
-    {{if and .PreviousArticle .NextArticle}}
-    <div class="article__neighbor fn-clear">
-        {{if .PreviousArticle}}
-        <a href="{{.PreviousArticle.URL}}"
-           class="pipe-tooltipped pipe-tooltipped--w"
-           rel="prev" aria-label="{{.I18n.PreArticle}}">
-            <svg>
-                <use xlink:href="#icon-chevron-left"></use>
-            </svg>
-            {{.PreviousArticle.Title}}
-        </a>
-        {{end}}
-        {{if .NextArticle}}
-        <a href="{{.NextArticle.URL}}" aria-label="{{.I18n.NextArticle}}" rel="next"
-           class="fn-right pipe-tooltipped pipe-tooltipped--e">
-            {{.NextArticle.Title}}
-            <svg>
-                <use xlink:href="#icon-chevron-right"></use>
-            </svg>
-        </a>
-        {{end}}
-    </div>
-    {{end}}
+    <div class="article__toolbar">
+        <div class="wrapper fn-clear">
+            <a href="{{.URL}}" class="post__view">{{.Article.ViewCount}} {{$.I18n.View}}</a>
+            <div class="fn-right">
+                <span id="articleCommentBottomBtn" class="pipe-tooltipped pipe-tooltipped--n article__edit ft-green"
+                      aria-label="{{$.I18n.Comment}}"
+                      data-title="{{$.I18n.Comment}}{{$.I18n.Colon}}{{.Article.Title}}"
+                      data-id="{{.Article.ID}}">
+                    <svg>
+                        <use xlink:href="#icon-comment"></use>
+                    </svg>
+                    {{.Article.CommentCount}} &nbsp; &nbsp;
+                </span>
 
+                <span id="articleBottomShare">
+                    <span class="article__edit" data-type="wechat">
+                        <svg><use xlink:href="#wechat"></use></svg>
+                    </span> &nbsp; &nbsp;
+                    <span class="article__edit" data-type="weibo">
+                        <svg><use xlink:href="#weibo"></use></svg>
+                    </span> &nbsp; &nbsp;
+                    <span class="article__edit" data-type="twitter">
+                        <svg><use xlink:href="#twitter"></use></svg>
+                    </span> &nbsp; &nbsp;
+                    <span class="article__edit" data-type="google">
+                        <svg><use xlink:href="#google"></use></svg>
+                    </span>
+                    <span class="article__code"
+                          data-title="{{.Article.Title}}"
+                          data-blogtitle="{{$.Setting.BasicBlogTitle}}"
+                          data-url="{{.Article.URL}}"
+                          data-avatar="{{.Article.Author.AvatarURLWithSize 128}}"></span>
+                </span>
+
+                {{if .Article.Editable}}
+                &nbsp; &nbsp;
+                <a href="{{$.Conf.Server}}/admin/articles/post?id={{.Article.ID}}"
+                   aria-label="{{$.I18n.Edit}}"
+                   class="pipe-tooltipped pipe-tooltipped--n article__edit">
+                    <svg>
+                        <use xlink:href="#icon-edit"></use>
+                    </svg>
+                </a>
+                {{end}}
+
+                {{if .NextArticle}}
+                <a href="{{.NextArticle.URL}}" rel="next" class="article__next">
+                    <span class="ft-13 ft-gray">{{.I18n.NextArticle}}</span><br>
+                    <b>{{.NextArticle.Title}}</b>
+                </a>
+                {{end}}
+            </div>
+        </div>
+    </div>
 
     <div class="article__bottom">
         <div class="wrapper">

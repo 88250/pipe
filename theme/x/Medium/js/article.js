@@ -7,7 +7,7 @@
 
 import $ from 'jquery'
 import QRious from 'qrious'
-import {InitComment, InitToc, ShowEditor, InitHljs} from '../../../js/article'
+import { InitComment, InitToc, ShowEditor, InitHljs } from '../../../js/article'
 import './common'
 
 const Article = {
@@ -18,43 +18,65 @@ const Article = {
     InitComment()
     InitHljs()
 
-    Article._share('#articleShare');
-    Article._share('#articleSideShare');
+    Article._share('#articleShare')
+    Article._share('#articleSideShare')
+    Article._share('#articleBottomShare')
 
-    $('#articleCommentBtn, #articleSideCommentBtn').click(function () {
+    $('#articleCommentBtn, #articleSideCommentBtn, #articleCommentBottomBtn').click(function () {
       const $this = $(this)
       ShowEditor($this.data('title'), $this.data('id'))
     })
 
+    const $postSide = $('.post__side')
     if ($(window).height() >= $('body').height()) {
-      $('.post__side').css('opacity', 1)
+      $postSide.css('opacity', 1)
     }
 
-    $('.post__side').css('left', (($('.post').offset().left - 20) / 2 - 27) + 'px');
+    $postSide.css('left', (($('.post').offset().left - 20) / 2 - 27) + 'px')
 
-    const windowHeight = $(window).height();
-
+    const sideAbsoluteTop = ($(window).height() - 207) / 2 + 105
+    let beforScrollTop = $(window).scrollTop()
     $(window).scroll(function () {
-      if ($(window).scrollTop() > 65) {
-        $('.post__side').css('opacity', 1)
+      const scrollTop = $(window).scrollTop()
+      const bottomTop = $('.article__bottom').offset().top
+      if (scrollTop > 65) {
+        $postSide.css('opacity', 1)
+
+        if (beforScrollTop - scrollTop > 0) {
+          // up
+          $('.header').addClass('header--fixed').css({'top': '0'})
+          $('.main').css('padding-top', '64px')
+          $('.article__toolbar').css('bottom', '0')
+        } else if (beforScrollTop - scrollTop < 0) {
+          // down
+          $('.header').css({'top': '-64px'}).removeClass('header--fixed')
+          $('.main').css('padding-top', '0')
+          $('.article__toolbar').css('bottom', '-44px')
+        }
+
       } else {
-        $('.post__side').css('opacity', 0)
+        $postSide.css('opacity', 0)
+
+        $('.header').removeClass('header--fixed').css('top', '-64px')
+        $('.main').css('padding-top', '0')
       }
 
-      if ($(window).scrollTop() > $('.article__bottom').offset().top -  windowHeight) {
-        $('.post__side').css({
+      if (scrollTop > bottomTop - $(window).height()) {
+        $postSide.css({
           'position': 'absolute',
-          'top': $('.post').height() + 'px'
+          'top': (bottomTop - sideAbsoluteTop) + 'px'
         })
       } else {
-        $('.post__side').css({
+        $postSide.css({
           'position': 'fixed',
           'top': '50%'
         })
       }
-    });
 
-    $(window).scroll();
+      beforScrollTop = scrollTop
+    })
+
+    $(window).scroll()
   },
   _share: (id) => {
     const $this = $(id)
@@ -76,7 +98,7 @@ const Article = {
       const key = $(this).data('type')
 
       if (!key) {
-        return;
+        return
       }
 
       if (key === 'wechat') {
