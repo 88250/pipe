@@ -32,8 +32,8 @@
             {{end}}
         </div>
     </div>
+    {{template "Medium/bottom" .}}
 </div>
-{{template "Medium/bottom" .}}
 {{template "Medium/footer" .}}
 <script>
   increase({{len .Authors}}, 1000, 'authorCount', 0)

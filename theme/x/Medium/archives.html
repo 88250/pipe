@@ -32,8 +32,8 @@
         </div>
         {{end}}
     </div>
+    {{template "Medium/bottom" .}}
 </div>
-{{template "Medium/bottom" .}}
 {{template "Medium/footer" .}}
 <script>
   increase({{len .Archives}}, 1000, 'archiveMonthCount', 0)

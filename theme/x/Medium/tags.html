@@ -29,8 +29,8 @@
             {{end}}
         </div>
     </div>
+    {{template "Medium/bottom" .}}
 </div>
-{{template "Medium/bottom" .}}
 {{template "Medium/footer" .}}
 <script>
   increase({{len .Tags}}, 1000, 'tagArticleCount', 0)

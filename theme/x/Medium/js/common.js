@@ -26,10 +26,10 @@ const Common = {
       }
       if ($(window).scrollTop() > 64) {
         $('#headerNav').addClass('header__nav--fixed');
-        $('.main').css('padding-top', '50px');
+        $('.main').css('margin-top', '100px');
       } else {
         $('#headerNav').removeClass('header__nav--fixed');
-        $('.main').css('padding-top', '0');
+        $('.main').css('margin-top', '50px');
       }
     });
 

@@ -117,6 +117,8 @@ body {
 }
 
 .header {
+  padding: 0 20px;
+  box-sizing: border-box;
   height: 64px;
   text-align: center;
   transition: $transition;
@@ -204,6 +206,8 @@ body {
 
   &__nav {
     height: 50px;
+    padding: 0 20px;
+    box-sizing: border-box;
 
     .wrapper {
       overflow: auto;
@@ -268,7 +272,7 @@ body {
 }
 
 .main {
-  margin-top: 50px;
+  margin: 50px 20px 0;
 
   .content {
     margin-top: 50px;
@@ -276,13 +280,13 @@ body {
 }
 
 .board {
-  padding: 12px 28px;
+  padding: 12px 0;
   text-align: center;
 }
 
 .footer {
   margin-top: 50px;
-  padding: 10px 0 25px;
+  padding: 10px 20px 25px;
   font-size: 14px;
   border-top: 1px solid rgba(0, 0, 0, .05);
   color: $fade;
@@ -462,7 +466,7 @@ body {
 
 .article__bottom {
   background-color: #fafafa;
-  padding: 40px 0;
+  padding: 40px 20px;
 
   .article__item {
     box-shadow: 0 1px 7px rgba(0,0,0,.05);
@@ -583,6 +587,10 @@ body {
   max-width: 740px;
   margin: 50px auto 20px;
   position: relative;
+
+  &__main {
+    margin: 20px 0 0 0;
+  }
 
   &__user {
     margin-bottom: 40px;
@@ -823,17 +831,12 @@ body {
 @media (max-width: 768px) {
   .header {
     text-align: left;
-    padding: 0 20px;
-    box-sizing: border-box;
 
     &__logo {
       display: none;
     }
 
     &__nav {
-      .wrapper {
-        padding: 0 20px;
-      }
       &--fixed a.header__nav-btn {
         float: none;
         display: inline-block;
@@ -871,13 +874,11 @@ body {
     }
 
     &__wrap {
-      margin: 0 20px;
+      margin: 0;
     }
 
     &__comment {
       width: 100%;
-      padding: 0 20px;
-      box-sizing: border-box;
     }
 
     &__thumb,
@@ -900,18 +901,12 @@ body {
   }
 
   .footer {
-    padding: 10px 20px 25px;
     .fn-right {
       float: none;
     }
 
     &__tag {
-      padding: 0 20px;
       display: block;
-
-      .module__title {
-        margin: 0 0 25px 0;
-      }
 
       & > div:first-child {
         margin: 0 0 50px;
@@ -919,32 +914,17 @@ body {
     }
   }
 
-  .module__title {
-    margin: 0 20px 25px;
-  }
-
   .pagination {
-    margin: 30px 20px 0;
     &__item {
       margin: 0;
     }
   }
 
-  .page__item {
-    margin: 0 20px;
-  }
-
-  #tags {
-    margin: 0 20px;
-  }
-
   .author {
-    margin: 0 20px;
-
+    margin-right: 0;
     &__item {
       float: none;
       width: 100%;
     }
   }
-
 }
