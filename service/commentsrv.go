@@ -111,7 +111,7 @@ func (srv *commentService) ConsoleGetComments(keyword string, page int, blogID u
 	}
 
 	if err := db.Model(&model.Comment{}).
-		Where(where, whereArgs...).
+		Where(where, whereArgs...).Order("`created_at` DESC").
 		Count(&count).Offset(offset).Limit(adminConsoleCommentListPageSize).Find(&ret).Error; nil != err {
 		logger.Errorf("get comments failed: " + err.Error())
 	}
