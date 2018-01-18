@@ -19,6 +19,7 @@ package service
 import (
 	"errors"
 	"fmt"
+	"net/url"
 	"strings"
 	"sync"
 
@@ -42,6 +43,12 @@ const (
 )
 
 func (srv *categoryService) GetCategoryByPath(path string, blogID uint64) *model.Category {
+	path = strings.TrimSpace(path)
+	if "" == path || util.IsReservedPath(path) {
+		return nil
+	}
+	path, _ = url.PathUnescape(path)
+
 	ret := &model.Category{}
 	if err := db.Where("`path` = ? AND `blog_ID` = ?", path, blogID).First(ret).Error; nil != err {
 		return nil
