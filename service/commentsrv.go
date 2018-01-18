@@ -163,7 +163,7 @@ func (srv *commentService) AddComment(comment *model.Comment) error {
 
 		return err
 	}
-	if err := tx.Model(article).Update("`comment_count`", article.CommentCount+1).Error; nil != err {
+	if err := tx.Model(article).Update("comment_count", article.CommentCount+1).Error; nil != err {
 		tx.Rollback()
 
 		return err
@@ -197,7 +197,7 @@ func (srv *commentService) RemoveComment(id, blogID uint64) error {
 
 		return err
 	}
-	if err := tx.Model(article).Update("`comment_count`", article.CommentCount-1).Error; nil != err {
+	if err := tx.Model(article).Update("comment_count", article.CommentCount-1).Error; nil != err {
 		tx.Rollback()
 
 		return err
