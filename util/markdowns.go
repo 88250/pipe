@@ -116,6 +116,8 @@ func Markdown(mdText string) *MarkdownResult {
 	}
 	abstractText := strings.TrimSpace(runesToString(runes))
 	abstractText = pangu.SpacingText(abstractText)
+	abstractText = strings.Replace(abstractText, "<", "&lt;", -1)
+	abstractText = strings.Replace(abstractText, ">", "&gt;", -1)
 
 	ret := &MarkdownResult{
 		ContentHTML:  contentHTML,
