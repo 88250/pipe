@@ -69,7 +69,6 @@
     vertical-align: top;
     border-radius: 3px;
     box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.08);
-    position: relative;
     transition: box-shadow 200ms cubic-bezier(0.4, 0.0, 0.2, 1);
 
     &--focus,
@@ -81,15 +80,11 @@
       border-radius: 3px 0 0 3px;
       margin: 0;
       height: 44px;
-      width: 560px;
       box-sizing: border-box;
       padding: 10px;
     }
 
     button {
-      position: absolute;
-      top: 0;
-      right: 0;
       border-radius: 0 3px 3px 0;
       cursor: pointer;
       color: rgba(0, 0, 0, 0.87);
@@ -218,22 +213,17 @@
   .header {
     padding: 22px 10px;
 
-    &__logo,
-    &__status {
-      display: none;
+    .wrapper {
+      padding: 0px 125px 0 64px;
     }
 
     .search {
       width: 100%;
-      input {
-        width: 10px;
-      }
     }
   }
 
   .footer {
     padding: 30px 10px;
-    text-align: center;
 
     .fn-right {
       float: none;

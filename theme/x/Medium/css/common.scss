@@ -204,6 +204,13 @@ body {
 
   &__nav {
     height: 50px;
+    overflow: auto;
+    word-wrap: normal;
+    white-space: nowrap;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
 
     a {
       color: rgba(0, 0, 0, .76);
@@ -605,6 +612,7 @@ body {
     font-weight: 700;
     font-size: 42px;
     margin: 0 -20px 10px;
+    word-break: break-all;
 
     svg {
       height: 40px;
@@ -806,4 +814,104 @@ body {
     font-size: 16px;
     margin: 9px 0 3px;
   }
+}
+
+
+@media (max-width: 768px) {
+  .header {
+    text-align: left;
+    padding: 0 20px;
+    box-sizing: border-box;
+
+    &__logo {
+      display: none;
+    }
+
+    &__nav {
+      padding: 0 20px;
+    }
+  }
+
+  .post__side,
+  .article__next,
+  #articleBottomShare,
+  #articleShare {
+    display: none;
+  }
+
+  .post {
+    margin: 50px 20px 20px;
+  }
+
+  .article{
+    &__toolbar {
+      padding-left: 20px;
+      box-sizing: border-box;
+    }
+
+    &__item {
+      width: 100%;
+      margin-bottom: 20px;
+    }
+
+    &__wrap {
+      margin: 0 20px;
+    }
+
+    &__comment {
+      width: 100%;
+      padding: 0 20px;
+      box-sizing: border-box;
+    }
+
+    &__thumb,
+    &__panel {
+      float: none !important;
+      width: 100% !important;
+      box-sizing: border-box;
+    }
+
+    &__thumb {
+      height: 170px !important;
+    }
+
+    &__main {
+      height: auto !important;
+      &--user {
+        height: auto !important;
+      }
+    }
+  }
+
+  .footer {
+    padding: 10px 20px 25px;
+    .fn-right {
+      float: none;
+    }
+
+    &__tag {
+      padding: 0 20px;
+      display: block;
+
+      & > div:first-child {
+        margin: 0 0 50px;
+      }
+    }
+  }
+
+  .module__title {
+    margin: 0 20px 25px;
+  }
+
+  .pagination {
+    margin: 30px 20px 0;
+    &__item {
+      margin: 0;
+    }
+  }
+
+  .page__item {
+    margin: 0 20px;
+  }
+
 }
