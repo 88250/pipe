@@ -254,7 +254,13 @@ func routePath(c *gin.Context) {
 		return
 	}
 	if strings.Contains(path, util.PathComments+"/") {
-		getRepliesAction(c)
+		if "DELETE" == c.Request.Method {
+			commentID := strings.Split(c.Request.RequestURI, util.PathComments+"/")[1]
+			c.Params = append(c.Params, gin.Param{Key: "id", Value: commentID})
+			console.RemoveCommentAction(c)
+		} else {
+			getRepliesAction(c)
+		}
 
 		return
 	}
