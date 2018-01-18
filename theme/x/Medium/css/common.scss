@@ -204,12 +204,15 @@ body {
 
   &__nav {
     height: 50px;
-    overflow: auto;
-    word-wrap: normal;
-    white-space: nowrap;
 
-    &::-webkit-scrollbar {
-      display: none;
+    .wrapper {
+      overflow: auto;
+      word-wrap: normal;
+      white-space: nowrap;
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
     }
 
     a {
@@ -828,7 +831,20 @@ body {
     }
 
     &__nav {
-      padding: 0 20px;
+      .wrapper {
+        padding: 0 20px;
+      }
+      &--fixed a.header__nav-btn {
+        float: none;
+        display: inline-block;
+      }
+    }
+
+    &__a {
+      margin-left: 10px;
+      &--border {
+        padding: 0 5px;
+      }
     }
   }
 
@@ -893,6 +909,10 @@ body {
       padding: 0 20px;
       display: block;
 
+      .module__title {
+        margin: 0 0 25px 0;
+      }
+
       & > div:first-child {
         margin: 0 0 50px;
       }
@@ -912,6 +932,19 @@ body {
 
   .page__item {
     margin: 0 20px;
+  }
+
+  #tags {
+    margin: 0 20px;
+  }
+
+  .author {
+    margin: 0 20px;
+
+    &__item {
+      float: none;
+      width: 100%;
+    }
   }
 
 }
