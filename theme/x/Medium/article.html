@@ -176,18 +176,19 @@
         <div class="wrapper">
             {{if lt 0 (len .RecommendArticles)}}
             <div class="fn-clear article__wrap">
-                {{range .RecommendArticles}}
+                {{range $index, $item := .RecommendArticles}}
+                {{if le $index 5}}
                 <article class="article__item article__item--small">
                     <a class="article__thumb"
-                       href="{{.URL}}"
+                       href="{{$item.URL}}"
                        target="_blank"
-                       data-src="{{.ThumbnailURL}}"></a>
+                       data-src="{{$item.ThumbnailURL}}"></a>
 
                     <header class="article__panel">
                         <div class="article__main article__main--user">
                             <h2 class="article__title">
-                                <a rel="bookmark" href="{{.URL}}">
-                                    {{.Title}}
+                                <a rel="bookmark" href="{{$item.URL}}">
+                                    {{$item.Title}}
                                 </a>
                             </h2>
                         </div>
@@ -196,20 +197,21 @@
                             <a rel="nofollow"
                                class="article__avatar"
                                target="_blank"
-                               data-src="{{.Author.AvatarURL}}"
-                               href="{{.Author.URL}}">
+                               data-src="{{$item.Author.AvatarURL}}"
+                               href="{{$item.Author.URL}}">
                             </a>
 
                             <div class="fn-flex-1">
-                                <a href="{{.Author.URL}}" class="article__author">{{.Author.Name}}</a><br>
-                                <time>{{.CreatedAt}}</time>
+                                <a href="{{$item.Author.URL}}" class="article__author">{{$item.Author.Name}}</a><br>
+                                <time>{{$item.CreatedAt}}</time>
                                 •
-                                <a href="{{.URL}}" class="ft-gray">{{.ViewCount}} {{$.I18n.View}}</a> •
-                                <a href="{{.URL}}#comments" class="ft-gray">{{.CommentCount}} {{$.I18n.Comment}}</a>
+                                <a href="{{$item.URL}}" class="ft-gray">{{$item.ViewCount}} {{$.I18n.View}}</a> •
+                                <a href="{{$item.URL}}#comments" class="ft-gray">{{$item.CommentCount}} {{$.I18n.Comment}}</a>
                             </div>
                         </div>
                     </header>
                 </article>
+                {{end}}
                 {{end}}
             </div>
             {{end}}
