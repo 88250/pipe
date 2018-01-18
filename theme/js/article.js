@@ -219,7 +219,7 @@ export const InitComment = () => {
     const $it = $(this)
     if (confirm($it.data('label'))) {
       $.ajax({
-        url: `${config.Server}/api/console/comments/${$it.data('id')}`,
+        url: `${$('#pipeEditorComment').data('blogurl')}/comments/${$it.data('id')}`,
         type: 'DELETE',
         success: (result) => {
           if (result.code === 0) {
