@@ -17,10 +17,10 @@
 package service
 
 import (
+	"sync"
+
 	"github.com/b3log/pipe/model"
 	"github.com/b3log/pipe/util"
-	"strconv"
-	"sync"
 )
 
 var Upgrade = &upgradeService{
@@ -32,7 +32,7 @@ type upgradeService struct {
 }
 
 const (
-	fromVer = "1.0.0"
+	fromVer = "1.1.0"
 	toVer   = util.Version
 )
 
@@ -69,30 +69,6 @@ func perform() {
 
 	var updateSettings []model.Setting
 	for _, setting := range allSettings {
-		if model.SettingNameArticleSign == setting.Name {
-			setting.Value = model.SettingArticleSignDefault
-			updateSettings = append(updateSettings, setting)
-
-			continue
-		}
-		if model.SettingNameBasicFooter == setting.Name {
-			setting.Value = model.SettingBasicFooterDefault
-			updateSettings = append(updateSettings, setting)
-
-			continue
-		}
-		if model.SettingNameBasicHeader == setting.Name {
-			setting.Value = model.SettingBasicHeaderDefault
-			updateSettings = append(updateSettings, setting)
-
-			continue
-		}
-		if model.SettingNameBasicNoticeBoard == setting.Name {
-			setting.Value = model.SettingBasicBasicNoticeBoardDefault
-			updateSettings = append(updateSettings, setting)
-
-			continue
-		}
 		if model.SettingNameSystemVer == setting.Name {
 			setting.Value = util.Version
 			updateSettings = append(updateSettings, setting)
@@ -101,40 +77,12 @@ func perform() {
 		}
 	}
 
-	rows, err := db.Model(&model.Setting{}).Select("`blog_id`").Group("`blog_id`").Rows()
-	if nil != err {
-		logger.Fatalf("load blogs failed: %s", err)
-	}
-	defer rows.Close()
-	var blogIDs []string
-	for rows.Next() {
-		blogID := ""
-		if err := rows.Scan(&blogID); nil != err {
-			logger.Fatalf("get blog id failed: %s", err)
-		}
-		blogIDs = append(blogIDs, blogID)
-	}
-
 	tx := db.Begin()
 	for _, setting := range updateSettings {
 		if err := tx.Save(setting).Error; nil != err {
 			tx.Rollback()
 
 			logger.Fatalf("update setting [%+v] failed: %s", setting, err)
-		}
-	}
-
-	for _, blogIDStr := range blogIDs {
-		blogID, err := strconv.ParseUint(blogIDStr, 10, 64)
-		if nil != err {
-			tx.Rollback()
-
-			logger.Fatalf("invalid blog id [%s]", blogIDStr)
-		}
-		if err = init3rdStatistic(tx, blogID); nil != err {
-			tx.Rollback()
-
-			logger.Fatalf("initial third statistic failed: %s", err)
 		}
 	}
 	tx.Commit()
