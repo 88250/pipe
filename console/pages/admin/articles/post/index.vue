@@ -93,7 +93,7 @@
           {{ $t('delete', $store.state.locale) }}
         </v-btn>
         <v-btn @click="edit($route.query.id)" class="btn--info btn--space btn--margin-t30" v-if="$route.query.id">
-          {{ $t('edit', $store.state.locale) }}
+          {{ $t('submit', $store.state.locale) }}
         </v-btn>
         <v-btn @click="edit()" class="btn--info btn--margin-t30" v-else>{{ $t('publish', $store.state.locale)
           }}
