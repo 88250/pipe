@@ -119,8 +119,10 @@ func pushComments() {
 			pa := service.User.GetPlatformAdmin()
 			b3Key = pa.B3Key
 			b3Name = pa.Name
+			logger.Info("b3key is empty [" + author.Name + "], paname [" + b3Name + "]")
 		}
 		if "" == b3Key {
+			logger.Info("b3key is empty")
 			continue
 		}
 
