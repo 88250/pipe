@@ -19,7 +19,7 @@ export const state = () => ({
   snackModify: 'error',
   menu: [],
   tagsItems: [],
-  bodySide: 'body--side'
+  bodySide: ''
 })
 
 export const mutations = {

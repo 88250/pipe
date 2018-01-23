@@ -87,6 +87,8 @@
     flex: 1
 
   @media (max-width: 768px)
+    .body--side .main
+      margin-left: 0
     .content
       padding: 15px
 </style>

@@ -51,12 +51,12 @@
               {{ item.title }}
             </v-list-tile>
             <v-list-tile
-              @click="$router.push('/');$store.commit('setBodySide', '')"
+              @click="goHome"
               v-if="$route.path.indexOf('/admin') > -1">
               {{ $t('index', $store.state.locale) }}
             </v-list-tile>
             <v-list-tile
-              @click="$router.push('/admin');$store.commit('setBodySide', 'body--side')"
+              @click="goAdmin"
               v-if="$route.path.indexOf('/admin') === -1 && $store.state.role !== 0 && $store.state.isInit">
                 {{ $t('manage', $store.state.locale) }}
             </v-list-tile>
@@ -71,6 +71,8 @@
 </template>
 
 <script>
+  import { initParticlesJS } from '~/plugins/utils'
+
   export default {
     props: {
       from: {
@@ -79,6 +81,19 @@
       }
     },
     methods: {
+      goAdmin () {
+        this.$router.push('/admin')
+        if (document.documentElement.clientWidth >= 768) {
+          this.$store.commit('setBodySide', 'body--side')
+        }
+      },
+      goHome () {
+        this.$router.push('/')
+        this.$store.commit('setBodySide', '')
+        setTimeout(() => {
+          initParticlesJS('particles')
+        }, 200)
+      },
       toggleSide () {
         const className = document.querySelector('#pipe').className
         if (className === '') {
