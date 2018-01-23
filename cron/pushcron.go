@@ -113,8 +113,10 @@ func pushComments() {
 	comments := service.Comment.GetUnpushedComments()
 	for _, comment := range comments {
 		author := service.User.GetUser(comment.AuthorID)
-		b3Key := author.B3Key
-		b3Name := author.Name
+		article := service.Article.ConsoleGetArticle(comment.ArticleID)
+		articleAuthor := service.User.GetUser(article.AuthorID)
+		b3Key := articleAuthor.B3Key
+		b3Name := articleAuthor.Name
 		if "" == b3Key {
 			pa := service.User.GetPlatformAdmin()
 			b3Key = pa.B3Key
