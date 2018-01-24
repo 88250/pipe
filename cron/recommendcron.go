@@ -79,6 +79,7 @@ func refreshRecommendArticles() {
 			Title:        article["articleTitle"].(string),
 			URL:          article["articlePermalink"].(string),
 			CommentCount: int(article["articleCommentCount"].(float64)),
+			ViewCount:    int(article["articleViewCount"].(float64)),
 			ThumbnailURL: util.ImageSize(images[i], 280, 90),
 		})
 	}
