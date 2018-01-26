@@ -76,6 +76,21 @@ func (srv *userService) AddUser(user *model.User) error {
 	return nil
 }
 
+func (srv *userService) UpdateUser(user *model.User) error {
+	srv.mutex.Lock()
+	defer srv.mutex.Unlock()
+
+	tx := db.Begin()
+	if err := tx.Save(user).Error; nil != err {
+		tx.Rollback()
+
+		return err
+	}
+	tx.Commit()
+
+	return nil
+}
+
 func (srv *userService) GetUserByName(name string) *model.User {
 	ret := &model.User{}
 	if err := db.Where("`name` = ?", name).First(ret).Error; nil != err {

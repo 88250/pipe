@@ -136,6 +136,8 @@ func fillUser(c *gin.Context) {
 				session.URole = ownBlog.UserRole
 			}
 			session.UID = existUser.ID
+
+			service.User.UpdateUser(existUser)
 		} else {
 			if err := service.User.AddUser(user); nil != err {
 				logger.Errorf("add user [name=%s] failed: %s", username, err.Error())
