@@ -128,7 +128,7 @@ func fillUser(c *gin.Context) {
 		}
 
 		if existUser := service.User.GetUserByName(username); nil != existUser {
-			session.UAvatar = existUser.AvatarURL
+			existUser.AvatarURL = session.UAvatar
 			ownBlog := service.User.GetOwnBlog(existUser.ID)
 			if nil != ownBlog {
 				session.BID = ownBlog.ID
