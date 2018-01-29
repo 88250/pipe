@@ -13,7 +13,7 @@
     <article>
         <header class="article-detail__header">
             <div class="ft-center fn-relative">
-                <h2 class="header__title">
+                <h2 class="header__title{{if .Article.Editable}} header__title--edit{{end}}">
                     {{if .Article.Topped}}
                     <svg>
                         <use xlink:href="#focus"></use>
