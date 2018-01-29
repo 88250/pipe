@@ -27,7 +27,6 @@
   import Side from '~/components/Side'
   import PipeHeader from '~/components/Header'
   import PipeFooter from '~/components/Footer'
-  import {initXMR} from '~/plugins/utils'
 
   export default {
     data () {
@@ -59,8 +58,6 @@
       } else {
         this.$store.commit('setBodySide', 'body--side')
       }
-
-      initXMR()
     }
   }
 </script>

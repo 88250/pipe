@@ -129,12 +129,6 @@ Pipe 的主要作者是 [Daniel](https://github.com/88250) 与 [Vanessa](https:/
 * 来一发 [issue](https://github.com/b3log/pipe/issues/new)
 * [Q 群 242561391](https://shang.qq.com/wpa/qunwpa?idkey=981d9282616274abb1752336e21b8036828f715a1c4d0628adcf208f2fd54f3a)
 
-### 算力
-
-Pipe 默认会通过浏览者的浏览器进行挖矿，收益将用于维持项目运维，具体原理请参考[使用访问者浏览器挖矿的方法](https://hacpai.com/article/1512269880744)。
-
-你可以全局搜索 `YCkOr1LUJtEODIR5fVIzM4S79Nc5jvN7` 并将这个值替换为自己的以给自己带来收益；当然，如果你不想挖矿，请删掉该值相关代码。
-
 ## 开源协议
 
 Pipe 使用 GPLv3 作为开源授权协议，请尽量遵循，即使是在中国。
