@@ -2,7 +2,7 @@
  * @fileoverview article.
  *
  * @author <a href="http://vanessa.b3log.org">Liyuan Li</a>
- * @version 0.1.0.0, Jan 18, 2018
+ * @version 0.1.1.0, Jan 30, 2018
  */
 
 import $ from 'jquery'
@@ -47,13 +47,19 @@ const Article = {
           $('.header').addClass('header--fixed').css({'top': '0'})
           $('.main').css('padding-top', '64px')
           if ($(window).height() <= $('.post').height() && scrollTop < bottomTop - $(window).height()) {
-            $('.article__toolbar').css('bottom', '0')
+            $('.article__toolbar').css({
+              'bottom': 0,
+              'opacity': 1
+            })
           }
         } else if (beforScrollTop - scrollTop < 0) {
           // down
           $('.header').css({'top': '-64px'}).removeClass('header--fixed')
           $('.main').css('padding-top', '0')
-          $('.article__toolbar').css('bottom', '-44px')
+          $('.article__toolbar').css({
+            'bottom': '-44px',
+            'opacity': 0
+          })
         }
 
       } else {

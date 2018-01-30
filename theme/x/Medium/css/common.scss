@@ -2,7 +2,7 @@
  * skin Medium style
  *
  * @author <a href="http://vanessa.b3log.org">Liyuan Li</a>
- * @version 0.1.0.0, Jan 18, 2018
+ * @version 0.1.1.0, Jan 30, 2018
 */
 @import '../../../scss/basic';
 @import '../../../scss/github';
@@ -510,6 +510,7 @@ body {
   font-size: 16px;
   line-height: 44px;
   transition: $transition;
+  opacity: 0;
 
   .wrapper {
     max-width: 740px;
