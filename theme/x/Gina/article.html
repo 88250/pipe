@@ -31,9 +31,12 @@
                     {{end}}
                     <time class="ft-nowrap">{{.Article.CreatedAt}}</time>
                     •
-                    <span class="ft-nowrap">{{.Article.ViewCount}} {{$.I18n.View}}</span> •
+                    <span class="ft-nowrap">{{.Article.ViewCount}} {{$.I18n.View}}</span>
+                    {{if gt .Article.CommentCount 0}}
+                    •
                     <a href="{{.Article.URL}}#pipeComments" class="ft-nowrap ft-gray">{{.Article.CommentCount}}
                         {{$.I18n.Comment}}</a>
+                    {{end}}
                 </div>
 
                 {{if .Article.Editable}}
