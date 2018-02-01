@@ -143,7 +143,7 @@ export const InitComment = () => {
   // bottom reply
   $('body').on('click', '#pipeCommentBottomComment', function () {
     const $bottomComment = $(this)
-    ShowEditor($bottomComment.text(), $bottomComment.data('id'))
+    ShowEditor($bottomComment.data('text'), $bottomComment.data('id'))
   })
 
   // comment show reply
@@ -371,8 +371,8 @@ ${$it.data('label2')}`).click(function () {
             $comments.removeClass('pipe-comment__null').unbind('click')
               .html(`<div class="pipe-comment__header"><span id="pipeCommentsCnt">1</span>${label}</div><div>${result.data}</div>
 <nav class="pipe-comment__pagination fn-clear">
-    <span class="fn-right pipe-comment__btn" data-id="${$editor.data('id')}" id="pipeCommentBottomComment">
-         <svg><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-reply"></use></svg> ${$comments.data('title')}
+    <span class="fn-right pipe-comment__btn" data-text="${$comments.data('title')}" data-id="${$editor.data('id')}" id="pipeCommentBottomComment">
+         <svg><use xlink:href="#icon-reply"></use></svg> ${label}
     </span>
 </nav>`)
           } else {
