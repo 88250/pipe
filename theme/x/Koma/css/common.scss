@@ -194,7 +194,7 @@ a {
   bottom: 35px;
   right: 5px;
   animation: upbounce 4s 2s infinite;
-  z-index: 101;
+  z-index: 99;
   cursor: pointer;
   color: #b0a0aa;
   transition: $transition;
@@ -331,17 +331,6 @@ a {
           color: $gray;
         }
       }
-
-      span {
-        color: $blue;
-        cursor: pointer;
-        margin-left: 15px;
-        transition: $transition;
-
-        &:hover {
-          color: $gray;
-        }
-      }
     }
   }
 
@@ -387,7 +376,8 @@ a {
     margin-left: -58px;
     display: none;
     top: 25px;
-    border: 1px solid #b0a0aa
+    border: 1px solid #b0a0aa;
+    z-index: 1;
   }
 
   &__neighbor {

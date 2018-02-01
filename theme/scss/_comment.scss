@@ -131,7 +131,10 @@
 
   #pipeEditorReplyTarget {
     line-height: 23px;
-    padding: 5px 0
+    padding: 5px 10px 5px 0;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
   }
 }
 

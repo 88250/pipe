@@ -64,36 +64,31 @@
             </div>
             <span class="fn-right">
                 <a href="{{.Article.URL}}" aria-label="{{$.I18n.View}}"
-                   class="pipe-tooltipped pipe-tooltipped--w">
+                   class="pipe-tooltipped pipe-tooltipped--n">
                     {{.Article.ViewCount}}
                     <svg>
                         <use xlink:href="#icon-view"></use>
                     </svg>
                 </a>
 
+                {{if gt .Article.CommentCount 0}}
                 <a href="{{.Article.URL}}#pipeComments" aria-label="{{$.I18n.Comment}}"
-                   class="pipe-tooltipped pipe-tooltipped--w">
+                   class="pipe-tooltipped pipe-tooltipped--n">
                     {{.Article.CommentCount}}
                     <svg>
                         <use xlink:href="#icon-comment"></use>
                     </svg>
                 </a>
+                {{end}}
+
                 {{if .Article.Editable}}
                 <a href="{{$.Conf.Server}}/admin/articles/post?id={{.Article.ID}}"
                    aria-label="{{$.I18n.Edit}}"
-                   class="pipe-tooltipped pipe-tooltipped--w">&nbsp;<svg>
+                   class="pipe-tooltipped pipe-tooltipped--n    ">&nbsp;<svg>
                         <use xlink:href="#icon-edit"></use>
                     </svg>
                 </a>
                 {{end}}
-                <span id="articleCommentBtn"
-                      data-title="{{$.I18n.Comment}}{{$.I18n.Colon}}{{.Article.Title}}"
-                      data-id="{{.Article.ID}}">
-                    <svg>
-                        <use xlink:href="#icon-reply"></use>
-                    </svg>
-                    {{$.I18n.Comment}}
-                </span>
             </span>
         </div>
     </article>
@@ -144,11 +139,13 @@
                            data-src="{{$item.Author.AvatarURL}}"
                            href="{{$item.Author.URL}}" target="_blank"></a>
                         <span class="fn-left ft-fade">{{$item.CreatedAt}} &nbsp; &nbsp;</span>
+                        {{if ne 0 $item.CommentCount}}
                         <a href="{{$item.URL}}#comments"
                            class="ft-fade" target="_blank">
-                            {{if ne 0 $item.CommentCount}}{{$item.CommentCount}}{{end}}
+                            {{$item.CommentCount}}
                             {{$.I18n.Comment}}
                         </a>
+                        {{end}}
                     </div>
                 </div>
             </div>

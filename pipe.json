@@ -1,7 +1,7 @@
 {
     "Server": "http://192.168.0.100:5897",
     "StaticServer": "",
-    "StaticResourceVersion": "1517306383203",
+    "StaticResourceVersion": "1517487122029",
     "RuntimeMode": "dev",
     "LogLevel": "debug",
     "SessionSecret": "BEYOND",

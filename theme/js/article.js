@@ -276,7 +276,7 @@ ${$it.data('label2')}`).click(function () {
       fullscreen: label[10] + ' <ctrl+shift+a>',
       emojiTip: 'EMOJI CHEAT SHEET'
     },
-    height: 200,
+    height: 180,
     keyup: (event) => {
       localStorage.setItem('pipeEditorComment', event.target.value)
     },

@@ -5,17 +5,17 @@
         <div id="pipeEditorComment"
              data-label="{{.I18n.Emoji}},{{.I18n.Bold}},{{.I18n.Italic}},{{.I18n.Quote}},{{.I18n.Link}},{{.I18n.Upload}},{{.I18n.UnorderedList}},{{.I18n.OrderedList}},{{.I18n.Preview}},{{.I18n.Question}},{{.I18n.Fullscreen}}"
              data-blogurl="{{.BlogURL}}" data-placeholder="{{.I18n.CommentPlaceholder}}"></div>
-        <div class="fn-clear">
-            <div class="fn-left ft-fade" id="pipeEditorReplyTarget"></div>
-            <span class="fn-right pipe-btn pipe-btn--space pipe-btn--success"
+        <div class="fn-flex">
+            <div class="fn-flex-1 ft-fade" id="pipeEditorReplyTarget"></div>
+            <span class="pipe-btn"
+                  id="pipeEditorCancel">
+                    {{.I18n.Cancel}}&nbsp;<svg class="fn-right"><use xlink:href="#icon-chevron-up"></use></svg>
+                </span>
+            <span class="pipe-btn pipe-btn--space pipe-btn--success"
                   id="pipeEditorAdd"
                   data-label2="{{.I18n.Required}}"
                   data-label="{{.I18n.Comment}}">
                     {{.I18n.Confirm}}
-                </span>
-            <span class="fn-right pipe-btn"
-                  id="pipeEditorCancel">
-                    {{.I18n.Cancel}}&nbsp;<svg class="fn-right"><use xlink:href="#icon-chevron-up"></use></svg>
                 </span>
         </div>
     </div>

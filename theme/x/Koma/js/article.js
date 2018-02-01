@@ -15,11 +15,6 @@ const Article = {
    * @description 页面初始化
    */
   init: () => {
-    $('#articleCommentBtn').click(function () {
-      const $this = $(this)
-      ShowEditor($this.data('title'), $this.data('id'))
-    })
-
     InitComment()
     InitHljs()
 
