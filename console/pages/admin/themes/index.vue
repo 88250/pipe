@@ -5,10 +5,10 @@
          @click="setup(item.name)"
          :key="item.previewURL"
          :class="{ 'theme--current': item.name === currentName }">
+      <div class="theme__name">{{ item.name }}</div>
       <div class="theme__img-wrap">
         <span class="theme__image" :style="`background-image: url('${item.thumbnailURL}')`"/>
         <div class="theme__overlay">
-          {{ item.name }} <br><br>
           <v-btn
             v-show="item.name !== currentName"
             class="btn--info">{{ $t('setup', $store.state.locale) }}</v-btn>
@@ -67,12 +67,22 @@
   @import '~assets/scss/_variables'
 
   .admin__themes
+    margin-top: 32px
     .card
-      margin: 0 30px 30px 0
+      margin: 0 30px 62px 0
       float: left
       width: 455px
       cursor: pointer
     .theme
+      &__name
+        position: absolute
+        top: -32px
+        text-align: center
+        background-color: rgba(255, 255, 255, .7)
+        left: 50%
+        line-height: 32px
+        width: 100px
+        margin-left: -50px
       &--current
         background-color: $blue
         cursor: auto
@@ -97,7 +107,7 @@
         position: absolute
         transition: all .4s ease-in-out
         opacity: 0
-        background-color: rgba(0, 0, 0, 0.7)
+        background-color: rgba(0, 0, 0, 0.2)
         text-align: center
         color: #fff
         font-size: 20px
