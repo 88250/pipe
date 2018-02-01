@@ -56,14 +56,15 @@
             <a href="{{.URL}}" class="post__view">{{.Article.ViewCount}} {{$.I18n.View}}</a>
 
             <div class="fn-right">
-                <span id="articleCommentBtn" class="pipe-tooltipped pipe-tooltipped--n article__edit ft-green"
+                <span id="articleCommentBtn"
+                      class="{{if gt .Article.CommentCount 0}}pipe-tooltipped pipe-tooltipped--n{{end}} article__edit ft-green"
                       aria-label="{{$.I18n.Comment}}"
                       data-title="{{$.I18n.Comment}}{{$.I18n.Colon}}{{.Article.Title}}"
                       data-id="{{.Article.ID}}">
                     <svg>
                         <use xlink:href="#icon-comment"></use>
                     </svg>
-                    {{.Article.CommentCount}} &nbsp; &nbsp;
+                    {{if gt .Article.CommentCount 0}}{{.Article.CommentCount}}{{else}}{{$.I18n.Comment}}{{end}} &nbsp; &nbsp;
                 </span>
 
                 <span id="articleShare">
@@ -121,14 +122,14 @@
         <div class="wrapper fn-clear">
             <a href="{{.URL}}" class="post__view">{{.Article.ViewCount}} {{$.I18n.View}}</a>
             <div class="fn-right">
-                <span id="articleCommentBottomBtn" class="pipe-tooltipped pipe-tooltipped--n article__edit ft-green"
+                <span id="articleCommentBottomBtn" class="{{if gt .Article.CommentCount 0}}pipe-tooltipped pipe-tooltipped--n{{end}} article__edit ft-green"
                       aria-label="{{$.I18n.Comment}}"
                       data-title="{{$.I18n.Comment}}{{$.I18n.Colon}}{{.Article.Title}}"
                       data-id="{{.Article.ID}}">
                     <svg>
                         <use xlink:href="#icon-comment"></use>
                     </svg>
-                    {{.Article.CommentCount}} &nbsp; &nbsp;
+                    {{if gt .Article.CommentCount 0}}{{.Article.CommentCount}}{{else}}{{$.I18n.Comment}}{{end}} &nbsp; &nbsp;
                 </span>
 
                 <span id="articleBottomShare">
@@ -232,7 +233,7 @@
           aria-label="{{$.I18n.Comment}}"
           data-title="{{$.I18n.Comment}}{{$.I18n.Colon}}{{.Article.Title}}"
           data-id="{{.Article.ID}}">
-        <span class="ft-gray">{{.Article.CommentCount}}</span>
+        {{if gt .Article.CommentCount 0}}{{.Article.CommentCount}}{{end}}
         <svg>
             <use xlink:href="#icon-comment"></use>
         </svg>
@@ -240,13 +241,13 @@
     <div id="articleSideShare">
         <span class="article__edit" data-type="wechat">
             <svg><use xlink:href="#wechat"></use></svg>
-        </span><br>
+        </span>
             <span class="article__edit" data-type="weibo">
             <svg><use xlink:href="#weibo"></use></svg>
-        </span><br>
+        </span>
             <span class="article__edit" data-type="twitter">
             <svg><use xlink:href="#twitter"></use></svg>
-        </span><br>
+        </span>
             <span class="article__edit" data-type="google">
             <svg><use xlink:href="#google"></use></svg>
         </span>

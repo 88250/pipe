@@ -122,6 +122,7 @@ body {
   height: 64px;
   text-align: center;
   transition: $transition;
+  line-height: 53px;
 
   h1 {
     display: inline-block;
@@ -160,7 +161,8 @@ body {
     width: 25px;
     margin-left: 10px;
     float: left;
-    margin-top: 18px;
+    line-height: normal;
+    margin-top: 25px;
 
     &:hover {
       text-decoration: none;
@@ -487,6 +489,10 @@ body {
     height: 45px;
     margin-bottom: 15px;
   }
+
+  .article__title {
+    font-size: 18px;
+  }
 }
 
 .article__comment {
@@ -519,7 +525,7 @@ body {
   svg {
     height: 20px;
     width: 20px;
-    vertical-align: middle;
+    vertical-align: sub;
   }
 
   .fn-right {
@@ -545,7 +551,7 @@ body {
     color: $gray;
     background-color: #fff;
     border: 1px solid rgba(0, 0, 0, .09);
-    font-size: 20px;
+    font-size: 16px;
     border-radius: 3px;
   }
 
@@ -626,7 +632,7 @@ body {
 
   &__title {
     font-weight: 700;
-    font-size: 42px;
+    font-size: 36px;
     margin: 0 -20px 10px;
     word-break: break-all;
 
@@ -690,6 +696,12 @@ body {
     margin-top: -105px;
     transition: opacity .1s;
     opacity: 0;
+
+    .article__edit {
+      margin-bottom: 5px;
+      display: block;
+    }
+
     svg {
       height: 25px;
       width: 25px;
@@ -697,8 +709,8 @@ body {
 
     .ft-green {
       svg {
-        height: 55px;
-        width: 55px;
+        height: 45px;
+        width: 45px;
         vertical-align: bottom;
         margin-bottom: 10px;
       }
@@ -832,6 +844,12 @@ body {
   }
 }
 
+@media (max-width: 1034px) and (min-width: 769px) {
+  .article__wrap {
+    width: 676px;
+    margin: 0 auto;
+  }
+}
 
 @media (max-width: 768px) {
   .header {
@@ -867,7 +885,7 @@ body {
     margin: 50px 20px 20px;
   }
 
-  .article{
+  .article {
     &__toolbar {
       padding-left: 20px;
       box-sizing: border-box;
@@ -931,5 +949,28 @@ body {
       float: none;
       width: 100%;
     }
+  }
+
+  .post__title {
+    font-size: 18px;
+    margin: 0 0 10px;
+  }
+
+  html,
+  .page__item h3 {
+    font-size: 16px;
+  }
+
+  .article__title,
+  .module__title {
+    font-size: 18px;
+  }
+
+  .header__title {
+    font-size: 22px;
+  }
+
+  .pipe-comment__item {
+    padding: 10px;
   }
 }

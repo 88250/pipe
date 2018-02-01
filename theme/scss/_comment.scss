@@ -89,14 +89,14 @@
     color: $black;
     display: none;
     transition: $transition;
-    padding-left: 10px;
     font-size: 14px;
-    line-height: 28px;
+    line-height: 18px;
+    padding: 5px 0 5px 10px;
     &--danger {
       color: $red;
     }
     svg {
-      margin: 7px 5px 0 0;
+      margin: 2px 5px 0 0;
       float: left;
     }
 
@@ -130,7 +130,8 @@
   }
 
   #pipeEditorReplyTarget {
-    line-height: 33px;
+    line-height: 23px;
+    padding: 5px 0
   }
 }
 

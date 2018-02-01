@@ -213,8 +213,12 @@
   .header {
     padding: 22px 10px;
 
+    &__status {
+      display: none;
+    }
+
     .wrapper {
-      padding: 0px 125px 0 64px;
+      padding: 0 0 0 64px;
     }
 
     .search {
