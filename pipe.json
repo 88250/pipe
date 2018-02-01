@@ -1,5 +1,5 @@
 {
-    "Server": "http://10.66.48.171:5897",
+    "Server": "http://192.168.0.100:5897",
     "StaticServer": "",
     "StaticResourceVersion": "1517306383203",
     "RuntimeMode": "dev",

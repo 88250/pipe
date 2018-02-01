@@ -11,10 +11,9 @@
 @import 'tip';
 
 .wrapper {
-  width: 90%;
-  margin: 0 auto;
   min-width: 720px;
   max-width: 1100px;
+  padding-left: 150px;
 }
 
 .header {
@@ -32,7 +31,7 @@
     height: 44px;
     width: 44px;
     top: 22px;
-    left: 10px;
+    left: 50px;
   }
 
   &__status {
@@ -202,23 +201,28 @@
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 910px) {
 
   .wrapper {
     width: 100%;
     min-width: 100%;
     box-sizing: border-box;
+    padding-left: 0;
   }
 
   .header {
     padding: 22px 10px;
 
-    &__status {
-      display: none;
+    .wrapper {
+      padding-left: 54px;
     }
 
-    .wrapper {
-      padding: 0 0 0 64px;
+    &__logo img {
+      left: 10px;
+    }
+
+    &__status {
+      display: none;
     }
 
     .search {

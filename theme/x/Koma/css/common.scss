@@ -243,8 +243,7 @@ a {
   &__header {
     border-left: 5px solid $text-color;
     padding: 15px 130px 15px 25px;
-    line-height: 36px;
-    font-size: 26px;
+    line-height: 28px;
     transition: $transition;
     &--user {
       padding-right: 181px;
@@ -259,6 +258,7 @@ a {
       font-weight: 300;
       transition: $transition;
       word-break: break-all;
+      font-size: 28px;
       &:hover {
         color: $text-hover-color;
         text-decoration: none;
@@ -522,7 +522,7 @@ a {
 // tags
 .tag {
   color: #fff;
-  font-size: 10px;
+  font-size: 12px;
   height: 18px;
   line-height: 18px;
   display: inline-block;
@@ -591,21 +591,7 @@ a {
   }
 
   &--page {
-    font-size: 18px;
-    line-height: 36px;
-    height: 36px;
-    padding: 0 10px 0 20px;
-    margin: 0 48px 30px 0;
-
-    &:before {
-      left: -36px;
-      border-width: 18px;
-    }
-
-    &:after {
-      top: 16px;
-      left: 6px;
-    }
+    margin-right: 16px;
   }
 }
 
@@ -632,7 +618,7 @@ a {
     }
 
     &--archive {
-      padding: 30px 30px 0 48px;
+      padding: 30px;
     }
   }
   &__title {
@@ -782,6 +768,7 @@ a {
 
       h1 a {
         margin-top: 0;
+        font-size: 22px;
       }
 
       ul {
@@ -823,15 +810,19 @@ a {
 
   .article__header {
     padding: 10px 15px 10px 10px;
-  }
 
-  .article__header .avatar {
-    position: inherit;
-    display: inline-block;
-    height: 20px;
-    width: 20px;
-    float: left;
-    margin: 11px 15px 0 0;
+    .article__title {
+      font-size: 18px;
+    }
+
+    .avatar {
+      position: inherit;
+      display: inline-block;
+      height: 20px;
+      width: 20px;
+      float: left;
+      margin: 11px 15px 0 0;
+    }
   }
 
   .pagination__item {
