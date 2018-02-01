@@ -21,14 +21,14 @@
                       data-commentid="{{.Item.ID}}">
                     <svg><use xlink:href="#icon-reply"></use></svg> {{.I18n.Reply}}
                 </span>
-                {{if .Item.Removable}}
-                <span class="pipe-comment__btn pipe-comment__btn--danger"
+
+                <span class="pipe-comment__btn pipe-comment__btn--danger
+                {{if .Item.Removable}}{{else}} pipe-comment__btn--none{{end}}"
                       data-id="{{.Item.ID}}"
                       data-label="{{.I18n.ConfirmDelete}}"
                       data-label2="{{.I18n.StayStep}}">
                     {{.I18n.Delete}}
                 </span>
-                {{end}}
             </div>
         </div>
         <div class="pipe-content__reset"

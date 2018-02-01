@@ -483,6 +483,7 @@ a:hover {
 
   &__header {
     margin-bottom: 10px;
+    line-height: 32px;
 
     .avatar {
       height: 20px;
@@ -929,6 +930,7 @@ a:hover {
 @media (max-width: 768px) {
   .header {
     padding: 20px 0;
+    margin-bottom: 20px;
     nav {
       display: none;
       transition: $transition;
@@ -940,12 +942,17 @@ a:hover {
         display: block;
       }
     }
+    &__logo {
+      font-size: 20px;
+    }
     .sidebar--header {
       display: block;
     }
   }
 
   .footer {
+    margin-top: 20px;
+    padding: 20px 0;
     .fn-right {
       float: none;
     }
@@ -961,7 +968,20 @@ a:hover {
       margin-bottom: 10px;
     }
   }
-
+  .article__relevant {
+    padding: 20px;
+    margin: 20px 0px -20px;
+  }
+  .article__header--center h2,
+  .article__title {
+    font-size: 18px;
+  }
+  .article__footer > .article__actions {
+    float: none;
+    margin-top: 10px;
+    text-align: right;
+    padding-top: 10px;
+  }
   .author {
     padding: 0;
 
@@ -978,5 +998,10 @@ a:hover {
     &--active {
       right: 0;
     }
+  }
+
+  .sidebar,
+  .top__btn {
+    right: 20px;
   }
 }

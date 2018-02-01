@@ -380,6 +380,10 @@ ${$it.data('label2')}`).click(function () {
             $('#pipeComments > div > section').last().after(result.data)
           }
 
+          if ($(this).data('editable')) {
+            $('#pipeComments > div > section').last().find('.pipe-comment__btn--danger').removeClass('pipe-comment__btn--none')
+          }
+
           LazyLoadCSSImage()
           LazyLoadImage()
           ParseMarkdown()

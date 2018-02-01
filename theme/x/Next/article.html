@@ -31,22 +31,24 @@
                     {{end}}
                     <time>{{.Article.CreatedAt}}</time> &nbsp;
                     | &nbsp;
-                    <a href="{{.URL}}">{{.Article.ViewCount}}</a> {{$.I18n.View}} &nbsp;
-                    | &nbsp;
+                    <a href="{{.URL}}">{{.Article.ViewCount}}</a> {{$.I18n.View}}
+                    {{if gt .Article.CommentCount 0}}
+                    &nbsp; | &nbsp;
                     <a href="{{.URL}}#pipeComments">{{.Article.CommentCount}}</a> {{$.I18n.Comment}}
+                    {{end}}
                 </div>
             </header>
             <section class="pipe-content__reset" id="articleContent" data-author="{{.Article.Author.Name}}">
                 {{.Article.Content}}
             </section>
             <div class="article__footer fn-clear">
-                <span class="fn-left">
+                <span>
                     {{range .Article.Tags}}
                     <a class="tag" rel="tag" href="{{.URL}}">{{.Title}}</a>
                     {{end}}
                 </span>
 
-                <span class="fn-right">
+                <div class="fn-right article__actions">
                     {{if .Article.Editable}}
                     <a href="{{$.Conf.Server}}/admin/articles/post?id={{.Article.ID}}"
                        aria-label="{{$.I18n.Edit}}"
@@ -87,7 +89,7 @@
                         {{$.I18n.Comment}}
                     </span>
 
-                </span>
+                </div>
             </div>
         </article>
 

@@ -207,7 +207,12 @@
                                 <time>{{$item.CreatedAt}}</time>
                                 •
                                 <a href="{{$item.URL}}" class="ft-gray">{{$item.ViewCount}} {{$.I18n.View}}</a> •
-                                <a href="{{$item.URL}}#comments" class="ft-gray">{{$item.CommentCount}} {{$.I18n.Comment}}</a>
+                                <a href="{{$item.URL}}#comments" class="ft-gray">
+                                    {{if gt $item.CommentCount 0}}
+                                    {{$item.CommentCount}}
+                                    {{end}}
+                                    {{$.I18n.Comment}}
+                                </a>
                             </div>
                         </div>
                     </header>
