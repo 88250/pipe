@@ -14,7 +14,7 @@
             <span id="archiveArticleCount">0</span> <span class="ft-fade ft-13">{{.I18n.Article2}}</span>
         </h2>
         {{range .Archives}}
-        <a href="{{.URL}}" class="page__item">
+        <a href="{{.URL}}" class="page__item page__item--li">
             {{.Title}}
             <span class="ft-fade">{{.ArticleCount}} {{$.I18n.Space}}</span>
         </a>

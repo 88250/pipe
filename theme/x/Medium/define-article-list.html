@@ -4,75 +4,80 @@
 {{end}}
 
 <div class="fn-clear article__wrap">
-{{range $index, $item := .Articles}}
-<article class="article__item
-    {{if or (eq $index 0) (eq $index 10)}}article__item--big
-    {{else if and (ge $index 1) (le $index 4)}}article__item--small
-    {{else if (and (ge $index 5) (le $index 7))}}article__item--big
-    {{else if (or (eq $index 8) (eq $index 9))}}article__item--mid
-    {{else if (and (gt $index 10) (le $index 14))}}article__item--small
-    {{else if (and (ge $index 15) (le $index 17))}}article__item--big
-    {{else if (and (ge $index 18) (le $index 19))}}article__item--mid
-    {{else}}article__item--big{{end}}
-    ">
-    <a class="article__thumb"
-       href="{{$item.URL}}"
-       data-src="{{$item.ThumbnailURL}}"></a>
+    {{range $index, $item := .Articles}}
+    <div class="article__item--wrap{{if or (and (ge $index 18) (le $index 19)) (or (eq $index 8) (eq $index 9))}} article__item--wrap-mid{{end}}">
+        <article class="article__item fn-clear
+            {{if or (eq $index 0) (eq $index 10)}}article__item--big
+            {{else if and (ge $index 1) (le $index 4)}}article__item--small
+            {{else if (and (ge $index 5) (le $index 7))}}article__item--big
+            {{else if (or (eq $index 8) (eq $index 9))}}article__item--mid
+            {{else if (and (gt $index 10) (le $index 14))}}article__item--small
+            {{else if (and (ge $index 15) (le $index 17))}}article__item--big
+            {{else if (and (ge $index 18) (le $index 19))}}article__item--mid
+            {{else}}article__item--big{{end}}
+            ">
+            <a class="article__thumb"
+               href="{{$item.URL}}"
+               data-src="{{$item.ThumbnailURL}}"></a>
 
-    <header class="article__panel">
-        <div class="article__main{{if gt $.UserCount 1}} article__main--user{{end}}">
-            <h2 class="article__title">
-                <a rel="bookmark" href="{{$item.URL}}">
-                    {{if $item.Topped}}
-                    <svg>
-                        <use xlink:href="#icon-perfect"></use>
-                    </svg>
+            <header class="article__panel">
+                <div class="article__main{{if gt $.UserCount 1}} article__main--user{{end}}">
+                    <h2 class="article__title">
+                        <a rel="bookmark" href="{{$item.URL}}">
+                            {{if $item.Topped}}
+                            <svg>
+                                <use xlink:href="#icon-perfect"></use>
+                            </svg>
+                            {{end}}
+                            {{$item.Title}}
+                        </a>
+                    </h2>
+
+                    {{if $item.Abstract}}
+                    <a href="{{$item.URL}}"
+                       data-link="{{$item.URL}}"
+                       class="pipe-content__reset article__content"
+                       data-author="{{$item.Author.Name}}">
+                        {{$item.Abstract}}
+                    </a>
                     {{end}}
-                    {{$item.Title}}
-                </a>
-            </h2>
+                </div>
 
-            {{if $item.Abstract}}
-            <a href="{{$item.URL}}"
-                data-link="{{$item.URL}}"
-                class="pipe-content__reset article__content"
-                data-author="{{$item.Author.Name}}">
-                {{$item.Abstract}}
-            </a>
-            {{end}}
-        </div>
+                <div class="article__meta ft-gray fn-flex">
+                    {{if gt $.UserCount 1}}
+                    <a rel="nofollow"
+                       class="article__avatar"
+                       data-src="{{.Author.AvatarURLWithSize 64}}"
+                       href="{{$item.Author.URL}}">
+                    </a>
+                    {{end}}
+                    <div class="fn-flex-1{{if gt $.UserCount 1}} ft-12{{end}}">
+                        {{if gt $.UserCount 1}}
+                        <a href="{{$item.Author.URL}}" class="article__author">{{$item.Author.Name}}</a><br>
+                        {{end}}
+                        <time>{{$item.CreatedAt}}</time>
+                        •
+                        <a href="{{$item.URL}}#pipeComments" class="ft-gray">
+                            {{if gt $item.CommentCount 0}}{{$item.CommentCount}}{{end}}
+                            {{$.I18n.Comment}}</a>
 
-        <div class="article__meta ft-gray fn-flex">
-            {{if gt $.UserCount 1}}
-            <a rel="nofollow"
-               class="article__avatar"
-               data-src="{{.Author.AvatarURLWithSize 64}}"
-               href="{{$item.Author.URL}}">
-            </a>
-            {{end}}
-            <div class="fn-flex-1">
-                {{if gt $.UserCount 1}}
-                <a href="{{$item.Author.URL}}" class="article__author">{{$item.Author.Name}}</a><br>
-                {{end}}
-                <time>{{$item.CreatedAt}}</time> •
-                <a href="{{$item.URL}}" class="ft-gray">{{$item.ViewCount}} {{$.I18n.View}}</a> •
-                <a href="{{$item.URL}}#pipeComments" class="ft-gray">{{$item.CommentCount}} {{$.I18n.Comment}}</a>
-            </div>
+                    </div>
 
-            {{if .Editable}}
-            <a href="{{$.Conf.Server}}/admin/articles/post?id={{.ID}}"
-               aria-label="{{$.I18n.Edit}}"
-               class="pipe-tooltipped pipe-tooltipped--n fn-right article__edit
+                    {{if .Editable}}
+                    <a href="{{$.Conf.Server}}/admin/articles/post?id={{.ID}}"
+                       aria-label="{{$.I18n.Edit}}"
+                       class="pipe-tooltipped pipe-tooltipped--n fn-right article__edit
                {{if gt $.UserCount 1}} article__edit--mid{{end}}">
-                <svg>
-                    <use xlink:href="#icon-edit"></use>
-                </svg>
-            </a>
-            {{end}}
-        </div>
-    </header>
-</article>
-{{end}}
+                        <svg>
+                            <use xlink:href="#icon-edit"></use>
+                        </svg>
+                    </a>
+                    {{end}}
+                </div>
+            </header>
+        </article>
+    </div>
+    {{end}}
 </div>
 
 {{if gt (len $.Pagination.PageNums) 1}}
@@ -82,7 +87,7 @@
     {{end}}
     {{if gt $.Pagination.FirstPageNum 1}}
     <a class="pagination__item" href="?p=1">1</a>{{if ne $.Pagination.FirstPageNum 2}}<span
-        class="pagination__item pagination__omit">...</span>{{end}}
+    class="pagination__item pagination__omit">...</span>{{end}}
     {{end}}
     {{range $.Pagination.PageNums}}
     {{if eq . $.Pagination.CurrentPageNum}}

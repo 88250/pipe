@@ -64,7 +64,7 @@
 {{end}}
 
 {{if gt (len $.Pagination.PageNums) 1}}
-<nav class="pagination">
+<nav class="pagination fn-clear">
     {{if gt $.Pagination.PreviousPageNum 0}}
     <a class="pagination__item" href="?p={{$.Pagination.PreviousPageNum}}">«</a>
     {{end}}

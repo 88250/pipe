@@ -1004,4 +1004,23 @@ a:hover {
   .top__btn {
     right: 20px;
   }
+
+  .page {
+    &__articles {
+      margin-bottom: 20px;
+    }
+
+    &__item--li {
+      padding: 10px 0 10px 40px;
+    }
+
+    &__title {
+      margin-bottom: 0;
+    }
+  }
+
+  .pagination__item {
+    margin: 0;
+    float: left;
+  }
 }

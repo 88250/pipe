@@ -279,7 +279,7 @@ a {
 // footer
 .footer {
   border-top: 1px solid $border-color;
-  box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 7px;
+  box-shadow: rgba(0, 0, 0, 0.05) 0 -1px 1px;
   &__side {
     padding: 50px 0 30px;
     .tag {
@@ -936,7 +936,7 @@ a {
   }
 
   .fn-three > div {
-    margin-bottom: 30px;
+    margin-bottom: 20px;
 
     &:last-child {
       margin-bottom: 0;
@@ -1014,9 +1014,14 @@ a {
 
   .footer__info {
     text-align: right;
+    padding: 20px 0;
     .fn-right {
       float: none;
     }
+  }
+
+  .footer__side {
+    padding: 20px 0;
   }
 
   .fn-padding30 {
@@ -1063,5 +1068,26 @@ a {
   .article__responsive-meta {
     display: block;
     margin-top: 10px;
+  }
+
+  .archives__item a {
+    line-height: 36px;
+    padding: 0 10px;
+  }
+
+  .page {
+    margin: 20px 0;
+  }
+
+  .page__title {
+    padding-bottom: 20px;
+  }
+
+  .categories__item {
+    padding: 20px 10px;
+  }
+
+  .categories__item .tag {
+    margin: 0 10px 10px 0;
   }
 }

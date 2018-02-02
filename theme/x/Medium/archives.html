@@ -15,14 +15,14 @@
     </div>
     {{end}}
     <div class="wrapper content">
-        <h2 class="module__title">
+        <h2 class="module__title module__title--unmargin">
             <span>
                 <span id="archiveMonthCount">0</span> <span class="ft-fade ft-13">{{.I18n.Month2}}</span>
                 <span id="archiveArticleCount">0</span> <span class="ft-fade ft-13">{{.I18n.Article2}}</span>
             </span>
         </h2>
         {{range .Archives}}
-        <div class="page__item">
+        <div class="page__item page__item--li">
             <h3>
                 <a href="{{.URL}}">
                     {{.Title}}

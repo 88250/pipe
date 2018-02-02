@@ -787,6 +787,10 @@ a {
     margin: 15px;
   }
 
+  .article__footer {
+    margin: 15px 20px;
+  }
+
   .article__footer > .fn-left,
   .article__footer > .fn-right,
   .footer .fn-right {
@@ -799,7 +803,7 @@ a {
   }
 
   .article__header {
-    padding: 10px 15px 10px 10px;
+    padding: 10px 15px 10px 25px;
 
     .article__title {
       font-size: 18px;
@@ -847,5 +851,14 @@ a {
 
   #pipeComments {
     padding: 15px;
+  }
+
+  .page__content .categories__header,
+  .page__title {
+    font-size: 18px;
+  }
+
+  .page__content--archive {
+    padding: 10px 30px;
   }
 }
