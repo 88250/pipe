@@ -1,5 +1,5 @@
 <template>
-  <div id="pipe" data-app="true">
+  <v-app id="pipe">
     <pipe-header from="error"/>
     <div class="main">
       <div class="console" id="particles">
@@ -27,7 +27,7 @@
       </div>
       <pipe-footer/>
     </div>
-  </div>
+  </v-app>
 </template>
 
 <script>

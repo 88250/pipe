@@ -1,5 +1,5 @@
 <template>
-  <div data-app="true" :class="$store.state.bodySide" id="pipe">
+  <v-app :class="$store.state.bodySide" id="pipe">
     <pipe-header  from="default"/>
     <side v-if="$route.path.indexOf('/admin') > -1"/>
     <div class="main">
@@ -20,7 +20,7 @@
       {{ $store.state.snackMsg }}
       <span @click="snack = false"><v-icon>cancel</v-icon></span>
     </v-snackbar>
-  </div>
+  </v-app>
 </template>
 
 <script>
