@@ -18,6 +18,8 @@ package util
 
 import (
 	"crypto/md5"
+	"io/ioutil"
+	"net/http"
 	"regexp"
 	"strings"
 	"time"
@@ -28,7 +30,6 @@ import (
 	"github.com/bluele/gcache"
 	"github.com/hackebrot/turtle"
 	"github.com/microcosm-cc/bluemonday"
-	"github.com/parnurzeal/gorequest"
 	"github.com/vinta/pangu"
 	"gopkg.in/russross/blackfriday.v2"
 )
@@ -44,15 +45,29 @@ type MarkdownResult struct {
 var markedAvailable = false
 
 func LoadMakrdown() {
-	_, content, errs := gorequest.New().Timeout(2 * time.Second).Post("http://localhost:8250").
-		SendString("Pipe 大法好").End()
-	if nil != errs {
+	request, err := http.NewRequest("POST", "http://localhost:8250", strings.NewReader("Pipe 大法好"))
+	if nil != err {
+		logger.Info("[marked] is not available, uses built-in [blackfriday] for markdown processing")
+
+		return
+	}
+	http.DefaultClient.Timeout = 2 * time.Second
+	response, err := http.DefaultClient.Do(request)
+	if nil != err {
+		logger.Info("[marked] is not available, uses built-in [blackfriday] for markdown processing")
+
+		return
+	}
+	defer response.Body.Close()
+	data, err := ioutil.ReadAll(response.Body)
+	if nil != err {
 		logger.Info("[marked] is not available, uses built-in [blackfriday] for markdown processing")
 
 		return
 	}
 
-	markedAvailable = "<p>Pipe 大法好</p>" == content
+	content := string(data)
+	markedAvailable = "<p>Pipe 大法好</p>\n" == content
 	if markedAvailable {
 		logger.Debug("[marked] is available, uses it for markdown processing")
 	} else {
@@ -61,15 +76,28 @@ func LoadMakrdown() {
 }
 
 func marked(mdText string) []byte {
-	_, ret, errs := gorequest.New().Timeout(500 * time.Microsecond).Post("http://localhost:8250").
-		SendString(mdText).End()
-	if nil != errs {
-		logger.Errorf("markdown failed with [marked]: " + errs[0].Error())
+	request, err := http.NewRequest("POST", "http://localhost:8250", strings.NewReader(mdText))
+	if nil != err {
+		logger.Info("marked failed: " + err.Error())
+
+		return []byte("")
+	}
+	http.DefaultClient.Timeout = 2 * time.Second
+	response, err := http.DefaultClient.Do(request)
+	if nil != err {
+		logger.Info("marked failed: " + err.Error())
+
+		return []byte("")
+	}
+	defer response.Body.Close()
+	ret, err := ioutil.ReadAll(response.Body)
+	if nil != err {
+		logger.Info("marked failed: " + err.Error())
 
 		return []byte("")
 	}
 
-	return []byte(ret)
+	return ret
 }
 
 func Markdown(mdText string) *MarkdownResult {
