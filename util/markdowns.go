@@ -20,6 +20,7 @@ import (
 	"crypto/md5"
 	"regexp"
 	"strings"
+	"time"
 	"unicode"
 	"unicode/utf8"
 
@@ -27,6 +28,7 @@ import (
 	"github.com/bluele/gcache"
 	"github.com/hackebrot/turtle"
 	"github.com/microcosm-cc/bluemonday"
+	"github.com/parnurzeal/gorequest"
 	"github.com/vinta/pangu"
 	"gopkg.in/russross/blackfriday.v2"
 )
@@ -37,6 +39,37 @@ type MarkdownResult struct {
 	ContentHTML  string
 	AbstractText string
 	ThumbURL     string
+}
+
+var markedAvailable = false
+
+func LoadMakrdown() {
+	_, content, errs := gorequest.New().Timeout(2 * time.Second).Post("http://localhost:8250").
+		SendString("Pipe 大法好").End()
+	if nil != errs {
+		logger.Info("[marked] is not available, uses built-in [blackfriday] for markdown processing")
+
+		return
+	}
+
+	markedAvailable = "<p>Pipe 大法好</p>" == content
+	if markedAvailable {
+		logger.Debug("[marked] is available, uses it for markdown processing")
+	} else {
+		logger.Debug("[marked] is not available, uses built-in [blackfriday] for markdown processing")
+	}
+}
+
+func marked(mdText string) []byte {
+	_, ret, errs := gorequest.New().Timeout(500 * time.Microsecond).Post("http://localhost:8250").
+		SendString(mdText).End()
+	if nil != errs {
+		logger.Errorf("markdown failed with [marked]: " + errs[0].Error())
+
+		return []byte("")
+	}
+
+	return []byte(ret)
 }
 
 func Markdown(mdText string) *MarkdownResult {
@@ -50,8 +83,13 @@ func Markdown(mdText string) *MarkdownResult {
 	}
 
 	mdText = emojify(mdText)
-	mdTextBytes := []byte(mdText)
-	unsafe := blackfriday.Run(mdTextBytes)
+	var unsafe []byte
+	if markedAvailable {
+		unsafe = marked(mdText)
+	} else {
+		mdTextBytes := []byte(mdText)
+		unsafe = blackfriday.Run(mdTextBytes)
+	}
 	contentHTML := string(unsafe)
 	doc, _ := goquery.NewDocumentFromReader(strings.NewReader(contentHTML))
 	doc.Find("img").Each(func(i int, ele *goquery.Selection) {
