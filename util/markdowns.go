@@ -82,12 +82,12 @@ func marked(mdText string) []byte {
 
 		return []byte("")
 	}
-	http.DefaultClient.Timeout = 2 * time.Second
+	http.DefaultClient.Timeout = time.Second
 	response, err := http.DefaultClient.Do(request)
 	if nil != err {
-		logger.Info("marked failed: " + err.Error())
+		logger.Warnf("[marked] failed [err=" + err.Error() + "], uses built-in [blackfriday] instead")
 
-		return []byte("")
+		return bf(mdText)
 	}
 	defer response.Body.Close()
 	ret, err := ioutil.ReadAll(response.Body)
@@ -98,6 +98,10 @@ func marked(mdText string) []byte {
 	}
 
 	return ret
+}
+
+func bf(mdText string) []byte {
+	return blackfriday.Run([]byte(mdText))
 }
 
 func Markdown(mdText string) *MarkdownResult {
@@ -115,8 +119,7 @@ func Markdown(mdText string) *MarkdownResult {
 	if markedAvailable {
 		unsafe = marked(mdText)
 	} else {
-		mdTextBytes := []byte(mdText)
-		unsafe = blackfriday.Run(mdTextBytes)
+		unsafe = bf(mdText)
 	}
 	contentHTML := string(unsafe)
 	doc, _ := goquery.NewDocumentFromReader(strings.NewReader(contentHTML))
