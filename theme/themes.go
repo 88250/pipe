@@ -39,7 +39,7 @@ func Load() {
 	f.Close()
 
 	for _, name := range names {
-		if !util.IsLetter(rune(name[0])) {
+		if !util.IsNumOrLetter(rune(name[0])) {
 			continue
 		}
 

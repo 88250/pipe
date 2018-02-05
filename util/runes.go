@@ -16,6 +16,10 @@
 
 package util
 
+func IsNumOrLetter(r rune) bool {
+	return IsLetter(r) || ('0' <= r && '9' >= r)
+}
+
 func IsLetter(r rune) bool {
 	return 'a' <= r && 'z' >= r || 'A' <= r && 'Z' >= r
 }
