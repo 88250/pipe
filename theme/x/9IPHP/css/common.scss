@@ -46,7 +46,7 @@ a {
   display: block;
   float: left;
   background: #bbb;
-  margin: 0 5px 0 0;
+  margin: 0 5px 5px 0;
   padding: 2px 5px;
 
   &:hover {
@@ -56,6 +56,36 @@ a {
 
   &:before {
     content: "#";
+  }
+
+  &__level0 {
+    line-height: inherit;
+    font-size: 12px;
+    color: $fade
+  }
+
+  &__level1 {
+    line-height: inherit;
+    font-size: 16px;
+    color: $gray
+  }
+
+  &__level2 {
+    line-height: inherit;
+    font-size: 21px;
+    color: #6f6f6f
+  }
+
+  &__level3 {
+    line-height: inherit;
+    font-size: 24px;
+    color: $black
+  }
+
+  &__level4 {
+    line-height: inherit;
+    font-size: 30px;
+    color: #000
   }
 }
 
@@ -281,7 +311,7 @@ a {
 // article
 .article {
   &__item {
-    padding: 20px;
+    padding: 15px;
     margin-bottom: 20px;
     border: 1px solid #ededed;
 
@@ -417,5 +447,71 @@ a {
     padding: 15px;
     margin-bottom: 20px;
     border: 1px solid transparent;
+  }
+}
+
+// page
+.page {
+  padding: 20px;
+  box-sizing: border-box;
+  border: 1px solid #ededed;
+  &--authors {
+    padding: 20px 10px 0 10px;
+  }
+  &__title {
+    border-bottom: 1px dashed #E1E1E1;
+    text-align: center;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+  }
+
+  &__item {
+    border-bottom: 1px solid #eee;
+    padding-bottom: 15px;
+    margin-bottom: 20px;
+    &:last-child {
+      margin-bottom: 0;
+      border-bottom: 0;
+      padding-bottom: 0;
+    }
+  }
+
+  &__description {
+    margin-bottom: 10px;
+  }
+}
+
+.author {
+  &__item {
+    float: left;
+    height: 265px;
+    width: 204px;
+    margin: 0 10px 20px 10px;
+    text-align: center;
+    box-shadow: 0 1px 1px rgba(0,0,0,0.05);
+    &:hover {
+      text-decoration: none;
+      color: $fade;
+
+      & .avatar {
+        transform: scale(1.2);
+      }
+    }
+  }
+
+  &__header {
+    height: 202px;
+    overflow: hidden;
+    .avatar {
+      transition: all .4s linear;
+      width: 100%;
+      height: 100%;
+      @include image-bg('../../../images/image-bg.svg');
+    }
+  }
+
+  &__name {
+    font-size: 16px;
+    margin: 9px 0 3px;
   }
 }

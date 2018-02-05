@@ -7,17 +7,19 @@
 </head>
 <body>
 {{template "9IPHP/header" .}}
-<div class="wrapper page">
-    <h1 class="page__title">
-        <span id="tagArticleCount">0</span> <span class="ft-fade ft-13">{{.I18n.Tags2}}</span>
-    </h1>
-    <div class="tags" id="tags">
-        {{range .Tags}}
-        <a href="{{.URL}}" data-count="{{.ArticleCount}}" class="tag">{{.Title}} ({{.ArticleCount}})</a>
-        {{end}}
+<div class="main wrapper fn-clear">
+    <div class="content">
+        <h1 class="page__title">
+            <span id="tagArticleCount">0</span> <span class="ft-fade ft-13">{{.I18n.Tags2}}</span>
+        </h1>
+        <div class="tags" id="tags">
+            {{range .Tags}}
+            <a href="{{.URL}}" data-count="{{.ArticleCount}}" class="tag">{{.Title}} ({{.ArticleCount}})</a>
+            {{end}}
+        </div>
     </div>
+    {{template "9IPHP/side" .}}
 </div>
-{{template "9IPHP/side" .}}
 {{template "9IPHP/footer" .}}
 <script>
   increase({{len .Tags}}, 1000, 'tagArticleCount', 0)
