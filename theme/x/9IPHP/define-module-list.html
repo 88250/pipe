@@ -4,17 +4,17 @@
     <div class="module__header">
         {{.Title}}
     </div>
-    <div class="module__body">
+    <div class="module__list">
         <ul>
             {{range .List}}
             <li class="fn-clear">
                 {{if gt $.UserCount 1}}
-                <a class="avatar pipe-tooltipped pipe-tooltipped--n fn-absolute"
+                <a class="avatar pipe-tooltipped pipe-tooltipped--n"
                    href="{{.Author.URL}}"
                    aria-label="{{.Author.Name}}"
                    data-src="{{.Author.AvatarURLWithSize 74}}"></a>
                 {{end}}
-                <div{{if gt $.UserCount 1}} class="fn-padding68"{{end}}>
+                <div{{if gt $.UserCount 1}} class="module__list-avatar"{{end}}>
                 <a href="{{.URL}}" class="module__list-title">{{.Title}}</a>
                 <br>
                 <time class="ft-12 ft-gray">{{.CreatedAt}}</time>

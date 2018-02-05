@@ -27,7 +27,7 @@ a {
 }
 
 ::selection {
-  background: none repeat scroll 0% 0% #3D4450;
+  background: none repeat scroll 0 0 #3D4450;
   color: #FFF;
   outline: none;
 }
@@ -64,7 +64,7 @@ a {
   background-color: #fff;
   border: 1px solid transparent;
   border-radius: 0;
-  box-shadow: 0 1px 1px rgba(0,0,0,0.05);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
 
   &__header {
     border-bottom: 1px solid #ff4d3a;
@@ -73,6 +73,34 @@ a {
 
   &__body {
     padding: 15px;
+  }
+
+  &__list {
+    li {
+      list-style: none;
+      position: relative;
+      padding: 10px;
+      line-height: 17px;
+      border-bottom: 1px solid #eee;
+
+      &:last-child {
+        border-bottom: 0;
+      }
+
+      .avatar {
+        display: inline-block;
+        height: 35px;
+        width: 35px;
+        @include image-bg('../../../images/image-bg.svg');
+        position: absolute;
+        left: 10px;
+        top: 10px;
+      }
+    }
+
+    &-avatar {
+      padding-left: 45px;
+    }
   }
 }
 
