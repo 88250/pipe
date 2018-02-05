@@ -13,6 +13,19 @@ body {
   color: #333;
 }
 
+a {
+  color: #383838;
+  text-decoration: none;
+  transition: all .3s;
+  outline: none;
+
+  &:hover,
+  &:focus {
+    color: #ff4d3a;
+    text-decoration: none;
+  }
+}
+
 ::selection {
   background: none repeat scroll 0% 0% #3D4450;
   color: #FFF;
@@ -27,12 +40,60 @@ body {
   color: #ff4d3a;
 }
 
+.tag {
+  color: #fff;
+  font-size: 12px;
+  display: block;
+  float: left;
+  background: #bbb;
+  margin: 0 5px 0 0;
+  padding: 2px 5px;
+
+  &:hover {
+    color: #fff;
+    background-color: #999;
+  }
+
+  &:before {
+    content: "#";
+  }
+}
+
+.module {
+  margin-bottom: 20px;
+  background-color: #fff;
+  border: 1px solid transparent;
+  border-radius: 0;
+  box-shadow: 0 1px 1px rgba(0,0,0,0.05);
+
+  &__header {
+    border-bottom: 1px solid #ff4d3a;
+    padding: 15px;
+  }
+
+  &__body {
+    padding: 15px;
+  }
+}
+
 // framework
 .wrapper {
   padding: 0 15px;
   margin: 0 auto;
   max-width: 1024px;
   box-sizing: border-box;
+}
+
+.content {
+  width: 70%;
+  float: left;
+}
+
+.side {
+  width: 30%;
+  padding-left: 20px;
+  box-sizing: border-box;
+  float: right;
 }
 
 // header
@@ -44,12 +105,11 @@ body {
     line-height: 75px;
     span {
       float: left;
-      height: 45px;
-      width: 45px;
-      margin: 15px 15px 0 0;
+      height: 35px;
+      width: 35px;
+      margin: 20px 15px 0 0;
       @include image-bg('../../../images/image-bg.svg');
       background-color: #fff;
-      border-radius: 50%;
     }
 
     a {
@@ -79,12 +139,11 @@ body {
 
   .avatar {
     display: inline-block;
-    height: 45px;
-    width: 45px;
+    height: 35px;
+    width: 35px;
     background-color: #fff;
     @include image-bg('../../../images/image-bg.svg');
-    border-radius: 50%;
-    margin-top: 15px;
+    margin-top: 20px;
   }
 }
 
@@ -132,7 +191,7 @@ body {
       padding: 0 40px 0 10px;
       border: 1px solid #ccc;
       background-color: #FAFAFA;
-      box-shadow: 0 1px 2px rgba(0,0,0,.075) inset;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, .075) inset;
       width: 100%;
       line-height: 28px;
       box-sizing: border-box;
@@ -187,6 +246,148 @@ body {
   transition: $transition;
 
   &:hover {
+    background-color: #393939;
+  }
+}
 
+// article
+.article {
+  &__item {
+    padding: 20px;
+    margin-bottom: 20px;
+    border: 1px solid #ededed;
+
+    .pipe-content__reset {
+      margin-bottom: 10px;
+    }
+  }
+
+  &__thumb {
+    position: relative;
+    bottom: -1px;
+    overflow: hidden;
+    display: block;
+
+    & > div:first-child {
+      height: 240px;
+      width: 100%;
+      @include image-bg('../../../images/image-bg.svg');
+      transition: $transition;
+    }
+
+    div.fn-none {
+      transition: $transition;
+      svg {
+        color: #fff;
+        height: 50px;
+        width: 50px;
+        margin-top: 90px;
+      }
+    }
+
+    &:hover {
+      div:first-child {
+        transform: scale(1.2);
+      }
+      div.fn-none {
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        background-color: rgba(235, 108, 95, .8);
+        width: 100%;
+        height: 240px;
+        text-align: center;
+      }
+    }
+  }
+
+  &__title {
+    font-size: 30px;
+    margin-bottom: 10px;
+    svg {
+      float: left;
+      height: 24px;
+      width: 24px;
+      margin: 9px 10px 0 0;
+    }
+  }
+
+  &__meta {
+    color: #aaa;
+    line-height: 18px;
+    margin-bottom: 10px;
+    .avatar {
+      @include image-bg('../../../images/image-bg.svg');
+      height: 18px;
+      width: 18px;
+      float: left;
+    }
+    a {
+      color: #aaa;
+      &:hover {
+        color: #ff4d3a;
+      }
+    }
+
+    svg {
+      vertical-align: text-top;
+    }
+  }
+
+  &__more {
+    float: right;
+    line-height: 21px;
+    a {
+      margin-left: 10px;
+    }
+    svg {
+      vertical-align: text-top;
+    }
+  }
+}
+
+.pagination {
+  float: right;
+  &__item {
+    float: left;
+    padding: 6px 12px;
+    text-decoration: none;
+    color: #383838;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    margin-left: -1px;
+    position: relative;
+    @at-root a.pagination__item:hover {
+      background-color: #eee;
+      border-color: #ddd;
+    }
+    &--active {
+      color: #fff;
+      background-color: #ff4d3a;
+      border-color: #ff4d3a;
+      cursor: default;
+      z-index: 2;
+      @at-root a.pagination__item--active:hover {
+        color: #fff;
+        background-color: #ff4d3a;
+        border-color: #ff4d3a;
+      }
+    }
+
+    svg {
+      margin: 3px 0 -2px 0;
+    }
+  }
+}
+
+// side
+.side {
+  &__ad {
+    background-color: #3cbc8d;
+    color: #fff;
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
   }
 }

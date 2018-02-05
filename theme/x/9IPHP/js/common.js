@@ -22,8 +22,10 @@ const Common = {
 
     $('.nav a').each(function (i) {
       const $it = $(this)
-      if (location.href === $it.attr('href')) {
-        $it.addClass('nav--current')
+      if (i === 0) {
+        if (location.origin + location.pathname === $it.attr('href')) {
+          $it.addClass('nav--current')
+        }
       } else if (i !== 0 && location.href.indexOf($it.attr('href')) > -1) {
         $it.addClass('nav--current')
       }
