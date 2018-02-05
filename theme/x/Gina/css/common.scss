@@ -1083,11 +1083,13 @@ a {
     padding-bottom: 20px;
   }
 
-  .categories__item {
+  .categories__item,
+  .tags {
     padding: 20px 10px;
   }
 
-  .categories__item .tag {
+  .categories__item .tag,
+  .tags .tag {
     margin: 0 10px 10px 0;
   }
 }
