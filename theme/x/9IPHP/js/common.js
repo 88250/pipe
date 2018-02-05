@@ -19,13 +19,35 @@ const Common = {
   init: () => {
     PreviewImg()
     KillBrowser()
-    $('#sidebarIcon').click(() => {
-      Common.toggleSide()
+
+    $('.nav a').each(function (i) {
+      const $it = $(this)
+      if (location.href === $it.attr('href')) {
+        $it.addClass('nav--current')
+      } else if (i !== 0 && location.href.indexOf($it.attr('href')) > -1) {
+        $it.addClass('nav--current')
+      }
     })
-  },
-  toggleSide: () => {
-    const $body = $('body')
-    $body.toggleClass('body--side')
+
+    $(window).scroll(function () {
+      if ($(window).scrollTop() > 75) {
+        $('.nav').addClass('nav--fix').next().css('margin-top', '75px')
+      } else {
+        $('.nav').removeClass('nav--fix').next().css('margin-top', 0)
+      }
+
+      if ($(window).scrollTop() > $(window).height()) {
+        $('#goTop').show()
+      } else {
+        $('#goTop').hide()
+      }
+    })
+
+    $('#goTop').click(function () {
+      $("html, body").animate({
+        scrollTop: 0
+      }, 800)
+    })
   },
   increase(max, time, id, count) {
     if (count < max) {

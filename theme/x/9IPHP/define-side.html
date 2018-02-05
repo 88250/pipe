@@ -50,8 +50,41 @@
             {{end}}
         </ul>
     </div>
-    <div class="side__sub-title">
-        {{.Setting.BasicBlogSubtitle}}
+    <div class="footer__side fn-clear fn-three">
+        <div>
+            <div class="module__header">
+                {{.I18n.NoticeBoard}}
+            </div>
+            <div>
+                {{if eq .Setting.BasicNoticeBoard ""}}
+                {{.I18n.NoData}}
+                {{end}}
+                {{.Setting.BasicNoticeBoard}}
+            </div>
+        </div>
+        <div class="fn-three--mid">
+            <div class="module__header">
+                {{.I18n.Tags}}
+            </div>
+            <div>
+                {{range .MostUseTags}}
+                <a class="tag" href="{{.URL}}">{{.Title}}</a>
+                {{end}}
+            </div>
+        </div>
+        <div>
+            <div class="module__header">
+                {{.I18n.Categories}}
+            </div>
+            <div>
+                {{if eq 0 (len .MostUseCategories)}}
+                {{.I18n.NoData}}
+                {{end}}
+                {{range .MostUseCategories}}
+                <a class="tag" href="{{.URL}}">{{.Title}}</a>
+                {{end}}
+            </div>
+        </div>
     </div>
     <div class="side__module">
         {{template "9IPHP/module-list" dict "List" .RecentComments "Title" .I18n.RecentComment "UserCount" 2}}
