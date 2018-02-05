@@ -18,8 +18,11 @@ package util
 
 import (
 	"crypto/md5"
+	"io/ioutil"
+	"net/http"
 	"regexp"
 	"strings"
+	"time"
 	"unicode"
 	"unicode/utf8"
 
@@ -39,6 +42,68 @@ type MarkdownResult struct {
 	ThumbURL     string
 }
 
+var markedAvailable = false
+
+func LoadMakrdown() {
+	request, err := http.NewRequest("POST", "http://localhost:8250", strings.NewReader("Pipe 大法好"))
+	if nil != err {
+		logger.Info("[marked] is not available, uses built-in [blackfriday] for markdown processing")
+
+		return
+	}
+	http.DefaultClient.Timeout = 2 * time.Second
+	response, err := http.DefaultClient.Do(request)
+	if nil != err {
+		logger.Info("[marked] is not available, uses built-in [blackfriday] for markdown processing")
+
+		return
+	}
+	defer response.Body.Close()
+	data, err := ioutil.ReadAll(response.Body)
+	if nil != err {
+		logger.Info("[marked] is not available, uses built-in [blackfriday] for markdown processing")
+
+		return
+	}
+
+	content := string(data)
+	markedAvailable = "<p>Pipe 大法好</p>\n" == content
+	if markedAvailable {
+		logger.Debug("[marked] is available, uses it for markdown processing")
+	} else {
+		logger.Debug("[marked] is not available, uses built-in [blackfriday] for markdown processing")
+	}
+}
+
+func marked(mdText string) []byte {
+	request, err := http.NewRequest("POST", "http://localhost:8250", strings.NewReader(mdText))
+	if nil != err {
+		logger.Info("marked failed: " + err.Error())
+
+		return []byte("")
+	}
+	http.DefaultClient.Timeout = time.Second
+	response, err := http.DefaultClient.Do(request)
+	if nil != err {
+		logger.Warnf("[marked] failed [err=" + err.Error() + "], uses built-in [blackfriday] instead")
+
+		return bf(mdText)
+	}
+	defer response.Body.Close()
+	ret, err := ioutil.ReadAll(response.Body)
+	if nil != err {
+		logger.Info("marked failed: " + err.Error())
+
+		return []byte("")
+	}
+
+	return ret
+}
+
+func bf(mdText string) []byte {
+	return blackfriday.Run([]byte(mdText))
+}
+
 func Markdown(mdText string) *MarkdownResult {
 	digest := md5.New()
 	digest.Write([]byte(mdText))
@@ -50,8 +115,12 @@ func Markdown(mdText string) *MarkdownResult {
 	}
 
 	mdText = emojify(mdText)
-	mdTextBytes := []byte(mdText)
-	unsafe := blackfriday.Run(mdTextBytes)
+	var unsafe []byte
+	if markedAvailable {
+		unsafe = marked(mdText)
+	} else {
+		unsafe = bf(mdText)
+	}
 	contentHTML := string(unsafe)
 	doc, _ := goquery.NewDocumentFromReader(strings.NewReader(contentHTML))
 	doc.Find("img").Each(func(i int, ele *goquery.Selection) {
