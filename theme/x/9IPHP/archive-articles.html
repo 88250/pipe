@@ -1,0 +1,24 @@
+{{define "9IPHP/archive-articles.html"}}
+<!DOCTYPE html>
+<html>
+<head>
+    {{template "head/head" .}}
+    {{template "head/3rdstatistic" .}}
+</head>
+<body>
+{{template "9IPHP/header" .}}
+<div class="wrapper">
+    <h1 class="page__headline">
+        {{.Archive.Title}}
+        <span id="archiveArticleCount" class="ft-fade">0</span> <span class="ft-fade ft-13">{{.I18n.Article2}}</span>
+    </h1>
+</div>
+{{template "9IPHP/article-list" .}}
+{{template "9IPHP/side" .}}
+{{template "9IPHP/footer" .}}
+<script>
+  increase({{.Archive.ArticleCount}}, 1000, 'archiveArticleCount', 0)
+</script>
+</body>
+</html>
+{{end}}
