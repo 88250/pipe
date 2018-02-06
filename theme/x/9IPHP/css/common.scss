@@ -266,7 +266,7 @@ svg {
     width: 100%;
     top: 0;
     background-color: rgba(255, 255, 255, .95);
-    z-index: 10;
+    z-index: 11;
   }
 
   img,
@@ -354,6 +354,7 @@ svg {
   padding-top: 6px;
   box-sizing: border-box;
   transition: $transition;
+  z-index: 2;
 
   &--top {
     bottom: 100px;
@@ -419,6 +420,7 @@ svg {
   &__title {
     font-size: 30px;
     margin-bottom: 10px;
+    word-wrap: break-word;
     svg {
       float: left;
       height: 24px;
@@ -622,4 +624,76 @@ svg {
   border: 1px solid #eee;
   padding: 20px;
   margin-bottom: 20px;
+}
+
+@media (max-width: 768px) {
+  .side,
+  .content {
+    width: 100%;
+  }
+
+  .side {
+    padding-left: 0;
+    margin-top: 20px;
+  }
+
+  .footer .fn-right {
+    float: none;
+  }
+
+  .header__sub-title,
+  .header .fn-right,
+  .nav {
+    display: none;
+  }
+
+  .header {
+    position: fixed;
+    z-index: 20;
+    width: 100%;
+    top: 0;
+
+    .fn-none {
+      color: #fff;
+      float: right;
+      margin: 25px 0 0 0;
+      height: 25px;
+      width: 25px;
+      display: block;
+      cursor: pointer;
+    }
+  }
+
+  .main {
+    margin-top: 95px;
+  }
+
+  .pagination__item {
+    padding: 6px;
+  }
+
+  .mobile__nav {
+    position: fixed;
+    top: 75px;
+    background-color: #fff;
+    z-index: 20;
+    width: 100%;
+
+    a {
+      display: block;
+      border-bottom: 1px solid #eee;
+      padding: 10px 20px;
+    }
+
+    img {
+      height: 14px;
+      width: 14px;
+      margin: 2px 4px 0 0;
+    }
+  }
+
+  .article__title,
+  .header__logo a {
+    font-size: 24px;
+  }
 }

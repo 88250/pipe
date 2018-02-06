@@ -51,6 +51,10 @@ const Article = {
         }, 100)
         $('.side > .fn-none').hide()
       })
+
+      if ($(window).width() < 768) {
+        $('#hideToc').click()
+      }
     }
 
     InitComment()

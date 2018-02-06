@@ -10,6 +10,7 @@
         <span class="header__sub-title">
             {{.Setting.BasicBlogSubtitle}}
         </span>
+        <svg class="fn-none"><use xlink:href="#icon-toc"></use></svg>
         <span class="fn-right">
             {{if eq .User.URole 0}}
             <a href="https://hacpai.com/login" class="header__btn">{{.I18n.Login}}</a> &nbsp; &nbsp;
@@ -23,6 +24,72 @@
         </span>
     </div>
 </header>
+<nav class="fn-none mobile__nav">
+    <a href="{{.BlogURL}}">
+        <svg>
+            <use xlink:href="#icon-home"></use>
+        </svg>
+        {{.I18n.Index}}
+    </a>
+    <a href="{{.BlogURL}}/categories">
+        <svg>
+            <use xlink:href="#icon-folders"></use>
+        </svg>
+        {{.I18n.Categories}}
+    </a>
+    <a href="{{.BlogURL}}/tags">
+        <svg>
+            <use xlink:href="#icon-tag"></use>
+        </svg>
+        {{.I18n.Tags}}
+    </a>
+    <a href="{{.BlogURL}}/archives">
+        <svg>
+            <use xlink:href="#icon-bookmark"></use>
+        </svg>
+        {{.I18n.Archives}}
+    </a>
+    {{if gt .UserCount 1}}
+    <a href="{{.BlogURL}}/authors">
+        <svg>
+            <use xlink:href="#icon-group"></use>
+        </svg>
+        {{.I18n.Team}}
+    </a>
+    {{end}}
+    {{range .Navigations}}
+    <a href="{{.URL}}" target="{{.OpenMethod}}">
+        {{if ne "" .IconURL}}
+        <img class="header__icon"
+             data-src="{{.IconURL}}"/>
+        {{end}}
+        {{.Title}}
+    </a>
+    {{end}}
+    <a href="{{.BlogURL}}/atom" target="_blank">
+        <svg>
+            <use xlink:href="#icon-feed"></use>
+        </svg>
+        {{.I18n.Feed}}
+    </a>
+    <a href="{{.BlogURL}}/search" target="_blank">
+        <svg>
+            <use xlink:href="#icon-search"></use>
+        </svg>
+        {{.I18n.Search}}
+    </a>
+    {{if eq .User.URole 0}}
+    <a href="https://hacpai.com/login">{{.I18n.Login}}</a>
+    <a href="https://hacpai.com/register">{{.I18n.Register}}</a>
+    {{else}}
+    <a href="{{.Conf.Server}}/{{if ne .User.URole 4}}admin/{{end}}">
+        <svg>
+            <use xlink:href="#icon-setting"></use>
+        </svg>
+        {{.I18n.manage}}
+    </a>
+    {{end}}
+</nav>
 <nav class="nav">
     <div class="wrapper fn-clear">
         <a href="{{.BlogURL}}">

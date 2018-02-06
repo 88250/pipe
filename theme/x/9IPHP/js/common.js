@@ -32,16 +32,19 @@ const Common = {
     })
 
     $(window).scroll(function () {
-      if ($(window).scrollTop() > 75) {
-        $('.nav').addClass('nav--fix').next().css('margin-top', '75px')
-      } else {
-        $('.nav').removeClass('nav--fix').next().css('margin-top', 0)
-      }
-
       if ($(window).scrollTop() > $(window).height()) {
         $('#goTop').show()
       } else {
         $('#goTop').hide()
+      }
+
+      if ($(window).width() < 768) {
+        return
+      }
+      if ($(window).scrollTop() > 75) {
+        $('.nav').addClass('nav--fix').next().css('margin-top', '75px')
+      } else {
+        $('.nav').removeClass('nav--fix').next().css('margin-top', 0)
       }
     })
 
@@ -50,6 +53,12 @@ const Common = {
         scrollTop: 0
       }, 800)
     })
+
+    $('.header .fn-none').click(function () {
+      $('.mobile__nav').slideToggle()
+    })
+
+    $(window).scroll()
   },
   increase(max, time, id, count) {
     if (count < max) {
