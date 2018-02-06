@@ -22,11 +22,35 @@ const Article = {
 
     if ($('#toc').length === 1) {
       InitToc('toc', 'articleContent')
-      if ($('body').width() > 768) {
-        $('body').addClass('body--side')
-      } else {
-        $('body').removeClass('body--side')
-      }
+      $('.side__toc').width($('.side').width()).css('max-height', ($(window).height() - 170) + 'px')
+
+      $(window).scroll(function () {
+        if ($(window).scrollTop() > 75) {
+          $('.side__toc').addClass('side__toc--fix')
+        } else {
+          $('.side__toc').removeClass('side__toc--fix')
+        }
+      })
+
+      $('#hideToc').click(function () {
+        $(this).hide()
+        $('#showToc').show()
+        $('.side__toc').animate({
+          'margin-top': '300px'
+        }, 300, function () {
+          $(this).hide()
+          $('.side > .fn-none').show()
+        })
+      })
+
+      $('#showToc').click(function () {
+        $(this).hide()
+        $('#hideToc').show()
+        $('.side__toc').show().animate({
+          'margin-top': '0'
+        }, 100)
+        $('.side > .fn-none').hide()
+      })
     }
 
     InitComment()

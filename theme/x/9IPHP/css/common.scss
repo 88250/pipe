@@ -36,6 +36,14 @@ svg {
   outline: none;
 }
 
+.pipe-content__reset a {
+  color: #ff4d3a;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
 .pipe-tooltipped::after {
   border-radius: 0;
 }
@@ -168,6 +176,34 @@ svg {
   padding-left: 20px;
   box-sizing: border-box;
   float: right;
+  position: relative;
+
+  &__toc {
+    transition: $transition;
+    overflow: auto;
+
+    &--fix {
+      position: fixed;
+      overflow: auto;
+      top: 70px;
+    }
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+}
+
+.toc {
+  @for $i from 1 through 5 {
+    .toc__h#{$i} a {
+      padding-left: 20px * $i
+    }
+  }
+
+  &__item--active a {
+    color: #ff4d3a;
+  }
 }
 
 // header
@@ -304,9 +340,9 @@ svg {
   }
 }
 
-#goTop {
+.btn__fix {
   position: fixed;
-  bottom: 100px;
+  bottom: 140px;
   right: 20px;
   color: #fff;
   background-color: #111;
@@ -318,6 +354,10 @@ svg {
   padding-top: 6px;
   box-sizing: border-box;
   transition: $transition;
+
+  &--top {
+    bottom: 100px;
+  }
 
   &:hover {
     background-color: #393939;
