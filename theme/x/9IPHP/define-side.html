@@ -14,7 +14,7 @@
         <div class="module__header">
             {{.I18n.Tags}}
         </div>
-        <div class="fn-clear module__body">
+        <div class="fn-clear module__body module__body--tag">
             {{range .MostUseTags}}
             <a class="tag" href="{{.URL}}">{{.Title}}</a>
             {{end}}
@@ -26,7 +26,7 @@
         <div class="module__header">
             {{.I18n.Categories}}
         </div>
-        <div class="module__body fn-clear">
+        <div class="module__body module__body--tag fn-clear">
             {{range .MostUseCategories}}
             <a class="tag" href="{{.URL}}">{{.Title}}</a>
             {{end}}

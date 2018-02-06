@@ -70,19 +70,19 @@
             {{range .Tags}}
             <a class="tag" rel="tag" href="{{.URL}}">{{.Title}}</a>
             {{end}}
-            <span class="article__more">
-                    <a rel="bookmark" href="{{.URL}}">
-                        {{$.I18n.ReadMore}} »
-                    </a>
-                    {{if .Editable}}
-                    <a href="{{$.Conf.Server}}/admin/articles/post?id={{.ID}}">
-                        <svg>
-                            <use xlink:href="#icon-edit"></use>
-                        </svg>
-                        {{$.I18n.Edit}}
-                    </a>
-                    {{end}}
-                </span>
+            <span class="article__more fn-right">
+                <a rel="bookmark" href="{{.URL}}">
+                    {{$.I18n.ReadMore}} »
+                </a>
+                {{if .Editable}}
+                <a href="{{$.Conf.Server}}/admin/articles/post?id={{.ID}}">
+                    <svg>
+                        <use xlink:href="#icon-edit"></use>
+                    </svg>
+                    {{$.I18n.Edit}}
+                </a>
+                {{end}}
+            </span>
         </div>
     </div>
 </article>

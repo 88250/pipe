@@ -26,6 +26,10 @@ a {
   }
 }
 
+svg {
+  vertical-align: text-top;
+}
+
 ::selection {
   background: none repeat scroll 0 0 #3D4450;
   color: #FFF;
@@ -38,6 +42,10 @@ a {
 
 .ft-orange {
   color: #ff4d3a;
+}
+
+.fn-mg5 {
+  margin-bottom: 5px;
 }
 
 .tag {
@@ -103,6 +111,10 @@ a {
 
   &__body {
     padding: 15px;
+
+    &--tag {
+      padding-bottom: 10px;
+    }
   }
 
   &__list {
@@ -131,6 +143,10 @@ a {
     &-avatar {
       padding-left: 45px;
     }
+  }
+
+  &:last-child {
+    margin-bottom: 0;
   }
 }
 
@@ -387,20 +403,65 @@ a {
         color: #ff4d3a;
       }
     }
-
-    svg {
-      vertical-align: text-top;
-    }
   }
 
   &__more {
-    float: right;
     line-height: 21px;
     a {
       margin-left: 10px;
+      &.first {
+        margin-left: 0;
+      }
     }
-    svg {
-      vertical-align: text-top;
+  }
+
+  &__share {
+    border-bottom: 1px dashed #eee;
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+
+    .share {
+      &__btns {
+        float: right;
+        position: relative;
+      }
+
+      &__btn {
+        cursor: pointer;
+        margin-left: 10px;
+        transition: $transition;
+        color: $gray;
+        svg {
+          height: 18px;
+          width: 18px;
+        }
+
+        &--wechat:hover {
+          color: #3caf36;
+        }
+
+        &--weibo:hover {
+          color: #ff9933;
+        }
+
+        &--twitter:hover {
+          color: #18a3fa;
+        }
+
+        &--google:hover {
+          color: #dc4A3d;
+        }
+      }
+
+      &__code {
+        position: absolute;
+        height: 130px;
+        width: 130px;
+        top: 30px;
+        border: 1px solid #eee;
+        right: -16px;
+        display: none;
+      }
     }
   }
 }
@@ -488,7 +549,7 @@ a {
     width: 204px;
     margin: 0 10px 20px 10px;
     text-align: center;
-    box-shadow: 0 1px 1px rgba(0,0,0,0.05);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
     &:hover {
       text-decoration: none;
       color: $fade;
