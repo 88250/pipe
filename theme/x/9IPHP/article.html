@@ -124,93 +124,12 @@
             </div>
             <div class="fn-mg5"></div>
         </article>
-        <div class="wrapper">
+        <div class="comment">
             {{template "comment/comments" .}}
-
-            {{if or .PreviousArticle .NextArticle}}
-            <div class="fn-bottom"></div>
-            {{if gt .UserCount 1}}
-            <div class="fn-clear article__near fn-two">
-                {{if .PreviousArticle}}
-                <a href="{{.PreviousArticle.URL}}" rel="prev">
-                    <svg class="fn-absolute near__svg">
-                        <use xlink:href="#chevron-left"></use>
-                    </svg>
-                    <span class="avatar pipe-tooltipped pipe-tooltipped--n fn-absolute"
-                          aria-label="{{.PreviousArticle.Author.Name}}"
-                          data-src="{{.PreviousArticle.Author.AvatarURLWithSize 128}}"></span>
-                    <span class="near__title">
-                     {{.I18n.PreArticle}}<br>
-                    <b class="ft-break">{{.PreviousArticle.Title}}</b>
-                </span>
-                </a>
-                {{end}}
-
-                {{if .NextArticle}}
-                <a href="{{.NextArticle.URL}}" rel="next"
-                   class="near__next {{if .PreviousArticle}}{{else}}near__next--single{{end}}">
-                    <svg class="fn-absolute near__svg">
-                        <use xlink:href="#chevron-right"></use>
-                    </svg>
-                    <span class="avatar pipe-tooltipped pipe-tooltipped--n fn-absolute"
-                          aria-label="{{.NextArticle.Author.Name}}"
-                          data-src="{{.NextArticle.Author.AvatarURLWithSize 128}}"></span>
-                    <span class="near__title">
-                    {{.I18n.NextArticle}}<br>
-                    <b class="ft-break">{{.NextArticle.Title}}</b>
-                </span>
-                </a>
-                {{end}}
-            </div>
-            {{else}}
-            {{end}}
-            {{end}}
         </div>
-        {{if gt (len .RecommendArticles) 0}}
-        <div class="article__relevant">
-            <div class="module__header">
-                {{$.I18n.RecommendArticle}}
-            </div>
-            <div class="relevant__panel">
-                {{range $index, $item := .RecommendArticles}}
-                <div class="relevant__item">
-                    {{if $item.ThumbnailURL}}
-                    <a class="relevant__thumbnail"
-                       href="{{$item.URL}}"
-                       data-src="{{$item.ThumbnailURL}}"
-                       target="_blank"></a>
-                    <a class="module__list-title fn-ellipsis" href="{{$item.URL}}" target="_blank">{{$item.Title}}</a>
-                    {{else}}
-                    <a class="module__list-title fn-ellipsis" href="{{$item.URL}}" target="_blank">{{$item.Title}}</a>
-                    <a href="{{$item.URL}} target=" _blank class="ft-fade relevant__abstract">
-                        {{$item.Abstract}}
-                    </a>
-                    {{end}}
-                    <div class="fn-relative">
-                        <a class="avatar fn-absolute" data-src="{{$item.Author.AvatarURL}}"
-                           href="{{$item.Author.URL}}" target="_blank"></a>
-                        <div class="relevant__content">
-                            <a href="{{$item.Author.URL}}" class="ft-gray" target="_blank">{{$item.Author.Name}}</a>
-                            <br>
-                            <span class="ft-12 ft-fade fn-clear">
-                        {{$item.CreatedAt}}
-                       <a href="{{$item.URL}}#comments" class="fn-right ft-fade" target="_blank">
-                           {{if ne 0 $item.CommentCount}}
-                           {{$item.CommentCount}}
-                           {{$.I18n.Comment}}
-                           {{else}}
-                           {{$.I18n.Comment}}
-                           <svg><use xlink:href="#comment"></use></svg>
-                           {{end}}
-                       </a>
-                   </span>
-                        </div>
-                    </div>
-                </div>
-                {{end}}
-            </div>
+        <div>
+            {{template "9IPHP/module-list" dict "List" .RecommendArticles "Title" .I18n.RecommendArticle "UserCount" 2}}
         </div>
-        {{end}}
 
         {{template "comment/editor" .}}
     </div>
