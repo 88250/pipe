@@ -51,11 +51,15 @@ a {
     cursor: pointer;
     z-index: 4;
     color: #fff;
-    height: 20px;
-    width: 20px;
     top: 15px;
     right: 15px;
     transition: $transition;
+    height: 20px;
+
+    svg {
+      height: 20px;
+      width: 20px;
+    }
   }
 
   #showToc:hover,

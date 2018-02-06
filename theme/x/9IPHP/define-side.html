@@ -1,8 +1,9 @@
 {{define "9IPHP/side"}}
 <aside class="side">
     {{if .ToC}}
-    {{.ToC}}
-    {{else}}
+        {{.ToC}}
+    {{end}}
+
     {{if eq .Setting.BasicNoticeBoard ""}}
     {{else}}
     <div class="side__ad">
@@ -36,6 +37,5 @@
     {{template "9IPHP/module-list" dict "List" .RecentComments "Title" .I18n.RecentComment "UserCount" 2}}
     {{template "9IPHP/module-list" dict "List" .MostCommentArticles "Title" .I18n.MostCommentArticle "UserCount" .UserCount}}
     {{template "9IPHP/module-list" dict "List" .MostViewArticles "Title" .I18n.MostViewArticle "UserCount" .UserCount}}
-    {{end}}
 </aside>
 {{end}}
