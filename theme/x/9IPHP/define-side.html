@@ -19,7 +19,7 @@
             {{.Setting.BasicNoticeBoard}}
         </div>
         {{end}}
-        {{if le 0 (len .MostUseTags)}}
+        {{if le 1 (len .MostUseTags)}}
         <div class="module">
             <div class="module__header">
                 {{.I18n.Tags}}
@@ -31,7 +31,8 @@
             </div>
         </div>
         {{end}}
-        {{if le 0 (len .MostUseCategories)}}
+
+        {{if le 1 (len .MostUseCategories)}}
         <div class="module">
             <div class="module__header">
                 {{.I18n.Categories}}

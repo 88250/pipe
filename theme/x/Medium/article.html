@@ -175,7 +175,7 @@
 
     <div class="article__bottom">
         <div class="wrapper">
-            {{if lt 0 (len .RecommendArticles)}}
+            {{if le 1 (len .RecommendArticles)}}
             <div class="fn-clear article__wrap">
                 {{range $index, $item := .RecommendArticles}}
                 {{if le $index 5}}

@@ -11,6 +11,9 @@ body {
   font-size: 14px;
   line-height: 1.42857143;
   color: #333;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
 a {
@@ -192,6 +195,10 @@ svg {
       display: none;
     }
   }
+}
+
+.main {
+  flex: 1;
 }
 
 .toc {
