@@ -2,14 +2,20 @@
 <aside class="side">
     {{if .ToC}}
     <div class="toc__panel">
-        <svg id="hideToc" class="fn-right"><use xlink:href="#icon-close"></use></svg>
+        <span id="hideToc" aria-label="{{.I18n.CloseToc}}" class="pipe-tooltipped pipe-tooltipped--w">
+            <svg><use xlink:href="#icon-close"></use></svg>
+        </span>
         {{.ToC}}
     </div>
     {{end}}
 
     <div{{if .ToC}} class="fn-none"{{end}}>
         <div class="side__overlay"></div>
-        {{if .ToC}}<svg id="showToc" class="fn-right"><use xlink:href="#icon-toc"></use></svg>{{end}}
+        {{if .ToC}}
+        <span id="showToc" aria-label="{{.I18n.Toc}}" class="pipe-tooltipped pipe-tooltipped--w">
+            <svg><use xlink:href="#icon-toc"></use></svg>
+        </span>
+        {{end}}
         <div class="side__content">
             <a href="{{.BlogURL}}" class="side__logo">
                 <img data-src="{{.LogoURL}}">

@@ -22,8 +22,10 @@ const Common = {
 
     $('.nav a').each(function (i) {
       const $it = $(this)
-      if (location.href === $it.attr('href')) {
-        $it.addClass('nav--current')
+      if (i === 0) {
+        if (location.origin + location.pathname === $it.attr('href')) {
+          $it.addClass('nav--current')
+        }
       } else if (i !== 0 && location.href.indexOf($it.attr('href')) > -1) {
         $it.addClass('nav--current')
       }
@@ -68,7 +70,7 @@ const Common = {
       // 算出当前 tag 数目所在的区间，加上 class
       for (let j = 0; j < 5; j++) {
         if (count > j * distance && count <= (j + 1) * distance) {
-          tagsArray[i].className = `tag tags__level${j}`;
+          tagsArray[i].className = `tag tag__level${j}`;
           break;
         }
       }

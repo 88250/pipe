@@ -7,42 +7,35 @@
 </head>
 <body>
 {{template "9IPHP/header" .}}
-<div class="wrapper page">
-    <h1 class="page__title">
-        <span id="categoriesCount">0</span> <span class="ft-fade ft-13">{{.I18n.Categories2}}</span>
-    </h1>
-    {{if eq (len .Categories) 0}}
-    <div class="ft-center">
-        <br> <br>
+<div class="main wrapper fn-clear">
+    <div class="content page">
+        <h1 class="page__title">
+            <span id="categoriesCount">0</span> <span class="ft-fade ft-13">{{.I18n.Categories2}}</span>
+        </h1>
+        {{if eq (len .Categories) 0}}
+        <div class="ft-center">
+            <br> <br>
             {{.I18n.NoData}}
-    </div>
-    {{end}}
-    <ul>
-        {{range .Categories}}
-        <li class="categories__item">
-            <div class="categories__description">
-                <a href="{{.URL}}" class="categories__header">
-               <span class="categories__title">
-                   {{.Title}}
-               </span>
-                    <span class="fn-13 ft-fade">
-                    <!--{{.ArticleCount}} {{$.I18n.Article2}}-->
-                </span>
-                </a>
-                <div class="ft-gray ft-13">{{.Description}}</div>
-            </div>
-
-            <div>
-                {{range .Tags}}
-                <a href="{{.URL}}" class="tag">{{.Title}}</a>
-                {{end}}
-            </div>
-        </li>
+        </div>
         {{end}}
-    </ul>
-
+            {{range .Categories}}
+            <div class="page__item">
+                <div class="page__description">
+                    <a href="{{.URL}}">
+                   {{.Title}}
+                    </a>
+                    <div class="ft-gray ft-13">{{.Description}}</div>
+                </div>
+                <div class="fn-clear">
+                    {{range .Tags}}
+                    <a href="{{.URL}}" class="tag">{{.Title}}</a>
+                    {{end}}
+                </div>
+            </div>
+            {{end}}
+    </div>
+    {{template "9IPHP/side" .}}
 </div>
-{{template "9IPHP/side" .}}
 {{template "9IPHP/footer" .}}
 <script>
   increase({{len .Categories}}, 1000, 'categoriesCount', 0)
