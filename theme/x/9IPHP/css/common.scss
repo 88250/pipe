@@ -659,20 +659,40 @@ svg {
     z-index: 20;
     width: 100%;
     top: 0;
+    height: 55px;
+    background-color: rgba(255, 255, 255, 0.95);
+    border-bottom: 1px solid #eee;
 
     .fn-none {
-      color: #fff;
       float: right;
-      margin: 25px 0 0 0;
-      height: 25px;
-      width: 25px;
+      margin-top: 12.5px;
+      height: 20px;
+      width: 20px;
       display: block;
       cursor: pointer;
+      padding: 5px;
+    }
+
+    &__logo {
+      line-height: 55px;
+
+      span {
+        margin-top: 10px;
+      }
+
+      a {
+        color: #555;
+      }
     }
   }
 
   .main {
-    margin-top: 95px;
+    margin-top: 75px;
+  }
+
+  .wrapper {
+    margin-left: 0;
+    margin-right: 0;
   }
 
   .pagination__item {
@@ -681,8 +701,8 @@ svg {
 
   .mobile__nav {
     position: fixed;
-    top: 75px;
-    background-color: #fff;
+    top: 56px;
+    background-color: rgba(255, 255, 255, 0.95);
     z-index: 20;
     width: 100%;
 
@@ -690,6 +710,10 @@ svg {
       display: block;
       border-bottom: 1px solid #eee;
       padding: 10px 20px;
+
+      &.nav--current {
+        background-color: rgba(238, 238, 238, 0.45);
+      }
     }
 
     img {
@@ -700,7 +724,16 @@ svg {
   }
 
   .article__title,
-  .header__logo a {
-    font-size: 24px;
+  .header__logo a,
+  .page__title {
+    font-size: 20px;
+  }
+
+  .article__more {
+    float: none;
+    display: block;
+    a {
+      margin: 0 10px 0 0;
+    }
   }
 }
