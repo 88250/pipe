@@ -37,7 +37,7 @@ import (
 var logger = log.NewLogger(os.Stdout)
 
 // Pipe version.
-const Version = "1.2.0"
+const Version = "1.3.0"
 
 // Pipe configuration.
 var Conf *Configuration

@@ -32,7 +32,7 @@ type upgradeService struct {
 }
 
 const (
-	fromVer = "1.1.0"
+	fromVer = "1.2.0"
 	toVer   = util.Version
 )
 
