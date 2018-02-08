@@ -20,7 +20,7 @@ const Common = {
     PreviewImg()
     KillBrowser()
 
-    $('.nav a').each(function (i) {
+    $('.nav a, .mobile__nav a').each(function (i) {
       const $it = $(this)
       if (i === 0) {
         if (location.origin + location.pathname === $it.attr('href')) {

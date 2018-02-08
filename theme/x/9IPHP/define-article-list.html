@@ -67,9 +67,11 @@
         </section>
         {{end}}
         <div class="fn-clear">
+            <div class="fn-clear">
             {{range .Tags}}
             <a class="tag" rel="tag" href="{{.URL}}">{{.Title}}</a>
             {{end}}
+            </div>
             <span class="article__more fn-right">
                 <a rel="bookmark" href="{{.URL}}">
                     {{$.I18n.ReadMore}} »
