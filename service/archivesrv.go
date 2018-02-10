@@ -53,7 +53,7 @@ func (srv *archiveService) UnArchiveArticleWithoutTx(tx *gorm.DB, article *model
 		return err
 	}
 	archive.ArticleCount -= 1
-	if 0 == archive.ArticleCount {
+	if 0 >= archive.ArticleCount {
 		if err := tx.Delete(archive).Error; nil != err {
 			return err
 		}
