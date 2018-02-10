@@ -15,6 +15,12 @@
 			"revisionTime": "2016-12-24T14:14:13Z"
 		},
 		{
+			"checksumSHA1": "qmsWyFl297NtbH/7ud6L41z8F+4=",
+			"path": "github.com/araddon/dateparse",
+			"revision": "036f821411c0b5b61c9eb8f1b947d9ec1f7f64a3",
+			"revisionTime": "2018-02-10T02:08:04Z"
+		},
+		{
 			"checksumSHA1": "8h/fIS0pW/0bkpDKfnWvat4fw7g=",
 			"path": "github.com/bluele/gcache",
 			"revision": "472614239ac7e5bc6461e237c798a6ebd5aff8c1",
