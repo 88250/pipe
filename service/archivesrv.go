@@ -53,8 +53,14 @@ func (srv *archiveService) UnArchiveArticleWithoutTx(tx *gorm.DB, article *model
 		return err
 	}
 	archive.ArticleCount -= 1
-	if err := tx.Save(archive).Error; nil != err {
-		return err
+	if 0 == archive.ArticleCount {
+		if err := tx.Delete(archive).Error; nil != err {
+			return err
+		}
+	} else {
+		if err := tx.Save(archive).Error; nil != err {
+			return err
+		}
 	}
 	if err := tx.Where("`id1` = ? AND `id2` = ? AND `type` = ? AND `blog_id` = ?",
 		article.ID, archive.ID, model.CorrelationArticleArchive, article.BlogID).
