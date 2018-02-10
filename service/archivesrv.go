@@ -41,7 +41,7 @@ func (srv *archiveService) GetArchives(blogID uint64) []*model.Archive {
 	return ret
 }
 
-func (srv *archiveService) UnarchiveArticleWithoutTx(tx *gorm.DB, article *model.Article) error {
+func (srv *archiveService) UnArchiveArticleWithoutTx(tx *gorm.DB, article *model.Article) error {
 	srv.mutex.Lock()
 	defer srv.mutex.Unlock()
 

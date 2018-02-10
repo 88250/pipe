@@ -382,7 +382,7 @@ func (srv *articleService) RemoveArticle(id, blogID uint64) error {
 
 		return err
 	}
-	if err := Archive.UnarchiveArticleWithoutTx(tx, article); nil != err {
+	if err := Archive.UnArchiveArticleWithoutTx(tx, article); nil != err {
 		tx.Rollback()
 
 		return err
