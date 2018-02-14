@@ -42,7 +42,7 @@ func RandImages(n int) []string {
 
 	i := 0
 	for {
-		if i >= n*2 {
+		if i >= n*5 {
 			break
 		}
 
