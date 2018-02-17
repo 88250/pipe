@@ -32,7 +32,7 @@ func pushArticlesPeriodically() {
 	go pushArticles()
 
 	go func() {
-		for _ = range time.Tick(time.Second * 30) {
+		for range time.Tick(time.Second * 30) {
 			pushArticles()
 		}
 	}()
@@ -96,7 +96,7 @@ func pushCommentsPeriodically() {
 	go pushComments()
 
 	go func() {
-		for _ = range time.Tick(time.Second * 30) {
+		for range time.Tick(time.Second * 30) {
 			pushComments()
 		}
 	}()
