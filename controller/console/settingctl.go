@@ -19,6 +19,8 @@ package console
 
 import (
 	"net/http"
+	"net/url"
+	"path"
 	"strconv"
 	"strings"
 
@@ -72,15 +74,27 @@ func UpdateBasicSettingsAction(c *gin.Context) {
 		case bool:
 			value = strconv.FormatBool(v.(bool))
 		default:
-			value = strings.TrimSpace( v.(string))
+			value = strings.TrimSpace(v.(string))
 		}
 
 		if model.SettingNameBasicBlogURL == k {
 			blogURL := value.(string)
-			if strings.HasSuffix(blogURL, "/") {
-				blogURL = blogURL[:len(blogURL)-1]
+			if !strings.Contains(blogURL, "://") {
+				blogURL = "http://" + blogURL
 			}
 
+			url, err := url.Parse(blogURL)
+			if nil != err {
+				result.Code = -1
+				result.Msg = "invalid URL format"
+
+				return
+			}
+
+			blogURL = url.Scheme + "://" + url.Host
+			if "" != url.Path {
+				blogURL +=  path.Clean(url.Path)
+			}
 			value = blogURL
 		}
 
