@@ -335,82 +335,65 @@ func (srv *articleService) ConsoleGetArticle(id uint64) *model.Article {
 	return ret
 }
 
-func (srv *articleService) RemoveArticle(id, blogID uint64) error {
+func (srv *articleService) RemoveArticle(id, blogID uint64) (err error) {
 	srv.mutex.Lock()
 	defer srv.mutex.Unlock()
 
 	article := &model.Article{}
 
 	tx := db.Begin()
-	if err := tx.Where("`id` = ? AND `blog_id` = ?", id, blogID).Find(article).Error; nil != err {
-		tx.Rollback()
-
-		return err
+	defer func() {
+		if err == nil {
+			tx.Commit()
+		} else {
+			tx.Rollback()
+		}
+	}()
+	if err = tx.Where("`id` = ? AND `blog_id` = ?", id, blogID).Find(article).Error; nil != err {
+		return
 	}
 	author := &model.User{}
-	if err := tx.First(author, article.AuthorID).Error; nil != err {
-		tx.Rollback()
-
-		return err
+	if err = tx.First(author, article.AuthorID).Error; nil != err {
+		return
 	}
 	author.TotalArticleCount -= 1
-	if err := tx.Model(author).Updates(author).Error; nil != err {
-		tx.Rollback()
-
-		return err
+	if err = tx.Model(author).Updates(author).Error; nil != err {
+		return
 	}
 	blogUserRel := &model.Correlation{}
-	if err := tx.Where("`id1` = ? AND `id2` = ? AND `type` = ? AND `blog_id` = ?",
+	if err = tx.Where("`id1` = ? AND `id2` = ? AND `type` = ? AND `blog_id` = ?",
 		article.BlogID, author.ID, model.CorrelationBlogUser, article.BlogID).First(blogUserRel).Error; nil != err {
-		tx.Rollback()
-
-		return err
+		return
 	}
 	blogUserRel.Int2 -= 1
-	if err := tx.Model(blogUserRel).Updates(blogUserRel).Error; nil != err {
-		tx.Rollback()
-
-		return err
+	if err = tx.Model(blogUserRel).Updates(blogUserRel).Error; nil != err {
+		return
 	}
-	if err := tx.Delete(article).Error; nil != err {
-		tx.Rollback()
-
-		return err
+	if err = tx.Delete(article).Error; nil != err {
+		return
 	}
-	if err := removeTagArticleRels(tx, article); nil != err {
-		tx.Rollback()
-
-		return err
+	if err = removeTagArticleRels(tx, article); nil != err {
+		return
 	}
-	if err := Archive.UnArchiveArticleWithoutTx(tx, article); nil != err {
-		tx.Rollback()
-
-		return err
+	if err = Archive.UnArchiveArticleWithoutTx(tx, article); nil != err {
+		return
 	}
-	if err := Statistic.DecArticleCountWithoutTx(tx, article.BlogID); nil != err {
-		tx.Rollback()
-
-		return err
+	if err = Statistic.DecArticleCountWithoutTx(tx, article.BlogID); nil != err {
+		return
 	}
 	var comments []*model.Comment
-	if err := tx.Model(&model.Comment{}).Where("`article_id` = ? AND `blog_id` = ?", id, article.BlogID).Find(&comments).Error; nil != err {
-		tx.Rollback()
-
-		return err
+	if err = tx.Model(&model.Comment{}).Where("`article_id` = ? AND `blog_id` = ?", id, article.BlogID).Find(&comments).Error; nil != err {
+		return
 	}
 	if 0 < len(comments) {
-		if err := tx.Where("`article_id` = ? AND `blog_id` = ?", id, article.BlogID).Delete(&model.Comment{}).Error; nil != err {
-			tx.Rollback()
-
-			return err
+		if err = tx.Where("`article_id` = ? AND `blog_id` = ?", id, article.BlogID).Delete(&model.Comment{}).Error; nil != err {
+			return
 		}
 		for range comments {
 			Statistic.DecCommentCountWithoutTx(tx, article.BlogID)
 		}
 	}
-	tx.Commit()
-
-	return nil
+	return nil // triger commit in the defer
 }
 
 func (srv *articleService) UpdatePushedAt(article *model.Article) error {
