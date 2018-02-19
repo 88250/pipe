@@ -167,7 +167,7 @@ func TestNormalizeTagStr(t *testing.T) {
 		return
 	}
 	if "带空格1,分号2,顿号3,正常4" != tagStr {
-		t.Error("exptected is [%s], actual is [%s]", "带空格1,分号2,顿号3,正常4", tagStr)
+		t.Errorf("exptected is [%s], actual is [%s]", "带空格1,分号2,顿号3,正常4", tagStr)
 	}
 }
 
