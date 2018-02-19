@@ -343,12 +343,13 @@ func (srv *articleService) RemoveArticle(id, blogID uint64) (err error) {
 
 	tx := db.Begin()
 	defer func() {
-		if err == nil {
+		if nil != err {
 			tx.Commit()
 		} else {
 			tx.Rollback()
 		}
 	}()
+
 	if err = tx.Where("`id` = ? AND `blog_id` = ?", id, blogID).Find(article).Error; nil != err {
 		return
 	}
@@ -393,7 +394,8 @@ func (srv *articleService) RemoveArticle(id, blogID uint64) (err error) {
 			Statistic.DecCommentCountWithoutTx(tx, article.BlogID)
 		}
 	}
-	return nil // triger commit in the defer
+	
+	return nil // trigger commit in the defer
 }
 
 func (srv *articleService) UpdatePushedAt(article *model.Article) error {
