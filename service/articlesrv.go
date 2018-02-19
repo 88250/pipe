@@ -115,7 +115,7 @@ func (srv *articleService) GetArticleByPath(path string, blogID uint64) *model.A
 	return ret
 }
 
-func (srv *articleService) AddArticle(article *model.Article) error {
+func (srv *articleService) AddArticle(article *model.Article) (err error) {
 	srv.mutex.Lock()
 	defer srv.mutex.Unlock()
 
@@ -125,54 +125,44 @@ func (srv *articleService) AddArticle(article *model.Article) error {
 	}
 
 	tx := db.Begin()
-	if err := tx.Create(article).Error; nil != err {
-		tx.Rollback()
-
-		return err
+	defer func() {
+		if err == nil {
+			tx.Commit()
+		} else {
+			tx.Rollback()
+		}
+	}()
+	if err = tx.Create(article).Error; nil != err {
+		return
 	}
-	if err := tagArticle(tx, article); nil != err {
-		tx.Rollback()
-
-		return err
+	if err = tagArticle(tx, article); nil != err {
+		return
 	}
-	if err := Archive.ArchiveArticleWithoutTx(tx, article); nil != err {
-		tx.Rollback()
-
-		return err
+	if err = Archive.ArchiveArticleWithoutTx(tx, article); nil != err {
+		return
 	}
 	author := &model.User{}
-	if err := tx.First(author, article.AuthorID).Error; nil != err {
-		tx.Rollback()
-
-		return err
+	if err = tx.First(author, article.AuthorID).Error; nil != err {
+		return
 	}
 	author.TotalArticleCount += 1
-	if err := tx.Model(author).Updates(author).Error; nil != err {
-		tx.Rollback()
-
-		return err
+	if err = tx.Model(author).Updates(author).Error; nil != err {
+		return
 	}
 	blogUserRel := &model.Correlation{}
-	if err := tx.Where("`id1` = ? AND `id2` = ? AND `type` = ? AND `blog_id` = ?",
+	if err = tx.Where("`id1` = ? AND `id2` = ? AND `type` = ? AND `blog_id` = ?",
 		article.BlogID, author.ID, model.CorrelationBlogUser, article.BlogID).First(blogUserRel).Error; nil != err {
-		tx.Rollback()
-
-		return err
+		return
 	}
 	blogUserRel.Int2 += 1
-	if err := tx.Model(blogUserRel).Updates(blogUserRel).Error; nil != err {
-		tx.Rollback()
-
-		return err
+	if err = tx.Model(blogUserRel).Updates(blogUserRel).Error; nil != err {
+		return
 	}
-	if err := Statistic.IncArticleCountWithoutTx(tx, article.BlogID); nil != err {
-		tx.Rollback()
-
-		return err
+	if err = Statistic.IncArticleCountWithoutTx(tx, article.BlogID); nil != err {
+		return
 	}
-	tx.Commit()
 
-	return nil
+	return nil // triger commit in the defer
 }
 
 func (srv *articleService) ConsoleGetArticles(keyword string, page int, blogID uint64) (ret []*model.Article, pagination *util.Pagination) {
@@ -343,13 +333,12 @@ func (srv *articleService) RemoveArticle(id, blogID uint64) (err error) {
 
 	tx := db.Begin()
 	defer func() {
-		if nil != err {
+		if err == nil {
 			tx.Commit()
 		} else {
 			tx.Rollback()
 		}
 	}()
-
 	if err = tx.Where("`id` = ? AND `blog_id` = ?", id, blogID).Find(article).Error; nil != err {
 		return
 	}
@@ -394,8 +383,7 @@ func (srv *articleService) RemoveArticle(id, blogID uint64) (err error) {
 			Statistic.DecCommentCountWithoutTx(tx, article.BlogID)
 		}
 	}
-	
-	return nil // trigger commit in the defer
+	return nil // triger commit in the defer
 }
 
 func (srv *articleService) UpdatePushedAt(article *model.Article) error {
@@ -410,14 +398,14 @@ func (srv *articleService) UpdatePushedAt(article *model.Article) error {
 	return nil
 }
 
-func (srv *articleService) UpdateArticle(article *model.Article) error {
+func (srv *articleService) UpdateArticle(article *model.Article) (err error) {
 	srv.mutex.Lock()
 	defer srv.mutex.Unlock()
 
 	oldArticle := &model.Article{}
-	if err := db.Model(&model.Article{}).Where("`id` = ? AND `blog_id` = ?", article.ID, article.BlogID).
+	if err = db.Model(&model.Article{}).Where("`id` = ? AND `blog_id` = ?", article.ID, article.BlogID).
 		Find(oldArticle).Error; nil != err {
-		return err
+		return
 	}
 	newArticle := &model.Article{}
 	newArticle.Title = strings.TrimSpace(article.Title)
@@ -430,32 +418,32 @@ func (srv *articleService) UpdateArticle(article *model.Article) error {
 
 	tagStr, err := normalizeTagStr(article.Tags)
 	if nil != err {
-		return err
+		return
 	}
 	newArticle.Tags = tagStr
 
-	if err := normalizeArticlePath(article); nil != err {
-		return err
+	if err = normalizeArticlePath(article); nil != err {
+		return
 	}
 	newArticle.Path = article.Path
 
 	tx := db.Begin()
-	if err := tx.Model(oldArticle).UpdateColumns(newArticle).Error; nil != err {
-		tx.Rollback()
-
-		return err
+	defer func() {
+		if err == nil {
+			tx.Commit()
+		} else {
+			tx.Rollback()
+		}
+	}()
+	if err = tx.Model(oldArticle).UpdateColumns(newArticle).Error; nil != err {
+		return
 	}
-	if err := removeTagArticleRels(tx, article); nil != err {
-		tx.Rollback()
-
-		return err
+	if err = removeTagArticleRels(tx, article); nil != err {
+		return
 	}
-	if err := tagArticle(tx, article); nil != err {
-		tx.Rollback()
-
-		return err
+	if err = tagArticle(tx, article); nil != err {
+		return
 	}
-	tx.Commit()
 
 	return nil
 }
