@@ -195,6 +195,11 @@
 			"revisionTime": "2017-09-19T18:10:01Z"
 		},
 		{
+			"checksumSHA1": "D7/wS5MZRyc4+d0PhZbk1PCpX60=",
+			"path": "github.com/mssola/user_agent",
+			"revision": ""
+		},
+		{
 			"checksumSHA1": "yJqMcmlRNB1FoV3rYo7U6bLLjBw=",
 			"path": "github.com/parnurzeal/gorequest",
 			"revision": "8e3aed27fe49f7fdc765dad067845f600fc984e8",
