@@ -26,6 +26,7 @@ import (
 	"github.com/b3log/pipe/service"
 	"github.com/b3log/pipe/util"
 	"github.com/gin-gonic/gin"
+	"github.com/mssola/user_agent"
 	"github.com/parnurzeal/gorequest"
 )
 
@@ -47,6 +48,14 @@ func fillUser(c *gin.Context) {
 	session := util.GetSession(c)
 	(*dataModel)["User"] = session
 	if 0 != session.UID {
+		c.Next()
+
+		return
+	}
+
+	var ua = user_agent.New(c.Request.UserAgent())
+	if ua.Bot() {
+		logger.Tracef("Bot User-Agent [%s]", c.Request.UserAgent())
 		c.Next()
 
 		return
