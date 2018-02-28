@@ -8,7 +8,7 @@
  * @author <a href="http://vanessa.b3log.org">Liyuan Li</a>
  * @version 0.3.1.0, Jun 9, 2018
  */
-import toMarkdown from 'to-markdown'
+import TurndownService from 'turndown'
 import $ from 'jquery'
 import hotkeys from '../../hotkeys'
 import {ajaxUpload, debounceInput, genUploaded, genUploading, insertTextAtCaret, replaceTextareaValue} from './tool'
@@ -261,7 +261,7 @@ export const Editor = (config) => {
   }).bind('paste', function (event) {
     if (event.originalEvent.clipboardData.getData('text/html').replace(/(^\s*)|(\s*)$/g, '') !== '') {
       let hasCode = false
-      let markdownStr = toMarkdown(event.originalEvent.clipboardData.getData('text/html'), {
+      let turndownService = new TurndownService({
         converters: [{
           filter: ['pre', 'code'],
           replacement: function (content) {
@@ -289,6 +289,8 @@ export const Editor = (config) => {
         }],
         gfm: true
       })
+      let markdownStr = turndownService.turndown(event.originalEvent.clipboardData.getData('text/html'))
+
       if (hasCode) {
         insertTextAtCaret(event.target, event.originalEvent.clipboardData.getData('text/plain'), '', true)
         if (/firefox/i.test(navigator.userAgent)) {
