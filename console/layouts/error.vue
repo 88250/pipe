@@ -60,7 +60,7 @@
 
 <style lang="sass">
   @import '~assets/scss/_variables'
-  #__nuxt, #pipe, .main
+  #__nuxt, #pipe, .main, #__layout
     height: 100%
   .main
     padding-top: 60px
