@@ -127,9 +127,11 @@ func LoadConf() {
 		Conf.Server = *confServer
 	}
 
-	Conf.StaticServer = Conf.Server
 	if "" != *confStaticServer {
 		Conf.StaticServer = *confStaticServer
+	}
+	if "" == Conf.StaticServer {
+		Conf.StaticServer = Conf.Server
 	}
 
 	time := strconv.FormatInt(time.Now().UnixNano(), 10)
