@@ -87,6 +87,10 @@ func fillUser(c *gin.Context) {
 					}
 				}
 			}
+		} else {
+			if !strings.HasPrefix(redirectURL, util.Conf.Server) {
+				redirectURL = util.Conf.Server + c.Request.URL.Path
+			}
 		}
 		redirectURL = strings.TrimSpace(redirectURL)
 		if "" == redirectURL {
