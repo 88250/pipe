@@ -12,11 +12,11 @@
   },
   "license": "GPLv3",
   "private": true,
-  "author": "Vanessa <lly219@gmail.com> (http://vanessa.b3log.org)",
+  "author": "Vanessa <v@b3log.org> (http://vanessa.b3log.org)",
   "maintainers": [
     {
       "name": "Vanessa",
-      "email": "lly219@gmail.com"
+      "email": "v@b3log.org"
     }
   ],
   "devDependencies": {
