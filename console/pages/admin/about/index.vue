@@ -6,7 +6,7 @@
           <img src="~/static/images/logo.png"/> <br>
           <a class="btn btn--info btn--margin-t30 btn--block btn--success"
              target="_blank"
-             href="http://b3log.org/donate.html">{{ $t('becomeSponsor', $store.state.locale) }}</a>
+             href="https://b3log.org/donate.html">{{ $t('becomeSponsor', $store.state.locale) }}</a>
         </div>
         <div class="fn-flex-1 pipe-content__reset">
           <h2 class="fn-clear" v-if="isLatest">
@@ -42,7 +42,7 @@
               <v-icon>hacpai-logo2</v-icon>
               {{ $t('community', $store.state.locale) }}
             </a>
-            <a href="http://b3log.org" target="_blank" class="about__link btn btn--info">
+            <a href="https://b3log.org" target="_blank" class="about__link btn btn--info">
               <v-icon>b3log-logo2</v-icon>
               B3log
             </a>

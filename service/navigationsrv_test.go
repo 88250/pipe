@@ -57,7 +57,7 @@ func TestConsoleGetNavigation(t *testing.T) {
 func TestConsoleAddNavigation(t *testing.T) {
 	navigation := &model.Navigation{
 		Title:      "测试添加的导航",
-		URL:        "http://b3log.org",
+		URL:        "https://b3log.org",
 		IconURL:    "图标 URL",
 		OpenMethod: model.NavigationOpenMethodBlank,
 		Number:     3,
