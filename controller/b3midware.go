@@ -53,9 +53,9 @@ func fillUser(c *gin.Context) {
 		return
 	}
 
-	var ua = user_agent.New(c.Request.UserAgent())
-	if ua.Bot() {
-		logger.Tracef("Bot User-Agent [%s]", c.Request.UserAgent())
+	uaStr := c.Request.UserAgent()
+	if isBot(uaStr) {
+		logger.Tracef("Bot User-Agent [%s]", uaStr)
 		c.Next()
 
 		return
@@ -103,8 +103,8 @@ func fillUser(c *gin.Context) {
 		return
 	default:
 		result := util.NewResult()
-		_, _, errs := gorequest.New().Get(util.HacPaiURL+"/apis/check-b3-identity?b3id="+b3id).
-			Set("user-agent", util.UserAgent).Timeout(5*time.Second).
+		_, _, errs := gorequest.New().Get(util.HacPaiURL + "/apis/check-b3-identity?b3id=" + b3id).
+			Set("user-agent", util.UserAgent).Timeout(5 * time.Second).
 			Retry(3, 2*time.Second, http.StatusInternalServerError).EndStruct(result)
 		if nil != errs {
 			logger.Errorf("check b3 identity failed: %s", errs)
@@ -170,4 +170,10 @@ func fillUser(c *gin.Context) {
 		(*dataModel)["User"] = session
 		c.Next()
 	}
+}
+
+func isBot(uaStr string) bool {
+	var ua = user_agent.New(uaStr)
+
+	return ua.Bot() || strings.Contains(uaStr, "HacPai")
 }
