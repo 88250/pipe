@@ -50,7 +50,7 @@ func init() {
 	logger = log.NewLogger(os.Stdout)
 
 	util.LoadConf()
-	util.LoadMakrdown()
+	util.LoadMarkdown()
 	i18n.Load()
 	theme.Load()
 	replaceServerConf()

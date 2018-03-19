@@ -44,7 +44,7 @@ type MarkdownResult struct {
 
 var markedAvailable = false
 
-func LoadMakrdown() {
+func LoadMarkdown() {
 	request, err := http.NewRequest("POST", "http://localhost:8250", strings.NewReader("Pipe 大法好"))
 	if nil != err {
 		logger.Info("[marked] is not available, uses built-in [blackfriday] for markdown processing")
@@ -130,7 +130,11 @@ func Markdown(mdText string) *MarkdownResult {
 	})
 
 	doc.Find("*").Contents().FilterFunction(func(i int, ele *goquery.Selection) bool {
-		return "#text" == goquery.NodeName(ele)
+		if "#text" != goquery.NodeName(ele) {
+			return false
+		}
+		parent := goquery.NodeName(ele.Parent())
+		return parent != "code" && parent != "pre"
 	}).Each(func(i int, ele *goquery.Selection) {
 		text := ele.Text()
 		text = pangu.SpacingText(text)
