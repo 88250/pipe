@@ -47,7 +47,7 @@
               <a
                 class="init__help"
                 href="https://hacpai.com/settings/b3"
-                target="_blank">{{ $t('check', $store.state.locale) }} B3log key</a>
+                target="_blank">{{ $t('check', $store.state.locale) }}/{{ $t('setting', $store.state.locale) }} B3log Key</a>
             </v-form>
             <div class="alert alert--danger" v-show="postInitError">
               <v-icon>danger</v-icon>
