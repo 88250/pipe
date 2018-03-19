@@ -108,4 +108,3 @@ func TestConsoleUpdateNavigation(t *testing.T) {
 		t.Errorf("expected is [%s], actual is [%s]", "更新后的导航标题", navigation.Title)
 	}
 }
-

@@ -93,7 +93,7 @@ func UpdateBasicSettingsAction(c *gin.Context) {
 
 			blogURL = url.Scheme + "://" + url.Host
 			if "" != url.Path {
-				blogURL +=  path.Clean(url.Path)
+				blogURL += path.Clean(url.Path)
 			}
 			value = blogURL
 		}
