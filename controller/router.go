@@ -235,6 +235,14 @@ func routePath(c *gin.Context) {
 		addSymCommentAction(c)
 
 		return
+	case util.PathAPIsSymArticles:
+		if "POST" == c.Request.Method {
+			addSymArticleAction(c)
+		} else if "PUT" == c.Request.Method {
+			updateSymArticleAction(c)
+		}
+
+		return
 	}
 
 	if strings.Contains(path, util.PathArchives+"/") {
