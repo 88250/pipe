@@ -489,7 +489,9 @@ func normalizeArticle(article *model.Article) error {
 	}
 	article.Tags = tagStr
 
-	article.ID = util.CurrentMillisecond()
+	if 1 > article.ID {
+		article.ID = util.CurrentMillisecond()
+	}
 
 	if err := normalizeArticlePath(article); nil != err {
 		return err

@@ -17,10 +17,10 @@
 package controller
 
 import (
+	"fmt"
 	"net/http"
 	"strconv"
 
-	"fmt"
 	"github.com/b3log/pipe/model"
 	"github.com/b3log/pipe/service"
 	"github.com/b3log/pipe/util"
@@ -48,8 +48,6 @@ func addSymCommentAction(c *gin.Context) {
 
 		return
 	}
-
-	logger.Info("add a comment come from sym: %+v", arg)
 
 	blogID := getBlogID(c)
 	comment := &model.Comment{
@@ -96,8 +94,6 @@ func addSymArticleAction(c *gin.Context) {
 
 		return
 	}
-
-	logger.Info("add an article come from sym: %+v", arg)
 
 	blogID := getBlogID(c)
 	b3Key := requestArticle["userB3Key"].(string)
@@ -151,8 +147,6 @@ func updateSymArticleAction(c *gin.Context) {
 		return
 	}
 
-	logger.Info("add update article come from sym: %+v", arg)
-
 	blogID := getBlogID(c)
 	b3Key := requestArticle["userB3Key"].(string)
 	blogAdmin := service.User.GetBlogAdmin(blogID)
@@ -166,7 +160,7 @@ func updateSymArticleAction(c *gin.Context) {
 	article := service.Article.ConsoleGetArticle(articleId)
 	if nil == article {
 		result.Code = -1
-		result.Msg = "not found article [ID=" + fmt.Sprintf("%s", articleId) + "] to update"
+		result.Msg = "not found article [ID=" + fmt.Sprintf("%d", articleId) + "] to update"
 
 		return
 	}
