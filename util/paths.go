@@ -22,34 +22,35 @@ import (
 
 // Path prefixes.
 const (
-	PathRoot        = "/"
-	PathInit        = "/init"
-	PathSearch      = "/search"
-	PathBlogs       = "/blogs"
-	PathConsoleDist = "/console/dist"
-	PathAdmin       = "/admin"
-	PathAPI         = "/api"
-	PathFavicon     = "/favicon.ico"
-	PathTheme       = "/theme"
-	PathActivities  = "/activities"
-	PathArchives    = "/archives"
-	PathArticles    = "/articles"
-	PathAuthors     = "/authors"
-	PathCategories  = "/categories"
-	PathTags        = "/tags"
-	PathComments    = "/comments"
-	PathAtom        = "/atom"
-	PathUpload      = "/upload"
-	PathFetchUpload = "/fetch-upload"
-	PathChangelogs  = "/changelogs"
-	PathRobots      = "/robots.txt"
+	PathRoot            = "/"
+	PathInit            = "/init"
+	PathSearch          = "/search"
+	PathBlogs           = "/blogs"
+	PathConsoleDist     = "/console/dist"
+	PathAdmin           = "/admin"
+	PathAPI             = "/api"
+	PathFavicon         = "/favicon.ico"
+	PathTheme           = "/theme"
+	PathActivities      = "/activities"
+	PathArchives        = "/archives"
+	PathArticles        = "/articles"
+	PathAuthors         = "/authors"
+	PathCategories      = "/categories"
+	PathTags            = "/tags"
+	PathComments        = "/comments"
+	PathAtom            = "/atom"
+	PathUpload          = "/upload"
+	PathFetchUpload     = "/fetch-upload"
+	PathChangelogs      = "/changelogs"
+	PathRobots          = "/robots.txt"
+	PathAPIsSymArticles = "/apis/symphony/articles"
+	PathAPIsSymComments = "/apis/symphony/comments"
 )
 
 var reservedPaths = []string{
-	PathInit, PathSearch, PathBlogs, PathConsoleDist, PathAdmin, PathAPI,
-	PathFavicon, PathTheme, PathActivities, PathArchives, PathAuthors,
-	PathCategories, PathTags, PathComments, PathAtom, PathUpload, PathFetchUpload, PathChangelogs,
-	PathRobots,
+	PathInit, PathSearch, PathBlogs, PathConsoleDist, PathAdmin, PathAPI, PathFavicon, PathTheme,
+	PathActivities, PathArchives, PathAuthors, PathCategories, PathTags, PathComments, PathAtom,
+	PathUpload, PathFetchUpload, PathChangelogs, PathRobots, PathAPIsSymArticles, PathAPIsSymComments,
 }
 
 func IsReservedPath(path string) bool {

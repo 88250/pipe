@@ -45,12 +45,17 @@ func GetCommentsAction(c *gin.Context) {
 			AvatarURL: articleAuthor.AvatarURL,
 		}
 
-		commentAuthor := service.User.GetUser(commentModel.AuthorID)
-		commentAuthorBlog := service.User.GetOwnBlog(commentModel.AuthorID)
-		author := &ConsoleAuthor{
-			URL:       service.Setting.GetSetting(model.SettingCategoryBasic, model.SettingNameBasicBlogURL, commentAuthorBlog.ID).Value + util.PathAuthors + "/" + commentAuthor.Name,
-			Name:      commentAuthor.Name,
-			AvatarURL: commentAuthor.AvatarURL,
+		author := &ConsoleAuthor{}
+		if model.SyncCommentAuthorID == commentModel.AuthorID {
+			author.URL = commentModel.AuthorURL
+			author.Name = commentModel.AuthorName
+			author.AvatarURL = commentModel.AuthorAvatarURL
+		} else {
+			commentAuthor := service.User.GetUser(commentModel.AuthorID)
+			commentAuthorBlog := service.User.GetOwnBlog(commentModel.AuthorID)
+			author.URL = service.Setting.GetSetting(model.SettingCategoryBasic, model.SettingNameBasicBlogURL, commentAuthorBlog.ID).Value + util.PathAuthors + "/" + commentAuthor.Name
+			author.Name = commentAuthor.Name
+			author.AvatarURL = commentAuthor.AvatarURL
 		}
 
 		page := service.Comment.GetCommentPage(commentModel.ArticleID, commentModel.ID, commentModel.BlogID)

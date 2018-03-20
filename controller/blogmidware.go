@@ -227,20 +227,19 @@ func fillRecentComments(c *gin.Context, settingMap *map[string]interface{}, data
 	recentComments := service.Comment.GetRecentComments(recentCommentSize, blogID)
 	var themeRecentComments []*model.ThemeComment
 	for _, comment := range recentComments {
-		commentAuthor := service.User.GetUser(comment.AuthorID)
-		if nil == commentAuthor {
-			logger.Errorf("not found comment author [userID=%d]", comment.AuthorID)
+		author := &model.ThemeAuthor{}
+		if model.SyncCommentAuthorID == comment.AuthorID {
+			author.URL = comment.AuthorURL
+			author.Name = comment.AuthorName
+			author.AvatarURL = comment.AuthorAvatarURL
+		} else {
+			commentAuthor := service.User.GetUser(comment.AuthorID)
+			commentAuthorBlog := service.User.GetOwnBlog(comment.AuthorID)
+			author.URL = service.Setting.GetSetting(model.SettingCategoryBasic, model.SettingNameBasicBlogURL, commentAuthorBlog.ID).Value + util.PathAuthors + "/" + commentAuthor.Name
+			author.Name = commentAuthor.Name
+			author.AvatarURL = commentAuthor.AvatarURL
+		}
 
-			continue
-		}
-		commentAuthorBlog := service.User.GetOwnBlog(commentAuthor.ID)
-		blogURLSetting := service.Setting.GetSetting(model.SettingCategoryBasic, model.SettingNameBasicBlogURL, commentAuthorBlog.ID)
-		commentAuthorURL := blogURLSetting.Value + util.PathAuthors + "/" + commentAuthor.Name
-		author := &model.ThemeAuthor{
-			Name:      commentAuthor.Name,
-			URL:       commentAuthorURL,
-			AvatarURL: commentAuthor.AvatarURL,
-		}
 		page := service.Comment.GetCommentPage(comment.ArticleID, comment.ID, blogID)
 		article := service.Article.ConsoleGetArticle(comment.ArticleID)
 		themeComment := &model.ThemeComment{

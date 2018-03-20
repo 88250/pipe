@@ -231,6 +231,10 @@ func routePath(c *gin.Context) {
 		searchAction(c)
 
 		return
+	case util.PathAPIsSymComments:
+		addSymCommentAction(c)
+
+		return
 	}
 
 	if strings.Contains(path, util.PathArchives+"/") {

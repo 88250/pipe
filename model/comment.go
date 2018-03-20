@@ -16,7 +16,10 @@
 
 package model
 
-import "time"
+import (
+	"time"
+	"math"
+)
 
 // Comment model.
 type Comment struct {
@@ -30,5 +33,11 @@ type Comment struct {
 	UserAgent       string    `gorm:"size:255" json:"userAgent"`
 	PushedAt        time.Time `json:"pushedAt"`
 
+	AuthorName      string `gorm:"size:32" json:"authorName"`       // exist if this comment sync from Sym, https://github.com/b3log/pipe/issues/98
+	AuthorAvatarURL string `gorm:"size:255" json:"authorAvatarURL"` // exist if this comment sync from Sym, https://github.com/b3log/pipe/issues/98
+	AuthorURL       string `gorm:"size:255" json:"authorURL"`       // exist if this comment sync from Sym, https://github.com/b3log/pipe/issues/98
+
 	BlogID uint64 `sql:"index" json:"blogID"`
 }
+
+const SyncCommentAuthorID = math.MaxInt32

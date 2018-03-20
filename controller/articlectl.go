@@ -151,20 +151,17 @@ func showArticleAction(c *gin.Context) {
 	commentModels, pagination := service.Comment.GetArticleComments(article.ID, page, blogID)
 	var comments []*model.ThemeComment
 	for _, commentModel := range commentModels {
-		commentAuthor := service.User.GetUser(commentModel.AuthorID)
-		if nil == commentAuthor {
-			logger.Errorf("not found comment author [userID=%d]", commentModel.AuthorID)
-
-			continue
-		}
-
-		commentAuthorBlog := service.User.GetOwnBlog(commentAuthor.ID)
-		blogURLSetting := service.Setting.GetSetting(model.SettingCategoryBasic, model.SettingNameBasicBlogURL, commentAuthorBlog.ID)
-		commentAuthorURL := blogURLSetting.Value + util.PathAuthors + "/" + commentAuthor.Name
-		author := &model.ThemeAuthor{
-			Name:      commentAuthor.Name,
-			URL:       commentAuthorURL,
-			AvatarURL: commentAuthor.AvatarURL,
+		author := &model.ThemeAuthor{}
+		if model.SyncCommentAuthorID == commentModel.AuthorID {
+			author.URL = commentModel.AuthorURL
+			author.Name = commentModel.AuthorName
+			author.AvatarURL = commentModel.AuthorAvatarURL
+		} else {
+			commentAuthor := service.User.GetUser(commentModel.AuthorID)
+			commentAuthorBlog := service.User.GetOwnBlog(commentModel.AuthorID)
+			author.URL = service.Setting.GetSetting(model.SettingCategoryBasic, model.SettingNameBasicBlogURL, commentAuthorBlog.ID).Value + util.PathAuthors + "/" + commentAuthor.Name
+			author.Name = commentAuthor.Name
+			author.AvatarURL = commentAuthor.AvatarURL
 		}
 
 		mdResult := util.Markdown(commentModel.Content)

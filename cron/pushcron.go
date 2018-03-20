@@ -136,6 +136,8 @@ func pushComments() {
 				"authorEmail": "",
 			},
 			"client": map[string]interface{}{
+				"name":  "Pipe",
+				"ver":   util.Version,
 				"title": blogTitleSetting.Value,
 				"host":  util.Conf.Server,
 				"email": b3Name,
