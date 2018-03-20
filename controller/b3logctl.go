@@ -67,4 +67,9 @@ func addSymCommentAction(c *gin.Context) {
 		result.Code = -1
 		result.Msg = err.Error()
 	}
+
+	if err := service.Comment.UpdatePushedAt(comment); nil != err {
+		result.Code = -1
+		result.Msg = err.Error()
+	}
 }
