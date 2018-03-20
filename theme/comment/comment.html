@@ -7,7 +7,7 @@
     </a>
     <div class="pipe-comment__body">
         <div class="fn-clear">
-            <a href="{{.Item.Author.AvatarURL}}" class="ft-gray">{{.Item.Author.Name}}</a>
+            <a href="{{.Item.Author.URL}}" class="ft-gray">{{.Item.Author.Name}}</a>
             {{if .Item.Parent}}
             <a class="ft-nowrap ft-12 ft-gray" href="{{.Item.Parent.URL}}">
                 <svg><use xlink:href="#icon-reply"></use></svg> {{.I18n.Reply}} {{.Item.Parent.Author.Name}}
