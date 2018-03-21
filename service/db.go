@@ -31,10 +31,11 @@ import (
 var logger = log.NewLogger(os.Stdout)
 
 var db *gorm.DB
+var useSQLite bool
 
 func ConnectDB() {
 	var err error
-	useSQLite := false
+	useSQLite = false
 	if "" != util.Conf.SQLite {
 		db, err = gorm.Open("sqlite3", util.Conf.SQLite)
 		useSQLite = true
@@ -69,4 +70,13 @@ func DisconnectDB() {
 	if err := db.Close(); nil != err {
 		logger.Errorf("Disconnect from database failed: " + err.Error())
 	}
+}
+
+// Database returns the underlying database name.
+func Database() string {
+	if (useSQLite) {
+		return "SQLite"
+	}
+
+	return "MySQL"
 }

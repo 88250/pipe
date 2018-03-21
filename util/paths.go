@@ -45,12 +45,14 @@ const (
 	PathRobots          = "/robots.txt"
 	PathAPIsSymArticles = "/apis/symphony/articles"
 	PathAPIsSymComments = "/apis/symphony/comments"
+	PathPlatInfo        = "/plat/info"
 )
 
 var reservedPaths = []string{
 	PathInit, PathSearch, PathBlogs, PathConsoleDist, PathAdmin, PathAPI, PathFavicon, PathTheme,
 	PathActivities, PathArchives, PathAuthors, PathCategories, PathTags, PathComments, PathAtom,
 	PathUpload, PathFetchUpload, PathChangelogs, PathRobots, PathAPIsSymArticles, PathAPIsSymComments,
+	PathPlatInfo,
 }
 
 func IsReservedPath(path string) bool {

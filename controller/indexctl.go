@@ -21,6 +21,7 @@ import (
 	"path/filepath"
 	"text/template"
 
+	"github.com/b3log/pipe/service"
 	"github.com/b3log/pipe/util"
 	"github.com/gin-gonic/gin"
 )
@@ -35,4 +36,19 @@ func showIndexAction(c *gin.Context) {
 	}
 
 	t.Execute(c.Writer, nil)
+}
+
+func showPlatInfo(c *gin.Context) {
+	result := util.NewResult()
+	defer c.JSON(http.StatusOK, result)
+
+	data := map[string]interface{}{}
+	data["version"] = util.Version
+	data["database"] = service.Database()
+	data["mode"] = util.Conf.RuntimeMode
+	data["server"] = util.Conf.Server
+	data["staticServer"] = util.Conf.StaticServer
+	data["staticResourceVer"] = util.Conf.StaticResourceVersion
+
+	result.Data = data
 }
