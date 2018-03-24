@@ -1,158 +1,158 @@
 # <img src="https://user-images.githubusercontent.com/873584/33324159-c3ea5050-d489-11e7-9f4b-75ee806a7538.png"> [Pipe](https://github.com/b3log/pipe) [![Build Status](https://img.shields.io/travis/b3log/pipe.svg?style=flat)](https://travis-ci.org/b3log/pipe) [![Go Report Card](https://goreportcard.com/badge/github.com/b3log/pipe)](https://goreportcard.com/report/github.com/b3log/pipe) [![Coverage Status](https://coveralls.io/repos/github/b3log/pipe/badge.svg?branch=master)](https://coveralls.io/github/b3log/pipe?branch=master) [![GitHub license](https://img.shields.io/github/license/b3log/pipe.svg)](https://github.com/b3log/pipe/blob/master/LICENSE)
 
-* [简介](#简介)
-* [特性](#特性)
-* [安装](#安装)
-* [文档](#文档)
-* [界面](#界面)
-* [构建](#构建)
-* [贡献](#贡献)
-* [开源协议](#开源协议)
-* [鸣谢](#鸣谢)
+* [Introduction](#Introduction)
+* [Features](#Features)
+* [Installation](#Installation)
+* [Documents](#Documents)
+* [User Interface](#User Interface)
+* [Build](#Build)
+* [Contributions](#Contributions)
+* [License](#License)
+* [Credits](#Credits)
 
-## 简介
+## Introduction
 
-[Pipe](https://github.com/b3log/pipe) 是一款小而美的开源博客平台，通过[黑客派](https://hacpai.com)账号登录即可使用。
+[Pipe](https://github.com/b3log/pipe) is a small and beautiful blogging platform, login via [HacPai](https://hacpai.com) to use.
 
-### 动机
+### Motivation
 
-产品层面：
+Product level:
 
-* 市面上缺乏支持多独立博客的平台级系统
-* 实现 [B3log 构思](https://hacpai.com/b3log)
+* There is a lack of platform-level systems on the market that support multiple independent blogs
+* Implements [B3log Idea](https://hacpai.com/b3log)
 
-技术层面：
+Technical level:
 
-* 在博客系统这个轮子上充分发挥 golang 的优势
-* 博客管理后台界面使用 Vue.js 进行前后端分离
+* Take full advantage of golang on the wheel of blogging system
+* Blog console using Vue.js for frontend-backend separation
 
-### 案例
+### Use cases
 
 * [http://pipe.b3log.org](http://pipe.b3log.org)
 * [Akkuman 的博客](http://o0o.pub)
 * [Vanessa](http://vanessa.b3log.org)
 * [Domolo Reader](http://www.domolo.com)
 
-你也在使用的话欢迎通过 PR 更新该列表。
+You are also welcome to update this list through PR.
 
-## 特性
+## Features
 
-* 多用户博客平台
+* Multi-user blog platform
 * Markdown / Emoji
-* 聚合分类 / 标签
-* 自定义导航
-* 多主题 / 多语言
-* Atom 订阅
-* 搜索
-* Hexo/Jekyll 导入 / 导出
-* 可配置动静分离
-* 支持 SQLite / MySQL
+* Aggregate classification / tag
+* Custom navigation
+* Themes / I18n
+* Atom subscription
+* Search
+* Hexo/Jekyll Import/Export
+* Configurable static separation
+* Supports SQLite / MySQL
 
-## 安装
+## Installation
 
-[下载](https://pan.baidu.com/s/1jHPtHLO)最新的发布包解压，进入解压目录运行 pipe/pipe.exe 可执行文件即可。
+[Download](https://pan.baidu.com/s/1jHPtHLO)The latest release package is decompressed, enter the decompressed directory and run the pipe/pipe.exe executable file.
 
-**更多细节请参考 [Pipe 用户指南](https://hacpai.com/article/1513761942333)。另外，如果你不想自己维护服务器，可以直接使用我们运维的 [Pipe 服务](http://pipe.b3log.org)（域名绑定请联系 QQ845765）。**
+** For more details, refer to the [Pipe User Guide] (https://hacpai.com/article/1513761942333). In addition, if you do not want to maintain the server yourself, you can directly use the [Pipe Service] (http://pipe.b3log.org) of our operation and maintenance (for domain name binding, please contact QQ845765). **
 
-## 文档
+## Documents
 
-* [用户指南](https://hacpai.com/article/1513761942333)
-* [主题开发指南](https://hacpai.com/article/1512550354920)
-* [Postman 测试集](https://www.getpostman.com/collections/c466e81beb7acd5685ec)
+* [Pipe User Guide](https://hacpai.com/article/1513761942333)
+* [Pipe Theme Dev Guide](https://hacpai.com/article/1512550354920)
+* [Postman Collection](https://www.getpostman.com/collections/c466e81beb7acd5685ec)
 
-## 界面
+## User Interface
 
-### 初始化
+### Init
 
-![初始化](https://user-images.githubusercontent.com/873584/34195698-e860c0c4-e599-11e7-9d4f-32307712324d.jpg)
+![Init](https://user-images.githubusercontent.com/873584/34195698-e860c0c4-e599-11e7-9d4f-32307712324d.jpg)
 
-### 管理后台
+### Console
 
-![管理后台](https://user-images.githubusercontent.com/873584/34195907-b390adf4-e59a-11e7-8ef7-97f8393c770d.jpg)
+![Console](https://user-images.githubusercontent.com/873584/34195907-b390adf4-e59a-11e7-8ef7-97f8393c770d.jpg)
 
-### 编辑文章
+### Edit
 
-![编辑文章](https://user-images.githubusercontent.com/873584/34195873-975c07dc-e59a-11e7-83ca-c07272c5933c.jpg)
+![Edit](https://user-images.githubusercontent.com/873584/34195873-975c07dc-e59a-11e7-83ca-c07272c5933c.jpg)
 
-### 默认主题
+### Theme
 
-![默认主题](https://user-images.githubusercontent.com/873584/34195948-d2b0106c-e59a-11e7-922d-b85e7a172eef.jpg)
+![Theme](https://user-images.githubusercontent.com/873584/34195948-d2b0106c-e59a-11e7-922d-b85e7a172eef.jpg)
 
-## 构建
+## Build
 
-需要预先安装好如下编译环境，请尽量都使用最新版：
+Need to pre-install the following compilation environment, please use the latest version as far as possible:
 
 1. [Go](https://golang.org)
 2. [Node.js](https://nodejs.org)
 
-在 Linux 上可以执行 build.sh 进行自动构建，其他平台可按照下面步骤进行手动构建。
+Build.sh can be automatically built on Linux, and other platforms can be manually built using the following steps.
 
-### 编译后端
+### Compile the server
 
 ```
 go build -i -v
 ```
 
-### 编译管理后台前端
+### Compile console frond-end
 
-进入 console 目录，然后：
+Enter console directory then execute:
 
 ```
 npm install && npm run build
 ```
 
-* 开发环境执行 `npm run dev`，有点链接需要手动修改访问端口为 :3000
-* pipe.json 中 `AxiosBaseURL` 为 `/api` 时需启动 `./pipe`，为 `/mock` 时需运行 `npm run mock`
+* The development environment executes `npm run dev` and the access port is :3000
+* In pipe.json `./pipe` needs to be started when `AxiosBaseURL` is `/api`, `npm run mock` is required when `/mock` is specified
 
-### 打包前台主题
+### Pack the theme
 
-进入 theme 目录，然后：
+Go to the theme directory and then:
 
 ```
 npm install && npm install --global gulp && gulp
 ```
 
-* 开发环境执行 `gulp watch --theme=ThemeName`
-* theme/js 和 theme/scss 下为基础方法和样式，可按需引入使用
-* 主题开发请参考 theme/x/Gina
+* Development environment implementation `gulp watch --theme=ThemeName`
+* Basic methods and styles under theme/js and theme/scss can be introduced as needed
+* Theme development please refer to theme/x/Gina
 
-## 贡献
+## Contributions
 
-### 作者
+### Authors
 
-Pipe 的主要作者是 [Daniel](https://github.com/88250) 与 [Vanessa](https://github.com/Vanessa219)，所有贡献者可以在[这里](https://github.com/b3log/pipe/graphs/contributors)看到。
+The main authors of Pipe are [Daniel] (https://github.com/88250) and [Vanessa] (https://github.com/Vanessa219), and all contributors can be found [here](https://github.com/b3log/pipe/graphs/contributors).
 
-我们非常期待你加入到这个项目中，无论是使用反馈还是代码补丁，都是对 Pipe 一份满满的爱 :heart:
+We are very much looking forward to you joining this project. Whether it is using feedback or code patches, it is a full of love for Pipe :heart:
 
-### 讨论区
+### Discussion
 
-* 到 Pipe 官方[论坛](https://hacpai.com/tag/Pipe)发帖（推荐做法）
-* 来一发 [issue](https://github.com/b3log/pipe/issues/new)
-* [Q 群 242561391](https://shang.qq.com/wpa/qunwpa?idkey=981d9282616274abb1752336e21b8036828f715a1c4d0628adcf208f2fd54f3a)
+* [Official forum](https://hacpai.com/tag/Pipe)
+* [Issue](https://github.com/b3log/pipe/issues/new)
+* [QQ group 242561391](https://shang.qq.com/wpa/qunwpa?idkey=981d9282616274abb1752336e21b8036828f715a1c4d0628adcf208f2fd54f3a)
 
-## 开源协议
+## License
 
-Pipe 使用 GPLv3 作为开源授权协议，请尽量遵循，即使是在中国。
+Pipe uses GPLv3 as an open source license, please follow it as much as possible, even in China.
 
-## 鸣谢
+## Credits
 
-Pipe 的诞生离不开以下项目：
+The birth of Pipe is inseparable from the following items:
 
-* [jQuery](https://github.com/jquery/jquery)：JavaScript 工具库，用于主题页面
-* [Vue.js](https://github.com/vuejs/vue)：渐进式 JavaScript 框架
-* [Nuxt.js](https://github.com/nuxt/nuxt.js)：Vue.js 框架
-* [Vuetify](https://github.com/vanessa219/vuetify)：Vue.js 的 Material 组件框架
-* [Gin](https://github.com/gin-gonic/gin)：又快又好用的 golang HTTP web 框架
-* [GORM](https://github.com/jinzhu/gorm)：极好的 golang ORM 库
-* [Blackfriday](github.com/russross/blackfriday)：golang Markdown 处理器
-* [SQLite](https://www.sqlite.org)：使用广泛的嵌入式 SQL 引擎
-* [GCache](https://github.com/bluele/gcache)：golang 缓存库
-* [GoLand](https://www.jetbrains.com/go)：全宇宙暂时排名第一的 golang IDE
+* [jQuery](https://github.com/jquery/jquery): JavaScript library for themes
+* [Vue.js](https://github.com/vuejs/vue): Progressive JavaScript framework
+* [Nuxt.js](https://github.com/nuxt/nuxt.js): Vue.js framewok
+* [Vuetify](https://github.com/vanessa219/vuetify): Vue.js Material component
+* [Gin](https://github.com/gin-gonic/gin): golang HTTP web framework
+* [GORM](https://github.com/jinzhu/gorm): fantastic golang ORM library
+* [Blackfriday](github.com/russross/blackfriday): golang Markdown processor
+* [SQLite](https://www.sqlite.org): the most used database enging in the world
+* [GCache](https://github.com/bluele/gcache): golang cache
+* [GoLand](https://www.jetbrains.com/go): a wonderful IDE
 
 ----
 
 <p align = "center">
-<strong>小而美的博客平台，为未来而构建</strong>
+<strong>A small and beautiful blogging platform, build for the future</strong>
 <br><br>
 <img src="https://user-images.githubusercontent.com/873584/33324033-441773da-d489-11e7-8d39-78abbeb563f0.png">
 </p>
