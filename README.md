@@ -31,6 +31,7 @@
 * [http://pipe.b3log.org](http://pipe.b3log.org)
 * [Akkuman 的博客](http://o0o.pub)
 * [Vanessa](http://vanessa.b3log.org)
+* [Domolo Reader](http://www.domolo.com)
 
 你也在使用的话欢迎通过 PR 更新该列表。
 
