@@ -1,5 +1,9 @@
 # <img src="https://user-images.githubusercontent.com/873584/33324159-c3ea5050-d489-11e7-9f4b-75ee806a7538.png"> [Pipe](https://github.com/b3log/pipe) [![Build Status](https://img.shields.io/travis/b3log/pipe.svg?style=flat)](https://travis-ci.org/b3log/pipe) [![Go Report Card](https://goreportcard.com/badge/github.com/b3log/pipe)](https://goreportcard.com/report/github.com/b3log/pipe) [![Coverage Status](https://coveralls.io/repos/github/b3log/pipe/badge.svg?branch=master)](https://coveralls.io/github/b3log/pipe?branch=master) [![GitHub license](https://img.shields.io/github/license/b3log/pipe.svg)](https://github.com/b3log/pipe/blob/master/LICENSE)
 
+<p align="center">
+<a href="https://github.com/b3log/pipe/blob/master/README.md"><strong>English</strong></a> | <a href="https://github.com/b3log/pipe/blob/master/README_zh_CN.md"><strong>中文</strong></a>
+</p>
+
 * [简介](#简介)
 * [特性](#特性)
 * [安装](#安装)
