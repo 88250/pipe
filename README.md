@@ -124,7 +124,7 @@ npm install && npm install --global gulp && gulp
 
 ### Authors
 
-The main authors of Pipe are [Daniel] (https://github.com/88250) and [Vanessa] (https://github.com/Vanessa219), and all contributors can be found [here](https://github.com/b3log/pipe/graphs/contributors).
+The main authors of Pipe are [Daniel](https://github.com/88250) and [Vanessa](https://github.com/Vanessa219), and all contributors can be found [here](https://github.com/b3log/pipe/graphs/contributors).
 
 We are very much looking forward to you joining this project. Whether it is using feedback or code patches, it is a full of love for Pipe :heart:
 
