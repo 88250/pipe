@@ -23,8 +23,8 @@ import (
 	"github.com/b3log/pipe/model"
 	"github.com/b3log/pipe/util"
 	"github.com/jinzhu/gorm"
-	_ "github.com/jinzhu/gorm/dialects/mysql"
-	_ "github.com/jinzhu/gorm/dialects/sqlite"
+	_ "github.com/jinzhu/gorm/dialects/mysql" // mysql
+	_ "github.com/jinzhu/gorm/dialects/sqlite" // sqlite
 )
 
 // Logger

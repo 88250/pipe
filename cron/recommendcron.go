@@ -26,6 +26,7 @@ import (
 	"github.com/parnurzeal/gorequest"
 )
 
+// Recommend articles.
 var RecommendArticles []*model.ThemeArticle
 
 func refreshRecommendArticlesPeriodically() {

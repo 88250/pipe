@@ -26,6 +26,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// UpdateThemeAction updates theme.
 func UpdateThemeAction(c *gin.Context) {
 	result := util.NewResult()
 	defer c.JSON(http.StatusOK, result)
@@ -47,6 +48,7 @@ func UpdateThemeAction(c *gin.Context) {
 	}
 }
 
+// GetThemesAction gets themes.
 func GetThemesAction(c *gin.Context) {
 	result := util.NewResult()
 	defer c.JSON(http.StatusOK, result)

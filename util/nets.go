@@ -23,14 +23,17 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// IsDomain checks the specified string is domain name.
 func IsDomain(s string) bool {
 	return !IsIP(s) && "localhost" != s
 }
 
+// IsIP checks the specified string is IP.
 func IsIP(s string) bool {
 	return nil != net.ParseIP(s)
 }
 
+// GetRemoteAddr returns remote address of the context.
 func GetRemoteAddr(c *gin.Context) string {
 	ret := c.GetHeader("X-forwarded-for")
 	ret = strings.TrimSpace(ret)

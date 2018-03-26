@@ -22,6 +22,7 @@ import (
 	"github.com/b3log/pipe/model"
 )
 
+// Tag service.
 var Tag = &tagService{
 	mutex: &sync.Mutex{},
 }

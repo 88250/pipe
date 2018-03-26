@@ -26,6 +26,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// UpdateCategoryAction updates a category.
 func UpdateCategoryAction(c *gin.Context) {
 	result := util.NewResult()
 	defer c.JSON(http.StatusOK, result)
@@ -56,6 +57,7 @@ func UpdateCategoryAction(c *gin.Context) {
 	}
 }
 
+// GetCategoryAction gets a category.
 func GetCategoryAction(c *gin.Context) {
 	result := util.NewResult()
 	defer c.JSON(http.StatusOK, result)
@@ -79,6 +81,7 @@ func GetCategoryAction(c *gin.Context) {
 	result.Data = data
 }
 
+// GetCategoriesAction gets categories.
 func GetCategoriesAction(c *gin.Context) {
 	result := util.NewResult()
 	defer c.JSON(http.StatusOK, result)
@@ -105,6 +108,7 @@ func GetCategoriesAction(c *gin.Context) {
 	result.Data = data
 }
 
+// AddCategoryAction adds a category.
 func AddCategoryAction(c *gin.Context) {
 	result := util.NewResult()
 	defer c.JSON(http.StatusOK, result)
@@ -126,6 +130,7 @@ func AddCategoryAction(c *gin.Context) {
 	}
 }
 
+// RemoveCategoryAction removes a category.
 func RemoveCategoryAction(c *gin.Context) {
 	result := util.NewResult()
 	defer c.JSON(http.StatusOK, result)

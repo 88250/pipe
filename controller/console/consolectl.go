@@ -25,6 +25,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// ShowAdminPagesAction shows admin pages.
 func ShowAdminPagesAction(c *gin.Context) {
 	t, err := template.ParseFiles(filepath.ToSlash(filepath.Join(util.Conf.StaticRoot, "console/dist/admin"+c.Param("path")+"/index.html")))
 	if nil != err {
