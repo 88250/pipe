@@ -22,6 +22,7 @@ import (
 	"github.com/b3log/pipe/util"
 )
 
+// ConsoleArticle represents console article.
 type ConsoleArticle struct {
 	ID           uint64         `json:"id"`
 	Author       *ConsoleAuthor `json:"author"`
@@ -34,21 +35,25 @@ type ConsoleArticle struct {
 	CommentCount int            `json:"commentCount"`
 }
 
+// ConsoleTag represents console tag.
 type ConsoleTag struct {
 	Title string `json:"title"`
 	URL   string `json:"url,omitempty"`
 }
 
+// ConsoleAuthor represents console author.
 type ConsoleAuthor struct {
 	URL       string `json:"url"`
 	Name      string `json:"name"`
 	AvatarURL string `json:"avatarURL"`
 }
 
+// AvatarURLWithSize returns avatar URL with the specified size.
 func (u *ConsoleAuthor) AvatarURLWithSize(size int) string {
 	return util.ImageSize(u.AvatarURL, size, size)
 }
 
+// ConsoleCategory represents console category.
 type ConsoleCategory struct {
 	ID          uint64 `json:"id"`
 	Title       string `json:"title"`
@@ -58,6 +63,7 @@ type ConsoleCategory struct {
 	Tags        string `json:"tags"`
 }
 
+// ConsoleComment represents console comment.
 type ConsoleComment struct {
 	ID            uint64         `json:"id"`
 	Author        *ConsoleAuthor `json:"author"`
@@ -68,6 +74,7 @@ type ConsoleComment struct {
 	URL           string         `json:"url"`
 }
 
+// ConsoleNavigation represents console navigation.
 type ConsoleNavigation struct {
 	ID         uint64 `json:"id"`
 	Title      string `json:"title"`
@@ -77,11 +84,13 @@ type ConsoleNavigation struct {
 	Number     int    `json:"number"`
 }
 
+// ConsoleTheme represents console theme.
 type ConsoleTheme struct {
 	Name         string `json:"name"`
 	ThumbnailURL string `json:"thumbnailURL"`
 }
 
+// ConsoleUser represents console user.
 type ConsoleUser struct {
 	ID           uint64 `json:"id"`
 	Name         string `json:"name"`
