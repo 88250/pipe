@@ -100,8 +100,7 @@ func (*myfile) CopyFile(source string, dest string) (err error) {
 
 	_, err = io.Copy(destfile, sourcefile)
 	if err == nil {
-		sourceinfo, err := os.Stat(source)
-		if err != nil {
+		if sourceinfo, e := os.Stat(source); nil != e {
 			err = os.Chmod(dest, sourceinfo.Mode())
 
 			return
