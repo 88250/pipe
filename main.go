@@ -90,7 +90,7 @@ func handleSignal(server *http.Server) {
 		s := <-c
 		logger.Infof("got signal [%s], exiting pipe now", s)
 		if err := server.Close(); nil != err {
-			logger.Errorf("server close failed: ", err)
+			logger.Errorf("server close failed: " + err.Error())
 		}
 
 		service.DisconnectDB()

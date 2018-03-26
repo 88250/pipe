@@ -98,7 +98,7 @@ func importComments(sqlite, mysql *gorm.DB, models []*model.Comment) {
 
 func importCorrelations(sqlite, mysql *gorm.DB, models []*model.Correlation) {
 	if err := sqlite.Find(&models).Error; nil != err {
-		logger.Fatalf("queries data failed: ", err.Error())
+		logger.Fatalf("queries data failed: " + err.Error())
 	}
 	for _, model := range models {
 		if err := mysql.Save(model).Error; nil != err {

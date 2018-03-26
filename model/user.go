@@ -28,7 +28,7 @@ type User struct {
 	Nickname          string `gorm:"size:32" json:"nickname"`
 	AvatarURL         string `gorm:"size:255" json:"avatarURL"`
 	B3Key             string `gorm:"size:32" json:"b3Key"`
-	Locale            string `gorm:"size:32 json:"locale"`
+	Locale            string `gorm:"size:32" json:"locale"`
 	TotalArticleCount int    `json:"totalArticleCount"`
 }
 

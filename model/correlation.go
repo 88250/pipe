@@ -41,7 +41,7 @@ type Correlation struct {
 	Int1 int    `json:"int1"`
 	Int2 int    `json:"int2"`
 	Int3 int    `json:"int3"`
-	Int4 int    `json:int4`
+	Int4 int    `json:"int4"`
 	Type int    `json:"type"`
 
 	BlogID uint64 `sql:"index" json:"blogID"`
