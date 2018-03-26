@@ -27,6 +27,7 @@ import (
 	"github.com/parnurzeal/gorequest"
 )
 
+// BlogSwitchAction switches blog.
 func BlogSwitchAction(c *gin.Context) {
 	result := util.NewResult()
 	defer c.JSON(http.StatusOK, result)
@@ -73,6 +74,7 @@ func BlogSwitchAction(c *gin.Context) {
 	session.Save(c)
 }
 
+// CheckVersion checks version.
 func CheckVersion(c *gin.Context) {
 	result := util.NewResult()
 	defer c.JSON(http.StatusOK, result)

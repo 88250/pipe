@@ -16,7 +16,7 @@
 
 package util
 
-// Result.
+// Result represents HTTP response body.
 type Result struct {
 	Code int         `json:"code"` // return code, 0 for succ
 	Msg  string      `json:"msg"`  // message

@@ -22,6 +22,7 @@ import (
 	"github.com/bluele/gcache"
 )
 
+// Setting cache.
 var Setting = &settingCache{
 	categoryNameHolder: gcache.New(1024 * 10).LRU().Build(),
 }

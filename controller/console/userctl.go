@@ -25,6 +25,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// AddUserAction adds a user.
 func AddUserAction(c *gin.Context) {
 	result := util.NewResult()
 	defer c.JSON(http.StatusOK, result)
@@ -55,6 +56,7 @@ func AddUserAction(c *gin.Context) {
 	}
 }
 
+// GetUsersAction gets users.
 func GetUsersAction(c *gin.Context) {
 	result := util.NewResult()
 	defer c.JSON(http.StatusOK, result)

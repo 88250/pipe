@@ -31,6 +31,7 @@ import (
 	"github.com/jinzhu/gorm"
 )
 
+// Article service.
 var Article = &articleService{
 	mutex: &sync.Mutex{},
 }

@@ -33,6 +33,7 @@ import (
 // Logger
 var logger = log.NewLogger(os.Stdout)
 
+// MarkdownAction handles markdown text to HTML.
 func MarkdownAction(c *gin.Context) {
 	result := util.NewResult()
 	defer c.JSON(http.StatusOK, result)
@@ -52,6 +53,7 @@ func MarkdownAction(c *gin.Context) {
 	result.Data = data
 }
 
+// AddArticleAction adds a new article.
 func AddArticleAction(c *gin.Context) {
 	result := util.NewResult()
 	defer c.JSON(http.StatusOK, result)
@@ -76,6 +78,7 @@ func AddArticleAction(c *gin.Context) {
 	}
 }
 
+// GetArticleAction gets an article.
 func GetArticleAction(c *gin.Context) {
 	result := util.NewResult()
 	defer c.JSON(http.StatusOK, result)
@@ -98,6 +101,7 @@ func GetArticleAction(c *gin.Context) {
 	result.Data = data
 }
 
+// GetArticlesAction gets articles.
 func GetArticlesAction(c *gin.Context) {
 	result := util.NewResult()
 	defer c.JSON(http.StatusOK, result)
@@ -146,6 +150,7 @@ func GetArticlesAction(c *gin.Context) {
 	result.Data = data
 }
 
+// RemoveArticleAction removes an article.
 func RemoveArticleAction(c *gin.Context) {
 	result := util.NewResult()
 	defer c.JSON(http.StatusOK, result)
@@ -168,6 +173,7 @@ func RemoveArticleAction(c *gin.Context) {
 	}
 }
 
+// RemoveArticlesAction removes articles.
 func RemoveArticlesAction(c *gin.Context) {
 	result := util.NewResult()
 	defer c.JSON(http.StatusOK, result)
@@ -191,6 +197,7 @@ func RemoveArticlesAction(c *gin.Context) {
 	}
 }
 
+// UpdateArticleAction updates an article.
 func UpdateArticleAction(c *gin.Context) {
 	result := util.NewResult()
 	defer c.JSON(http.StatusOK, result)
@@ -222,6 +229,7 @@ func UpdateArticleAction(c *gin.Context) {
 	}
 }
 
+// GetArticleThumbsAction gets article thumbnails.
 func GetArticleThumbsAction(c *gin.Context) {
 	result := util.NewResult()
 	defer c.JSON(http.StatusOK, result)

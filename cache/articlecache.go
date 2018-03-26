@@ -28,6 +28,7 @@ import (
 // Logger
 var logger = log.NewLogger(os.Stdout)
 
+// Article cache.
 var Article = &articleCache{
 	idHolder: gcache.New(1024 * 10).LRU().Build(),
 }

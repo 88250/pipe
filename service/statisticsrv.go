@@ -24,6 +24,7 @@ import (
 	"github.com/jinzhu/gorm"
 )
 
+// Statistic service.
 var Statistic = &statisticService{
 	mutex: &sync.Mutex{},
 }
