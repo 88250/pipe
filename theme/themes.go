@@ -31,7 +31,7 @@ var logger = log.NewLogger(os.Stdout)
 // DefaultTheme represents the default theme name.
 const DefaultTheme = "Gina"
 
-//  Themes saves all theme names.
+// Themes saves all theme names.
 var Themes []string
 
 // Load loads themes.

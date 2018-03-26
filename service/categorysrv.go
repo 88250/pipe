@@ -28,6 +28,7 @@ import (
 	"github.com/jinzhu/gorm"
 )
 
+// Category service.
 var Category = &categoryService{
 	mutex: &sync.Mutex{},
 }
@@ -64,7 +65,7 @@ func (srv *categoryService) UpdateCategory(category *model.Category) error {
 	count := 0
 	if db.Model(&model.Category{}).Where("`id` = ? AND `blog_id` = ?", category.ID, category.BlogID).
 		Count(&count); 1 > count {
-		return errors.New(fmt.Sprintf("not found category [id=%d] to update", category.ID))
+		return fmt.Errorf("not found category [id=%d] to update", category.ID)
 	}
 
 	tagStr, err := normalizeTagStr(category.Tags)

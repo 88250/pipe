@@ -23,6 +23,7 @@ import (
 	"github.com/b3log/pipe/util"
 )
 
+// Upgrade service.
 var Upgrade = &upgradeService{
 	mutex: &sync.Mutex{},
 }

@@ -24,6 +24,7 @@ import (
 	"github.com/b3log/pipe/util"
 )
 
+// User service.
 var User = &userService{
 	mutex: &sync.Mutex{},
 }
@@ -116,6 +117,7 @@ func (srv *userService) GetUser(userID uint64) *model.User {
 	return ret
 }
 
+// UserBlog represents user blog.
 type UserBlog struct {
 	ID               uint64 `json:"id"`    // blog ID
 	Title            string `json:"title"` // blog title

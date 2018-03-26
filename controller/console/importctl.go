@@ -28,6 +28,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// ImportMarkdownAction imports markdown zip file as articles.
 func ImportMarkdownAction(c *gin.Context) {
 	result := util.NewResult()
 	defer c.JSON(http.StatusOK, result)

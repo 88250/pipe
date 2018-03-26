@@ -29,11 +29,13 @@ import (
 	"gopkg.in/yaml.v2"
 )
 
+// Import service.
 var Import = &importService{}
 
 type importService struct {
 }
 
+// MarkdownFile represents markdown file.
 type MarkdownFile struct {
 	Name    string
 	Path    string

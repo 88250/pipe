@@ -26,7 +26,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// HacPai URL.
+// HacPaiURL is the URL of HacPai community.
 const HacPaiURL = "https://hacpai.com"
 
 // HacPaiAPI is a reverse proxy for https://hacpai.com.

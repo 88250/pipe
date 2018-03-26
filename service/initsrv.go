@@ -28,6 +28,7 @@ import (
 	"github.com/jinzhu/gorm"
 )
 
+// Init service.
 var Init = &initService{
 	mutex: &sync.Mutex{},
 }
@@ -37,6 +38,7 @@ type initService struct {
 	inited bool
 }
 
+// PlatformStatus represents platform status.
 type PlatformStatus struct {
 	Version string `json:"version"`
 	Locale  string `json:"locale"`

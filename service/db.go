@@ -33,6 +33,7 @@ var logger = log.NewLogger(os.Stdout)
 var db *gorm.DB
 var useSQLite bool
 
+// ConnectDB connects to the database.
 func ConnectDB() {
 	var err error
 	useSQLite = false
@@ -66,6 +67,7 @@ func ConnectDB() {
 	//db.LogMode(true)
 }
 
+// DisconnectDB disconnects from the database.
 func DisconnectDB() {
 	if err := db.Close(); nil != err {
 		logger.Errorf("Disconnect from database failed: " + err.Error())
