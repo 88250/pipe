@@ -23,6 +23,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// LoginCheck checks login or not.
 func LoginCheck(c *gin.Context) {
 	session := util.GetSession(c)
 	if nil == session {

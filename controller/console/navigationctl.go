@@ -26,6 +26,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// GetNavigationsAction gets navigations.
 func GetNavigationsAction(c *gin.Context) {
 	result := util.NewResult()
 	defer c.JSON(http.StatusOK, result)
@@ -53,6 +54,7 @@ func GetNavigationsAction(c *gin.Context) {
 	result.Data = data
 }
 
+// GetNavigationAction gets a navigation.
 func GetNavigationAction(c *gin.Context) {
 	result := util.NewResult()
 	defer c.JSON(http.StatusOK, result)
@@ -75,6 +77,7 @@ func GetNavigationAction(c *gin.Context) {
 	result.Data = data
 }
 
+// RemoveNavigationAction remove a navigation.
 func RemoveNavigationAction(c *gin.Context) {
 	result := util.NewResult()
 	defer c.JSON(http.StatusOK, result)
@@ -97,6 +100,7 @@ func RemoveNavigationAction(c *gin.Context) {
 	}
 }
 
+// UpdateNavigationAction updates a navigation.
 func UpdateNavigationAction(c *gin.Context) {
 	result := util.NewResult()
 	defer c.JSON(http.StatusOK, result)
@@ -127,6 +131,7 @@ func UpdateNavigationAction(c *gin.Context) {
 	}
 }
 
+// AddNavigationAction adds a navigation.
 func AddNavigationAction(c *gin.Context) {
 	result := util.NewResult()
 	defer c.JSON(http.StatusOK, result)

@@ -36,6 +36,7 @@ import (
 
 var markdownCache = gcache.New(1024).LRU().Build()
 
+// MarkdownResult represents markdown result.
 type MarkdownResult struct {
 	ContentHTML  string
 	AbstractText string
@@ -44,6 +45,7 @@ type MarkdownResult struct {
 
 var markedAvailable = false
 
+// LoadMarkdown loads markdown process engine.
 func LoadMarkdown() {
 	request, err := http.NewRequest("POST", "http://localhost:8250", strings.NewReader("Pipe 大法好"))
 	if nil != err {
@@ -104,6 +106,7 @@ func bf(mdText string) []byte {
 	return blackfriday.Run([]byte(mdText))
 }
 
+// Markdown process the specified markdown text to HTML.
 func Markdown(mdText string) *MarkdownResult {
 	digest := md5.New()
 	digest.Write([]byte(mdText))

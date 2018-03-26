@@ -40,4 +40,5 @@ type Comment struct {
 	BlogID uint64 `sql:"index" json:"blogID"`
 }
 
+// SyncCommentAuthorID is the id of sync comment bot.
 const SyncCommentAuthorID = math.MaxInt32
