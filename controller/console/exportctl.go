@@ -28,6 +28,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// ExportMarkdownAction exports articles as markdown zip file.
 func ExportMarkdownAction(c *gin.Context) {
 	result := util.NewResult()
 	defer c.JSON(http.StatusOK, result)

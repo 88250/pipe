@@ -20,6 +20,7 @@ import (
 	"math/rand"
 )
 
+// RandInts returns a random integer array with the specified from, to and size.
 func RandInts(from, to, size int) []int {
 	if to-from < size {
 		size = to - from

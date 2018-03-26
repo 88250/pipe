@@ -36,13 +36,13 @@ import (
 // Logger
 var logger = log.NewLogger(os.Stdout)
 
-// Version..
+// Version of Pipe.
 const Version = "1.4.0"
 
-// Configuration.
+// Configuration of Pipe.
 var Conf *Configuration
 
-// UserAgnt represents HTTP client user agent.
+// UserAgent represents HTTP client user agent.
 var UserAgent = "Mozilla/5.0 (compatible; Pipe" + Version + "; +" + HacPaiURL + ")"
 
 // Models represents all models..

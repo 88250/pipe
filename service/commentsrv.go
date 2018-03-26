@@ -23,7 +23,7 @@ import (
 	"github.com/b3log/pipe/util"
 )
 
-// Commment service.
+// Comment service.
 var Comment = &commentService{
 	mutex: &sync.Mutex{},
 }

@@ -55,6 +55,7 @@ var reservedPaths = []string{
 	PathPlatInfo,
 }
 
+// IsReservedPath checks the specified path is a reserved path or not.
 func IsReservedPath(path string) bool {
 	path = strings.TrimSpace(path)
 	if PathRoot == path {
