@@ -17,8 +17,8 @@
 package model
 
 import (
-	"time"
 	"math"
+	"time"
 )
 
 // Comment model.

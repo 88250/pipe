@@ -23,7 +23,7 @@ import (
 	"github.com/b3log/pipe/model"
 	"github.com/b3log/pipe/util"
 	"github.com/jinzhu/gorm"
-	_ "github.com/jinzhu/gorm/dialects/mysql" // mysql
+	_ "github.com/jinzhu/gorm/dialects/mysql"  // mysql
 	_ "github.com/jinzhu/gorm/dialects/sqlite" // sqlite
 )
 
@@ -76,7 +76,7 @@ func DisconnectDB() {
 
 // Database returns the underlying database name.
 func Database() string {
-	if (useSQLite) {
+	if useSQLite {
 		return "SQLite"
 	}
 
