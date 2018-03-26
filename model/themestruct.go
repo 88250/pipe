@@ -21,6 +21,7 @@ import (
 	"strconv"
 )
 
+// ThemeArticle represents theme article.
 type ThemeArticle struct {
 	ID           uint64        `json:",omitempty"`
 	Abstract     template.HTML `json:"abstract"`
@@ -37,18 +38,21 @@ type ThemeArticle struct {
 	Editable     bool          `json:",omitempty"`
 }
 
+// ThemeTag represents theme tag.
 type ThemeTag struct {
 	Title        string `json:"title"`
 	URL          string `json:"url"`
 	ArticleCount int    `json:",omitempty"`
 }
 
+// ThemeArchive represents theme archive.
 type ThemeArchive struct {
 	Title        string
 	URL          string
 	ArticleCount int
 }
 
+// ThemeAuthor represents theme author.
 type ThemeAuthor struct {
 	Name         string
 	AvatarURL    string
@@ -56,10 +60,12 @@ type ThemeAuthor struct {
 	ArticleCount int
 }
 
+// AvatarURLWithSize returns avatar URL with the specified size.
 func (author *ThemeAuthor) AvatarURLWithSize(size int) string {
 	return author.AvatarURL + "?imageView2/1/w/" + strconv.Itoa(size) + "/h/" + strconv.Itoa(size) + "/interlace/1/q/100"
 }
 
+// ThemeCategory represents theme category.
 type ThemeCategory struct {
 	Title        string
 	URL          string
@@ -68,6 +74,7 @@ type ThemeCategory struct {
 	ArticleCount int
 }
 
+// ThemeComment represents theme comment.
 type ThemeComment struct {
 	ID         uint64
 	Title      string
@@ -80,6 +87,7 @@ type ThemeComment struct {
 	Parent     *ThemeComment
 }
 
+// ThemeReply represents theme reply.
 type ThemeReply struct {
 	ID        uint64
 	Content   template.HTML

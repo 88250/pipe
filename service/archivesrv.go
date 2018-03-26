@@ -24,6 +24,7 @@ import (
 	"github.com/jinzhu/gorm"
 )
 
+// Archive service.
 var Archive = &archiveService{
 	mutex: &sync.Mutex{},
 }
