@@ -21,6 +21,7 @@ import (
 	"github.com/bluele/gcache"
 )
 
+// User cache.
 var User = &userCache{
 	idHolder: gcache.New(1024 * 10).LRU().Build(),
 }

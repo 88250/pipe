@@ -38,6 +38,7 @@ func RandImage() string {
 	return time.Unix(sec, 0).Format("https://img.hacpai.com/bing/20060102.jpg")
 }
 
+// RandImages returns random image URLs.
 func RandImages(n int) []string {
 	var ret []string
 

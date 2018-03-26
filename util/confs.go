@@ -36,16 +36,16 @@ import (
 // Logger
 var logger = log.NewLogger(os.Stdout)
 
-// Pipe version.
+// Version..
 const Version = "1.4.0"
 
-// Pipe configuration.
+// Configuration.
 var Conf *Configuration
 
-// HTTP client user agent.
+// UserAgnt represents HTTP client user agent.
 var UserAgent = "Mozilla/5.0 (compatible; Pipe" + Version + "; +" + HacPaiURL + ")"
 
-// Database models.
+// Models represents all models..
 var Models = []interface{}{
 	&model.User{}, &model.Article{}, &model.Comment{}, &model.Navigation{}, &model.Tag{},
 	&model.Category{}, &model.Archive{}, &model.Setting{}, &model.Correlation{},
@@ -54,7 +54,7 @@ var Models = []interface{}{
 // Table prefix.
 const tablePrefix = "b3_pipe_"
 
-// Zero push time.
+// ZeroPushTime represents zero push time.
 var ZeroPushTime, _ = time.Parse("2006-01-02 15:04:05", "2006-01-02 15:04:05")
 
 // Configuration (pipe.json).

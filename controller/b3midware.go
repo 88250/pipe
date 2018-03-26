@@ -30,6 +30,7 @@ import (
 	"github.com/parnurzeal/gorequest"
 )
 
+// DataModel represents data model.
 type DataModel map[string]interface{}
 
 const nilB3id = "H9oxzSym"

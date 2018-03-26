@@ -27,6 +27,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// GetCommentsAction gets comments
 func GetCommentsAction(c *gin.Context) {
 	result := util.NewResult()
 	defer c.JSON(http.StatusOK, result)
@@ -79,6 +80,7 @@ func GetCommentsAction(c *gin.Context) {
 	result.Data = data
 }
 
+// RemoveCommentAction removes a comment.
 func RemoveCommentAction(c *gin.Context) {
 	result := util.NewResult()
 	defer c.JSON(http.StatusOK, result)
@@ -101,6 +103,7 @@ func RemoveCommentAction(c *gin.Context) {
 	}
 }
 
+// RemoveCommentsAction removes comments.
 func RemoveCommentsAction(c *gin.Context) {
 	result := util.NewResult()
 	defer c.JSON(http.StatusOK, result)

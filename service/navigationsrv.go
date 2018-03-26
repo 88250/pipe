@@ -17,7 +17,6 @@
 package service
 
 import (
-	"errors"
 	"fmt"
 	"sync"
 
@@ -25,6 +24,7 @@ import (
 	"github.com/b3log/pipe/util"
 )
 
+// Navigation service.
 var Navigation = &navigationService{
 	mutex: &sync.Mutex{},
 }
@@ -83,7 +83,7 @@ func (srv *navigationService) UpdateNavigation(navigation *model.Navigation) err
 	count := 0
 	if db.Model(&model.Navigation{}).Where("`id` = ? AND `blog_id` = ?", navigation.ID, navigation.BlogID).
 		Count(&count); 1 > count {
-		return errors.New(fmt.Sprintf("not found navigation [id=%d] to update", navigation.ID))
+		return fmt.Errorf("not found navigation [id=%d] to update", navigation.ID)
 	}
 
 	tx := db.Begin()
