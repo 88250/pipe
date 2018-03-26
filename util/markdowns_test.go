@@ -34,6 +34,7 @@ func TestMarkdown(t *testing.T) {
 	}
 
 	html = Markdown(mdText).ContentHTML
+	t.Log(html)
 }
 
 func TestMarkdownAbstract(t *testing.T) {

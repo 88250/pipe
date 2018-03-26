@@ -103,6 +103,8 @@ func (*myfile) CopyFile(source string, dest string) (err error) {
 		sourceinfo, err := os.Stat(source)
 		if err != nil {
 			err = os.Chmod(dest, sourceinfo.Mode())
+
+			return
 		}
 	}
 
