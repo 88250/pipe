@@ -30,6 +30,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// GetBasicSettingsAction gets basic settings.
 func GetBasicSettingsAction(c *gin.Context) {
 	result := util.NewResult()
 	defer c.JSON(http.StatusOK, result)
@@ -54,6 +55,7 @@ func GetBasicSettingsAction(c *gin.Context) {
 	result.Data = data
 }
 
+// UpdateBasicSettingsAction updates basic settings.
 func UpdateBasicSettingsAction(c *gin.Context) {
 	result := util.NewResult()
 	defer c.JSON(http.StatusOK, result)
@@ -113,6 +115,7 @@ func UpdateBasicSettingsAction(c *gin.Context) {
 	}
 }
 
+// GetPreferenceSettingsAction gets preference settings.
 func GetPreferenceSettingsAction(c *gin.Context) {
 	result := util.NewResult()
 	defer c.JSON(http.StatusOK, result)
@@ -137,6 +140,7 @@ func GetPreferenceSettingsAction(c *gin.Context) {
 	result.Data = data
 }
 
+// UpdatePreferenceSettingsAction updates preference settings.
 func UpdatePreferenceSettingsAction(c *gin.Context) {
 	result := util.NewResult()
 	defer c.JSON(http.StatusOK, result)
@@ -175,6 +179,7 @@ func UpdatePreferenceSettingsAction(c *gin.Context) {
 	}
 }
 
+// GetSignSettingsAction gets sign settings.
 func GetSignSettingsAction(c *gin.Context) {
 	result := util.NewResult()
 	defer c.JSON(http.StatusOK, result)
@@ -184,6 +189,7 @@ func GetSignSettingsAction(c *gin.Context) {
 	result.Data = signSetting.Value
 }
 
+// UpdateSignSettingsAction updates sign settings.
 func UpdateSignSettingsAction(c *gin.Context) {
 	result := util.NewResult()
 	defer c.JSON(http.StatusOK, result)
@@ -212,6 +218,7 @@ func UpdateSignSettingsAction(c *gin.Context) {
 	}
 }
 
+// GetI18nSettingsAction gets i18n settings.
 func GetI18nSettingsAction(c *gin.Context) {
 	result := util.NewResult()
 	defer c.JSON(http.StatusOK, result)
@@ -225,6 +232,7 @@ func GetI18nSettingsAction(c *gin.Context) {
 	result.Data = data
 }
 
+// UpdateI18nSettingsAction updates i18n settings.
 func UpdateI18nSettingsAction(c *gin.Context) {
 	result := util.NewResult()
 	defer c.JSON(http.StatusOK, result)
@@ -255,6 +263,7 @@ func UpdateI18nSettingsAction(c *gin.Context) {
 	}
 }
 
+// GetFeedSettingsAction gets feed settings.
 func GetFeedSettingsAction(c *gin.Context) {
 	result := util.NewResult()
 	defer c.JSON(http.StatusOK, result)
@@ -278,6 +287,7 @@ func GetFeedSettingsAction(c *gin.Context) {
 	result.Data = data
 }
 
+// UpdateFeedSettingsAction updates feed settings.
 func UpdateFeedSettingsAction(c *gin.Context) {
 	result := util.NewResult()
 	defer c.JSON(http.StatusOK, result)
@@ -316,6 +326,7 @@ func UpdateFeedSettingsAction(c *gin.Context) {
 	}
 }
 
+// GetThirdStatisticSettingsAction gets third statistic settings.
 func GetThirdStatisticSettingsAction(c *gin.Context) {
 	result := util.NewResult()
 	defer c.JSON(http.StatusOK, result)
@@ -328,6 +339,7 @@ func GetThirdStatisticSettingsAction(c *gin.Context) {
 	result.Data = data
 }
 
+// UpdateThirdStatisticSettingsAction updates third statistic settings.
 func UpdateThirdStatisticSettingsAction(c *gin.Context) {
 	result := util.NewResult()
 	defer c.JSON(http.StatusOK, result)

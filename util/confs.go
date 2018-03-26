@@ -39,7 +39,7 @@ var logger = log.NewLogger(os.Stdout)
 // Version of Pipe.
 const Version = "1.4.0"
 
-// Configuration of Pipe.
+// Conf of Pipe.
 var Conf *Configuration
 
 // UserAgent represents HTTP client user agent.
