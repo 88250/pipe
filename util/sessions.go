@@ -23,6 +23,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// SessionData represents the session.
 type SessionData struct {
 	UID     uint64 // user ID
 	UName   string // username
@@ -33,10 +34,12 @@ type SessionData struct {
 	BURL    string // blog url
 }
 
+// AvatarURLWithSize returns avatar URL with the specified size.
 func (sd *SessionData) AvatarURLWithSize(size int) string {
 	return ImageSize(sd.UAvatar, size, size)
 }
 
+// Save saves the current session of the specified context.
 func (sd *SessionData) Save(c *gin.Context) error {
 	session := sessions.Default(c)
 	sessionDataBytes, err := json.Marshal(sd)
@@ -48,6 +51,7 @@ func (sd *SessionData) Save(c *gin.Context) error {
 	return session.Save()
 }
 
+// GetSession returns session of the specified context.
 func GetSession(c *gin.Context) *SessionData {
 	ret := &SessionData{}
 

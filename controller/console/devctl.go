@@ -27,6 +27,7 @@ import (
 	"math/rand"
 )
 
+// GenArticlesAction generates articles for testing.
 func GenArticlesAction(c *gin.Context) {
 	session := util.GetSession(c)
 

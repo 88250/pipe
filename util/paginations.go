@@ -23,6 +23,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// Pagination represents pagination info.
 type Pagination struct {
 	CurrentPageNum  int    `json:"currentPageNum"`
 	PageSize        int    `json:"pageSize"`
@@ -37,6 +38,7 @@ type Pagination struct {
 	PageURL         string `json:"pageURL"`
 }
 
+// GetPage returns paging parameter.
 func GetPage(c *gin.Context) int {
 	ret, _ := strconv.Atoi(c.Query("p"))
 	if 1 > ret {
@@ -46,6 +48,7 @@ func GetPage(c *gin.Context) int {
 	return ret
 }
 
+// NewPagination creates a new pagination with the specified current page num, page size, window size and record count.
 func NewPagination(currentPageNum, pageSize, windowSize, recordCount int) *Pagination {
 	pageCount := int(math.Ceil(float64(recordCount) / float64(pageSize)))
 

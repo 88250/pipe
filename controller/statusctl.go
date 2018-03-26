@@ -26,6 +26,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// Status represents platform status and blog info.
 type Status struct {
 	*service.PlatformStatus
 

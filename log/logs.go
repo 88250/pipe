@@ -193,7 +193,7 @@ func (l *Logger) Warn(v ...interface{}) {
 	l.logger.Output(2, fmt.Sprint(v...))
 }
 
-// Warn prints warning level message with format.
+// Warnf prints warning level message with format.
 func (l *Logger) Warnf(format string, v ...interface{}) {
 	if Warn < l.level {
 		return

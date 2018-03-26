@@ -28,9 +28,11 @@ import (
 // Logger
 var logger = log.NewLogger(os.Stdout)
 
+// Default theme name.
 const DefaultTheme = "Gina"
 
-var Themes = []string{}
+// All theme names.
+var Themes []string
 
 // Load loads themes.
 func Load() {

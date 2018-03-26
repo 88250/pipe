@@ -22,6 +22,7 @@ import (
 	"time"
 )
 
+// ImageSize returns image URL of Qiniu image processing style with the specified width and height.
 func ImageSize(imageURL string, width, height int) string {
 	return imageURL + "?imageView2/1/w/" + strconv.Itoa(width) + "/h/" + strconv.Itoa(height) + "/interlace/1/q/100"
 }

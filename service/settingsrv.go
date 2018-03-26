@@ -23,6 +23,7 @@ import (
 	"github.com/b3log/pipe/model"
 )
 
+// Setting service.
 var Setting = &settingService{
 	mutex: &sync.Mutex{},
 }

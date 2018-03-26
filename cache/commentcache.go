@@ -21,6 +21,7 @@ import (
 	"github.com/bluele/gcache"
 )
 
+// Comment service.
 var Comment = &commentCache{
 	idHolder: gcache.New(1024 * 10 * 10).LRU().Build(),
 }
