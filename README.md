@@ -8,7 +8,7 @@
 * [Features](#features)
 * [Installation](#installation)
 * [Documents](#documents)
-* [Screenshots](#screenshot)
+* [Screenshots](#screenshots)
 * [Build](#build)
 * [Contributions](#contributions)
 * [License](#license)
@@ -64,7 +64,7 @@ You are also welcome to update this list through PR.
 * [Pipe Theme Dev Guide](https://hacpai.com/article/1512550354920)
 * [Postman Collection](https://www.getpostman.com/collections/c466e81beb7acd5685ec)
 
-## Screenshot
+## Screenshots
 
 ### Init
 
