@@ -27,7 +27,6 @@ import (
 
 const (
 	testPlatformAdminName  = "pipe"
-	testPlatformAdminEmail = "pipe@b3log.org"
 )
 
 func TestMain(m *testing.M) {
