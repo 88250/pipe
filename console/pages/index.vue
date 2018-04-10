@@ -1,21 +1,19 @@
 <template>
   <div class="console" id="particles">
-    <div class="card" v-if="$store.state.role !== 0">
+    <div class="card ft-center">
+      <h2 class="card__body"></h2>
+      <div v-if="$store.state.role === 0" v-html="$t('index2', $store.state.locale)"></div>
+      <div v-html="$t('index3', $store.state.locale)"></div>
+      <br>
+      <iframe src="https://ghbtns.com/github-btn.html?user=b3log&repo=pipe&type=star&count=true&size=large"
+              frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+      <br><br>
       <h2 class="card__title">Top 10</h2>
-      <ul class="list">
+      <ul class="list ">
         <li class="fn-flex" v-for="item in list">
-          <a class="fn-flex-1" :href="item.url">{{ item.title }}</a>
+          <a class="fn-flex-1" :href="item.url" target="_blank">{{ item.title }}</a>
         </li>
       </ul>
-    </div>
-    <div class="card" v-else>
-      <h2 class="card__body">{{ $t('welcome', $store.state.locale) }}</h2>
-      <div class="ft-center">
-        <div v-html="$t('index2', $store.state.locale)"></div>
-        <br>
-        <iframe src="https://ghbtns.com/github-btn.html?user=b3log&repo=pipe&type=star&count=true&size=large"
-                frameborder="0" scrolling="0" width="160px" height="30px"></iframe><br><br>
-      </div>
     </div>
   </div>
 </template>
@@ -44,3 +42,11 @@
     }
   }
 </script>
+
+<style lang="sass">
+  .console
+    flex: none
+  .card__title
+    text-align: center
+    display: block
+</style>
