@@ -39,6 +39,13 @@
           @change="setLocalstorage('url')"
         ></v-text-field>
 
+        <v-text-field
+          :label="$t('time', $store.state.locale) + '[YYYY-MM-DD HH:mm:ss]'"
+          v-model="time"
+          :rules="timeRules"
+          @change="setLocalstorage('time')"
+        ></v-text-field>
+
         <label class="checkbox">
           <input
             type="checkbox"
@@ -140,7 +147,11 @@
         tagsRules: [
           (v) => this.tags.length > 0 || this.$t('required', this.$store.state.locale)
         ],
+        timeRules: [
+          (v) => /^(((20[0-3][0-9]-(0[13578]|1[02])-(0[1-9]|[12][0-9]|3[01]))|(20[0-3][0-9]-(0[2469]|11)-(0[1-9]|[12][0-9]|30))) (20|21|22|23|[0-1][0-9]):[0-5][0-9]:[0-5][0-9])$/.test(v) || this.$t('time', this.$store.state.locale) + '[YYYY-MM-DD HH:mm:ss]'
+        ],
         url: '',
+        time: '',
         tags: [],
         commentable: true,
         useThumbs: false,
@@ -255,6 +266,9 @@
           case 'url':
             localStorage.setItem('article-url', this.url)
             break
+          case 'time':
+            localStorage.setItem('article-time', this.time)
+            break
           case 'commentable':
             localStorage.setItem('article-commentable', this.commentable)
             break
@@ -297,7 +311,8 @@
           path: this.url,
           tags: this.tags.toString(),
           commentable: this.commentable,
-          topped: this.topped
+          topped: this.topped,
+          time: this.time
         })
         if (responseData.code === 0) {
           if (!id) {
@@ -305,6 +320,7 @@
             localStorage.removeItem('article-content')
             localStorage.removeItem('article-tags')
             localStorage.removeItem('article-url')
+            localStorage.removeItem('article-time')
             localStorage.removeItem('article-commentable')
             localStorage.removeItem('article-useThumbs')
             localStorage.removeItem('article-topped')
@@ -340,6 +356,7 @@
           this.$set(this, 'title', responseData.title)
           this.$set(this, 'content', responseData.content)
           this.$set(this, 'url', responseData.path)
+          this.$set(this, 'time', responseData.time)
           this.$set(this, 'tags', responseData.tags.split(','))
           this.$set(this, 'commentable', responseData.commentable)
           this.$set(this, 'topped', responseData.topped)
@@ -359,6 +376,9 @@
           }
           if (localStorage.getItem('article-url')) {
             this.$set(this, 'url', localStorage.getItem('article-url'))
+          }
+          if (localStorage.getItem('article-time')) {
+            this.$set(this, 'time', localStorage.getItem('article-time'))
           }
           if (localStorage.getItem('article-commentable')) {
             this.$set(this, 'commentable', localStorage.getItem('article-commentable') === 'true')
