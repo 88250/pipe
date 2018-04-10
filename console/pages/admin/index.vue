@@ -26,7 +26,7 @@
       }
     },
     async mounted () {
-      const responseTagsData = await this.axios.get(`/console/tags`)
+      const responseTagsData = await this.axios.get('/console/tags')
       if (responseTagsData) {
         let tags = ''
         responseTagsData.map((v, i) => {

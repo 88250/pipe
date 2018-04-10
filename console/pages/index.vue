@@ -1,9 +1,9 @@
 <template>
   <div class="console" id="particles">
     <div class="card" v-if="$store.state.role !== 0">
-      <h2 class="card__title">{{ $t('welcome', $store.state.locale) }}</h2>
+      <h2 class="card__title">Top 10</h2>
       <ul class="list">
-        <li class="fn-flex" v-for="item in $store.state.blogs">
+        <li class="fn-flex" v-for="item in list">
           <a class="fn-flex-1" :href="item.url">{{ item.title }}</a>
         </li>
       </ul>
@@ -30,7 +30,16 @@
         title: this.$t('welcome', this.$store.state.locale) + ' - Pipe'
       }
     },
-    mounted () {
+    data () {
+      return {
+        list: []
+      }
+    },
+    async mounted () {
+      const responseTopData = await this.axios.get('/blogs/top')
+      if (responseTopData) {
+        this.$set(this, 'list', responseTopData)
+      }
       initParticlesJS('particles')
     }
   }

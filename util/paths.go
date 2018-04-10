@@ -46,14 +46,13 @@ const (
 	PathAPIsSymArticles = "/apis/symphony/articles"
 	PathAPIsSymComments = "/apis/symphony/comments"
 	PathPlatInfo        = "/plat/info"
-	PathTopBlogs        = "/plat/blogs/top"
 )
 
 var reservedPaths = []string{
 	PathInit, PathSearch, PathBlogs, PathConsoleDist, PathAdmin, PathAPI, PathFavicon, PathTheme,
 	PathActivities, PathArchives, PathAuthors, PathCategories, PathTags, PathComments, PathAtom,
 	PathUpload, PathFetchUpload, PathChangelogs, PathRobots, PathAPIsSymArticles, PathAPIsSymComments,
-	PathPlatInfo, PathTopBlogs,
+	PathPlatInfo,
 }
 
 // IsReservedPath checks the specified path is a reserved path or not.
