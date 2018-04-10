@@ -70,6 +70,7 @@ func MapRoutes() *gin.Engine {
 	ret.Use(sessions.Sessions("pipe", store))
 	ret.POST(util.PathUpload, uploadAction)
 	ret.GET(util.PathPlatInfo, showPlatInfo)
+	ret.GET(util.PathTopBlogs, showTopBlogs)
 
 	api := ret.Group(util.PathAPI)
 	api.POST("/init", initAction)

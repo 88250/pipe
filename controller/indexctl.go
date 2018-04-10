@@ -52,3 +52,17 @@ func showPlatInfo(c *gin.Context) {
 
 	result.Data = data
 }
+
+func showTopBlogs(c *gin.Context) {
+	result := util.NewResult()
+	defer c.JSON(http.StatusOK, result)
+
+	blogs := service.User.GetTopBlogs(10)
+	for _, blog := range blogs {
+		blog.ID = 0
+		blog.UserID = 0
+		blog.UserRole = 0
+	}
+
+	result.Data = blogs
+}

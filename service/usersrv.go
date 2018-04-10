@@ -119,11 +119,11 @@ func (srv *userService) GetUser(userID uint64) *model.User {
 
 // UserBlog represents user blog.
 type UserBlog struct {
-	ID               uint64 `json:"id"`    // blog ID
+	ID               uint64 `json:"id,omitempty"`    // blog ID
 	Title            string `json:"title"` // blog title
 	URL              string `json:"url"`   // blog URL
-	UserID           uint64 `json:"userId"`
-	UserRole         int    `json:"userRole"`
+	UserID           uint64 `json:"userId,omitempty"`
+	UserRole         int    `json:"userRole,omitempty"`
 	UserArticleCount int    `json:"userArticleCount"`
 }
 
@@ -249,4 +249,19 @@ func (srv *userService) AddUserToBlog(userID, blogID uint64) error {
 	}
 
 	return nil
+}
+
+func (srv *userService) GetTopBlogs(size int) (ret []*UserBlog) {
+	var users []*model.User
+	if err := db.Model(&model.User{}).Order("`total_article_count` DESC, `id` DESC").Limit(size).
+		Find(&users).Error; nil != err {
+		return
+	}
+
+	for _, user := range users {
+		userBlog := srv.GetOwnBlog(user.ID)
+		ret = append(ret, userBlog)
+	}
+
+	return ret
 }
