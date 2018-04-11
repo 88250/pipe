@@ -1,6 +1,6 @@
 <template>
-  <div class="console" id="particles">
-    <div class="card ft-center">
+  <div class="console" :style="flex" id="particles">
+    <div class="card ft-center" ref="content">
       <h2 class="card__body"></h2>
       <div v-if="$store.state.role === 0" v-html="$t('index2', $store.state.locale)"></div>
       <div v-html="$t('index3', $store.state.locale)"></div>
@@ -20,6 +20,7 @@
 
 <script>
   import 'particles.js'
+  import Vue from 'vue'
   import { initParticlesJS } from '~/plugins/utils'
 
   export default {
@@ -30,6 +31,7 @@
     },
     data () {
       return {
+        flex: '',
         list: []
       }
     },
@@ -37,6 +39,11 @@
       const responseTopData = await this.axios.get('/blogs/top')
       if (responseTopData) {
         this.$set(this, 'list', responseTopData)
+        Vue.nextTick(() => {
+          if (this.$refs.content.scrollHeight > this.$refs.content.clientHeight) {
+            this.$set(this, 'flex', 'flex:none')
+          }
+        })
       }
       initParticlesJS('particles')
     }
@@ -44,9 +51,6 @@
 </script>
 
 <style lang="sass">
-  .console
-    flex: none
   .card__title
-    text-align: center
     display: block
 </style>
