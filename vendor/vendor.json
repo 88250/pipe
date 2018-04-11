@@ -51,6 +51,12 @@
 			"revisionTime": "2017-08-28T04:11:59Z"
 		},
 		{
+			"checksumSHA1": "QNKFdw3S/PyEibGJYAUoQqNUDWY=",
+			"path": "github.com/fatih/structs",
+			"revision": "ebf56d35bba727c68ac77f56f2fcf90b181851aa",
+			"revisionTime": "2018-01-23T06:50:59Z"
+		},
+		{
 			"checksumSHA1": "6X3O3mfvOyiwV2iAb5GjxARs08c=",
 			"path": "github.com/garyburd/redigo/internal",
 			"revision": "34a326de1fea52965fa5ad664d3fc7163dd4b0a1",
