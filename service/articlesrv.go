@@ -416,6 +416,7 @@ func (srv *articleService) UpdateArticle(article *model.Article) (err error) {
 	now := time.Now()
 	newArticle.UpdatedAt = now
 	newArticle.PushedAt = util.ZeroPushTime
+	newArticle.CreatedAt = article.CreatedAt
 
 	tagStr, err := normalizeTagStr(article.Tags)
 	if nil != err {
@@ -436,6 +437,15 @@ func (srv *articleService) UpdateArticle(article *model.Article) (err error) {
 			tx.Rollback()
 		}
 	}()
+	if oldArticle.CreatedAt != newArticle.CreatedAt {
+		// https://github.com/b3log/pipe/issues/106
+		if err = Archive.UnArchiveArticleWithoutTx(tx, oldArticle); nil != err {
+			return
+		}
+		if err = Archive.ArchiveArticleWithoutTx(tx, article); nil != err {
+			return
+		}
+	}
 	if err = tx.Model(oldArticle).UpdateColumns(newArticle).Error; nil != err {
 		return
 	}
@@ -602,7 +612,7 @@ func contains(strs []string, str string) bool {
 func normalizeArticlePath(article *model.Article) error {
 	path := strings.TrimSpace(article.Path)
 	if "" == path {
-		path = util.PathArticles + time.Now().Format("/2006/01/02/") +
+		path = util.PathArticles + article.CreatedAt.Format("/2006/01/02/") +
 			fmt.Sprintf("%d", article.ID)
 	}
 	if !strings.HasPrefix(path, "/") {

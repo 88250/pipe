@@ -24,21 +24,21 @@ import (
 type Article struct {
 	Model
 
-	AuthorID     uint64    `json:"authorID"`
-	Title        string    `gorm:"size:128" json:"title"`
-	Tags         string    `gorm:"type:text" json:"tags"`
-	Content      string    `gorm:"type:mediumtext" json:"content"`
-	Path         string    `sql:"index" gorm:"size:255" json:"path"`
-	Status       int       `sql:"index" json:"status"`
-	Topped       bool      `json:"topped"`
-	Commentable  bool      `json:"commentable"`
-	ViewCount    int       `json:"viewCount"`
-	CommentCount int       `json:"commentCount"`
-	IP           string    `gorm:"size:128" json:"ip"`
-	UserAgent    string    `gorm:"size:255" json:"userAgent"`
-	PushedAt     time.Time `json:"pushedAt"`
+	AuthorID     uint64    `json:"authorID" structs:"authorID"`
+	Title        string    `gorm:"size:128" json:"title" structs:"title"`
+	Tags         string    `gorm:"type:text" json:"tags" structs:"tags"`
+	Content      string    `gorm:"type:mediumtext" json:"content" structs:"content"`
+	Path         string    `sql:"index" gorm:"size:255" json:"path" structs:"path"`
+	Status       int       `sql:"index" json:"status" structs:"status"`
+	Topped       bool      `json:"topped" structs:"tooped"`
+	Commentable  bool      `json:"commentable" structs:"commentable"`
+	ViewCount    int       `json:"viewCount" structs:"viewCount"`
+	CommentCount int       `json:"commentCount" structs:"commentCount"`
+	IP           string    `gorm:"size:128" json:"ip" structs:"ip"`
+	UserAgent    string    `gorm:"size:255" json:"userAgent" structs:"userAgent"`
+	PushedAt     time.Time `json:"pushedAt" structs:"pushedAt"`
 
-	BlogID uint64 `sql:"index" json:"blogID"`
+	BlogID uint64 `sql:"index" json:"blogID" structs:"blogID"`
 }
 
 // Article statuses.

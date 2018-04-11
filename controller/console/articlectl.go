@@ -22,11 +22,14 @@ import (
 	"os"
 	"strconv"
 	"strings"
+	"time"
 
+	"github.com/araddon/dateparse"
 	"github.com/b3log/pipe/log"
 	"github.com/b3log/pipe/model"
 	"github.com/b3log/pipe/service"
 	"github.com/b3log/pipe/util"
+	"github.com/fatih/structs"
 	"github.com/gin-gonic/gin"
 )
 
@@ -58,19 +61,39 @@ func AddArticleAction(c *gin.Context) {
 	result := util.NewResult()
 	defer c.JSON(http.StatusOK, result)
 
-	session := util.GetSession(c)
-
-	article := &model.Article{}
-	if err := c.BindJSON(article); nil != err {
+	arg := map[string]interface{}{}
+	if err := c.BindJSON(&arg); nil != err {
 		result.Code = -1
 		result.Msg = "parses add article request failed"
 
 		return
 	}
 
-	article.IP = util.GetRemoteAddr(c)
-	article.BlogID = session.BID
-	article.AuthorID = session.UID
+	createdAt, err := dateparse.ParseAny(arg["time"].(string))
+	if nil != err {
+		if "" != arg["time"].(string) {
+			result.Code = -1
+			result.Msg = "parses article create time failed"
+
+			return
+		}
+
+		createdAt = time.Now()
+	}
+
+	session := util.GetSession(c)
+
+	article := &model.Article{
+		Title:       arg["title"].(string),
+		Content:     arg["content"].(string),
+		Path:        arg["path"].(string),
+		Tags:        arg["tags"].(string),
+		Commentable: arg["commentable"].(bool),
+		IP:          util.GetRemoteAddr(c),
+		BlogID:      session.BID,
+		AuthorID:    session.UID,
+	}
+	article.CreatedAt = createdAt
 
 	if err := service.Article.AddArticle(article); nil != err {
 		result.Code = -1
@@ -91,12 +114,15 @@ func GetArticleAction(c *gin.Context) {
 		return
 	}
 
-	data := service.Article.ConsoleGetArticle(uint64(id))
-	if nil == data {
+	article := service.Article.ConsoleGetArticle(uint64(id))
+	if nil == article {
 		result.Code = -1
 
 		return
 	}
+
+	data := structs.Map(article)
+	data["time"] = article.CreatedAt.Format("2006-01-02 15:04:05")
 
 	result.Data = data
 }
@@ -211,17 +237,35 @@ func UpdateArticleAction(c *gin.Context) {
 		return
 	}
 
-	article := &model.Article{Model: model.Model{ID: id}}
-	if err := c.BindJSON(article); nil != err {
+	arg := map[string]interface{}{}
+	if err := c.BindJSON(&arg); nil != err {
 		result.Code = -1
 		result.Msg = "parses update article request failed"
 
 		return
 	}
 
-	article.IP = util.GetRemoteAddr(c)
+	createdAt, err := dateparse.ParseAny(arg["time"].(string))
+	if nil != err {
+		result.Code = -1
+		result.Msg = "parses article create time failed"
+
+		return
+	}
+
 	session := util.GetSession(c)
-	article.BlogID = session.BID
+
+	article := &model.Article{
+		Model:       model.Model{ID: id, CreatedAt: createdAt},
+		Title:       arg["title"].(string),
+		Content:     arg["content"].(string),
+		Path:        arg["path"].(string),
+		Tags:        arg["tags"].(string),
+		Commentable: arg["commentable"].(bool),
+		IP:          util.GetRemoteAddr(c),
+		BlogID:      session.BID,
+		AuthorID:    session.UID,
+	}
 
 	if err := service.Article.UpdateArticle(article); nil != err {
 		result.Code = -1
