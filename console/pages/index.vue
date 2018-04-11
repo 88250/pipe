@@ -8,7 +8,7 @@
       <iframe src="https://ghbtns.com/github-btn.html?user=b3log&repo=pipe&type=star&count=true&size=large"
               frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
       <br><br>
-      <h2 class="card__title">Top 10</h2>
+      <h2 class="card__title">{{ $t('popularBlog', $store.state.locale) }}</h2>
       <ul class="list ">
         <li class="fn-flex" v-for="item in list">
           <a class="fn-flex-1" :href="item.url" target="_blank">{{ item.title }}</a>

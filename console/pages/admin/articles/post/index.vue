@@ -40,7 +40,7 @@
         ></v-text-field>
 
         <v-text-field
-          :label="$t('time', $store.state.locale) + '[YYYY-MM-DD HH:mm:ss]'"
+          :label="$t('createdTime', $store.state.locale) + '[YYYY-MM-DD HH:mm:ss]'"
           v-model="time"
           :rules="timeRules"
           @change="setLocalstorage('time')"
@@ -148,7 +148,7 @@
           (v) => this.tags.length > 0 || this.$t('required', this.$store.state.locale)
         ],
         timeRules: [
-          (v) => /^(((20[0-3][0-9]-(0[13578]|1[02])-(0[1-9]|[12][0-9]|3[01]))|(20[0-3][0-9]-(0[2469]|11)-(0[1-9]|[12][0-9]|30))) (20|21|22|23|[0-1][0-9]):[0-5][0-9]:[0-5][0-9])$/.test(v) || this.$t('time', this.$store.state.locale) + '[YYYY-MM-DD HH:mm:ss]'
+          (v) => (v.length === 0 || /^(((20[0-3][0-9]-(0[13578]|1[02])-(0[1-9]|[12][0-9]|3[01]))|(20[0-3][0-9]-(0[2469]|11)-(0[1-9]|[12][0-9]|30))) (20|21|22|23|[0-1][0-9]):[0-5][0-9]:[0-5][0-9])$/.test(v)) || this.$t('createdTime', this.$store.state.locale) + '[YYYY-MM-DD HH:mm:ss]'
         ],
         url: '',
         time: '',
@@ -312,7 +312,7 @@
           tags: this.tags.toString(),
           commentable: this.commentable,
           topped: this.topped,
-          time: this.time
+          time: this.time === '' ? '' : this.time.replace(' ', 'T') + '+08:00'
         })
         if (responseData.code === 0) {
           if (!id) {
@@ -356,7 +356,7 @@
           this.$set(this, 'title', responseData.title)
           this.$set(this, 'content', responseData.content)
           this.$set(this, 'url', responseData.path)
-          this.$set(this, 'time', responseData.time)
+          this.$set(this, 'time', responseData.time.replace('T', ' ').substr(0, 19))
           this.$set(this, 'tags', responseData.tags.split(','))
           this.$set(this, 'commentable', responseData.commentable)
           this.$set(this, 'topped', responseData.topped)

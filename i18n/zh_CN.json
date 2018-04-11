@@ -1,5 +1,6 @@
 {
-  "time": "时间",
+  "popularBlog": "受欢迎的博客",
+  "createdTime": "创建时间",
   "goTop": "回到顶部",
   "submit": "提交",
   "gist": "概要",
