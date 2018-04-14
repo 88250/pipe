@@ -2,7 +2,7 @@
  * @fileoverview util and every page should be used.
  *
  * @author <a href="http://vanessa.b3log.org">Liyuan Li</a>
- * @version 0.2.0.0, Oct 19, 2017
+ * @version 0.2.1.0, Apr 15, 2018
  */
 
 import $ from 'jquery'
@@ -59,6 +59,12 @@ const Common = {
     })
 
     $(window).scroll()
+
+    // https://github.com/b3log/pipe/issues/115
+    const ua = window.navigator.userAgent;
+    if (ua.indexOf('MSIE ') > -1 || ua.indexOf('Trident/') > -1) {
+      $('body').css('display', 'block')
+    }
   },
   increase(max, time, id, count) {
     if (count < max) {
