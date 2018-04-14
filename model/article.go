@@ -30,7 +30,7 @@ type Article struct {
 	Content      string    `gorm:"type:mediumtext" json:"content" structs:"content"`
 	Path         string    `sql:"index" gorm:"size:255" json:"path" structs:"path"`
 	Status       int       `sql:"index" json:"status" structs:"status"`
-	Topped       bool      `json:"topped" structs:"tooped"`
+	Topped       bool      `json:"topped" structs:"topped"`
 	Commentable  bool      `json:"commentable" structs:"commentable"`
 	ViewCount    int       `json:"viewCount" structs:"viewCount"`
 	CommentCount int       `json:"commentCount" structs:"commentCount"`
