@@ -22,6 +22,16 @@ const Article = {
 
     if ($('#toc').length === 1) {
       InitToc('toc', 'articleContent')
+
+      // https://github.com/b3log/pipe/issues/114
+      $('#toc a').each(function () {
+        $(this).data('href', $(this).attr('href')).attr('href', 'javascript:void(0)')
+      }).click(function () {
+        const hash = $(this).data('href')
+        location.hash = hash
+        $(window).scrollTop($(hash)[0].offsetTop - 50)
+      })
+
       $('.side__toc').width($('.side').width()).css('max-height', ($(window).height() - 170) + 'px')
 
       $(window).scroll(function () {
@@ -60,7 +70,7 @@ const Article = {
     InitComment()
     InitHljs()
 
-    Article._share();
+    Article._share()
   },
   _share: () => {
     const $this = $('.share__btns')
@@ -82,7 +92,7 @@ const Article = {
       const key = $(this).data('type')
 
       if (!key) {
-        return;
+        return
       }
 
       if (key === 'wechat') {
