@@ -62,6 +62,7 @@ const Common = {
 
     // https://github.com/b3log/pipe/issues/115
     const ua = window.navigator.userAgent;
+    alert(ua);
     if (ua.indexOf('MSIE ') > -1 || ua.indexOf('Trident/') > -1) {
       $('body').css('display', 'block')
     }
