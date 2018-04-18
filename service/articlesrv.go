@@ -408,26 +408,25 @@ func (srv *articleService) UpdateArticle(article *model.Article) (err error) {
 		Find(oldArticle).Error; nil != err {
 		return
 	}
-	newArticle := &model.Article{}
-	newArticle.Title = strings.TrimSpace(article.Title)
-	newArticle.Content = strings.TrimSpace(article.Content)
-	newArticle.Commentable = article.Commentable
-	newArticle.Topped = article.Topped
+
+	oldArticle.Title = strings.TrimSpace(article.Title)
+	oldArticle.Content = strings.TrimSpace(article.Content)
+	oldArticle.Commentable = article.Commentable
+	oldArticle.Topped = article.Topped
 	now := time.Now()
-	newArticle.UpdatedAt = now
-	newArticle.PushedAt = util.ZeroPushTime
-	newArticle.CreatedAt = article.CreatedAt
+	oldArticle.UpdatedAt = now
+	oldArticle.PushedAt = util.ZeroPushTime
 
 	tagStr, err := normalizeTagStr(article.Tags)
 	if nil != err {
 		return
 	}
-	newArticle.Tags = tagStr
+	oldArticle.Tags = tagStr
 
 	if err = normalizeArticlePath(article); nil != err {
 		return
 	}
-	newArticle.Path = article.Path
+	oldArticle.Path = article.Path
 
 	tx := db.Begin()
 	defer func() {
@@ -437,16 +436,17 @@ func (srv *articleService) UpdateArticle(article *model.Article) (err error) {
 			tx.Rollback()
 		}
 	}()
-	if oldArticle.CreatedAt != newArticle.CreatedAt {
+	if oldArticle.CreatedAt != article.CreatedAt {
 		// https://github.com/b3log/pipe/issues/106
 		if err = Archive.UnArchiveArticleWithoutTx(tx, oldArticle); nil != err {
 			return
 		}
-		if err = Archive.ArchiveArticleWithoutTx(tx, article); nil != err {
+		oldArticle.CreatedAt = article.CreatedAt
+		if err = Archive.ArchiveArticleWithoutTx(tx, oldArticle); nil != err {
 			return
 		}
 	}
-	if err = tx.Model(oldArticle).UpdateColumns(newArticle).Error; nil != err {
+	if err = tx.Save(oldArticle).Error; nil != err {
 		return
 	}
 	if err = removeTagArticleRels(tx, article); nil != err {
