@@ -22,11 +22,11 @@ const Common = {
 
     $('.nav a, .mobile__nav a').each(function (i) {
       const $it = $(this)
-      if (i === 0 || i === 8) {
+      if (i === 0 || i === $('.mobile__nav a').length) {
         if (location.origin + location.pathname === $it.attr('href')) {
           $it.addClass('nav--current')
         }
-      } else if (i !== 0 && i !== 8 && location.href.indexOf($it.attr('href')) > -1) {
+      } else if (location.href.indexOf($it.attr('href')) > -1) {
         $it.addClass('nav--current')
       }
     })
