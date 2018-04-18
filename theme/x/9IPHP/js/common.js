@@ -2,7 +2,7 @@
  * @fileoverview util and every page should be used.
  *
  * @author <a href="http://vanessa.b3log.org">Liyuan Li</a>
- * @version 0.2.1.0, Apr 15, 2018
+ * @version 0.2.2.0, Apr 18, 2018
  */
 
 import $ from 'jquery'
@@ -22,11 +22,11 @@ const Common = {
 
     $('.nav a, .mobile__nav a').each(function (i) {
       const $it = $(this)
-      if (i === 0) {
+      if (i === 0 || i === 8) {
         if (location.origin + location.pathname === $it.attr('href')) {
           $it.addClass('nav--current')
         }
-      } else if (i !== 0 && location.href.indexOf($it.attr('href')) > -1) {
+      } else if (i !== 0 && i !== 8 && location.href.indexOf($it.attr('href')) > -1) {
         $it.addClass('nav--current')
       }
     })
