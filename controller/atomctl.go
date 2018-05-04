@@ -27,13 +27,25 @@ import (
 )
 
 func outputAtomAction(c *gin.Context) {
+	feed := generateFeed(c)
+
+	feed.WriteAtom(c.Writer)
+}
+
+func outputRSSAction(c *gin.Context) {
+	feed := generateFeed(c)
+
+	feed.WriteRss(c.Writer)
+}
+
+func generateFeed(c *gin.Context) *feeds.Feed {
 	blogID := getBlogID(c)
 
 	feedOutputModeSetting := service.Setting.GetSetting(model.SettingCategoryFeed, model.SettingNameFeedOutputMode, blogID)
 	blogTitleSetting := service.Setting.GetSetting(model.SettingCategoryBasic, model.SettingNameBasicBlogTitle, blogID)
 	blogURLSetting := service.Setting.GetSetting(model.SettingCategoryBasic, model.SettingNameBasicBlogURL, blogID)
 	blogSubtitleSetting := service.Setting.GetSetting(model.SettingCategoryBasic, model.SettingNameBasicBlogSubtitle, blogID)
-	feed := &feeds.Feed{
+	ret := &feeds.Feed{
 		Title:       blogTitleSetting.Value,
 		Link:        &feeds.Link{Href: blogURLSetting.Value},
 		Description: blogSubtitleSetting.Value,
@@ -56,7 +68,7 @@ func outputAtomAction(c *gin.Context) {
 			Created:     article.CreatedAt,
 		})
 	}
-	feed.Items = items
+	ret.Items = items
 
-	feed.WriteAtom(c.Writer)
+	return ret
 }

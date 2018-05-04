@@ -39,6 +39,7 @@ const (
 	PathTags            = "/tags"
 	PathComments        = "/comments"
 	PathAtom            = "/atom"
+	PathRSS             = "/rss"
 	PathUpload          = "/upload"
 	PathFetchUpload     = "/fetch-upload"
 	PathChangelogs      = "/changelogs"
@@ -50,7 +51,7 @@ const (
 
 var reservedPaths = []string{
 	PathInit, PathSearch, PathBlogs, PathConsoleDist, PathAdmin, PathAPI, PathFavicon, PathTheme,
-	PathActivities, PathArchives, PathAuthors, PathCategories, PathTags, PathComments, PathAtom,
+	PathActivities, PathArchives, PathAuthors, PathCategories, PathTags, PathComments, PathAtom, PathRSS,
 	PathUpload, PathFetchUpload, PathChangelogs, PathRobots, PathAPIsSymArticles, PathAPIsSymComments,
 	PathPlatInfo,
 }

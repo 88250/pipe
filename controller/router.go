@@ -221,6 +221,10 @@ func routePath(c *gin.Context) {
 		outputAtomAction(c)
 
 		return
+	case util.PathRSS:
+		outputRSSAction(c)
+
+		return
 	case util.PathUpload:
 		uploadAction(c)
 
