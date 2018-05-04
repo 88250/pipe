@@ -4,6 +4,7 @@
     "StaticResourceVersion": "1524630591447",
     "RuntimeMode": "prod",
     "LogLevel": "debug",
+    "ShowSQL": false,
     "SessionSecret": "BEYOND",
     "SessionMaxAge": 86400,
     "SQLite": "${home}/pipe.db",

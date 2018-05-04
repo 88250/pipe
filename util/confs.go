@@ -63,6 +63,7 @@ type Configuration struct {
 	StaticServer          string // static resources server scheme, host and port
 	StaticResourceVersion string // version of static resources
 	LogLevel              string // logging level: trace/debug/info/warn/error/fatal
+	ShowSQL               bool   // whether print sql in log
 	SessionSecret         string // HTTP session secret
 	SessionMaxAge         int    // HTTP session max age (in seciond)
 	RuntimeMode           string // runtime mode (dev/prod)
@@ -82,6 +83,7 @@ func LoadConf() {
 	confStaticServer := flag.String("static_server", "", "this will override Conf.StaticServer if specified")
 	confStaticResourceVer := flag.String("static_resource_ver", "", "this will override Conf.StaticResourceVersion if specified")
 	confLogLevel := flag.String("log_level", "", "this will override Conf.LogLevel if specified")
+	confShowSQL := flag.Bool("show_sql", false, "this will override Conf.ShowSQL if specified")
 	confRuntimeMode := flag.String("runtime_mode", "", "this will override Conf.RuntimeMode if specified")
 	confSQLite := flag.String("sqlite", "", "this will override Conf.SQLite if specified")
 	confMySQL := flag.String("mysql", "", "this will override Conf.MySQL if specified")
@@ -111,6 +113,10 @@ func LoadConf() {
 	if "" != *confLogLevel {
 		Conf.LogLevel = *confLogLevel
 		log.SetLevel(*confLogLevel)
+	}
+
+	if *confShowSQL {
+		Conf.ShowSQL = true
 	}
 
 	home, err := UserHome()
