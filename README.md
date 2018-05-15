@@ -132,7 +132,6 @@ We are very much looking forward to you joining this project. Whether it is usin
 
 * [Official forum](https://hacpai.com/tag/Pipe)
 * [Issue](https://github.com/b3log/pipe/issues/new)
-* [QQ group 242561391](https://shang.qq.com/wpa/qunwpa?idkey=981d9282616274abb1752336e21b8036828f715a1c4d0628adcf208f2fd54f3a)
 
 ## License
 
