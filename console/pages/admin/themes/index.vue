@@ -1,17 +1,23 @@
 <template>
-  <div class="admin__themes fn-clear">
-    <div class="card"
-         v-for="item in list"
-         @click="setup(item.name)"
-         :key="item.previewURL"
-         :class="{ 'theme--current': item.name === currentName }">
-      <div class="theme__name">{{ item.name }}</div>
-      <div class="theme__img-wrap">
-        <span class="theme__image" :style="`background-image: url('${item.thumbnailURL}')`"/>
-        <div class="theme__overlay">
-          <v-btn
-            v-show="item.name !== currentName"
-            class="btn--info">{{ $t('setup', $store.state.locale) }}</v-btn>
+  <div class="admin__themes">
+    <div class="theme__link">
+      <a href="https://github.com/b3log/pipe/issues/122" target="_blank">新主题推荐</a> •
+      <a href="https://hacpai.com/article/1512550354920#toc_h3_20" target="_blank">Pipe 主题开发指南</a>
+    </div>
+    <div class="fn-clear">
+      <div class="card"
+           v-for="item in list"
+           @click="setup(item.name)"
+           :key="item.previewURL"
+           :class="{ 'theme--current': item.name === currentName }">
+        <div class="theme__name">{{ item.name }}</div>
+        <div class="theme__img-wrap">
+          <span class="theme__image" :style="`background-image: url('${item.thumbnailURL}')`"/>
+          <div class="theme__overlay">
+            <v-btn
+              v-show="item.name !== currentName"
+              class="btn--info">{{ $t('setup', $store.state.locale) }}</v-btn>
+          </div>
         </div>
       </div>
     </div>
@@ -67,13 +73,15 @@
   @import '~assets/scss/_variables'
 
   .admin__themes
-    margin-top: 32px
     .card
       margin: 0 30px 62px 0
       float: left
       width: 455px
       cursor: pointer
     .theme
+      &__link
+        margin-bottom: 52px
+        text-align: center
       &__name
         position: absolute
         top: -32px
