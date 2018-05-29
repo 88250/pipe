@@ -28,6 +28,31 @@ import (
 	"github.com/vinta/pangu"
 )
 
+func showOpensearchAction(c *gin.Context) {
+	blogID := getBlogID(c)
+	blogTitleSetting := service.Setting.GetSetting(model.SettingCategoryBasic, model.SettingNameBasicBlogTitle, blogID)
+	blogSubtitleSetting := service.Setting.GetSetting(model.SettingCategoryBasic, model.SettingNameBasicBlogSubtitle, blogID)
+
+	opensearch := `<?xml version="1.0" encoding="UTF-8" ?>
+<OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/" xmlns:moz="http://www.mozilla.org/2006/browser/search/">
+    <ShortName>${title}</ShortName>
+    <Description>${description}</Description>
+    <InputEncoding>UTF-8</InputEncoding>
+    <Image width="16" height="16" type="image/x-icon">${faviconURL}</Image>
+    <Url type="text/html" method="get" template="${blogURL}/search?key={searchTerms}"></Url>
+</OpenSearchDescription>
+`
+	opensearch = strings.Replace(opensearch, "${title}", blogTitleSetting.Value, -1)
+	opensearch = strings.Replace(opensearch, "${description}", blogSubtitleSetting.Value, -1)
+	faviconURL := getDataModel(c)["FaviconURL"].(string)
+	opensearch = strings.Replace(opensearch, "${faviconURL}", faviconURL, -1)
+	blogURL := getBlogURL(c)
+	opensearch = strings.Replace(opensearch, "${blogURL}", blogURL, -1)
+
+	c.Writer.Header().Set("Content-Type", "application/xml; charset=utf-8")
+	c.Writer.Write([]byte(opensearch))
+}
+
 func searchAction(c *gin.Context) {
 	blogID := getBlogID(c)
 	key := c.Query("key")

@@ -25,6 +25,7 @@ const (
 	PathRoot            = "/"
 	PathInit            = "/init"
 	PathSearch          = "/search"
+	PathOpensearch      = "/opensearch.xml"
 	PathBlogs           = "/blogs"
 	PathConsoleDist     = "/console/dist"
 	PathAdmin           = "/admin"
@@ -51,7 +52,7 @@ const (
 )
 
 var reservedPaths = []string{
-	PathInit, PathSearch, PathBlogs, PathConsoleDist, PathAdmin, PathAPI, PathFavicon, PathTheme,
+	PathInit, PathSearch, PathOpensearch, PathBlogs, PathConsoleDist, PathAdmin, PathAPI, PathFavicon, PathTheme,
 	PathActivities, PathArchives, PathAuthors, PathCategories, PathTags, PathComments, PathAtom, PathRSS,
 	PathSitemap, PathUpload, PathFetchUpload, PathChangelogs, PathRobots, PathAPIsSymArticles,
 	PathAPIsSymComments, PathPlatInfo,

@@ -238,6 +238,10 @@ func routePath(c *gin.Context) {
 		searchAction(c)
 
 		return
+	case util.PathOpensearch:
+		showOpensearchAction(c)
+
+		return
 	case util.PathAPIsSymComments:
 		addSymCommentAction(c)
 
