@@ -436,7 +436,7 @@ func (srv *articleService) UpdateArticle(article *model.Article) (err error) {
 			tx.Rollback()
 		}
 	}()
-	if oldArticle.CreatedAt != article.CreatedAt {
+	if oldArticle.CreatedAt.Format("200601") != article.CreatedAt.Format("200601") {
 		// https://github.com/b3log/pipe/issues/106
 		if err = Archive.UnArchiveArticleWithoutTx(tx, oldArticle); nil != err {
 			return
