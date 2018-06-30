@@ -133,9 +133,10 @@ func fillUser(c *gin.Context) {
 		}
 
 		user := &model.User{
-			Name:      session.UName,
-			B3Key:     b3Key,
-			AvatarURL: session.UAvatar,
+			Name:         session.UName,
+			B3Key:        b3Key,
+			AllowB3Login: true,
+			AvatarURL:    session.UAvatar,
 		}
 
 		if service.Init.Inited() {
