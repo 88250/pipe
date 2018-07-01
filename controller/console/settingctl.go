@@ -30,6 +30,21 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// GetAccountSettingsAction gets account settings.
+func GetAccountSettingsAction(c *gin.Context) {
+	result := util.NewResult()
+	defer c.JSON(http.StatusOK, result)
+
+	session := util.GetSession(c)
+	data := map[string]interface{}{}
+	data["name"] = session.UName
+	data["allowB3Login"] = session.UAllowB3Login
+	data["avatarURL"] = session.UAvatar
+	data["b3Key"] = session.UB3Key
+
+	result.Data = data
+}
+
 // GetBasicSettingsAction gets basic settings.
 func GetBasicSettingsAction(c *gin.Context) {
 	result := util.NewResult()

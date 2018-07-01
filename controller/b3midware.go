@@ -104,8 +104,8 @@ func fillUser(c *gin.Context) {
 		return
 	default:
 		result := util.NewResult()
-		_, _, errs := gorequest.New().Get(util.HacPaiURL+"/apis/check-b3-identity?b3id="+b3id).
-			Set("user-agent", util.UserAgent).Timeout(5*time.Second).
+		_, _, errs := gorequest.New().Get(util.HacPaiURL + "/apis/check-b3-identity?b3id=" + b3id).
+			Set("user-agent", util.UserAgent).Timeout(5 * time.Second).
 			Retry(3, 2*time.Second, http.StatusInternalServerError).EndStruct(result)
 		if nil != errs {
 			logger.Errorf("check b3 identity failed: %s", errs)
@@ -126,10 +126,11 @@ func fillUser(c *gin.Context) {
 		userAvatar := data["userAvatarURL"].(string)
 
 		session = &util.SessionData{
-			UName:   username,
-			UB3Key:  b3Key,
-			UAvatar: userAvatar,
-			URole:   model.UserRoleBlogAdmin,
+			UName:         username,
+			UB3Key:        b3Key,
+			UAllowB3Login: true,
+			UAvatar:       userAvatar,
+			URole:         model.UserRoleBlogAdmin,
 		}
 
 		user := &model.User{
@@ -146,6 +147,12 @@ func fillUser(c *gin.Context) {
 		}
 
 		if existUser := service.User.GetUserByName(username); nil != existUser {
+			if !existUser.AllowB3Login { // https://github.com/b3log/pipe/issues/130
+				c.Next()
+
+				return
+			}
+
 			existUser.AvatarURL = session.UAvatar
 			ownBlog := service.User.GetOwnBlog(existUser.ID)
 			if nil != ownBlog {
