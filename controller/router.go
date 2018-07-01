@@ -111,6 +111,7 @@ func MapRoutes() *gin.Engine {
 	consoleGroup.DELETE("/navigations/:id", console.RemoveNavigationAction)
 	consoleGroup.GET("/users", console.GetUsersAction)
 	consoleGroup.POST("/users", console.AddUserAction)
+	consoleGroup.PUT("/users/:id", console.UpdateUserAction)
 	consoleGroup.GET("/thumbs", console.GetArticleThumbsAction)
 	consoleGroup.POST("/markdown", console.MarkdownAction)
 	consoleGroup.POST("/import/md", console.ImportMarkdownAction)

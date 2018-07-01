@@ -25,6 +25,35 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// UpdateUserAction updates a user.
+func UpdateUserAction(c *gin.Context) {
+	result := util.NewResult()
+	defer c.JSON(http.StatusOK, result)
+
+	arg := map[string]interface{}{}
+	if err := c.BindJSON(&arg); nil != err {
+		result.Code = -1
+		result.Msg = "parses update user request failed"
+
+		return
+	}
+
+	// TODO: update password
+	b3Key := arg["b3Key"].(string)
+	allowB3Login := arg["allowB3Login"].(bool)
+
+	session := util.GetSession(c)
+	user := service.User.GetUserByName(session.UName)
+	user.B3Key = b3Key
+	user.AllowB3Login = allowB3Login
+	if err := service.User.UpdateUser(user); nil != err {
+		result.Code = -1
+		result.Msg = err.Error()
+
+		return
+	}
+}
+
 // AddUserAction adds a user.
 func AddUserAction(c *gin.Context) {
 	result := util.NewResult()

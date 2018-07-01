@@ -161,6 +161,7 @@ func fillUser(c *gin.Context) {
 				session.URole = ownBlog.UserRole
 			}
 			session.UID = existUser.ID
+			session.UB3Key = existUser.B3Key
 
 			service.User.UpdateUser(existUser)
 		} else {
