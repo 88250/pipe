@@ -27,8 +27,8 @@
         <v-text-field
           :label="$t('avatarURL', $store.state.locale)"
           v-model="avatarURL"
-          :rules="requiredRules"
-          :counter="20"
+          :rules="avatarRules"
+          :counter="255"
           @keyup.ctrl.13="accountUpdate"
           @keyup.meta.13="accountUpdate"
         ></v-text-field>
@@ -65,6 +65,10 @@
         requiredRules: [
           (v) => required.call(this, v),
           (v) => maxSize.call(this, v, 20)
+        ],
+        avatarRules: [
+          (v) => required.call(this, v),
+          (v) => maxSize.call(this, v, 255)
         ],
         error: false,
         errorMsg: '',

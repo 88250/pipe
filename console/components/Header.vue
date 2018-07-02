@@ -10,12 +10,10 @@
       <template v-if="$store.state.role === 0">
         <span class="fn-flex-1"> &nbsp;</span>
         <span>
-          <a href="https://hacpai.com/login">
-            {{ $t('login', $store.state.locale) }}
-          </a>
-          <a class="btn--space btn--success btn btn--small" href="https://hacpai.com/register">
-          {{ $t('register', $store.state.locale) }}
-          </a>
+          <nuxt-link to="/login">{{ $t('login', $store.state.locale)}}</nuxt-link>
+          <nuxt-link to="/register" class="btn--space btn--success btn btn--small">
+            {{ $t('register', $store.state.locale)}}
+          </nuxt-link>
         </span>
       </template>
       <template v-else>
@@ -119,6 +117,7 @@
         }
       },
       async logout () {
+        // TODO
         const responseData = await this.axios.post('/logout')
         if (responseData.code === 0) {
           window.location.href = 'https://hacpai.com/logout'

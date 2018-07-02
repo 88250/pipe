@@ -17,11 +17,10 @@
               </a>
             </div>
             <div class="fn-flex-1">
-              <a class="card init__image"
-                 href="http://pipe.b3log.org/"
-                 target="_blank">
+              <div class="card init__image fn-pointer"
+                 @click="account='pipe'">
                 <img src="~/static/images/logo.png"/>
-              </a>
+              </div>
               <div class="init__link fn-pointer" @click="account='pipe'">
                 {{ $t('usePipeInit', $store.state.locale) }}
               </div>

@@ -7,7 +7,7 @@ export default function ({redirect, store, route}) {
     if (!isLogin || store.state.role === 4) {
       redirect('/')
     }
-  } else if (route.path === '/login' || route.path === '/init') {
+  } else if (route.path === '/init') {
     redirect('/')
   }
 }
