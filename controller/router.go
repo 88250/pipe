@@ -74,6 +74,7 @@ func MapRoutes() *gin.Engine {
 
 	api := ret.Group(util.PathAPI)
 	api.POST("/init", initAction)
+	api.POST("/init/local", initLocalAction)
 	api.POST("/register", registerAction)
 	api.POST("/login", loginAction)
 	api.POST("/logout", logoutAction)

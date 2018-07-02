@@ -44,6 +44,63 @@ func showInitPageAction(c *gin.Context) {
 	t.Execute(c.Writer, nil)
 }
 
+func initLocalAction(c *gin.Context) {
+	result := util.NewResult()
+	defer c.JSON(http.StatusOK, result)
+
+	arg := map[string]interface{}{}
+	if err := c.BindJSON(&arg); nil != err {
+		result.Code = -1
+		result.Msg = "parses init request failed"
+
+		return
+	}
+
+	name := arg["name"].(string)
+	password := arg["password"].(string)
+
+	existUser := service.User.GetUserByName(name)
+	if nil != existUser {
+		result.Code = -1
+		result.Msg = "duplicated user name"
+
+		return
+	}
+
+	platformAdmin := &model.User{
+		Name:      name,
+		Password:  password,
+		AvatarURL: "https://img.hacpai.com/pipe/default-avatar.png",
+	}
+
+	if err := service.Init.InitPlatform(platformAdmin); nil != err {
+		result.Code = -1
+		result.Msg = err.Error()
+
+		return
+	}
+
+	blogURLSetting := service.Setting.GetSetting(model.SettingCategoryBasic, model.SettingNameBasicBlogURL, 1)
+	if nil == blogURLSetting {
+		result.Code = -1
+		result.Msg = fmt.Sprintf("not found blog URL settings [blogID=%d]", 1)
+
+		return
+	}
+	sessionData := &util.SessionData{
+		UID:     platformAdmin.ID,
+		UName:   platformAdmin.Name,
+		URole:   model.UserRoleBlogAdmin,
+		UAvatar: platformAdmin.AvatarURL,
+		BID:     1,
+		BURL:    blogURLSetting.Value,
+	}
+	if err := sessionData.Save(c); nil != err {
+		result.Code = -1
+		result.Msg = "saves session failed: " + err.Error()
+	}
+}
+
 func initAction(c *gin.Context) {
 	result := util.NewResult()
 	defer c.JSON(http.StatusOK, result)
