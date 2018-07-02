@@ -181,6 +181,8 @@ func MapRoutes() *gin.Engine {
 	indexGroup := ret.Group("")
 	indexGroup.Use(fillUser)
 	indexGroup.GET("", showIndexAction)
+	indexGroup.GET(util.PathLogin, showLoginPageAction)
+	indexGroup.GET(util.PathRegister, showRegisterPageAction)
 
 	initGroup := ret.Group(util.PathInit)
 	initGroup.Use(fillUser)

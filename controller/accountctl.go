@@ -1,7 +1,9 @@
 package controller
 
 import (
+	"html/template"
 	"net/http"
+	"path/filepath"
 
 	"github.com/b3log/pipe/model"
 	"github.com/b3log/pipe/service"
@@ -95,4 +97,28 @@ func registerAction(c *gin.Context) {
 
 		return
 	}
+}
+
+func showLoginPageAction(c *gin.Context) {
+	t, err := template.ParseFiles(filepath.ToSlash(filepath.Join(util.Conf.StaticRoot, "console/dist/login/index.html")))
+	if nil != err {
+		logger.Errorf("load login page failed: " + err.Error())
+		c.String(http.StatusNotFound, "load login page failed")
+
+		return
+	}
+
+	t.Execute(c.Writer, nil)
+}
+
+func showRegisterPageAction(c *gin.Context) {
+	t, err := template.ParseFiles(filepath.ToSlash(filepath.Join(util.Conf.StaticRoot, "console/dist/register/index.html")))
+	if nil != err {
+		logger.Errorf("load register page failed: " + err.Error())
+		c.String(http.StatusNotFound, "load register page failed")
+
+		return
+	}
+
+	t.Execute(c.Writer, nil)
 }
