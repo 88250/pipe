@@ -21,6 +21,7 @@
     "axios": "^0.18.0",
     "babel-polyfill": "^6.26.0",
     "particles.js": "^2.0.0",
+    "sha512crypt-node": "^0.1.0",
     "vue-axios": "^2.0.2",
     "vue-i18n": "^7.2.0",
     "vuetify": "git+https://github.com/Vanessa219/vuetify.git#v1.2.6"

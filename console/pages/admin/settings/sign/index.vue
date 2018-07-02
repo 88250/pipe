@@ -1,26 +1,23 @@
 <template>
-  <div>
-    <div class="card fn-clear card__body">
+  <div class="card fn-clear card__body">
+    <v-form>
+      <v-text-field
+        :label="$t('signs', $store.state.locale)"
+        v-model="sign"
+        multi-line
+        @keyup.ctrl.13="update"
+        @keyup.meta.13="update"
+      ></v-text-field>
 
-      <v-form>
-        <v-text-field
-          :label="$t('signs', $store.state.locale)"
-          v-model="sign"
-          multi-line
-          @keyup.ctrl.13="update"
-          @keyup.meta.13="update"
-        ></v-text-field>
+      <div class="alert alert--danger" v-show="error">
+        <v-icon>danger</v-icon>
+        <span>{{ errorMsg }}</span>
+      </div>
+    </v-form>
 
-        <div class="alert alert--danger" v-show="error">
-          <v-icon>danger</v-icon>
-          <span>{{ errorMsg }}</span>
-        </div>
-      </v-form>
-
-      <v-btn class="fn-right btn--margin-t30 btn--info btn--space" @click="update">
-        {{ $t('confirm', $store.state.locale) }}
-      </v-btn>
-    </div>
+    <v-btn class="fn-right btn--margin-t30 btn--info btn--space" @click="update">
+      {{ $t('confirm', $store.state.locale) }}
+    </v-btn>
   </div>
 </template>
 
