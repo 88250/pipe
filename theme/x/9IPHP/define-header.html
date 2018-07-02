@@ -13,8 +13,8 @@
         <svg class="fn-none"><use xlink:href="#icon-toc"></use></svg>
         <span class="fn-right">
             {{if eq .User.URole 0}}
-            <a href="https://hacpai.com/login" class="header__btn">{{.I18n.Login}}</a> &nbsp; &nbsp;
-            <a href="https://hacpai.com/register" class="header__btn ft-orange">{{.I18n.Register}}</a>
+            <a href="{{.Conf.Server}}/login" class="header__btn">{{.I18n.Login}}</a> &nbsp; &nbsp;
+            <a href="{{.Conf.Server}}/register" class="header__btn ft-orange">{{.I18n.Register}}</a>
             {{else}}
             <a class="avatar pipe-tooltipped pipe-tooltipped--w"
                aria-label="{{.I18n.manage}}"
@@ -79,8 +79,8 @@
         {{.I18n.Search}}
     </a>
     {{if eq .User.URole 0}}
-    <a href="https://hacpai.com/login">{{.I18n.Login}}</a>
-    <a href="https://hacpai.com/register">{{.I18n.Register}}</a>
+    <a href="{{.Conf.Server}}/login">{{.I18n.Login}}</a>
+    <a href="{{.Conf.Server}}/register">{{.I18n.Register}}</a>
     {{else}}
     <a href="{{.Conf.Server}}/{{if ne .User.URole 4}}admin/{{end}}">
         <svg>

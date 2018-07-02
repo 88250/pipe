@@ -103,7 +103,7 @@
             </a>
 
             {{if eq .User.URole 0}}
-            <a href="https://hacpai.com/register" aria-label="{{.I18n.Register}}"
+            <a href="{{.Conf.Server}}/register" aria-label="{{.I18n.Register}}"
                class="pipe-tooltipped pipe-tooltipped--n">
                 <svg>
                     <use xlink:href="#icon-logout"></use>

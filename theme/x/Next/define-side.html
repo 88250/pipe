@@ -20,8 +20,8 @@
         <div class="side__board">{{.Setting.BasicNoticeBoard}}</div>
 
         {{if eq .User.URole 0}}
-        <a href="https://hacpai.com/register" class="side__btn">{{.I18n.Register}}</a>
-        <a href="https://hacpai.com/login" class="side__btn">{{.I18n.Login}}</a>
+        <a href="{{.Conf.Server}}/register" class="side__btn">{{.I18n.Register}}</a>
+        <a href="{{.Conf.Server}}/login" class="side__btn">{{.I18n.Login}}</a>
         {{else}}
         <a class="side__btn"
            href="{{.Conf.Server}}/{{if ne .User.URole 4}}admin/{{end}}">{{.I18n.Manage}}</a>

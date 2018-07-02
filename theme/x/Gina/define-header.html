@@ -44,8 +44,8 @@
         </a>
         <div class="header__tool">
             {{if eq .User.URole 0}}
-            <a href="https://hacpai.com/register" class="fn-right ft-orange">{{.I18n.Register}}</a>
-            <a href="https://hacpai.com/login" class="fn-right">{{.I18n.Login}}</a>
+            <a href="{{.Conf.Server}}/register" class="fn-right ft-orange">{{.I18n.Register}}</a>
+            <a href="{{.Conf.Server}}/login" class="fn-right">{{.I18n.Login}}</a>
             {{else}}
             <a class="avatar fn-right"
                href="{{.Conf.Server}}/{{if ne .User.URole 4}}admin/{{end}}"
