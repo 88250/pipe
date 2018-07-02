@@ -60,6 +60,9 @@ func UpdateAccountAction(c *gin.Context) {
 
 		return
 	}
+	session.UB3Key = b3Key
+	session.UAvatar = avatarURL
+	session.Save(c)
 }
 
 // GetAccountAction gets an account.
