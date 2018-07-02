@@ -25,27 +25,49 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// UpdateUserAction updates a user.
-func UpdateUserAction(c *gin.Context) {
+// UpdatePasswordAction updates a user's password.
+func UpdatePasswordAction(c *gin.Context) {
 	result := util.NewResult()
 	defer c.JSON(http.StatusOK, result)
 
 	arg := map[string]interface{}{}
 	if err := c.BindJSON(&arg); nil != err {
 		result.Code = -1
-		result.Msg = "parses update user request failed"
+		result.Msg = "parses update user's password request failed"
 
 		return
 	}
 
-	// TODO: update password
+	password := arg["password"].(string)
+	_ = password
+	session := util.GetSession(c)
+	user := service.User.GetUserByName(session.UName)
+	if err := service.User.UpdateUser(user); nil != err {
+		result.Code = -1
+		result.Msg = err.Error()
+
+		return
+	}
+}
+
+// UpdateB3Action updates a user's b3 settings.
+func UpdateB3Action(c *gin.Context) {
+	result := util.NewResult()
+	defer c.JSON(http.StatusOK, result)
+
+	arg := map[string]interface{}{}
+	if err := c.BindJSON(&arg); nil != err {
+		result.Code = -1
+		result.Msg = "parses update user's b3 request failed"
+
+		return
+	}
+
 	b3Key := arg["b3Key"].(string)
-	allowB3Login := arg["allowB3Login"].(bool)
 
 	session := util.GetSession(c)
 	user := service.User.GetUserByName(session.UName)
 	user.B3Key = b3Key
-	user.AllowB3Login = allowB3Login
 	if err := service.User.UpdateUser(user); nil != err {
 		result.Code = -1
 		result.Msg = err.Error()
