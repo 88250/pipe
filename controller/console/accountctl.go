@@ -47,7 +47,7 @@ func UpdateAccountAction(c *gin.Context) {
 		return
 	}
 
-	b3Key := arg["b3Key"].(string)
+	b3Key := arg["b3key"].(string)
 	avatarURL := arg["avatarURL"].(string)
 
 	session := util.GetSession(c)
