@@ -17,7 +17,7 @@
 package model
 
 import (
-	"strconv"
+	"github.com/b3log/pipe/util"
 )
 
 // User model.
@@ -43,5 +43,5 @@ const (
 
 // AvatarURLWithSize returns avatar URL with the specified size.
 func (u *User) AvatarURLWithSize(size int) string {
-	return u.AvatarURL + "?imageView2/1/w/" + strconv.Itoa(size) + "/h/" + strconv.Itoa(size) + "/interlace/1/q/100"
+	return util.ImageSize(u.AvatarURL, size, size)
 }
