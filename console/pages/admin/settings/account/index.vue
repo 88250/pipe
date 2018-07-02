@@ -7,10 +7,10 @@
           v-model="password"
           type="password"
           :rules="requiredRules"
+          required
           @keyup.ctrl.13="passwordUpdate"
           @keyup.meta.13="passwordUpdate"
         ></v-text-field>
-
         <div class="alert alert--danger" v-show="errorPassword">
           <v-icon>danger</v-icon>
           <span>{{ errorPasswordMsg }}</span>
@@ -29,6 +29,7 @@
           v-model="avatarURL"
           :rules="avatarRules"
           :counter="255"
+          required
           @keyup.ctrl.13="accountUpdate"
           @keyup.meta.13="accountUpdate"
         ></v-text-field>
@@ -36,12 +37,19 @@
         <v-text-field
           label="B3log Key"
           v-model="b3key"
-          :rules="requiredRules"
           :counter="20"
           @keyup.ctrl.13="accountUpdate"
           @keyup.meta.13="accountUpdate"
         ></v-text-field>
 
+        <div class="fn-clear">
+          <a
+            class="fn-right"
+            href="https://hacpai.com/settings/b3"
+            target="_blank">
+            {{ $t('check', $store.state.locale) }}/{{ $t('setting', $store.state.locale) }} B3log Key
+          </a>
+        </div>
         <div class="alert alert--danger" v-show="error">
           <v-icon>danger</v-icon>
           <span>{{ errorMsg }}</span>

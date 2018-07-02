@@ -7,7 +7,7 @@
           <div class="ft-center login__content fn-flex" v-if="account===''">
             <div class="fn-flex-1">
               <a class="card card--dark login__image"
-                 href="https://hacpai.com"
+                 href="https://hacpai.com/login"
                  target="_blank">
                 <v-icon>hacpai-logo</v-icon>
               </a>
@@ -43,6 +43,7 @@
                 :rules="requiredRules"
                 required
                 type="password"
+                @keyup.13="goStep2"
               ></v-text-field>
             </v-form>
             <div class="alert alert--danger" v-show="registerError">
@@ -78,6 +79,7 @@
                 :counter="20"
                 :rules="b3keyRules"
                 required
+                @keyup.13="init"
               ></v-text-field>
               <a
                 class="init__help"

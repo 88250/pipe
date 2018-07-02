@@ -5,11 +5,11 @@
       <div class="ft-center login__content fn-flex" v-if="account===''">
         <div class="fn-flex-1">
           <a class="card card--dark login__image"
-             href="https://hacpai.com"
+             href="https://hacpai.com/register"
              target="_blank">
             <v-icon>hacpai-logo</v-icon>
           </a>
-          <a class="login__link" href="https://hacpai.com/login"
+          <a class="login__link" href="https://hacpai.com/register"
              target="_blank">
             {{ $t('useHacpaiInit', $store.state.locale) }}
           </a>
@@ -41,6 +41,7 @@
             :rules="requiredRules"
             required
             type="password"
+            @keyup.13="register"
           ></v-text-field>
         </v-form>
         <div class="alert alert--danger" v-show="error">
@@ -96,6 +97,10 @@
         if (responseData.code === 0) {
           this.$set(this, 'error', false)
           this.$set(this, 'errorMsg', '')
+          const stateResponseData = await this.axios.get('/status')
+          if (stateResponseData) {
+            this.$store.commit('setStatus', stateResponseData)
+          }
           this.$router.push(this.$route.query.goto || '/')
         } else {
           this.$set(this, 'error', true)
