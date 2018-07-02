@@ -44,6 +44,12 @@ func fillUser(c *gin.Context) {
 		return
 	}
 
+	if util.PathLogin == c.Request.URL.Path || util.PathRegister == c.Request.URL.Path {
+		c.Next()
+
+		return
+	}
+
 	dataModel := &DataModel{}
 	c.Set("dataModel", dataModel)
 	session := util.GetSession(c)
@@ -69,7 +75,7 @@ func fillUser(c *gin.Context) {
 
 		return
 	case "":
-		redirectURL := c.Request.Referer()
+		redirectURL := model.Conf.Server + c.Request.URL.Path
 		if "/admin/" == c.Request.URL.Path { // https://github.com/b3log/pipe/issues/67
 			redirectURL = model.Conf.Server + c.Request.URL.Path
 		}
