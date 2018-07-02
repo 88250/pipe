@@ -74,7 +74,7 @@ func registerAction(c *gin.Context) {
 		AvatarURL: "https://img.hacpai.com/pipe/default-avatar.png",
 	}
 
-	if err := service.User.AddUser(user); nil != err {
+	if err := service.Init.InitBlog(user); nil != err {
 		result.Code = -1
 		result.Msg = err.Error()
 
