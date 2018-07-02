@@ -42,6 +42,21 @@ func loginAction(c *gin.Context) {
 
 		return
 	}
+
+	ownBlog := service.User.GetOwnBlog(user.ID)
+	session := &util.SessionData{
+		UID:     user.ID,
+		UName:   user.Name,
+		UB3Key:  user.B3Key,
+		UAvatar: user.AvatarURL,
+		URole:   ownBlog.UserRole,
+		BID:     ownBlog.ID,
+		BURL:    ownBlog.URL,
+	}
+	if err := session.Save(c); nil != err {
+		result.Code = -1
+		result.Msg = "saves session failed: " + err.Error()
+	}
 }
 
 // registerAction registers a user.

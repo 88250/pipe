@@ -260,7 +260,9 @@ func (srv *userService) GetTopBlogs(size int) (ret []*UserBlog) {
 
 	for _, user := range users {
 		userBlog := srv.GetOwnBlog(user.ID)
-		ret = append(ret, userBlog)
+		if (nil != userBlog) {
+			ret = append(ret, userBlog)
+		}
 	}
 
 	return ret
