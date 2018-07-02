@@ -26,7 +26,7 @@ import (
 )
 
 const (
-	testPlatformAdminName  = "pipe"
+	testPlatformAdminName = "pipe"
 )
 
 func TestMain(m *testing.M) {

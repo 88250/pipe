@@ -119,9 +119,9 @@ func (srv *userService) GetUser(userID uint64) *model.User {
 
 // UserBlog represents user blog.
 type UserBlog struct {
-	ID               uint64 `json:"id,omitempty"`    // blog ID
-	Title            string `json:"title"` // blog title
-	URL              string `json:"url"`   // blog URL
+	ID               uint64 `json:"id,omitempty"` // blog ID
+	Title            string `json:"title"`        // blog title
+	URL              string `json:"url"`          // blog URL
 	UserID           uint64 `json:"userId,omitempty"`
 	UserRole         int    `json:"userRole,omitempty"`
 	UserArticleCount int    `json:"userArticleCount"`
