@@ -28,14 +28,16 @@
           :label="$t('avatarURL', $store.state.locale)"
           v-model="avatarURL"
           :rules="requiredRules"
+          :counter="20"
           @keyup.ctrl.13="accountUpdate"
           @keyup.meta.13="accountUpdate"
         ></v-text-field>
 
         <v-text-field
-          label="B3Key"
+          label="B3log Key"
           v-model="b3key"
           :rules="requiredRules"
+          :counter="20"
           @keyup.ctrl.13="accountUpdate"
           @keyup.meta.13="accountUpdate"
         ></v-text-field>
@@ -55,13 +57,14 @@
 
 <script>
   import sha512crypt from 'sha512crypt-node'
-  import { required } from '~/plugins/validate'
+  import { maxSize, required } from '~/plugins/validate'
 
   export default {
     data () {
       return {
         requiredRules: [
-          (v) => required.call(this, v)
+          (v) => required.call(this, v),
+          (v) => maxSize.call(this, v, 20)
         ],
         error: false,
         errorMsg: '',
