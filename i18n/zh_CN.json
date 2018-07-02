@@ -1,4 +1,5 @@
 {
+  "userName": "用户名",
   "popularBlog": "受欢迎的博客",
   "createdTime": "创建时间",
   "goTop": "回到顶部",
@@ -56,8 +57,8 @@
   "nextArticle": "下一篇",
   "nextPage": "下一页",
   "experienceNow": "立即体验",
-  "pipeUseHacpaiAccount": "Pipe 需要使用黑客派账号",
   "useHacpaiInit": "使用黑客派账号",
+  "usePipeInit": "使用 Pipe 派账号",
   "openPipeTravel": "开启 Pipe 之旅",
   "registerHacpaiAccount": "注册黑客派",
   "hacpaiEmail": "黑客派邮箱",

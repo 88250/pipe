@@ -3,27 +3,63 @@
     <div class="card">
       <v-stepper v-model="step">
         <v-stepper-content step="1" class="fn-clear">
-          <h1>{{ $t('pipeUseHacpaiAccount', $store.state.locale) }}</h1>
-          <div class="ft-center init__content fn-clear">
-            <a class="card card--dark init__image"
-               href="https://hacpai.com"
-               target="_blank">
-              <v-icon>hacpai-logo</v-icon>
-            </a>
-            <a class="init__link" href="https://hacpai.com/register"
-               target="_blank">
-              {{ $t('registerHacpaiAccount', $store.state.locale) }}
-            </a>
-            <a class="init__link" href="https://hacpai.com/login"
-               target="_blank">
-              {{ $t('loginHacpai', $store.state.locale) }}
-            </a>
+          <h1>Pipe {{ $t(account === 'pipe' ? 'register' : 'guide', $store.state.locale) }}</h1>
+          <div class="ft-center init__content fn-flex" v-if="account===''">
+            <div class="fn-flex-1">
+              <a class="card card--dark init__image"
+                 href="https://hacpai.com"
+                 target="_blank">
+                <v-icon>hacpai-logo</v-icon>
+              </a>
+              <a class="init__link" href="https://hacpai.com/login"
+                 target="_blank">
+                {{ $t('useHacpaiInit', $store.state.locale) }}
+              </a>
+            </div>
+            <div class="fn-flex-1">
+              <a class="card init__image"
+                 href="http://pipe.b3log.org/"
+                 target="_blank">
+                <img src="~/static/images/logo.png"/>
+              </a>
+              <div class="init__link fn-pointer" @click="account='pipe'">
+                {{ $t('usePipeInit', $store.state.locale) }}
+              </div>
+            </div>
           </div>
-          <v-btn
-            v-if="$store.state.name !== ''"
-            class="btn--info fn-right"
-            @click="step = 2">{{ $t('nextStep', $store.state.locale) }}
-          </v-btn>
+          <div v-if="account==='pipe'">
+            <br>
+            <v-form ref="accountForm" @submit.prevent="init">
+              <v-text-field
+                :label="$t('userName', $store.state.locale)"
+                v-model="userName"
+                :counter="16"
+                :rules="requiredRules"
+                required
+              ></v-text-field>
+              <v-text-field
+                :label="$t('password', $store.state.locale)"
+                v-model="userPassword"
+                :counter="16"
+                :rules="requiredRules"
+                required
+                type="password"
+              ></v-text-field>
+            </v-form>
+            <div class="alert alert--danger" v-show="registerError">
+              <v-icon>danger</v-icon>
+              <span>{{ registerErrorMsg }}</span>
+            </div>
+          </div>
+          <div class="fn-right">
+            <v-btn  v-if="account === 'pipe'"
+              class="btn--info" @click="account = ''">{{ $t('preStep', $store.state.locale) }}</v-btn>
+            <v-btn
+              v-if="$store.state.name !== '' || account === 'pipe'"
+              class="btn--success btn--space"
+              @click="goStep2">{{ $t(account === 'pipe' ? 'init' : 'nextStep', $store.state.locale) }}
+            </v-btn>
+          </div>
         </v-stepper-content>
 
         <v-stepper-content step="2" class="fn-clear">
@@ -82,19 +118,29 @@
 <script>
   import Vue from 'vue'
   import 'particles.js'
+  import sha512crypt from 'sha512crypt-node'
   import {initParticlesJS} from '~/plugins/utils'
   import { required, maxSize } from '~/plugins/validate'
 
   export default {
     data () {
       return {
+        userName: '',
+        userPassword: '',
+        account: '',
         step: 4,
         postInitError: false,
         postInitErrorMsg: '',
+        registerError: false,
+        registerErrorMsg: '',
         b3key: '',
         b3keyRules: [
           (v) => required.call(this, v),
           (v) => maxSize.call(this, v, 20)
+        ],
+        requiredRules: [
+          (v) => required.call(this, v),
+          (v) => maxSize.call(this, v, 16)
         ]
       }
     },
@@ -104,6 +150,30 @@
       }
     },
     methods: {
+      async goStep2 () {
+        if (this.account === '') {
+          this.$set(this, 'step', 2)
+        }
+
+        if (this.account === 'pipe') {
+          if (!this.$refs.accountForm.validate()) {
+            return
+          }
+          const responseData = await this.axios.post('/init/local', {
+            name: this.userName,
+            password: sha512crypt.sha512crypt(this.userPassword, `$6$5000$${Math.random().toString(36)}`)
+          })
+          if (responseData.code === 0) {
+            this.$set(this, 'step', 3)
+            this.$set(this, 'registerError', false)
+            this.$set(this, 'registerErrorMsg', '')
+            this.$store.commit('setIsInit', true)
+          } else {
+            this.$set(this, 'registerError', true)
+            this.$set(this, 'registerErrorMsg', responseData.msg)
+          }
+        }
+      },
       async init () {
         if (!this.$refs.form.validate()) {
           return
