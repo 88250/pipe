@@ -126,18 +126,16 @@ func fillUser(c *gin.Context) {
 		userAvatar := data["userAvatarURL"].(string)
 
 		session = &util.SessionData{
-			UName:         username,
-			UB3Key:        b3Key,
-			UAllowB3Login: true,
-			UAvatar:       userAvatar,
-			URole:         model.UserRoleBlogAdmin,
+			UName:   username,
+			UB3Key:  b3Key,
+			UAvatar: userAvatar,
+			URole:   model.UserRoleBlogAdmin,
 		}
 
 		user := &model.User{
-			Name:         session.UName,
-			B3Key:        b3Key,
-			AllowB3Login: true,
-			AvatarURL:    session.UAvatar,
+			Name:      session.UName,
+			B3Key:     b3Key,
+			AvatarURL: session.UAvatar,
 		}
 
 		if service.Init.Inited() {
@@ -147,12 +145,6 @@ func fillUser(c *gin.Context) {
 		}
 
 		if existUser := service.User.GetUserByName(username); nil != existUser {
-			if !existUser.AllowB3Login { // https://github.com/b3log/pipe/issues/130
-				c.Next()
-
-				return
-			}
-
 			existUser.AvatarURL = session.UAvatar
 			ownBlog := service.User.GetOwnBlog(existUser.ID)
 			if nil != ownBlog {

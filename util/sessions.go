@@ -27,7 +27,6 @@ import (
 type SessionData struct {
 	UID          uint64 // user ID
 	UName        string // username
-	UAllowB3Login bool   // user allow b3 login
 	UB3Key       string // user B3 key
 	URole        int    // user role
 	UAvatar      string // user avatar URL

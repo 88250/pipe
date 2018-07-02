@@ -102,7 +102,6 @@ func initAction(c *gin.Context) {
 	platformAdmin := &model.User{
 		Name:         session.UName,
 		B3Key:        b3key,
-		AllowB3Login: session.UAllowB3Login,
 		AvatarURL:    session.UAvatar,
 	}
 

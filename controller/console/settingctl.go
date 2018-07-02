@@ -38,7 +38,6 @@ func GetAccountSettingsAction(c *gin.Context) {
 	session := util.GetSession(c)
 	data := map[string]interface{}{}
 	data["name"] = session.UName
-	data["allowB3Login"] = session.UAllowB3Login
 	data["avatarURL"] = session.UAvatar
 	data["b3Key"] = session.UB3Key
 
