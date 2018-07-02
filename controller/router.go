@@ -111,8 +111,6 @@ func MapRoutes() *gin.Engine {
 	consoleGroup.DELETE("/navigations/:id", console.RemoveNavigationAction)
 	consoleGroup.GET("/users", console.GetUsersAction)
 	consoleGroup.POST("/users", console.AddUserAction)
-	consoleGroup.PUT("/users/:id/b3", console.UpdateB3Action)
-	consoleGroup.PUT("/users/:id/password", console.UpdatePasswordAction)
 	consoleGroup.GET("/thumbs", console.GetArticleThumbsAction)
 	consoleGroup.POST("/markdown", console.MarkdownAction)
 	consoleGroup.POST("/import/md", console.ImportMarkdownAction)
@@ -132,7 +130,9 @@ func MapRoutes() *gin.Engine {
 	consoleSettingsGroup.PUT("/feed", console.UpdateFeedSettingsAction)
 	consoleSettingsGroup.GET("/third-stat", console.GetThirdStatisticSettingsAction)
 	consoleSettingsGroup.PUT("/third-stat", console.UpdateThirdStatisticSettingsAction)
-	consoleSettingsGroup.GET("/account", console.GetAccountSettingsAction)
+	consoleSettingsGroup.GET("/account", console.GetAccountAction)
+	consoleSettingsGroup.PUT("/account", console.UpdateAccountAction)
+	consoleSettingsGroup.PUT("/account/password", console.UpdatePasswordAction)
 
 	ret.StaticFile(util.PathFavicon, staticPath("console/static/favicon.ico"))
 

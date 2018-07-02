@@ -28,10 +28,68 @@ import (
 	"github.com/b3log/pipe/service"
 	"github.com/b3log/pipe/util"
 	"github.com/gin-gonic/gin"
+	"github.com/tredoe/osutil/user/crypt/sha512_crypt"
 )
 
-// GetAccountSettingsAction gets account settings.
-func GetAccountSettingsAction(c *gin.Context) {
+// UpdatePasswordAction updates a user's password.
+func UpdatePasswordAction(c *gin.Context) {
+	result := util.NewResult()
+	defer c.JSON(http.StatusOK, result)
+
+	arg := map[string]interface{}{}
+	if err := c.BindJSON(&arg); nil != err {
+		result.Code = -1
+		result.Msg = "parses update user's password request failed"
+
+		return
+	}
+
+	password := arg["password"].(string)
+	_ = password
+	crypt := sha512_crypt.New()
+	hash, _ := crypt.Generate([]byte(password), nil)
+
+	session := util.GetSession(c)
+	user := service.User.GetUserByName(session.UName)
+	user.Password = hash
+	if err := service.User.UpdateUser(user); nil != err {
+		result.Code = -1
+		result.Msg = err.Error()
+
+		return
+	}
+}
+
+// UpdateAccountAction updates an account.
+func UpdateAccountAction(c *gin.Context) {
+	result := util.NewResult()
+	defer c.JSON(http.StatusOK, result)
+
+	arg := map[string]interface{}{}
+	if err := c.BindJSON(&arg); nil != err {
+		result.Code = -1
+		result.Msg = "parses update account request failed"
+
+		return
+	}
+
+	b3Key := arg["b3Key"].(string)
+	avatarURL := arg["avatarURL"].(string)
+
+	session := util.GetSession(c)
+	user := service.User.GetUserByName(session.UName)
+	user.B3Key = b3Key
+	user.AvatarURL = avatarURL
+	if err := service.User.UpdateUser(user); nil != err {
+		result.Code = -1
+		result.Msg = err.Error()
+
+		return
+	}
+}
+
+// GetAccountAction gets an account.
+func GetAccountAction(c *gin.Context) {
 	result := util.NewResult()
 	defer c.JSON(http.StatusOK, result)
 
