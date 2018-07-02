@@ -9,5 +9,9 @@ export default function ({redirect, store, route}) {
     }
   } else if (route.path === '/init') {
     redirect('/')
+  } else if (route.path === '/login' || route.path === '/register') {
+    if (isLogin) {
+      redirect('/')
+    }
   }
 }

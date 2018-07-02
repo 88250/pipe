@@ -16,10 +16,38 @@
     overflow: auto;
   }
 }
+
 .particles-js-canvas-el {
   position: absolute;
   top: 0;
   left: 0;
+}
+
+// login
+.login {
+  padding: 30px;
+  &__content {
+    height: 300px;
+  }
+
+  &__link {
+    margin: 0 25px;
+  }
+
+  &__image {
+    &.card {
+      display: block;
+      height: 120px;
+      width: 120px;
+      margin: 54px auto;
+      svg {
+        color: #fff;
+        height: 100px;
+        width: 100px;
+        padding: 10px;
+      }
+    }
+  }
 }
 
 @media (max-width: 768px) {

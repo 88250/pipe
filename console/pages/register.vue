@@ -1,7 +1,7 @@
 <template>
   <div class="console" id="particles">
     <div class="card login">
-      <h1>{{ $t('login', $store.state.locale) }}</h1>
+      <h1>{{ $t('register', $store.state.locale) }}</h1>
       <div class="ft-center login__content fn-flex" v-if="account===''">
         <div class="fn-flex-1">
           <a class="card card--dark login__image"
@@ -51,7 +51,7 @@
           <v-btn class="btn--info" @click="account = ''">{{ $t('preStep', $store.state.locale) }}</v-btn>
           <v-btn
             class="btn--success btn--space"
-            @click="login">{{ $t('login', $store.state.locale) }}
+            @click="register">{{ $t('register', $store.state.locale) }}
           </v-btn>
         </div>
       </div>
@@ -61,13 +61,14 @@
 
 <script>
   import 'particles.js'
+  import sha512crypt from 'sha512crypt-node'
   import { initParticlesJS } from '~/plugins/utils'
   import { required, maxSize } from '~/plugins/validate'
 
   export default {
     head () {
       return {
-        title: this.$t('login', this.$store.state.locale)
+        title: this.$t('register', this.$store.state.locale)
       }
     },
     data () {
@@ -84,13 +85,13 @@
       }
     },
     methods: {
-      async login () {
+      async register () {
         if (!this.$refs.accountForm.validate()) {
           return
         }
-        const responseData = await this.axios.post('/login', {
+        const responseData = await this.axios.post('/register', {
           name: this.userName,
-          password: this.userPassword
+          password: sha512crypt.sha512crypt(this.userPassword, `$6$5000$${Math.random().toString(36)}`)
         })
         if (responseData.code === 0) {
           this.$set(this, 'error', false)

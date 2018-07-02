@@ -4,24 +4,24 @@
       <v-stepper v-model="step">
         <v-stepper-content step="1" class="fn-clear">
           <h1>Pipe {{ $t(account === 'pipe' ? 'register' : 'guide', $store.state.locale) }}</h1>
-          <div class="ft-center init__content fn-flex" v-if="account===''">
+          <div class="ft-center login__content fn-flex" v-if="account===''">
             <div class="fn-flex-1">
-              <a class="card card--dark init__image"
+              <a class="card card--dark login__image"
                  href="https://hacpai.com"
                  target="_blank">
                 <v-icon>hacpai-logo</v-icon>
               </a>
-              <a class="init__link" href="https://hacpai.com/login"
+              <a class="login__link" href="https://hacpai.com/login"
                  target="_blank">
                 {{ $t('useHacpaiInit', $store.state.locale) }}
               </a>
             </div>
             <div class="fn-flex-1">
-              <div class="card init__image fn-pointer"
+              <div class="card login__image fn-pointer"
                  @click="account='pipe'">
                 <img src="~/static/images/logo.png"/>
               </div>
-              <div class="init__link fn-pointer" @click="account='pipe'">
+              <div class="login__link fn-pointer" @click="account='pipe'">
                 {{ $t('usePipeInit', $store.state.locale) }}
               </div>
             </div>
@@ -67,8 +67,8 @@
             {{ $store.state.name }}
             {{ $t('init', $store.state.locale) }}
           </h1>
-          <div class="ft-center init__content fn-clear">
-            <img class="avatar init__image card init__image--step2"
+          <div class="ft-center login__content fn-clear">
+            <img class="avatar login__image card init__image--step2"
                  :src="`${$store.state.avatarURL}?imageView2/1/w/128/h/128/interlace/1/q/100`"/>
             <v-form ref="form" class="fn-flex" @submit.prevent="init">
               <v-text-field
@@ -97,11 +97,11 @@
 
         <v-stepper-content step="3" class="fn-clear">
           <h1>{{ $t('welcome', $store.state.locale) }} Pipe</h1>
-          <div class="ft-center init__content fn-clear">
+          <div class="ft-center login__content fn-clear">
             <a href="https://github.com/b3log/pipe"
                target="_blank"
                :aria-label="$t('openPipeTravel', $store.state.locale)"
-               class="card init__image init__image--step3 pipe-tooltipped pipe-tooltipped--n">
+               class="card login__image init__image--step3 pipe-tooltipped pipe-tooltipped--n">
                 <img src="~/static/images/logo.png"/>
             </a>
             <div class="init__text">{{$t('starIsMotivation', $store.state.locale)}}</div>
@@ -204,23 +204,9 @@
 <style lang="sass">
   @import '~assets/scss/_variables'
   .init
-    &__content
-      height: 300px
-    &__link
-      margin: 0 25px
     &__help
       padding: 34px 0 0 20px
     &__image
-      &.card
-        display: block
-        height: 120px
-        width: 120px
-        margin: 54px auto
-        svg
-          color: #fff
-          height: 100px
-          width: 100px
-          padding: 10px
       &--step2.card
         margin: 20px auto 0
       &--step3.card
