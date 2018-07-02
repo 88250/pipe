@@ -78,7 +78,7 @@ func resolveBlog(c *gin.Context) {
 }
 
 func fillCommon(c *gin.Context) {
-	if "dev" == util.Conf.RuntimeMode {
+	if "dev" == model.Conf.RuntimeMode {
 		i18n.Load()
 	}
 
@@ -136,7 +136,7 @@ func fillCommon(c *gin.Context) {
 	(*dataModel)["Title"] = settingMap[model.SettingNameBasicBlogTitle]
 	(*dataModel)["MetaKeywords"] = settingMap[model.SettingNameBasicMetaKeywords]
 	(*dataModel)["MetaDescription"] = settingMap[model.SettingNameBasicMetaDescription]
-	(*dataModel)["Conf"] = util.Conf
+	(*dataModel)["Conf"] = model.Conf
 	(*dataModel)["Year"] = time.Now().Year()
 	users, _ := service.User.GetBlogUsers(1, blogID)
 	(*dataModel)["UserCount"] = len(users)
@@ -318,7 +318,7 @@ func getLocale(c *gin.Context) string {
 }
 
 func notFound(c *gin.Context) {
-	t, err := template.ParseFiles(filepath.ToSlash(filepath.Join(util.Conf.StaticRoot, "console/dist/init/index.html")))
+	t, err := template.ParseFiles(filepath.ToSlash(filepath.Join(model.Conf.StaticRoot, "console/dist/init/index.html")))
 	if nil != err {
 		logger.Errorf("load 404 page failed: " + err.Error())
 		c.String(http.StatusNotFound, "load 404 page failed")

@@ -41,7 +41,7 @@ func pushArticlesPeriodically() {
 func pushArticles() {
 	defer util.Recover()
 
-	server, _ := url.Parse(util.Conf.Server)
+	server, _ := url.Parse(model.Conf.Server)
 	if !util.IsDomain(server.Hostname()) {
 		return
 	}
@@ -51,7 +51,7 @@ func pushArticles() {
 		author := service.User.GetUser(article.AuthorID)
 		b3Key := author.B3Key
 		b3Name := author.Name
-		if "" == b3Key && !strings.Contains(util.Conf.Server, "pipe.b3log.org") {
+		if "" == b3Key && !strings.Contains(model.Conf.Server, "pipe.b3log.org") {
 			pa := service.User.GetPlatformAdmin()
 			b3Key = pa.B3Key
 			b3Name = pa.Name
@@ -72,7 +72,7 @@ func pushArticles() {
 			},
 			"client": map[string]interface{}{
 				"name":  "Pipe",
-				"ver":   util.Version,
+				"ver":   model.Version,
 				"title": blogTitleSetting.Value,
 				"host":  blogURLSetting.Value,
 				"email": b3Name,
@@ -81,7 +81,7 @@ func pushArticles() {
 		}
 		result := &map[string]interface{}{}
 		_, _, errs := gorequest.New().Post("https://rhythm.b3log.org/api/article").SendMap(requestJSON).
-			Set("user-agent", util.UserAgent).Timeout(30*time.Second).
+			Set("user-agent", model.UserAgent).Timeout(30*time.Second).
 			Retry(3, 5*time.Second, http.StatusInternalServerError).EndStruct(result)
 		if nil != errs {
 			logger.Errorf("push article to Rhythm failed: " + errs[0].Error())
@@ -105,7 +105,7 @@ func pushCommentsPeriodically() {
 func pushComments() {
 	defer util.Recover()
 
-	server, _ := url.Parse(util.Conf.Server)
+	server, _ := url.Parse(model.Conf.Server)
 	if !util.IsDomain(server.Hostname()) {
 		return
 	}
@@ -137,16 +137,16 @@ func pushComments() {
 			},
 			"client": map[string]interface{}{
 				"name":  "Pipe",
-				"ver":   util.Version,
+				"ver":   model.Version,
 				"title": blogTitleSetting.Value,
-				"host":  util.Conf.Server,
+				"host":  model.Conf.Server,
 				"email": b3Name,
 				"key":   b3Key,
 			},
 		}
 		result := &map[string]interface{}{}
 		_, _, errs := gorequest.New().Post("https://rhythm.b3log.org/api/comment").SendMap(requestJSON).
-			Set("user-agent", util.UserAgent).Timeout(30*time.Second).
+			Set("user-agent", model.UserAgent).Timeout(30*time.Second).
 			Retry(3, 5*time.Second, http.StatusInternalServerError).EndStruct(result)
 		if nil != errs {
 			logger.Errorf("push comment to Rhythm failed: " + errs[0].Error())

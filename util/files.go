@@ -21,7 +21,12 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
+
+	"github.com/b3log/pipe/log"
 )
+
+// Logger
+var logger = log.NewLogger(os.Stdout)
 
 type myfile struct{}
 

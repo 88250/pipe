@@ -37,6 +37,7 @@ import (
 	"github.com/b3log/pipe/theme"
 	"github.com/b3log/pipe/util"
 	"github.com/gin-gonic/gin"
+	"github.com/b3log/pipe/model"
 )
 
 // Logger
@@ -49,13 +50,13 @@ func init() {
 	log.SetLevel("warn")
 	logger = log.NewLogger(os.Stdout)
 
-	util.LoadConf()
+	model.LoadConf()
 	util.LoadMarkdown()
 	i18n.Load()
 	theme.Load()
 	replaceServerConf()
 
-	if "dev" == util.Conf.RuntimeMode {
+	if "dev" == model.Conf.RuntimeMode {
 		gin.SetMode(gin.DebugMode)
 	} else {
 		gin.SetMode(gin.ReleaseMode)
@@ -71,13 +72,13 @@ func main() {
 
 	router := controller.MapRoutes()
 	server := &http.Server{
-		Addr:    "0.0.0.0:" + util.Conf.Port,
+		Addr:    "0.0.0.0:" + model.Conf.Port,
 		Handler: router,
 	}
 
 	handleSignal(server)
 
-	logger.Infof("Pipe (v%s) is running [%s]", util.Version, util.Conf.Server)
+	logger.Infof("Pipe (v%s) is running [%s]", model.Version, model.Conf.Server)
 	server.ListenAndServe()
 }
 
@@ -101,7 +102,7 @@ func handleSignal(server *http.Server) {
 }
 
 func replaceServerConf() {
-	err := filepath.Walk(filepath.ToSlash(filepath.Join(util.Conf.StaticRoot, "theme")), func(path string, f os.FileInfo, err error) error {
+	err := filepath.Walk(filepath.ToSlash(filepath.Join(model.Conf.StaticRoot, "theme")), func(path string, f os.FileInfo, err error) error {
 		if strings.HasSuffix(path, ".min.js") {
 			data, e := ioutil.ReadFile(path)
 			if nil != e {
@@ -114,9 +115,9 @@ func replaceServerConf() {
 
 			json := "{Server:" + strings.Split(content, "{Server:")[1]
 			json = strings.Split(json, "}}")[0] + "}"
-			newJSON := "{Server:\"" + util.Conf.Server + "\",StaticServer:\"" + util.Conf.StaticServer + "\",StaticResourceVersion:\"" +
-				util.Conf.StaticResourceVersion + "\",RuntimeMode:\"" + util.Conf.RuntimeMode + "\",AxiosBaseURL:\"" + util.Conf.AxiosBaseURL +
-				"\",MockServer:\"" + util.Conf.MockServer + "\"}"
+			newJSON := "{Server:\"" + model.Conf.Server + "\",StaticServer:\"" + model.Conf.StaticServer + "\",StaticResourceVersion:\"" +
+				model.Conf.StaticResourceVersion + "\",RuntimeMode:\"" + model.Conf.RuntimeMode + "\",AxiosBaseURL:\"" + model.Conf.AxiosBaseURL +
+				"\",MockServer:\"" + model.Conf.MockServer + "\"}"
 			content = strings.Replace(content, json, newJSON, -1)
 			if e = ioutil.WriteFile(path, []byte(content), 0644); nil != e {
 				logger.Fatal("replace server conf in [" + path + "] failed: " + err.Error())
@@ -129,7 +130,7 @@ func replaceServerConf() {
 		logger.Fatal("replace server conf in [theme] failed: " + err.Error())
 	}
 
-	paths, err := filepath.Glob(filepath.ToSlash(filepath.Join(util.Conf.StaticRoot, "console/dist/*.js")))
+	paths, err := filepath.Glob(filepath.ToSlash(filepath.Join(model.Conf.StaticRoot, "console/dist/*.js")))
 	if 0 < len(paths) {
 		for _, path := range paths {
 			data, e := ioutil.ReadFile(path)
@@ -140,21 +141,21 @@ func replaceServerConf() {
 			if strings.Contains(content, "{rel:\"manifest") {
 				json := "{rel:\"manifest\",href:\"" + strings.Split(content, "{rel:\"manifest\",href:\"")[1]
 				json = strings.Split(json, "}]")[0] + "}"
-				newJSON := "{rel:\"manifest\",href:\"" + util.Conf.StaticServer + "/theme/js/manifest.json\"}"
+				newJSON := "{rel:\"manifest\",href:\"" + model.Conf.StaticServer + "/theme/js/manifest.json\"}"
 				content = strings.Replace(content, json, newJSON, -1)
 			}
 			if strings.Contains(content, "env:{Server:") {
 				json := "env:{Server:" + strings.Split(content, "env:{Server:")[1]
 				json = strings.Split(json, "}}")[0] + "}"
-				newJSON := "env:{Server:\"" + util.Conf.Server + "\",StaticServer:\"" + util.Conf.StaticServer + "\",StaticResourceVersion:\"" +
-					util.Conf.StaticResourceVersion + "\",RuntimeMode:\"" + util.Conf.RuntimeMode + "\",AxiosBaseURL:\"" + util.Conf.AxiosBaseURL +
-					"\",MockServer:\"" + util.Conf.MockServer + "\"}"
+				newJSON := "env:{Server:\"" + model.Conf.Server + "\",StaticServer:\"" + model.Conf.StaticServer + "\",StaticResourceVersion:\"" +
+					model.Conf.StaticResourceVersion + "\",RuntimeMode:\"" + model.Conf.RuntimeMode + "\",AxiosBaseURL:\"" + model.Conf.AxiosBaseURL +
+					"\",MockServer:\"" + model.Conf.MockServer + "\"}"
 				content = strings.Replace(content, json, newJSON, -1)
 			}
 			if strings.Contains(content, "/console/dist/") {
 				part := strings.Split(content, "/console/dist/")[0]
 				part = part[strings.LastIndex(part, "\"")+1:]
-				content = strings.Replace(content, part, util.Conf.StaticServer, -1)
+				content = strings.Replace(content, part, model.Conf.StaticServer, -1)
 			}
 			if e = ioutil.WriteFile(path, []byte(content), 0644); nil != e {
 				logger.Fatal("replace server conf in [" + path + "] failed: " + err.Error())
@@ -163,7 +164,7 @@ func replaceServerConf() {
 	}
 
 	if util.File.IsExist("console/dist/") { // dose not exist if npm run dev
-		err = filepath.Walk(filepath.ToSlash(filepath.Join(util.Conf.StaticRoot, "console/dist/")), func(path string, f os.FileInfo, err error) error {
+		err = filepath.Walk(filepath.ToSlash(filepath.Join(model.Conf.StaticRoot, "console/dist/")), func(path string, f os.FileInfo, err error) error {
 			if strings.HasSuffix(path, ".html") {
 				data, e := ioutil.ReadFile(path)
 				if nil != e {
@@ -173,13 +174,13 @@ func replaceServerConf() {
 				if strings.Contains(content, "rel=\"manifest\" href=\"") {
 					rel := "rel=\"manifest\" href=\"" + strings.Split(content, "rel=\"manifest\" href=\"")[1]
 					rel = strings.Split(rel, "/>")[0] + "/>"
-					newRel := "rel=\"manifest\" href=\"" + util.Conf.StaticServer + "/theme/js/manifest.json\"/>"
+					newRel := "rel=\"manifest\" href=\"" + model.Conf.StaticServer + "/theme/js/manifest.json\"/>"
 					content = strings.Replace(content, rel, newRel, -1)
 				}
 				if strings.Contains(content, "/console/dist/") {
 					part := strings.Split(content, "/console/dist/")[0]
 					part = part[strings.LastIndex(part, "\"")+1:]
-					content = strings.Replace(content, part, util.Conf.StaticServer, -1)
+					content = strings.Replace(content, part, model.Conf.StaticServer, -1)
 				}
 				v := fmt.Sprintf("%d", time.Now().Unix())
 				content = strings.Replace(content, ".js\"", ".js?"+v+"\"", -1)

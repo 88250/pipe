@@ -33,7 +33,7 @@ import (
 )
 
 func showInitPageAction(c *gin.Context) {
-	t, err := template.ParseFiles(filepath.ToSlash(filepath.Join(util.Conf.StaticRoot, "console/dist/init/index.html")))
+	t, err := template.ParseFiles(filepath.ToSlash(filepath.Join(model.Conf.StaticRoot, "console/dist/init/index.html")))
 	if nil != err {
 		logger.Errorf("load init page failed: " + err.Error())
 		c.String(http.StatusNotFound, "load init page failed")
@@ -139,7 +139,7 @@ func initAction(c *gin.Context) {
 	_, _, errs := request.Post(util.HacPaiURL+"/apis/check-b3key").Send(map[string]interface{}{
 		"userName":  session.UName,
 		"userB3Key": b3key,
-	}).Set("user-agent", util.UserAgent).Timeout(30*time.Second).
+	}).Set("user-agent", model.UserAgent).Timeout(30*time.Second).
 		Retry(3, 5*time.Second, http.StatusInternalServerError).EndStruct(checkResult)
 	if nil != errs {
 		logger.Errorf("check b3 key failed: %s", errs)

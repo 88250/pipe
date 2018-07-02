@@ -100,7 +100,7 @@ func registerAction(c *gin.Context) {
 }
 
 func showLoginPageAction(c *gin.Context) {
-	t, err := template.ParseFiles(filepath.ToSlash(filepath.Join(util.Conf.StaticRoot, "console/dist/login/index.html")))
+	t, err := template.ParseFiles(filepath.ToSlash(filepath.Join(model.Conf.StaticRoot, "console/dist/login/index.html")))
 	if nil != err {
 		logger.Errorf("load login page failed: " + err.Error())
 		c.String(http.StatusNotFound, "load login page failed")
@@ -112,7 +112,7 @@ func showLoginPageAction(c *gin.Context) {
 }
 
 func showRegisterPageAction(c *gin.Context) {
-	t, err := template.ParseFiles(filepath.ToSlash(filepath.Join(util.Conf.StaticRoot, "console/dist/register/index.html")))
+	t, err := template.ParseFiles(filepath.ToSlash(filepath.Join(model.Conf.StaticRoot, "console/dist/register/index.html")))
 	if nil != err {
 		logger.Errorf("load register page failed: " + err.Error())
 		c.String(http.StatusNotFound, "load register page failed")

@@ -24,10 +24,11 @@ import (
 	"github.com/b3log/pipe/service"
 	"github.com/b3log/pipe/util"
 	"github.com/gin-gonic/gin"
+	model "github.com/b3log/pipe/model"
 )
 
 func showIndexAction(c *gin.Context) {
-	t, err := template.ParseFiles(filepath.ToSlash(filepath.Join(util.Conf.StaticRoot, "console/dist/index.html")))
+	t, err := template.ParseFiles(filepath.ToSlash(filepath.Join(model.Conf.StaticRoot, "console/dist/index.html")))
 	if nil != err {
 		logger.Errorf("load index page failed: " + err.Error())
 		c.String(http.StatusNotFound, "load index page failed")
@@ -43,12 +44,12 @@ func showPlatInfo(c *gin.Context) {
 	defer c.JSON(http.StatusOK, result)
 
 	data := map[string]interface{}{}
-	data["version"] = util.Version
+	data["version"] = model.Version
 	data["database"] = service.Database()
-	data["mode"] = util.Conf.RuntimeMode
-	data["server"] = util.Conf.Server
-	data["staticServer"] = util.Conf.StaticServer
-	data["staticResourceVer"] = util.Conf.StaticResourceVersion
+	data["mode"] = model.Conf.RuntimeMode
+	data["server"] = model.Conf.Server
+	data["staticServer"] = model.Conf.StaticServer
+	data["staticResourceVer"] = model.Conf.StaticResourceVersion
 
 	result.Data = data
 }

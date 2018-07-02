@@ -30,6 +30,7 @@ import (
 	"github.com/b3log/pipe/util"
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
+	"github.com/b3log/pipe/model"
 )
 
 // Logger
@@ -60,11 +61,11 @@ func MapRoutes() *gin.Engine {
 
 	ret.Use(gin.Recovery())
 
-	store := sessions.NewCookieStore([]byte(util.Conf.SessionSecret))
+	store := sessions.NewCookieStore([]byte(model.Conf.SessionSecret))
 	store.Options(sessions.Options{
 		Path:     "/",
-		MaxAge:   util.Conf.SessionMaxAge,
-		Secure:   strings.HasPrefix(util.Conf.Server, "https"),
+		MaxAge:   model.Conf.SessionMaxAge,
+		Secure:   strings.HasPrefix(model.Conf.Server, "https"),
 		HttpOnly: true,
 	})
 	ret.Use(sessions.Sessions("pipe", store))
@@ -86,7 +87,7 @@ func MapRoutes() *gin.Engine {
 	consoleGroup := api.Group("/console")
 	consoleGroup.Use(console.LoginCheck)
 
-	if "dev" == util.Conf.RuntimeMode {
+	if "dev" == model.Conf.RuntimeMode {
 		consoleGroup.GET("/dev/articles/gen", console.GenArticlesAction)
 	}
 
@@ -306,5 +307,5 @@ func routePath(c *gin.Context) {
 }
 
 func staticPath(relativePath string) string {
-	return filepath.ToSlash(filepath.Join(util.Conf.StaticRoot, relativePath))
+	return filepath.ToSlash(filepath.Join(model.Conf.StaticRoot, relativePath))
 }

@@ -47,7 +47,7 @@ const (
 )
 
 func (srv *articleService) GetUnpushedArticles() (ret []*model.Article) {
-	if err := db.Where("`pushed_at` <= ?", util.ZeroPushTime).Find(&ret).Error; nil != err {
+	if err := db.Where("`pushed_at` <= ?", model.ZeroPushTime).Find(&ret).Error; nil != err {
 		return
 	}
 
@@ -120,7 +120,7 @@ func (srv *articleService) AddArticle(article *model.Article) (err error) {
 	srv.mutex.Lock()
 	defer srv.mutex.Unlock()
 
-	article.PushedAt = util.ZeroPushTime
+	article.PushedAt = model.ZeroPushTime
 	if err := normalizeArticle(article); nil != err {
 		return err
 	}
@@ -415,7 +415,7 @@ func (srv *articleService) UpdateArticle(article *model.Article) (err error) {
 	oldArticle.Topped = article.Topped
 	now := time.Now()
 	oldArticle.UpdatedAt = now
-	oldArticle.PushedAt = util.ZeroPushTime
+	oldArticle.PushedAt = model.ZeroPushTime
 
 	tagStr, err := normalizeTagStr(article.Tags)
 	if nil != err {

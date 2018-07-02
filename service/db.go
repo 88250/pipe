@@ -21,7 +21,6 @@ import (
 
 	"github.com/b3log/pipe/log"
 	"github.com/b3log/pipe/model"
-	"github.com/b3log/pipe/util"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"  // mysql
 	_ "github.com/jinzhu/gorm/dialects/sqlite" // sqlite
@@ -37,11 +36,11 @@ var useSQLite bool
 func ConnectDB() {
 	var err error
 	useSQLite = false
-	if "" != util.Conf.SQLite {
-		db, err = gorm.Open("sqlite3", util.Conf.SQLite)
+	if "" != model.Conf.SQLite {
+		db, err = gorm.Open("sqlite3", model.Conf.SQLite)
 		useSQLite = true
-	} else if "" != util.Conf.MySQL {
-		db, err = gorm.Open("mysql", util.Conf.MySQL)
+	} else if "" != model.Conf.MySQL {
+		db, err = gorm.Open("mysql", model.Conf.MySQL)
 	} else {
 		logger.Fatal("please specify database")
 	}
@@ -54,7 +53,7 @@ func ConnectDB() {
 		logger.Debug("used [MySQL] as underlying database")
 	}
 
-	if err = db.AutoMigrate(util.Models...).Error; nil != err {
+	if err = db.AutoMigrate(model.Models...).Error; nil != err {
 		logger.Fatal("auto migrate tables failed: " + err.Error())
 	}
 
@@ -64,7 +63,7 @@ func ConnectDB() {
 
 	db.DB().SetMaxIdleConns(10)
 	db.DB().SetMaxOpenConns(50)
-	db.LogMode(util.Conf.ShowSQL)
+	db.LogMode(model.Conf.ShowSQL)
 }
 
 // DisconnectDB disconnects from the database.

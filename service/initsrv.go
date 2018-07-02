@@ -60,7 +60,7 @@ func (srv *initService) Inited() bool {
 
 func (srv *initService) Status() (platformStatus *PlatformStatus, err error) {
 	platformStatus = &PlatformStatus{
-		Version: util.Version,
+		Version: model.Version,
 		Locale:  "zh_CN",
 	}
 
@@ -295,7 +295,7 @@ func initSystemSettings(tx *gorm.DB, blogID uint64) error {
 	if err := tx.Create(&model.Setting{
 		Category: model.SettingCategorySystem,
 		Name:     model.SettingNameSystemVer,
-		Value:    util.Version,
+		Value:    model.Version,
 		BlogID:   blogID}).Error; nil != err {
 		return err
 	}
@@ -319,7 +319,7 @@ func initBasicSettings(tx *gorm.DB, blogAdmin *model.User, blogID uint64) error 
 	if err := tx.Create(&model.Setting{
 		Category: model.SettingCategoryBasic,
 		Name:     model.SettingNameBasicBlogURL,
-		Value:    util.Conf.Server + util.PathBlogs + "/" + blogAdmin.Name,
+		Value:    model.Conf.Server + util.PathBlogs + "/" + blogAdmin.Name,
 		BlogID:   blogID}).Error; nil != err {
 		return err
 	}

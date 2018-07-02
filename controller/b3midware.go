@@ -38,7 +38,7 @@ const nilB3id = "H9oxzSym"
 func fillUser(c *gin.Context) {
 	inited := service.Init.Inited()
 	if !inited && util.PathInit != c.Request.URL.Path {
-		c.Redirect(http.StatusSeeOther, util.Conf.Server+util.PathInit)
+		c.Redirect(http.StatusSeeOther, model.Conf.Server+util.PathInit)
 		c.Abort()
 
 		return
@@ -71,7 +71,7 @@ func fillUser(c *gin.Context) {
 	case "":
 		redirectURL := c.Request.Referer()
 		if "/admin/" == c.Request.URL.Path { // https://github.com/b3log/pipe/issues/67
-			redirectURL = util.Conf.Server + c.Request.URL.Path
+			redirectURL = model.Conf.Server + c.Request.URL.Path
 		}
 		if strings.HasPrefix(c.Request.URL.Path, util.PathBlogs) {
 			name := c.Request.URL.Path[len(util.PathBlogs)+1:]
@@ -89,13 +89,13 @@ func fillUser(c *gin.Context) {
 				}
 			}
 		} else {
-			if !strings.HasPrefix(redirectURL, util.Conf.Server) {
-				redirectURL = util.Conf.Server + c.Request.URL.Path
+			if !strings.HasPrefix(redirectURL, model.Conf.Server) {
+				redirectURL = model.Conf.Server + c.Request.URL.Path
 			}
 		}
 		redirectURL = strings.TrimSpace(redirectURL)
 		if "" == redirectURL {
-			redirectURL = util.Conf.Server + c.Request.URL.Path
+			redirectURL = model.Conf.Server + c.Request.URL.Path
 		}
 		redirectURL = url.QueryEscape(redirectURL)
 		c.Redirect(http.StatusSeeOther, util.HacPaiURL+"/apis/b3-identity?goto="+redirectURL)
@@ -105,7 +105,7 @@ func fillUser(c *gin.Context) {
 	default:
 		result := util.NewResult()
 		_, _, errs := gorequest.New().Get(util.HacPaiURL+"/apis/check-b3-identity?b3id="+b3id).
-			Set("user-agent", util.UserAgent).Timeout(5*time.Second).
+			Set("user-agent", model.UserAgent).Timeout(5*time.Second).
 			Retry(3, 2*time.Second, http.StatusInternalServerError).EndStruct(result)
 		if nil != errs {
 			logger.Errorf("check b3 identity failed: %s", errs)

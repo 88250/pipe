@@ -44,7 +44,7 @@ func refreshRecommendArticles() {
 
 	result := util.NewResult()
 	_, _, errs := gorequest.New().Get(util.HacPaiURL+"/apis/recommend/articles").
-		Set("user-agent", util.UserAgent).Timeout(30*time.Second).
+		Set("user-agent", model.UserAgent).Timeout(30*time.Second).
 		Retry(3, 5*time.Second, http.StatusInternalServerError).EndStruct(result)
 	if nil != errs {
 		logger.Errorf("get recommend articles: %s", errs)
