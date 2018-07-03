@@ -57,7 +57,7 @@ func (srv *commentService) UpdatePushedAt(comment *model.Comment) error {
 }
 
 func (srv *commentService) GetUnpushedComments() (ret []*model.Comment) {
-	if err := db.Where("`pushed_at` <= ?", util.ZeroPushTime).Find(&ret).Error; nil != err {
+	if err := db.Where("`pushed_at` <= ?", model.ZeroPushTime).Find(&ret).Error; nil != err {
 		return
 	}
 
@@ -151,7 +151,7 @@ func (srv *commentService) AddComment(comment *model.Comment) error {
 	defer srv.mutex.Unlock()
 
 	comment.ID = util.CurrentMillisecond()
-	comment.PushedAt = util.ZeroPushTime
+	comment.PushedAt = model.ZeroPushTime
 	tx := db.Begin()
 	if err := tx.Create(comment).Error; nil != err {
 		tx.Rollback()

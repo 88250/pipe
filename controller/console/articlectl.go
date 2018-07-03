@@ -296,8 +296,7 @@ func GetArticleThumbsAction(c *gin.Context) {
 
 	var styledURLs []string
 	for _, url := range urls {
-		styledURLs = append(styledURLs, url+"?imageView2/1/w/"+strconv.Itoa(w)+
-			"/h/"+strconv.Itoa(h)+"/interlace/1/q/100")
+		styledURLs = append(styledURLs, util.ImageSize(url, w, h))
 	}
 
 	result.Data = styledURLs

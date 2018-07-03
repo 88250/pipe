@@ -25,6 +25,7 @@ import (
 	"github.com/b3log/pipe/util"
 	"github.com/gin-gonic/gin"
 	"github.com/parnurzeal/gorequest"
+	"github.com/b3log/pipe/model"
 )
 
 // BlogSwitchAction switches blog.
@@ -81,8 +82,8 @@ func CheckVersion(c *gin.Context) {
 
 	rhyResult := map[string]interface{}{}
 	request := gorequest.New()
-	_, _, errs := request.Get("https://rhythm.b3log.org/version/pipe/latest/"+util.Version).
-		Set("User-Agent", util.UserAgent).Timeout(30*time.Second).
+	_, _, errs := request.Get("https://rhythm.b3log.org/version/pipe/latest/"+model.Version).
+		Set("User-Agent", model.UserAgent).Timeout(30*time.Second).
 		Retry(3, 5*time.Second, http.StatusInternalServerError).EndStruct(&rhyResult)
 	if nil != errs {
 		result.Code = -1

@@ -15,7 +15,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 // Package util defines variety of utilities.
-package util
+package model
 
 import (
 	"encoding/json"
@@ -29,26 +29,26 @@ import (
 	"time"
 
 	"github.com/b3log/pipe/log"
-	"github.com/b3log/pipe/model"
 	"github.com/jinzhu/gorm"
+	"github.com/b3log/pipe/util"
 )
 
 // Logger
 var logger = log.NewLogger(os.Stdout)
 
 // Version of Pipe.
-const Version = "1.6.0"
+const Version = "1.7.0"
 
 // Conf of Pipe.
 var Conf *Configuration
 
 // UserAgent represents HTTP client user agent.
-var UserAgent = "Mozilla/5.0 (compatible; Pipe" + Version + "; +" + HacPaiURL + ")"
+var UserAgent = "Mozilla/5.0 (compatible; Pipe" + Version + "; +" + util.HacPaiURL + ")"
 
 // Models represents all models..
 var Models = []interface{}{
-	&model.User{}, &model.Article{}, &model.Comment{}, &model.Navigation{}, &model.Tag{},
-	&model.Category{}, &model.Archive{}, &model.Setting{}, &model.Correlation{},
+	&User{}, &Article{}, &Comment{}, &Navigation{}, &Tag{},
+	&Category{}, &Archive{}, &Setting{}, &Correlation{},
 }
 
 // Table prefix.
@@ -119,7 +119,7 @@ func LoadConf() {
 		Conf.ShowSQL = true
 	}
 
-	home, err := UserHome()
+	home, err := util.UserHome()
 	if nil != err {
 		logger.Fatal("can't find user home directory: " + err.Error())
 	}

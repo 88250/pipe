@@ -42,11 +42,11 @@ func setup() {
 		logger.Fatal(err)
 	}
 
-	util.Conf = &util.Configuration{}
-	util.Conf.SQLite = home + "/pipe.test.db"
+	model.Conf = &model.Configuration{}
+	model.Conf.SQLite = home + "/pipe.test.db"
 
-	if util.File.IsExist(util.Conf.SQLite) {
-		os.Remove(util.Conf.SQLite)
+	if util.File.IsExist(model.Conf.SQLite) {
+		os.Remove(model.Conf.SQLite)
 	}
 
 	ConnectDB()

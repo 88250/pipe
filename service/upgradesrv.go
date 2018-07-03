@@ -20,7 +20,6 @@ import (
 	"sync"
 
 	"github.com/b3log/pipe/model"
-	"github.com/b3log/pipe/util"
 )
 
 // Upgrade service.
@@ -33,8 +32,8 @@ type upgradeService struct {
 }
 
 const (
-	fromVer = "1.5.0"
-	toVer   = util.Version
+	fromVer = "1.6.0"
+	toVer   = model.Version
 )
 
 func (srv *upgradeService) Perform() {
@@ -47,7 +46,7 @@ func (srv *upgradeService) Perform() {
 	}
 
 	currentVer := sysVerSetting.Value
-	if util.Version == currentVer {
+	if model.Version == currentVer {
 		return
 	}
 
@@ -71,7 +70,7 @@ func perform() {
 	var updateSettings []model.Setting
 	for _, setting := range allSettings {
 		if model.SettingNameSystemVer == setting.Name {
-			setting.Value = util.Version
+			setting.Value = model.Version
 			updateSettings = append(updateSettings, setting)
 
 			continue

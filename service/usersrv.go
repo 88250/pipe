@@ -89,6 +89,8 @@ func (srv *userService) UpdateUser(user *model.User) error {
 	}
 	tx.Commit()
 
+	cache.User.Put(user)
+
 	return nil
 }
 

@@ -14,10 +14,9 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-package util
+package model
 
 import (
-	"github.com/b3log/pipe/model"
 	"github.com/jinzhu/gorm"
 )
 
@@ -34,18 +33,18 @@ func sqlite2MySQL(sqliteDataFilePath, mysqlConn string) {
 		logger.Fatal("auto migrate tables failed: " + err.Error())
 	}
 
-	importArchives(sqlite, mysql, []*model.Archive{})
-	importArticles(sqlite, mysql, []*model.Article{})
-	importCategories(sqlite, mysql, []*model.Category{})
-	importComments(sqlite, mysql, []*model.Comment{})
-	importCorrelations(sqlite, mysql, []*model.Correlation{})
-	importNavigations(sqlite, mysql, []*model.Navigation{})
-	importSettings(sqlite, mysql, []*model.Setting{})
-	importTags(sqlite, mysql, []*model.Tag{})
-	importUsers(sqlite, mysql, []*model.User{})
+	importArchives(sqlite, mysql, []*Archive{})
+	importArticles(sqlite, mysql, []*Article{})
+	importCategories(sqlite, mysql, []*Category{})
+	importComments(sqlite, mysql, []*Comment{})
+	importCorrelations(sqlite, mysql, []*Correlation{})
+	importNavigations(sqlite, mysql, []*Navigation{})
+	importSettings(sqlite, mysql, []*Setting{})
+	importTags(sqlite, mysql, []*Tag{})
+	importUsers(sqlite, mysql, []*User{})
 }
 
-func importArchives(sqlite, mysql *gorm.DB, models []*model.Archive) {
+func importArchives(sqlite, mysql *gorm.DB, models []*Archive) {
 	if err := sqlite.Find(&models).Error; nil != err {
 		logger.Fatalf("queries data failed: " + err.Error())
 	}
@@ -57,7 +56,7 @@ func importArchives(sqlite, mysql *gorm.DB, models []*model.Archive) {
 	logger.Infof("imported [%d] archives", len(models))
 }
 
-func importArticles(sqlite, mysql *gorm.DB, models []*model.Article) {
+func importArticles(sqlite, mysql *gorm.DB, models []*Article) {
 	if err := sqlite.Find(&models).Error; nil != err {
 		logger.Fatalf("queries data failed: " + err.Error())
 	}
@@ -72,7 +71,7 @@ func importArticles(sqlite, mysql *gorm.DB, models []*model.Article) {
 	logger.Infof("imported [%d] articles", len(models))
 }
 
-func importCategories(sqlite, mysql *gorm.DB, models []*model.Category) {
+func importCategories(sqlite, mysql *gorm.DB, models []*Category) {
 	if err := sqlite.Find(&models).Error; nil != err {
 		logger.Fatalf("queries data failed: " + err.Error())
 	}
@@ -84,7 +83,7 @@ func importCategories(sqlite, mysql *gorm.DB, models []*model.Category) {
 	logger.Infof("imported [%d] categories", len(models))
 }
 
-func importComments(sqlite, mysql *gorm.DB, models []*model.Comment) {
+func importComments(sqlite, mysql *gorm.DB, models []*Comment) {
 	if err := sqlite.Find(&models).Error; nil != err {
 		logger.Fatalf("queries data failed: " + err.Error())
 	}
@@ -96,7 +95,7 @@ func importComments(sqlite, mysql *gorm.DB, models []*model.Comment) {
 	logger.Infof("imported [%d] comments", len(models))
 }
 
-func importCorrelations(sqlite, mysql *gorm.DB, models []*model.Correlation) {
+func importCorrelations(sqlite, mysql *gorm.DB, models []*Correlation) {
 	if err := sqlite.Find(&models).Error; nil != err {
 		logger.Fatalf("queries data failed: " + err.Error())
 	}
@@ -108,7 +107,7 @@ func importCorrelations(sqlite, mysql *gorm.DB, models []*model.Correlation) {
 	logger.Infof("imported [%d] correlations", len(models))
 }
 
-func importNavigations(sqlite, mysql *gorm.DB, models []*model.Navigation) {
+func importNavigations(sqlite, mysql *gorm.DB, models []*Navigation) {
 	if err := sqlite.Find(&models).Error; nil != err {
 		logger.Fatalf("queries data failed: " + err.Error())
 	}
@@ -120,7 +119,7 @@ func importNavigations(sqlite, mysql *gorm.DB, models []*model.Navigation) {
 	logger.Infof("imported [%d] navigations", len(models))
 }
 
-func importSettings(sqlite, mysql *gorm.DB, models []*model.Setting) {
+func importSettings(sqlite, mysql *gorm.DB, models []*Setting) {
 	if err := sqlite.Find(&models).Error; nil != err {
 		logger.Fatalf("queries data failed: " + err.Error())
 	}
@@ -132,7 +131,7 @@ func importSettings(sqlite, mysql *gorm.DB, models []*model.Setting) {
 	logger.Infof("imported [%d] settings", len(models))
 }
 
-func importTags(sqlite, mysql *gorm.DB, models []*model.Tag) {
+func importTags(sqlite, mysql *gorm.DB, models []*Tag) {
 	if err := sqlite.Find(&models).Error; nil != err {
 		logger.Fatalf("queries data failed: " + err.Error())
 	}
@@ -144,7 +143,7 @@ func importTags(sqlite, mysql *gorm.DB, models []*model.Tag) {
 	logger.Infof("imported [%d] tags", len(models))
 }
 
-func importUsers(sqlite, mysql *gorm.DB, models []*model.User) {
+func importUsers(sqlite, mysql *gorm.DB, models []*User) {
 	if err := sqlite.Find(&models).Error; nil != err {
 		logger.Fatalf("queries data failed: " + err.Error())
 	}
