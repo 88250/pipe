@@ -100,7 +100,10 @@
           if (stateResponseData) {
             this.$store.commit('setStatus', stateResponseData)
           }
-          this.$router.push(this.$route.query.goto || '/admin')
+          this.$router.push('/admin')
+          if (document.documentElement.clientWidth >= 768) {
+            this.$store.commit('setBodySide', 'body--side')
+          }
         } else {
           this.$set(this, 'error', true)
           this.$set(this, 'errorMsg', responseData.msg)
