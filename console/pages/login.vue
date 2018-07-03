@@ -100,7 +100,7 @@
           if (stateResponseData) {
             this.$store.commit('setStatus', stateResponseData)
           }
-          this.$router.push(this.$route.query.goto || '/')
+          this.$router.push(this.$route.query.goto || '/admin')
         } else {
           this.$set(this, 'error', true)
           this.$set(this, 'errorMsg', responseData.msg)

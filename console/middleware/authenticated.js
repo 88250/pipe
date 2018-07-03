@@ -11,7 +11,7 @@ export default function ({redirect, store, route}) {
     redirect('/')
   } else if (route.path === '/login' || route.path === '/register') {
     if (isLogin) {
-      redirect('/')
+      redirect('/admin')
     }
   }
 }
