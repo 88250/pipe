@@ -169,6 +169,10 @@
             this.$set(this, 'registerError', false)
             this.$set(this, 'registerErrorMsg', '')
             this.$store.commit('setIsInit', true)
+            const stateResponseData = await this.axios.get('/status')
+            if (stateResponseData) {
+              this.$store.commit('setStatus', stateResponseData)
+            }
           } else {
             this.$set(this, 'registerError', true)
             this.$set(this, 'registerErrorMsg', responseData.msg)
