@@ -44,12 +44,6 @@ func fillUser(c *gin.Context) {
 		return
 	}
 
-	if util.PathLogin == c.Request.URL.Path || util.PathRegister == c.Request.URL.Path {
-		c.Next()
-
-		return
-	}
-
 	dataModel := &DataModel{}
 	c.Set("dataModel", dataModel)
 	session := util.GetSession(c)
@@ -176,6 +170,14 @@ func fillUser(c *gin.Context) {
 		}
 
 		(*dataModel)["User"] = session
+
+		if util.PathLogin == c.Request.URL.Path || util.PathRegister == c.Request.URL.Path {
+			c.Redirect(http.StatusSeeOther, model.Conf.Server + util.PathAdmin)
+			c.Abort()
+
+			return
+		}
+
 		c.Next()
 	}
 }
