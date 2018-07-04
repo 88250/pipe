@@ -54,7 +54,7 @@ You are also welcome to update this list through PR.
 
 ## Installation
 
-[Download](https://pan.baidu.com/s/1jHPtHLO)The latest release package is decompressed, enter the decompressed directory and run the pipe/pipe.exe executable file.
+[Download](https://pan.baidu.com/s/1jHPtHLO) the latest release package is decompressed, enter the decompressed directory and run the pipe/pipe.exe executable file.
 
 **For more details, refer to the [Pipe User Guide](https://hacpai.com/article/1513761942333). In addition, if you do not want to maintain the server yourself, you can directly use the [Pipe Service](http://pipe.b3log.org) of our operation and maintenance (for domain name binding, please contact QQ845765).**
 
