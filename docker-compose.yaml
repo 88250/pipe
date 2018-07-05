@@ -1,0 +1,9 @@
+version: '3'
+services:
+  pipe:
+    build: .
+    ports:
+      - "5897:5897"
+    volumes:
+      - ./pipe.json:/opt/pipe.json
+      - ./pipe.db:/root/pipe.db  # default use sqlitedb,volume your data.
