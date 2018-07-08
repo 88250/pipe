@@ -2,7 +2,7 @@
  * @fileoverview common tool for every theme
  *
  * @author <a href="http://vanessa.b3log.org">Liyuan Li</a>
- * @version 0.3.0.0, Nov 30, 2017
+ * @version 0.3.1.0, Jul 8, 2018
  */
 
 import $ from 'jquery'
@@ -16,7 +16,9 @@ export const ParseMarkdown = () => {
   let hasFlow = false;
   // 按需加载 MathJax
   $('.pipe-content__reset').each(function () {
-    if ($(this).text().indexOf('$\\') > -1 || $(this).text().indexOf('$$') > -1) {
+    if ($(this).text().split('$').length > 2 ||
+      ($(this).text().split('\\(').length > 1 &&
+        $(this).text().split('\\)').length > 1)) {
       hasMathJax = true;
     }
 

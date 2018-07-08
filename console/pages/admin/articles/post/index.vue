@@ -183,7 +183,9 @@
         LazyLoadImage()
         let hasMathJax = false
         let hasFlow = false
-        if (text.indexOf('$\\') > -1 || text.indexOf('$$') > -1) {
+        if (text.split('$').length > 2 ||
+          (text.split('\\(').length > 1 &&
+            text.split('\\)').length > 1)) {
           hasMathJax = true
         }
 
