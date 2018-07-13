@@ -8,6 +8,7 @@ import (
 	"github.com/b3log/pipe/model"
 	"github.com/b3log/pipe/service"
 	"github.com/b3log/pipe/util"
+	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
 	"github.com/tredoe/osutil/user/crypt/sha512_crypt"
 )
@@ -58,6 +59,22 @@ func loginAction(c *gin.Context) {
 	if err := session.Save(c); nil != err {
 		result.Code = -1
 		result.Msg = "saves session failed: " + err.Error()
+	}
+}
+
+// logoutAction logout a user.
+func logoutAction(c *gin.Context) {
+	result := util.NewResult()
+	defer c.JSON(http.StatusOK, result)
+
+	session := sessions.Default(c)
+	session.Options(sessions.Options{
+		Path:   "/",
+		MaxAge: -1,
+	})
+	session.Clear()
+	if err := session.Save(); nil != err {
+		logger.Errorf("saves session failed: " + err.Error())
 	}
 }
 
