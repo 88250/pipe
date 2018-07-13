@@ -24,3 +24,15 @@ func TestRandInts(t *testing.T) {
 		t.Errorf("generate random integers failed")
 	}
 }
+
+func TestRandString(t *testing.T) {
+	a := RandString(16)
+	if 16 != len(a) {
+		t.Error("generate random string failed")
+	}
+	b := RandString(16)
+	if a == b {
+		t.Error("generate random string failed")
+	}
+	t.Log(a, b)
+}
