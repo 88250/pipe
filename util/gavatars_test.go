@@ -14,27 +14,17 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-package controller
+package util
 
 import (
-	"net/http"
-
-	"github.com/b3log/pipe/util"
-	"github.com/gin-contrib/sessions"
-	"github.com/gin-gonic/gin"
+	"testing"
 )
 
-func logoutAction(c *gin.Context) {
-	result := util.NewResult()
-	defer c.JSON(http.StatusOK, result)
+func TestRandomAvatarData(t *testing.T) {
+	data := RandAvatarData()
+	if nil == data {
+		t.Error("generate random avatar data failed")
 
-	session := sessions.Default(c)
-	session.Options(sessions.Options{
-		Path:   "/",
-		MaxAge: -1,
-	})
-	session.Clear()
-	if err := session.Save(); nil != err {
-		logger.Errorf("saves session failed: " + err.Error())
+		return
 	}
 }

@@ -17,41 +17,33 @@
 package util
 
 import (
-	"math/rand"
+	"net/http"
 	"time"
+	"io/ioutil"
+	"math/rand"
 )
 
-// RandInts returns a random integer array with the specified from, to and size.
-func RandInts(from, to, size int) []int {
-	if to-from < size {
-		size = to - from
+// RandAvatarData returns random avatar image byte array data from Gravatar (http://www.gravatar.com).
+// Sees https://github.com/b3log/pipe/issues/131 for more details.
+func RandAvatarData() (ret []byte) {
+	modes := []string{"identicon", "monsterid", "wavatar", "retro", "robohash"}
+	d := modes[rand.Intn(len(modes))]
+	h := RandString(16)
+
+	http.DefaultClient.Timeout = 2 * time.Second
+	response, err := http.Get("http://www.gravatar.com/avatar/" + h + "?s=256&d=" + d)
+	if nil != err {
+		logger.Error("generate random avatar from Gavatar failed: " + err.Error())
+
+		return nil
+	}
+	defer response.Body.Close()
+	ret, err = ioutil.ReadAll(response.Body)
+	if nil != err {
+		logger.Error("generate random avatar from Gavatar failed: " + err.Error())
+
+		return nil
 	}
 
-	var slice []int
-	for i := from; i < to; i++ {
-		slice = append(slice, i)
-	}
-
-	var ret []int
-	for i := 0; i < size; i++ {
-		idx := rand.Intn(len(slice))
-		ret = append(ret, slice[idx])
-		slice = append(slice[:idx], slice[idx+1:]...)
-	}
-
-	return ret
-}
-
-// RandString returns a fixed length random string.
-func RandString(n int) string {
-	rand.Seed(time.Now().UTC().UnixNano())
-	time.Sleep(time.Nanosecond)
-
-	letter := []rune("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789")
-	b := make([]rune, n)
-	for i := range b {
-		b[i] = letter[rand.Intn(len(letter))]
-	}
-
-	return string(b)
+	return
 }

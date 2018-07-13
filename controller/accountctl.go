@@ -1,14 +1,20 @@
 package controller
 
 import (
+	"bytes"
+	"context"
 	"html/template"
 	"net/http"
 	"path/filepath"
+	"strings"
 
 	"github.com/b3log/pipe/model"
 	"github.com/b3log/pipe/service"
 	"github.com/b3log/pipe/util"
+	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
+	"github.com/qiniu/api.v7/storage"
+	"github.com/satori/go.uuid"
 	"github.com/tredoe/osutil/user/crypt/sha512_crypt"
 )
 
@@ -61,6 +67,22 @@ func loginAction(c *gin.Context) {
 	}
 }
 
+// logoutAction logout a user.
+func logoutAction(c *gin.Context) {
+	result := util.NewResult()
+	defer c.JSON(http.StatusOK, result)
+
+	session := sessions.Default(c)
+	session.Options(sessions.Options{
+		Path:   "/",
+		MaxAge: -1,
+	})
+	session.Clear()
+	if err := session.Save(); nil != err {
+		logger.Errorf("saves session failed: " + err.Error())
+	}
+}
+
 // registerAction registers a user.
 func registerAction(c *gin.Context) {
 	result := util.NewResult()
@@ -85,10 +107,25 @@ func registerAction(c *gin.Context) {
 		return
 	}
 
+	avatarURL := "https://img.hacpai.com/pipe/default-avatar.png"
+
+	platformAdmin := service.User.GetPlatformAdmin()
+	key := "pipe/" + platformAdmin.Name + "/" + name + "/" + name + "/" + strings.Replace(uuid.NewV4().String(), "-", "", -1) + ".jpg"
+	avatarData := util.RandAvatarData()
+	if nil != avatarData {
+		uploadRet := &storage.PutRet{}
+		refreshUploadToken()
+		if err := storage.NewFormUploader(nil).Put(context.Background(), uploadRet, ut.token, key, bytes.NewReader(avatarData), int64(len(avatarData)), nil); nil != err {
+			logger.Warnf("upload avatar to storage failed [" + err.Error() + "], uses default avatar instead")
+		} else {
+			avatarURL = ut.domain + "/" + uploadRet.Key
+		}
+	}
+
 	user := &model.User{
 		Name:      name,
 		Password:  password,
-		AvatarURL: "https://img.hacpai.com/pipe/default-avatar.png",
+		AvatarURL: avatarURL,
 	}
 
 	if err := service.Init.InitBlog(user); nil != err {

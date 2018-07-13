@@ -45,7 +45,7 @@ var logger *log.Logger
 
 // The only one init function in pipe.
 func init() {
-	rand.Seed(time.Now().Unix())
+	rand.Seed(time.Now().UTC().UnixNano())
 
 	log.SetLevel("warn")
 	logger = log.NewLogger(os.Stdout)
