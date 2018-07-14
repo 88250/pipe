@@ -46,6 +46,13 @@
           @change="setLocalstorage('time')"
         ></v-text-field>
 
+        <v-text-field
+          :label="$t('abstract', $store.state.locale)"
+          v-model="abstract"
+          multi-line
+          @change="setLocalstorage('abstract')"
+        ></v-text-field>
+
         <label class="checkbox">
           <input
             type="checkbox"
@@ -152,6 +159,7 @@
         ],
         url: '',
         time: '',
+        abstract: '',
         tags: [],
         commentable: true,
         useThumbs: false,
@@ -271,6 +279,9 @@
           case 'time':
             localStorage.setItem('article-time', this.time)
             break
+          case 'abstract':
+            localStorage.setItem('article-abstract', this.abstract)
+            break
           case 'commentable':
             localStorage.setItem('article-commentable', this.commentable)
             break
@@ -314,6 +325,7 @@
           tags: this.tags.toString(),
           commentable: this.commentable,
           topped: this.topped,
+          abstract: this.abstract,
           time: this.time === '' ? '' : this.time.replace(' ', 'T') + '+08:00'
         })
         if (responseData.code === 0) {
@@ -323,6 +335,7 @@
             localStorage.removeItem('article-tags')
             localStorage.removeItem('article-url')
             localStorage.removeItem('article-time')
+            localStorage.removeItem('article-abstract')
             localStorage.removeItem('article-commentable')
             localStorage.removeItem('article-useThumbs')
             localStorage.removeItem('article-topped')
@@ -359,6 +372,7 @@
           this.$set(this, 'content', responseData.content)
           this.$set(this, 'url', responseData.path)
           this.$set(this, 'time', responseData.time.replace('T', ' ').substr(0, 19))
+          this.$set(this, 'abstract', responseData.abstract)
           this.$set(this, 'tags', responseData.tags.split(','))
           this.$set(this, 'commentable', responseData.commentable)
           this.$set(this, 'topped', responseData.topped)
@@ -381,6 +395,9 @@
           }
           if (localStorage.getItem('article-time')) {
             this.$set(this, 'time', localStorage.getItem('article-time'))
+          }
+          if (localStorage.getItem('article-abstract')) {
+            this.$set(this, 'abstract', localStorage.getItem('article-abstract'))
           }
           if (localStorage.getItem('article-commentable')) {
             this.$set(this, 'commentable', localStorage.getItem('article-commentable') === 'true')
