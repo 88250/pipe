@@ -36,21 +36,21 @@
           v-model="url"
           :rules="linkRules"
           :counter="255"
-          @change="setLocalstorage('url')"
+          @keyup="setLocalstorage('url')"
         ></v-text-field>
 
         <v-text-field
           :label="$t('createdTime', $store.state.locale) + '[YYYY-MM-DD HH:mm:ss]'"
           v-model="time"
           :rules="timeRules"
-          @change="setLocalstorage('time')"
+          @keyup="setLocalstorage('time')"
         ></v-text-field>
 
         <v-text-field
           :label="$t('abstract', $store.state.locale)"
           v-model="abstract"
           multi-line
-          @change="setLocalstorage('abstract')"
+          @keyup="setLocalstorage('abstract')"
         ></v-text-field>
 
         <label class="checkbox">
