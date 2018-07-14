@@ -85,6 +85,7 @@ func AddArticleAction(c *gin.Context) {
 
 	article := &model.Article{
 		Title:       arg["title"].(string),
+		Abstract:    arg["abstract"].(string),
 		Content:     arg["content"].(string),
 		Path:        arg["path"].(string),
 		Tags:        arg["tags"].(string),
@@ -259,6 +260,7 @@ func UpdateArticleAction(c *gin.Context) {
 	article := &model.Article{
 		Model:       model.Model{ID: id, CreatedAt: createdAt},
 		Title:       arg["title"].(string),
+		Abstract:    arg["abstract"].(string),
 		Content:     arg["content"].(string),
 		Path:        arg["path"].(string),
 		Tags:        arg["tags"].(string),
