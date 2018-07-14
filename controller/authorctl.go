@@ -94,6 +94,9 @@ func showAuthorArticlesAction(c *gin.Context) {
 		if strconv.Itoa(model.SettingPreferenceArticleListStyleValueTitleAbstract) == articleListStyleSetting.Value {
 			abstract = template.HTML(mdResult.AbstractText)
 		}
+		if "" != articleModel.Abstract {
+			abstract = template.HTML(articleModel.Abstract)
+		}
 		if strconv.Itoa(model.SettingPreferenceArticleListStyleValueTitleContent) == articleListStyleSetting.Value {
 			abstract = template.HTML(mdResult.ContentHTML)
 			thumbnailURL = ""

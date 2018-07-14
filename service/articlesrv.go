@@ -201,7 +201,7 @@ func (srv *articleService) GetArticles(keyword string, page int, blogID uint64) 
 		whereArgs = append(whereArgs, "%"+keyword+"%")
 	}
 
-	if err := db.Model(&model.Article{}).Select("`id`, `created_at`, `author_id`, `title`, `content`, `tags`, `path`, `topped`, `view_count`, `comment_count`").
+	if err := db.Model(&model.Article{}).Select("`id`, `created_at`, `author_id`, `title`, `abstract`, `content`, `tags`, `path`, `topped`, `view_count`, `comment_count`").
 		Where(where, whereArgs...).
 		Order("`topped` DESC, `created_at` DESC").Count(&count).
 		Offset(offset).Limit(pageSize).
@@ -410,6 +410,7 @@ func (srv *articleService) UpdateArticle(article *model.Article) (err error) {
 	}
 
 	oldArticle.Title = strings.TrimSpace(article.Title)
+	oldArticle.Abstract = strings.TrimSpace(article.Abstract)
 	oldArticle.Content = strings.TrimSpace(article.Content)
 	oldArticle.Commentable = article.Commentable
 	oldArticle.Topped = article.Topped

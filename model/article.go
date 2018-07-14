@@ -26,6 +26,7 @@ type Article struct {
 
 	AuthorID     uint64    `json:"authorID" structs:"authorID"`
 	Title        string    `gorm:"size:128" json:"title" structs:"title"`
+	Abstract     string    `gorm:"type:mediumtext" json:"abstract" structs:abstract"`
 	Tags         string    `gorm:"type:text" json:"tags" structs:"tags"`
 	Content      string    `gorm:"type:mediumtext" json:"content" structs:"content"`
 	Path         string    `sql:"index" gorm:"size:255" json:"path" structs:"path"`
