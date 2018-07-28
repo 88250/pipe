@@ -62,6 +62,7 @@ type Configuration struct {
 	Server                string // server scheme, host and port
 	StaticServer          string // static resources server scheme, host and port
 	StaticResourceVersion string // version of static resources
+	OpenRegister          bool   // whether open register
 	LogLevel              string // logging level: trace/debug/info/warn/error/fatal
 	ShowSQL               bool   // whether print sql in log
 	SessionSecret         string // HTTP session secret
@@ -82,6 +83,7 @@ func LoadConf() {
 	confServer := flag.String("server", "", "this will override Conf.Server if specified")
 	confStaticServer := flag.String("static_server", "", "this will override Conf.StaticServer if specified")
 	confStaticResourceVer := flag.String("static_resource_ver", "", "this will override Conf.StaticResourceVersion if specified")
+	confOpenRegister := flag.Bool("open_register", true, "this will override Conf.OpenRegister if specified")
 	confLogLevel := flag.String("log_level", "", "this will override Conf.LogLevel if specified")
 	confShowSQL := flag.Bool("show_sql", false, "this will override Conf.ShowSQL if specified")
 	confRuntimeMode := flag.String("runtime_mode", "", "this will override Conf.RuntimeMode if specified")
@@ -113,6 +115,10 @@ func LoadConf() {
 	if "" != *confLogLevel {
 		Conf.LogLevel = *confLogLevel
 		log.SetLevel(*confLogLevel)
+	}
+
+	if !*confOpenRegister {
+		Conf.OpenRegister = false
 	}
 
 	if *confShowSQL {

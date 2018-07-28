@@ -2,6 +2,7 @@
     "Server": "http://localhost:5897",
     "StaticServer": "",
     "StaticResourceVersion": "1531050535408",
+    "OpenRegister": true,
     "RuntimeMode": "prod",
     "LogLevel": "debug",
     "ShowSQL": false,
