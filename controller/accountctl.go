@@ -96,6 +96,13 @@ func registerAction(c *gin.Context) {
 		return
 	}
 
+	if !model.Conf.OpenRegister {
+		result.Code = -1
+		result.Msg = "Not open register at present"
+
+		return
+	}
+
 	name := arg["name"].(string)
 	password := arg["password"].(string)
 

@@ -172,7 +172,7 @@ func fillUser(c *gin.Context) {
 		(*dataModel)["User"] = session
 
 		if util.PathLogin == c.Request.URL.Path || util.PathRegister == c.Request.URL.Path {
-			c.Redirect(http.StatusSeeOther, model.Conf.Server + util.PathAdmin)
+			c.Redirect(http.StatusSeeOther, model.Conf.Server+util.PathAdmin)
 			c.Abort()
 
 			return
