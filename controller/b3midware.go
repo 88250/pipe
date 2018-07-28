@@ -62,8 +62,7 @@ func fillUser(c *gin.Context) {
 		return
 	}
 
-	logger.Info("request path is [" + c.Request.URL.Path + "]")
-	if util.PathAPIsSymArticle == c.Request.URL.Path || util.PathAPIsSymComment == c.Request.URL.Path { // https://github.com/b3log/pipe/issues/138
+	if strings.Contains(c.Request.URL.Path, util.PathAPIsSymArticle) || strings.Contains(c.Request.URL.Path, util.PathAPIsSymComment) { // https://github.com/b3log/pipe/issues/138
 		c.Next()
 
 		return
