@@ -251,11 +251,11 @@ func routePath(c *gin.Context) {
 		showOpensearchAction(c)
 
 		return
-	case util.PathAPIsSymComments:
+	case util.PathAPIsSymComment:
 		addSymCommentAction(c)
 
 		return
-	case util.PathAPIsSymArticles:
+	case util.PathAPIsSymArticle:
 		if "POST" == c.Request.Method {
 			addSymArticleAction(c)
 		} else if "PUT" == c.Request.Method {

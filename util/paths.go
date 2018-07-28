@@ -46,8 +46,8 @@ const (
 	PathFetchUpload     = "/fetch-upload"
 	PathChangelogs      = "/changelogs"
 	PathRobots          = "/robots.txt"
-	PathAPIsSymArticles = "/apis/symphony/articles"
-	PathAPIsSymComments = "/apis/symphony/comments"
+	PathAPIsSymArticle = "/apis/symphony/article"
+	PathAPIsSymComment = "/apis/symphony/comment"
 	PathPlatInfo        = "/plat/info"
 	PathRegister        = "/register"
 	PathLogin           = "/login"
@@ -56,8 +56,8 @@ const (
 var reservedPaths = []string{
 	PathInit, PathSearch, PathOpensearch, PathBlogs, PathConsoleDist, PathAdmin, PathAPI, PathFavicon, PathTheme,
 	PathActivities, PathArchives, PathAuthors, PathCategories, PathTags, PathComments, PathAtom, PathRSS,
-	PathSitemap, PathUpload, PathFetchUpload, PathChangelogs, PathRobots, PathAPIsSymArticles,
-	PathAPIsSymComments, PathPlatInfo, PathRegister, PathLogin,
+	PathSitemap, PathUpload, PathFetchUpload, PathChangelogs, PathRobots, PathAPIsSymArticle,
+	PathAPIsSymComment, PathPlatInfo, PathRegister, PathLogin,
 }
 
 // IsReservedPath checks the specified path is a reserved path or not.
