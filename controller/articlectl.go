@@ -188,7 +188,7 @@ func showArticleAction(c *gin.Context) {
 				} else {
 					parentCommentAuthorModel := service.User.GetUser(parentCommentModel.AuthorID)
 					commentAuthorBlog := service.User.GetOwnBlog(parentCommentModel.AuthorID)
-					parentAuthor.URL = service.Setting.GetSetting(model.SettingCategoryBasic, model.SettingNameBasicBlogURL, commentAuthorBlog.ID).Value + util.PathAuthors + "/" + commentAuthor.Name
+					parentAuthor.URL = service.Setting.GetSetting(model.SettingCategoryBasic, model.SettingNameBasicBlogURL, commentAuthorBlog.ID).Value + util.PathAuthors + "/" + parentCommentAuthorModel.Name
 					parentAuthor.Name = parentCommentAuthorModel.Name
 					parentAuthor.AvatarURL = parentCommentAuthorModel.AvatarURL
 				}
