@@ -4,18 +4,6 @@
 
 [Pipe](https://github.com/b3log/pipe) 是一款小而美的开源博客平台，通过[黑客派](https://hacpai.com)账号登录即可使用。
 
-## 动机
-
-产品层面：
-
-* 市面上缺乏支持多独立博客的平台级系统
-* 实现 [B3log 构思](https://hacpai.com/b3log)
-
-技术层面：
-
-* 在博客系统这个轮子上充分发挥 golang 的优势
-* 博客管理后台界面使用 Vue.js 进行前后端分离
-
 ## 案例
 
 * [B3log Pipe](http://pipe.b3log.org)
@@ -80,8 +68,6 @@
 Pipe 使用 [GPLv3](https://www.gnu.org/licenses/gpl-3.0.txt) 开源协议，请务必遵循该开源协议相关约定。
 
 ## 鸣谢
-
-Pipe 的诞生离不开以下项目：
 
 * [jQuery](https://github.com/jquery/jquery)：JavaScript 工具库，用于主题页面
 * [Vue.js](https://github.com/vuejs/vue)：渐进式 JavaScript 框架
