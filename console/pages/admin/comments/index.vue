@@ -96,6 +96,9 @@
 </template>
 
 <script>
+  import Vue from 'vue'
+  import {LazyLoadImage} from '~/plugins/utils'
+
   export default {
     data () {
       return {
@@ -195,6 +198,9 @@
           this.$set(this, 'currentPageNum', responseData.pagination.currentPageNum)
           this.$set(this, 'pageCount', responseData.pagination.pageCount)
           this.$set(this, 'windowSize', document.documentElement.clientWidth < 721 ? 5 : responseData.pagination.windowSize)
+          Vue.nextTick(() => {
+            LazyLoadImage()
+          })
         }
       },
       async remove (id) {
