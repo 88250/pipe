@@ -1,0 +1,140 @@
+{{define "Fara/article.html"}}
+<!DOCTYPE html>
+<html>
+<head>
+    {{template "head/head" .}}
+    {{template "head/3rdstatistic" .}}
+    {{template "head/article" .}}
+</head>
+{{template "Fara/header" .}}
+<div class="main wrapper fn-clear">
+    <div class="content">
+        <article class="article__item">
+            <header>
+                <h2 class="article__title">
+                    {{if .Article.Topped}}
+                    <svg>
+                        <use xlink:href="#focus"></use>
+                    </svg>
+                    {{end}}
+                    {{.Article.Title}}
+                </h2>
+                <div class="article__meta">
+                    {{if gt .UserCount 1}}
+                    <a rel="nofollow"
+                       class="avatar pipe-tooltipped pipe-tooltipped--w"
+                       aria-label="{{.Article.Author.Name}}"
+                       data-src="{{.Article.Author.AvatarURLWithSize 116}}"
+                       href="{{.Article.Author.URL}}">
+                    </a>
+                    &nbsp; &nbsp;
+                    {{end}}
+                    <time class="ft-nowrap">
+                        <svg>
+                            <use xlink:href="#icon-date"></use>
+                        </svg>
+                        {{.Article.CreatedAt}}
+                    </time>
+                    &nbsp; | &nbsp;
+                    <span class="ft-nowrap">
+                        <svg><use xlink:href="#icon-view"></use></svg>
+                        {{.Article.ViewCount}} {{$.I18n.View}}
+                    </span>
+                    {{if gt .Article.CommentCount 0}}
+                    &nbsp; | &nbsp;
+                    <a href="{{.Article.URL}}#pipeComments" class="fn-nowrap">
+                        <svg>
+                            <use xlink:href="#icon-cmts"></use>
+                        </svg>
+                        {{.Article.CommentCount}} {{$.I18n.Comment}}
+                    </a>
+                    {{end}}
+                </div>
+            </header>
+            <section class="pipe-content__reset" id="articleContent"
+                     data-author="{{.Article.Author.Name}}">
+                {{.Article.Content}}
+            </section>
+            <div class="article__share fn-clear">
+                {{range .Article.Tags}}
+                <a class="tag" rel="tag" href="{{.URL}}">{{.Title}}</a>
+                {{end}}
+
+                <span class="share__btns">
+                    <span class="share__btn share__btn--wechat" data-type="wechat">
+                        <svg><use xlink:href="#wechat"></use></svg>
+                    </span>
+                    <span class="share__btn share__btn--weibo" data-type="weibo">
+                        <svg><use xlink:href="#weibo"></use></svg>
+                    </span>
+                    <span class="share__btn share__btn--twitter" data-type="twitter">
+                        <svg><use xlink:href="#twitter"></use></svg>
+                    </span>
+                    <span class="share__btn share__btn--google" data-type="google">
+                        <svg><use xlink:href="#google"></use></svg>
+                    </span>
+                    <div class="share__code"
+                         data-title="{{.Article.Title}}"
+                         data-blogtitle="{{$.Setting.BasicBlogTitle}}"
+                         data-url="{{.Article.URL}}"
+                         data-avatar="{{.Article.Author.AvatarURLWithSize 128}}"></div>
+                </span>
+            </div>
+            <div class="fn-clear article__more">
+                {{if .PreviousArticle}}
+                <a href="{{.PreviousArticle.URL}}"
+                   class="pipe-tooltipped pipe-tooltipped--n first"
+                   rel="prev" aria-label="{{.PreviousArticle.Title}}">
+                    <svg class="near__icon">
+                        <use xlink:href="#icon-chevron-left"></use>
+                    </svg> {{.I18n.PreArticle}}
+                </a>
+                {{end}}
+
+                {{if .NextArticle}}
+                <a href="{{.NextArticle.URL}}" rel="next"
+                   class="pipe-tooltipped pipe-tooltipped--n"
+                   aria-label="{{.NextArticle.Title}}">
+                    {{.I18n.NextArticle}}
+                    <svg class="near__icon-last">
+                        <use xlink:href="#icon-chevron-right"></use>
+                    </svg>
+                </a>
+                {{end}}
+
+                <span class="fn-right">
+                    <a href="javascript:void(0)"
+                        data-title="{{.I18n.Comment}}{{.I18n.Colon}}{{.Article.Title}}"
+                       id="articleCommentBtn"
+                       data-id="{{.Article.ID}}">
+                        <svg>
+                            <use xlink:href="#icon-cmts"></use>
+                        </svg>
+                        {{$.I18n.Comment}}
+                    </a>
+                    {{if .Article.Editable}}
+                    <a href="{{$.Conf.Server}}/admin/articles/post?id={{.Article.ID}}">
+                        <svg>
+                            <use xlink:href="#icon-edit"></use>
+                        </svg>
+                        {{$.I18n.Edit}}
+                    </a>
+                    {{end}}
+                </span>
+            </div>
+            <div class="fn-mg5"></div>
+        </article>
+        <div class="comment">
+            {{template "comment/comments" .}}
+        </div>
+        <div>
+            {{template "Fara/module-list" dict "List" .RecommendArticles "Title" .I18n.RecommendArticle "UserCount" 2}}
+        </div>
+
+        {{template "comment/editor" .}}
+    </div>
+    {{template "Fara/side" .}}
+</div>
+{{template "Fara/footer" .}}
+</html>
+{{end}}

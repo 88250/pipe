@@ -1,0 +1,26 @@
+{{define "Fara/tag-articles.html"}}
+<!DOCTYPE html>
+<html>
+<head>
+    {{template "head/head" .}}
+    {{template "head/3rdstatistic" .}}
+</head>
+<body>
+{{template "Fara/header" .}}
+<div class="main wrapper fn-clear">
+    <div class="content">
+        <h1 class="page__title">
+            {{.Tag.Title}}
+            <span id="tagArticlesCount" class="ft-fade">0</span> <span class="ft-fade ft-13">{{.I18n.Article2}}</span>
+        </h1>
+        {{template "Fara/article-list" .}}
+    </div>
+    {{template "Fara/side" .}}
+</div>
+{{template "Fara/footer" .}}
+<script>
+  increase({{.Tag.ArticleCount}}, 1000, 'tagArticlesCount', 0)
+</script>
+</body>
+</html>
+{{end}}

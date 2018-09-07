@@ -1,0 +1,35 @@
+{{define "Fara/authors.html"}}
+<!DOCTYPE html>
+<html>
+<head>
+    {{template "head/head" .}}
+    {{template "head/3rdstatistic" .}}
+</head>
+<body>
+{{template "Fara/header" .}}
+<div class="main wrapper fn-clear">
+    <div class="content page page--authors">
+        <h1 class="page__title">
+            <span id="authorCount">0</span> <span class="ft-fade ft-13">{{.I18n.TeamMember2}}</span>
+        </h1>
+        <div class="author fn-clear">
+            {{range .Authors}}
+            <a class="author__item" href="{{.URL}}">
+                <div class="author__header">
+                    <div class="avatar" data-src="{{.AvatarURLWithSize 404}}"></div>
+                </div>
+                <h3 class="author__name">{{.Name}}</h3>
+                <span class="ft-12">{{.ArticleCount}} {{$.I18n.Article2}}</span>
+            </a>
+            {{end}}
+        </div>
+    </div>
+    {{template "Fara/side" .}}
+</div>
+{{template "Fara/footer" .}}
+<script>
+  increase({{len .Authors}}, 1000, 'authorCount', 0)
+</script>
+</body>
+</html>
+{{end}}
