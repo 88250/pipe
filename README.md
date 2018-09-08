@@ -53,6 +53,7 @@
 
 ## 文档
 
+* [《提问的智慧》精读注解版](https://hacpai.com/article/1536377163156)
 * [用户指南](https://hacpai.com/article/1513761942333)
 * [开发指南](https://hacpai.com/article/1533965022328)
 * [主题开发指南](https://hacpai.com/article/1512550354920)
