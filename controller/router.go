@@ -57,6 +57,7 @@ func MapRoutes() *gin.Engine {
 		"minus": func(a, b int) int {
 			return a - b
 		},
+		"mod": func(i, j int) bool { return i%j == 0 },
 	})
 
 	ret.Use(gin.Recovery())
