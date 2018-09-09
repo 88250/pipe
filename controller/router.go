@@ -26,11 +26,11 @@ import (
 
 	"github.com/b3log/pipe/controller/console"
 	"github.com/b3log/pipe/log"
+	"github.com/b3log/pipe/model"
 	"github.com/b3log/pipe/theme"
 	"github.com/b3log/pipe/util"
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
-	"github.com/b3log/pipe/model"
 )
 
 // Logger
@@ -57,7 +57,7 @@ func MapRoutes() *gin.Engine {
 		"minus": func(a, b int) int {
 			return a - b
 		},
-		"mod": func(i, j int) bool { return i%j == 0 },
+		"mod": func(a, b int) bool { return a%b == 0 },
 	})
 
 	ret.Use(gin.Recovery())
