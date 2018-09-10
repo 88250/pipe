@@ -105,6 +105,7 @@ func fillCommon(c *gin.Context) {
 		if model.SettingNameBasicHeader == setting.Name || model.SettingNameBasicFooter == setting.Name || model.SettingNameBasicNoticeBoard == setting.Name {
 			mdResult := util.Markdown(v)
 			v = mdResult.ContentHTML
+			v = strings.TrimSpace(v)
 			v = strings.TrimPrefix(v, "<p>")
 			v = strings.TrimSuffix(v, "</p>")
 			v = strings.TrimSpace(v)
