@@ -10,6 +10,11 @@
     display: flex;
   }
 
+  &-flex-center {
+    display: inline-flex;
+    align-items: center;
+  }
+
   &-flex-1 {
     flex: 1;
     min-width: 1px;

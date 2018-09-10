@@ -2,109 +2,86 @@
 {{if eq (len .Articles) 0}}
 {{.I18n.NoData}}
 {{end}}
-{{range .Articles}}
-<article>
-    {{if .ThumbnailURL}}
-    <a class="article__thumb" href="{{.URL}}">
-        <div data-src="{{.ThumbnailURL}}"></div>
-        <div class="fn-none">
-            <svg>
-                <use xlink:href="#icon-view"></use>
-            </svg>
+<div class="article__wrap">
+    {{range $index, $item := .Articles}}
+    <article class="article__item fn-flex">
+        <div class="article__meta article__meta--{{mod $index 4}}">
+            {{if gt $.UserCount 1}}
+            <div>
+                <a rel="nofollow"
+                   class="article__avatar"
+                   data-src="{{$item.Author.AvatarURLWithSize 116}}"
+                   href="{{$item.Author.URL}}">
+                </a>
+                <a href="{{$item.Author.URL}}">
+                    {{$item.Author.Name}}
+                </a>
+            </div>
+            {{end}}
+            <div>
+                {{$item.CreatedAt}}
+            </div>
+            <div>
+                <a href="{{$item.URL}}">
+                    {{$item.ViewCount}} {{$.I18n.View}}
+                </a>
+            </div>
+            {{if gt .CommentCount 0}}
+            <div>
+                <a href="{{$item.URL}}#pipeComments">
+                    {{$item.CommentCount}} {{$.I18n.Comment}}
+                </a>
+            </div>
+            {{end}}
+            {{if .Editable}}
+            <div>
+                <a href="{{$.Conf.Server}}/admin/articles/post?id={{$item.ID}}">
+                    {{$.I18n.Edit}}
+                </a>
+            </div>
+            {{end}}
         </div>
-    </a>
-    {{end}}
-    <div class="article__item">
-        <header>
-            <h2 class="article__title">
+        <div class="fn-flex-1 article__main">
+            <h2 class="ft-center">
                 {{if .Topped}}
                 <svg>
                     <use xlink:href="#icon-perfect"></use>
                 </svg>
                 {{end}}
-                <a rel="bookmark" href="{{.URL}}">
-                    {{.Title}}
+                <a rel="bookmark" href="{{$item.URL}}">
+                    {{$item.Title}}
                 </a>
             </h2>
-            <div class="article__meta">
-                {{if gt $.UserCount 1}}
-                <a rel="nofollow"
-                   class="avatar pipe-tooltipped pipe-tooltipped--w"
-                   aria-label="{{.Author.Name}}"
-                   data-src="{{.Author.AvatarURLWithSize 116}}"
-                   href="{{.Author.URL}}">
-                </a>
-                &nbsp; &nbsp;
-                {{end}}
-                <time class="ft-nowrap">
-                    <svg>
-                        <use xlink:href="#icon-date"></use>
-                    </svg>
-                    {{.CreatedAt}}
-                </time>
-                &nbsp; | &nbsp;
-                <span class="ft-nowrap">
-                            <svg><use xlink:href="#icon-view"></use></svg>
-                            {{.ViewCount}} {{$.I18n.View}}
-                        </span>
-                {{if gt .CommentCount 0}}
-                &nbsp; | &nbsp;
-                <a href="{{.URL}}#pipeComments" class="fn-nowrap">
-                    <svg>
-                        <use xlink:href="#icon-cmts"></use>
-                    </svg>
-                    {{.CommentCount}} {{$.I18n.Comment}}
-                </a>
-                {{end}}
-            </div>
-        </header>
-        {{if .Abstract}}
-        <section
-            data-link="{{.URL}}"
-            class="pipe-content__reset"
-            data-author="{{.Author.Name}}">
-            {{.Abstract}}
-        </section>
-        {{end}}
-        <div class="fn-clear">
-            <div class="fn-clear">
-            {{range .Tags}}
-            <a class="tag" rel="tag" href="{{.URL}}">{{.Title}}</a>
+            {{if .Abstract}}
+            <section
+                    data-link="{{$item.URL}}"
+                    class="pipe-content__reset fn-flex-1"
+                    data-author="{{$item.Author.Name}}">
+                {{$item.Abstract}}
+            </section>
             {{end}}
-            </div>
-            <span class="article__more fn-right">
-                <a rel="bookmark" href="{{.URL}}">
-                    {{$.I18n.ReadMore}} »
-                </a>
-                {{if .Editable}}
-                <a href="{{$.Conf.Server}}/admin/articles/post?id={{.ID}}">
-                    <svg>
-                        <use xlink:href="#icon-edit"></use>
-                    </svg>
-                    {{$.I18n.Edit}}
-                </a>
+            <div>
+                {{range .Tags}}
+                <a class="tag" rel="tag" href="{{$item.URL}}">{{$item.Title}}</a>
                 {{end}}
-            </span>
+            </div>
         </div>
-    </div>
-</article>
-{{end}}
+    </article>
+    {{end}}
+</div>
 
 {{if gt (len $.Pagination.PageNums) 1}}
-<div class="fn-clear">
+<div class="ft-center">
     <nav class="pagination">
         {{if gt $.Pagination.PreviousPageNum 0}}
-        <a aria-label="{{.I18n.PrePage}}"
-           class="pagination__item pipe-tooltipped pipe-tooltipped--n"
+        <a class="pagination__item"
            href="?p={{$.Pagination.PreviousPageNum}}">
-            <svg>
-                <use xlink:href="#icon-chevron-left"></use>
-            </svg>
+            {{.I18n.PrePage}}
         </a>
         {{end}}
         {{if gt $.Pagination.FirstPageNum 1}}
         <a class="pagination__item" href="?p=1">1</a>{{if ne $.Pagination.FirstPageNum 2}}<span
-        class="pagination__item">...</span>{{end}}
+            class="pagination__item">...</span>{{end}}
         {{end}}
         {{range $.Pagination.PageNums}}
         <a href="?p={{.}}"
@@ -115,12 +92,9 @@
         <a class="pagination__item" href="?p={{$.Pagination.PageCount}}">{{$.Pagination.PageCount}}</a>
         {{end}}
         {{if lt $.Pagination.CurrentPageNum $.Pagination.PageCount}}
-        <a aria-label="{{.I18n.NextPage}}"
-           class="pagination__item pipe-tooltipped pipe-tooltipped--n"
+        <a class="pagination__item"
            href="?p={{$.Pagination.NextPageNum}}">
-            <svg>
-                <use xlink:href="#icon-chevron-right"></use>
-            </svg>
+            {{.I18n.NextPage}}
         </a>
         {{end}}
     </nav>

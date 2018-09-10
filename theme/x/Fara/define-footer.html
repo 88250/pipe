@@ -1,33 +1,35 @@
 {{define "Fara/footer"}}
 <footer class="footer">
-    <div class="wrapper">
-            <div class="fn-clear">
-                {{.Setting.BasicBlogSubtitle}}
-                <div class="fn-right">
-                    <a href="{{.BlogURL}}">{{.Setting.BasicBlogTitle}}</a> &copy; {{.Year}}
-                    {{.Setting.BasicFooter}}
-                </div>
+    <div class="footer__main">
+        <div class="fn-clear">
+            {{.Setting.BasicBlogSubtitle}}
+            <div class="fn-right">
+                <a href="{{.BlogURL}}">{{.Setting.BasicBlogTitle}}</a> &copy; {{.Year}} &nbsp; &nbsp;
+                <span id="goTop" class="pipe-tooltipped pipe-tooltipped--n" aria-label="{{.I18n.GoTop}}">
+                    <svg>
+                        <use xlink:href="#icon-chevron-up"></use>
+                    </svg>
+                </span>
             </div>
-            <div class="fn-clear">
-                {{.Statistic.StatisticViewCount}}
-                {{.I18n.View}}
-                &nbsp;
-                {{.Statistic.StatisticArticleCount}}
-                {{.I18n.Article}}
-                &nbsp;
-                {{.Statistic.StatisticCommentCount}}
-                {{.I18n.Comment}}
-                <div class="fn-right">
-                    Powered by <a href="https://b3log.org/" target="_blank">B3log 开源</a> •
-                    <a href="https://hacpai.com/tag/Pipe" target="_blank">Pipe</a> •
-                    Theme <a href="https://github.com/b3log/pipe-themes" target="_blank">Fara</a>
-                </div>
+        </div>
+        <div class="fn-clear">
+            {{.Statistic.StatisticViewCount}}
+            {{.I18n.View}}
+            &nbsp;
+            {{.Statistic.StatisticArticleCount}}
+            {{.I18n.Article}}
+            &nbsp;
+            {{.Statistic.StatisticCommentCount}}
+            {{.I18n.Comment}}
+            <div class="fn-right">
+                Powered by <a href="https://b3log.org/" target="_blank">B3log 开源</a> •
+                <a href="https://hacpai.com/tag/Pipe" target="_blank">Pipe</a> •
+                Theme <a href="https://github.com/b3log/pipe-themes" target="_blank">Fara</a>
             </div>
+        </div>
+        {{.Setting.BasicFooter}}
     </div>
 </footer>
-<div id="goTop" class="btn__fix btn__fix--top pipe-tooltipped pipe-tooltipped--w" aria-label="{{.I18n.GoTop}}">
-    <svg><use xlink:href="#icon-chevron-up"></use></svg>
-</div>
 
 <script type="text/javascript"
         id="script"
@@ -38,5 +40,4 @@
         src="{{.Conf.StaticServer}}/theme/x/{{.Setting.ThemeName}}/js/common.min.js?{{.Conf.StaticResourceVersion}}"
         {{end}}
 ></script>
-
 {{end}}

@@ -1,56 +1,42 @@
 {{define "Fara/header"}}
 <header class="header">
-    <div class="wrapper fn-clear">
-        <h1 class="header__logo">
-            <a href="{{.BlogURL}}">
-                <span data-src="{{.LogoURL}}"></span>
-                {{.Setting.BasicBlogTitle}}
-            </a>
-        </h1>
-        <span class="header__sub-title">
-            {{.Setting.BasicBlogSubtitle}}
-        </span>
-        <svg class="fn-none"><use xlink:href="#icon-toc"></use></svg>
-        <span class="fn-right">
-            {{if eq .User.URole 0}}
-            <a href="{{.Conf.Server}}/login" class="header__btn">{{.I18n.Login}}</a> &nbsp; &nbsp;
-            <a href="{{.Conf.Server}}/register" class="header__btn ft-orange">{{.I18n.Register}}</a>
-            {{else}}
-            <a class="avatar pipe-tooltipped pipe-tooltipped--w"
-               aria-label="{{.I18n.manage}}"
-               href="{{.Conf.Server}}/{{if ne .User.URole 4}}admin/{{end}}"
-               data-src="{{.User.AvatarURLWithSize 64}}"></a>
-            {{end}}
-        </span>
+    <h1 class="header__title">
+        <a href="{{.BlogURL}}" class="fn-flex-center">
+            <span class="header__logo" data-src="{{.LogoURL}}"></span>
+            {{.Setting.BasicBlogTitle}}
+        </a>
+    </h1>
+    <div class="header__sub-title">
+        {{.Setting.BasicBlogSubtitle}}
     </div>
 </header>
-<nav class="fn-none mobile__nav">
-    <a href="{{.BlogURL}}">
+<nav class="nav">
+    <a href="{{.BlogURL}}" class="fn-flex-center">
         <svg>
             <use xlink:href="#icon-home"></use>
         </svg>
         {{.I18n.Index}}
     </a>
-    <a href="{{.BlogURL}}/categories">
+    <a href="{{.BlogURL}}/categories" class="fn-flex-center">
         <svg>
             <use xlink:href="#icon-folders"></use>
         </svg>
         {{.I18n.Categories}}
     </a>
-    <a href="{{.BlogURL}}/tags">
+    <a href="{{.BlogURL}}/tags" class="fn-flex-center">
         <svg>
             <use xlink:href="#icon-tag"></use>
         </svg>
         {{.I18n.Tags}}
     </a>
-    <a href="{{.BlogURL}}/archives">
+    <a href="{{.BlogURL}}/archives" class="fn-flex-center">
         <svg>
             <use xlink:href="#icon-bookmark"></use>
         </svg>
         {{.I18n.Archives}}
     </a>
     {{if gt .UserCount 1}}
-    <a href="{{.BlogURL}}/authors">
+    <a href="{{.BlogURL}}/authors" class="fn-flex-center">
         <svg>
             <use xlink:href="#icon-group"></use>
         </svg>
@@ -58,96 +44,46 @@
     </a>
     {{end}}
     {{range .Navigations}}
-    <a href="{{.URL}}" target="{{.OpenMethod}}">
+    <a href="{{.URL}}" target="{{.OpenMethod}}" class="fn-flex-center">
         {{if ne "" .IconURL}}
-        <img class="header__icon"
-             data-src="{{.IconURL}}"/>
+        <img data-src="{{.IconURL}}"/>
         {{end}}
         {{.Title}}
     </a>
     {{end}}
-    <a href="{{.BlogURL}}/atom" target="_blank">
+    <a href="{{.BlogURL}}/atom" target="_blank" class="fn-flex-center">
         <svg>
             <use xlink:href="#icon-feed"></use>
         </svg>
         {{.I18n.Feed}}
     </a>
-    <a href="{{.BlogURL}}/search" target="_blank">
+
+    <a target="_blank" class="fn-flex-center" href="{{.BlogURL}}/search">
         <svg>
             <use xlink:href="#icon-search"></use>
         </svg>
         {{.I18n.Search}}
     </a>
+
     {{if eq .User.URole 0}}
-    <a href="{{.Conf.Server}}/login">{{.I18n.Login}}</a>
-    <a href="{{.Conf.Server}}/register">{{.I18n.Register}}</a>
-    {{else}}
-    <a href="{{.Conf.Server}}/{{if ne .User.URole 4}}admin/{{end}}">
+    <a href="{{.Conf.Server}}/login" class="fn-flex-center">
         <svg>
-            <use xlink:href="#icon-setting"></use>
+            <use xlink:href="#icon-login"></use>
         </svg>
+        {{.I18n.Login}}
+    </a>
+    <a href="{{.Conf.Server}}/register" class="fn-flex-center">
+        <svg>
+            <use xlink:href="#icon-register"></use>
+        </svg>
+        {{.I18n.Register}}
+    </a>
+    {{else}}
+    <a class="fn-flex-center"
+       href="{{.Conf.Server}}/{{if ne .User.URole 4}}admin/{{end}}">
+        <img data-src="{{.User.AvatarURLWithSize 64}}" />
         {{.I18n.manage}}
     </a>
     {{end}}
-</nav>
-<nav class="nav">
-    <div class="wrapper fn-clear">
-        <a href="{{.BlogURL}}">
-            <svg>
-                <use xlink:href="#icon-home"></use>
-            </svg>
-            {{.I18n.Index}}
-        </a>
-        <a href="{{.BlogURL}}/categories">
-            <svg>
-                <use xlink:href="#icon-folders"></use>
-            </svg>
-            {{.I18n.Categories}}
-        </a>
-        <a href="{{.BlogURL}}/tags">
-            <svg>
-                <use xlink:href="#icon-tag"></use>
-            </svg>
-            {{.I18n.Tags}}
-        </a>
-        <a href="{{.BlogURL}}/archives">
-            <svg>
-                <use xlink:href="#icon-bookmark"></use>
-            </svg>
-            {{.I18n.Archives}}
-        </a>
-        {{if gt .UserCount 1}}
-        <a href="{{.BlogURL}}/authors">
-            <svg>
-                <use xlink:href="#icon-group"></use>
-            </svg>
-            {{.I18n.Team}}
-        </a>
-        {{end}}
-        {{range .Navigations}}
-        <a href="{{.URL}}" target="{{.OpenMethod}}">
-            {{if ne "" .IconURL}}
-            <img class="header__icon"
-                 data-src="{{.IconURL}}"/>
-            {{end}}
-            {{.Title}}
-        </a>
-        {{end}}
-        <a href="{{.BlogURL}}/atom" target="_blank">
-            <svg>
-                <use xlink:href="#icon-feed"></use>
-            </svg>
-            {{.I18n.Feed}}
-        </a>
-
-        <form class="nav__search" action="{{.BlogURL}}/search">
-            <input placeholder="{{.I18n.Search}}" type="text" name="key">
-            <button type="submit">
-                <svg>
-                    <use xlink:href="#icon-search"></use>
-                </svg>
-            </button>
-        </form>
-    </div>
 </nav>
 {{end}}

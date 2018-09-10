@@ -31,40 +31,11 @@ const Common = {
       }
     })
 
-    $(window).scroll(function () {
-      if ($(window).scrollTop() > $(window).height()) {
-        $('#goTop').show()
-      } else {
-        $('#goTop').hide()
-      }
-
-      if ($(window).width() < 768) {
-        return
-      }
-      if ($(window).scrollTop() > 75) {
-        $('.nav').addClass('nav--fix').next().css('margin-top', '75px')
-      } else {
-        $('.nav').removeClass('nav--fix').next().css('margin-top', 0)
-      }
-    })
-
     $('#goTop').click(function () {
       $("html, body").animate({
         scrollTop: 0
       }, 800)
     })
-
-    $('.header .fn-none').click(function () {
-      $('.mobile__nav').slideToggle()
-    })
-
-    $(window).scroll()
-
-    // https://github.com/b3log/pipe/issues/115
-    const ua = window.navigator.userAgent;
-    if (/MicroMessenger/i.test(ua)) {
-      $('body').css('display', 'block')
-    }
   },
   increase(max, time, id, count) {
     if (count < max) {
