@@ -13,8 +13,8 @@ body {
   color: #6E757C;
   height: 100%;
   background-image: url(../images/bg.jpg);
-  background-position: center top;
-  background-size: auto;
+  background-position: center center;
+  background-size: cover;
   background-repeat: no-repeat;
   background-attachment: fixed;
 }
@@ -112,8 +112,11 @@ a {
     z-index: 0;
   }
   &__content {
+    min-height: 100%;
     position: relative;
     z-index: 1;
+    display: flex;
+    flex-direction: column;
 
     &--toc {
       margin-right: 240px;
@@ -125,6 +128,11 @@ a {
   margin: 60px auto;
   padding: 0 15px;
   max-width: 1024px;
+  flex: 1;
+  min-height: 1px;
+  width:100%;
+  box-sizing: border-box;
+
   &__title {
     border: 2px solid #fff;
     padding: 30px;
@@ -322,7 +330,7 @@ a {
       border: 2px solid #fff;
       padding: 15px;
       font-size: 16px;
-      margin: 60px 0;
+      margin-top: 60px;
       color: #fff;
       &:hover {
         text-decoration: none;
@@ -353,7 +361,7 @@ a {
 
 .comment {
   background-color: #fff;
-  margin-bottom: 60px;
+  margin: 60px 0;
   .pipe-comment__header {
     font-size: 18px;
     padding: 15px 15px 0 15px;
@@ -432,10 +440,12 @@ a {
   }
 
   .post__nearby a {
-    margin: 15px 0;
+    margin-top: 15px;
     padding: 5px;
   }
-  .comment,
+  .comment {
+    margin: 15px 0;
+  }
   .article__item {
     margin-bottom: 15px;
   }
