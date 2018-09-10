@@ -3,7 +3,7 @@
     "StaticServer": "",
     "StaticResourceVersion": "1536304627150",
     "OpenRegister": true,
-    "RuntimeMode": "prod",
+    "RuntimeMode": "dev",
     "LogLevel": "debug",
     "ShowSQL": false,
     "SessionSecret": "BEYOND",
