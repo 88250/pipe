@@ -5,6 +5,8 @@
             {{.Setting.BasicBlogSubtitle}}
             <div class="fn-right">
                 <a href="{{.BlogURL}}">{{.Setting.BasicBlogTitle}}</a> &copy; {{.Year}} &nbsp; &nbsp;
+                {{.Setting.BasicFooter}}
+                &nbsp; &nbsp;
                 <span id="goTop" class="pipe-tooltipped pipe-tooltipped--n" aria-label="{{.I18n.GoTop}}">
                     <svg>
                         <use xlink:href="#icon-chevron-up"></use>
@@ -27,7 +29,6 @@
                 Theme <a href="https://github.com/b3log/pipe-themes" target="_blank">Fara</a>
             </div>
         </div>
-        {{.Setting.BasicFooter}}
     </div>
 </footer>
 

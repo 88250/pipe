@@ -6,25 +6,27 @@
     {{template "head/3rdstatistic" .}}
 </head>
 <body>
-{{template "Fara/header" .}}
-<div class="main wrapper fn-clear">
-    <div class="content page">
-        <h1 class="page__title">
-            <span id="categoriesCount">0</span> <span class="ft-fade ft-13">{{.I18n.Categories2}}</span>
-        </h1>
-        {{if eq (len .Categories) 0}}
-        <div class="ft-center">
-            {{.I18n.NoData}}
+<div class="body__overlay"></div>
+<div class="body__content">
+    {{template "Fara/header" .}}
+    <div class="main">
+        <div class="main__title">
+            <span id="categoriesCount" class="main__count">0</span> <span class="ft-13">{{.I18n.Categories2}}</span>
         </div>
-        {{end}}
+        <div class="article__meta article__meta--page article__meta--2">
+            {{if eq (len .Categories) 0}}
+            <div>
+                {{.I18n.NoData}}
+            </div>
+            {{end}}
             {{range .Categories}}
-            <div class="page__item">
-                <div class="page__description">
+            <div class="categories__item">
+                <h2>
                     <a href="{{.URL}}">
-                   {{.Title}}
+                        {{.Title}}
                     </a>
-                    <div class="ft-gray ft-13">{{.Description}}</div>
-                </div>
+                </h2>
+                <div class="categories__desc">{{.Description}}</div>
                 <div class="fn-clear">
                     {{range .Tags}}
                     <a href="{{.URL}}" class="tag">{{.Title}}</a>
@@ -32,9 +34,10 @@
                 </div>
             </div>
             {{end}}
+        </div>
     </div>
+    {{template "Fara/footer" .}}
 </div>
-{{template "Fara/footer" .}}
 <script>
   increase({{len .Categories}}, 1000, 'categoriesCount', 0)
 </script>
