@@ -62,7 +62,7 @@
             {{end}}
             <div>
                 {{range .Tags}}
-                <a class="tag" rel="tag" href="{{$item.URL}}">{{$item.Title}}</a>
+                <a class="tag" rel="tag" href="{{.URL}}">{{.Title}}</a>
                 {{end}}
             </div>
         </div>
