@@ -57,6 +57,7 @@
 * [用户指南](https://hacpai.com/article/1513761942333)
 * [开发指南](https://hacpai.com/article/1533965022328)
 * [主题开发指南](https://hacpai.com/article/1512550354920)
+* [贡献指南](https://github.com/b3log/pipe/blob/master/CONTRIBUTING.md)
 * [Postman 测试集](https://www.getpostman.com/collections/900ddef64ad0e60479a6)
 
 ## 社区
