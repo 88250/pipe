@@ -43,7 +43,7 @@ const Version = "1.8.1"
 var Conf *Configuration
 
 // UserAgent represents HTTP client user agent.
-var UserAgent = "Mozilla/5.0 (compatible; Pipe" + Version + "; +" + util.HacPaiURL + ")"
+var UserAgent = "Pipe/" + Version + "; +https://github.com/b3log/pipe"
 
 // Models represents all models..
 var Models = []interface{}{
