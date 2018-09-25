@@ -1,6 +1,6 @@
 {
   "name": "pipe-admin",
-  "version": "1.8.1",
+  "version": "1.8.2",
   "author": "Vanessa <v@b3log.org>",
   "private": true,
   "config": {
@@ -24,7 +24,7 @@
     "sha512crypt-node": "^0.1.0",
     "vue-axios": "^2.0.2",
     "vue-i18n": "^7.2.0",
-    "vuetify": "git+https://github.com/Vanessa219/vuetify.git#v1.2.7"
+    "vuetify": "git+https://github.com/Vanessa219/vuetify.git#v1.2.8"
   },
   "devDependencies": {
     "@nuxtjs/proxy": "^1.1.2",
