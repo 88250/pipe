@@ -39,6 +39,15 @@ const (
 	adminConsoleUserListWindowSize = 20
 )
 
+func (srv *userService) GetUserByGitHubId(githubId string) *model.User {
+	ret := &model.User{}
+	if err := db.Where("`github_id` = ?", githubId).First(ret).Error; nil != err {
+		return nil
+	}
+
+	return ret
+}
+
 func (srv *userService) GetBlogAdmin(blogID uint64) *model.User {
 	rel := &model.Correlation{}
 	if err := db.Where("`id1` = ? AND `type` = ? AND `blog_id` = ?",

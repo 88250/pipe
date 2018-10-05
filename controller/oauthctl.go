@@ -20,6 +20,7 @@ import (
 	"net/http"
 
 	"github.com/b3log/pipe/model"
+	"github.com/b3log/pipe/service"
 	"github.com/b3log/pipe/util"
 	"github.com/gin-gonic/gin"
 )
@@ -28,7 +29,7 @@ var states map[string]string
 
 // redirectGitHubLoginAction redirects to GitHub auth page.
 func redirectGitHubLoginAction(c *gin.Context) {
-	state := model.Conf.Server
+	state := util.RandString(16)
 	states[state] = state
 	path := "https://github.com/login/oauth/authorize" + "?client_id=af7df3c80f26af88a8b3&state=" + state + "&scope=public_repo,user"
 
@@ -37,13 +38,11 @@ func redirectGitHubLoginAction(c *gin.Context) {
 
 func githubCallback(c *gin.Context) {
 	state := c.Query("state")
-
 	if _, exist := states[state]; !exist {
 		c.Status(http.StatusForbidden)
 
 		return
 	}
-
 	delete(states, state)
 
 	accessToken := c.Query("ak")
@@ -54,5 +53,46 @@ func githubCallback(c *gin.Context) {
 		return
 	}
 
-	logger.Infof("TODO github oauth login for user [%+v]", githubUser)
+	githubId := githubUser["id"].(string)
+	userName := githubUser["login"].(string)
+	user := service.User.GetUserByGitHubId(githubId)
+	if nil == user {
+		if !model.Conf.OpenRegister {
+			c.Status(http.StatusForbidden)
+
+			return
+		}
+
+		user := service.User.GetUserByName(userName)
+		if nil == user {
+			user = &model.User{
+				Name:      userName,
+				Password:  util.RandString(8),
+				AvatarURL: githubUser["avatar_url"].(string),
+				GithubId:  githubId,
+			}
+
+			if err := service.Init.InitBlog(user); nil != err {
+				logger.Errorf("init blog via github login failed: " + err.Error())
+				c.Status(http.StatusInternalServerError)
+
+				return
+			}
+		}
+	}
+
+	ownBlog := service.User.GetOwnBlog(user.ID)
+	session := &util.SessionData{
+		UID:     user.ID,
+		UName:   user.Name,
+		UB3Key:  user.B3Key,
+		UAvatar: user.AvatarURL,
+		URole:   ownBlog.UserRole,
+		BID:     ownBlog.ID,
+		BURL:    ownBlog.URL,
+	}
+	if err := session.Save(c); nil != err {
+		logger.Errorf("saves session failed: " + err.Error())
+		c.Status(http.StatusInternalServerError)
+	}
 }
