@@ -17,6 +17,7 @@
 package controller
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/b3log/pipe/model"
@@ -25,11 +26,11 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-var states map[string]string
+var states = map[string]string{}
 
 // redirectGitHubLoginAction redirects to GitHub auth page.
 func redirectGitHubLoginAction(c *gin.Context) {
-	state := util.RandString(16)
+	state := util.RandString(16) + model.Conf.Server
 	states[state] = state
 	path := "https://github.com/login/oauth/authorize" + "?client_id=af7df3c80f26af88a8b3&state=" + state + "&scope=public_repo,user"
 
@@ -53,7 +54,7 @@ func githubCallback(c *gin.Context) {
 		return
 	}
 
-	githubId := githubUser["id"].(string)
+	githubId := fmt.Sprintf("%v", githubUser["id"])
 	userName := githubUser["login"].(string)
 	user := service.User.GetUserByGitHubId(githubId)
 	if nil == user {
@@ -63,7 +64,7 @@ func githubCallback(c *gin.Context) {
 			return
 		}
 
-		user := service.User.GetUserByName(userName)
+		user = service.User.GetUserByName(userName)
 		if nil == user {
 			user = &model.User{
 				Name:      userName,
@@ -95,4 +96,6 @@ func githubCallback(c *gin.Context) {
 		logger.Errorf("saves session failed: " + err.Error())
 		c.Status(http.StatusInternalServerError)
 	}
+
+	c.Redirect(http.StatusSeeOther, model.Conf.Server+util.PathAdmin)
 }
