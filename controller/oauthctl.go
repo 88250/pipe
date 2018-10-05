@@ -15,3 +15,44 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 package controller
+
+import (
+	"net/http"
+
+	"github.com/b3log/pipe/model"
+	"github.com/b3log/pipe/util"
+	"github.com/gin-gonic/gin"
+)
+
+var states map[string]string
+
+// redirectGitHubLoginAction redirects to GitHub auth page.
+func redirectGitHubLoginAction(c *gin.Context) {
+	state := model.Conf.Server
+	states[state] = state
+	path := "https://github.com/login/oauth/authorize" + "?client_id=af7df3c80f26af88a8b3&state=" + state + "&scope=public_repo,user"
+
+	c.Redirect(http.StatusSeeOther, path)
+}
+
+func githubCallback(c *gin.Context) {
+	state := c.Query("state")
+
+	if _, exist := states[state]; !exist {
+		c.Status(http.StatusForbidden)
+
+		return
+	}
+
+	delete(states, state)
+
+	accessToken := c.Query("ak")
+	githubUser := util.GitHubUserInfo(accessToken)
+	if nil == githubUser {
+		c.Status(http.StatusForbidden)
+
+		return
+	}
+
+	logger.Infof("TODO github oauth login for user [%+v]", githubUser)
+}

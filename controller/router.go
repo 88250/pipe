@@ -82,6 +82,7 @@ func MapRoutes() *gin.Engine {
 	api.GET("/status", getStatusAction)
 	api.GET("/check-version", console.CheckVersion)
 	api.GET("/blogs/top", showTopBlogs)
+	api.GET("/oauth/github/redirect", redirectGitHubLoginAction)
 
 	consoleGroup := api.Group("/console")
 	consoleGroup.Use(console.LoginCheck)
