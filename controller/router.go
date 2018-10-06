@@ -69,7 +69,7 @@ func MapRoutes() *gin.Engine {
 	})
 	ret.Use(sessions.Sessions("pipe", store))
 	ret.POST(util.PathUpload, uploadAction)
-	ret.GET(util.PathPlatInfo, showPlatInfo)
+	ret.GET(util.PathPlatInfo, showPlatInfoAction)
 	ret.GET(util.PathSitemap, outputSitemapAction)
 
 	api := ret.Group(util.PathAPI)
@@ -80,10 +80,10 @@ func MapRoutes() *gin.Engine {
 	api.POST("/logout", logoutAction)
 	api.Any("/hp/*apis", util.HacPaiAPI())
 	api.GET("/status", getStatusAction)
-	api.GET("/check-version", console.CheckVersion)
-	api.GET("/blogs/top", showTopBlogs)
+	api.GET("/check-version", console.CheckVersionAction)
+	api.GET("/blogs/top", showTopBlogsAction)
 	api.GET("/oauth/github/redirect", redirectGitHubLoginAction)
-	api.GET("/oauth/github/callback", githubCallback)
+	api.GET("/oauth/github/callback", githubCallbackAction)
 
 	consoleGroup := api.Group("/console")
 	consoleGroup.Use(console.LoginCheck)

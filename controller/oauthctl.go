@@ -37,7 +37,7 @@ func redirectGitHubLoginAction(c *gin.Context) {
 	c.Redirect(http.StatusSeeOther, path)
 }
 
-func githubCallback(c *gin.Context) {
+func githubCallbackAction(c *gin.Context) {
 	state := c.Query("state")
 	if _, exist := states[state]; !exist {
 		c.Status(http.StatusForbidden)

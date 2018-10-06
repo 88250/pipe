@@ -39,7 +39,7 @@ func showIndexAction(c *gin.Context) {
 	t.Execute(c.Writer, nil)
 }
 
-func showPlatInfo(c *gin.Context) {
+func showPlatInfoAction(c *gin.Context) {
 	result := util.NewResult()
 	defer c.JSON(http.StatusOK, result)
 
@@ -54,7 +54,7 @@ func showPlatInfo(c *gin.Context) {
 	result.Data = data
 }
 
-func showTopBlogs(c *gin.Context) {
+func showTopBlogsAction(c *gin.Context) {
 	result := util.NewResult()
 	defer c.JSON(http.StatusOK, result)
 

@@ -75,8 +75,8 @@ func BlogSwitchAction(c *gin.Context) {
 	session.Save(c)
 }
 
-// CheckVersion checks version.
-func CheckVersion(c *gin.Context) {
+// CheckVersionAction checks version.
+func CheckVersionAction(c *gin.Context) {
 	result := util.NewResult()
 	defer c.JSON(http.StatusOK, result)
 
