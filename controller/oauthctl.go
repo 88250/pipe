@@ -58,14 +58,7 @@ func githubCallbackAction(c *gin.Context) {
 	userName := githubUser["login"].(string)
 	user := service.User.GetUserByGitHubId(githubId)
 	if nil == user {
-		if !model.Conf.OpenRegister {
-			c.Status(http.StatusForbidden)
-
-			return
-		}
-
-		user = service.User.GetUserByName(userName)
-		if nil == user {
+		if !service.Init.Inited() {
 			user = &model.User{
 				Name:      userName,
 				Password:  util.RandString(8),
@@ -73,11 +66,34 @@ func githubCallbackAction(c *gin.Context) {
 				GithubId:  githubId,
 			}
 
-			if err := service.Init.InitBlog(user); nil != err {
-				logger.Errorf("init blog via github login failed: " + err.Error())
+			if err := service.Init.InitPlatform(user); nil != err {
+				logger.Errorf("init platform via github login failed: " + err.Error())
 				c.Status(http.StatusInternalServerError)
 
 				return
+			}
+		} else {
+			if !model.Conf.OpenRegister {
+				c.Status(http.StatusForbidden)
+
+				return
+			}
+
+			user = service.User.GetUserByName(userName)
+			if nil == user {
+				user = &model.User{
+					Name:      userName,
+					Password:  util.RandString(8),
+					AvatarURL: githubUser["avatar_url"].(string),
+					GithubId:  githubId,
+				}
+
+				if err := service.Init.InitBlog(user); nil != err {
+					logger.Errorf("init blog via github login failed: " + err.Error())
+					c.Status(http.StatusInternalServerError)
+
+					return
+				}
 			}
 		}
 	}
