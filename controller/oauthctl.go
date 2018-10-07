@@ -94,6 +94,9 @@ func githubCallbackAction(c *gin.Context) {
 
 					return
 				}
+			} else {
+				user.GithubId = githubId
+				service.User.UpdateUser(user)
 			}
 		}
 	}
