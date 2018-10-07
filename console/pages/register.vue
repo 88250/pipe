@@ -3,11 +3,11 @@
     <div class="card login">
       <h1>{{ $t('register', $store.state.locale) }}</h1>
       <div class="ft-center login__content" v-if="account===''">
-        <a :href="`${baseURL}/oauth/github/redirect`">
-          {{ $t('useGitHub', $store.state.locale) }}{{ $t('register', $store.state.locale) }}
+        <div class="fn-pointer" @click="loginGitHub">
+          {{ $t('useGitHub', $store.state.locale) }}{{ $t('login', $store.state.locale) }}
           <div class="login__github"></div>
           <img class="fn-none" src="~/static/images/github.gif"/>
-        </a>
+        </div>
 
         <a class="login__link fn-flex-center" href="https://hacpai.com/register"
            target="_blank">
@@ -69,6 +69,7 @@
     },
     data () {
       return {
+        clickedGitHub: false,
         baseURL: process.env.AxiosBaseURL,
         account: '',
         userName: '',
@@ -82,6 +83,17 @@
       }
     },
     methods: {
+      loginGitHub () {
+        this.$store.commit('setSnackBar', {
+          snackBar: true,
+          snackMsg: 'Loading...',
+          snackModify: 'success'
+        })
+        if (!this.clickedGitHub) {
+          window.location.href = `${process.env.AxiosBaseURL}/oauth/github/redirect`
+          this.$set(this, 'clickedGitHub', true)
+        }
+      },
       async register () {
         if (!this.$refs.accountForm.validate()) {
           return
