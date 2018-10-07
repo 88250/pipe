@@ -3,27 +3,22 @@
     <div class="card">
       <v-stepper v-model="step">
         <v-stepper-content step="1" class="fn-clear">
-          <h1>Pipe {{ $t(account === 'pipe' ? 'register' : 'guide', $store.state.locale) }}</h1>
-          <div class="ft-center login__content fn-flex" v-if="account===''">
-            <div class="fn-flex-1">
-              <a class="card card--dark login__image"
-                 href="https://hacpai.com/login"
-                 target="_blank">
-                <v-icon>hacpai-logo</v-icon>
-              </a>
-              <a class="login__link" href="https://hacpai.com/login"
-                 target="_blank">
-                {{ $t('useHacpaiInit', $store.state.locale) }}
-              </a>
+          <h1>Pipe {{ $t(account === 'pipe' ? 'init' : 'guide', $store.state.locale) }}</h1>
+          <div class="ft-center login__content" v-if="account===''">
+            <a :href="`${baseURL}/oauth/github/redirect`">
+              {{ $t('useGitHub', $store.state.locale) }}{{ $t('init', $store.state.locale) }}
+              <div class="login__github"></div>
+              <img class="fn-none" src="~/static/images/github.gif"/>
+            </a>
+
+            <div class="login__link fn-flex-center fn-pointer"
+                 @click="hacpaiInit">
+              <v-icon>hacpai-logo</v-icon>
+              <div>&nbsp;{{ $t('useHacpaiInit', $store.state.locale) }}</div>
             </div>
-            <div class="fn-flex-1">
-              <div class="card login__image fn-pointer"
-                 @click="account='pipe'">
-                <img src="~/static/images/logo.png"/>
-              </div>
-              <div class="login__link fn-pointer" @click="account='pipe'">
-                {{ $t('usePipeInit', $store.state.locale) }}
-              </div>
+            <div class="login__link fn-pointer fn-flex-center" @click="account='pipe'">
+              <img width="16" src="~/static/images/logo.png"/>
+              <span>&nbsp;{{ $t('usePipeInit', $store.state.locale) }}</span>
             </div>
           </div>
           <div v-if="account==='pipe'">
@@ -43,7 +38,7 @@
                 :rules="requiredRules"
                 required
                 type="password"
-                @keyup.13="goStep2"
+                @keyup.13="localInit"
               ></v-text-field>
             </v-form>
             <div class="alert alert--danger" v-show="registerError">
@@ -52,12 +47,12 @@
             </div>
           </div>
           <div class="fn-right">
-            <v-btn  v-if="account === 'pipe'"
+            <v-btn v-if="account === 'pipe'"
               class="btn--info" @click="account = ''">{{ $t('preStep', $store.state.locale) }}</v-btn>
             <v-btn
-              v-if="$store.state.name !== '' || account === 'pipe'"
+              v-if="account === 'pipe'"
               class="btn--success btn--space"
-              @click="goStep2">{{ $t(account === 'pipe' ? 'init' : 'nextStep', $store.state.locale) }}
+              @click="localInit">{{ $t('init', $store.state.locale) }}
             </v-btn>
           </div>
         </v-stepper-content>
@@ -126,6 +121,7 @@
   export default {
     data () {
       return {
+        baseURL: process.env.AxiosBaseURL,
         userName: '',
         userPassword: '',
         account: '',
@@ -151,32 +147,33 @@
       }
     },
     methods: {
-      async goStep2 () {
-        if (this.account === '') {
+      hacpaiInit () {
+        if (this.$store.state.name !== '') {
           this.$set(this, 'step', 2)
+        } else {
+          window.open('https://hacpai.com/login')
         }
-
-        if (this.account === 'pipe') {
-          if (!this.$refs.accountForm.validate()) {
-            return
+      },
+      async localInit () {
+        if (!this.$refs.accountForm.validate()) {
+          return
+        }
+        const responseData = await this.axios.post('/init/local', {
+          name: this.userName,
+          password: sha512crypt.sha512crypt(this.userPassword, `$6$5000$${Math.random().toString(36)}`)
+        })
+        if (responseData.code === 0) {
+          this.$set(this, 'step', 3)
+          this.$set(this, 'registerError', false)
+          this.$set(this, 'registerErrorMsg', '')
+          this.$store.commit('setIsInit', true)
+          const stateResponseData = await this.axios.get('/status')
+          if (stateResponseData) {
+            this.$store.commit('setStatus', stateResponseData)
           }
-          const responseData = await this.axios.post('/init/local', {
-            name: this.userName,
-            password: sha512crypt.sha512crypt(this.userPassword, `$6$5000$${Math.random().toString(36)}`)
-          })
-          if (responseData.code === 0) {
-            this.$set(this, 'step', 3)
-            this.$set(this, 'registerError', false)
-            this.$set(this, 'registerErrorMsg', '')
-            this.$store.commit('setIsInit', true)
-            const stateResponseData = await this.axios.get('/status')
-            if (stateResponseData) {
-              this.$store.commit('setStatus', stateResponseData)
-            }
-          } else {
-            this.$set(this, 'registerError', true)
-            this.$set(this, 'registerErrorMsg', responseData.msg)
-          }
+        } else {
+          this.$set(this, 'registerError', true)
+          this.$set(this, 'registerErrorMsg', responseData.msg)
         }
       },
       async init () {

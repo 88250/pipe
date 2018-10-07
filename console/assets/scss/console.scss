@@ -48,6 +48,18 @@
       }
     }
   }
+
+  &__github {
+    background-image: url("~/static/images/github.png");
+    height: 200px;
+    width: 200px;
+    background-size: cover;
+    margin: 20px auto;
+    background-position: center center;
+    &:hover {
+      background-image: url("~/static/images/github.gif");
+    }
+  }
 }
 
 @media (max-width: 768px) {

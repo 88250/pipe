@@ -2,26 +2,21 @@
   <div class="console" id="particles">
     <div class="card login">
       <h1>{{ $t('register', $store.state.locale) }}</h1>
-      <div class="ft-center login__content fn-flex" v-if="account===''">
-        <div class="fn-flex-1">
-          <a class="card card--dark login__image"
-             href="https://hacpai.com/register"
-             target="_blank">
-            <v-icon>hacpai-logo</v-icon>
-          </a>
-          <a class="login__link" href="https://hacpai.com/register"
-             target="_blank">
-            {{ $t('useHacpaiInit', $store.state.locale) }}
-          </a>
-        </div>
-        <div class="fn-flex-1">
-          <div class="card login__image fn-pointer"
-               @click="account='pipe'">
-            <img src="~/static/images/logo.png"/>
-          </div>
-          <div class="login__link fn-pointer" @click="account='pipe'">
-            {{ $t('usePipeInit', $store.state.locale) }}
-          </div>
+      <div class="ft-center login__content" v-if="account===''">
+        <a :href="`${baseURL}/oauth/github/redirect`">
+          {{ $t('useGitHub', $store.state.locale) }}{{ $t('register', $store.state.locale) }}
+          <div class="login__github"></div>
+          <img class="fn-none" src="~/static/images/github.gif"/>
+        </a>
+
+        <a class="login__link fn-flex-center" href="https://hacpai.com/register"
+           target="_blank">
+          <v-icon>hacpai-logo</v-icon>
+          <div>&nbsp;{{ $t('useHacpaiInit', $store.state.locale) }}</div>
+        </a>
+        <div class="login__link fn-pointer fn-flex-center" @click="account='pipe'">
+          <img width="16" src="~/static/images/logo.png"/>
+          <span>&nbsp;{{ $t('usePipeInit', $store.state.locale) }}</span>
         </div>
       </div>
       <div v-if="account==='pipe'">
@@ -74,6 +69,7 @@
     },
     data () {
       return {
+        baseURL: process.env.AxiosBaseURL,
         account: '',
         userName: '',
         userPassword: '',
