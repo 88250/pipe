@@ -2,7 +2,7 @@
  * skin gina style
  *
  * @author <a href="http://vanessa.b3log.org">Liyuan Li</a>
- * @version 0.1.1.1, Jan 29, 2018
+ * @version 0.1.1.2, Oct 9, 2018
 */
 @import '../../../scss/basic';
 @import '../../../scss/github';
@@ -239,7 +239,7 @@ a {
     font-size: 16px;
 
     &:first-child {
-      margin-left: -10px;
+      padding: 0;
     }
 
     &:hover {
@@ -951,8 +951,13 @@ a {
     margin: 5px 5px 5px 0;
   }
 
-  .header__tool {
-    display: none;
+  .header {
+    &__tool {
+      display: none;
+    }
+    &__logo {
+      width: 38px !important;
+    }
   }
 
   .body--side {

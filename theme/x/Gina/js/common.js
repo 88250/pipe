@@ -2,7 +2,7 @@
  * @fileoverview util and every page should be used.
  *
  * @author <a href="http://vanessa.b3log.org">Liyuan Li</a>
- * @version 0.2.0.0, Oct 19, 2017
+ * @version 0.2.0.1, Oct 9, 2018
  */
 
 import $ from 'jquery'
@@ -17,6 +17,7 @@ const Common = {
    * @description 页面初始化
    */
   init: () => {
+    $('.header__logo').width($('.header a').get(1).offsetLeft - 30)
     PreviewImg()
     KillBrowser()
     $('#sidebarIcon').click(() => {
