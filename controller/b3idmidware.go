@@ -191,5 +191,5 @@ func fillUser(c *gin.Context) {
 func isBot(uaStr string) bool {
 	var ua = user_agent.New(uaStr)
 
-	return ua.Bot() || strings.Contains(uaStr, "HacPai")
+	return ua.Bot() || strings.HasPrefix(uaStr, "Sym")
 }
