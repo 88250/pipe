@@ -5,7 +5,8 @@
     {{template "head/head" .}}
     {{template "head/3rdstatistic" .}}
 </head>
-<body id="pjax">
+<body>
+<div id="pjax">
 {{if .pjax}}{{noescape "<!---- pjax {#pjax} start ---->"}}{{end}}
 {{template "9IPHP/header" .}}
 <div class="main wrapper fn-clear">
@@ -36,7 +37,11 @@
     </div>
     {{template "9IPHP/side" .}}
 </div>
+{{if .pjax}}{{noescape "<!---- pjax {#pjax} end ---->"}}{{end}}
+</div>
+
 {{template "9IPHP/footer" .}}
+{{if .pjax}}{{noescape "<!---- pjax {#pjax} start ---->"}}{{end}}
 <script>
   increase({{len .Categories}}, 1000, 'categoriesCount', 0)
 </script>
