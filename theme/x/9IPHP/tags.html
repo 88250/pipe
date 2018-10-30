@@ -5,7 +5,8 @@
     {{template "head/head" .}}
     {{template "head/3rdstatistic" .}}
 </head>
-<body>
+<body id="pjax">
+{{if .pjax}}<!---- pjax {#pjax} start ---->{{end}}
 {{template "9IPHP/header" .}}
 <div class="main wrapper fn-clear">
     <div class="content page">
@@ -25,6 +26,7 @@
   increase({{len .Tags}}, 1000, 'tagArticleCount', 0)
   addLevelToTag()
 </script>
+{{if .pjax}}<!---- pjax {#pjax} end ---->{{end}}
 </body>
 </html>
 {{end}}

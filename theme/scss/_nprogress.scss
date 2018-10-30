@@ -1,0 +1,19 @@
+/**
+ * nprogress.
+ *
+ * @author <a href="http://vanessa.b3log.org">Liyuan Li</a>
+ * @version 0.1.0.0, Oct 30, 2018
+ */
+#nprogress {
+  pointer-events: none;
+}
+
+#nprogress .bar {
+  background: $progress;
+  position: fixed;
+  z-index: 1031;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+}

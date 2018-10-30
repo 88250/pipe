@@ -2,11 +2,13 @@
  * @fileoverview common tool for every theme
  *
  * @author <a href="http://vanessa.b3log.org">Liyuan Li</a>
- * @version 0.3.1.0, Jul 8, 2018
+ * @version 0.4.0.0, Oct 30, 2018
  */
 
 import $ from 'jquery'
 import config from '../../pipe.json'
+import NProgress from 'nprogress'
+import pjax from './lib/pjax'
 
 /**
  * @description 初始化 markdown 解析
@@ -310,12 +312,46 @@ ${selectionObj.toString()}${genCopy(author, link).join('<br>')}</div>`)
   })
 }
 
+const initPjax = () => {
+  if ($('#pjax').length === 1) {
+    pjax({
+      selector: 'a',
+      container: '#pjax',
+      show: '',
+      cache: false,
+      storage: true,
+      titleSuffix: '',
+      filter: function(href){
+        if (href.indexOf('/atom') > -1  ||
+          href.indexOf(config.Server + '/admin') > -1) {
+          return true
+        }
+        return false
+      },
+      callback: function () {
+        LazyLoadCSSImage()
+        LazyLoadImage()
+        ParseMarkdown()
+      }
+    });
+    NProgress.configure({ showSpinner: false });
+    $('#pjax').bind('pjax.start', function(){
+      NProgress.start();
+    });
+    $('#pjax').bind('pjax.end', function(){
+      window.scroll(window.scrollX,0)
+      NProgress.done();
+    });
+  }
+}
+
 (() => {
   TrimB3Id()
   LazyLoadCSSImage()
   LazyLoadImage()
   ParseMarkdown()
   addCopyright()
+  initPjax()
 
   if ('serviceWorker' in navigator && 'caches' in window && 'fetch' in window && config.RuntimeMode === 'prod') {
     // navigator.serviceWorker.register(`${config.Server}/sw.min.js?${config.StaticResourceVersion}`, {scope: '/'})
