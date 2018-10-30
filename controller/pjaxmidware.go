@@ -17,7 +17,6 @@
 package controller
 
 import (
-	"regexp"
 	"strings"
 
 	"github.com/gin-gonic/gin"
@@ -54,18 +53,31 @@ func (p *pjaxHTMLWriter) Write(data []byte) (int, error) {
 
 	pjaxContainer := p.c.Request.Header.Get("X-PJAX-Container")
 	body := p.bodyBuilder.String()
-	r := regexp.MustCompile(`<!---- pjax \{` + pjaxContainer + `\} start ---->([\s\S]*)<!---- pjax \{` + pjaxContainer + `\} end ---->`)
-	containers := r.FindAllStringSubmatch(body, -1)
+	startTag := "<!---- pjax {" + pjaxContainer + "} start ---->"
+	endTag := "<!---- pjax {" + pjaxContainer + "} end ---->"
+	var containers []string
+	count := 0
+	part := body
+	for {
+		start := strings.Index(part, startTag)
+		if 0 > start {
+			break
+		}
+		start = start + len(startTag)
+		end := strings.Index(part, endTag)
+		containers = append(containers, part[start:end])
+		count++
+		if 10 <= count {
+			break
+		}
+		part = part[end+len(endTag):]
+	}
+
 	if 0 == len(containers) {
 		return p.ResponseWriter.WriteString(body)
 	}
 
-	builder := &strings.Builder{}
-	for _, v := range containers {
-		builder.WriteString(v[1])
-	}
-
-	return p.ResponseWriter.WriteString(builder.String())
+	return p.ResponseWriter.WriteString(strings.Join(containers, ""))
 }
 
 func isPJAX(c *gin.Context) bool {
