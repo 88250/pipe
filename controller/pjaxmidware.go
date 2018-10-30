@@ -17,15 +17,18 @@
 package controller
 
 import (
-	"github.com/gin-gonic/gin"
 	"regexp"
 	"strings"
+
+	"github.com/gin-gonic/gin"
 )
 
 func pjax(c *gin.Context) {
 	isPJAX := isPJAX(c)
-	model := getDataModel(c)
-	model["pjax"] = isPJAX
+	dataModelVal, _ := c.Get("dataModel")
+	dataModel := dataModelVal.(*DataModel)
+	(*dataModel)["pjax"] = isPJAX
+	c.Set("dataModel", dataModel)
 
 	if !isPJAX {
 		c.Next()
@@ -51,13 +54,18 @@ func (p *pjaxHTMLWriter) Write(data []byte) (int, error) {
 
 	pjaxContainer := p.c.Request.Header.Get("X-PJAX-Container")
 	body := p.bodyBuilder.String()
-	r := regexp.MustCompile("<!---- pjax {" + pjaxContainer + "} start ---->(.+)?<!---- pjax {" + pjaxContainer + "} end ---->")
-	containers := r.FindStringSubmatch(body)
+	r := regexp.MustCompile(`<!---- pjax \{` + pjaxContainer + `\} start ---->([\s\S]*)<!---- pjax \{` + pjaxContainer + `\} end ---->`)
+	containers := r.FindAllStringSubmatch(body, -1)
 	if 0 == len(containers) {
 		return p.ResponseWriter.WriteString(body)
 	}
 
-	return p.ResponseWriter.WriteString(strings.Join(containers, ""))
+	builder := &strings.Builder{}
+	for _, v := range containers {
+		builder.WriteString(v[1])
+	}
+
+	return p.ResponseWriter.WriteString(builder.String())
 }
 
 func isPJAX(c *gin.Context) bool {

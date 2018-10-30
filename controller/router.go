@@ -54,8 +54,9 @@ func MapRoutes() *gin.Engine {
 			}
 			return dict, nil
 		},
-		"minus": func(a, b int) int { return a - b },
-		"mod":   func(a, b int) int { return a % b },
+		"minus":    func(a, b int) int { return a - b },
+		"mod":      func(a, b int) int { return a % b },
+		"noescape": func(s string) template.HTML { return template.HTML(s) },
 	})
 
 	ret.Use(gin.Recovery())
