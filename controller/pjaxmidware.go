@@ -48,7 +48,7 @@ type pjaxHTMLWriter struct {
 
 func (p *pjaxHTMLWriter) Write(data []byte) (int, error) {
 	p.bodyBuilder.Write(data)
-	if !strings.HasSuffix(string(data), "</html>\r\n") {
+	if !strings.HasSuffix(string(data), "</html>\r\n") && !strings.HasSuffix(string(data), "</html>\n") {
 		return 0, nil
 	}
 
