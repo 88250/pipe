@@ -171,7 +171,7 @@ func MapRoutes() *gin.Engine {
 	templates = append(templates, headTemplates...)
 	ret.LoadHTMLFiles(templates...)
 	themeGroup := ret.Group(util.PathBlogs + "/:username")
-	themeGroup.Use(fillUser, resolveBlog)
+	themeGroup.Use(fillUser, pjax, resolveBlog)
 	themeGroup.GET("", showArticlesAction)
 	themeGroup.Any("/*path", routePath)
 
