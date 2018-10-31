@@ -27,6 +27,7 @@
 </div>
 <script type="text/javascript"
         id="script"
+        data-blogurl="{{.BlogURL}}"
         data-isLogin="{{if eq .User.URole 0}}false{{else}}true{{end}}"
         src="{{.Conf.StaticServer}}/theme/x/{{.Setting.ThemeName}}/js/common.min.js?{{.Conf.StaticResourceVersion}}"
 ></script>

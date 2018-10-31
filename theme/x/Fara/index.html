@@ -9,8 +9,10 @@
 <div class="body__overlay"></div>
 <div class="body__content">
     {{template "Fara/header" .}}
-    <div class="main">
+    <div class="main" id="pjax">
+        {{if .pjax}}{{noescape "<!---- pjax {#pjax} start ---->"}}{{end}}
         {{template "Fara/article-list" .}}
+        {{if .pjax}}{{noescape "<!---- pjax {#pjax} end ---->"}}{{end}}
     </div>
     {{template "Fara/footer" .}}
 </div>

@@ -2,12 +2,13 @@
  * @fileoverview util and every page should be used.
  *
  * @author <a href="http://vanessa.b3log.org">Liyuan Li</a>
- * @version 0.1.0.0, Dec 11, 2017
+ * @version 0.2.0.0, Oct 31, 2018
  */
 
 import $ from 'jquery'
 import Icon from './symbol'
 import {
+  initPjax,
   KillBrowser,
   PreviewImg,
 } from '../../../js/common'
@@ -19,6 +20,7 @@ const Common = {
   init: () => {
     PreviewImg()
     KillBrowser()
+    initPjax('Koma')
 
     $("a.tag").each(function (i) {
       $(this).addClass("tag--color" + Math.ceil(Math.random() * 4));
@@ -77,13 +79,18 @@ const Common = {
     if (count < max) {
       setTimeout(() => {
         increase(max, time, id, ++count)
-        document.getElementById(id).innerHTML = count
+        if (document.getElementById(id)) {
+          document.getElementById(id).innerHTML = count
+        }
       }, time / max)
     }
   }
 }
 
-window.increase = Common.increase
-Icon()
-Common.init()
+if (!window.increase) {
+  window.increase = Common.increase
+  Icon()
+  Common.init()
+}
+
 export default Common

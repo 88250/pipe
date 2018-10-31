@@ -9,7 +9,8 @@
 <div class="body__overlay"></div>
 <div class="body__content">
     {{template "Fara/header" .}}
-    <div class="main">
+    <div class="main" id="pjax">
+        {{if .pjax}}{{noescape "<!---- pjax {#pjax} start ---->"}}{{end}}
         <div class="main__title">
             <span class="main__count" id="archiveMonthCount">0</span> <span class="ft-13">{{.I18n.Month2}}</span>
             <span class="main__count" id="archiveArticleCount">0</span> <span class="ft-13">{{.I18n.Article2}}</span>
@@ -23,13 +24,16 @@
             </div>
             {{end}}
         </div>
+        {{if .pjax}}{{noescape "<!---- pjax {#pjax} end ---->"}}{{end}}
     </div>
     {{template "Fara/footer" .}}
 </div>
+{{if .pjax}}{{noescape "<!---- pjax {#pjax} start ---->"}}{{end}}
 <script>
   increase({{len .Archives}},1000, 'archiveMonthCount', 0)
   increase({{.Statistic.StatisticArticleCount}},1000, 'archiveArticleCount', 0)
 </script>
+{{if .pjax}}{{noescape "<!---- pjax {#pjax} end ---->"}}{{end}}
 </body>
 </html>
 {{end}}

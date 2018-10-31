@@ -314,10 +314,10 @@ ${selectionObj.toString()}${genCopy(author, link).join('<br>')}</div>`)
 
 /**
  * @description 初始化 pjax
- * @param {string} urlPre 博客访问地址
+ * @param {string} themeName 主题名称
  * @param {function} cb pjax 成功加载后的回调函数
  */
-export const initPjax = (urlPre, cb) => {
+export const initPjax = (themeName, cb) => {
   if ($('#pjax').length === 1) {
     pjax({
       selector: 'a',
@@ -330,12 +330,20 @@ export const initPjax = (urlPre, cb) => {
         if (href.indexOf('/atom') > -1  ||
           href.indexOf(config.Server + '/admin') > -1) {
           return true
-        } else if (href.indexOf(urlPre) > -1) {
+        } else if (href.indexOf($('#script').data('blogurl')) > -1) {
           return false
         }
         return true
       },
       callback: function () {
+        if ($('#pipeComments').length === 1) {
+          $.ajax({
+            method: 'GET',
+            url: `${config.StaticServer }/theme/x/${themeName}/js/article.min.js`,
+            dataType: 'script',
+            cache: true,
+          })
+        }
         LazyLoadCSSImage()
         LazyLoadImage()
         ParseMarkdown()

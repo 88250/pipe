@@ -18,7 +18,7 @@ const Common = {
    * @description 页面初始化
    */
   init: () => {
-    initPjax($('#script').data('blogurl'), () => {
+    initPjax('9IPHP', () => {
       $('.nav a, .mobile__nav a').removeClass('nav--current')
       $('.nav a, .mobile__nav a').each(function (i) {
         const $it = $(this)
@@ -117,8 +117,11 @@ const Common = {
   }
 }
 
-window.increase = Common.increase
-window.addLevelToTag = Common.addLevelToTag
-Icon()
-Common.init()
+if (!window.increase) {
+  window.increase = Common.increase
+  window.addLevelToTag = Common.addLevelToTag
+  Icon()
+  Common.init()
+}
+
 export default Common
