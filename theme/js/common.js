@@ -2,7 +2,7 @@
  * @fileoverview common tool for every theme
  *
  * @author <a href="http://vanessa.b3log.org">Liyuan Li</a>
- * @version 0.4.0.0, Oct 30, 2018
+ * @version 0.4.0.1, Oct 31, 2018
  */
 
 import $ from 'jquery'
@@ -312,7 +312,12 @@ ${selectionObj.toString()}${genCopy(author, link).join('<br>')}</div>`)
   })
 }
 
-const initPjax = () => {
+/**
+ * @description 初始化 pjax
+ * @param {string} urlPre 博客访问地址
+ * @param {function} cb pjax 成功加载后的回调函数
+ */
+export const initPjax = (urlPre, cb) => {
   if ($('#pjax').length === 1) {
     pjax({
       selector: 'a',
@@ -325,13 +330,16 @@ const initPjax = () => {
         if (href.indexOf('/atom') > -1  ||
           href.indexOf(config.Server + '/admin') > -1) {
           return true
+        } else if (href.indexOf(urlPre) > -1) {
+          return false
         }
-        return false
+        return true
       },
       callback: function () {
         LazyLoadCSSImage()
         LazyLoadImage()
         ParseMarkdown()
+        cb && cb()
       }
     });
     NProgress.configure({ showSpinner: false });
@@ -351,7 +359,6 @@ const initPjax = () => {
   LazyLoadImage()
   ParseMarkdown()
   addCopyright()
-  initPjax()
 
   if ('serviceWorker' in navigator && 'caches' in window && 'fetch' in window && config.RuntimeMode === 'prod') {
     // navigator.serviceWorker.register(`${config.Server}/sw.min.js?${config.StaticResourceVersion}`, {scope: '/'})

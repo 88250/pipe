@@ -7,6 +7,8 @@
 </head>
 <body>
 {{template "9IPHP/header" .}}
+<div id="pjax">
+    {{if .pjax}}{{noescape "<!---- pjax {#pjax} start ---->"}}{{end}}
 <div class="main wrapper fn-clear">
     <div class="content">
         <h1 class="page__title">
@@ -17,10 +19,14 @@
     </div>
     {{template "9IPHP/side" .}}
 </div>
+    {{if .pjax}}{{noescape "<!---- pjax {#pjax} end ---->"}}{{end}}
+</div>
 {{template "9IPHP/footer" .}}
+{{if .pjax}}{{noescape "<!---- pjax {#pjax} start ---->"}}{{end}}
 <script>
   increase({{.Tag.ArticleCount}}, 1000, 'tagArticlesCount', 0)
 </script>
+{{if .pjax}}{{noescape "<!---- pjax {#pjax} end ---->"}}{{end}}
 </body>
 </html>
 {{end}}

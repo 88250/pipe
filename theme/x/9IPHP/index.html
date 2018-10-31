@@ -7,11 +7,15 @@
 </head>
 <body>
 {{template "9IPHP/header" .}}
+<div id="pjax">
+    {{if .pjax}}{{noescape "<!---- pjax {#pjax} start ---->"}}{{end}}
 <div class="main wrapper fn-clear">
     <div class="content">
         {{template "9IPHP/article-list" .}}
     </div>
     {{template "9IPHP/side" .}}
+</div>
+    {{if .pjax}}{{noescape "<!---- pjax {#pjax} end ---->"}}{{end}}
 </div>
 {{template "9IPHP/footer" .}}
 </body>
