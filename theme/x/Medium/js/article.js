@@ -2,7 +2,7 @@
  * @fileoverview article.
  *
  * @author <a href="http://vanessa.b3log.org">Liyuan Li</a>
- * @version 0.1.1.0, Jan 30, 2018
+ * @version 0.1.2.0, Nov 1, 2018
  */
 
 import $ from 'jquery'
@@ -37,6 +37,9 @@ const Article = {
     const sideAbsoluteTop = ($(window).height() - 207) / 2 + 105
     let beforScrollTop = $(window).scrollTop()
     $(window).scroll(function () {
+      if ($('#pipeComments').length === 0) {
+        return
+      }
       const scrollTop = $(window).scrollTop()
       const bottomTop = $('.article__bottom').offset().top
       if (scrollTop > 65) {

@@ -2,7 +2,7 @@
  * @fileoverview util and every page should be used.
  *
  * @author <a href="http://vanessa.b3log.org">Liyuan Li</a>
- * @version 0.2.0.0, Oct 31, 2018
+ * @version 0.2.1.0, Nov 1, 2018
  */
 
 import $ from 'jquery'
@@ -14,16 +14,7 @@ import {
 } from '../../../js/common'
 
 const Common = {
-  /**
-   * @description 页面初始化
-   */
-  init: () => {
-    PreviewImg()
-    KillBrowser()
-    initPjax(() => {
-      $(window).scroll();
-    })
-
+  initEvent: () => {
     $("a.tag").each(function () {
       $(this).addClass("tag--color" + Math.ceil(Math.random() * 4));
     });
@@ -54,6 +45,19 @@ const Common = {
         $('.side > .fn-none').hide()
       }, 300)
     });
+  },
+  /**
+   * @description 页面初始化
+   */
+  init: () => {
+    PreviewImg()
+    KillBrowser()
+    initPjax(() => {
+      $(window).scroll();
+      Common.initEvent()
+    })
+
+    Common.initEvent()
 
     $(window).scroll(function () {
       if ($('.article__item').length > 0) {

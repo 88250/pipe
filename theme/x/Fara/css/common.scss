@@ -2,7 +2,7 @@
  * skin gina style
  *
  * @author <a href="http://vanessa.b3log.org">Liyuan Li</a>
- * @version 0.1.0.0, Sep  9, 2018
+ * @version 0.1.0.1, Nov 1, 2018
 */
 @import '../../../scss/basic';
 @import '../../../scss/github';
@@ -362,18 +362,23 @@ a {
 .comment {
   background-color: #fff;
   margin: 60px 0;
-  .pipe-comment__header {
-    font-size: 18px;
-    padding: 15px 15px 0 15px;
-    background-color: #fff;
-    margin: 0;
-  }
+  .pipe-comment {
+    &__header {
+      font-size: 18px;
+      padding: 15px 15px 0 15px;
+      background-color: #fff;
+      margin: 0;
+    }
+    &__item {
+      padding: 20px 20px 0;
+    }
+    &__pagination {
+      padding: 20px;
+    }
 
-  .pipe-comment__item {
-    padding: 20px 20px 0;
-  }
-  .pipe-comment__pagination {
-    padding: 20px;
+    &__null {
+      padding: 15px 0;
+    }
   }
 }
 
