@@ -2,7 +2,7 @@
  * @fileoverview util and every page should be used.
  *
  * @author <a href="http://vanessa.b3log.org">Liyuan Li</a>
- * @version 0.2.0.0, Oct 11, 2018
+ * @version 0.3.0.0, Nov 1, 2018
  */
 
 import $ from 'jquery'
@@ -12,6 +12,7 @@ import {
   KillBrowser,
   PreviewImg,
 } from '../../../js/common'
+import config from '../../../../pipe.json'
 
 const Common = {
   /**
@@ -20,7 +21,22 @@ const Common = {
   init: () => {
     PreviewImg()
     KillBrowser()
-    initPjax('Next')
+    initPjax(() => {
+      if ($('#pipeComments').length === 1) {
+        $.ajax({
+          method: 'GET',
+          url: `${config.StaticServer}/theme/x/Next/js/article.min.js`,
+          dataType: 'script',
+          cache: true,
+        })
+      }
+
+      if ($('#pipeComments').length !== 1 || $('#toc').length !== 1) {
+        $('#sideBar').removeClass('sidebar--active')
+        $('.main').css('margin-right', '0')
+        $('.side').removeClass('side--active')
+      }
+    })
     $('#sideBar').click(function () {
       if ($(this).hasClass('sidebar--active')) {
         $(this).removeClass('sidebar--active')

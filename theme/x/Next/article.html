@@ -9,6 +9,8 @@
 <body>
 <div class="main">
     {{template "Next/header" .}}
+    <div id="pjax">
+        {{if .pjax}}{{noescape "<!---- pjax {#pjax} start ---->"}}{{end}}
     <div class="wrapper">
         <article class="article__item">
             <header class="article__header article__header--center">
@@ -151,6 +153,8 @@
     {{end}}
     {{template "comment/editor" .}}
     {{template "Next/side" .}}
+        {{if .pjax}}{{noescape "<!---- pjax {#pjax} end ---->"}}{{end}}
+    </div>
     {{template "Next/footer" .}}
 </div>
 </body>

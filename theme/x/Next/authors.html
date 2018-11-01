@@ -8,6 +8,8 @@
 <body>
 <div class="main">
     {{template "Next/header" .}}
+    <div id="pjax">
+        {{if .pjax}}{{noescape "<!---- pjax {#pjax} start ---->"}}{{end}}
     <div class="wrapper">
         <h2 class="page__articles">
             <span id="authorCount">0</span> <span class="ft-fade ft-13">{{.I18n.TeamMember2}}</span>
@@ -25,11 +27,15 @@
         </div>
     </div>
     {{template "Next/side" .}}
+        {{if .pjax}}{{noescape "<!---- pjax {#pjax} end ---->"}}{{end}}
+    </div>
     {{template "Next/footer" .}}
 </div>
+{{if .pjax}}{{noescape "<!---- pjax {#pjax} start ---->"}}{{end}}
 <script>
   increase({{len .Authors}}, 1000, 'authorCount', 0)
 </script>
+{{if .pjax}}{{noescape "<!---- pjax {#pjax} end ---->"}}{{end}}
 </body>
 </html>
 {{end}}

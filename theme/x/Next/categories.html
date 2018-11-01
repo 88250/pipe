@@ -7,6 +7,8 @@
 <body>
 <div class="main">
     {{template "Next/header" .}}
+    <div id="pjax">
+        {{if .pjax}}{{noescape "<!---- pjax {#pjax} start ---->"}}{{end}}
     <div class="wrapper page">
         <h2 class="page__title">
             <span id="categoriesCount">0</span> <span class="ft-fade ft-13">{{.I18n.Categories2}}</span>
@@ -32,11 +34,15 @@
         {{end}}
     </div>
     {{template "Next/side" .}}
+        {{if .pjax}}{{noescape "<!---- pjax {#pjax} end ---->"}}{{end}}
+    </div>
     {{template "Next/footer" .}}
 </div>
+{{if .pjax}}{{noescape "<!---- pjax {#pjax} start ---->"}}{{end}}
 <script>
   increase({{len .Categories}}, 1000, 'categoriesCount', 0)
 </script>
+{{if .pjax}}{{noescape "<!---- pjax {#pjax} end ---->"}}{{end}}
 </body>
 </html>
 {{end}}

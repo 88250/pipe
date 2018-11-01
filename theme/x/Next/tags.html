@@ -8,6 +8,8 @@
 <body>
 <div class="main">
     {{template "Next/header" .}}
+    <div id="pjax">
+        {{if .pjax}}{{noescape "<!---- pjax {#pjax} start ---->"}}{{end}}
     <div class="wrapper">
         <h2 class="page__articles">
             <span id="tagArticleCount">0</span> <span class="ft-fade ft-13">{{.I18n.Tags2}}</span>
@@ -22,12 +24,16 @@
         </div>
     </div>
     {{template "Next/side" .}}
+        {{if .pjax}}{{noescape "<!---- pjax {#pjax} end ---->"}}{{end}}
+    </div>
     {{template "Next/footer" .}}
 </div>
+{{if .pjax}}{{noescape "<!---- pjax {#pjax} start ---->"}}{{end}}
 <script>
   increase({{len .Tags}}, 1000, 'tagArticleCount', 0)
   addLevelToTag()
 </script>
+{{if .pjax}}{{noescape "<!---- pjax {#pjax} end ---->"}}{{end}}
 </body>
 </html>
 {{end}}

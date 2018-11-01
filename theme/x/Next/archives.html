@@ -8,6 +8,8 @@
 <body>
 <div class="main">
     {{template "Next/header" .}}
+    <div id="pjax">
+        {{if .pjax}}{{noescape "<!---- pjax {#pjax} start ---->"}}{{end}}
     <div class="wrapper page">
         <h2 class="page__title">
             <span id="archiveMonthCount">0</span> <span class="ft-fade ft-13">{{.I18n.Month2}}</span>
@@ -21,12 +23,16 @@
         {{end}}
     </div>
     {{template "Next/side" .}}
+        {{if .pjax}}{{noescape "<!---- pjax {#pjax} end ---->"}}{{end}}
+    </div>
     {{template "Next/footer" .}}
 </div>
+{{if .pjax}}{{noescape "<!---- pjax {#pjax} start ---->"}}{{end}}
 <script>
   increase({{len .Archives}}, 1000, 'archiveMonthCount', 0)
   increase({{.Statistic.StatisticArticleCount}}, 1000, 'archiveArticleCount', 0)
 </script>
+{{if .pjax}}{{noescape "<!---- pjax {#pjax} end ---->"}}{{end}}
 </body>
 </html>
 {{end}}

@@ -1,4 +1,5 @@
 {{define "comment/comments"}}
+<div id="pipeCommentsWrap">
 {{if gt (len .Comments) 0}}
 <div id="pipeComments" class="fn-clear"
      data-title="{{.I18n.Comment}}{{.I18n.Colon}}{{.Article.Title}}"
@@ -46,4 +47,5 @@
     {{.I18n.StayStep}}
 </div>
 {{end}}
+</div>
 {{end}}

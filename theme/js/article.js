@@ -148,13 +148,13 @@ export const InitComment = () => {
   })
 
   // bottom reply
-  $('#pipeComments').on('click', '#pipeCommentBottomComment', function () {
+  $('#pipeCommentsWrap').on('click', '#pipeCommentBottomComment', function () {
     const $bottomComment = $(this)
     ShowEditor($bottomComment.data('text'), $bottomComment.data('id'))
   })
 
   // comment show reply
-  $('#pipeComments').on('click', '.fn-pointer', function () {
+  $('#pipeCommentsWrap').on('click', '#pipeComments .fn-pointer', function () {
     const $it = $(this)
     if ($it.hasClass('disabled')) {
       return
@@ -223,8 +223,8 @@ export const InitComment = () => {
   })
 
   // comment remove
-  $('#pipeComments').
-    on('click', '.pipe-comment__btn--danger', function () {
+  $('#pipeCommentsWrap').
+    on('click', '#pipeComments .pipe-comment__btn--danger', function () {
       const $it = $(this)
       if (confirm($it.data('label'))) {
         $.ajax({
@@ -255,8 +255,8 @@ ${$it.data('label2')}`).click(function () {
     })
 
   // comment reply
-  $('#pipeComments').
-    on('click', '.pipe-comment__btn--reply', function () {
+  $('#pipeCommentsWrap').
+    on('click', '#pipeComments .pipe-comment__btn--reply', function () {
       const $it = $(this)
       ShowEditor($it.data('title'), $it.data('id'), $it.data('commentid'))
     })

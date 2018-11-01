@@ -408,7 +408,7 @@ a:hover {
 .header {
   background: #f5f5f5;
   margin-bottom: 80px;
-  padding: 40px 0;
+  padding: 40px 0 20px;
 
   &__logo {
     position: relative;
@@ -417,6 +417,7 @@ a:hover {
     border-bottom-width: 0;
     color: #222;
     float: left;
+    margin-bottom: 20px;
 
     div {
       opacity: 0;
@@ -929,7 +930,7 @@ a:hover {
 
 @media (max-width: 768px) {
   .header {
-    padding: 20px 0;
+    padding: 20px 0 0;
     margin-bottom: 20px;
     nav {
       display: none;
