@@ -85,11 +85,19 @@ func (p *pjaxHTMLWriter) Write(data []byte) (int, error) {
 			start.UnixNano()/1000/1000, end.UnixNano()/1000/1000, elapsed.Nanoseconds()/1000/1000)
 	}()
 
+	var i int
+	var e error
 	if 0 == len(containers) {
-		return p.ResponseWriter.WriteString(body)
+		i, e = p.ResponseWriter.WriteString(body)
+		p.ResponseWriter.Flush()
+
+		return i, e
 	}
 
-	return p.ResponseWriter.WriteString(strings.Join(containers, ""))
+	i, e = p.ResponseWriter.WriteString(strings.Join(containers, ""))
+	p.ResponseWriter.Flush()
+
+	return i, e
 }
 
 func isPJAX(c *gin.Context) bool {
