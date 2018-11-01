@@ -12,13 +12,22 @@ import {
   KillBrowser,
   PreviewImg,
 } from '../../../js/common'
+import config from '../../../../pipe.json'
 
 const Common = {
   /**
    * @description 页面初始化
    */
   init: () => {
-    initPjax('Gina', () => {
+    initPjax(() => {
+      if ($('#pipeComments').length === 1) {
+        $.ajax({
+          method: 'GET',
+          url: `${config.StaticServer}/theme/x/Gina/js/article.min.js`,
+          dataType: 'script',
+          cache: true,
+        })
+      }
       if ($('#pipeComments').length === 1 && $('#toc').length === 1) {
         $('body').addClass('body--side')
       } else {

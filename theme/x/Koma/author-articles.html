@@ -6,7 +6,8 @@
     {{template "head/3rdstatistic" .}}
 </head>
 <body>
-
+<div id="pjax">
+    {{if .pjax}}{{noescape "<!---- pjax {#pjax} start ---->"}}{{end}}
 {{template "Koma/side" .}}
 <div class="main">
     <h2 class="page__title">
@@ -17,10 +18,14 @@
 
     {{template "Koma/footer" .}}
 </div>
+    {{if .pjax}}{{noescape "<!---- pjax {#pjax} end ---->"}}{{end}}
+</div>
 
+{{if .pjax}}{{noescape "<!---- pjax {#pjax} start ---->"}}{{end}}
 <script>
   increase({{.Author.ArticleCount}}, 1000, 'authorCount', 0)
 </script>
+{{if .pjax}}{{noescape "<!---- pjax {#pjax} end ---->"}}{{end}}
 </body>
 </html>
 {{end}}

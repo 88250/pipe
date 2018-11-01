@@ -7,6 +7,8 @@
     {{template "head/article" .}}
 </head>
 <body>
+<div id="pjax">
+    {{if .pjax}}{{noescape "<!---- pjax {#pjax} start ---->"}}{{end}}
 {{template "Koma/side" .}}
 <div class="main">
     <article class="article__item">
@@ -151,13 +153,13 @@
             </div>
         </div>
         {{end}}
+        {{end}}
     </article>
     {{template "comment/editor" .}}
-
     {{template "Koma/footer" .}}
 </div>
-{{end}}
-
+    {{if .pjax}}{{noescape "<!---- pjax {#pjax} end ---->"}}{{end}}
+</div>
 </body>
 </html>
 {{end}}

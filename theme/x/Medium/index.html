@@ -6,6 +6,8 @@
     {{template "head/3rdstatistic" .}}
 </head>
 <body>
+<div id="pjax">
+    {{if .pjax}}{{noescape "<!---- pjax {#pjax} start ---->"}}{{end}}
     {{template "Medium/header" .}}
     {{template "Medium/nav" .}}
     <div class="main">
@@ -20,6 +22,8 @@
         {{template "Medium/bottom2" .}}
     </div>
     {{template "Medium/footer" .}}
+    {{if .pjax}}{{noescape "<!---- pjax {#pjax} end ---->"}}{{end}}
+</div>
 </body>
 </html>
 {{end}}

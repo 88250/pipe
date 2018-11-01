@@ -20,9 +20,11 @@ const Common = {
   init: () => {
     PreviewImg()
     KillBrowser()
-    initPjax('Koma')
+    initPjax(() => {
+      $(window).scroll();
+    })
 
-    $("a.tag").each(function (i) {
+    $("a.tag").each(function () {
       $(this).addClass("tag--color" + Math.ceil(Math.random() * 4));
     });
 

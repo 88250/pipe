@@ -6,6 +6,8 @@
     {{template "head/3rdstatistic" .}}
 </head>
 <body>
+<div id="pjax">
+    {{if .pjax}}{{noescape "<!---- pjax {#pjax} start ---->"}}{{end}}
 {{template "Koma/side" .}}
 <div class="main">
     <article class="article__item">
@@ -26,9 +28,13 @@
 
     {{template "Koma/footer" .}}
 </div>
+    {{if .pjax}}{{noescape "<!---- pjax {#pjax} end ---->"}}{{end}}
+</div>
+{{if .pjax}}{{noescape "<!---- pjax {#pjax} start ---->"}}{{end}}
 <script>
   increase({{len .Tags}}, 1000, 'tagArticleCount', 0)
 </script>
+{{if .pjax}}{{noescape "<!---- pjax {#pjax} end ---->"}}{{end}}
 </body>
 </html>
 {{end}}

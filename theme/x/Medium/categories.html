@@ -5,6 +5,8 @@
     {{template "head/head" .}}
     {{template "head/3rdstatistic" .}}
 <body>
+<div id="pjax">
+    {{if .pjax}}{{noescape "<!---- pjax {#pjax} start ---->"}}{{end}}
 {{template "Medium/header" .}}
 {{template "Medium/nav" .}}
 <div class="main">
@@ -48,6 +50,8 @@
 <script>
   increase({{len .Categories}}, 1000, 'categoriesCount', 0)
 </script>
+{{if .pjax}}{{noescape "<!---- pjax {#pjax} end ---->"}}{{end}}
+</div>
 </body>
 </html>
 {{end}}

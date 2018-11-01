@@ -12,13 +12,22 @@ import {
   PreviewImg,
   initPjax
 } from '../../../js/common'
+import config from '../../../../pipe.json'
 
 const Common = {
   /**
    * @description 页面初始化
    */
   init: () => {
-    initPjax('9IPHP', () => {
+    initPjax(() => {
+      if ($('#pipeComments').length === 1) {
+        $.ajax({
+          method: 'GET',
+          url: `${config.StaticServer}/theme/x/9IPHP/js/article.min.js`,
+          dataType: 'script',
+          cache: true,
+        })
+      }
       $('.nav a, .mobile__nav a').removeClass('nav--current')
       $('.nav a, .mobile__nav a').each(function (i) {
         const $it = $(this)
