@@ -7,8 +7,13 @@
 </head>
 <body>
 {{template "Gina/header" .}}
+<div id="pjax">
+    {{if .pjax}}{{noescape "<!---- pjax {#pjax} start ---->"}}{{end}}
 {{template "Gina/article-list" .}}
 {{template "Gina/side" .}}
+    {{if .pjax}}{{noescape "<!---- pjax {#pjax} end ---->"}}{{end}}
+</div>
+
 {{template "Gina/footer" .}}
 </body>
 </html>

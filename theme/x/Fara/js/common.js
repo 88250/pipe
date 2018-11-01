@@ -36,9 +36,7 @@ const Common = {
       if ($('#pipeComments').length === 1 && $('#toc').length === 1) {
         $('.body__content').addClass('body__content--toc')
       } else {
-
         $('.body__content').removeClass('body__content--toc')
-        console.log('rm',  $('.body__content'))
       }
     })
 

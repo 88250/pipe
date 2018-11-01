@@ -18,9 +18,19 @@ const Common = {
    * @description 页面初始化
    */
   init: () => {
-    initPjax('Gina')
+    initPjax('Gina', () => {
+      if ($('#pipeComments').length === 1 && $('#toc').length === 1) {
+        $('body').addClass('body--side')
+      } else {
+        $('body').removeClass('body--side')
+      }
+      setTimeout(() => {
+        $('.header__logo').width($('.header a').get(1).offsetLeft - 30)
+      }, 301)
+    })
 
     $('.header__logo').width($('.header a').get(1).offsetLeft - 30)
+
     PreviewImg()
     KillBrowser()
     $('#sidebarIcon').click(() => {
@@ -30,6 +40,9 @@ const Common = {
   toggleSide: () => {
     const $body = $('body')
     $body.toggleClass('body--side')
+    setTimeout(() => {
+      $('.header__logo').width($('.header a').get(1).offsetLeft - 30)
+    }, 301)
   },
   increase(max, time, id, count) {
     if (count < max) {

@@ -8,6 +8,8 @@
 </head>
 <body{{if .ToC}} class="body--side"{{end}}>
 {{template "Gina/header" .}}
+<div id="pjax">
+    {{if .pjax}}{{noescape "<!---- pjax {#pjax} start ---->"}}{{end}}
 {{template "Gina/side" .}}
 <div class="wrapper content">
     <article>
@@ -207,7 +209,8 @@
 {{end}}
 
 {{template "comment/editor" .}}
-
+    {{if .pjax}}{{noescape "<!---- pjax {#pjax} end ---->"}}{{end}}
+</div>
 {{template "Gina/footer" .}}
 </body>
 </html>
