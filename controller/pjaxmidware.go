@@ -17,10 +17,8 @@
 package controller
 
 import (
-	"strings"
-	"time"
-
 	"github.com/gin-gonic/gin"
+	"strings"
 )
 
 func pjax(c *gin.Context) {
@@ -52,8 +50,6 @@ func (p *pjaxHTMLWriter) Write(data []byte) (int, error) {
 		return 0, nil
 	}
 
-	start := time.Now()
-
 	pjaxContainer := p.c.Request.Header.Get("X-PJAX-Container")
 	body := p.bodyBuilder.String()
 	startTag := "<!---- pjax {" + pjaxContainer + "} start ---->"
@@ -76,25 +72,11 @@ func (p *pjaxHTMLWriter) Write(data []byte) (int, error) {
 		part = part[end+len(endTag):]
 	}
 
-	time.Sleep(time.Millisecond * 100)
-
-	defer func() {
-		end := time.Now()
-		elapsed := end.Sub(start)
-		logger.Infof("start: %dms, end: %dms, elapsed: %dms",
-			start.UnixNano()/1000/1000, end.UnixNano()/1000/1000, elapsed.Nanoseconds()/1000/1000)
-	}()
-
-	var i int
-	var e error
-	if 0 == len(containers) {
-		i, e = p.ResponseWriter.WriteString(body)
-		p.ResponseWriter.Flush()
-
-		return i, e
+	if 0 != len(containers) {
+		body = strings.Join(containers, "")
 	}
 
-	i, e = p.ResponseWriter.WriteString(strings.Join(containers, ""))
+	i, e := p.ResponseWriter.WriteString(body)
 	p.ResponseWriter.Flush()
 
 	return i, e
