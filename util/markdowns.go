@@ -108,6 +108,8 @@ func bf(mdText string) []byte {
 
 // Markdown process the specified markdown text to HTML.
 func Markdown(mdText string) *MarkdownResult {
+	mdText = strings.Replace(mdText, "\r\n", "\n", -1)
+
 	digest := md5.New()
 	digest.Write([]byte(mdText))
 	key := string(digest.Sum(nil))
