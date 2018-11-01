@@ -17,8 +17,9 @@
 package controller
 
 import (
-	"github.com/gin-gonic/gin"
 	"strings"
+
+	"github.com/gin-gonic/gin"
 )
 
 func pjax(c *gin.Context) {
