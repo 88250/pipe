@@ -365,7 +365,7 @@ ${$it.data('label2')}`).click(function () {
       requestData.parentCommentID = $editor.data('commentid')
     }
 
-    $editorAdd.addClass('disabled')
+    $editorAdd.addClass('pipe-btn--disabled')
 
     $.ajax({
       url: `${$commentContent.data('blogurl')}/comments`,
@@ -410,7 +410,7 @@ ${$it.data('label2')}`).click(function () {
         } else {
           alert(result.msg)
         }
-        $editorAdd.removeClass('disabled')
+        $editorAdd.removeClass('pipe-btn--disabled')
       },
     })
   })
