@@ -78,10 +78,12 @@ func (p *pjaxHTMLWriter) Write(data []byte) (int, error) {
 
 	time.Sleep(time.Millisecond * 100)
 
-	end := time.Now()
-	elapsed := end.Sub(start)
-	logger.Infof("start: %dms, end: %dms, elapsed: %dms",
-		start.UnixNano()/1000/1000, end.UnixNano()/1000/1000, elapsed.Nanoseconds()/1000/1000)
+	defer func() {
+		end := time.Now()
+		elapsed := end.Sub(start)
+		logger.Infof("start: %dms, end: %dms, elapsed: %dms",
+			start.UnixNano()/1000/1000, end.UnixNano()/1000/1000, elapsed.Nanoseconds()/1000/1000)
+	}()
 
 	if 0 == len(containers) {
 		return p.ResponseWriter.WriteString(body)
