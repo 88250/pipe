@@ -75,7 +75,7 @@ export const actions = {
     }
 
     try {
-      const responseData = await vueAxios().get('/status')
+      const responseData = await vueAxios().get('/status?' + (new Date()).getTime())
       if (responseData) {
         if (app.i18n.messages[responseData.locale]) {
           app.i18n.locale = responseData.locale
