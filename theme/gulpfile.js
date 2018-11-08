@@ -13,7 +13,6 @@ const fs = require('fs')
 const browserify = require('browserify')
 const source = require('vinyl-source-stream')
 const buffer = require('vinyl-buffer')
-const es = require('event-stream')
 
 function themeSassProcess () {
   return gulp.src('./x/*/css/*.scss').
