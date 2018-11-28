@@ -6,11 +6,12 @@
 
 ## 案例
 
-* [B3log Pipe](http://pipe.b3log.org)
 * [Akkuman 的博客](http://o0o.pub)
 * [Vanessa](http://vanessa.b3log.org)
-* [Domolo Reader](http://www.domolo.com)
 * [图解吧](http://tujie8.net)
+* [黑壳博客](http://blog.bhusk.com)
+* [zorke 的博客](http://pipe.b3log.org/blogs/zorke)
+* [一个码农](http://blog.gitor.org)
 
 你也在使用的话欢迎通过 PR 更新该列表。
 
