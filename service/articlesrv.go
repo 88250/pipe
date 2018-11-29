@@ -46,6 +46,16 @@ const (
 	adminConsoleArticleListWindowSize = 20
 )
 
+func (srv *articleService) GetPlatMostViewArticles(size int) (ret []*model.Article) {
+	if err := db.Model(&model.Article{}).Select("`id`, `created_at`, `author_id`, `title`, `path`, `blog_id`").
+		Where("`status` = ?", model.ArticleStatusOK).
+		Order("`view_count` DESC, `created_at` DESC").Limit(size).Find(&ret).Error; nil != err {
+		logger.Errorf("get platform most view articles failed: " + err.Error())
+	}
+
+	return
+}
+
 func (srv *articleService) GetUnpushedArticles() (ret []*model.Article) {
 	if err := db.Where("`pushed_at` <= ?", model.ZeroPushTime).Find(&ret).Error; nil != err {
 		return

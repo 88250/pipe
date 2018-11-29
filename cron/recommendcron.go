@@ -22,24 +22,79 @@ import (
 	"time"
 
 	"github.com/b3log/pipe/model"
+	"github.com/b3log/pipe/service"
 	"github.com/b3log/pipe/util"
+	"github.com/dustin/go-humanize"
 	"github.com/parnurzeal/gorequest"
 )
 
 // RecommendArticles saves all recommend articles.
 var RecommendArticles []*model.ThemeArticle
 
+// CommunityRecommendArticles saves all community recommend articles.
+var CommunityRecommendArticles []*model.ThemeArticle
+
 func refreshRecommendArticlesPeriodically() {
 	go refreshRecommendArticles()
+	go refreshCommunityRecommendArticlesPeriodically()
 
 	go func() {
 		for range time.Tick(time.Minute * 30) {
 			refreshRecommendArticles()
+			refreshCommunityRecommendArticlesPeriodically()
 		}
 	}()
 }
 
 func refreshRecommendArticles() {
+	defer util.Recover()
+
+	size := 7
+	articles := service.Article.GetPlatMostViewArticles(size)
+	size = len(articles)
+	indics := util.RandInts(0, size, size)
+	images := util.RandImages(size)
+	indics = indics[:len(images)]
+	var recommendations []*model.ThemeArticle
+	for _, index := range indics {
+		article := articles[index]
+		authorModel := service.User.GetUser(article.AuthorID)
+		if nil == authorModel {
+			logger.Errorf("not found author of article [id=%d, authorID=%d]", article.ID, article.AuthorID)
+
+			continue
+		}
+
+		blogURLSetting := service.Setting.GetSetting(model.SettingCategoryBasic, model.SettingNameBasicBlogURL, article.BlogID)
+		blogURL := blogURLSetting.Value
+		author := &model.ThemeAuthor{
+			Name:      authorModel.Name,
+			URL:       blogURL + util.PathAuthors + "/" + authorModel.Name,
+			AvatarURL: authorModel.AvatarURL,
+		}
+		themeArticle := &model.ThemeArticle{
+			Title:     article.Title,
+			URL:       blogURL + article.Path,
+			CreatedAt: humanize.Time(article.CreatedAt),
+			Author:    author,
+		}
+		recommendations = append(recommendations, themeArticle)
+	}
+
+	RecommendArticles = recommendations
+}
+
+func refreshCommunityRecommendArticlesPeriodically() {
+	go refreshCommunityRecommendArticles()
+
+	go func() {
+		for range time.Tick(time.Minute * 30) {
+			refreshCommunityRecommendArticles()
+		}
+	}()
+}
+
+func refreshCommunityRecommendArticles() {
 	defer util.Recover()
 
 	result := util.NewResult()
@@ -85,5 +140,5 @@ func refreshRecommendArticles() {
 		})
 	}
 
-	RecommendArticles = recommendations
+	CommunityRecommendArticles = recommendations
 }
