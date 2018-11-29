@@ -56,7 +56,7 @@ func refreshRecommendArticles() {
 	images := util.RandImages(size)
 	indics = indics[:len(images)]
 	var recommendations []*model.ThemeArticle
-	for _, index := range indics {
+	for i, index := range indics {
 		article := articles[index]
 		authorModel := service.User.GetUser(article.AuthorID)
 		if nil == authorModel {
@@ -77,6 +77,9 @@ func refreshRecommendArticles() {
 			URL:       blogURL + article.Path,
 			CreatedAt: humanize.Time(article.CreatedAt),
 			Author:    author,
+			CommentCount: article.CommentCount,
+			ViewCount:    article.ViewCount,
+			ThumbnailURL: util.ImageSize(images[i], 280, 90),
 		}
 		recommendations = append(recommendations, themeArticle)
 	}

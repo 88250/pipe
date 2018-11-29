@@ -47,7 +47,7 @@ const (
 )
 
 func (srv *articleService) GetPlatMostViewArticles(size int) (ret []*model.Article) {
-	if err := db.Model(&model.Article{}).Select("`id`, `created_at`, `author_id`, `title`, `path`, `blog_id`").
+	if err := db.Model(&model.Article{}).Select("`id`, `created_at`, `author_id`, `title`, `path`, `view_count`, `comment_count`, `blog_id`").
 		Where("`status` = ?", model.ArticleStatusOK).
 		Order("`view_count` DESC, `created_at` DESC").Limit(size).Find(&ret).Error; nil != err {
 		logger.Errorf("get platform most view articles failed: " + err.Error())
