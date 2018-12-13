@@ -35,7 +35,6 @@ module.exports = {
   ** Build configuration
   */
   build: {
-    vendor: ['babel-polyfill', 'vue-i18n', '~/assets/symbol.js', 'axios', 'vuetify'],
     publicPath: (env.StaticServer ||  env.Server) + '/console/dist/',
     extractCSS: true,
     ssr: false,

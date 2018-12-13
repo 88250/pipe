@@ -1,12 +1,12 @@
 <template>
   <div class="console" id="particles">
     <div class="card login">
-      <h1>{{ $t('register', $store.state.locale) }}</h1>
+      <h1>{{$t('register', $store.state.locale)}}</h1>
       <div class="ft-center login__content" v-if="account===''">
         <div class="fn-pointer" @click="loginGitHub">
           {{ $t('useGitHub', $store.state.locale) }}{{ $t('login', $store.state.locale) }}
           <div class="login__github"></div>
-          <img class="fn-none" src="~/static/images/github.gif"/>
+          <img class="fn-none" src="~assets/images/github.gif"/>
         </div>
 
         <a class="login__link fn-flex-center" href="https://hacpai.com/register"
@@ -15,7 +15,7 @@
           <div>&nbsp;{{ $t('useHacpaiInit', $store.state.locale) }}</div>
         </a>
         <div class="login__link fn-pointer fn-flex-center" @click="account='pipe'">
-          <img width="16" src="~/static/images/logo.png"/>
+          <img width="16" src="~assets/images/logo.png"/>
           <span>&nbsp;{{ $t('usePipeInit', $store.state.locale) }}</span>
         </div>
       </div>

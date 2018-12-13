@@ -50,14 +50,14 @@
   }
 
   &__github {
-    background-image: url("~/static/images/github.png");
+    background-image: url("~assets/images/github.png");
     height: 200px;
     width: 200px;
     background-size: cover;
     margin: 20px auto;
     background-position: center center;
     &:hover {
-      background-image: url("~/static/images/github.gif");
+      background-image: url("~assets/images/github.gif");
     }
   }
 }

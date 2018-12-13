@@ -67,7 +67,7 @@ export const mutations = {
 }
 
 export const actions = {
-  async nuxtClientInit ({commit, state}, {app}) {
+  async nuxtClientInit ({ commit, state }, { app }) {
     // TrimB3Id
     const search = location.search
     if (search.indexOf('b3id') > -1) {
@@ -94,7 +94,7 @@ export const actions = {
       app.i18n.setLocaleMessage(state.locale, message)
     }
   },
-  setLocaleMessage ({commit}, locale) {
+  setLocaleMessage ({ commit }, locale) {
     if (this.app.i18n.messages[locale]) {
       this.app.i18n.locale = locale
     } else {
@@ -103,7 +103,7 @@ export const actions = {
     }
     commit('setLocale', locale)
   },
-  async getTags ({commit, state}) {
+  async getTags ({ commit, state }) {
     if (state.tagsItems.length > 0) {
       return
     }

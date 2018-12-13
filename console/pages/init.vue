@@ -8,7 +8,7 @@
             <div class="fn-pointer" @click="loginGitHub">
               {{ $t('useGitHub', $store.state.locale) }}{{ $t('login', $store.state.locale) }}
               <div class="login__github"></div>
-              <img class="fn-none" src="~/static/images/github.gif"/>
+              <img class="fn-none" src="~assets/images/github.gif"/>
             </div>
 
             <div class="login__link fn-flex-center fn-pointer"
@@ -17,7 +17,7 @@
               <div>&nbsp;{{ $t('useHacpaiInit', $store.state.locale) }}</div>
             </div>
             <div class="login__link fn-pointer fn-flex-center" @click="account='pipe'">
-              <img width="16" src="~/static/images/logo.png"/>
+              <img width="16" src="~assets/images/logo.png"/>
               <span>&nbsp;{{ $t('usePipeInit', $store.state.locale) }}</span>
             </div>
           </div>
@@ -99,7 +99,7 @@
                target="_blank"
                :aria-label="$t('openPipeTravel', $store.state.locale)"
                class="card login__image init__image--step3 pipe-tooltipped pipe-tooltipped--n">
-                <img src="~/static/images/logo.png"/>
+                <img src="~assets/images/logo.png"/>
             </a>
             <div class="init__text">{{$t('starIsMotivation', $store.state.locale)}}</div>
             <iframe src="https://ghbtns.com/github-btn.html?user=b3log&repo=pipe&type=star&count=true&size=large"

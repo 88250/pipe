@@ -2,7 +2,7 @@
   <header class="header fn-flex">
     <div :class="$route.path.indexOf('/admin') > -1 ? 'header__logo' : 'header__logo header__logo--theme'">
       <a :href="$store.state.blogURL || '/'">
-        <img class="header__logo-img" src="~static/images/logo.png"/>
+        <img class="header__logo-img" src="~assets/images/logo.png"/>
         {{ $store.state.blogTitle || 'Pipe' }}
       </a>
     </div>
@@ -25,7 +25,7 @@
               <span class="side__icon-line"></span>
             </div>
             <a :href="$store.state.blogURL">
-              <img class="header__logo-img fn-none" src="~static/images/logo.png"/>
+              <img class="header__logo-img fn-none" src="~assets/images/logo.png"/>
             </a>
           </span>
           <template v-else>&nbsp;</template>
