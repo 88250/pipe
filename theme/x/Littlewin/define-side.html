@@ -1,0 +1,63 @@
+{{define "Littlewin/side"}}
+<aside class="side">
+    {{if .ToC}}
+    {{.ToC}}
+    {{else}}
+    <div class="fn-none side__module module__list">
+        <ul>
+            <li>
+                <a href="{{.BlogURL}}/categories">
+                    <svg><use xlink:href="#folders"></use></svg>
+                    {{.I18n.Categories}}
+                </a>
+            </li>
+            <li>
+                <a href="{{.BlogURL}}/tags">
+                    <svg><use xlink:href="#icon-tags"></use></svg>
+                    {{.I18n.Tags}}
+                </a>
+            </li>
+            <li>
+                <a href="{{.BlogURL}}/archives">
+                    <svg><use xlink:href="#bookmark"></use></svg>
+                    {{.I18n.Archives}}
+                </a>
+            </li>
+            {{if gt .UserCount 1}}
+            <li>
+                <a href="{{.BlogURL}}/authors">
+                    <svg><use xlink:href="#group"></use></svg>
+                    {{.I18n.Team}}
+                </a>
+            </li>
+            {{end}}
+            <li>
+                <a href="{{.BlogURL}}/atom">
+                    <svg><use xlink:href="#feed"></use></svg>
+                    {{.I18n.Feed}}
+                </a>
+            </li>
+            {{range .Navigations}}
+            <li>
+                <a href="{{.URL}}" target="{{.OpenMethod}}">
+                    {{if ne "" .IconURL}}
+                    <img class="header__icon"
+                         data-src="{{.IconURL}}"/>
+                    {{end}}
+                    {{.Title}}
+                </a>
+            </li>
+            {{end}}
+        </ul>
+    </div>
+    <div class="side__sub-title">
+        {{.Setting.BasicBlogSubtitle}}
+    </div>
+    <div class="side__module">
+        {{template "Littlewin/module-list" dict "List" .RecentComments "Title" .I18n.RecentComment "UserCount" 2}}
+        {{template "Littlewin/module-list" dict "List" .MostCommentArticles "Title" .I18n.MostCommentArticle "UserCount" .UserCount}}
+        {{template "Littlewin/module-list" dict "List" .MostViewArticles "Title" .I18n.MostViewArticle "UserCount" .UserCount}}
+    </div>
+    {{end}}
+</aside>
+{{end}}

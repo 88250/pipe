@@ -1,0 +1,59 @@
+{{define "Littlewin/header"}}
+<header class="header">
+    <div class="wrapper ft-center">
+        <a href="{{.BlogURL}}"
+           class="header__logo fn-flex pipe-tooltipped--e pipe-tooltipped"
+           aria-label="{{.Setting.BasicBlogTitle}}">
+            <img data-src="{{.LogoURL}}" class="fn-center">
+            <span class="fn-ellipsis fn-flex-1">{{.Setting.BasicBlogTitle}}</span>
+        </a>
+        <a href="{{.BlogURL}}/categories">
+            <svg><use xlink:href="#folders"></use></svg>
+            {{.I18n.Categories}}
+        </a>
+        <a href="{{.BlogURL}}/tags">
+            <svg><use xlink:href="#icon-tags"></use></svg>
+            {{.I18n.Tags}}
+        </a>
+        <a href="{{.BlogURL}}/archives">
+            <svg><use xlink:href="#bookmark"></use></svg>
+            {{.I18n.Archives}}
+        </a>
+        {{if gt .UserCount 1}}
+        <a href="{{.BlogURL}}/authors">
+            <svg><use xlink:href="#group"></use></svg>
+            {{.I18n.Team}}
+        </a>
+        {{end}}
+        {{range .Navigations}}
+        <a href="{{.URL}}" target="{{.OpenMethod}}">
+            {{if ne "" .IconURL}}
+            <img class="header__icon"
+                 data-src="{{.IconURL}}"/>
+            {{end}}
+            {{.Title}}
+        </a>
+        {{end}}
+        <a href="{{.BlogURL}}/atom" target="_blank">
+            <svg><use xlink:href="#feed"></use></svg>
+            {{.I18n.Feed}}
+        </a>
+        <a href="{{.BlogURL}}/search" class="header__search">
+            <svg>
+                <use xlink:href="#search"></use>
+            </svg>
+            <span>{{.I18n.Search}}</span>
+        </a>
+        <div class="header__tool">
+            {{if eq .User.URole 0}}
+            <a href="{{.Conf.Server}}/register" class="fn-right ft-orange">{{.I18n.Register}}</a>
+            <a href="{{.Conf.Server}}/login" class="fn-right">{{.I18n.Login}}</a>
+            {{else}}
+            <a class="avatar fn-right"
+               href="{{.Conf.Server}}/{{if ne .User.URole 4}}admin/{{end}}"
+               data-src="{{.User.AvatarURLWithSize 64}}"></a>
+            {{end}}
+        </div>
+    </div>
+</header>
+{{end}}

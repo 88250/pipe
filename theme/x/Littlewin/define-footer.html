@@ -1,0 +1,83 @@
+{{define "Littlewin/footer"}}
+<footer class="footer">
+    <div class="wrapper">
+        <div class="footer__side fn-clear fn-three">
+            <div>
+                <div class="module__header">
+                    {{.I18n.NoticeBoard}}
+                </div>
+                <div>
+                    {{if eq .Setting.BasicNoticeBoard ""}}
+                    {{.I18n.NoData}}
+                    {{end}}
+                    {{.Setting.BasicNoticeBoard}}
+                </div>
+            </div>
+            <div class="fn-three--mid">
+                <div class="module__header">
+                    {{.I18n.Tags}}
+                </div>
+                <div>
+                    {{range .MostUseTags}}
+                    <a class="tag" href="{{.URL}}">{{.Title}}</a>
+                    {{end}}
+                </div>
+            </div>
+            <div>
+                <div class="module__header">
+                    {{.I18n.Categories}}
+                </div>
+                <div>
+                    {{if eq 0 (len .MostUseCategories)}}
+                    {{.I18n.NoData}}
+                    {{end}}
+                    {{range .MostUseCategories}}
+                    <a class="tag" href="{{.URL}}">{{.Title}}</a>
+                    {{end}}
+                </div>
+            </div>
+        </div>
+        <div class="footer__info">
+            <div class="fn-clear">
+                {{.Setting.BasicBlogSubtitle}}
+                <div class="fn-right">
+                    <a href="{{.BlogURL}}">{{.Setting.BasicBlogTitle}}</a> &copy; {{.Year}}
+                    {{.Setting.BasicFooter}}
+                </div>
+            </div>
+            <div class="fn-clear">
+                <span class="ft-gray">{{.Statistic.StatisticViewCount}}</span>
+                {{.I18n.View}}
+                &nbsp;
+                <span class="ft-gray">{{.Statistic.StatisticArticleCount}}</span>
+                {{.I18n.Article}}
+                &nbsp;
+                <span class="ft-gray">{{.Statistic.StatisticCommentCount}}</span>
+                {{.I18n.Comment}}
+                <div class="fn-right ft-gray">
+                    Powered by <a href="https://b3log.org/" target="_blank">B3log 开源</a> •
+                    <a href="https://hacpai.com/tag/Pipe" target="_blank">Pipe</a> •
+                    Theme <a href="https://github.com/b3log/pipe-themes" target="_blank">Gina</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+<div class="sidebar__icon" id="sidebarIcon">
+    <span class="sidebar__icon-line"></span>
+    <span class="sidebar__icon-line sidebar__icon-line--middle"></span>
+    <span class="sidebar__icon-line"></span>
+</div>
+
+<script type="text/javascript"
+        id="script"
+        data-blogurl="{{.BlogURL}}"
+        data-isLogin="{{if eq .User.URole 0}}false{{else}}true{{end}}"
+        {{if .Article}}
+        src="{{.Conf.StaticServer}}/theme/x/{{.Setting.ThemeName}}/js/article.min.js?{{.Conf.StaticResourceVersion}}"
+        {{else}}
+        src="{{.Conf.StaticServer}}/theme/x/{{.Setting.ThemeName}}/js/common.min.js?{{.Conf.StaticResourceVersion}}"
+        {{end}}
+></script>
+
+{{end}}

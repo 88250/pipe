@@ -1,0 +1,105 @@
+{{define "Littlewin/article-list"}}
+<div class="wrapper content">
+    <div>
+        {{if eq (len .Articles) 0}}
+        {{.I18n.NoData}}
+        {{end}}
+        {{range .Articles}}
+        <article class="fn-bottom article__item">
+            <header class="fn-relative article__header">
+                {{if .ThumbnailURL}}
+                <a class="article__thumb"
+                   href="{{.URL}}"
+                   data-src="{{.ThumbnailURL}}"></a>
+                {{end}}
+                <div class="fn-padding30">
+                    {{if gt $.UserCount 1}}
+                    <a rel="nofollow"
+                       class="avatar pipe-tooltipped pipe-tooltipped--w fn-absolute"
+                       aria-label="{{.Author.Name}}"
+                       data-src="{{.Author.AvatarURLWithSize 116}}"
+                       href="{{.Author.URL}}">
+                    </a>
+                    {{end}}
+                    <div {{if gt $.UserCount 1}} class="fn-padding68" {{end}}>
+                        <h2 class="article__title">
+                            {{if .Topped}}
+                            <svg>
+                                <use xlink:href="#focus"></use>
+                            </svg>
+                            {{end}}
+                            <a rel="bookmark" href="{{.URL}}">
+                                {{.Title}}
+                            </a>
+                        </h2>
+                        <div class="ft-gray ft-12">
+                            {{range .Tags}}
+                            <a class="tag" rel="tag" href="{{.URL}}">{{.Title}}</a>
+                            {{end}}
+                            <span class="article__responsive-meta">
+                                <time class="ft-nowrap">{{.CreatedAt}}</time>
+                                •
+                                <span class="ft-nowrap">{{.ViewCount}} {{$.I18n.View}}</span>
+                                {{if gt .CommentCount 0}}
+                                •
+                                <a href="{{.URL}}#pipeComments" class="fn-nowrap ft-gray">{{.CommentCount}} {{$.I18n.Comment}}</a>
+                                {{end}}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </header>
+            {{if .Abstract}}
+            <section
+                data-link="{{.URL}}"
+                class="pipe-content__reset article__abstract fn-padding30"
+                data-author="{{.Author.Name}}">
+                {{.Abstract}}
+            </section>
+            {{end}}
+            <div class="article__action fn-clear">
+                <span class="fn-right">
+                    {{if .Editable}}
+                    <a class="fn-right action__btn action__btn--space fn-clear"
+                       href="{{$.Conf.Server}}/admin/articles/post?id={{.ID}}">
+                        {{$.I18n.Edit}} &nbsp;
+                        <svg class="fn-right">
+                            <use xlink:href="#edit"></use>
+                        </svg>
+                    </a>
+                    {{end}}
+                    <a class="action__btn fn-right action__btn--active fn-clear" rel="bookmark" href="{{.URL}}">
+                        {{$.I18n.ReadMore}} &nbsp; <svg class="fn-right"><use xlink:href="#reply"></use></svg>
+                    </a>
+                </span>
+            </div>
+        </article>
+        {{end}}
+    </div>
+
+    {{if gt (len $.Pagination.PageNums) 1}}
+    <nav class="pagination">
+        {{if gt $.Pagination.PreviousPageNum 0}}
+        <a class="pagination__near" href="?p={{$.Pagination.PreviousPageNum}}">
+            <svg><use xlink:href="#chevron-left"></use></svg>
+        </a>
+        {{end}}
+        {{if gt $.Pagination.FirstPageNum 1}}
+        <a class="pagination__item" href="?p=1">1</a>{{if ne $.Pagination.FirstPageNum 2}}<span class="pagination__omit">...</span>{{end}}
+        {{end}}
+        {{range $.Pagination.PageNums}}
+        <a href="?p={{.}}" class="pagination__item {{if eq . $.Pagination.CurrentPageNum}}pagination__item--active{{end}}">{{.}}</a>
+        {{end}}
+        {{if lt $.Pagination.LastPageNum $.Pagination.PageCount}}
+        {{if ne $.Pagination.LastPageNum (minus $.Pagination.PageCount 1)}}<span class="pagination__omit">...</span>{{end}}
+        <a class="pagination__item" href="?p={{$.Pagination.PageCount}}">{{$.Pagination.PageCount}}</a>
+        {{end}}
+        {{if lt $.Pagination.CurrentPageNum $.Pagination.PageCount}}
+        <a class="pagination__near" href="?p={{$.Pagination.NextPageNum}}">
+            <svg><use xlink:href="#chevron-right"></use></svg>
+        </a>
+        {{end}}
+    </nav>
+    {{end}}
+</div>
+{{end}}
