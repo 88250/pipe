@@ -1,0 +1,35 @@
+/**
+ * variables.
+ *
+ * @author <a href="http://vanessa.b3log.org">Liyuan Li</a>
+ * @version 0.1.0.0, Dec 20, 2018
+ */
+
+
+// variable
+$text-color: rgba(0, 0, 0, .84) !default;
+
+// Table of Contents
+// Colors
+$blue: #4285f4 !default;
+$blue-light: #dbedff !default;
+$blue-lighter: #f1f7fe !default;
+$red: #d23f31 !default;
+$red-light: #ffdce0 !default;
+$green: #03a87c !default;
+$fade-lighter: rgba(0, 0, 0, .15) !default;
+$fade: rgba(0, 0, 0, .38) !default;
+$gray: rgba(0, 0, 0, .54) !default;
+$black: #3b3e43 !default;
+$black-light: #616161 !default;
+$progress: #4285f4 !default;
+
+// Fonts
+$font-family-base: "Helvetica Neue", "Luxi Sans", "DejaVu Sans", Tahoma, "Hiragino Sans GB", "Microsoft Yahei", sans-serif !default;
+$font-family-code: mononoki, Consolas, "Liberation Mono", Menlo, Courier, monospace !default;
+
+// shadow
+$shadow-tip: 0 1px 2px rgba(0, 0, 0, .2) !default;
+
+// transition
+$transition: all .1s !default;

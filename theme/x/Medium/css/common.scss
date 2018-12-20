@@ -1,16 +1,13 @@
 /**
- * skin Medium style
+ * skin style
  *
  * @author <a href="http://vanessa.b3log.org">Liyuan Li</a>
- * @version 0.1.1.0, Jan 30, 2018
+ * @version 0.2.0.0, Dec 20, 2018
 */
+
+@import 'variables';
 @import '../../../scss/basic';
 @import '../../../scss/github';
-
-// variable
-$text-color: rgba(0, 0, 0, .84);
-$transition: all .1s;
-$green: #03a87c;
 
 // reset
 html {

@@ -1,16 +1,13 @@
 /**
- * skin Next style
+ * skin style
  *
  * @author <a href="http://vanessa.b3log.org">Liyuan Li</a>
- * @version 0.1.1.0, Jan 18, 2018
+ * @version 0.2.0.0, Dec 20, 2018
 */
+
+@import 'variables';
 @import '../../../scss/basic';
 @import '../../../scss/github';
-
-// variable
-$text-color: #555;
-$text-hover-color: #222;
-$transition: all .2s ease-in-out;
 
 // reset
 html {

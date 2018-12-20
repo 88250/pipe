@@ -1,23 +1,13 @@
 /**
- * skin gina style
+ * skin style
  *
  * @author <a href="http://vanessa.b3log.org">Liyuan Li</a>
- * @version 0.1.1.2, Oct 9, 2018
+ * @version 0.2.0.0, Dec 20, 2018
 */
+
+@import 'variables';
 @import '../../../scss/basic';
 @import '../../../scss/github';
-
-// z-index
-// article avatar 10
-// side 99
-// editor 100
-// side bar icon 200
-
-// variable
-$border-color: #e1e4e8;
-$theme-accent: #f47e00;
-$text-color: #24292e;
-$text-hover-color: #586069;
 
 // reset
 html {
