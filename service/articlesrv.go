@@ -130,6 +130,9 @@ func (srv *articleService) AddArticle(article *model.Article) (err error) {
 	srv.mutex.Lock()
 	defer srv.mutex.Unlock()
 
+	if article.CreatedAt.IsZero() {
+		article.CreatedAt = time.Now()
+	}
 	article.PushedAt = model.ZeroPushTime
 	if err := normalizeArticle(article); nil != err {
 		return err
