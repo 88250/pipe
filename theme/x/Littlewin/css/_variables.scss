@@ -5,16 +5,6 @@
  * @version 0.1.0.0, Dec 20, 2018
  */
 
-// z-index
-// article avatar 10
-// side 99
-// editor 100
-// side bar icon 200
-
-$border-color: #e1e4e8 !default;
-$theme-accent: #f47e00 !default;
-$text-color: #24292e !default;
-$text-hover-color: #586069 !default;
 
 // Table of Contents
 // Colors
@@ -39,4 +29,4 @@ $font-family-code: mononoki, Consolas, "Liberation Mono", Menlo, Courier, monosp
 $shadow-tip: 0 1px 2px rgba(0, 0, 0, .2) !default;
 
 // transition
-$transition: all .15s ease-in-out !default;
+$transition: all .25s linear !default;

@@ -39,6 +39,7 @@
     "vinyl-source-stream": "^2.0.0"
   },
   "dependencies": {
+    "aplayer": "^1.10.1",
     "jquery": "^3.2.1",
     "nprogress": "^0.2.0",
     "qrious": "^4.0.2",
