@@ -140,7 +140,7 @@ func initAction(c *gin.Context) {
 		"userName":  session.UName,
 		"userB3Key": b3key,
 	}).Set("user-agent", model.UserAgent).Timeout(30*time.Second).
-		Retry(3, 5*time.Second, http.StatusInternalServerError).EndStruct(checkResult)
+		Retry(3, 5*time.Second).EndStruct(checkResult)
 	if nil != errs {
 		logger.Errorf("check b3 key failed: %s", errs)
 		result.Code = -1

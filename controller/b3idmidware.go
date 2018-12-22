@@ -112,7 +112,7 @@ func fillUser(c *gin.Context) {
 		result := util.NewResult()
 		_, _, errs := gorequest.New().Get(util.HacPaiURL+"/apis/check-b3-identity?b3id="+b3id).
 			Set("user-agent", model.UserAgent).Timeout(5*time.Second).
-			Retry(3, 2*time.Second, http.StatusInternalServerError).EndStruct(result)
+			Retry(3, 2*time.Second).EndStruct(result)
 		if nil != errs {
 			logger.Errorf("check b3 identity failed: %s", errs)
 			c.Next()

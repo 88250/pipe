@@ -24,7 +24,6 @@ import (
 	"github.com/b3log/pipe/service"
 	"github.com/b3log/pipe/util"
 	"github.com/parnurzeal/gorequest"
-	"net/http"
 	"strings"
 )
 
@@ -82,7 +81,7 @@ func pushArticles() {
 		result := &map[string]interface{}{}
 		_, _, errs := gorequest.New().Post("https://rhythm.b3log.org/api/article").SendMap(requestJSON).
 			Set("user-agent", model.UserAgent).Timeout(30*time.Second).
-			Retry(3, 5*time.Second, http.StatusInternalServerError).EndStruct(result)
+			Retry(3, 5*time.Second).EndStruct(result)
 		if nil != errs {
 			logger.Errorf("push article to Rhythm failed: " + errs[0].Error())
 		}
@@ -147,7 +146,7 @@ func pushComments() {
 		result := &map[string]interface{}{}
 		_, _, errs := gorequest.New().Post("https://rhythm.b3log.org/api/comment").SendMap(requestJSON).
 			Set("user-agent", model.UserAgent).Timeout(30*time.Second).
-			Retry(3, 5*time.Second, http.StatusInternalServerError).EndStruct(result)
+			Retry(3, 5*time.Second).EndStruct(result)
 		if nil != errs {
 			logger.Errorf("push comment to Rhythm failed: " + errs[0].Error())
 		}

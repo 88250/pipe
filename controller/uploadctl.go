@@ -146,7 +146,7 @@ func fetchUploadAction(c *gin.Context) {
 	fileURL := arg["url"].(string)
 	timeout := time.Duration(5 * time.Second)
 	resp, fileData, errs := gorequest.New().Get(fileURL).Timeout(timeout).
-		Retry(3, 1*time.Second, http.StatusInternalServerError).EndBytes()
+		Retry(3, 1*time.Second).EndBytes()
 	if nil != errs {
 		result.Code = -1
 		result.Msg = "get data failed"
@@ -219,7 +219,7 @@ func refreshUploadToken() {
 
 	uploadTokenResult := util.NewResult()
 	if _, _, errs := gorequest.New().Get(util.HacPaiURL+"/apis/qiniu/ut").Timeout(15*time.Second).
-		Retry(3, time.Second, http.StatusInternalServerError).EndStruct(uploadTokenResult); nil != errs {
+		Retry(3, time.Second).EndStruct(uploadTokenResult); nil != errs {
 		logger.Errorf("can't refresh upload token: %s", errs[0])
 
 		return

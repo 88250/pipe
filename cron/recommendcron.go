@@ -18,7 +18,6 @@ package cron
 
 import (
 	"html/template"
-	"net/http"
 	"time"
 
 	"github.com/b3log/pipe/model"
@@ -103,7 +102,7 @@ func refreshCommunityRecommendArticles() {
 	result := util.NewResult()
 	_, _, errs := gorequest.New().Get(util.HacPaiURL+"/apis/recommend/articles").
 		Set("user-agent", model.UserAgent).Timeout(30*time.Second).
-		Retry(3, 5*time.Second, http.StatusInternalServerError).EndStruct(result)
+		Retry(3, 5*time.Second).EndStruct(result)
 	if nil != errs {
 		logger.Errorf("get recommend articles: %s", errs)
 
