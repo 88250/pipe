@@ -20,23 +20,14 @@ const Article = {
       ShowEditor($this.data('title'), $this.data('id'))
     })
 
-    if ($('#toc').length === 1) {
-      InitToc('toc', 'articleContent')
-      if ($('body').width() > 768) {
-        $('body').addClass('body--side')
-      } else {
-        $('body').removeClass('body--side')
-      }
-    }
-
     InitComment()
     InitHljs()
 
     Article._share();
   },
   _share: () => {
-    const $this = $('.action__share')
-    const $qrCode = $this.find('.action__code')
+    const $this = $('.post__share')
+    const $qrCode = $this.find('.post__code')
     const shareURL = $qrCode.data('url')
     const avatarURL = $qrCode.data('avatar')
     const title = encodeURIComponent($qrCode.data('title') + ' - ' + $qrCode.data('blogtitle')),
@@ -49,8 +40,9 @@ const Article = {
       title + '&url=' + url + '&pic=' + avatarURL
     urls.google = 'https://plus.google.com/share?url=' + url
     urls.twitter = 'https://twitter.com/intent/tweet?status=' + title + ' ' + url
+    urls.qqz =`https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=${url}&sharesource=qzone&title=${title}&pics=${avatarURL}`,
 
-    $this.find('.action__btn').click(function () {
+    $this.find('span').click(function () {
       const key = $(this).data('type')
 
       if (!key) {

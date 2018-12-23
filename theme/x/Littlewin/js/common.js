@@ -20,7 +20,7 @@ const Common = {
    * @description 页面初始化
    */
   init: () => {
-    const ap = new APlayer({
+    new APlayer({
       container: document.getElementById('player'),
       autoplay: true,
       theme: '#ccc',
@@ -56,25 +56,10 @@ const Common = {
           cache: true,
         })
       }
-      if ($('#pipeComments').length === 1 && $('#toc').length === 1) {
-        $('body').addClass('body--side')
-      } else {
-        $('body').removeClass('body--side')
-      }
     })
 
     PreviewImg()
     KillBrowser()
-    $('#sidebarIcon').click(() => {
-      Common.toggleSide()
-    })
-  },
-  toggleSide: () => {
-    const $body = $('body')
-    $body.toggleClass('body--side')
-    setTimeout(() => {
-      $('.header__logo').width($('.header a').get(1).offsetLeft - 30)
-    }, 301)
   },
   increase (max, time, id, count) {
     if (count < max) {

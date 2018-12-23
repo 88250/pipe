@@ -42,6 +42,51 @@ a {
   color: #555;
 }
 
+.pipe-content__reset {
+  font-size: 14px;
+}
+
+.pipe-comment {
+  &__header {
+    margin-top: 6px;
+    padding-bottom: 12px;
+    margin-bottom: 12px;
+    border-bottom: 1px dashed hsla(0, 0%, 47.5%, .4);
+  }
+  &__item {
+    border-top: 0;
+    padding-top: 0;
+    margin: 0 0 12px 21px;
+    position: relative;
+
+    &:hover .pipe-comment__avatar {
+      transform: rotate(1turn);
+    }
+  }
+  &__body {
+    padding: 7px 7px 7px 55px;
+    background-color: hsla(0,0%,77.3%,.4);
+    &:hover {
+      background-color: hsla(0,0%,57.3%,.4);
+    }
+  }
+  &__avatar {
+    border: 3px solid  hsla(0,0%,100%,.6);
+    border-radius: 0;
+    position: absolute;
+    top: 11px;
+    left: -21px;
+    transition: $transition;
+  }
+
+  &__pagination {
+    padding-top: 6px;
+    margin-top: 0;
+    margin-bottom: 6px;
+    border-top: 1px dashed hsla(0, 0%, 47.5%, .4);
+  }
+}
+
 // common
 .tag {
   line-height: initial !important;
@@ -386,5 +431,64 @@ a {
   &__tag {
     text-decoration: underline;
     margin-right: 3px;
+  }
+}
+
+.post {
+  &__content {
+    padding: 24px 36px;
+  }
+
+  &__title {
+    font-size: 20px;
+    margin: 18px auto;
+    text-align: center;
+  }
+
+  &__share {
+    position: relative;
+    &--wechat:hover {
+      color: #3caf36;
+    }
+    &--weibo:hover {
+      color: #ff9933;
+    }
+    &--twitter:hover {
+      color: #18a3fa;
+    }
+    &--qqz:hover {
+      color: #fdc200;
+    }
+    span {
+      transition: $transition;
+      cursor: pointer;
+      margin-right: 6px;
+    }
+
+    svg {
+      height: 18px;
+      width: 18px;
+    }
+
+    a svg {
+      height: 14px;
+      width: 14px;
+    }
+
+    a:hover {
+      text-decoration: none;
+    }
+  }
+
+  &__code {
+    width: 130px;
+    height: 130px;
+    position: absolute;
+    display: none;
+  }
+
+  &__meta {
+    color: $fade;
+    line-height: 24px;
   }
 }
