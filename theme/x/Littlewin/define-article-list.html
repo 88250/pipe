@@ -3,22 +3,23 @@
 {{.I18n.NoData}}
 {{end}}
 {{range .Articles}}
-<article class="article__item module module--space module--bottom fn-flex">
+<article class="article__item module module--bottom fn-flex">
     <header>
         <time class="article__time">
-            {{.CreatedAtDay}}
-            {{.CreatedAtMonth}}
+            <div class="article__day">{{.CreatedAtDay}}</div>
+            {{.CreatedAtMonth}} {{$.I18n.Month}}
             {{.CreatedAtYear}}
         </time>
     </header>
     <section class="fn-flex-1">
         <h2 class="fn-flex-center">
             {{if .Topped}}
-            <div aria-label="top" class="pipe-tooltipped pipe-tooltipped--n">
+            <div aria-label="{{$.I18n.Top}}" class="pipe-tooltipped pipe-tooltipped--n">
                 <svg>
                     <use xlink:href="#iconTop"></use>
-                </svg> &nbsp;
+                </svg>
             </div>
+            &nbsp;
             {{end}}
             <a class="article__title" rel="bookmark" href="{{.URL}}">
                 {{.Title}}

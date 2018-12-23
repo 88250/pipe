@@ -46,6 +46,8 @@ a {
 .module {
   background-color: hsla(0, 0%, 100%, .6);
   box-sizing: border-box;
+  white-space: normal;
+  word-break: break-all;
 
   &--space {
     padding: 6px 12px;
@@ -56,23 +58,24 @@ a {
   }
 
   &__header {
+    box-sizing: border-box;
     color: #48494d;
     border-bottom: 1px dashed #eee;
     padding: 12px;
     width: 100%;
+    line-height: 14px;
     svg {
       margin-right: 6px;
     }
   }
 
   &__list {
-    margin: 12px;
     list-style: none;
     li {
       width: 100%;
       box-sizing: border-box;
-      padding: 0 12px;
-      line-height: 36px;
+      padding: 6px 12px;
+      line-height: 24px;
       font-weight: 600;
       transition: $transition;
       &:hover {
@@ -80,22 +83,54 @@ a {
       }
 
       .avatar {
-        margin-right: 3px;
+        margin-right: 6px;
       }
     }
   }
 
   &__tags {
-    margin: 12px;
-
     a {
+      float: left;
       line-height: 26px;
       padding: 0 6px;
-      margin: 0 12px 12px 0;
+      margin: 6px 12px 6px 0;
       background-color: hsla(0, 0%, 76.9%, .4);
       display: inline-block;
       &:hover {
         background-color: rgba(95, 95, 95, .4);
+        text-decoration: none;
+      }
+    }
+  }
+
+  &__cmt {
+    width: 100%;
+    margin: 6px 0;
+    justify-content: flex-end;
+    .avatar--mid {
+      order: 1;
+      margin-left: 6px;
+    }
+    &--left {
+      justify-content: flex-start;
+      .avatar--mid {
+        order: 0;
+        margin: 0 6px 0 0;
+      }
+      .module__cmt-con {
+        background-color: rgba(102,204,255,.4);
+        &:hover {
+          background-color: rgba(102,153,204,.4);
+        }
+      }
+    }
+    &-con {
+      padding: 3px 6px;
+      line-height: 18px;
+      background-color: hsla(0,0%,76.9%,.4);
+      border-radius: 6px;
+      &:hover {
+        background-color: rgba(95,95,95,.4);
         text-decoration: none;
       }
     }
@@ -107,7 +142,12 @@ a {
   height: 16px;
   width: 16px;
   @include image-bg('../../../images/image-bg.svg');
-  border-radius: 8px;
+  border-radius: 50%;
+
+  &--mid {
+    height: 24px;
+    width: 24px;
+  }
 }
 
 // framework
@@ -217,18 +257,26 @@ a {
 .article {
   &__item {
     transition: $transition;
-    padding-right: 32px;
+    padding: 12px 32px;
     &:hover {
       background-color: hsla(0, 0%, 76.9%, .4);
     }
   }
 
   &__time {
-    padding: 0 20px;
+    padding-right: 20px;
     border-right: 1px solid #ebebeb;
     width: 30px;
     display: block;
     margin-right: 20px;
+    font-size: 12px;
+  }
+
+  &__day {
+    font-size: 16px;
+    font-weight: 500;
+    color: #303030;
+    padding-bottom: 6px;
   }
 
   &__title {

@@ -5,18 +5,16 @@
         <svg><use xlink:href="#iconBar"></use></svg>
         {{.Title}}
     </div>
-    <ul class="module__list">
+    <ul class="module__list module--space">
         {{range .List}}
         <li class="fn-flex-center">
-            {{if gt $.UserCount 0}}
+            {{if gt $.UserCount 1}}
             <a class="avatar pipe-tooltipped pipe-tooltipped--n"
                href="{{.Author.URL}}"
                aria-label="{{.Author.Name}}"
                data-src="{{.Author.AvatarURLWithSize 74}}"></a>
             {{end}}
-            <div{{if gt $.UserCount 1}} class="fn-padding68"{{end}}>
-                <a href="{{.URL}}" class="module__list-title">{{.Title}}</a>
-            </div>
+            <a href="{{.URL}}">{{.Title}}</a>
         </li>
         {{end}}
     </ul>
