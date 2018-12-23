@@ -12,10 +12,9 @@
     <div class="main">
         {{template "Littlewin/article-list" .}}
     </div>
-{{template "Littlewin/side" .}}
+    {{template "Littlewin/side" .}}
     {{if .pjax}}{{noescape "<!---- pjax {#pjax} end ---->"}}{{end}}
 </div>
-
 {{template "Littlewin/footer" .}}
 </body>
 </html>

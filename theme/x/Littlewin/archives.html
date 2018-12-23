@@ -7,25 +7,25 @@
 </head>
 <body>
 {{template "Littlewin/header" .}}
-<div id="pjax">
+<div id="pjax" class="wrapper fn-flex">
     {{if .pjax}}{{noescape "<!---- pjax {#pjax} start ---->"}}{{end}}
-<div class="wrapper page">
-    <h1 class="page__title">
-        <span id="archiveMonthCount">0</span> <span class="ft-fade ft-13">{{.I18n.Month2}}</span>
-        <span id="archiveArticleCount">0</span> <span class="ft-fade ft-13">{{.I18n.Article2}}</span>
-    </h1>
-    <ul>
-        {{range .Archives}}
-        <li class="archives__item">
-            <a href="{{.URL}}">
-                {{.Title}}
+    <div class="main">
+        <div class="module ft-center module--bottom module--space">
+            <h2 class="module__logo">{{.I18n.Archives}}</h2>
+            <span id="archiveMonthCount">0</span> <span class="ft-fade ft-13">{{.I18n.Month2}}</span>
+            <span id="archiveArticleCount">0</span> <span class="ft-fade ft-13">{{.I18n.Article2}}</span>
+        </div>
+        <ul class="module module--bottom module--space module__list">
+            {{range .Archives}}
+            <li class="archives__item">
+                <a href="{{.URL}}">{{.Title}}</a>
                 <span class="ft-fade ft-13">{{.ArticleCount}} {{$.I18n.Space}}</span>
-            </a>
-        </li>
-        {{end}}
-    </ul>
-</div>
-{{template "Littlewin/side" .}}
+            </li>
+            </li>
+            {{end}}
+        </ul>
+    </div>
+    {{template "Littlewin/side" .}}
     {{if .pjax}}{{noescape "<!---- pjax {#pjax} end ---->"}}{{end}}
 </div>
 {{template "Littlewin/footer" .}}

@@ -7,23 +7,23 @@
 </head>
 <body>
 {{template "Littlewin/header" .}}
-<div id="pjax">
+<div id="pjax" class="wrapper fn-flex">
     {{if .pjax}}{{noescape "<!---- pjax {#pjax} start ---->"}}{{end}}
-<div class="wrapper page">
-    <h1 class="page__title">
+<div class="main">
+    <div class="module ft-center module--bottom module--space">
+        <h2 class="module__logo">{{.I18n.Team}}</h2>
         <span id="authorCount">0</span> <span class="ft-fade ft-13">{{.I18n.TeamMember2}}</span>
-    </h1>
-    <div class="author fn-clear">
-    {{range .Authors}}
-        <a class="author__item" href="{{.URL}}">
-            <div class="author__header">
-                <div class="avatar" data-src="{{.AvatarURLWithSize 404}}"></div>
-            </div>
-            <h3 class="author__name">{{.Name}}</h3>
-            <span class="ft-12">{{.ArticleCount}} {{$.I18n.Article2}}</span>
-        </a>
-    {{end}}
     </div>
+
+    <ul class="module module--bottom module--space module__list">
+    {{range .Authors}}
+        <li class="fn-flex-center">
+            <div class="avatar" data-src="{{.AvatarURLWithSize 24}}"></div>
+            <a href="{{.URL}}"class="author__name">{{.Name}}</a>
+            <span class="ft-12">&nbsp; {{.ArticleCount}} {{$.I18n.Article2}}</span>
+        </li>
+    {{end}}
+    </ul>
 </div>
 {{template "Littlewin/side" .}}
     {{if .pjax}}{{noescape "<!---- pjax {#pjax} end ---->"}}{{end}}

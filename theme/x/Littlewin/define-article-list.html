@@ -48,10 +48,12 @@
                 {{end}}
             </div>
 
+            {{if gt .ViewCount 0}}
             <svg>
                 <use xlink:href="#iconView"></use>
             </svg>
             <a href="{{.URL}}#pipeComments">{{.ViewCount}}</a>
+            {{end}}
 
             {{if gt .CommentCount 0}}
             <span>&nbsp; &nbsp;</span>
@@ -76,11 +78,12 @@
 {{end}}
 
 {{if gt (len $.Pagination.PageNums) 1}}
-<nav class="pagination">
+<nav class="pagination fn-flex-center">
     {{if gt $.Pagination.PreviousPageNum 0}}
-    <a class="pagination__near" href="?p={{$.Pagination.PreviousPageNum}}">
+    <a class="pagination__omit pipe-tooltipped--w pipe-tooltipped"
+       aria-label="{{.I18n.PrePage}}" href="?p={{$.Pagination.PreviousPageNum}}">
         <svg>
-            <use xlink:href="#chevron-left"></use>
+            <use xlink:href="#icon-chevron-left"></use>
         </svg>
     </a>
     {{end}}
@@ -96,9 +99,10 @@
     <a class="pagination__item" href="?p={{$.Pagination.PageCount}}">{{$.Pagination.PageCount}}</a>
     {{end}}
     {{if lt $.Pagination.CurrentPageNum $.Pagination.PageCount}}
-    <a class="pagination__near" href="?p={{$.Pagination.NextPageNum}}">
+    <a class="pagination__omit pipe-tooltipped--e pipe-tooltipped"
+       aria-label="{{.I18n.NextPage}}" href="?p={{$.Pagination.NextPageNum}}">
         <svg>
-            <use xlink:href="#chevron-right"></use>
+            <use xlink:href="#icon-chevron-right"></use>
         </svg>
     </a>
     {{end}}

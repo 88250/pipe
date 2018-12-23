@@ -7,15 +7,16 @@
 </head>
 <body>
 {{template "Littlewin/header" .}}
-<div id="pjax">
+<div id="pjax" class="wrapper fn-flex">
     {{if .pjax}}{{noescape "<!---- pjax {#pjax} start ---->"}}{{end}}
-<div class="wrapper">
-    <h1 class="page__headline">
-        {{.Author.Name}}
+<div class="main">
+    <div class="module ft-center module--bottom module--space">
+        <h2 class="module__logo">{{.Author.Name}}</h2>
         <span id="authorCount" class="ft-fade">0</span> <span class="ft-fade ft-13">{{.I18n.Article2}}</span>
-    </h1>
+    </div>
+    {{template "Littlewin/article-list" .}}
 </div>
-{{template "Littlewin/article-list" .}}
+
 {{template "Littlewin/side" .}}
     {{if .pjax}}{{noescape "<!---- pjax {#pjax} end ---->"}}{{end}}
 </div>

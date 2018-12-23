@@ -43,6 +43,55 @@ a {
 }
 
 // common
+.tag {
+  line-height: initial !important;
+  padding: 3px 6px !important;
+  &--level0 {
+    font-size: 12px;
+    color: $fade
+  }
+
+  &--level1 {
+    font-size: 16px;
+    color: $gray
+  }
+
+  &--level2 {
+    font-size: 21px;
+    color: #6f6f6f
+  }
+
+  &--level3 {
+    font-size: 24px;
+    color: $black
+  }
+
+  &--level4 {
+    font-size: 30px;
+    color: #000
+  }
+}
+
+.pagination {
+  width: 100%;
+  justify-content: center;
+  &__omit {
+    margin: 0 12px 12px 0;
+    display: inline-block;
+  }
+  &__item {
+    background-color: rgba(196, 196, 196, 0.4);
+    margin: 0 12px 12px 0;
+    padding: 3px 6px;
+    display: inline-block;
+    &--active,
+    &:hover {
+      background-color: rgba(95, 95, 95, 0.4);
+      text-decoration: none;
+    }
+  }
+}
+
 .module {
   background-color: hsla(0, 0%, 100%, .6);
   box-sizing: border-box;
@@ -76,10 +125,13 @@ a {
       box-sizing: border-box;
       padding: 6px 12px;
       line-height: 24px;
-      font-weight: 600;
       transition: $transition;
       &:hover {
         background-color: hsla(0, 0%, 76.9%, .4);
+      }
+
+      a {
+        font-weight: 600;
       }
 
       .avatar {
@@ -118,22 +170,45 @@ a {
         margin: 0 6px 0 0;
       }
       .module__cmt-con {
-        background-color: rgba(102,204,255,.4);
+        background-color: rgba(102, 204, 255, .4);
         &:hover {
-          background-color: rgba(102,153,204,.4);
+          background-color: rgba(102, 153, 204, .4);
         }
       }
     }
     &-con {
       padding: 3px 6px;
       line-height: 18px;
-      background-color: hsla(0,0%,76.9%,.4);
+      background-color: hsla(0, 0%, 76.9%, .4);
       border-radius: 6px;
       &:hover {
-        background-color: rgba(95,95,95,.4);
+        background-color: rgba(95, 95, 95, .4);
         text-decoration: none;
       }
     }
+  }
+
+  &__logo {
+    animation: logo-rotate 5s infinite;
+  }
+}
+
+@keyframes logo-rotate {
+  0% {
+    opacity: 1;
+    transform: scale(1)
+  }
+  33% {
+    opacity: .8;
+    transform: scale(.9) rotateY(0deg)
+  }
+  66% {
+    opacity: .8;
+    transform: scale(.9) rotateY(1turn)
+  }
+  to {
+    opacity: 1;
+    transform: scale(1)
   }
 }
 
