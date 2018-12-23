@@ -78,18 +78,21 @@ func showArticlesAction(c *gin.Context) {
 			thumbnailURL = ""
 		}
 		article := &model.ThemeArticle{
-			ID:           articleModel.ID,
-			Abstract:     abstract,
-			Author:       author,
-			CreatedAt:    articleModel.CreatedAt.Format("2006-01-02"),
-			Title:        pangu.SpacingText(articleModel.Title),
-			Tags:         themeTags,
-			URL:          getBlogURL(c) + articleModel.Path,
-			Topped:       articleModel.Topped,
-			ViewCount:    articleModel.ViewCount,
-			CommentCount: articleModel.CommentCount,
-			ThumbnailURL: thumbnailURL,
-			Editable:     session.UID == authorModel.ID,
+			ID:             articleModel.ID,
+			Abstract:       abstract,
+			Author:         author,
+			CreatedAt:      articleModel.CreatedAt.Format("2006-01-02"),
+			CreatedAtYear:  articleModel.CreatedAt.Format("2006"),
+			CreatedAtMonth: articleModel.CreatedAt.Format("01"),
+			CreatedAtDay:   articleModel.CreatedAt.Format("02"),
+			Title:          pangu.SpacingText(articleModel.Title),
+			Tags:           themeTags,
+			URL:            getBlogURL(c) + articleModel.Path,
+			Topped:         articleModel.Topped,
+			ViewCount:      articleModel.ViewCount,
+			CommentCount:   articleModel.CommentCount,
+			ThumbnailURL:   thumbnailURL,
+			Editable:       session.UID == authorModel.ID,
 		}
 
 		articles = append(articles, article)
@@ -106,10 +109,10 @@ func showArticleAction(c *gin.Context) {
 	session := util.GetSession(c)
 
 	a, _ := c.Get("article")
-	article := a.(*model.Article)
+	articleModel := a.(*model.Article)
 
 	var themeTags []*model.ThemeTag
-	tagStrs := strings.Split(article.Tags, ",")
+	tagStrs := strings.Split(articleModel.Tags, ",")
 	for _, tagStr := range tagStrs {
 		themeTag := &model.ThemeTag{
 			Title: tagStr,
@@ -118,10 +121,10 @@ func showArticleAction(c *gin.Context) {
 		themeTags = append(themeTags, themeTag)
 	}
 
-	mdResult := util.Markdown(article.Content)
-	authorModel := service.User.GetUser(article.AuthorID)
-	articleTitle := pangu.SpacingText(article.Title)
-	articleURL := getBlogURL(c) + article.Path
+	mdResult := util.Markdown(articleModel.Content)
+	authorModel := service.User.GetUser(articleModel.AuthorID)
+	articleTitle := pangu.SpacingText(articleModel.Title)
+	articleURL := getBlogURL(c) + articleModel.Path
 	articleSignSetting := dataModel["Setting"].(map[string]interface{})[model.SettingNameArticleSign].(string)
 	articleSignSetting = strings.Replace(articleSignSetting, "{title}", articleTitle, -1)
 	articleSignSetting = strings.Replace(articleSignSetting, "{author}", authorModel.Name, -1)
@@ -136,22 +139,25 @@ func showArticleAction(c *gin.Context) {
 			URL:       getBlogURL(c) + util.PathAuthors + "/" + authorModel.Name,
 			AvatarURL: authorModel.AvatarURL,
 		},
-		ID:           article.ID,
-		Abstract:     template.HTML(mdResult.AbstractText),
-		CreatedAt:    article.CreatedAt.Format("2006-01-02"),
-		Title:        articleTitle,
-		Tags:         themeTags,
-		URL:          articleURL,
-		Topped:       article.Topped,
-		ViewCount:    article.ViewCount,
-		CommentCount: article.CommentCount,
-		ThumbnailURL: mdResult.ThumbURL,
-		Content:      template.HTML(mdResult.ContentHTML + "\n" + articleSignSetting),
-		Editable:     session.UID == authorModel.ID,
+		ID:             articleModel.ID,
+		Abstract:       template.HTML(mdResult.AbstractText),
+		CreatedAt:      articleModel.CreatedAt.Format("2006-01-02"),
+		CreatedAtYear:  articleModel.CreatedAt.Format("2006"),
+		CreatedAtMonth: articleModel.CreatedAt.Format("01"),
+		CreatedAtDay:   articleModel.CreatedAt.Format("02"),
+		Title:          articleTitle,
+		Tags:           themeTags,
+		URL:            articleURL,
+		Topped:         articleModel.Topped,
+		ViewCount:      articleModel.ViewCount,
+		CommentCount:   articleModel.CommentCount,
+		ThumbnailURL:   mdResult.ThumbURL,
+		Content:        template.HTML(mdResult.ContentHTML + "\n" + articleSignSetting),
+		Editable:       session.UID == authorModel.ID,
 	}
 
 	page := util.GetPage(c)
-	commentModels, pagination := service.Comment.GetArticleComments(article.ID, page, blogID)
+	commentModels, pagination := service.Comment.GetArticleComments(articleModel.ID, page, blogID)
 	var comments []*model.ThemeComment
 	for _, commentModel := range commentModels {
 		author := &model.ThemeAuthor{}
@@ -171,7 +177,7 @@ func showArticleAction(c *gin.Context) {
 		comment := &model.ThemeComment{
 			ID:         commentModel.ID,
 			Content:    template.HTML(mdResult.ContentHTML),
-			URL:        getBlogURL(c) + article.Path + "?p=" + strconv.Itoa(page) + "#pipeComment" + strconv.Itoa(int(commentModel.ID)),
+			URL:        getBlogURL(c) + articleModel.Path + "?p=" + strconv.Itoa(page) + "#pipeComment" + strconv.Itoa(int(commentModel.ID)),
 			Author:     author,
 			CreatedAt:  commentModel.CreatedAt.Format("2006-01-02"),
 			Removable:  session.UID == authorModel.ID,
@@ -196,7 +202,7 @@ func showArticleAction(c *gin.Context) {
 				page := service.Comment.GetCommentPage(commentModel.ArticleID, commentModel.ID, commentModel.BlogID)
 				parentComment := &model.ThemeComment{
 					ID:     parentCommentModel.ID,
-					URL:    getBlogURL(c) + article.Path + "?p=" + strconv.Itoa(page) + "#pipeComment" + strconv.Itoa(int(parentCommentModel.ID)),
+					URL:    getBlogURL(c) + articleModel.Path + "?p=" + strconv.Itoa(page) + "#pipeComment" + strconv.Itoa(int(parentCommentModel.ID)),
 					Author: parentAuthor,
 				}
 				comment.Parent = parentComment
@@ -209,14 +215,14 @@ func showArticleAction(c *gin.Context) {
 	dataModel["Comments"] = comments
 	dataModel["Pagination"] = pagination
 	dataModel["RecommendArticles"] = getRecommendArticles()
-	fillPreviousArticle(c, article, &dataModel)
-	fillNextArticle(c, article, &dataModel)
+	fillPreviousArticle(c, articleModel, &dataModel)
+	fillNextArticle(c, articleModel, &dataModel)
 	dataModel["ToC"] = template.HTML(toc(dataModel["Article"].(*model.ThemeArticle)))
 	dataModel["Title"] = articleTitle + " - " + dataModel["Title"].(string)
 
 	c.HTML(http.StatusOK, getTheme(c)+"/article.html", dataModel)
 
-	go service.Article.IncArticleViewCount(article)
+	go service.Article.IncArticleViewCount(articleModel)
 }
 
 func fillPreviousArticle(c *gin.Context, article *model.Article, dataModel *DataModel) {
