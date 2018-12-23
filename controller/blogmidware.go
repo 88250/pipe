@@ -141,7 +141,7 @@ func fillCommon(c *gin.Context) {
 	(*dataModel)["Year"] = time.Now().Year()
 	users, _ := service.User.GetBlogUsers(1, blogID)
 	(*dataModel)["UserCount"] = len(users)
-
+	(*dataModel)["BlogAdmin"] = service.User.GetBlogAdmin(blogID)
 	(*dataModel)["Navigations"] = service.Navigation.GetNavigations(blogID)
 
 	fillMostUseCategories(&settingMap, dataModel, blogID)
