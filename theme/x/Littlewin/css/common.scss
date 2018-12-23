@@ -29,9 +29,22 @@ a {
   margin: 0;
 }
 
+.aplayer.aplayer-withlrc .aplayer-info {
+  height: 85px;
+  padding-top: 5px;
+}
+
+.aplayer.aplayer-withlrc .aplayer-pic {
+  height: 85px;
+}
+
+.ft__gray {
+  color: #555;
+}
+
 // common
 .module {
-  background-color: hsla(0,0%,100%,.6);
+  background-color: hsla(0, 0%, 100%, .6);
   box-sizing: border-box;
 
   &--space {
@@ -41,6 +54,60 @@ a {
   &--bottom {
     margin-bottom: 12px;
   }
+
+  &__header {
+    color: #48494d;
+    border-bottom: 1px dashed #eee;
+    padding: 12px;
+    width: 100%;
+    svg {
+      margin-right: 6px;
+    }
+  }
+
+  &__list {
+    margin: 12px;
+    list-style: none;
+    li {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 0 12px;
+      line-height: 36px;
+      font-weight: 600;
+      transition: $transition;
+      &:hover {
+        background-color: hsla(0, 0%, 76.9%, .4);
+      }
+
+      .avatar {
+        margin-right: 3px;
+      }
+    }
+  }
+
+  &__tags {
+    margin: 12px;
+
+    a {
+      line-height: 26px;
+      padding: 0 6px;
+      margin: 0 12px 12px 0;
+      background-color: hsla(0, 0%, 76.9%, .4);
+      display: inline-block;
+      &:hover {
+        background-color: rgba(95, 95, 95, .4);
+        text-decoration: none;
+      }
+    }
+  }
+}
+
+.avatar {
+  display: inline-block;
+  height: 16px;
+  width: 16px;
+  @include image-bg('../../../images/image-bg.svg');
+  border-radius: 8px;
 }
 
 // framework
@@ -58,6 +125,13 @@ a {
 .side {
   flex: 1 1 33.4%;
   margin-left: 24px;
+}
+
+.footer {
+  background-color: rgba(255, 255, 255, 0.6);
+  padding: 16px 0;
+  font-size: 12px;
+  color: #999;
 }
 
 .header {
@@ -137,5 +211,57 @@ a {
         text-decoration: none;
       }
     }
+  }
+}
+
+.article {
+  &__item {
+    transition: $transition;
+    padding-right: 32px;
+    &:hover {
+      background-color: hsla(0, 0%, 76.9%, .4);
+    }
+  }
+
+  &__time {
+    padding: 0 20px;
+    border-right: 1px solid #ebebeb;
+    width: 30px;
+    display: block;
+    margin-right: 20px;
+  }
+
+  &__title {
+    text-decoration: underline;
+    font-size: 17px;
+  }
+
+  &__abstract {
+    margin: 6px 0;
+    font-size: 13px;
+    color: #777;
+    line-height: 24px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid #ebebeb;
+  }
+
+  &__footer {
+    font-size: 12px;
+    width: 100%;
+    svg {
+      height: 12px;
+      margin-right: 3px;
+      width: 12px;
+      color: #8d8d8d;
+    }
+
+    .avatar {
+      margin: 0 3px 0 6px;
+    }
+  }
+
+  &__tag {
+    text-decoration: underline;
+    margin-right: 3px;
   }
 }
