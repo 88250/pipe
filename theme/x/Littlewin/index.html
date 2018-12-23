@@ -7,9 +7,11 @@
 </head>
 <body>
 {{template "Littlewin/header" .}}
-<div id="pjax">
+<div id="pjax" class="wrapper fn-flex">
     {{if .pjax}}{{noescape "<!---- pjax {#pjax} start ---->"}}{{end}}
-{{template "Littlewin/article-list" .}}
+    <div class="main">
+        {{template "Littlewin/article-list" .}}
+    </div>
 {{template "Littlewin/side" .}}
     {{if .pjax}}{{noescape "<!---- pjax {#pjax} end ---->"}}{{end}}
 </div>
