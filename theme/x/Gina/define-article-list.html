@@ -10,7 +10,7 @@
                 {{if .ThumbnailURL}}
                 <a class="article__thumb"
                    href="{{.URL}}"
-                   data-src="{{.ThumbnailURL}}"></a>
+                   data-src="{{.ThumbnailURL}}">{{.Title}}</a>
                 {{end}}
                 <div class="fn-padding30">
                     {{if gt $.UserCount 1}}

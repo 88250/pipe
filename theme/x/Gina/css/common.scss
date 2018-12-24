@@ -214,6 +214,12 @@ a {
     img {
       height: 35px;
       width: 35px;
+      flex-shrink: 0;
+    }
+
+    div {
+      text-align: left;
+      margin-left: 10px;
     }
   }
 
@@ -423,6 +429,7 @@ a {
     margin-bottom: 30px;
     display: block;
     @include image-bg('../../../images/image-bg.svg');
+    font-size: 0;
 
     &--relevant {
       margin-bottom: 10px;

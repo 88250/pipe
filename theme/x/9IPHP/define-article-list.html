@@ -6,7 +6,7 @@
 <article>
     {{if .ThumbnailURL}}
     <a class="article__thumb" href="{{.URL}}">
-        <div data-src="{{.ThumbnailURL}}"></div>
+        <div data-src="{{.ThumbnailURL}}">{{.Title}}</div>
         <div class="fn-none">
             <svg>
                 <use xlink:href="#icon-view"></use>

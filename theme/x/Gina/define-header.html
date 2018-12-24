@@ -2,10 +2,9 @@
 <header class="header">
     <div class="wrapper ft-center">
         <a href="{{.BlogURL}}"
-           class="header__logo fn-flex pipe-tooltipped--e pipe-tooltipped"
-           aria-label="{{.Setting.BasicBlogTitle}}">
+           class="header__logo fn-flex">
             <img data-src="{{.LogoURL}}" class="fn-center">
-            <span class="fn-ellipsis fn-flex-1">{{.Setting.BasicBlogTitle}}</span>
+            <div class="fn-ellipsis fn-flex-1" title="{{.Setting.BasicBlogTitle}}">{{.Setting.BasicBlogTitle}}</div>
         </a>
         <a href="{{.BlogURL}}/categories">
             <svg><use xlink:href="#folders"></use></svg>

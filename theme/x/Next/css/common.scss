@@ -554,6 +554,7 @@ a:hover {
     @include image-bg('../../../images/image-bg.svg');
     border-bottom: 0;
     margin-bottom: 10px;
+    font-size: 0;
   }
 
   &__footer {

@@ -36,7 +36,7 @@
     {{if .ThumbnailURL}}
     <a class="article__thumb"
        href="{{.URL}}"
-       data-src="{{.ThumbnailURL}}"></a>
+       data-src="{{.ThumbnailURL}}">{{.Title}}</a>
     {{end}}
     {{if .Abstract}}
     <section

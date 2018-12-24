@@ -305,6 +305,7 @@ a {
     height: 180px;
     display: block;
     @include image-bg('../../../images/image-bg.svg');
+    font-size: 0;
   }
 
   &__footer {

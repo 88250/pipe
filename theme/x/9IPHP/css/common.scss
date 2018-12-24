@@ -399,6 +399,7 @@ svg {
       width: 100%;
       @include image-bg('../../../images/image-bg.svg');
       transition: $transition;
+      font-size: 0;
     }
 
     div.fn-none {
