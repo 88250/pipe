@@ -7,53 +7,55 @@
 </head>
 <body>
 {{template "Littlewin/header" .}}
-<div id="pjax" class="wrapper fn-flex">
-    {{if .pjax}}{{noescape "<!---- pjax {#pjax} start ---->"}}{{end}}
-<div class="main">
-    <div class="module ft-center module--bottom module--space">
-        <h2 class="module__logo">{{.I18n.Categories}}</h2>
-        <span id="categoriesCount">0</span> <span class="ft-fade ft-13">{{.I18n.Categories2}}</span>
-    </div>
-
-    {{if eq (len .Categories) 0}}
-    <div class="ft-center module module--space module--bottom">
-        <br> <br>
-        {{.I18n.NoData}}
-        <br> <br>
-    </div>
-    {{end}}
-    {{range .Categories}}
-    <article class="article__item module module--bottom fn-flex">
-        <header>
-            <time class="article__time">
-                <div class="article__day">{{.ArticleCount}}</div>
-                {{$.I18n.space}}<br>
-                {{$.I18n.article}}
-            </time>
-        </header>
-        <section class="fn-flex-1">
-            <h2 class="fn-flex-center">
-                <a class="article__title" rel="bookmark" href="{{.URL}}">
-                    {{.Title}}
-                </a>
-            </h2>
-            <div class="pipe-content__reset article__abstract">
-                {{.Description}}
+<div class="fn-flex-1">
+    <div id="pjax" class="wrapper fn-flex">
+        {{if .pjax}}{{noescape "<!---- pjax {#pjax} start ---->"}}{{end}}
+        <div class="main">
+            <div class="module ft-center module--bottom module--space">
+                <h2 class="module__logo">{{.I18n.Categories}}</h2>
+                <span id="categoriesCount">0</span> <span class="ft-fade ft-13">{{.I18n.Categories2}}</span>
             </div>
-            <footer class="article__footer fn-flex-center">
-                <svg>
-                    <use xlink:href="#iconTag"></use>
-                </svg>
-                {{range .Tags}}
-                <a href="{{.URL}}" class="article__tag" rel="tag" >{{.Title}}</a>
-                {{end}}
-            </footer>
-        </section>
-    </article>
-    {{end}}
-</div>
-{{template "Littlewin/side" .}}
-    {{if .pjax}}{{noescape "<!---- pjax {#pjax} end ---->"}}{{end}}
+
+            {{if eq (len .Categories) 0}}
+            <div class="ft-center module module--space module--bottom">
+                <br> <br>
+                {{.I18n.NoData}}
+                <br> <br>
+            </div>
+            {{end}}
+            {{range .Categories}}
+            <article class="article__item module module--bottom fn-flex">
+                <header>
+                    <time class="article__time">
+                        <div class="article__day">{{.ArticleCount}}</div>
+                        {{$.I18n.space}}<br>
+                        {{$.I18n.article}}
+                    </time>
+                </header>
+                <section class="fn-flex-1">
+                    <h2 class="fn-flex-center">
+                        <a class="article__title" rel="bookmark" href="{{.URL}}">
+                            {{.Title}}
+                        </a>
+                    </h2>
+                    <div class="pipe-content__reset article__abstract">
+                        {{.Description}}
+                    </div>
+                    <footer class="article__footer fn-flex-center">
+                        <svg>
+                            <use xlink:href="#iconTag"></use>
+                        </svg>
+                        {{range .Tags}}
+                        <a href="{{.URL}}" class="article__tag" rel="tag" >{{.Title}}</a>
+                        {{end}}
+                    </footer>
+                </section>
+            </article>
+            {{end}}
+        </div>
+        {{template "Littlewin/side" .}}
+        {{if .pjax}}{{noescape "<!---- pjax {#pjax} end ---->"}}{{end}}
+    </div>
 </div>
 {{template "Littlewin/footer" .}}
 {{if .pjax}}{{noescape "<!---- pjax {#pjax} start ---->"}}{{end}}

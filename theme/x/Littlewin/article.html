@@ -8,96 +8,98 @@
 </head>
 <body{{if .ToC}} class="body--side"{{end}}>
 {{template "Littlewin/header" .}}
-<div id="pjax" class="wrapper fn-flex">
-    {{if .pjax}}{{noescape "<!---- pjax {#pjax} start ---->"}}{{end}}
-<div class="main">
-    <article class="module module--bottom post__content">
-        <h2 class="post__title">
-            {{if .Article.Topped}}
-            <span aria-label="{{$.I18n.Top}}" class="pipe-tooltipped pipe-tooltipped--n">
-                <svg>
-                    <use xlink:href="#focus"></use>
-                </svg>
-            </span>
-            {{end}}
-            {{.Article.Title}}
-        </h2>
-        <div class="pipe-content__reset" id="articleContent" data-author="{{.Article.Author.Name}}">
-            {{.Article.Content}}
+<div class="fn-flex-1">
+    <div id="pjax" class="wrapper fn-flex">
+        {{if .pjax}}{{noescape "<!---- pjax {#pjax} start ---->"}}{{end}}
+        <div class="main">
+            <article class="module module--bottom post__content">
+                <h2 class="post__title">
+                    {{if .Article.Topped}}
+                    <span aria-label="{{$.I18n.Top}}" class="pipe-tooltipped pipe-tooltipped--n">
+                        <svg>
+                            <use xlink:href="#focus"></use>
+                        </svg>
+                    </span>
+                    {{end}}
+                    {{.Article.Title}}
+                </h2>
+                <div class="pipe-content__reset" id="articleContent" data-author="{{.Article.Author.Name}}">
+                    {{.Article.Content}}
+                </div>
+            </article>
+            <div class="module module--space module--bottom post__share fn-clear">
+                <span data-type="wechat" class="post__share--wechat">
+                    <svg><use xlink:href="#wechat"></use></svg>
+                </span>
+                <span data-type="weibo" class="post__share--weibo">
+                    <svg><use xlink:href="#weibo"></use></svg>
+                </span>
+                <span data-type="twitter" class="post__share--twitter">
+                    <svg><use xlink:href="#twitter"></use></svg>
+                </span>
+                <span data-type="qqz" class="post__share--qqz">
+                    <svg><use xlink:href="#iconQQZ"></use></svg>
+                </span>
+                <div class="post__code"
+                     data-title="{{.Article.Title}}"
+                     data-blogtitle="{{$.Setting.BasicBlogTitle}}"
+                     data-url="{{.Article.URL}}"
+                     data-avatar="{{.Article.Author.AvatarURLWithSize 128}}"></div>
+                {{if .Article.Editable}}
+                <a href="{{$.Conf.Server}}/admin/articles/post?id={{.Article.ID}}" class="fn-right fn-flex-center">
+                    &nbsp;&nbsp;&nbsp;
+                    <svg><use xlink:href="#iconEdit"></use></svg>&nbsp;{{.I18n.Edit}}
+                </a>
+                {{end}}
+                <span class="fn-right fn-flex-center"
+                      data-title="{{.I18n.Comment}}{{.I18n.Colon}}{{.Article.Title}}"
+                      id="articleCommentBtn"
+                      data-id="{{.Article.ID}}">
+                    <svg>
+                        <use xlink:href="#iconComment"></use>
+                    </svg>&nbsp;{{.I18n.Comment}}
+                </span>
+            </div>
+            <div class="module module--space module--bottom post__meta">
+                本文由 <a rel="nofollow" href="{{.Article.Author.URL}}">{{.Article.Author.Name}}</a> 于 {{.Article.CreatedAt}}
+                发布，当前已被围观 
+                <a href="{{.Article.URL}}">{{.Article.ViewCount}}</a> 次{{if gt .Article.CommentCount 0}}，评论
+                <a href="{{.Article.URL}}#pipeComments">{{.Article.CommentCount}}</a> 次{{end}}
+                <br>
+
+                并被添加
+                {{range .Article.Tags}}「<a class="tag" rel="tag" href="{{.URL}}">{{.Title}}</a>」{{end}}
+                标签
+
+                {{if .PreviousArticle}}
+                <br>
+                {{.I18n.PreArticle}}
+                <a href="{{.PreviousArticle.URL}}"
+                   rel="prev">
+                   {{.PreviousArticle.Title}}
+                </a>
+                {{end}}
+
+                {{if .NextArticle}}
+                <br>
+                {{.I18n.NextArticle}}
+                <a href="{{.NextArticle.URL}}" rel="next">
+                    {{.NextArticle.Title}}
+                </a>
+                {{end}}
+            </div>
+
+            {{template "Littlewin/module-list" dict "List" .RecommendArticles "Title" .I18n.RecommendArticle "UserCount" .UserCount}}
+
+            <div class="module module--bottom module--space">
+            {{template "comment/comments" .}}
+            </div>
         </div>
-    </article>
-    <div class="module module--space module--bottom post__share fn-clear">
-        <span data-type="wechat" class="post__share--wechat">
-            <svg><use xlink:href="#wechat"></use></svg>
-        </span>
-        <span data-type="weibo" class="post__share--weibo">
-            <svg><use xlink:href="#weibo"></use></svg>
-        </span>
-        <span data-type="twitter" class="post__share--twitter">
-            <svg><use xlink:href="#twitter"></use></svg>
-        </span>
-        <span data-type="qqz" class="post__share--qqz">
-            <svg><use xlink:href="#iconQQZ"></use></svg>
-        </span>
-        <div class="post__code"
-             data-title="{{.Article.Title}}"
-             data-blogtitle="{{$.Setting.BasicBlogTitle}}"
-             data-url="{{.Article.URL}}"
-             data-avatar="{{.Article.Author.AvatarURLWithSize 128}}"></div>
-        {{if .Article.Editable}}
-        <a href="{{$.Conf.Server}}/admin/articles/post?id={{.Article.ID}}" class="fn-right fn-flex-center">
-            &nbsp;&nbsp;&nbsp;
-            <svg><use xlink:href="#iconEdit"></use></svg>&nbsp;{{.I18n.Edit}}
-        </a>
-        {{end}}
-        <span class="fn-right fn-flex-center"
-              data-title="{{.I18n.Comment}}{{.I18n.Colon}}{{.Article.Title}}"
-              id="articleCommentBtn"
-              data-id="{{.Article.ID}}">
-            <svg>
-                <use xlink:href="#iconComment"></use>
-            </svg>&nbsp;{{.I18n.Comment}}
-        </span>
+        {{template "Littlewin/side" .}}
+
+        {{template "comment/editor" .}}
+        {{if .pjax}}{{noescape "<!---- pjax {#pjax} end ---->"}}{{end}}
     </div>
-    <div class="module module--space module--bottom post__meta">
-        本文由 <a rel="nofollow" href="{{.Article.Author.URL}}">{{.Article.Author.Name}}</a> 于 {{.Article.CreatedAt}}
-        发布，当前已被围观 
-        <a href="{{.Article.URL}}">{{.Article.ViewCount}}</a> 次{{if gt .Article.CommentCount 0}}，评论
-        <a href="{{.Article.URL}}#pipeComments">{{.Article.CommentCount}}</a> 次{{end}}
-        <br>
-
-        并被添加
-        {{range .Article.Tags}}「<a class="tag" rel="tag" href="{{.URL}}">{{.Title}}</a>」{{end}}
-        标签
-
-        {{if .PreviousArticle}}
-        <br>
-        {{.I18n.PreArticle}}
-        <a href="{{.PreviousArticle.URL}}"
-           rel="prev">
-           {{.PreviousArticle.Title}}
-        </a>
-        {{end}}
-
-        {{if .NextArticle}}
-        <br>
-        {{.I18n.NextArticle}}
-        <a href="{{.NextArticle.URL}}" rel="next">
-            {{.NextArticle.Title}}
-        </a>
-        {{end}}
-    </div>
-
-    {{template "Littlewin/module-list" dict "List" .RecommendArticles "Title" .I18n.RecommendArticle "UserCount" .UserCount}}
-
-    <div class="module module--bottom module--space">
-    {{template "comment/comments" .}}
-    </div>
-</div>
-    {{template "Littlewin/side" .}}
-
-{{template "comment/editor" .}}
-    {{if .pjax}}{{noescape "<!---- pjax {#pjax} end ---->"}}{{end}}
 </div>
 {{template "Littlewin/footer" .}}
 </body>

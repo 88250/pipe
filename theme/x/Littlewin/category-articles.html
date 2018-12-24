@@ -7,18 +7,20 @@
 </head>
 <body>
 {{template "Littlewin/header" .}}
-<div id="pjax" class="wrapper fn-flex">
-    {{if .pjax}}{{noescape "<!---- pjax {#pjax} start ---->"}}{{end}}
-<div class="main">
-    <div class="module ft-center module--bottom module--space">
-        <h2 class="module__logo">{{.Category.Title}}</h2>
-        <span id="categoryArticleCount" class="ft-fade">0</span> <span class="ft-fade ft-13">{{.I18n.Article2}}</span>
-    </div>
-    {{template "Littlewin/article-list" .}}
-</div>
+<div class="fn-flex-1">
+    <div id="pjax" class="wrapper fn-flex">
+        {{if .pjax}}{{noescape "<!---- pjax {#pjax} start ---->"}}{{end}}
+        <div class="main">
+            <div class="module ft-center module--bottom module--space">
+                <h2 class="module__logo">{{.Category.Title}}</h2>
+                <span id="categoryArticleCount" class="ft-fade">0</span> <span class="ft-fade ft-13">{{.I18n.Article2}}</span>
+            </div>
+            {{template "Littlewin/article-list" .}}
+        </div>
 
-{{template "Littlewin/side" .}}
-    {{if .pjax}}{{noescape "<!---- pjax {#pjax} end ---->"}}{{end}}
+        {{template "Littlewin/side" .}}
+        {{if .pjax}}{{noescape "<!---- pjax {#pjax} end ---->"}}{{end}}
+    </div>
 </div>
 {{template "Littlewin/footer" .}}
 {{if .pjax}}{{noescape "<!---- pjax {#pjax} start ---->"}}{{end}}

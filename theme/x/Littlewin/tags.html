@@ -7,21 +7,23 @@
 </head>
 <body>
 {{template "Littlewin/header" .}}
-<div id="pjax" class="wrapper fn-flex">
-    {{if .pjax}}{{noescape "<!---- pjax {#pjax} start ---->"}}{{end}}
-<div class="main">
-    <div class="module ft-center module--bottom module--space">
-        <h2 class="module__logo">{{.I18n.Tag}}</h2>
-        <span id="tagArticleCount">0</span> <span class="ft-fade ft-13">{{.I18n.Tags2}}</span>
+<div class="fn-flex-1">
+    <div id="pjax" class="wrapper fn-flex">
+        {{if .pjax}}{{noescape "<!---- pjax {#pjax} start ---->"}}{{end}}
+        <div class="main">
+            <div class="module ft-center module--bottom module--space">
+                <h2 class="module__logo">{{.I18n.Tag}}</h2>
+                <span id="tagArticleCount">0</span> <span class="ft-fade ft-13">{{.I18n.Tags2}}</span>
+            </div>
+            <div class="module module__tags module--space fn-clear module--bottom" id="tags">
+                {{range .Tags}}
+                <a href="{{.URL}}" data-count="{{.ArticleCount}}" class="tag">{{.Title}} ({{.ArticleCount}})</a>
+                {{end}}
+            </div>
+        </div>
+        {{template "Littlewin/side" .}}
+        {{if .pjax}}{{noescape "<!---- pjax {#pjax} end ---->"}}{{end}}
     </div>
-    <div class="module module__tags module--space fn-clear module--bottom" id="tags">
-        {{range .Tags}}
-        <a href="{{.URL}}" data-count="{{.ArticleCount}}" class="tag">{{.Title}} ({{.ArticleCount}})</a>
-        {{end}}
-    </div>
-</div>
-{{template "Littlewin/side" .}}
-    {{if .pjax}}{{noescape "<!---- pjax {#pjax} end ---->"}}{{end}}
 </div>
 {{template "Littlewin/footer" .}}
 {{if .pjax}}{{noescape "<!---- pjax {#pjax} start ---->"}}{{end}}

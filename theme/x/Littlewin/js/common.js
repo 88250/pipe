@@ -33,20 +33,12 @@ const Common = {
       listFolded: true,
       audio: [
         {
-          name: '光るなら',
-          artist: 'Goose house',
-          url: 'https://moeplayer.b0.upaiyun.com/aplayer/hikarunara.mp3',
-          cover: 'https://moeplayer.b0.upaiyun.com/aplayer/hikarunara.jpg',
-          lrc: 'https://moeplayer.b0.upaiyun.com/aplayer/hikarunara.lrc',
-          theme: '#ebd0c2',
-        },
-        {
-          name: 'トリカゴ',
-          artist: 'XX:me',
-          url: 'https://moeplayer.b0.upaiyun.com/aplayer/darling.mp3',
-          cover: 'https://moeplayer.b0.upaiyun.com/aplayer/darling.jpg',
-          lrc: 'https://moeplayer.b0.upaiyun.com/aplayer/darling.lrc',
-          theme: '#46718b',
+          name: 'Kiss The Rain',
+          artist: '이루마',
+          url: `${config.StaticServer}/theme/x/Littlewin/images/kisstherain.mp3`,
+          cover: `${config.StaticServer}/theme/x/Littlewin/images/kisstherain.jpeg`,
+          lrc: `${config.StaticServer}/theme/x/Littlewin/images/kisstherain.lrc`,
+          theme: '#60b044',
         },
       ],
     })
@@ -55,7 +47,7 @@ const Common = {
       if ($('#pipeComments').length === 1) {
         $.ajax({
           method: 'GET',
-          url: `${config.StaticServer}/theme/x/Gina/js/article.min.js`,
+          url: `${config.StaticServer}/theme/x/Littlewin/js/article.min.js`,
           dataType: 'script',
           cache: true,
         })
