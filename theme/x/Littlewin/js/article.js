@@ -2,12 +2,12 @@
  * @fileoverview article.
  *
  * @author <a href="http://vanessa.b3log.org">Liyuan Li</a>
- * @version 0.1.0.0, Oct 19, 2017
+ * @version 0.1.0.0, Dec 24, 2018
  */
 
 import $ from 'jquery'
 import QRious from 'qrious'
-import {InitComment, InitToc, ShowEditor, InitHljs} from '../../../js/article'
+import {InitComment, ShowEditor, InitHljs} from '../../../js/article'
 import './common'
 
 const Article = {

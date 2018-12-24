@@ -6,6 +6,9 @@
             <h1>{{.Setting.BasicBlogTitle}}</h1>
             <img data-src="{{.LogoURL}}">
         </a>
+        <div class="fn-none header__menu">
+            <svg><use xlink:href="#iconBar"></use></svg>
+        </div>
         <div class="header__links fn-flex-center">
             {{range .Navigations}}
             <a href="{{.URL}}" target="{{.OpenMethod}}" class="fn-flex-center">

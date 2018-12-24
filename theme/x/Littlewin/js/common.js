@@ -20,6 +20,10 @@ const Common = {
    * @description 页面初始化
    */
   init: () => {
+    $('.header__menu').click(function () {
+      $('.header__links').slideToggle()
+    })
+
     new APlayer({
       container: document.getElementById('player'),
       autoplay: true,

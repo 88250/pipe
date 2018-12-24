@@ -39,7 +39,7 @@
                 <a class="article__tag" rel="tag" href="{{.URL}}">{{.Title}}</a>
                 {{end}}
 
-                {{if gt $.UserCount 0}}
+                {{if gt $.UserCount 1}}
                 <div class="avatar" data-src="{{.Author.AvatarURLWithSize 116}}"></div>
                 <a rel="nofollow"
                    href="{{.Author.URL}}">

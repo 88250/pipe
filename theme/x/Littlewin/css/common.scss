@@ -65,13 +65,13 @@ a {
   }
   &__body {
     padding: 7px 7px 7px 55px;
-    background-color: hsla(0,0%,77.3%,.4);
+    background-color: hsla(0, 0%, 77.3%, .4);
     &:hover {
-      background-color: hsla(0,0%,57.3%,.4);
+      background-color: hsla(0, 0%, 57.3%, .4);
     }
   }
   &__avatar {
-    border: 3px solid  hsla(0,0%,100%,.6);
+    border: 3px solid hsla(0, 0%, 100%, .6);
     border-radius: 0;
     position: absolute;
     top: 11px;
@@ -490,5 +490,85 @@ a {
   &__meta {
     color: $fade;
     line-height: 24px;
+  }
+}
+
+@media (max-width: 768px) {
+  .wrapper.fn-flex {
+    display: block;
+  }
+
+  .main {
+    max-width: none;
+  }
+
+  .side {
+    margin-left: 0;
+  }
+
+  .header {
+    &__menu {
+      display: block;
+      float: right;
+
+      svg {
+        height: 24px;
+        width: 24px;
+        margin-top: -3px;
+      }
+    }
+    &__nav a {
+      padding: 6px 12px;
+    }
+    &__links {
+      display: none;
+      position: fixed;
+      top: 70px;
+      background: rgba(255, 255, 255, 0.8);
+      width: 100%;
+      left: 0;
+      box-sizing: border-box;
+      padding: 6px 12px;
+
+      a {
+        display: block;
+        background-color: rgba(196, 196, 196, 0.4);
+        padding: 6px;
+        margin: 6px 0;
+      }
+    }
+  }
+
+  .article {
+    &__time {
+      display: none;
+    }
+
+    &__item {
+      padding: 6px 12px;
+    }
+  }
+
+  .post__content {
+    padding: 6px 12px;
+  }
+
+  .pipe-comment {
+    &__body {
+      padding: 6px 12px;
+    }
+    &__item {
+      margin-left: 0;
+    }
+    &__avatar {
+      display: none;
+    }
+  }
+
+  .footer {
+    text-align: center;
+    .fn-right {
+      float: none;
+    }
   }
 }
