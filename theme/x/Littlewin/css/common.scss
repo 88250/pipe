@@ -2,7 +2,7 @@
  * skin style
  *
  * @author <a href="http://vanessa.b3log.org">Liyuan Li</a>
- * @version 0.1.0.0, Dec 20, 2018
+ * @version 0.1.1.0, Dec 24, 2018
 */
 @import 'variables';
 @import '../../../scss/basic';
@@ -210,6 +210,7 @@ a {
     .avatar--mid {
       order: 1;
       margin-left: 6px;
+      flex-shrink: 0;
     }
     &--left {
       justify-content: flex-start;
