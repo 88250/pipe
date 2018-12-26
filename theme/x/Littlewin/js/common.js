@@ -6,7 +6,7 @@
  */
 
 import $ from 'jquery'
-import APlayer from 'APlayer'
+import APlayer from 'aplayer'
 import Icon from './symbol'
 import {
   initPjax,
