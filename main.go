@@ -122,6 +122,8 @@ func replaceServerConf() {
 			if e = ioutil.WriteFile(path, []byte(content), 0644); nil != e {
 				logger.Fatal("replace server conf in [" + path + "] failed: " + err.Error())
 			}
+
+			logger.Info("replaced [" + path + "]")
 		}
 
 		return err
