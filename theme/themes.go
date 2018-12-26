@@ -30,7 +30,7 @@ import (
 var logger = log.NewLogger(os.Stdout)
 
 // DefaultTheme represents the default theme name.
-const DefaultTheme = "Gina"
+const DefaultTheme = "Littlewin"
 
 // Themes saves all theme names.
 var Themes []string
