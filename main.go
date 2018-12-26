@@ -33,11 +33,11 @@ import (
 	"github.com/b3log/pipe/cron"
 	"github.com/b3log/pipe/i18n"
 	"github.com/b3log/pipe/log"
+	"github.com/b3log/pipe/model"
 	"github.com/b3log/pipe/service"
 	"github.com/b3log/pipe/theme"
 	"github.com/b3log/pipe/util"
 	"github.com/gin-gonic/gin"
-	"github.com/b3log/pipe/model"
 )
 
 // Logger
@@ -123,7 +123,7 @@ func replaceServerConf() {
 				logger.Fatal("replace server conf in [" + path + "] failed: " + err.Error())
 			}
 
-			logger.Info("replaced [" + path + "]")
+			logger.Info("replaced [" + path + "], json [" + json + "], newJSON [" + newJSON + "]")
 		}
 
 		return err
