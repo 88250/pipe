@@ -76,8 +76,11 @@ func fillUser(c *gin.Context) {
 		return
 	case "":
 		redirectURL := model.Conf.Server + c.Request.URL.Path
-		if "/admin/" == c.Request.URL.Path { // https://github.com/b3log/pipe/issues/67
+		if strings.Contains(c.Request.URL.Path, util.PathAdmin) {
 			redirectURL = model.Conf.Server + c.Request.URL.Path
+			if "" != c.Request.URL.RawQuery {
+				redirectURL += "?" + c.Request.URL.RawQuery
+			}
 		}
 		if strings.HasPrefix(c.Request.URL.Path, util.PathBlogs) {
 			name := c.Request.URL.Path[len(util.PathBlogs)+1:]
