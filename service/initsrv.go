@@ -538,7 +538,7 @@ func initStatisticSettings(tx *gorm.DB, blogID uint64) error {
 func initAd(tx *gorm.DB, blogID uint64) error {
 	if err := tx.Create(&model.Setting{
 		Category: model.SettingCategoryAd,
-		Name:     model.SettingNameAdGoogleAdsenseArticleEmbed,
+		Name:     model.SettingNameAdGoogleAdSenseArticleEmbed,
 		Value:    "",
 		BlogID:   blogID}).Error; nil != err {
 		return err

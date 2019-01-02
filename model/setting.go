@@ -146,5 +146,5 @@ const (
 const (
 	SettingCategoryAd = "ad"
 
-	SettingNameAdGoogleAdsenseArticleEmbed = "adGoogleAdsenseArticleEmbed"
+	SettingNameAdGoogleAdSenseArticleEmbed = "adGoogleAdSenseArticleEmbed"
 )

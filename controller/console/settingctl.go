@@ -374,9 +374,9 @@ func GetAdSettingsAction(c *gin.Context) {
 	defer c.JSON(http.StatusOK, result)
 
 	session := util.GetSession(c)
-	googleAdsenseArticleEmbedSetting := service.Setting.GetSetting(model.SettingCategoryAd, model.SettingNameAdGoogleAdsenseArticleEmbed, session.BID)
+	googleAdSenseArticleEmbedSetting := service.Setting.GetSetting(model.SettingCategoryAd, model.SettingNameAdGoogleAdSenseArticleEmbed, session.BID)
 	data := map[string]string{
-		model.SettingNameAdGoogleAdsenseArticleEmbed: googleAdsenseArticleEmbedSetting.Value,
+		model.SettingNameAdGoogleAdSenseArticleEmbed: googleAdSenseArticleEmbedSetting.Value,
 	}
 	result.Data = data
 }
@@ -394,8 +394,8 @@ func UpdateAdSettingsAction(c *gin.Context) {
 		return
 	}
 
-	googleAdsenseArticleEmbedVal := args["googleAdsenseArticleEmbed"].(string)
-	if !strings.HasPrefix(googleAdsenseArticleEmbedVal, "<ins>") || !strings.HasSuffix(googleAdsenseArticleEmbedVal, "</ins>") {
+	googleAdSenseArticleEmbedVal := args["googleAdSenseArticleEmbed"].(string)
+	if !strings.HasPrefix(googleAdSenseArticleEmbedVal, "<ins>") || !strings.HasSuffix(googleAdSenseArticleEmbedVal, "</ins>") {
 		result.Code = -1
 		result.Msg = "please just put <ins>....</ins> part"
 
@@ -404,13 +404,13 @@ func UpdateAdSettingsAction(c *gin.Context) {
 
 	session := util.GetSession(c)
 	var ads []*model.Setting
-	googleAdsenseArticleEmbed := &model.Setting{
+	googleAdSenseArticleEmbed := &model.Setting{
 		Category: model.SettingCategoryAd,
 		BlogID:   session.BID,
-		Name:     model.SettingNameAdGoogleAdsenseArticleEmbed,
-		Value:    googleAdsenseArticleEmbedVal,
+		Name:     model.SettingNameAdGoogleAdSenseArticleEmbed,
+		Value:    googleAdSenseArticleEmbedVal,
 	}
-	ads = append(ads, googleAdsenseArticleEmbed)
+	ads = append(ads, googleAdSenseArticleEmbed)
 
 	if err := service.Setting.UpdateSettings(model.SettingCategoryAd, ads, session.BID); nil != err {
 		result.Code = -1
