@@ -375,6 +375,17 @@ func GetAdSettingsAction(c *gin.Context) {
 
 	session := util.GetSession(c)
 	googleAdSenseArticleEmbedSetting := service.Setting.GetSetting(model.SettingCategoryAd, model.SettingNameAdGoogleAdSenseArticleEmbed, session.BID)
+	if nil == googleAdSenseArticleEmbedSetting {
+		// v1.8.5 加入了 Google AdSense 广告位，数据升级 https://github.com/b3log/pipe/issues/161
+		googleAdSenseArticleEmbedSetting = &model.Setting{
+			Category: model.SettingCategoryAd,
+			Name:     model.SettingNameAdGoogleAdSenseArticleEmbed,
+			Value:    "",
+			BlogID:   session.BID}
+		if err := service.Setting.AddSetting(googleAdSenseArticleEmbedSetting); nil != err {
+			logger.Error("create Google AdSense setting failed: " + err.Error())
+		}
+	}
 	data := map[string]string{
 		model.SettingNameAdGoogleAdSenseArticleEmbed: googleAdSenseArticleEmbedSetting.Value,
 	}
