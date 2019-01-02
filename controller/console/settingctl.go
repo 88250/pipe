@@ -374,9 +374,9 @@ func GetAdSettingsAction(c *gin.Context) {
 	defer c.JSON(http.StatusOK, result)
 
 	session := util.GetSession(c)
-	baiduStatisticSetting := service.Setting.GetSetting(model.SettingCategoryAd, model.SettingNameAdGoogleAdsenseArticleEmbed, session.BID)
+	googleAdsenseArticleEmbedSetting := service.Setting.GetSetting(model.SettingCategoryAd, model.SettingNameAdGoogleAdsenseArticleEmbed, session.BID)
 	data := map[string]string{
-		model.SettingNameAdGoogleAdsenseArticleEmbed: baiduStatisticSetting.Value,
+		model.SettingNameAdGoogleAdsenseArticleEmbed: googleAdsenseArticleEmbedSetting.Value,
 	}
 	result.Data = data
 }
