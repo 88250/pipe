@@ -122,6 +122,23 @@ func showArticleAction(c *gin.Context) {
 	}
 
 	mdResult := util.Markdown(articleModel.Content)
+
+	gaSetting := service.Setting.GetSetting(model.SettingCategoryAd, model.SettingNameAdGoogleAdSenseArticleEmbed, blogID)
+	if 0 < len(gaSetting.Value) {
+		// 嵌入 Google AdSense 文章广告
+		if idx := strings.Index(mdResult.ContentHTML, "</p>"); 0 < idx {
+			idx = idx + len("</p>")
+			gaScript := `
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+` + gaSetting.Value + `
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+`
+			mdResult.ContentHTML = mdResult.ContentHTML[0:idx] + gaScript + mdResult.ContentHTML[idx:]
+		}
+	}
+
 	authorModel := service.User.GetUser(articleModel.AuthorID)
 	articleTitle := pangu.SpacingText(articleModel.Title)
 	articleURL := getBlogURL(c) + articleModel.Path
