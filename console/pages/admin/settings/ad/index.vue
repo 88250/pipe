@@ -1,7 +1,6 @@
 <template>
   <div>
     <div class="card fn-clear card__body">
-
       <v-form>
         <v-text-field
           multi-line
