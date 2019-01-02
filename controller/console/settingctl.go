@@ -394,13 +394,21 @@ func UpdateAdSettingsAction(c *gin.Context) {
 		return
 	}
 
+	googleAdsenseArticleEmbedVal := args["googleAdsenseArticleEmbed"].(string)
+	if !strings.HasPrefix(googleAdsenseArticleEmbedVal, "<ins>") || !strings.HasSuffix(googleAdsenseArticleEmbedVal, "</ins>") {
+		result.Code = -1
+		result.Msg = "please just put <ins>....</ins> part"
+
+		return
+	}
+
 	session := util.GetSession(c)
 	var ads []*model.Setting
 	googleAdsenseArticleEmbed := &model.Setting{
 		Category: model.SettingCategoryAd,
 		BlogID:   session.BID,
 		Name:     model.SettingNameAdGoogleAdsenseArticleEmbed,
-		Value:    args["googleAdsenseArticleEmbed"].(string),
+		Value:    googleAdsenseArticleEmbedVal,
 	}
 	ads = append(ads, googleAdsenseArticleEmbed)
 
