@@ -7,7 +7,7 @@
           label="Google AdSense ins"
           :rules="linkRules"
           :counter="255"
-          v-model="googleAdSenseArticleEmbed"
+          v-model="adGoogleAdSenseArticleEmbed"
         ></v-text-field>
         <div class="alert alert--danger" v-show="error">
           <v-icon>danger</v-icon>
@@ -27,7 +27,7 @@
   export default {
     data () {
       return {
-        googleAdSenseArticleEmbed: '',
+        adGoogleAdSenseArticleEmbed: '',
         linkRules: [
           (v) => maxSize.call(this, v, 255)
         ],
@@ -43,7 +43,7 @@
     methods: {
       async update () {
         const responseData = await this.axios.put('/console/settings/ad', {
-          googleAdSenseArticleEmbed: this.googleAdSenseArticleEmbed
+          adGoogleAdSenseArticleEmbed: this.adGoogleAdSenseArticleEmbed
         })
 
         if (responseData.code === 0) {
@@ -63,7 +63,7 @@
     async mounted () {
       const responseData = await this.axios.get('/console/settings/ad')
       if (responseData) {
-        this.$set(this, 'googleAdSenseArticleEmbed', responseData.googleAdSenseArticleEmbed)
+        this.$set(this, 'adGoogleAdSenseArticleEmbed', responseData.adGoogleAdSenseArticleEmbed)
       }
     }
   }
