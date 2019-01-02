@@ -136,6 +136,8 @@ func MapRoutes() *gin.Engine {
 	consoleSettingsGroup.PUT("/feed", console.UpdateFeedSettingsAction)
 	consoleSettingsGroup.GET("/third-stat", console.GetThirdStatisticSettingsAction)
 	consoleSettingsGroup.PUT("/third-stat", console.UpdateThirdStatisticSettingsAction)
+	consoleSettingsGroup.GET("/ad", console.GetAdSettingsAction)
+	consoleSettingsGroup.PUT("/ad", console.UpdateAdSettingsAction)
 	consoleSettingsGroup.GET("/account", console.GetAccountAction)
 	consoleSettingsGroup.PUT("/account", console.UpdateAccountAction)
 	consoleSettingsGroup.PUT("/account/password", console.UpdatePasswordAction)

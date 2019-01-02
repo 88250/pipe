@@ -367,3 +367,45 @@ func UpdateThirdStatisticSettingsAction(c *gin.Context) {
 		result.Msg = err.Error()
 	}
 }
+
+// GetAdSettingsAction get advertisement settings.
+func GetAdSettingsAction(c *gin.Context) {
+	result := util.NewResult()
+	defer c.JSON(http.StatusOK, result)
+
+	session := util.GetSession(c)
+	baiduStatisticSetting := service.Setting.GetSetting(model.SettingCategoryAd, model.SettingNameAdGoogleAdsenseArticleEmbed, session.BID)
+	data := map[string]string{
+		model.SettingNameAdGoogleAdsenseArticleEmbed: baiduStatisticSetting.Value,
+	}
+	result.Data = data
+}
+
+// UpdateAdSettingsAction update third statistic settings.
+func UpdateAdSettingsAction(c *gin.Context) {
+	result := util.NewResult()
+	defer c.JSON(http.StatusOK, result)
+
+	args := map[string]interface{}{}
+	if err := c.BindJSON(&args); nil != err {
+		result.Code = -1
+		result.Msg = "parses update ad settings request failed"
+
+		return
+	}
+
+	session := util.GetSession(c)
+	var ads []*model.Setting
+	googleAdsenseArticleEmbed := &model.Setting{
+		Category: model.SettingCategoryAd,
+		BlogID:   session.BID,
+		Name:     model.SettingNameAdGoogleAdsenseArticleEmbed,
+		Value:    args["googleAdsenseArticleEmbed"].(string),
+	}
+	ads = append(ads, googleAdsenseArticleEmbed)
+
+	if err := service.Setting.UpdateSettings(model.SettingCategoryAd, ads, session.BID); nil != err {
+		result.Code = -1
+		result.Msg = err.Error()
+	}
+}
