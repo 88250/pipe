@@ -47,7 +47,7 @@ var markedAvailable = false
 
 // LoadMarkdown loads markdown process engine.
 func LoadMarkdown() {
-	request, err := http.NewRequest("POST", "http://localhost:8250", strings.NewReader("Pipe 大法好"))
+	request, err := http.NewRequest("POST", "http://localhost:8250", strings.NewReader("旧日的足迹"))
 	if nil != err {
 		logger.Info("[marked] is not available, uses built-in [blackfriday] for markdown processing")
 
@@ -69,7 +69,7 @@ func LoadMarkdown() {
 	}
 
 	content := string(data)
-	markedAvailable = "<p>Pipe 大法好</p>\n" == content
+	markedAvailable = "<p>旧日的足迹</p>\n" == content
 	if markedAvailable {
 		logger.Debug("[marked] is available, uses it for markdown processing")
 	} else {
