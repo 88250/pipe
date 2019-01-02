@@ -141,3 +141,10 @@ const (
 	SettingNameStatisticCommentCount = "statisticCommentCount"
 	SettingNameStatisticViewCount    = "statisticViewCount"
 )
+
+// Setting names of category "ad".
+const (
+	SettingCategoryAd = "ad"
+
+	SettingNameAdGoogleAdsenseArticleEmbed = "adGoogleAdsenseArticleEmbed"
+)
