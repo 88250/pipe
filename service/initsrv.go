@@ -112,6 +112,9 @@ func (srv *initService) initBlog(tx *gorm.DB, admin *model.User, blogID uint64) 
 	if err := init3rdStatistic(tx, blogID); nil != err {
 		return err
 	}
+	if err := initAd(tx, blogID); nil != err {
+		return err
+	}
 	if err := initStatisticSettings(tx, blogID); nil != err {
 		return err
 	}
@@ -525,6 +528,18 @@ func initStatisticSettings(tx *gorm.DB, blogID uint64) error {
 		Category: model.SettingCategoryStatistic,
 		Name:     model.SettingNameStatisticViewCount,
 		Value:    "0",
+		BlogID:   blogID}).Error; nil != err {
+		return err
+	}
+
+	return nil
+}
+
+func initAd(tx *gorm.DB, blogID uint64) error {
+	if err := tx.Create(&model.Setting{
+		Category: model.SettingCategoryAd,
+		Name:     model.SettingNameAdGoogleAdsenseArticleEmbed,
+		Value:    "",
 		BlogID:   blogID}).Error; nil != err {
 		return err
 	}
