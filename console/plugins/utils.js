@@ -140,6 +140,11 @@ export const genMenuData = (app, locale) => [
         title: app.$t('3rdStatistic', locale),
         link: '/admin/settings/3rd-statistic',
         role: 2
+      },
+      {
+        title: app.$t('ad', locale),
+        link: '/admin/settings/ad',
+        role: 2
       }
     ]
   },
