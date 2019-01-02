@@ -395,7 +395,8 @@ func UpdateAdSettingsAction(c *gin.Context) {
 	}
 
 	googleAdSenseArticleEmbedVal := args["adGoogleAdSenseArticleEmbed"].(string)
-	if !strings.HasPrefix(googleAdSenseArticleEmbedVal, "<ins>") || !strings.HasSuffix(googleAdSenseArticleEmbedVal, "</ins>") {
+	googleAdSenseArticleEmbedVal = strings.TrimSpace(googleAdSenseArticleEmbedVal)
+	if !strings.HasPrefix(googleAdSenseArticleEmbedVal, "<ins ") || !strings.HasSuffix(googleAdSenseArticleEmbedVal, "</ins>") {
 		result.Code = -1
 		result.Msg = "please just put <ins>....</ins> part"
 
