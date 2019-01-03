@@ -2,7 +2,7 @@
  * function.
  *
  * @author <a href="http://vanessa.b3log.org">Liyuan Li</a>
- * @version 0.2.0.0, Oct 9, 2018
+ * @version 0.3.0.0, Jan 2, 2019
  */
 
 .fn {
@@ -13,6 +13,10 @@
   &-flex-center {
     display: inline-flex;
     align-items: center;
+  }
+
+  &-flex-shrink {
+    flex-shrink: 0;
   }
 
   &-flex-1 {
