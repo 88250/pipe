@@ -429,6 +429,15 @@
     async mounted () {
       const id = this.$route.query.id
 
+      window.onbeforeunload = (event) => {
+        if ((this.edited || this.originalContent !== this.content) && id) {
+          if (event) {
+            event.returnValue = this.$t('isGoTo', this.$store.state.locale)
+          }
+          return this.$t('isGoTo', this.$store.state.locale)
+        }
+      }
+
       if (id) {
         const responseData = await this.axios.get(`/console/articles/${id}`)
         if (responseData) {
