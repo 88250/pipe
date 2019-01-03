@@ -429,6 +429,21 @@
     async mounted () {
       const id = this.$route.query.id
 
+      if (id) {
+        history.pushState(null, null, this.$route.fullPath)
+      }
+      window.onpopstate = () => {
+        if ((this.edited || this.originalContent !== this.content) && id) {
+          if (!confirm(this.$t('isGoTo', this.$store.state.locale))) {
+            history.pushState(null, null, this.$route.fullPath)
+          } else if (this.$route.query.id && this.$route.path === '/admin/articles/post') {
+            history.back()
+          }
+        } else if (this.$route.query.id && this.$route.path === '/admin/articles/post') {
+          history.back()
+        }
+      }
+
       window.onbeforeunload = (event) => {
         if ((this.edited || this.originalContent !== this.content) && id) {
           if (event) {
