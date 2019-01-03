@@ -146,16 +146,18 @@ func Markdown(mdText string) *MarkdownResult {
 		ele.ReplaceWithHtml(text)
 	})
 
-	doc.Find("code").Each(func(i int, ele *goquery.Selection) {
-		code, err := ele.Html()
-		if nil != err {
-			logger.Errorf("get element [%+v]' HTML failed: %s", ele, err)
-		} else {
-			code = strings.Replace(code, "<", "&lt;", -1)
-			code = strings.Replace(code, ">", "&gt;", -1)
-			ele.SetHtml(code)
-		}
-	})
+	if !MarkedAvailable {
+		doc.Find("code").Each(func(i int, ele *goquery.Selection) {
+			code, err := ele.Html()
+			if nil != err {
+				logger.Errorf("get element [%+v]' HTML failed: %s", ele, err)
+			} else {
+				code = strings.Replace(code, "<", "&lt;", -1)
+				code = strings.Replace(code, ">", "&gt;", -1)
+				ele.SetHtml(code)
+			}
+		})
+	}
 
 	contentHTML, _ = doc.Find("body").Html()
 	contentHTML = bluemonday.UGCPolicy().AllowAttrs("class").Matching(regexp.MustCompile("^language-[a-zA-Z0-9]+$")).OnElements("code").
