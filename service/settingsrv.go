@@ -82,6 +82,19 @@ func (srv *settingService) GetSettings(category string, names []string, blogID u
 	return ret
 }
 
+func (srv *settingService) AddSetting(setting *model.Setting) error {
+	srv.mutex.Lock()
+	defer srv.mutex.Unlock()
+
+	tx := db.Begin()
+	if err := tx.Create(setting).Error; nil != err {
+		return err
+	}
+	tx.Commit()
+
+	return nil
+}
+
 func (srv *settingService) UpdateSettings(category string, settings []*model.Setting, blogID uint64) error {
 	srv.mutex.Lock()
 	defer srv.mutex.Unlock()
