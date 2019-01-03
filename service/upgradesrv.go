@@ -82,9 +82,36 @@ func perform() {
 		if err := tx.Save(setting).Error; nil != err {
 			tx.Rollback()
 
-			logger.Fatalf("update setting [%+v] failed: %s", setting, err)
+			logger.Fatalf("update setting [%+v] failed: %s", setting, err.Error())
 		}
 	}
+
+	rows, err := tx.Model(&model.Setting{}).Select("`blog_id`").Group("`blog_id`").Rows()
+	defer rows.Close()
+	if nil != err {
+		tx.Rollback()
+
+		logger.Fatalf("update settings failed: %s", err.Error())
+	}
+	for rows.Next() {
+		var blogID uint64
+		err := rows.Scan(&blogID)
+		if nil != err {
+			tx.Rollback()
+
+			logger.Fatalf("update settings failed: %s", err.Error())
+		}
+
+		googleAdSenseArticleEmbedSetting := &model.Setting{
+			Category: model.SettingCategoryAd,
+			Name:     model.SettingNameAdGoogleAdSenseArticleEmbed,
+			Value:    "",
+			BlogID:   blogID}
+		if err := Setting.AddSetting(googleAdSenseArticleEmbedSetting); nil != err {
+			logger.Error("create Google AdSense setting failed: " + err.Error())
+		}
+	}
+
 	tx.Commit()
 
 	logger.Infof("upgraded from version [%s] to version [%s] successfully :-)", fromVer, toVer)
