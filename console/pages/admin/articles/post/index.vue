@@ -143,6 +143,7 @@
         error: false,
         errorMsg: '',
         content: '',
+        originalContent: '',
         title: '',
         titleRules: [
           (v) => required.call(this, v),
@@ -164,12 +165,20 @@
         commentable: true,
         useThumbs: false,
         topped: false,
-        thumbs: ['', '', '', '', '', '']
+        thumbs: ['', '', '', '', '', ''],
+        edited: false
       }
     },
     head () {
       return {
         title: `${this.$t(this.$route.query.id ? 'editArticle' : 'postArticle', this.$store.state.locale)} - ${this.$store.state.blogTitle}`
+      }
+    },
+    watch: {
+      '$route.query.id': function (newValue, oldValue) {
+        if (typeof newValue === 'undefined' && oldValue) {
+          this._setDefaultLocalStorage()
+        }
       }
     },
     methods: {
@@ -261,6 +270,10 @@
         }
       },
       setLocalstorage (type) {
+        if (type !== 'content') {
+          this.$set(this, 'edited', true)
+        }
+
         if (this.$route.query.id) {
           return
         }
@@ -361,15 +374,86 @@
           })
           this.$router.push('/admin/articles')
         }
+      },
+      _setDefaultLocalStorage () {
+        if (localStorage.getItem('article-title')) {
+          this.title = localStorage.getItem('article-title')
+          this.$set(this, 'title', localStorage.getItem('article-title'))
+        } else {
+          this.$set(this, 'title', '')
+        }
+        if (localStorage.getItem('article-content')) {
+          this.$set(this, 'content', localStorage.getItem('article-content'))
+          this.$set(this, 'originalContent', localStorage.getItem('article-content'))
+        } else {
+          this.$set(this, 'content', '')
+          this.$set(this, 'originalContent', '')
+        }
+        if (localStorage.getItem('article-tags')) {
+          this.$set(this, 'tags', localStorage.getItem('article-tags').split(','))
+        } else {
+          this.$set(this, 'tags', [])
+        }
+        if (localStorage.getItem('article-url')) {
+          this.$set(this, 'url', localStorage.getItem('article-url'))
+        } else {
+          this.$set(this, 'url', '')
+        }
+        if (localStorage.getItem('article-time')) {
+          this.$set(this, 'time', localStorage.getItem('article-time'))
+        } else {
+          this.$set(this, 'time', '')
+        }
+        if (localStorage.getItem('article-abstract')) {
+          this.$set(this, 'abstract', localStorage.getItem('article-abstract'))
+        } else {
+          this.$set(this, 'abstract', '')
+        }
+        if (localStorage.getItem('article-commentable')) {
+          this.$set(this, 'commentable', localStorage.getItem('article-commentable') === 'true')
+        } else {
+          this.$set(this, 'commentable', true)
+        }
+        if (localStorage.getItem('article-useThumbs')) {
+          this.$set(this, 'useThumbs', localStorage.getItem('article-useThumbs') === 'true')
+        } else {
+          this.$set(this, 'userThumbs', false)
+        }
+        if (localStorage.getItem('article-topped')) {
+          this.$set(this, 'topped', localStorage.getItem('article-topped') === 'true')
+        } else {
+          this.$set(this, 'topped', false)
+        }
       }
     },
     async mounted () {
       const id = this.$route.query.id
+      window.onpopstate = (event) => {
+        console.log(event, window.event)
+        event.defaultPrevented = true
+        // if ((this.edited || this.originalContent !== this.content) && id) {
+        window.event.preventDefault()
+        event.preventDefault()
+          event.returnValue = '123123'
+          return '123123'
+          // confirm ('系统不会保存您所做的更改。是否回退？')
+       // }
+      }
+      window.onbeforeunload = (event) => {
+        if ((this.edited || this.originalContent !== this.content) && id) {
+          if (event) {
+            event.returnValue = '系统可能不会保存您所做的更改。'
+          }
+          return '系统可能不会保存您所做的更改。'
+        }
+      }
+
       if (id) {
         const responseData = await this.axios.get(`/console/articles/${id}`)
         if (responseData) {
           this.$set(this, 'title', responseData.title)
           this.$set(this, 'content', responseData.content)
+          this.$set(this, 'originalContent', responseData.content)
           this.$set(this, 'url', responseData.path)
           this.$set(this, 'time', responseData.time.replace('T', ' ').substr(0, 19))
           this.$set(this, 'abstract', responseData.abstract)
@@ -379,38 +463,7 @@
         }
       } else {
         // set storage
-        setTimeout(() => {
-          if (localStorage.getItem('article-title')) {
-            this.title = localStorage.getItem('article-title')
-            this.$set(this, 'title', localStorage.getItem('article-title'))
-          }
-          if (localStorage.getItem('article-content')) {
-            this.$set(this, 'content', localStorage.getItem('article-content'))
-          }
-          if (localStorage.getItem('article-tags')) {
-            this.$set(this, 'tags', localStorage.getItem('article-tags').split(','))
-          }
-          if (localStorage.getItem('article-url')) {
-            this.$set(this, 'url', localStorage.getItem('article-url'))
-          }
-          if (localStorage.getItem('article-time')) {
-            this.$set(this, 'time', localStorage.getItem('article-time'))
-          }
-          if (localStorage.getItem('article-abstract')) {
-            this.$set(this, 'abstract', localStorage.getItem('article-abstract'))
-          }
-          if (localStorage.getItem('article-commentable')) {
-            this.$set(this, 'commentable', localStorage.getItem('article-commentable') === 'true')
-          }
-          if (localStorage.getItem('article-useThumbs')) {
-            this.$set(this, 'useThumbs', localStorage.getItem('article-useThumbs') === 'true')
-          }
-          if (localStorage.getItem('article-topped')) {
-            this.$set(this, 'topped', localStorage.getItem('article-topped') === 'true')
-          }
-
-          this.parseMarkdown(this.content)
-        })
+        this._setDefaultLocalStorage()
       }
       // get tags
       this.$store.dispatch('getTags')

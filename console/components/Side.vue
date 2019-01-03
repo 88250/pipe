@@ -6,7 +6,7 @@
           :value="item.active"
           v-if="$store.state.role <= item.role">
           <v-list-tile
-            @click=""
+            @click.capture="goRouter"
             ripple
             slot="item">
             <nuxt-link :to="item.link" v-if="!item.items">
@@ -27,7 +27,7 @@
             ripple
             v-for="subItem in item.items"
             :key="subItem.title"
-            @click=""
+            @click.capture="goRouter"
             v-if="$store.state.role <= subItem.role">
             <nuxt-link :to="subItem.link">{{ subItem.title }}</nuxt-link>
           </v-list-tile>
@@ -42,9 +42,27 @@
   import {genMenuData} from '~/plugins/utils'
 
   export default {
+    data () {
+      return {
+        isFirst: true
+      }
+    },
     methods: {
       closeSide () {
         document.querySelector('#pipe').className = ''
+      },
+      goRouter (event) {
+        if (this.$route.path === '/admin/articles/post' && this.$route.query.id && this.isFirst) {
+          if (!confirm(this.$t('isGoTo', this.$store.state.locale))) {
+            event.preventDefault()
+          }
+          this.$set(this, 'isFirst', false)
+        }
+
+        // 仅执行第一次捕获事件
+        setTimeout(() => {
+          this.$set(this, 'isFirst', true)
+        }, 500)
       }
     },
     mounted () {
