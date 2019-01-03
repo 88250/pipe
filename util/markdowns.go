@@ -94,9 +94,9 @@ func marked(mdText string) []byte {
 	defer response.Body.Close()
 	ret, err := ioutil.ReadAll(response.Body)
 	if nil != err {
-		logger.Info("marked failed: " + err.Error())
+		logger.Info("marked failed: " + err.Error() + ", try to use built-in md engine instead")
 
-		return []byte("")
+		return bf(mdText)
 	}
 
 	return ret
