@@ -2,7 +2,7 @@
  * @fileoverview article.
  *
  * @author <a href="http://vanessa.b3log.org">Liyuan Li</a>
- * @version 0.1.0.0, Dec 24, 2018
+ * @version 0.1.1.0, Jan 2, 2019
  */
 
 import $ from 'jquery'

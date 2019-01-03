@@ -90,11 +90,11 @@ export const InitHljs = () => {
     })
   }
 
-  if (typeof hljs === 'undefined') {
+  if (typeof hljs === 'undefined' && !$('#pipeLang').data('markedavailable')) {
     $.ajax({
       method: 'GET',
       url: (config.StaticServer || config.Server) +
-      '/theme/js/lib/highlight.min.js',
+      '/theme/js/lib/highlight.min.js?9.12.0',
       dataType: 'script',
       cache: true,
     }).done(function () {
