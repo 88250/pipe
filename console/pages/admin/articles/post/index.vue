@@ -428,25 +428,6 @@
     },
     async mounted () {
       const id = this.$route.query.id
-      window.onpopstate = (event) => {
-        console.log(event, window.event)
-        event.defaultPrevented = true
-        // if ((this.edited || this.originalContent !== this.content) && id) {
-        window.event.preventDefault()
-        event.preventDefault()
-          event.returnValue = '123123'
-          return '123123'
-          // confirm ('系统不会保存您所做的更改。是否回退？')
-       // }
-      }
-      window.onbeforeunload = (event) => {
-        if ((this.edited || this.originalContent !== this.content) && id) {
-          if (event) {
-            event.returnValue = '系统可能不会保存您所做的更改。'
-          }
-          return '系统可能不会保存您所做的更改。'
-        }
-      }
 
       if (id) {
         const responseData = await this.axios.get(`/console/articles/${id}`)
