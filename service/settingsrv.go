@@ -86,6 +86,10 @@ func (srv *settingService) AddSetting(setting *model.Setting) error {
 	srv.mutex.Lock()
 	defer srv.mutex.Unlock()
 
+	if nil != srv.GetSetting(setting.Category, setting.Name, setting.BlogID) {
+		return nil
+	}
+
 	tx := db.Begin()
 	if err := tx.Create(setting).Error; nil != err {
 		return err
