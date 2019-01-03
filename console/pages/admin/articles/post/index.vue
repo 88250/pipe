@@ -373,6 +373,10 @@
           }
           this.$set(this, 'error', false)
           this.$set(this, 'errorMsg', '')
+          if (id) {
+            this.$set(this, 'edited', false)
+            this.$set(this, 'originalContent', this.content)
+          }
           this.$router.push('/admin/articles')
         } else {
           this.$set(this, 'error', true)
