@@ -43,7 +43,7 @@ type MarkdownResult struct {
 	ThumbURL     string
 }
 
-var markedAvailable = false
+var MarkedAvailable = false
 
 // LoadMarkdown loads markdown process engine.
 func LoadMarkdown() {
@@ -69,8 +69,8 @@ func LoadMarkdown() {
 	}
 
 	content := string(data)
-	markedAvailable = "<p>旧日的足迹</p>\n" == content
-	if markedAvailable {
+	MarkedAvailable = "<p>旧日的足迹</p>\n" == content
+	if MarkedAvailable {
 		logger.Debug("[marked] is available, uses it for markdown processing")
 	} else {
 		logger.Debug("[marked] is not available, uses built-in [blackfriday] for markdown processing")
@@ -121,7 +121,7 @@ func Markdown(mdText string) *MarkdownResult {
 
 	mdText = emojify(mdText)
 	var unsafe []byte
-	if markedAvailable {
+	if MarkedAvailable {
 		unsafe = marked(mdText)
 	} else {
 		unsafe = bf(mdText)
