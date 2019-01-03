@@ -111,6 +111,7 @@ func addSymArticleAction(c *gin.Context) {
 		Title:    requestArticle["articleTitle"].(string),
 		Tags:     requestArticle["articleTags"].(string),
 		Content:  requestArticle["articleContent"].(string),
+		Commentable: true,
 	}
 	article.ID = articleId
 
