@@ -2,7 +2,7 @@
  * @fileoverview article tool for every theme
  *
  * @author <a href="http://vanessa.b3log.org">Liyuan Li</a>
- * @version 0.3.0.0, Nov 1, 2018
+ * @version 0.3.1.0, Jan 7, 2019
  */
 
 import $ from 'jquery'
@@ -86,7 +86,9 @@ export const InitHljs = () => {
           class="pipe-code__copy pipe-tooltipped pipe-tooltipped--w" 
           onclick="this.previousElementSibling.select();document.execCommand('copy');this.setAttribute('aria-label','Copied')"><svg><use xlink:href="#copy"></use></svg></div>`)
 
-      hljs.highlightBlock(block)
+      if (!$('#pipeLang').data('markedavailable')) {
+        hljs.highlightBlock(block)
+      }
     })
   }
 
