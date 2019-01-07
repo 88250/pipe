@@ -135,7 +135,9 @@ func showArticleAction(c *gin.Context) {
      (adsbygoogle = window.adsbygoogle || []).push({});
 </script>
 `
-			mdResult.ContentHTML = mdResult.ContentHTML[0:idx] + gaScript + mdResult.ContentHTML[idx:]
+			if !strings.Contains(mdResult.ContentHTML, gaScript) {
+				mdResult.ContentHTML = mdResult.ContentHTML[0:idx] + gaScript + mdResult.ContentHTML[idx:]
+			}
 		}
 	}
 
