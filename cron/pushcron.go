@@ -18,13 +18,13 @@ package cron
 
 import (
 	"net/url"
+	"strings"
 	"time"
 
 	"github.com/b3log/pipe/model"
 	"github.com/b3log/pipe/service"
 	"github.com/b3log/pipe/util"
 	"github.com/parnurzeal/gorequest"
-	"strings"
 )
 
 func pushArticlesPeriodically() {
