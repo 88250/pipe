@@ -97,6 +97,10 @@ func AddArticleAction(c *gin.Context) {
 	}
 	article.CreatedAt = createdAt
 
+	if !arg["syncToCommunity"].(bool) {
+		article.PushedAt = article.CreatedAt
+	}
+
 	if err := service.Article.AddArticle(article); nil != err {
 		result.Code = -1
 		result.Msg = err.Error()
