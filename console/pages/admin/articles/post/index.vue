@@ -76,21 +76,21 @@
         <label class="checkbox btn--space">
           <input
             type="checkbox"
-            :checked="syncToCommunity"
-            @change="setLocalstorage('syncToCommunity')"
-            @click="syncToCommunity = !syncToCommunity"/><span
-          class="checkbox__icon"></span>
-          {{ $t('syncToCommunity', $store.state.locale) }}
-        </label>
-
-        <label class="checkbox btn--space">
-          <input
-            type="checkbox"
             :checked="topped"
             @change="setLocalstorage('topped')"
             @click="topped = !topped"/><span
           class="checkbox__icon"></span>
           {{ $t('top', $store.state.locale) }}
+        </label>
+        <label class="checkbox btn--space" v-if="!$route.query.id">
+          <input
+            type="checkbox"
+            :checked="syncToCommunity"
+            @change="setLocalstorage('syncToCommunity')"
+            @click="syncToCommunity = !syncToCommunity"/><span
+          class="checkbox__icon"></span>
+          {{ $t('syncToCommunity', $store.state.locale) }}
+          (<a href="https://hacpai.com/article/1546941897596" target="_blank">?</a>)
         </label>
       </v-form>
       <div class="alert alert--danger" v-show="error">
