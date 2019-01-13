@@ -76,6 +76,16 @@
         <label class="checkbox btn--space">
           <input
             type="checkbox"
+            :checked="syncToCommunity"
+            @change="setLocalstorage('syncToCommunity')"
+            @click="syncToCommunity = !syncToCommunity"/><span
+          class="checkbox__icon"></span>
+          {{ $t('syncToCommunity', $store.state.locale) }}
+        </label>
+
+        <label class="checkbox btn--space">
+          <input
+            type="checkbox"
             :checked="topped"
             @change="setLocalstorage('topped')"
             @click="topped = !topped"/><span
@@ -165,6 +175,7 @@
         commentable: true,
         useThumbs: false,
         topped: false,
+        syncToCommunity: false,
         thumbs: ['', '', '', '', '', ''],
         edited: false
       }
@@ -319,6 +330,9 @@
           case 'useThumbs':
             localStorage.setItem('article-useThumbs', this.useThumbs)
             break
+          case 'syncToCommunity':
+            localStorage.setItem('article-syncToCommunity', this.syncToCommunity)
+            break
           case 'topped':
             localStorage.setItem('article-topped', this.topped)
             break
@@ -357,6 +371,7 @@
           commentable: this.commentable,
           topped: this.topped,
           abstract: this.abstract,
+          syncToCommunity: this.syncToCommunity,
           time: this.time === '' ? '' : this.time.replace(' ', 'T') + '+08:00'
         })
         if (responseData.code === 0) {
@@ -369,6 +384,7 @@
             localStorage.removeItem('article-abstract')
             localStorage.removeItem('article-commentable')
             localStorage.removeItem('article-useThumbs')
+            localStorage.removeItem('article-syncToCommunity')
             localStorage.removeItem('article-topped')
           }
           this.$set(this, 'error', false)
@@ -439,7 +455,12 @@
         if (localStorage.getItem('article-useThumbs')) {
           this.$set(this, 'useThumbs', localStorage.getItem('article-useThumbs') === 'true')
         } else {
-          this.$set(this, 'userThumbs', false)
+          this.$set(this, 'useThumbs', false)
+        }
+        if (localStorage.getItem('article-syncToCommunity')) {
+          this.$set(this, 'syncToCommunity', localStorage.getItem('article-syncToCommunity') === 'true')
+        } else {
+          this.$set(this, 'syncToCommunity', false)
         }
         if (localStorage.getItem('article-topped')) {
           this.$set(this, 'topped', localStorage.getItem('article-topped') === 'true')
@@ -472,6 +493,7 @@
           this.$set(this, 'tags', responseData.tags.split(','))
           this.$set(this, 'commentable', responseData.commentable)
           this.$set(this, 'topped', responseData.topped)
+          this.$set(this, 'syncToCommunity', responseData.syncToCommunity)
         }
       } else {
         // set storage
