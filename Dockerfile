@@ -1,4 +1,4 @@
-FROM golang:1.11
+FROM alpine:3.7
 LABEL maintainer = "luckylsn9610@gmail.com"
 
 WORKDIR /opt/

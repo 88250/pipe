@@ -1,0 +1,4 @@
+.git
+vendor
+console/node_modules
+theme/node_modules
