@@ -19,7 +19,7 @@ package console
 import (
 	"math"
 	"net/http"
-
+	
 	"github.com/b3log/pipe/service"
 	"github.com/b3log/pipe/util"
 	"github.com/gin-gonic/gin"
@@ -29,14 +29,38 @@ import (
 func GetTagsAction(c *gin.Context) {
 	result := util.NewResult()
 	defer c.JSON(http.StatusOK, result)
-
+	
 	session := util.GetSession(c)
-
+	
 	var tags []*ConsoleTag
 	tagModels := service.Tag.GetTags(math.MaxInt64, session.BID)
 	for _, tagModel := range tagModels {
 		tags = append(tags, &ConsoleTag{Title: tagModel.Title})
 	}
-
+	
 	result.Data = tags
+}
+
+// RemoveTagsAction remove tags that have no articles.
+func RemoveTagsAction(c *gin.Context) {
+	result := util.NewResult()
+	defer c.JSON(http.StatusOK, result)
+	
+	arg := map[string]interface{}{}
+	if err := c.BindJSON(&arg); nil != err {
+		result.Code = -1
+		result.Msg = "parses add article request failed"
+		return
+	}
+	titleArg := arg["title"].(string)
+	
+	session := util.GetSession(c)
+	blogID := session.BID
+	
+	// rm tags
+	if err := service.Tag.RemoveTag(titleArg, blogID); nil != err {
+		result.Code = -1
+		result.Msg = err.Error()
+	}
+	
 }

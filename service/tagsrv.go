@@ -18,7 +18,7 @@ package service
 
 import (
 	"sync"
-
+	
 	"github.com/b3log/pipe/model"
 )
 
@@ -35,7 +35,7 @@ func (srv *tagService) GetTags(size int, blogID uint64) (ret []*model.Tag) {
 	if err := db.Where("`blog_id` = ?", blogID).Order("`article_count` DESC, `id` DESC").Limit(size).Find(&ret).Error; nil != err {
 		logger.Errorf("get tags failed: " + err.Error())
 	}
-
+	
 	return
 }
 
@@ -44,6 +44,23 @@ func (srv *tagService) GetTagByTitle(title string, blogID uint64) *model.Tag {
 	if err := db.Where("`title` = ? AND `blog_id` = ?", title, blogID).First(ret).Error; nil != err {
 		return nil
 	}
-
+	
 	return ret
+}
+
+func (srv *tagService) RemoveTag(title string, blogID uint64) (err error) {
+	
+	ret := Tag.GetTagByTitle(title, blogID)
+	
+	if nil == ret || (nil != ret && ret.ArticleCount != 0) {
+		return
+	}
+	// if 1 > ret.ArticleCount {
+	// 	logger.Errorf("Cannot remove tags that have articles");
+	// 	return errors.New("Cannot remove tags that have articles")
+	// }
+	if err := db.Delete(&ret).Error; nil != err {
+		logger.Errorf("Delete tags failed" + err.Error())
+	}
+	return nil // trigger commit in the defer
 }

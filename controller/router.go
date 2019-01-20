@@ -99,6 +99,7 @@ func MapRoutes() *gin.Engine {
 	consoleGroup.GET("/themes", console.GetThemesAction)
 	consoleGroup.PUT("/themes/:id", console.UpdateThemeAction)
 	consoleGroup.GET("/tags", console.GetTagsAction)
+	consoleGroup.DELETE("/tags", console.RemoveTagsAction)
 	consoleGroup.POST("/articles", console.AddArticleAction)
 	consoleGroup.POST("/articles/batch-delete", console.RemoveArticlesAction)
 	consoleGroup.GET("/articles", console.GetArticlesAction)
