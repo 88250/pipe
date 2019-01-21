@@ -17,6 +17,8 @@
 package service
 
 import (
+	"github.com/b3log/pipe/util"
+	"github.com/pkg/errors"
 	"sync"
 	
 	"github.com/b3log/pipe/model"
@@ -29,6 +31,25 @@ var Tag = &tagService{
 
 type tagService struct {
 	mutex *sync.Mutex
+}
+
+const (
+	adminConsoleTagListPageSize   = 15
+	adminConsoleTagListWindowSize = 20
+)
+
+func (srv *tagService) ConsoleGetTags(page int, blogID uint64) (ret []*model.Tag, pagination *util.Pagination) {
+	offset := (page - 1) * adminConsoleTagListPageSize
+	count := 0
+	if err := db.Model(&model.Tag{}).Order("`id` DESC").
+		Where("`blog_id` = ?", blogID).
+		Count(&count).Offset(offset).Limit(adminConsoleTagListPageSize).Find(&ret).Error; nil != err {
+		logger.Errorf("get tags failed: " + err.Error())
+	}
+	
+	pagination = util.NewPagination(page, adminConsoleTagListPageSize, adminConsoleTagListWindowSize, count)
+	
+	return
 }
 
 func (srv *tagService) GetTags(size int, blogID uint64) (ret []*model.Tag) {
@@ -50,17 +71,18 @@ func (srv *tagService) GetTagByTitle(title string, blogID uint64) *model.Tag {
 
 func (srv *tagService) RemoveTag(title string, blogID uint64) (err error) {
 	
-	ret := Tag.GetTagByTitle(title, blogID)
-	
-	if nil == ret || (nil != ret && ret.ArticleCount != 0) {
+	tagModel := Tag.GetTagByTitle(title, blogID)
+	if nil == tagModel {
 		return
 	}
-	// if 1 > ret.ArticleCount {
-	// 	logger.Errorf("Cannot remove tags that have articles");
-	// 	return errors.New("Cannot remove tags that have articles")
-	// }
-	if err := db.Delete(&ret).Error; nil != err {
+	
+	if (tagModel.ArticleCount != 0) {
+		return errors.New("Cannot remove tags that have articles!")
+	}
+	
+	if err := db.Delete(&tagModel).Error; nil != err {
 		logger.Errorf("Delete tags failed" + err.Error())
 	}
+	
 	return nil // trigger commit in the defer
 }
