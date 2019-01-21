@@ -23,7 +23,7 @@ import (
 	"path/filepath"
 	"strconv"
 	"strings"
-	
+
 	"github.com/b3log/pipe/controller/console"
 	"github.com/b3log/pipe/log"
 	"github.com/b3log/pipe/model"
@@ -58,12 +58,12 @@ func MapRoutes() *gin.Engine {
 		"mod":      func(a, b int) int { return a % b },
 		"noescape": func(s string) template.HTML { return template.HTML(s) },
 	})
-	
+
 	if "dev" == model.Conf.RuntimeMode {
 		ret.Use(gin.Logger())
 	}
 	ret.Use(gin.Recovery())
-	
+
 	store := sessions.NewCookieStore([]byte(model.Conf.SessionSecret))
 	store.Options(sessions.Options{
 		Path:     "/",
@@ -75,7 +75,7 @@ func MapRoutes() *gin.Engine {
 	ret.POST(util.PathUpload, uploadAction)
 	ret.GET(util.PathPlatInfo, showPlatInfoAction)
 	ret.GET(util.PathSitemap, outputSitemapAction)
-	
+
 	api := ret.Group(util.PathAPI)
 	api.POST("/init", initAction)
 	api.POST("/init/local", initLocalAction)
@@ -88,14 +88,14 @@ func MapRoutes() *gin.Engine {
 	api.GET("/blogs/top", showTopBlogsAction)
 	api.GET("/oauth/github/redirect", redirectGitHubLoginAction)
 	api.GET("/oauth/github/callback", githubCallbackAction)
-	
+
 	consoleGroup := api.Group("/console")
 	consoleGroup.Use(console.LoginCheck)
-	
+
 	if "dev" == model.Conf.RuntimeMode {
 		consoleGroup.GET("/dev/articles/gen", console.GenArticlesAction)
 	}
-	
+
 	consoleGroup.GET("/themes", console.GetThemesAction)
 	consoleGroup.PUT("/themes/:id", console.UpdateThemeAction)
 	consoleGroup.GET("/tags", console.GetTagsAction)
@@ -127,7 +127,7 @@ func MapRoutes() *gin.Engine {
 	consoleGroup.POST("/import/md", console.ImportMarkdownAction)
 	consoleGroup.GET("/export/md", console.ExportMarkdownAction)
 	// consoleGroup.POST("/blogs/switch/:id", console.BlogSwitchAction)
-	
+
 	consoleSettingsGroup := consoleGroup.Group("/settings")
 	consoleSettingsGroup.GET("/basic", console.GetBasicSettingsAction)
 	consoleSettingsGroup.PUT("/basic", console.UpdateBasicSettingsAction)
@@ -146,15 +146,15 @@ func MapRoutes() *gin.Engine {
 	consoleSettingsGroup.GET("/account", console.GetAccountAction)
 	consoleSettingsGroup.PUT("/account", console.UpdateAccountAction)
 	consoleSettingsGroup.PUT("/account/password", console.UpdatePasswordAction)
-	
+
 	ret.StaticFile(util.PathFavicon, staticPath("console/static/favicon.ico"))
-	
+
 	ret.Static(util.PathTheme+"/scss", staticPath("theme/scss"))
 	ret.Static(util.PathTheme+"/js", staticPath("theme/js"))
 	ret.Static(util.PathTheme+"/images", staticPath("theme/images"))
 	ret.StaticFile("/sw.min.js", staticPath("theme/sw.min.js"))
 	ret.StaticFile("/halt.html", staticPath("theme/halt.html"))
-	
+
 	for _, theme := range theme.Themes {
 		themePath := staticPath("theme/x/" + theme)
 		ret.Static("/theme/x/"+theme+"/css", themePath+"/css")
@@ -182,87 +182,87 @@ func MapRoutes() *gin.Engine {
 	themeGroup.Use(fillUser, pjax, resolveBlog)
 	themeGroup.GET("", showArticlesAction)
 	themeGroup.Any("/*path", routePath)
-	
+
 	adminPagesGroup := ret.Group(util.PathAdmin)
 	adminPagesGroup.Use(fillUser)
 	adminPagesGroup.GET("", console.ShowAdminPagesAction)
 	adminPagesGroup.GET("/*path", console.ShowAdminPagesAction)
-	
+
 	indexGroup := ret.Group("")
 	indexGroup.Use(fillUser)
 	indexGroup.GET("", showIndexAction)
 	indexGroup.GET(util.PathLogin, showLoginPageAction)
 	indexGroup.GET(util.PathRegister, showRegisterPageAction)
-	
+
 	initGroup := ret.Group(util.PathInit)
 	initGroup.Use(fillUser)
 	initGroup.GET("", showInitPageAction)
-	
+
 	ret.Static(util.PathConsoleDist, staticPath("console/dist"))
 	ret.StaticFile(util.PathChangelogs, staticPath("changelogs.html"))
 	ret.StaticFile(util.PathRobots, staticPath("theme/robots.txt"))
 	ret.NoRoute(func(c *gin.Context) {
 		notFound(c)
 	})
-	
+
 	return ret
 }
 
 func routePath(c *gin.Context) {
 	path := c.Param("path")
-	
+
 	switch path {
 	case util.PathActivities:
 		showActivitiesAction(c)
-		
+
 		return
 	case util.PathArchives:
 		showArchivesAction(c)
-		
+
 		return
 	case util.PathAuthors:
 		showAuthorsAction(c)
-		
+
 		return
 	case util.PathCategories:
 		showCategoriesAction(c)
-		
+
 		return
 	case util.PathTags:
 		showTagsAction(c)
-		
+
 		return
 	case util.PathComments:
 		addCommentAction(c)
-		
+
 		return
 	case util.PathAtom:
 		outputAtomAction(c)
-		
+
 		return
 	case util.PathRSS:
 		outputRSSAction(c)
-		
+
 		return
 	case util.PathUpload:
 		uploadAction(c)
-		
+
 		return
 	case util.PathFetchUpload:
 		fetchUploadAction(c)
-		
+
 		return
 	case util.PathSearch:
 		searchAction(c)
-		
+
 		return
 	case util.PathOpensearch:
 		showOpensearchAction(c)
-		
+
 		return
 	case util.PathAPIsSymComment:
 		addSymCommentAction(c)
-		
+
 		return
 	case util.PathAPIsSymArticle:
 		if "POST" == c.Request.Method {
@@ -270,28 +270,28 @@ func routePath(c *gin.Context) {
 		} else if "PUT" == c.Request.Method {
 			updateSymArticleAction(c)
 		}
-		
+
 		return
 	}
-	
+
 	if strings.Contains(path, util.PathArchives+"/") {
 		showArchiveArticlesAction(c)
-		
+
 		return
 	}
 	if strings.Contains(path, util.PathAuthors+"/") {
 		showAuthorArticlesAction(c)
-		
+
 		return
 	}
 	if strings.Contains(path, util.PathCategories+"/") {
 		showCategoryArticlesArticlesAction(c)
-		
+
 		return
 	}
 	if strings.Contains(path, util.PathTags+"/") {
 		showTagArticlesAction(c)
-		
+
 		return
 	}
 	if strings.Contains(path, util.PathComments+"/") {
@@ -302,15 +302,15 @@ func routePath(c *gin.Context) {
 		} else {
 			getRepliesAction(c)
 		}
-		
+
 		return
 	}
 	if "/" == path {
 		showArticlesAction(c)
-		
+
 		return
 	}
-	
+
 	logger.Tracef("can't handle path [" + path + "]")
 	notFound(c)
 }

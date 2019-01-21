@@ -23,7 +23,7 @@ import (
 	"net/http"
 	"path/filepath"
 	"strings"
-	
+
 	"github.com/b3log/pipe/model"
 	"github.com/b3log/pipe/service"
 	"github.com/b3log/pipe/util"
@@ -38,35 +38,35 @@ import (
 func loginAction(c *gin.Context) {
 	result := util.NewResult()
 	defer c.JSON(http.StatusOK, result)
-	
+
 	arg := map[string]interface{}{}
 	if err := c.BindJSON(&arg); nil != err {
 		result.Code = -1
 		result.Msg = "parses login request failed"
-		
+
 		return
 	}
-	
+
 	name := arg["name"].(string)
 	password := arg["password"].(string)
-	
+
 	user := service.User.GetUserByName(name)
 	if nil == user {
 		result.Code = -1
 		result.Msg = "user not found"
-		
+
 		return
 	}
-	
+
 	crypt := sha512_crypt.New()
 	inputHash, _ := crypt.Generate([]byte(password), []byte(user.Password))
 	if inputHash != user.Password {
 		result.Code = -1
 		result.Msg = "wrong password"
-		
+
 		return
 	}
-	
+
 	ownBlog := service.User.GetOwnBlog(user.ID)
 	session := &util.SessionData{
 		UID:     user.ID,
@@ -87,7 +87,7 @@ func loginAction(c *gin.Context) {
 func logoutAction(c *gin.Context) {
 	result := util.NewResult()
 	defer c.JSON(http.StatusOK, result)
-	
+
 	session := sessions.Default(c)
 	session.Options(sessions.Options{
 		Path:   "/",
@@ -103,35 +103,35 @@ func logoutAction(c *gin.Context) {
 func registerAction(c *gin.Context) {
 	result := util.NewResult()
 	defer c.JSON(http.StatusOK, result)
-	
+
 	arg := map[string]interface{}{}
 	if err := c.BindJSON(&arg); nil != err {
 		result.Code = -1
 		result.Msg = "parses register request failed"
-		
+
 		return
 	}
-	
+
 	if !model.Conf.OpenRegister {
 		result.Code = -1
 		result.Msg = "Not open register at present"
-		
+
 		return
 	}
-	
+
 	name := arg["name"].(string)
 	password := arg["password"].(string)
-	
+
 	existUser := service.User.GetUserByName(name)
 	if nil != existUser {
 		result.Code = -1
 		result.Msg = "duplicated user name"
-		
+
 		return
 	}
-	
+
 	avatarURL := "https://img.hacpai.com/pipe/default-avatar.png"
-	
+
 	platformAdmin := service.User.GetPlatformAdmin()
 	key := "pipe/" + platformAdmin.Name + "/" + name + "/" + name + "/" + strings.Replace(uuid.NewV4().String(), "-", "", -1) + ".jpg"
 	avatarData := util.RandAvatarData()
@@ -144,20 +144,20 @@ func registerAction(c *gin.Context) {
 			avatarURL = ut.domain + "/" + uploadRet.Key
 		}
 	}
-	
+
 	user := &model.User{
 		Name:      name,
 		Password:  password,
 		AvatarURL: avatarURL,
 	}
-	
+
 	if err := service.Init.InitBlog(user); nil != err {
 		result.Code = -1
 		result.Msg = err.Error()
-		
+
 		return
 	}
-	
+
 	ownBlog := service.User.GetOwnBlog(user.ID)
 	session := &util.SessionData{
 		UID:     user.ID,
@@ -179,10 +179,10 @@ func showLoginPageAction(c *gin.Context) {
 	if nil != err {
 		logger.Errorf("load login page failed: " + err.Error())
 		c.String(http.StatusNotFound, "load login page failed")
-		
+
 		return
 	}
-	
+
 	t.Execute(c.Writer, nil)
 }
 
@@ -191,9 +191,9 @@ func showRegisterPageAction(c *gin.Context) {
 	if nil != err {
 		logger.Errorf("load register page failed: " + err.Error())
 		c.String(http.StatusNotFound, "load register page failed")
-		
+
 		return
 	}
-	
+
 	t.Execute(c.Writer, nil)
 }

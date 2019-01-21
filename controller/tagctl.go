@@ -22,7 +22,7 @@ import (
 	"net/http"
 	"strconv"
 	"strings"
-	
+
 	"github.com/b3log/pipe/i18n"
 	"github.com/b3log/pipe/model"
 	"github.com/b3log/pipe/service"
@@ -47,7 +47,7 @@ func showTagsAction(c *gin.Context) {
 	}
 	dataModel["Tags"] = themeTags
 	dataModel["Title"] = i18n.GetMessage(locale, "tags") + " - " + dataModel["Title"].(string)
-	
+
 	c.HTML(http.StatusOK, getTheme(c)+"/tags.html", dataModel)
 }
 
@@ -60,7 +60,7 @@ func showTagArticlesAction(c *gin.Context) {
 	tagModel := service.Tag.GetTagByTitle(tagTitle, blogID)
 	if nil == tagModel {
 		notFound(c)
-		
+
 		return
 	}
 	articleListStyleSetting := service.Setting.GetSetting(model.SettingCategoryPreference, model.SettingNamePreferenceArticleListStyle, blogID)
@@ -76,20 +76,20 @@ func showTagArticlesAction(c *gin.Context) {
 			}
 			themeTags = append(themeTags, themeTag)
 		}
-		
+
 		authorModel := service.User.GetUser(articleModel.AuthorID)
 		if nil == authorModel {
 			logger.Errorf("not found author of article [id=%d, authorID=%d]", articleModel.ID, articleModel.AuthorID)
-			
+
 			continue
 		}
-		
+
 		author := &model.ThemeAuthor{
 			Name:      authorModel.Name,
 			URL:       getBlogURL(c) + util.PathAuthors + "/" + authorModel.Name,
 			AvatarURL: authorModel.AvatarURL,
 		}
-		
+
 		mdResult := util.Markdown(articleModel.Content)
 		abstract := template.HTML("")
 		thumbnailURL := mdResult.ThumbURL
@@ -120,7 +120,7 @@ func showTagArticlesAction(c *gin.Context) {
 			ThumbnailURL:   thumbnailURL,
 			Editable:       session.UID == authorModel.ID,
 		}
-		
+
 		articles = append(articles, article)
 	}
 	dataModel["Articles"] = articles
@@ -131,6 +131,6 @@ func showTagArticlesAction(c *gin.Context) {
 		ArticleCount: tagModel.ArticleCount,
 	}
 	dataModel["Title"] = tagModel.Title + " - " + i18n.GetMessage(locale, "tags") + " - " + dataModel["Title"].(string)
-	
+
 	c.HTML(http.StatusOK, getTheme(c)+"/tag-articles.html", dataModel)
 }
