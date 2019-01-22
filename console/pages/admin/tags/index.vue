@@ -10,24 +10,9 @@
                  href="javascript:void(0)">
                 {{ item.title }}
               </a>
-              <v-menu
-                v-if="$store.state.role < 3"
-                :nudge-bottom="28"
-                :nudge-width="60"
-                :nudge-left="60"
-                :open-on-hover="true">
-                <v-toolbar-title slot="activator">
-                  <v-btn class="btn--small btn--info">
-                    {{ $t('edit', $store.state.locale) }}
-                    <v-icon>arrow_drop_down</v-icon>
-                  </v-btn>
-                </v-toolbar-title>
-                <v-list>
-                  <v-list-tile class="list__tile--link" @click="remove(item.title)">
-                    {{ $t('delete', $store.state.locale) }}
-                  </v-list-tile>
-                </v-list>
-              </v-menu>
+              <v-btn class="btn--danger btn--small" @click="remove(item.title)">
+                {{ $t('delete', $store.state.locale) }}
+              </v-btn>
             </div>
           </div>
         </li>
