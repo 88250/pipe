@@ -59,6 +59,9 @@ func MapRoutes() *gin.Engine {
 		"noescape": func(s string) template.HTML { return template.HTML(s) },
 	})
 
+	if "dev" == model.Conf.RuntimeMode {
+		ret.Use(gin.Logger())
+	}
 	ret.Use(gin.Recovery())
 
 	store := sessions.NewCookieStore([]byte(model.Conf.SessionSecret))
@@ -96,6 +99,8 @@ func MapRoutes() *gin.Engine {
 	consoleGroup.GET("/themes", console.GetThemesAction)
 	consoleGroup.PUT("/themes/:id", console.UpdateThemeAction)
 	consoleGroup.GET("/tags", console.GetTagsAction)
+	consoleGroup.GET("/taglist", console.GetTagsPageAction)
+	consoleGroup.DELETE("/tags/:title", console.RemoveTagsAction)
 	consoleGroup.POST("/articles", console.AddArticleAction)
 	consoleGroup.POST("/articles/batch-delete", console.RemoveArticlesAction)
 	consoleGroup.GET("/articles", console.GetArticlesAction)

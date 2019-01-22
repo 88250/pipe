@@ -81,7 +81,13 @@ export const genMenuData = (app, locale) => [
         title: app.$t('navigationList', locale),
         link: '/admin/navigations',
         role: 2
-      }/*,
+      },
+      {
+        title: app.$t('tagList', locale),
+        link: '/admin/tags',
+        role: 2
+      }
+      /*,
       {
         title: app.$t('userList', locale),
         link: '/admin/users',

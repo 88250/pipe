@@ -17,6 +17,7 @@
 package console
 
 import (
+	"github.com/b3log/pipe/model"
 	"math"
 	"net/http"
 
@@ -39,4 +40,45 @@ func GetTagsAction(c *gin.Context) {
 	}
 
 	result.Data = tags
+}
+
+// GetTagsAction gets tags with paginations.
+func GetTagsPageAction(c *gin.Context) {
+	result := util.NewResult()
+	defer c.JSON(http.StatusOK, result)
+
+	session := util.GetSession(c)
+	tagModels, pagination := service.Tag.ConsoleGetTags(util.GetPage(c), session.BID)
+	blogURLSetting := service.Setting.GetSetting(model.SettingCategoryBasic, model.SettingNameBasicBlogURL, session.BID)
+
+	var tags []*ConsoleTag
+	for _, tagModel := range tagModels {
+		item := &ConsoleTag{
+			Title: tagModel.Title,
+			URL:   blogURLSetting.Value + util.PathTags + "/" + tagModel.Title,
+		}
+		tags = append(tags, item)
+	}
+	data := map[string]interface{}{}
+	data["tags"] = tags
+	data["pagination"] = pagination
+	result.Data = data
+}
+
+// RemoveTagsAction remove tags that have no articles.
+func RemoveTagsAction(c *gin.Context) {
+	result := util.NewResult()
+	defer c.JSON(http.StatusOK, result)
+
+	titleArg := c.Param("title")
+
+	session := util.GetSession(c)
+	blogID := session.BID
+
+	// rm tags
+	if err := service.Tag.RemoveTag(titleArg, blogID); nil != err {
+		result.Code = -1
+		result.Msg = err.Error()
+	}
+
 }
