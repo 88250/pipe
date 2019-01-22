@@ -1,10 +1,8 @@
 <template>
   <div>
     <div class="card fn-clear">
-
       <ul class="list" v-if="list.length > 0">
         <li v-for="item in list" :key="item.id" class="fn-flex">
-          
           <div class="fn-flex-1">
             <div class="fn-flex">
               <a target="_blank" class="list__title fn-flex-1"
@@ -31,9 +29,6 @@
                 </v-list>
               </v-menu>
             </div>
-            <div class="list__meta">
-              {{ getOpenMethodName(item.openMethod) }}
-            </div>
           </div>
         </li>
       </ul>
@@ -54,7 +49,6 @@
 </template>
 
 <script>
-
   export default {
     data () {
       return {
@@ -74,23 +68,6 @@
     methods: {
       openURL (url) {
         window.location.href = url
-      },
-      getOpenMethodName (openMethod) {
-        let openMethodName = this.$t('openMethod1', this.$store.state.locale)
-        switch (openMethod) {
-          case '_blank':
-            openMethodName = this.$t('openMethod2', this.$store.state.locale)
-            break
-          case '_parent':
-            openMethodName = this.$t('openMethod3', this.$store.state.locale)
-            break
-          case '_top':
-            openMethodName = this.$t('openMethod4', this.$store.state.locale)
-            break
-          default:
-            break
-        }
-        return openMethodName
       },
       async getList (currentPage = 1) {
         const responseData = await this.axios.get(`/console/taglist?p=${currentPage}`)
