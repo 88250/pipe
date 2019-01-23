@@ -533,7 +533,7 @@ body {
     vertical-align: sub;
   }
 
-  .fn-right {
+  .fn__right {
     position: absolute;
     top: 0;
     right: 20px;
@@ -572,7 +572,7 @@ body {
     padding: 10px 20px;
     margin: 0 0 20px 0;
   }
-  &__body > .fn-clear > .ft-gray:first-child {
+  &__body > .fn__clear > .ft__gray:first-child {
     color: $green;
     font-size: 16px;
     transition: $transition;
@@ -933,7 +933,7 @@ body {
 
   .footer {
     margin-top: 20px;
-    .fn-right {
+    .fn__right {
       float: none;
     }
 

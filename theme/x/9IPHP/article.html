@@ -9,7 +9,7 @@
 {{template "9IPHP/header" .}}
 <div id="pjax">
     {{if .pjax}}{{noescape "<!---- pjax {#pjax} start ---->"}}{{end}}
-<div class="main wrapper fn-clear">
+<div class="main wrapper fn__clear">
     <div class="content">
         <article class="article__item">
             <header>
@@ -31,14 +31,14 @@
                     </a>
                     &nbsp; &nbsp;
                     {{end}}
-                    <time class="ft-nowrap">
+                    <time class="ft__nowrap">
                         <svg>
                             <use xlink:href="#icon-date"></use>
                         </svg>
                         {{.Article.CreatedAt}}
                     </time>
                     &nbsp; | &nbsp;
-                    <span class="ft-nowrap">
+                    <span class="ft__nowrap">
                         <svg><use xlink:href="#icon-view"></use></svg>
                         {{.Article.ViewCount}} {{$.I18n.View}}
                     </span>
@@ -57,7 +57,7 @@
                      data-author="{{.Article.Author.Name}}">
                 {{.Article.Content}}
             </section>
-            <div class="article__share fn-clear">
+            <div class="article__share fn__clear">
                 {{range .Article.Tags}}
                 <a class="tag" rel="tag" href="{{.URL}}">{{.Title}}</a>
                 {{end}}
@@ -82,7 +82,7 @@
                          data-avatar="{{.Article.Author.AvatarURLWithSize 128}}"></div>
                 </span>
             </div>
-            <div class="fn-clear article__more">
+            <div class="fn__clear article__more">
                 {{if .PreviousArticle}}
                 <a href="{{.PreviousArticle.URL}}"
                    class="pipe-tooltipped pipe-tooltipped--n first"
@@ -104,7 +104,7 @@
                 </a>
                 {{end}}
 
-                <span class="fn-right">
+                <span class="fn__right">
                     <a href="javascript:void(0)"
                         data-title="{{.I18n.Comment}}{{.I18n.Colon}}{{.Article.Title}}"
                        id="articleCommentBtn"

@@ -255,7 +255,7 @@ a {
     height: 65px;
     box-sizing: border-box;
 
-    a.fn-right {
+    a.fn__right {
       padding: 0 20px 0 0;
       box-sizing: border-box;
 
@@ -995,7 +995,7 @@ a {
     }
   }
 
-  .side > .fn-none {
+  .side > .fn__none {
     display: block;
     &.module__list li {
       border-bottom: 1px dotted $border-color;
@@ -1017,7 +1017,7 @@ a {
   .footer__info {
     text-align: right;
     padding: 20px 0;
-    .fn-right {
+    .fn__right {
       float: none;
     }
   }

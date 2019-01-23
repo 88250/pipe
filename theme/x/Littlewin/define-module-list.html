@@ -1,13 +1,13 @@
 {{define "Littlewin/module-list"}}
 {{if ne (len .List) 0}}
 <div class="module module--bottom">
-    <div class="module__header fn-flex-center">
+    <div class="module__header fn__flex-center">
         <svg><use xlink:href="#iconBar"></use></svg>
         {{.Title}}
     </div>
     <ul class="module__list module--space">
         {{range .List}}
-        <li class="fn-flex-center">
+        <li class="fn__flex-center">
             {{if gt $.UserCount 1}}
             <a class="avatar pipe-tooltipped pipe-tooltipped--n"
                href="{{.Author.URL}}"

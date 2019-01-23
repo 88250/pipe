@@ -2,9 +2,9 @@
   <div class="console" id="particles">
     <div class="card">
       <h2 class="card__title">404</h2>
-      <div class="card__body fn-clear">
+      <div class="card__body fn__clear">
         <div class="error__description">Page not found</div>
-        <div class="fn-right">
+        <div class="fn__right">
           <nuxt-link to="/">{{ $t('index', $store.state.locale)}}</nuxt-link>
           |
           <a href="https://hacpai.com">{{ $t('hacpai', $store.state.locale)}}</a>

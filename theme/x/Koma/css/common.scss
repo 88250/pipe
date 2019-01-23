@@ -314,14 +314,14 @@ a {
     padding-top: 15px;
     position: relative;
 
-    .fn-left svg {
+    .fn__left svg {
       float: left;
       margin: 6px 15px 0 0;
       height: 18px;
       width: 18px;
     }
 
-    .fn-right {
+    .fn__right {
       a {
         color: $text-hover-color;
         transition: $transition;
@@ -738,7 +738,7 @@ a {
     display: none;
   }
 
-  .side > .fn-none,
+  .side > .fn__none,
   .mobile--show {
     display: block;
   }
@@ -792,13 +792,13 @@ a {
     margin: 15px 20px;
   }
 
-  .article__footer > .fn-left,
-  .article__footer > .fn-right,
-  .footer .fn-right {
+  .article__footer > .fn__left,
+  .article__footer > .fn__right,
+  .footer .fn__right {
     float: none;
   }
 
-  .article__footer > .fn-right a {
+  .article__footer > .fn__right a {
     margin: 15px 15px 0 0;
     display: inline-block;
   }

@@ -26,10 +26,10 @@ const Common = {
     });
 
     $('#hideToc').click(function () {
-      if ($('.side > .fn-none').css('display') !== 'none') {
+      if ($('.side > .fn__none').css('display') !== 'none') {
         return
       }
-      $('.side > .fn-none').show()
+      $('.side > .fn__none').show()
       $('.toc__panel').addClass('toc__panel--hide')
       setTimeout(function () {
         $('.toc__panel').hide();
@@ -42,7 +42,7 @@ const Common = {
       }
       $('.toc__panel').show().removeClass('toc__panel--hide')
       setTimeout(function () {
-        $('.side > .fn-none').hide()
+        $('.side > .fn__none').hide()
       }, 300)
     });
   },

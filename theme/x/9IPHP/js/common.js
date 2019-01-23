@@ -77,7 +77,7 @@ const Common = {
       }, 800)
     })
 
-    $('.header .fn-none').click(function () {
+    $('.header .fn__none').click(function () {
       $('.mobile__nav').slideToggle()
     })
 

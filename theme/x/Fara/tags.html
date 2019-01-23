@@ -12,9 +12,9 @@
     <div class="main" id="pjax">
         {{if .pjax}}{{noescape "<!---- pjax {#pjax} start ---->"}}{{end}}
         <div class="main__title">
-            <span id="tagArticleCount" class="main__count">0</span> <span class="ft-13">{{.I18n.Tags2}}</span>
+            <span id="tagArticleCount" class="main__count">0</span> <span class="ft__13">{{.I18n.Tags2}}</span>
         </div>
-        <div class="article__meta article__meta--page article__meta--3 fn-clear" id="tags">
+        <div class="article__meta article__meta--page article__meta--3 fn__clear" id="tags">
             {{range .Tags}}
             <a href="{{.URL}}" data-count="{{.ArticleCount}}" class="tag">{{.Title}} ({{.ArticleCount}})</a>
             {{end}}

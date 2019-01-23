@@ -43,14 +43,14 @@
             <section class="pipe-content__reset" id="articleContent" data-author="{{.Article.Author.Name}}">
                 {{.Article.Content}}
             </section>
-            <div class="article__footer fn-clear">
+            <div class="article__footer fn__clear">
                 <span>
                     {{range .Article.Tags}}
                     <a class="tag" rel="tag" href="{{.URL}}">{{.Title}}</a>
                     {{end}}
                 </span>
 
-                <div class="fn-right article__actions">
+                <div class="fn__right article__actions">
                     {{if .Article.Editable}}
                     <a href="{{$.Conf.Server}}/admin/articles/post?id={{.Article.ID}}"
                        aria-label="{{$.I18n.Edit}}"
@@ -98,7 +98,7 @@
         {{template "comment/comments" .}}
 
         {{if and .PreviousArticle .NextArticle}}
-        <div class="article__neighbor fn-clear">
+        <div class="article__neighbor fn__clear">
             {{if .PreviousArticle}}
             <a href="{{.PreviousArticle.URL}}"
                class="pipe-tooltipped pipe-tooltipped--w"
@@ -111,7 +111,7 @@
             {{end}}
             {{if .NextArticle}}
             <a href="{{.NextArticle.URL}}" aria-label="{{.I18n.NextArticle}}" rel="next"
-               class="fn-right pipe-tooltipped pipe-tooltipped--e">
+               class="fn__right pipe-tooltipped pipe-tooltipped--e">
                 {{.NextArticle.Title}}
                 <svg>
                     <use xlink:href="#icon-chevron-right"></use>
@@ -131,12 +131,12 @@
                    href="{{$item.URL}}"
                    data-src="{{$item.ThumbnailURL}}"
                    target="_blank"></a>
-                <a class="relevant__title fn-ellipsis" href="{{$item.URL}}" target="_blank">{{$item.Title}}</a>
-                <div class="fn-clear">
+                <a class="relevant__title fn__ellipsis" href="{{$item.URL}}" target="_blank">{{$item.Title}}</a>
+                <div class="fn__clear">
                     <a class="avatar" data-src="{{$item.Author.AvatarURL}}"
                        href="{{$item.Author.URL}}" target="_blank"></a>
-                    <a href="{{$item.Author.URL}}" class="ft-gray" target="_blank">{{$item.Author.Name}}</a>
-                    <a href="{{$item.URL}}#comments" class="ft-fade fn-right" target="_blank">
+                    <a href="{{$item.Author.URL}}" class="ft__gray" target="_blank">{{$item.Author.Name}}</a>
+                    <a href="{{$item.URL}}#comments" class="ft__fade fn__right" target="_blank">
                            {{if ne 0 $item.CommentCount}}
                            {{$item.CommentCount}}
                            {{$.I18n.Comment}}

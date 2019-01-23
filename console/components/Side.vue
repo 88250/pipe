@@ -1,5 +1,5 @@
 <template>
-  <aside class="side fn-flex">
+  <aside class="side fn__flex">
     <nav>
       <v-list v-for="item in $store.state.menu" :key="item.title">
         <v-list-group
@@ -34,7 +34,7 @@
         </v-list-group>
       </v-list>
     </nav>
-    <div class="side__mobile fn-flex-1" @click="closeSide"></div>
+    <div class="side__mobile fn__flex-1" @click="closeSide"></div>
   </aside>
 </template>
 

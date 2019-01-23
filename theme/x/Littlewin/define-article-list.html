@@ -3,7 +3,7 @@
 {{.I18n.NoData}}
 {{end}}
 {{range .Articles}}
-<article class="article__item module module--bottom fn-flex">
+<article class="article__item module module--bottom fn__flex">
     <header>
         <time class="article__time">
             <div class="article__day">{{.CreatedAtDay}}</div>
@@ -11,8 +11,8 @@
             {{.CreatedAtYear}}
         </time>
     </header>
-    <section class="fn-flex-1">
-        <h2 class="fn-flex-center">
+    <section class="fn__flex-1">
+        <h2 class="fn__flex-center">
             {{if .Topped}}
             <div aria-label="{{$.I18n.Top}}" class="pipe-tooltipped pipe-tooltipped--n">
                 <svg>
@@ -30,8 +30,8 @@
              class="pipe-content__reset article__abstract">
             {{.Abstract}}
         </div>
-        <footer class="article__footer fn-flex-center">
-            <div class="fn-flex-1 fn-flex-center">
+        <footer class="article__footer fn__flex-center">
+            <div class="fn__flex-1 fn__flex-center">
                 <svg>
                     <use xlink:href="#iconTag"></use>
                 </svg>
@@ -78,7 +78,7 @@
 {{end}}
 
 {{if gt (len $.Pagination.PageNums) 1}}
-<nav class="pagination fn-flex-center">
+<nav class="pagination fn__flex-center">
     {{if gt $.Pagination.PreviousPageNum 0}}
     <a class="pagination__omit pipe-tooltipped--w pipe-tooltipped"
        aria-label="{{.I18n.PrePage}}" href="?p={{$.Pagination.PreviousPageNum}}">

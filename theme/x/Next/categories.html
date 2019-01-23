@@ -11,10 +11,10 @@
         {{if .pjax}}{{noescape "<!---- pjax {#pjax} start ---->"}}{{end}}
     <div class="wrapper page">
         <h2 class="page__title">
-            <span id="categoriesCount">0</span> <span class="ft-fade ft-13">{{.I18n.Categories2}}</span>
+            <span id="categoriesCount">0</span> <span class="ft__fade ft__13">{{.I18n.Categories2}}</span>
         </h2>
         {{if eq (len .Categories) 0}}
-        <div class="ft-center">
+        <div class="ft__center">
             {{.I18n.NoData}}
         </div>
         {{end}}
@@ -23,10 +23,10 @@
             <h3>
                 <a href="{{.URL}}" class="categories__header">
                     {{.Title}}
-                    <span class="ft-13 ft-gray"><!--{{.ArticleCount}} {{$.I18n.Article2}}--></span>
+                    <span class="ft__13 ft__gray"><!--{{.ArticleCount}} {{$.I18n.Article2}}--></span>
                 </a>
             </h3>
-            <div class="ft-gray ft-13">{{.Description}}</div>
+            <div class="ft__gray ft__13">{{.Description}}</div>
             {{range .Tags}}
             <a href="{{.URL}}" class="tag">{{.Title}}</a>
             {{end}}

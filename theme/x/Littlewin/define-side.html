@@ -3,13 +3,13 @@
     {{template "Littlewin/module-list" dict "List" .MostCommentArticles "Title" .I18n.MostCommentArticle "UserCount" .UserCount}}
     {{template "Littlewin/module-list" dict "List" .MostViewArticles "Title" .I18n.MostViewArticle "UserCount" .UserCount}}
     <div class="module module--bottom">
-        <div class="module__header fn-flex-center">
+        <div class="module__header fn__flex-center">
             <svg>
                 <use xlink:href="#iconBar"></use>
             </svg>
             {{.I18n.Tags}}
         </div>
-        <div class="module__tags module--space fn-clear">
+        <div class="module__tags module--space fn__clear">
             {{range .MostUseTags}}
             <a href="{{.URL}}">{{.Title}}</a>
             {{end}}
@@ -17,13 +17,13 @@
     </div>
     {{if gt (len .MostUseCategories) 0}}
     <div class="module module--bottom">
-        <div class="module__header fn-flex-center">
+        <div class="module__header fn__flex-center">
             <svg>
                 <use xlink:href="#iconBar"></use>
             </svg>
             {{.I18n.Categories}}
         </div>
-        <div class="module__tags module--space fn-clear">
+        <div class="module__tags module--space fn__clear">
             {{range .MostUseCategories}}
             <a href="{{.URL}}">{{.Title}}</a>
             {{end}}
@@ -32,7 +32,7 @@
     {{end}}
     {{if gt (len .RecentComments) 0}}
     <div class="module module--bottom">
-        <div class="module__header fn-flex-center">
+        <div class="module__header fn__flex-center">
             <svg>
                 <use xlink:href="#iconBar"></use>
             </svg>
@@ -40,7 +40,7 @@
         </div>
         <div class="module--space">
             {{range .RecentComments}}
-            <div class="module__cmt{{if eq .Author.Name $.BlogAdmin.Name}} module__cmt--left{{end}} fn-flex-center">
+            <div class="module__cmt{{if eq .Author.Name $.BlogAdmin.Name}} module__cmt--left{{end}} fn__flex-center">
                 <a class="avatar avatar--mid pipe-tooltipped pipe-tooltipped--n"
                    href="{{.Author.URL}}"
                    aria-label="{{.Author.Name}}"

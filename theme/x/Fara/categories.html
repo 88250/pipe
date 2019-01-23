@@ -12,7 +12,7 @@
     <div class="main" id="pjax">
         {{if .pjax}}{{noescape "<!---- pjax {#pjax} start ---->"}}{{end}}
         <div class="main__title">
-            <span id="categoriesCount" class="main__count">0</span> <span class="ft-13">{{.I18n.Categories2}}</span>
+            <span id="categoriesCount" class="main__count">0</span> <span class="ft__13">{{.I18n.Categories2}}</span>
         </div>
         <div class="article__meta article__meta--page article__meta--2">
             {{if eq (len .Categories) 0}}
@@ -28,7 +28,7 @@
                     </a>
                 </h2>
                 <div class="categories__desc">{{.Description}}</div>
-                <div class="fn-clear">
+                <div class="fn__clear">
                     {{range .Tags}}
                     <a href="{{.URL}}" class="tag">{{.Title}}</a>
                     {{end}}

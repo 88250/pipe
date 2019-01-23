@@ -1,29 +1,29 @@
 <template>
   <div class="card">
     <div class="card__body">
-      <div class="fn-flex admin__about">
+      <div class="fn__flex admin__about">
         <div class="about__side">
           <img src="~assets/images/logo.png"/> <br>
           <a class="btn btn--info btn--margin-t30 btn--block btn--success"
              target="_blank"
              href="https://b3log.org/donate.html">{{ $t('becomeSponsor', $store.state.locale) }}</a>
         </div>
-        <div class="fn-flex-1 pipe-content__reset">
-          <h2 class="fn-clear" v-if="isLatest">
-            <span class="fn-left">
+        <div class="fn__flex-1 pipe-content__reset">
+          <h2 class="fn__clear" v-if="isLatest">
+            <span class="fn__left">
               {{ $t('about1', $store.state.locale) }}
               <a :href="download" target="_blank">{{ version }}</a>
             </span>
-            <iframe class="about__github fn-left"
+            <iframe class="about__github fn__left"
                     src="https://ghbtns.com/github-btn.html?user=b3log&repo=pipe&type=star&count=true&size=large"
                     frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
           </h2>
-          <h2 class="fn-clear" v-else>
-            <span class="fn-left">
+          <h2 class="fn__clear" v-else>
+            <span class="fn__left">
                {{ $t('about2', $store.state.locale) }}
-              <a class="ft-danger" :href="download" target="_blank">{{ version }}</a>
+              <a class="ft__danger" :href="download" target="_blank">{{ version }}</a>
             </span>
-            <iframe class="about__github fn-left"
+            <iframe class="about__github fn__left"
                     src="https://ghbtns.com/github-btn.html?user=b3log&repo=pipe&type=star&count=true&size=large"
                     frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
           </h2>

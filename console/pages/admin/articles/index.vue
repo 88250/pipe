@@ -1,9 +1,9 @@
 <template>
   <div class="card">
-    <div class="card__body fn-flex" v-show="!isBatch">
+    <div class="card__body fn__flex" v-show="!isBatch">
       <v-text-field v-if="list.length > 0 || isSearch"
         @keyup.enter="getList();isSearch = true"
-        class="fn-flex-1"
+        class="fn__flex-1"
         :label="$t('enterSearch', $store.state.locale)"
         v-model="keyword">
       </v-text-field>
@@ -11,8 +11,8 @@
         }}
       </nuxt-link>
     </div>
-    <div class="card__batch-action fn-flex" v-show="isBatch">
-      <label class="checkbox fn-flex-1">
+    <div class="card__batch-action fn__flex" v-show="isBatch">
+      <label class="checkbox fn__flex-1">
         <input
           type="checkbox"
           :checked="isSelectAll"
@@ -38,7 +38,7 @@
       <li
         v-for="item in list"
         :key="item.id"
-        class="fn-flex"
+        class="fn__flex"
         :class="{'selected': isSelected(item.id)}"
         @click="setSelectedId(item.id)">
         <a class="avatar avatar--mid avatar--space pipe-tooltipped pipe-tooltipped--s"
@@ -47,9 +47,9 @@
            @click.stop="openURL(item.author.url)"
            href="javascript:void(0)"
            :style="`background-image: url(${item.author.avatarURL})`"></a>
-        <div class="fn-flex-1">
-          <div class="fn-flex">
-            <span class="fn-flex-1">
+        <div class="fn__flex-1">
+          <div class="fn__flex">
+            <span class="fn__flex-1">
               <a class="list__title" @click.stop="openURL(item.url)" href="javascript:void(0)">{{ item.title }}</a>
             </span>
             <v-menu
@@ -90,17 +90,17 @@
       </li>
     </ul>
     <ul class="list" v-else-if="isSearch && !isBatch">
-      <li class="fn-flex fn-pointer" @click="isSearch = false;keyword = '';getList();">
+      <li class="fn__flex fn__pointer" @click="isSearch = false;keyword = '';getList();">
         {{ $t('searchNull', $store.state.locale) }} &nbsp;
-        <span class="ft-danger">{{keyword}}</span>
+        <span class="ft__danger">{{keyword}}</span>
       </li>
     </ul>
-    <div class="pagination--wrapper fn-clear" v-if="pageCount > 1">
+    <div class="pagination--wrapper fn__clear" v-if="pageCount > 1">
       <v-pagination
         :length="pageCount"
         v-model="currentPageNum"
         :total-visible="windowSize"
-        class="fn-right"
+        class="fn__right"
         circle
         next-icon="angle-right"
         prev-icon="angle-left"

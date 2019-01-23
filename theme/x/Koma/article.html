@@ -36,7 +36,7 @@
         <section class="pipe-content__reset article__abstract" id="articleContent" data-author="{{.Article.Author.Name}}">
             {{.Article.Content}}
         </section>
-        <div class="article__footer fn-clear">
+        <div class="article__footer fn__clear">
             <span class="article__share">
                 <span class="article__share-btn article__share-btn--wechat" data-type="wechat">
                     <svg><use xlink:href="#wechat"></use></svg>
@@ -56,7 +56,7 @@
                      data-url="{{.Article.URL}}"
                      data-avatar="{{.Article.Author.AvatarURLWithSize 128}}"></div>
             </span>
-            <div class="fn-left">
+            <div class="fn__left">
                 <svg>
                     <use xlink:href="#icon-tag"></use>
                 </svg>
@@ -64,7 +64,7 @@
                 <a class="tag" rel="tag" href="{{.URL}}">{{.Title}}</a>
                 {{end}}
             </div>
-            <span class="fn-right">
+            <span class="fn__right">
                 <a href="{{.Article.URL}}" aria-label="{{$.I18n.View}}"
                    class="pipe-tooltipped pipe-tooltipped--n">
                     {{.Article.ViewCount}}
@@ -135,15 +135,15 @@
                     <a href="{{$item.URL}}" class="relevant__abstract" target="_blank">
                         {{$item.Abstract}}
                     </a>
-                    <div class="relevant__meta fn-clear">
+                    <div class="relevant__meta fn__clear">
                         <a class="relevant__avatar pipe-tooltipped pipe-tooltipped--w"
                            aria-label="{{$item.Author.Name}}"
                            data-src="{{$item.Author.AvatarURL}}"
                            href="{{$item.Author.URL}}" target="_blank"></a>
-                        <span class="fn-left ft-fade">{{$item.CreatedAt}} &nbsp; &nbsp;</span>
+                        <span class="fn__left ft__fade">{{$item.CreatedAt}} &nbsp; &nbsp;</span>
                         {{if ne 0 $item.CommentCount}}
                         <a href="{{$item.URL}}#comments"
-                           class="ft-fade" target="_blank">
+                           class="ft__fade" target="_blank">
                             {{$item.CommentCount}}
                             {{$.I18n.Comment}}
                         </a>

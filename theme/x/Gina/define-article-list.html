@@ -6,7 +6,7 @@
         {{end}}
         {{range .Articles}}
         <article class="fn-bottom article__item">
-            <header class="fn-relative article__header">
+            <header class="fn__relative article__header">
                 {{if .ThumbnailURL}}
                 <a class="article__thumb"
                    href="{{.URL}}"
@@ -32,17 +32,17 @@
                                 {{.Title}}
                             </a>
                         </h2>
-                        <div class="ft-gray ft-12">
+                        <div class="ft__gray ft__12">
                             {{range .Tags}}
                             <a class="tag" rel="tag" href="{{.URL}}">{{.Title}}</a>
                             {{end}}
                             <span class="article__responsive-meta">
-                                <time class="ft-nowrap">{{.CreatedAt}}</time>
+                                <time class="ft__nowrap">{{.CreatedAt}}</time>
                                 •
-                                <span class="ft-nowrap">{{.ViewCount}} {{$.I18n.View}}</span>
+                                <span class="ft__nowrap">{{.ViewCount}} {{$.I18n.View}}</span>
                                 {{if gt .CommentCount 0}}
                                 •
-                                <a href="{{.URL}}#pipeComments" class="fn-nowrap ft-gray">{{.CommentCount}} {{$.I18n.Comment}}</a>
+                                <a href="{{.URL}}#pipeComments" class="fn-nowrap ft__gray">{{.CommentCount}} {{$.I18n.Comment}}</a>
                                 {{end}}
                             </span>
                         </div>
@@ -57,19 +57,19 @@
                 {{.Abstract}}
             </section>
             {{end}}
-            <div class="article__action fn-clear">
-                <span class="fn-right">
+            <div class="article__action fn__clear">
+                <span class="fn__right">
                     {{if .Editable}}
-                    <a class="fn-right action__btn action__btn--space fn-clear"
+                    <a class="fn__right action__btn action__btn--space fn__clear"
                        href="{{$.Conf.Server}}/admin/articles/post?id={{.ID}}">
                         {{$.I18n.Edit}} &nbsp;
-                        <svg class="fn-right">
+                        <svg class="fn__right">
                             <use xlink:href="#edit"></use>
                         </svg>
                     </a>
                     {{end}}
-                    <a class="action__btn fn-right action__btn--active fn-clear" rel="bookmark" href="{{.URL}}">
-                        {{$.I18n.ReadMore}} &nbsp; <svg class="fn-right"><use xlink:href="#reply"></use></svg>
+                    <a class="action__btn fn__right action__btn--active fn__clear" rel="bookmark" href="{{.URL}}">
+                        {{$.I18n.ReadMore}} &nbsp; <svg class="fn__right"><use xlink:href="#reply"></use></svg>
                     </a>
                 </span>
             </div>

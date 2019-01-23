@@ -4,7 +4,7 @@
       <a href="https://github.com/b3log/pipe/issues/122" target="_blank">新主题推荐</a> •
       <a href="https://hacpai.com/article/1512550354920#toc_h3_20" target="_blank">Pipe 主题开发指南</a>
     </div>
-    <div class="fn-clear">
+    <div class="fn__clear">
       <div class="card"
            v-for="item in list"
            @click="setup(item.name)"

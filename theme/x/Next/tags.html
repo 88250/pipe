@@ -12,13 +12,13 @@
         {{if .pjax}}{{noescape "<!---- pjax {#pjax} start ---->"}}{{end}}
     <div class="wrapper">
         <h2 class="page__articles">
-            <span id="tagArticleCount">0</span> <span class="ft-fade ft-13">{{.I18n.Tags2}}</span>
+            <span id="tagArticleCount">0</span> <span class="ft__fade ft__13">{{.I18n.Tags2}}</span>
         </h2>
         <div id="tags">
             {{range .Tags}}
             <a href="{{.URL}}" data-count="{{.ArticleCount}}" class="tag">
                 {{.Title}}
-                <span class="ft-fade">{{.ArticleCount}} {{$.I18n.Space}}</span>
+                <span class="ft__fade">{{.ArticleCount}} {{$.I18n.Space}}</span>
             </a>
             {{end}}
         </div>

@@ -9,7 +9,7 @@
     </div>
     {{end}}
 
-    <div{{if .ToC}} class="fn-none"{{end}}>
+    <div{{if .ToC}} class="fn__none"{{end}}>
         <div class="side__overlay"></div>
         {{if .ToC}}
         <span id="showToc" aria-label="{{.I18n.Toc}}" class="pipe-tooltipped pipe-tooltipped--w">
@@ -24,7 +24,7 @@
             <div>
                 {{.Setting.BasicNoticeBoard}}
             </div>
-            <ul class="fn-clear">
+            <ul class="fn__clear">
                 <li>
                     <a href="{{.BlogURL}}/categories">
                         <svg>
@@ -66,19 +66,19 @@
         </div>
 
         <div class="side__footer">
-            <a href="{{.BlogURL}}/categories" class="mobile--show fn-none">
+            <a href="{{.BlogURL}}/categories" class="mobile--show fn__none">
                 <svg>
                     <use xlink:href="#icon-folders"></use>
                 </svg>
             </a>
             {{if gt .UserCount 1}}
-            <a href="{{.BlogURL}}/authors" class="mobile--show fn-none">
+            <a href="{{.BlogURL}}/authors" class="mobile--show fn__none">
                 <svg>
                     <use xlink:href="#icon-group"></use>
                 </svg>
             </a>
             {{end}}
-            <a href="{{.BlogURL}}/tags" class="mobile--show fn-none">
+            <a href="{{.BlogURL}}/tags" class="mobile--show fn__none">
                 <svg>
                     <use xlink:href="#icon-tag"></use>
                 </svg>
@@ -110,7 +110,7 @@
                 </svg>
             </a>
             {{else}}
-            <span class="fn-right">
+            <span class="fn__right">
         <a class="avatar pipe-tooltipped pipe-tooltipped--n"
            aria-label="{{.User.UName}}"
            href="{{.Conf.Server}}/{{if ne .User.URole 4}}admin/{{end}}"

@@ -9,13 +9,13 @@
 {{template "9IPHP/header" .}}
 <div id="pjax">
 {{if .pjax}}{{noescape "<!---- pjax {#pjax} start ---->"}}{{end}}
-<div class="main wrapper fn-clear">
+<div class="main wrapper fn__clear">
     <div class="content page">
         <h1 class="page__title">
-            <span id="categoriesCount">0</span> <span class="ft-fade ft-13">{{.I18n.Categories2}}</span>
+            <span id="categoriesCount">0</span> <span class="ft__fade ft__13">{{.I18n.Categories2}}</span>
         </h1>
         {{if eq (len .Categories) 0}}
-        <div class="ft-center">
+        <div class="ft__center">
             {{.I18n.NoData}}
         </div>
         {{end}}
@@ -25,9 +25,9 @@
                     <a href="{{.URL}}">
                    {{.Title}}
                     </a>
-                    <div class="ft-gray ft-13">{{.Description}}</div>
+                    <div class="ft__gray ft__13">{{.Description}}</div>
                 </div>
-                <div class="fn-clear">
+                <div class="fn__clear">
                     {{range .Tags}}
                     <a href="{{.URL}}" class="tag">{{.Title}}</a>
                     {{end}}

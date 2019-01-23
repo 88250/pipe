@@ -4,7 +4,7 @@
     <div id="hideToc" aria-label="{{.I18n.CloseToc}}" class="btn__fix pipe-tooltipped pipe-tooltipped--w">
         <svg><use xlink:href="#icon-close"></use></svg>
     </div>
-    <div id="showToc" aria-label="{{.I18n.Toc}}" class="btn__fix fn-none pipe-tooltipped pipe-tooltipped--w">
+    <div id="showToc" aria-label="{{.I18n.Toc}}" class="btn__fix fn__none pipe-tooltipped pipe-tooltipped--w">
         <svg><use xlink:href="#icon-toc"></use></svg>
     </div>
     <div class="side__toc module module__list">
@@ -12,7 +12,7 @@
     </div>
     {{end}}
 
-    <div{{if .ToC}} class="fn-none"{{end}}>
+    <div{{if .ToC}} class="fn__none"{{end}}>
         {{if eq .Setting.BasicNoticeBoard ""}}
         {{else}}
         <div class="side__ad">
@@ -24,7 +24,7 @@
             <div class="module__header">
                 {{.I18n.Tags}}
             </div>
-            <div class="fn-clear module__body module__body--tag">
+            <div class="fn__clear module__body module__body--tag">
                 {{range .MostUseTags}}
                 <a class="tag" href="{{.URL}}">{{.Title}}</a>
                 {{end}}
@@ -37,7 +37,7 @@
             <div class="module__header">
                 {{.I18n.Categories}}
             </div>
-            <div class="module__body module__body--tag fn-clear">
+            <div class="module__body module__body--tag fn__clear">
                 {{range .MostUseCategories}}
                 <a class="tag" href="{{.URL}}">{{.Title}}</a>
                 {{end}}

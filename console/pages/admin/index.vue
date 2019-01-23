@@ -4,8 +4,8 @@
       <h3>{{ $t('communityRecommend', $store.state.locale)}}</h3>
     </div>
     <ul class="list admin__index">
-      <li v-for="item in list" :key="item.articleCreateTime" class="fn-flex">
-        <a class="fn-flex-1" :href="item.articlePermalink" target="_blank">{{ item.articleTitle }}</a>
+      <li v-for="item in list" :key="item.articleCreateTime" class="fn__flex">
+        <a class="fn__flex-1" :href="item.articlePermalink" target="_blank">{{ item.articleTitle }}</a>
         <div>{{ item.articleAuthorName }}</div>
       </li>
     </ul>

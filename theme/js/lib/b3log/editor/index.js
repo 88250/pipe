@@ -124,7 +124,7 @@ export const Editor = (config) => {
         <svg><use xlink:href="#question"></use></svg>
       </a> 
       <div class="b3log-editor__emoji">
-        <div class="fn-clear">
+        <div class="fn__clear">
         </div>
         <div class="b3log-editor__emoji-tip">
           <a href="${config.emojiURL || 'https://hacpai.com/settings/function'}" target="_blank">${config.label.emojiTip || 'Tip'}</a>
@@ -136,7 +136,7 @@ export const Editor = (config) => {
         <textarea
           placeholder="${config.placeholder || ''}"></textarea>
       </div>
-      <div class="b3log-editor__markdown ${config.previewClass} fn-none" ref="pipeView"></div>
+      <div class="b3log-editor__markdown ${config.previewClass} fn__none" ref="pipeView"></div>
     </div>
   </div>`;
 
@@ -163,7 +163,7 @@ export const Editor = (config) => {
       Object.keys(data).forEach((key) => {
         emojiHTML += `<span data-value="${data[key]} "><img src="${config.staticServePath || ''}/emoji/graphics/${key}.png"></span>`
       });
-      $emoji.find('.fn-clear').html(emojiHTML);
+      $emoji.find('.fn__clear').html(emojiHTML);
       config._emojiData = data;
     }
     config.emoji(genEmoji)
@@ -186,7 +186,7 @@ export const Editor = (config) => {
       emojiHTML += `<span data-value="${config._emojiData[key]} ">${config._emojiData[key]}</span>`
     });
   }
-  $emoji.find('.fn-clear').html(emojiHTML);
+  $emoji.find('.fn__clear').html(emojiHTML);
   $emoji.on('click', 'span', function () {
     insertTextAtCaret(textarea, $(this).data('value'), '', true)
     if (/firefox/i.test(navigator.userAgent)) {

@@ -61,7 +61,7 @@
   &__body {
     padding-left: 81px;
 
-    & > .fn-clear {
+    & > .fn__clear {
       line-height: 28px;
     }
   }
@@ -162,7 +162,7 @@
     padding: 5px 10px 5px 0;
   }
 
-  .pipe-comment__body>.fn-clear>.fn-right {
+  .pipe-comment__body>.fn__clear>.fn__right {
     float: none;
   }
 }

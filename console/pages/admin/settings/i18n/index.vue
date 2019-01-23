@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="card fn-clear card__body">
+    <div class="card fn__clear card__body">
 
       <v-form>
         <v-select
@@ -16,7 +16,7 @@
         ></v-text-field>
       </v-form>
 
-      <v-btn class="fn-right btn--margin-t30 btn--info btn--space" @click="update">
+      <v-btn class="fn__right btn--margin-t30 btn--info btn--space" @click="update">
         {{ $t('confirm', $store.state.locale) }}
       </v-btn>
     </div>

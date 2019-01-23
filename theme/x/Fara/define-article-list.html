@@ -4,7 +4,7 @@
 {{end}}
 <div class="article__wrap">
     {{range $index, $item := .Articles}}
-    <article class="article__item fn-flex">
+    <article class="article__item fn__flex">
         <div class="article__meta article__meta--{{mod $index 4}}">
             {{if gt $.UserCount 1}}
             <div>
@@ -41,7 +41,7 @@
             </div>
             {{end}}
         </div>
-        <div class="fn-flex-1 article__main">
+        <div class="fn__flex-1 article__main">
             <h2 class="article__title">
                 {{if .Topped}}
                 <svg>
@@ -55,7 +55,7 @@
             {{if .Abstract}}
             <section
                     data-link="{{$item.URL}}"
-                    class="pipe-content__reset fn-flex-1"
+                    class="pipe-content__reset fn__flex-1"
                     data-author="{{$item.Author.Name}}">
                 {{$item.Abstract}}
             </section>
@@ -71,7 +71,7 @@
 </div>
 
 {{if gt (len $.Pagination.PageNums) 1}}
-<div class="ft-center">
+<div class="ft__center">
     <nav class="pagination">
         {{if gt $.Pagination.PreviousPageNum 0}}
         <a class="pagination__item"

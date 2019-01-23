@@ -14,7 +14,7 @@
 <div class="wrapper content">
     <article>
         <header class="article-detail__header">
-            <div class="ft-center fn-relative">
+            <div class="ft__center fn__relative">
                 <h2 class="header__title{{if .Article.Editable}} header__title--edit{{end}}">
                     {{if .Article.Topped}}
                     <svg>
@@ -23,7 +23,7 @@
                     {{end}}
                     {{.Article.Title}}
                 </h2>
-                <div class="ft-gray">
+                <div class="ft__gray">
                     {{if gt .UserCount 1}}
                     <a rel="nofollow"
                        href="{{.Article.Author.URL}}">
@@ -31,22 +31,22 @@
                     </a>
                     •
                     {{end}}
-                    <time class="ft-nowrap">{{.Article.CreatedAt}}</time>
+                    <time class="ft__nowrap">{{.Article.CreatedAt}}</time>
                     •
-                    <span class="ft-nowrap">{{.Article.ViewCount}} {{$.I18n.View}}</span>
+                    <span class="ft__nowrap">{{.Article.ViewCount}} {{$.I18n.View}}</span>
                     {{if gt .Article.CommentCount 0}}
                     •
-                    <a href="{{.Article.URL}}#pipeComments" class="ft-nowrap ft-gray">{{.Article.CommentCount}}
+                    <a href="{{.Article.URL}}#pipeComments" class="ft__nowrap ft__gray">{{.Article.CommentCount}}
                         {{$.I18n.Comment}}</a>
                     {{end}}
                 </div>
 
                 {{if .Article.Editable}}
                 <span class="article__action">
-                    <a class="action__btn fn-clear action__btn--active"
+                    <a class="action__btn fn__clear action__btn--active"
                        href="{{$.Conf.Server}}/admin/articles/post?id={{.Article.ID}}">
                         {{$.I18n.Edit}} &nbsp;
-                        <svg class="fn-right">
+                        <svg class="fn__right">
                             <use xlink:href="#edit"></use>
                         </svg>
                     </a>
@@ -62,12 +62,12 @@
         <section class="pipe-content__reset article__abstract fn-padding30" id="articleContent" data-author="{{.Article.Author.Name}}">
             {{.Article.Content}}
         </section>
-        <div class="article__action fn-clear">
-            <span class="action__share fn-left">
-                <span class="action__btn action__btn--share fn-clear fn-left">
-                    {{$.I18n.Share}} &nbsp; <svg class="fn-right"><use xlink:href="#reply"></use></svg>
+        <div class="article__action fn__clear">
+            <span class="action__share fn__left">
+                <span class="action__btn action__btn--share fn__clear fn__left">
+                    {{$.I18n.Share}} &nbsp; <svg class="fn__right"><use xlink:href="#reply"></use></svg>
                 </span>
-                <span class="action__btns fn-left">
+                <span class="action__btns fn__left">
                     <span class="action__btn action__btn--wechat" data-type="wechat">
                         <svg><use xlink:href="#wechat"></use></svg>
                     </span>
@@ -87,12 +87,12 @@
                          data-avatar="{{.Article.Author.AvatarURLWithSize 128}}"></div>
                 </span>
             </span>
-            <span class="fn-right action__btn action__btn--space action__btn--active fn-clear"
+            <span class="fn__right action__btn action__btn--space action__btn--active fn__clear"
                   data-title="{{.I18n.Comment}}{{.I18n.Colon}}{{.Article.Title}}"
                   id="articleCommentBtn"
                   data-id="{{.Article.ID}}">
                 {{$.I18n.Comment}} &nbsp;
-                <svg class="fn-right">
+                <svg class="fn__right">
                     <use xlink:href="#comment"></use>
                 </svg>
             </span>
@@ -105,7 +105,7 @@
     {{if or .PreviousArticle .NextArticle}}
     <div class="fn-bottom"></div>
     {{if gt .UserCount 1}}
-    <div class="fn-clear article__near fn-two">
+    <div class="fn__clear article__near fn-two">
         {{if .PreviousArticle}}
         <a href="{{.PreviousArticle.URL}}" rel="prev">
             <svg class="fn-absolute near__svg">
@@ -116,7 +116,7 @@
                   data-src="{{.PreviousArticle.Author.AvatarURLWithSize 128}}"></span>
             <span class="near__title">
                      {{.I18n.PreArticle}}<br>
-                    <b class="ft-break">{{.PreviousArticle.Title}}</b>
+                    <b class="ft__break">{{.PreviousArticle.Title}}</b>
                 </span>
         </a>
         {{end}}
@@ -131,13 +131,13 @@
                   data-src="{{.NextArticle.Author.AvatarURLWithSize 128}}"></span>
             <span class="near__title">
                     {{.I18n.NextArticle}}<br>
-                    <b class="ft-break">{{.NextArticle.Title}}</b>
+                    <b class="ft__break">{{.NextArticle.Title}}</b>
                 </span>
         </a>
         {{end}}
     </div>
     {{else}}
-    <div class="fn-clear article__near fn-two">
+    <div class="fn__clear article__near fn-two">
         {{if .PreviousArticle}}
         <a href="{{.PreviousArticle.URL}}"
            class="pipe-tooltipped pipe-tooltipped--w"
@@ -145,7 +145,7 @@
             <svg class="near__icon">
                 <use xlink:href="#chevron-left"></use>
             </svg>
-            <b class="ft-break">{{.PreviousArticle.Title}}</b>
+            <b class="ft__break">{{.PreviousArticle.Title}}</b>
         </a>
         {{end}}
 
@@ -153,7 +153,7 @@
         <a href="{{.NextArticle.URL}}" rel="next"
            class="pipe-tooltipped pipe-tooltipped--e fn-two--next {{if .PreviousArticle}}{{else}}near__next--single{{end}}"
            aria-label="{{.I18n.NextArticle}}">
-            <b class="ft-break">{{.NextArticle.Title}}</b>
+            <b class="ft__break">{{.NextArticle.Title}}</b>
             <svg class="near__icon-last">
                 <use xlink:href="#chevron-right"></use>
             </svg>
@@ -176,21 +176,21 @@
                href="{{$item.URL}}"
                data-src="{{$item.ThumbnailURL}}"
                target="_blank"></a>
-            <a class="module__list-title fn-ellipsis" href="{{$item.URL}}" target="_blank">{{$item.Title}}</a>
+            <a class="module__list-title fn__ellipsis" href="{{$item.URL}}" target="_blank">{{$item.Title}}</a>
             {{else}}
-            <a class="module__list-title fn-ellipsis" href="{{$item.URL}}" target="_blank">{{$item.Title}}</a>
-            <a href="{{$item.URL}} target="_blank class="ft-fade relevant__abstract">
+            <a class="module__list-title fn__ellipsis" href="{{$item.URL}}" target="_blank">{{$item.Title}}</a>
+            <a href="{{$item.URL}} target="_blank class="ft__fade relevant__abstract">
                 {{$item.Abstract}}
             </a>
             {{end}}
-            <div class="fn-relative">
+            <div class="fn__relative">
                 <a class="avatar fn-absolute" data-src="{{$item.Author.AvatarURL}}"
                    href="{{$item.Author.URL}}" target="_blank"></a>
                 <div class="relevant__content">
-                    <a href="{{$item.Author.URL}}" class="ft-gray" target="_blank">{{$item.Author.Name}}</a> <br>
-                    <span class="ft-12 ft-fade fn-clear">
+                    <a href="{{$item.Author.URL}}" class="ft__gray" target="_blank">{{$item.Author.Name}}</a> <br>
+                    <span class="ft__12 ft__fade fn__clear">
                         {{$item.CreatedAt}}
-                       <a href="{{$item.URL}}#comments" class="fn-right ft-fade" target="_blank">
+                       <a href="{{$item.URL}}#comments" class="fn__right ft__fade" target="_blank">
                            {{if ne 0 $item.CommentCount}}
                            {{$item.CommentCount}}
                            {{$.I18n.Comment}}

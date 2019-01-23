@@ -1,5 +1,5 @@
 <template>
-  <div class="card__body fn-clear">
+  <div class="card__body fn__clear">
     <v-form ref="form" @submit.prevent="created">
       <v-text-field
         :label="$t('account', $store.state.locale)"
@@ -13,10 +13,10 @@
         <span>{{ errorMsg }}</span>
       </div>
     </v-form>
-    <v-btn class="fn-right btn--margin-t30 btn--info btn--space" @click="created">
+    <v-btn class="fn__right btn--margin-t30 btn--info btn--space" @click="created">
       {{ $t('confirm', $store.state.locale) }}
     </v-btn>
-    <v-btn class="fn-right btn--margin-t30 btn--danger btn--space" @click="$emit('update:show', false)">
+    <v-btn class="fn__right btn--margin-t30 btn--danger btn--space" @click="$emit('update:show', false)">
       {{ $t('cancel', $store.state.locale) }}
     </v-btn>
   </div>

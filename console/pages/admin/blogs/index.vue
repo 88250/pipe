@@ -2,11 +2,11 @@
   <div class="card">
     <blog v-if="showForm" :show.sync="showForm" @addSuccess="addSuccess"></blog>
 
-    <div v-show="!showForm" class="card__body fn-flex">
+    <div v-show="!showForm" class="card__body fn__flex">
       <v-text-field
         v-if="list.length > 0"
         @keyup.enter="getList()"
-        class="fn-flex-1"
+        class="fn__flex-1"
         :label="$t('enterSearch', $store.state.locale)"
         v-model="keyword">
       </v-text-field>
@@ -16,12 +16,12 @@
     </div>
 
     <ul class="list" v-if="list.length > 0">
-      <li v-for="item in list" :key="item.id" class="fn-flex">
+      <li v-for="item in list" :key="item.id" class="fn__flex">
         <div class="avatar avatar--mid avatar--space"
              :style="`background-image: url(${item.blogLogo})`"></div>
-        <div class="fn-flex-1">
-          <div class="fn-flex">
-            <a class="list__title fn-flex-1" target="_blank" :href="`${item.blogURL}`">
+        <div class="fn__flex-1">
+          <div class="fn__flex">
+            <a class="list__title fn__flex-1" target="_blank" :href="`${item.blogURL}`">
               {{ item.blogTitle }}
             </a>
             <v-btn class="btn--small btn--info" @click="prohibit(item.id, 'unprohibit')" v-if="item.status === 1">
@@ -34,18 +34,18 @@
           <div class="list__meta">
             {{ item.blogAdmin }}
             <span v-if="item.status === 1">
-               • <span class="ft-danger"> {{ $t('prohibit', $store.state.locale) }} </span>
+               • <span class="ft__danger"> {{ $t('prohibit', $store.state.locale) }} </span>
             </span>
           </div>
         </div>
       </li>
     </ul>
-    <div class="pagination--wrapper fn-clear" v-if="pageCount > 1">
+    <div class="pagination--wrapper fn__clear" v-if="pageCount > 1">
       <v-pagination
         :length="pageCount"
         v-model="currentPageNum"
         :total-visible="windowSize"
-        class="fn-right"
+        class="fn__right"
         circle
         next-icon="angle-right"
         prev-icon="angle-left"

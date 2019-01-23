@@ -12,13 +12,13 @@
         {{if .pjax}}{{noescape "<!---- pjax {#pjax} start ---->"}}{{end}}
     <div class="wrapper page">
         <h2 class="page__title">
-            <span id="archiveMonthCount">0</span> <span class="ft-fade ft-13">{{.I18n.Month2}}</span>
-            <span id="archiveArticleCount">0</span> <span class="ft-fade ft-13">{{.I18n.Article2}}</span>
+            <span id="archiveMonthCount">0</span> <span class="ft__fade ft__13">{{.I18n.Month2}}</span>
+            <span id="archiveArticleCount">0</span> <span class="ft__fade ft__13">{{.I18n.Article2}}</span>
         </h2>
         {{range .Archives}}
         <a href="{{.URL}}" class="page__item page__item--li">
             {{.Title}}
-            <span class="ft-fade">{{.ArticleCount}} {{$.I18n.Space}}</span>
+            <span class="ft__fade">{{.ArticleCount}} {{$.I18n.Space}}</span>
         </a>
         {{end}}
     </div>

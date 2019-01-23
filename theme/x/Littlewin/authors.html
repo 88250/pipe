@@ -7,21 +7,21 @@
 </head>
 <body>
 {{template "Littlewin/header" .}}
-<div class="fn-flex-1">
-    <div id="pjax" class="wrapper fn-flex">
+<div class="fn__flex-1">
+    <div id="pjax" class="wrapper fn__flex">
         {{if .pjax}}{{noescape "<!---- pjax {#pjax} start ---->"}}{{end}}
         <div class="main">
-            <div class="module ft-center module--bottom module--space">
+            <div class="module ft__center module--bottom module--space">
                 <h2 class="module__logo">{{.I18n.Team}}</h2>
-                <span id="authorCount">0</span> <span class="ft-fade ft-13">{{.I18n.TeamMember2}}</span>
+                <span id="authorCount">0</span> <span class="ft__fade ft__13">{{.I18n.TeamMember2}}</span>
             </div>
 
             <ul class="module module--bottom module--space module__list">
             {{range .Authors}}
-                <li class="fn-flex-center">
+                <li class="fn__flex-center">
                     <div class="avatar" data-src="{{.AvatarURLWithSize 24}}"></div>
                     <a href="{{.URL}}"class="author__name">{{.Name}}</a>
-                    <span class="ft-12">&nbsp; {{.ArticleCount}} {{$.I18n.Article2}}</span>
+                    <span class="ft__12">&nbsp; {{.ArticleCount}} {{$.I18n.Article2}}</span>
                 </li>
             {{end}}
             </ul>

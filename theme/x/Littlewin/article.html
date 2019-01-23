@@ -8,8 +8,8 @@
 </head>
 <body{{if .ToC}} class="body--side"{{end}}>
 {{template "Littlewin/header" .}}
-<div class="fn-flex-1">
-    <div id="pjax" class="wrapper fn-flex">
+<div class="fn__flex-1">
+    <div id="pjax" class="wrapper fn__flex">
         {{if .pjax}}{{noescape "<!---- pjax {#pjax} start ---->"}}{{end}}
         <div class="main">
             <article class="module module--bottom post__content">
@@ -27,7 +27,7 @@
                     {{.Article.Content}}
                 </div>
             </article>
-            <div class="module module--space module--bottom post__share fn-clear">
+            <div class="module module--space module--bottom post__share fn__clear">
                 <span data-type="wechat" class="post__share--wechat">
                     <svg><use xlink:href="#wechat"></use></svg>
                 </span>
@@ -46,12 +46,12 @@
                      data-url="{{.Article.URL}}"
                      data-avatar="{{.Article.Author.AvatarURLWithSize 128}}"></div>
                 {{if .Article.Editable}}
-                <a href="{{$.Conf.Server}}/admin/articles/post?id={{.Article.ID}}" class="fn-right fn-flex-center">
+                <a href="{{$.Conf.Server}}/admin/articles/post?id={{.Article.ID}}" class="fn__right fn__flex-center">
                     &nbsp;&nbsp;&nbsp;
                     <svg><use xlink:href="#iconEdit"></use></svg>&nbsp;{{.I18n.Edit}}
                 </a>
                 {{end}}
-                <span class="fn-right fn-flex-center"
+                <span class="fn__right fn__flex-center"
                       data-title="{{.I18n.Comment}}{{.I18n.Colon}}{{.Article.Title}}"
                       id="articleCommentBtn"
                       data-id="{{.Article.ID}}">

@@ -7,24 +7,24 @@
 </head>
 <body>
 {{template "Littlewin/header" .}}
-<div class="fn-flex-1">
-    <div id="pjax" class="wrapper fn-flex">
+<div class="fn__flex-1">
+    <div id="pjax" class="wrapper fn__flex">
         {{if .pjax}}{{noescape "<!---- pjax {#pjax} start ---->"}}{{end}}
         <div class="main">
-            <div class="module ft-center module--bottom module--space">
+            <div class="module ft__center module--bottom module--space">
                 <h2 class="module__logo">{{.I18n.Categories}}</h2>
-                <span id="categoriesCount">0</span> <span class="ft-fade ft-13">{{.I18n.Categories2}}</span>
+                <span id="categoriesCount">0</span> <span class="ft__fade ft__13">{{.I18n.Categories2}}</span>
             </div>
 
             {{if eq (len .Categories) 0}}
-            <div class="ft-center module module--space module--bottom">
+            <div class="ft__center module module--space module--bottom">
                 <br> <br>
                 {{.I18n.NoData}}
                 <br> <br>
             </div>
             {{end}}
             {{range .Categories}}
-            <article class="article__item module module--bottom fn-flex">
+            <article class="article__item module module--bottom fn__flex">
                 <header>
                     <time class="article__time">
                         <div class="article__day">{{.ArticleCount}}</div>
@@ -32,8 +32,8 @@
                         {{$.I18n.article}}
                     </time>
                 </header>
-                <section class="fn-flex-1">
-                    <h2 class="fn-flex-center">
+                <section class="fn__flex-1">
+                    <h2 class="fn__flex-center">
                         <a class="article__title" rel="bookmark" href="{{.URL}}">
                             {{.Title}}
                         </a>
@@ -41,7 +41,7 @@
                     <div class="pipe-content__reset article__abstract">
                         {{.Description}}
                     </div>
-                    <footer class="article__footer fn-flex-center">
+                    <footer class="article__footer fn__flex-center">
                         <svg>
                             <use xlink:href="#iconTag"></use>
                         </svg>

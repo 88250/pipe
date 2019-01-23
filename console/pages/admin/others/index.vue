@@ -2,8 +2,8 @@
   <div>
     <div class="card card--space">
       <ul class="list">
-        <li class="fn-flex" v-if="$store.state.role <= 3">
-          <div class="fn-flex-1">
+        <li class="fn__flex" v-if="$store.state.role <= 3">
+          <div class="fn__flex-1">
             {{ $t('import', $store.state.locale) }}
           </div>
           <a href="https://hacpai.com/article/1498490209748" target="_blank"><v-icon>question</v-icon></a>
@@ -12,8 +12,8 @@
             <input @change="importMD" type="file"/>
           </label>
         </li>
-        <li class="fn-flex">
-          <div class="fn-flex-1">
+        <li class="fn__flex">
+          <div class="fn__flex-1">
             {{ $t('export', $store.state.locale) }}
           </div>
           <a class="btn--small btn--info btn" href="/api/console/export/md">

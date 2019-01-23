@@ -58,7 +58,7 @@ export const ParseMarkdown = () => {
         const $it = $(this);
         const id = 'pipeFlowChart' + (new Date()).getTime() + index;
         $it.hide();
-        $it.parent().after('<div class="ft-center" id="' + id + '"></div>')
+        $it.parent().after('<div class="ft__center" id="' + id + '"></div>')
 
         const diagram = flowchart.parse($.trim($it.text()));
         diagram.drawSVG(id);

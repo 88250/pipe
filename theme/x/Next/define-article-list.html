@@ -46,14 +46,14 @@
         {{.Abstract}}
     </section>
     {{end}}
-    <div class="fn-clear article__footer">
-        <a href="{{.URL}}" class="fn-left article__read">
+    <div class="fn__clear article__footer">
+        <a href="{{.URL}}" class="fn__left article__read">
             {{$.I18n.ReadMore}}  »
         </a>
         {{if .Editable}}
         <a href="{{$.Conf.Server}}/admin/articles/post?id={{.ID}}"
            aria-label="{{$.I18n.Edit}}"
-           class="pipe-tooltipped pipe-tooltipped--n fn-right article__edit">
+           class="pipe-tooltipped pipe-tooltipped--n fn__right article__edit">
             <svg>
                 <use xlink:href="#icon-edit"></use>
             </svg>
@@ -64,7 +64,7 @@
 {{end}}
 
 {{if gt (len $.Pagination.PageNums) 1}}
-<nav class="pagination fn-clear">
+<nav class="pagination fn__clear">
     {{if gt $.Pagination.PreviousPageNum 0}}
     <a class="pagination__item" href="?p={{$.Pagination.PreviousPageNum}}">«</a>
     {{end}}

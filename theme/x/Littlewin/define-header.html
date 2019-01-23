@@ -6,19 +6,19 @@
             <h1>{{.Setting.BasicBlogTitle}}</h1>
             <img data-src="{{.LogoURL}}">
         </a>
-        <div class="fn-none header__menu">
+        <div class="fn__none header__menu">
             <svg><use xlink:href="#iconBar"></use></svg>
         </div>
-        <div class="header__links fn-flex-center">
+        <div class="header__links fn__flex-center">
             {{range .Navigations}}
-            <a href="{{.URL}}" target="{{.OpenMethod}}" class="fn-flex-center">
+            <a href="{{.URL}}" target="{{.OpenMethod}}" class="fn__flex-center">
                 {{if ne "" .IconURL}}
                 <img data-src="{{.IconURL}}"/>
                 {{end}}
                 {{.Title}}
             </a>
             {{end}}
-            <a href="{{.BlogURL}}/search" class="fn-flex-center">
+            <a href="{{.BlogURL}}/search" class="fn__flex-center">
                 <svg>
                     <use xlink:href="#search"></use>
                 </svg>
@@ -34,10 +34,10 @@
     </div>
 </header>
 <div>
-    <div class="wrapper header__meta fn-flex">
+    <div class="wrapper header__meta fn__flex">
         <div class="main">
-            <div class="header__ad fn-flex-center module module--space">
-                <svg class="fn-flex-shrink"><use xlink:href="#iconAnnounce"></use></svg>
+            <div class="header__ad fn__flex-center module module--space">
+                <svg class="fn__flex-shrink"><use xlink:href="#iconAnnounce"></use></svg>
                 <div>&nbsp; &nbsp;</div>
                 <div class="fn__flex-1">
                     {{if eq .Setting.BasicNoticeBoard ""}}

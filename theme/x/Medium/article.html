@@ -19,13 +19,13 @@
 
     <article class="post">
         {{if gt $.UserCount 1}}
-        <div class="fn-flex post__user">
+        <div class="fn__flex post__user">
             <a rel="nofollow"
                class="avatar"
                data-src="{{.Article.Author.AvatarURLWithSize 116}}"
                href="{{.Article.Author.URL}}">
             </a>
-            <div class="fn-flex-1 small">
+            <div class="fn__flex-1 small">
                 <a href="{{.Article.Author.URL}}" class="name">{{.Article.Author.Name}}</a>
                 <div>
                     <time>{{.Article.CreatedAt}}</time>
@@ -51,13 +51,13 @@
             <a class="tag" rel="tag" href="{{.URL}}">{{.Title}}</a>
             {{end}}
         </div>
-        <div class="post__share fn-clear{{if eq $.UserCount 1}} post__share--no{{end}}">
+        <div class="post__share fn__clear{{if eq $.UserCount 1}} post__share--no{{end}}">
             {{if eq $.UserCount 1}}
-            <time class="ft-gray">{{.Article.CreatedAt}} • </time>
+            <time class="ft__gray">{{.Article.CreatedAt}} • </time>
             {{end}}
             <a href="{{.URL}}" class="post__view">{{.Article.ViewCount}} {{$.I18n.View}}</a>
 
-            <div class="fn-right">
+            <div class="fn__right">
                 <span id="articleCommentBtn"
                       class="{{if gt .Article.CommentCount 0}}pipe-tooltipped pipe-tooltipped--n{{end}} article__edit ft-green"
                       aria-label="{{$.I18n.Comment}}"
@@ -102,13 +102,13 @@
             </div>
         </div>
         {{if gt $.UserCount 1}}
-        <div class="fn-flex post__user">
+        <div class="fn__flex post__user">
             <a rel="nofollow"
                class="avatar"
                data-src="{{.Article.Author.AvatarURLWithSize 116}}"
                href="{{.Article.Author.URL}}">
             </a>
-            <div class="fn-flex-1 small">
+            <div class="fn__flex-1 small">
                 <a href="{{.Article.Author.URL}}" class="name">{{.Article.Author.Name}}</a>
                 <div>
                     <time>{{.Article.CreatedAt}}</time>
@@ -121,9 +121,9 @@
     </article>
 
     <div class="article__toolbar">
-        <div class="wrapper fn-clear">
+        <div class="wrapper fn__clear">
             <a href="{{.URL}}" class="post__view">{{.Article.ViewCount}} {{$.I18n.View}}</a>
-            <div class="fn-right">
+            <div class="fn__right">
                 <span id="articleCommentBottomBtn" class="{{if gt .Article.CommentCount 0}}pipe-tooltipped pipe-tooltipped--n{{end}} article__edit ft-green"
                       aria-label="{{$.I18n.Comment}}"
                       data-title="{{$.I18n.Comment}}{{$.I18n.Colon}}{{.Article.Title}}"
@@ -167,7 +167,7 @@
 
                 {{if .NextArticle}}
                 <a href="{{.NextArticle.URL}}" rel="next" class="article__next">
-                    <span class="ft-13 ft-gray">{{.I18n.NextArticle}}</span><br>
+                    <span class="ft__13 ft__gray">{{.I18n.NextArticle}}</span><br>
                     <b>{{.NextArticle.Title}}</b>
                 </a>
                 {{end}}
@@ -178,7 +178,7 @@
     <div class="article__bottom">
         <div class="wrapper">
             {{if le 1 (len .RecommendArticles)}}
-            <div class="fn-clear article__wrap">
+            <div class="fn__clear article__wrap">
                 {{range $index, $item := .RecommendArticles}}
                 {{if le $index 5}}
                 <div class="article__item--wrap">
@@ -197,7 +197,7 @@
                             </h2>
                         </div>
 
-                        <div class="article__meta ft-gray fn-flex">
+                        <div class="article__meta ft__gray fn__flex">
                             <a rel="nofollow"
                                class="article__avatar"
                                target="_blank"
@@ -205,13 +205,13 @@
                                href="{{$item.Author.URL}}">
                             </a>
 
-                            <div class="fn-flex-1">
+                            <div class="fn__flex-1">
                                 <a href="{{$item.Author.URL}}" class="article__author">{{$item.Author.Name}}</a>
-                                <div class="fn-ellipsis">
+                                <div class="fn__ellipsis">
                                     <time>{{$item.CreatedAt}}</time>
                                     •
-                                    <a href="{{$item.URL}}" class="ft-gray">{{$item.ViewCount}} {{$.I18n.View}}</a> •
-                                    <a href="{{$item.URL}}#comments" class="ft-gray">
+                                    <a href="{{$item.URL}}" class="ft__gray">{{$item.ViewCount}} {{$.I18n.View}}</a> •
+                                    <a href="{{$item.URL}}#comments" class="ft__gray">
                                         {{if gt $item.CommentCount 0}}
                                         {{$item.CommentCount}}
                                         {{end}}

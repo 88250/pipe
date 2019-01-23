@@ -13,7 +13,7 @@
         {{if .pjax}}{{noescape "<!---- pjax {#pjax} start ---->"}}{{end}}
         <div class="main__title">
             {{.Archive.Title}}
-            <span id="archiveArticleCount" class="main__count">0</span> <span class="ft-13">{{.I18n.Article2}}</span>
+            <span id="archiveArticleCount" class="main__count">0</span> <span class="ft__13">{{.I18n.Article2}}</span>
         </div>
         {{template "Fara/article-list" .}}
         {{if .pjax}}{{noescape "<!---- pjax {#pjax} end ---->"}}{{end}}

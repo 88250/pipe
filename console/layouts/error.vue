@@ -5,9 +5,9 @@
       <div class="console" id="particles">
         <div class="card" v-if="error.statusCode === 404">
           <h2 class="card__title">404</h2>
-          <div class="card__body fn-clear">
+          <div class="card__body fn__clear">
             <div class="error__description">Page not found</div>
-            <div class="fn-right">
+            <div class="fn__right">
               <nuxt-link to="/">{{ $t('index', $store.state.locale)}}</nuxt-link>
               |
               <a href="https://hacpai.com">{{ $t('hacpai', $store.state.locale)}}</a>
@@ -16,9 +16,9 @@
         </div>
         <div class="card" v-else>
           <h2 class="card__title">50X</h2>
-          <div class="card__body fn-clear">
+          <div class="card__body fn__clear">
             <div class="error__description">{{error.statusCode}}</div>
-            <div class="fn-right">
+            <div class="fn__right">
               <a href="https://github.com/b3log/pipe/issues/new">{{ $t('reportIssue', $store.state.locale)}}</a> |
               <a href="https://hacpai.com">{{ $t('hacpai', $store.state.locale)}}</a>
             </div>

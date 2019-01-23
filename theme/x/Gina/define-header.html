@@ -1,10 +1,10 @@
 {{define "Gina/header"}}
 <header class="header">
-    <div class="wrapper ft-center">
+    <div class="wrapper ft__center">
         <a href="{{.BlogURL}}"
-           class="header__logo fn-flex">
-            <img data-src="{{.LogoURL}}" class="fn-center">
-            <div class="fn-ellipsis fn-flex-1" title="{{.Setting.BasicBlogTitle}}">{{.Setting.BasicBlogTitle}}</div>
+           class="header__logo fn__flex">
+            <img data-src="{{.LogoURL}}" class="ft__center">
+            <div class="fn__ellipsis fn__flex-1" title="{{.Setting.BasicBlogTitle}}">{{.Setting.BasicBlogTitle}}</div>
         </a>
         <a href="{{.BlogURL}}/categories">
             <svg><use xlink:href="#folders"></use></svg>
@@ -45,10 +45,10 @@
         </a>
         <div class="header__tool">
             {{if eq .User.URole 0}}
-            <a href="{{.Conf.Server}}/register" class="fn-right ft-orange">{{.I18n.Register}}</a>
-            <a href="{{.Conf.Server}}/login" class="fn-right">{{.I18n.Login}}</a>
+            <a href="{{.Conf.Server}}/register" class="fn__right ft-orange">{{.I18n.Register}}</a>
+            <a href="{{.Conf.Server}}/login" class="fn__right">{{.I18n.Login}}</a>
             {{else}}
-            <a class="avatar fn-right"
+            <a class="avatar fn__right"
                href="{{.Conf.Server}}/{{if ne .User.URole 4}}admin/{{end}}"
                data-src="{{.User.AvatarURLWithSize 64}}"></a>
             {{end}}

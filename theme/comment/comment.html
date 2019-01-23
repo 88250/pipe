@@ -6,15 +6,15 @@
        href="{{.Item.Author.URL}}">
     </a>
     <div class="pipe-comment__body">
-        <div class="fn-clear">
-            <a href="{{.Item.Author.URL}}" class="ft-gray">{{.Item.Author.Name}}</a>
+        <div class="fn__clear">
+            <a href="{{.Item.Author.URL}}" class="ft__gray">{{.Item.Author.Name}}</a>
             {{if .Item.Parent}}
-            <a class="ft-nowrap ft-12 ft-gray" href="{{.Item.Parent.URL}}">
+            <a class="ft__nowrap ft__12 ft__gray" href="{{.Item.Parent.URL}}">
                 <svg><use xlink:href="#icon-reply"></use></svg> {{.I18n.Reply}} {{.Item.Parent.Author.Name}}
             </a>
             {{end}}
-            <span class="ft-nowrap ft-12 ft-fade"> • {{.Item.CreatedAt}} </span>
-            <div class="fn-right">
+            <span class="ft__nowrap ft__12 ft__fade"> • {{.Item.CreatedAt}} </span>
+            <div class="fn__right">
                 <span class="pipe-comment__btn pipe-comment__btn--reply"
                       data-title="{{.I18n.Reply}}{{.I18n.Colon}}{{.Item.Author.Name}}"
                       data-id="{{.ArticleID}}"
@@ -38,11 +38,11 @@
         </div>
         {{if ne .Item.ReplyCount 0}}
         <div>
-            <span class="ft-gray ft-12 fn-pointer pipe-comment__reply-icon" data-id="{{.Item.ID}}">
+            <span class="ft__gray ft__12 fn__pointer pipe-comment__reply-icon" data-id="{{.Item.ID}}">
                 {{.Item.ReplyCount}} {{.I18n.Reply}}
                 <svg class="pipe-comment__chevron-down"><use xlink:href="#icon-chevron-up"></use></svg>
             </span>
-            <div class="pipe-comment__reply fn-none">
+            <div class="pipe-comment__reply fn__none">
             </div>
         </div>
         {{end}}

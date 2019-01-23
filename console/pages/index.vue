@@ -1,6 +1,6 @@
 <template>
   <div class="console" :style="flex" id="particles">
-    <div class="card ft-center" ref="content">
+    <div class="card ft__center" ref="content">
       <h2 class="card__body"></h2>
       <div v-if="$store.state.role === 0" v-html="$t('index2', $store.state.locale)"></div>
       <div v-html="$t('index3', $store.state.locale)"></div>
@@ -10,8 +10,8 @@
       <br><br>
       <h2 class="card__title">{{ $t('popularBlog', $store.state.locale) }}</h2>
       <ul class="list ">
-        <li class="fn-flex" v-for="item in list">
-          <a class="fn-flex-1" :href="item.url" target="_blank">{{ item.title }}</a>
+        <li class="fn__flex" v-for="item in list">
+          <a class="fn__flex-1" :href="item.url" target="_blank">{{ item.title }}</a>
         </li>
       </ul>
     </div>

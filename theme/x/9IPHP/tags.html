@@ -9,10 +9,10 @@
 {{template "9IPHP/header" .}}
 <div id="pjax">
 {{if .pjax}}{{noescape "<!---- pjax {#pjax} start ---->"}}{{end}}
-<div class="main wrapper fn-clear">
+<div class="main wrapper fn__clear">
     <div class="content page">
         <h1 class="page__title">
-            <span id="tagArticleCount">0</span> <span class="ft-fade ft-13">{{.I18n.Tags2}}</span>
+            <span id="tagArticleCount">0</span> <span class="ft__fade ft__13">{{.I18n.Tags2}}</span>
         </h1>
         <div class="tags" id="tags">
             {{range .Tags}}

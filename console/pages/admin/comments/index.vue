@@ -4,7 +4,7 @@
       <v-text-field
         v-if="list.length > 0 || isSearch"
         @keyup.enter="isSearch = true; getList()"
-        class="fn-flex-1"
+        class="fn__flex-1"
         :label="$t('enterSearch', $store.state.locale)"
         v-model="keyword">
       </v-text-field>
@@ -12,8 +12,8 @@
         {{ $t('noData', $store.state.locale) }}
       </div>
     </div>
-    <div class="card__batch-action fn-flex" v-show="isBatch">
-      <label class="checkbox fn-flex-1">
+    <div class="card__batch-action fn__flex" v-show="isBatch">
+      <label class="checkbox fn__flex-1">
         <input
           type="checkbox"
           :checked="isSelectAll"
@@ -39,15 +39,15 @@
       <li
         :class="{'selected': isSelected(item.id)}"
         @click="setSelectedId(item.id)"
-        v-for="item in list" :key="item.id" class="fn-flex">
+        v-for="item in list" :key="item.id" class="fn__flex">
         <a class="avatar avatar--mid avatar--space pipe-tooltipped pipe-tooltipped--s"
            :aria-label="item.author.name"
            @click.stop="openURL(item.author.url)"
            href="javascript:void(0)"
            :style="`background-image: url(${item.author.avatarURL})`"></a>
-        <div class="fn-flex-1">
-          <div class="fn-flex">
-            <div class="fn-flex-1">
+        <div class="fn__flex-1">
+          <div class="fn__flex">
+            <div class="fn__flex-1">
               <a @click.stop="openURL(item.url)"
                  href="javascript:void(0)"
                  class="list__title">
@@ -75,17 +75,17 @@
       </li>
     </ul>
     <ul class="list" v-else-if="isSearch && !isBatch">
-      <li class="fn-flex fn-pointer" @click="isSearch = false;keyword = '';getList();">
+      <li class="fn__flex fn__pointer" @click="isSearch = false;keyword = '';getList();">
         {{ $t('searchNull', $store.state.locale) }} &nbsp;
-        <span class="ft-danger">{{keyword}}</span>
+        <span class="ft__danger">{{keyword}}</span>
       </li>
     </ul>
-    <div class="pagination--wrapper fn-clear" v-if="pageCount > 1">
+    <div class="pagination--wrapper fn__clear" v-if="pageCount > 1">
       <v-pagination
         :length="pageCount"
         v-model="currentPageNum"
         :total-visible="windowSize"
-        class="fn-right"
+        class="fn__right"
         circle
         next-icon="angle-right"
         prev-icon="angle-left"

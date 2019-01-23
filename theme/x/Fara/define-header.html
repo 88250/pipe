@@ -1,7 +1,7 @@
 {{define "Fara/header"}}
 <header class="header">
     <h1 class="header__title">
-        <a href="{{.BlogURL}}" class="fn-flex-center">
+        <a href="{{.BlogURL}}" class="fn__flex-center">
             <span class="header__logo" data-src="{{.LogoURL}}"></span>
             {{.Setting.BasicBlogTitle}}
         </a>
@@ -11,32 +11,32 @@
     </div>
 </header>
 <nav class="nav">
-    <a href="{{.BlogURL}}" class="fn-flex-center">
+    <a href="{{.BlogURL}}" class="fn__flex-center">
         <svg>
             <use xlink:href="#icon-home"></use>
         </svg>
         {{.I18n.Index}}
     </a>
-    <a href="{{.BlogURL}}/categories" class="fn-flex-center">
+    <a href="{{.BlogURL}}/categories" class="fn__flex-center">
         <svg>
             <use xlink:href="#icon-folders"></use>
         </svg>
         {{.I18n.Categories}}
     </a>
-    <a href="{{.BlogURL}}/tags" class="fn-flex-center">
+    <a href="{{.BlogURL}}/tags" class="fn__flex-center">
         <svg>
             <use xlink:href="#icon-tag"></use>
         </svg>
         {{.I18n.Tags}}
     </a>
-    <a href="{{.BlogURL}}/archives" class="fn-flex-center">
+    <a href="{{.BlogURL}}/archives" class="fn__flex-center">
         <svg>
             <use xlink:href="#icon-bookmark"></use>
         </svg>
         {{.I18n.Archives}}
     </a>
     {{if gt .UserCount 1}}
-    <a href="{{.BlogURL}}/authors" class="fn-flex-center">
+    <a href="{{.BlogURL}}/authors" class="fn__flex-center">
         <svg>
             <use xlink:href="#icon-group"></use>
         </svg>
@@ -44,21 +44,21 @@
     </a>
     {{end}}
     {{range .Navigations}}
-    <a href="{{.URL}}" target="{{.OpenMethod}}" class="fn-flex-center">
+    <a href="{{.URL}}" target="{{.OpenMethod}}" class="fn__flex-center">
         {{if ne "" .IconURL}}
         <img data-src="{{.IconURL}}"/>
         {{end}}
         {{.Title}}
     </a>
     {{end}}
-    <a href="{{.BlogURL}}/atom" target="_blank" class="fn-flex-center">
+    <a href="{{.BlogURL}}/atom" target="_blank" class="fn__flex-center">
         <svg>
             <use xlink:href="#icon-feed"></use>
         </svg>
         {{.I18n.Feed}}
     </a>
 
-    <a target="_blank" class="fn-flex-center" href="{{.BlogURL}}/search">
+    <a target="_blank" class="fn__flex-center" href="{{.BlogURL}}/search">
         <svg>
             <use xlink:href="#icon-search"></use>
         </svg>
@@ -66,20 +66,20 @@
     </a>
 
     {{if eq .User.URole 0}}
-    <a href="{{.Conf.Server}}/login" class="fn-flex-center">
+    <a href="{{.Conf.Server}}/login" class="fn__flex-center">
         <svg>
             <use xlink:href="#icon-login"></use>
         </svg>
         {{.I18n.Login}}
     </a>
-    <a href="{{.Conf.Server}}/register" class="fn-flex-center">
+    <a href="{{.Conf.Server}}/register" class="fn__flex-center">
         <svg>
             <use xlink:href="#icon-register"></use>
         </svg>
         {{.I18n.Register}}
     </a>
     {{else}}
-    <a class="fn-flex-center"
+    <a class="fn__flex-center"
        href="{{.Conf.Server}}/{{if ne .User.URole 4}}admin/{{end}}">
         <img data-src="{{.User.AvatarURLWithSize 64}}" />
         {{.I18n.manage}}

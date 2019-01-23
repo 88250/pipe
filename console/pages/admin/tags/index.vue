@@ -1,19 +1,19 @@
 <template>
   <div>
-    <div class="card fn-clear">
+    <div class="card fn__clear">
       <div class="card__body">
         <v-text-field
           @keyup.enter="getList()"
-          class="fn-flex-1"
+          class="fn__flex-1"
           :label="$t('enterSearch', $store.state.locale)"
           v-model="keyword">
         </v-text-field>
       </div>
       <ul class="list" v-if="list.length > 0">
-        <li v-for="item in list" :key="item.id" class="fn-flex">
-          <div class="fn-flex-1">
-            <div class="fn-flex">
-              <a target="_blank" class="list__title fn-flex-1"
+        <li v-for="item in list" :key="item.id" class="fn__flex">
+          <div class="fn__flex-1">
+            <div class="fn__flex">
+              <a target="_blank" class="list__title fn__flex-1"
                  @click.stop="openURL(item.url)"
                  href="javascript:void(0)">
                 {{ item.title }}
@@ -25,12 +25,12 @@
           </div>
         </li>
       </ul>
-      <div class="pagination--wrapper fn-clear" v-if="pageCount > 1">
+      <div class="pagination--wrapper fn__clear" v-if="pageCount > 1">
         <v-pagination
           :length="pageCount"
           v-model="currentPageNum"
           :total-visible="windowSize"
-          class="fn-right"
+          class="fn__right"
           circle
           next-icon="angle-right"
           prev-icon="angle-left"

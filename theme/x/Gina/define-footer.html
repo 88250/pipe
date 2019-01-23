@@ -1,7 +1,7 @@
 {{define "Gina/footer"}}
 <footer class="footer">
     <div class="wrapper">
-        <div class="footer__side fn-clear fn-three">
+        <div class="footer__side fn__clear fn-three">
             <div>
                 <div class="module__header">
                     {{.I18n.NoticeBoard}}
@@ -38,23 +38,23 @@
             </div>
         </div>
         <div class="footer__info">
-            <div class="fn-clear">
+            <div class="fn__clear">
                 {{.Setting.BasicBlogSubtitle}}
-                <div class="fn-right">
+                <div class="fn__right">
                     <a href="{{.BlogURL}}">{{.Setting.BasicBlogTitle}}</a> &copy; {{.Year}}
                     {{.Setting.BasicFooter}}
                 </div>
             </div>
-            <div class="fn-clear">
-                <span class="ft-gray">{{.Statistic.StatisticViewCount}}</span>
+            <div class="fn__clear">
+                <span class="ft__gray">{{.Statistic.StatisticViewCount}}</span>
                 {{.I18n.View}}
                 &nbsp;
-                <span class="ft-gray">{{.Statistic.StatisticArticleCount}}</span>
+                <span class="ft__gray">{{.Statistic.StatisticArticleCount}}</span>
                 {{.I18n.Article}}
                 &nbsp;
-                <span class="ft-gray">{{.Statistic.StatisticCommentCount}}</span>
+                <span class="ft__gray">{{.Statistic.StatisticCommentCount}}</span>
                 {{.I18n.Comment}}
-                <div class="fn-right ft-gray">
+                <div class="fn__right ft__gray">
                     Powered by <a href="https://b3log.org/" target="_blank">B3log 开源</a> •
                     <a href="https://hacpai.com/tag/Pipe" target="_blank">Pipe</a> •
                     Theme <a href="https://github.com/b3log/pipe-themes" target="_blank">Gina</a>

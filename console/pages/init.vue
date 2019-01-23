@@ -2,21 +2,21 @@
   <div class="console" id="particles">
     <div class="card">
       <v-stepper v-model="step">
-        <v-stepper-content step="1" class="fn-clear">
+        <v-stepper-content step="1" class="fn__clear">
           <h1>Pipe {{ $t(account === 'pipe' ? 'init' : 'guide', $store.state.locale) }}</h1>
-          <div class="ft-center login__content" v-if="account===''">
-            <div class="fn-pointer" @click="loginGitHub">
+          <div class="ft__center login__content" v-if="account===''">
+            <div class="fn__pointer" @click="loginGitHub">
               {{ $t('useGitHub', $store.state.locale) }}{{ $t('login', $store.state.locale) }}
               <div class="login__github"></div>
-              <img class="fn-none" src="~assets/images/github.gif"/>
+              <img class="fn__none" src="~assets/images/github.gif"/>
             </div>
 
-            <div class="login__link fn-flex-center fn-pointer"
+            <div class="login__link fn__flex-center fn__pointer"
                  @click="hacpaiInit">
               <v-icon>hacpai-logo</v-icon>
               <div>&nbsp;{{ $t('useHacpaiInit', $store.state.locale) }}</div>
             </div>
-            <div class="login__link fn-pointer fn-flex-center" @click="account='pipe'">
+            <div class="login__link fn__pointer fn__flex-center" @click="account='pipe'">
               <img width="16" src="~assets/images/logo.png"/>
               <span>&nbsp;{{ $t('usePipeInit', $store.state.locale) }}</span>
             </div>
@@ -46,7 +46,7 @@
               <span>{{ registerErrorMsg }}</span>
             </div>
           </div>
-          <div class="fn-right">
+          <div class="fn__right">
             <v-btn v-if="account === 'pipe'"
               class="btn--info" @click="account = ''">{{ $t('preStep', $store.state.locale) }}</v-btn>
             <v-btn
@@ -57,18 +57,18 @@
           </div>
         </v-stepper-content>
 
-        <v-stepper-content step="2" class="fn-clear">
+        <v-stepper-content step="2" class="fn__clear">
           <h1>
             {{ $t('useHacpaiInit', $store.state.locale) }}
             {{ $store.state.name }}
             {{ $t('init', $store.state.locale) }}
           </h1>
-          <div class="ft-center login__content fn-clear">
+          <div class="ft__center login__content fn__clear">
             <img class="avatar login__image card init__image--step2"
                  :src="`${$store.state.avatarURL}?imageView2/1/w/128/h/128/interlace/1/q/100`"/>
-            <v-form ref="form" class="fn-flex" @submit.prevent="init">
+            <v-form ref="form" class="fn__flex" @submit.prevent="init">
               <v-text-field
-                class="fn-flex-1"
+                class="fn__flex-1"
                 label="B3log Key"
                 v-model="b3key"
                 :counter="20"
@@ -86,15 +86,15 @@
               <span>{{ postInitErrorMsg }}</span>
             </div>
           </div>
-          <div class="fn-right">
+          <div class="fn__right">
             <v-btn class="btn--info" @click="step = 1">{{ $t('preStep', $store.state.locale) }}</v-btn>
             <v-btn class="btn--success btn--space" @click="init">{{ $t('init', $store.state.locale) }}</v-btn>
           </div>
         </v-stepper-content>
 
-        <v-stepper-content step="3" class="fn-clear">
+        <v-stepper-content step="3" class="fn__clear">
           <h1>{{ $t('welcome', $store.state.locale) }} Pipe</h1>
-          <div class="ft-center login__content fn-clear">
+          <div class="ft__center login__content fn__clear">
             <a href="https://github.com/b3log/pipe"
                target="_blank"
                :aria-label="$t('openPipeTravel', $store.state.locale)"

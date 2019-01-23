@@ -9,11 +9,11 @@
 {{template "9IPHP/header" .}}
 <div id="pjax">
     {{if .pjax}}{{noescape "<!---- pjax {#pjax} start ---->"}}{{end}}
-<div class="main wrapper fn-clear">
+<div class="main wrapper fn__clear">
     <div class="content">
         <h1 class="page__title">
             {{.Archive.Title}}
-            <span id="archiveArticleCount" class="ft-fade">0</span> <span class="ft-fade ft-13">{{.I18n.Article2}}</span>
+            <span id="archiveArticleCount" class="ft__fade">0</span> <span class="ft__fade ft__13">{{.I18n.Article2}}</span>
         </h1>
         {{template "9IPHP/article-list" .}}
     </div>

@@ -7,7 +7,7 @@
     <div class="module__list">
         <ul>
             {{range .List}}
-            <li class="fn-clear">
+            <li class="fn__clear">
                 {{if gt $.UserCount 1}}
                 <a class="avatar pipe-tooltipped pipe-tooltipped--n"
                    href="{{.Author.URL}}"
@@ -18,7 +18,7 @@
                 <div{{if gt $.UserCount 1}} class="module__list-avatar"{{end}}>
                 <a href="{{.URL}}" class="module__list-title">{{.Title}}</a>
                 <br>
-                <time class="ft-12 ft-gray">{{.CreatedAt}}</time>
+                <time class="ft__12 ft__gray">{{.CreatedAt}}</time>
                 </div>
             </li>
             {{end}}

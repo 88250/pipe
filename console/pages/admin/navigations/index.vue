@@ -1,20 +1,20 @@
 <template>
   <div>
-    <div class="card fn-clear">
+    <div class="card fn__clear">
       <navigation v-if="showForm" :show.sync="showForm" @addSuccess="addSuccess" :id="editId"></navigation>
 
-      <div v-show="!showForm" class="card__body fn-clear">
-        <v-btn class="btn--success" :class="{'fn-right': list.length > 0}" @click="edit(0)">{{ $t('new', $store.state.locale) }}</v-btn>
+      <div v-show="!showForm" class="card__body fn__clear">
+        <v-btn class="btn--success" :class="{'fn__right': list.length > 0}" @click="edit(0)">{{ $t('new', $store.state.locale) }}</v-btn>
       </div>
       <ul class="list" v-if="list.length > 0">
-        <li v-for="item in list" :key="item.id" class="fn-flex">
+        <li v-for="item in list" :key="item.id" class="fn__flex">
           <a class="avatar avatar--mid avatar--space"
              @click.stop="openURL(item.url)"
              href="javascript:void(0)"
              :style="`background-image: url(${item.iconURL})`"></a>
-          <div class="fn-flex-1">
-            <div class="fn-flex">
-              <a target="_blank" class="list__title fn-flex-1"
+          <div class="fn__flex-1">
+            <div class="fn__flex">
+              <a target="_blank" class="list__title fn__flex-1"
                  @click.stop="openURL(item.url)"
                  href="javascript:void(0)">
                 {{ item.title }}
@@ -47,12 +47,12 @@
           </div>
         </li>
       </ul>
-      <div class="pagination--wrapper fn-clear" v-if="pageCount > 1">
+      <div class="pagination--wrapper fn__clear" v-if="pageCount > 1">
         <v-pagination
           :length="pageCount"
           v-model="currentPageNum"
           :total-visible="windowSize"
-          class="fn-right"
+          class="fn__right"
           circle
           next-icon="angle-right"
           prev-icon="angle-left"

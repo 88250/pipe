@@ -13,14 +13,14 @@
     <article class="article__item">
         <header class="article__header">
             <h2>
-                <span id="tagArticleCount">0</span> <span class="ft-fade ft-13">{{.I18n.Tags2}}</span>
+                <span id="tagArticleCount">0</span> <span class="ft__fade ft__13">{{.I18n.Tags2}}</span>
             </h2>
         </header>
         <div class="page__content--archive">
             {{range .Tags}}
             <a href="{{.URL}}" data-count="{{.ArticleCount}}" class="tag  tag--page">
                 {{.Title}}
-                <span class="ft-fade">{{.ArticleCount}} {{$.I18n.Space}}</span>
+                <span class="ft__fade">{{.ArticleCount}} {{$.I18n.Space}}</span>
             </a>
             {{end}}
         </div>

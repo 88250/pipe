@@ -19,8 +19,8 @@
     <div class="wrapper content">
         <h2 class="module__title module__title--unmargin">
             <span>
-                <span id="archiveMonthCount">0</span> <span class="ft-fade ft-13">{{.I18n.Month2}}</span>
-                <span id="archiveArticleCount">0</span> <span class="ft-fade ft-13">{{.I18n.Article2}}</span>
+                <span id="archiveMonthCount">0</span> <span class="ft__fade ft__13">{{.I18n.Month2}}</span>
+                <span id="archiveArticleCount">0</span> <span class="ft__fade ft__13">{{.I18n.Article2}}</span>
             </span>
         </h2>
         {{range .Archives}}
@@ -28,7 +28,7 @@
             <h3>
                 <a href="{{.URL}}">
                     {{.Title}}
-                    <span class="ft-fade">{{.ArticleCount}} {{$.I18n.Space}}</span>
+                    <span class="ft__fade">{{.ArticleCount}} {{$.I18n.Space}}</span>
                 </a>
             </h3>
         </div>

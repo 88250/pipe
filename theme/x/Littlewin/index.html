@@ -7,8 +7,8 @@
 </head>
 <body>
 {{template "Littlewin/header" .}}
-<div class="fn-flex-1">
-    <div id="pjax" class="wrapper fn-flex">
+<div class="fn__flex-1">
+    <div id="pjax" class="wrapper fn__flex">
         {{if .pjax}}{{noescape "<!---- pjax {#pjax} start ---->"}}{{end}}
         <div class="main">
             {{template "Littlewin/article-list" .}}

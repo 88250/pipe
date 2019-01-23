@@ -498,7 +498,7 @@ a {
 }
 
 @media (max-width: 768px) {
-  .wrapper.fn-flex {
+  .wrapper.fn__flex {
     display: block;
   }
 
@@ -571,7 +571,7 @@ a {
 
   .footer {
     text-align: center;
-    .fn-right {
+    .fn__right {
       float: none;
     }
   }

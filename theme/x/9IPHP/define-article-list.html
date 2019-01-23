@@ -7,7 +7,7 @@
     {{if .ThumbnailURL}}
     <a class="article__thumb" href="{{.URL}}">
         <div data-src="{{.ThumbnailURL}}">{{.Title}}</div>
-        <div class="fn-none">
+        <div class="fn__none">
             <svg>
                 <use xlink:href="#icon-view"></use>
             </svg>
@@ -36,14 +36,14 @@
                 </a>
                 &nbsp; &nbsp;
                 {{end}}
-                <time class="ft-nowrap">
+                <time class="ft__nowrap">
                     <svg>
                         <use xlink:href="#icon-date"></use>
                     </svg>
                     {{.CreatedAt}}
                 </time>
                 &nbsp; | &nbsp;
-                <span class="ft-nowrap">
+                <span class="ft__nowrap">
                             <svg><use xlink:href="#icon-view"></use></svg>
                             {{.ViewCount}} {{$.I18n.View}}
                         </span>
@@ -66,13 +66,13 @@
             {{.Abstract}}
         </section>
         {{end}}
-        <div class="fn-clear">
-            <div class="fn-clear">
+        <div class="fn__clear">
+            <div class="fn__clear">
             {{range .Tags}}
             <a class="tag" rel="tag" href="{{.URL}}">{{.Title}}</a>
             {{end}}
             </div>
-            <span class="article__more fn-right">
+            <span class="article__more fn__right">
                 <a rel="bookmark" href="{{.URL}}">
                     {{$.I18n.ReadMore}} »
                 </a>
@@ -91,7 +91,7 @@
 {{end}}
 
 {{if gt (len $.Pagination.PageNums) 1}}
-<div class="fn-clear">
+<div class="fn__clear">
     <nav class="pagination">
         {{if gt $.Pagination.PreviousPageNum 0}}
         <a aria-label="{{.I18n.PrePage}}"

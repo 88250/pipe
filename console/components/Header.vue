@@ -1,14 +1,14 @@
 <template>
-  <header class="header fn-flex">
+  <header class="header fn__flex">
     <div :class="$route.path.indexOf('/admin') > -1 ? 'header__logo' : 'header__logo header__logo--theme'">
       <a :href="$store.state.blogURL || '/'">
         <img class="header__logo-img" src="~assets/images/logo.png"/>
         {{ $store.state.blogTitle || 'Pipe' }}
       </a>
     </div>
-    <div class="header__nav fn-flex-1 fn-flex">
+    <div class="header__nav fn__flex-1 fn__flex">
       <template v-if="$store.state.role === 0">
-        <span class="fn-flex-1"> &nbsp;</span>
+        <span class="fn__flex-1"> &nbsp;</span>
         <span>
           <nuxt-link to="/login">{{ $t('login', $store.state.locale)}}</nuxt-link>
           <nuxt-link to="/register" class="btn--space btn--success btn btn--small">
@@ -17,15 +17,15 @@
         </span>
       </template>
       <template v-else>
-        <span class="header__bar--icon fn-flex-1">
+        <span class="header__bar--icon fn__flex-1">
           <span v-if="$route.path.indexOf('/admin') > -1 && from !== 'error'">
-            <div class="side__icon fn-left" @click="toggleSide">
+            <div class="side__icon fn__left" @click="toggleSide">
               <span class="side__icon-line"></span>
               <span class="side__icon-line side__icon-line--middle"></span>
               <span class="side__icon-line"></span>
             </div>
             <a :href="$store.state.blogURL">
-              <img class="header__logo-img fn-none" src="~assets/images/logo.png"/>
+              <img class="header__logo-img fn__none" src="~assets/images/logo.png"/>
             </a>
           </span>
           <template v-else>&nbsp;</template>
@@ -238,7 +238,7 @@
       padding-right: 15px
     .header__logo--theme
       padding-left: 15px
-    .header__bar--icon .fn-none
+    .header__bar--icon .fn__none
       display: block
       float: left
     .header .side__icon

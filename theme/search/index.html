@@ -22,11 +22,11 @@
         <img src="{{.LogoURL}}">
     </a>
     <div class="wrapper">
-        <form action="" class="search fn-flex">
-            <input name="key" class="fn-flex-1"
+        <form action="" class="search fn__flex">
+            <input name="key" class="fn__flex-1"
                    value="{{.Key}}"
-                   onblur="this.parentNode.className='search fn-flex'"
-                   onfocus="this.parentNode.className='search fn-flex search--focus'">
+                   onblur="this.parentNode.className='search fn__flex'"
+                   onfocus="this.parentNode.className='search fn__flex search--focus'">
             <button type="submit">
                 {{.I18n.Search}}
             </button>
@@ -43,7 +43,7 @@
         {{end}}
     </div>
 </nav>
-<div class="wrapper fn-clear">
+<div class="wrapper fn__clear">
     <div class="articles">
         {{range .Articles}}
         <article class="article__item">
@@ -59,7 +59,7 @@
             {{end}}
             <div>
                 {{range .Tags}}
-                <a class="ft-fade ft-12" rel="tag" href="{{.URL}}">{{.Title}}</a>
+                <a class="ft__fade ft__12" rel="tag" href="{{.URL}}">{{.Title}}</a>
                 {{end}}
             </div>
         </article>
@@ -94,14 +94,14 @@
 </div>
 <footer class="footer">
     <div class="wrapper">
-        <div class="fn-clear">
+        <div class="fn__clear">
             {{.Setting.BasicBlogSubtitle}}
-            <div class="fn-right">
+            <div class="fn__right">
                 <a href="{{.BlogURL}}">{{.Setting.BasicBlogTitle}}</a> &copy; {{.Year}}
                 {{.Setting.BasicFooter}}
             </div>
         </div>
-        <div class="fn-clear">
+        <div class="fn__clear">
             <b>{{.Statistic.StatisticViewCount}}</b>
             {{.I18n.View}}
             &nbsp;
@@ -110,7 +110,7 @@
             &nbsp;
             <b>{{.Statistic.StatisticCommentCount}}</b>
             {{.I18n.Comment}}
-            <div class="fn-right">
+            <div class="fn__right">
                 Powered by <a href="https://b3log.org/" target="_blank">B3log 开源</a> •
                 <a href="https://hacpai.com/tag/Pipe" target="_blank">Pipe</a>
             </div>

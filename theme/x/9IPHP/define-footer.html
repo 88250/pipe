@@ -1,14 +1,14 @@
 {{define "9IPHP/footer"}}
 <footer class="footer">
     <div class="wrapper">
-            <div class="fn-clear">
+            <div class="fn__clear">
                 {{.Setting.BasicBlogSubtitle}}
-                <div class="fn-right">
+                <div class="fn__right">
                     <a href="{{.BlogURL}}">{{.Setting.BasicBlogTitle}}</a> &copy; {{.Year}}
                     {{.Setting.BasicFooter}}
                 </div>
             </div>
-            <div class="fn-clear">
+            <div class="fn__clear">
                 {{.Statistic.StatisticViewCount}}
                 {{.I18n.View}}
                 &nbsp;
@@ -17,7 +17,7 @@
                 &nbsp;
                 {{.Statistic.StatisticCommentCount}}
                 {{.I18n.Comment}}
-                <div class="fn-right">
+                <div class="fn__right">
                     Powered by <a href="https://b3log.org/" target="_blank">B3log 开源</a> •
                     <a href="https://hacpai.com/tag/Pipe" target="_blank">Pipe</a> •
                     Theme <a href="https://github.com/b3log/pipe-themes" target="_blank">9IPHP</a>

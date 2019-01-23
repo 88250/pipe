@@ -402,7 +402,7 @@ svg {
       font-size: 0;
     }
 
-    div.fn-none {
+    div.fn__none {
       transition: $transition;
       svg {
         color: #fff;
@@ -416,7 +416,7 @@ svg {
       div:first-child {
         transform: scale(1.2);
       }
-      div.fn-none {
+      div.fn__none {
         display: block;
         position: absolute;
         top: 0;
@@ -649,12 +649,12 @@ svg {
     margin-top: 20px;
   }
 
-  .footer .fn-right {
+  .footer .fn__right {
     float: none;
   }
 
   .header__sub-title,
-  .header .fn-right,
+  .header .fn__right,
   .nav {
     display: none;
   }
@@ -668,7 +668,7 @@ svg {
     background-color: rgba(255, 255, 255, 0.95);
     border-bottom: 1px solid #eee;
 
-    .fn-none {
+    .fn__none {
       float: right;
       margin-top: 12.5px;
       height: 20px;

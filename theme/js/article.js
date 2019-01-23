@@ -156,7 +156,7 @@ export const InitComment = () => {
   })
 
   // comment show reply
-  $('#pipeCommentsWrap').on('click', '#pipeComments .fn-pointer', function () {
+  $('#pipeCommentsWrap').on('click', '#pipeComments .fn__pointer', function () {
     const $it = $(this)
     if ($it.hasClass('disabled')) {
       return
@@ -189,8 +189,8 @@ export const InitComment = () => {
                        href="${item.Author.URL}">
                     </a>
                     <div class="pipe-comment__body">
-                        <a href="${item.Author.URL}" class="ft-gray">${item.Author.Name}</a>
-                        <span class="ft-nowrap ft-12 ft-gray"> • ${item.CreatedAt}</span>
+                        <a href="${item.Author.URL}" class="ft__gray">${item.Author.Name}</a>
+                        <span class="ft__nowrap ft__12 ft__gray"> • ${item.CreatedAt}</span>
                         <div class="pipe-content__reset">
                              ${item.Content}
                         </div>
@@ -384,8 +384,8 @@ ${$it.data('label2')}`).click(function () {
               unbind('click').
               html(
                 `<div class="pipe-comment__header"><span id="pipeCommentsCnt">1</span>${label}</div><div>${result.data}</div>
-<nav class="pipe-comment__pagination fn-clear">
-    <span class="fn-right pipe-comment__btn" data-text="${$comments.data(
+<nav class="pipe-comment__pagination fn__clear">
+    <span class="fn__right pipe-comment__btn" data-text="${$comments.data(
                   'title')}" data-id="${$editor.data('id')}" id="pipeCommentBottomComment">
          <svg><use xlink:href="#icon-reply"></use></svg> ${label}
     </span>

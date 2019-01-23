@@ -1,6 +1,6 @@
 <template>
   <div class="card">
-    <div class="card__body fn-clear">
+    <div class="card__body fn__clear">
       <v-form ref="form">
         <v-text-field
           :label="$t('title', $store.state.locale)"
@@ -112,7 +112,7 @@
           @click="getThumbs"><v-icon>refresh</v-icon></span>
       </div>
 
-      <div class="fn-right">
+      <div class="fn__right">
         <v-btn @click="remove" class="btn--danger btn--margin-t30" v-if="$route.query.id">
           {{ $t('delete', $store.state.locale) }}
         </v-btn>
@@ -263,7 +263,7 @@
               const id = 'pipeFlow' + (new Date()).getTime() + index
               it.style.display = 'none'
               const diagram = window.flowchart.parse(it.textContent)
-              it.parentElement.outerHTML = `<div class="ft-center" id="${id}"></div>`
+              it.parentElement.outerHTML = `<div class="ft__center" id="${id}"></div>`
               diagram.drawSVG(id)
               document.getElementById(id).firstChild.style.height = 'auto'
               document.getElementById(id).firstChild.style.width = 'auto'

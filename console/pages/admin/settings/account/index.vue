@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="card fn-clear card__body">
+    <div class="card fn__clear card__body">
       <v-form ref="passwordForm">
         <v-text-field
           :label="$t('password', $store.state.locale)"
@@ -17,12 +17,12 @@
         </div>
       </v-form>
 
-      <v-btn class="fn-right btn--margin-t30 btn--info btn--space" @click="passwordUpdate">
+      <v-btn class="fn__right btn--margin-t30 btn--info btn--space" @click="passwordUpdate">
         {{ $t('confirm', $store.state.locale) }}
       </v-btn>
     </div>
     <br>
-    <div class="card fn-clear card__body">
+    <div class="card fn__clear card__body">
       <v-form ref="form">
         <v-text-field
           :label="$t('avatarURL', $store.state.locale)"
@@ -42,9 +42,9 @@
           @keyup.meta.13="accountUpdate"
         ></v-text-field>
 
-        <div class="fn-clear">
+        <div class="fn__clear">
           <a
-            class="fn-right"
+            class="fn__right"
             href="https://hacpai.com/settings/b3"
             target="_blank">
             {{ $t('check', $store.state.locale) }}/{{ $t('setting', $store.state.locale) }} B3log Key
@@ -56,7 +56,7 @@
         </div>
       </v-form>
 
-      <v-btn class="fn-right btn--margin-t30 btn--info btn--space" @click="accountUpdate">
+      <v-btn class="fn__right btn--margin-t30 btn--info btn--space" @click="accountUpdate">
         {{ $t('confirm', $store.state.locale) }}
       </v-btn>
     </div>
