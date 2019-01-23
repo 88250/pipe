@@ -37,6 +37,7 @@ type ConsoleArticle struct {
 
 // ConsoleTag represents console tag.
 type ConsoleTag struct {
+	ID    uint64 `json:"id"`
 	Title string `json:"title"`
 	URL   string `json:"url,omitempty"`
 }

@@ -59,6 +59,7 @@ func GetTagsPageAction(c *gin.Context) {
 	var tags []*ConsoleTag
 	for _, tagModel := range tagModels {
 		item := &ConsoleTag{
+			ID:    tagModel.ID,
 			Title: tagModel.Title,
 			URL:   blogURLSetting.Value + util.PathTags + "/" + tagModel.Title,
 		}
