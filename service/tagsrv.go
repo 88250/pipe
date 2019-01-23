@@ -17,11 +17,11 @@
 package service
 
 import (
-	"github.com/b3log/pipe/util"
-	"github.com/pkg/errors"
+	"errors"
 	"sync"
 
 	"github.com/b3log/pipe/model"
+	"github.com/b3log/pipe/util"
 )
 
 // Tag service.
@@ -38,11 +38,19 @@ const (
 	adminConsoleTagListWindowSize = 20
 )
 
-func (srv *tagService) ConsoleGetTags(page int, blogID uint64) (ret []*model.Tag, pagination *util.Pagination) {
+func (srv *tagService) ConsoleGetTags(keyword string, page int, blogID uint64) (ret []*model.Tag, pagination *util.Pagination) {
 	offset := (page - 1) * adminConsoleTagListPageSize
 	count := 0
+
+	where := "`blog_id` = ?"
+	whereArgs := []interface{}{blogID}
+	if "" != keyword {
+		where += " AND `title` LIKE ?"
+		whereArgs = append(whereArgs, "%"+keyword+"%")
+	}
+
 	if err := db.Model(&model.Tag{}).Order("`id` DESC").
-		Where("`blog_id` = ?", blogID).
+		Where(where, whereArgs...).
 		Count(&count).Offset(offset).Limit(adminConsoleTagListPageSize).Find(&ret).Error; nil != err {
 		logger.Errorf("get tags failed: " + err.Error())
 	}
@@ -69,20 +77,27 @@ func (srv *tagService) GetTagByTitle(title string, blogID uint64) *model.Tag {
 	return ret
 }
 
-func (srv *tagService) RemoveTag(title string, blogID uint64) (err error) {
+func (srv *tagService) RemoveTag(id, blogID uint64) (err error) {
+	tag := &model.Tag{}
+	if err := db.Where("`id` = ? AND `blog_id` = ?", id, blogID).Find(tag).Error; nil != err {
+		return err
+	}
 
-	tagModel := Tag.GetTagByTitle(title, blogID)
-	if nil == tagModel {
+	if 0 < tag.ArticleCount {
+		return errors.New("can not remove tags that have articles")
+	}
+
+	tagTitle := tag.Title
+	categories := Category.GetCategoriesByTag(tagTitle, blogID)
+	if 0 < len(categories) {
+		return errors.New("can not remove tags in a category")
+	}
+
+	if err = db.Delete(&tag).Error; nil != err {
+		logger.Errorf("delete tag [" + tagTitle + "] failed: " + err.Error())
+
 		return
 	}
 
-	if tagModel.ArticleCount != 0 {
-		return errors.New("Cannot remove tags that have articles!")
-	}
-
-	if err := db.Delete(&tagModel).Error; nil != err {
-		logger.Errorf("Delete tags failed" + err.Error())
-	}
-
-	return nil // trigger commit in the defer
+	return nil
 }

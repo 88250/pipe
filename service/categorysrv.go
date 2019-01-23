@@ -139,6 +139,14 @@ func (srv *categoryService) AddCategory(category *model.Category) error {
 	return nil
 }
 
+func (srv *categoryService) GetCategoriesByTag(tagTitle string, blogID uint64) (ret []*model.Category) {
+	if err := db.Where("`blog_id` = ? AND `tags` LIKE ?", blogID, tagTitle).Find(&ret).Error; nil != err {
+		logger.Errorf("get categories failed: " + err.Error())
+	}
+
+	return
+}
+
 func (srv *categoryService) ConsoleGetCategories(page int, blogID uint64) (ret []*model.Category, pagination *util.Pagination) {
 	offset := (page - 1) * adminConsoleCategoryListPageSize
 	count := 0

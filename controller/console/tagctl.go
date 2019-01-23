@@ -17,10 +17,11 @@
 package console
 
 import (
-	"github.com/b3log/pipe/model"
 	"math"
 	"net/http"
+	"strconv"
 
+	"github.com/b3log/pipe/model"
 	"github.com/b3log/pipe/service"
 	"github.com/b3log/pipe/util"
 	"github.com/gin-gonic/gin"
@@ -32,23 +33,27 @@ func GetTagsAction(c *gin.Context) {
 	defer c.JSON(http.StatusOK, result)
 
 	session := util.GetSession(c)
+	blogURLSetting := service.Setting.GetSetting(model.SettingCategoryBasic, model.SettingNameBasicBlogURL, session.BID)
 
 	var tags []*ConsoleTag
 	tagModels := service.Tag.GetTags(math.MaxInt64, session.BID)
 	for _, tagModel := range tagModels {
-		tags = append(tags, &ConsoleTag{Title: tagModel.Title})
+		tags = append(tags, &ConsoleTag{
+			Title: tagModel.Title,
+			URL:   blogURLSetting.Value + util.PathTags + "/" + tagModel.Title,
+		})
 	}
 
 	result.Data = tags
 }
 
-// GetTagsAction gets tags with paginations.
+// GetTagsAction gets tags with pagination.
 func GetTagsPageAction(c *gin.Context) {
 	result := util.NewResult()
 	defer c.JSON(http.StatusOK, result)
 
 	session := util.GetSession(c)
-	tagModels, pagination := service.Tag.ConsoleGetTags(util.GetPage(c), session.BID)
+	tagModels, pagination := service.Tag.ConsoleGetTags(c.Query("key"), util.GetPage(c), session.BID)
 	blogURLSetting := service.Setting.GetSetting(model.SettingCategoryBasic, model.SettingNameBasicBlogURL, session.BID)
 
 	var tags []*ConsoleTag
@@ -70,13 +75,18 @@ func RemoveTagsAction(c *gin.Context) {
 	result := util.NewResult()
 	defer c.JSON(http.StatusOK, result)
 
-	titleArg := c.Param("title")
+	idArg := c.Param("id")
+	id, err := strconv.ParseUint(idArg, 10, 64)
+	if nil != err {
+		result.Code = -1
+		result.Msg = err.Error()
 
+		return
+	}
 	session := util.GetSession(c)
 	blogID := session.BID
 
-	// rm tags
-	if err := service.Tag.RemoveTag(titleArg, blogID); nil != err {
+	if err := service.Tag.RemoveTag(id, blogID); nil != err {
 		result.Code = -1
 		result.Msg = err.Error()
 	}
