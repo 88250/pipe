@@ -139,7 +139,8 @@ func Markdown(mdText string) *MarkdownResult {
 			return false
 		}
 		parent := goquery.NodeName(ele.Parent())
-		return parent != "code" && parent != "pre"
+
+		return "span" != parent && "code" != parent && "pre" != parent
 	}).Each(func(i int, ele *goquery.Selection) {
 		text := ele.Text()
 		text = pangu.SpacingText(text)
