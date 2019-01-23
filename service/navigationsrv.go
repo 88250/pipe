@@ -66,7 +66,7 @@ func (srv *navigationService) RemoveNavigation(id, blogID uint64) error {
 
 		return err
 	}
-	if err := db.Delete(navigation).Error; nil != err {
+	if err := tx.Delete(navigation).Error; nil != err {
 		tx.Rollback()
 
 		return err
