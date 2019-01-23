@@ -1,6 +1,14 @@
 <template>
   <div>
     <div class="card fn-clear">
+      <div class="card__body">
+        <v-text-field
+          @keyup.enter="getList()"
+          class="fn-flex-1"
+          :label="$t('enterSearch', $store.state.locale)"
+          v-model="keyword">
+        </v-text-field>
+      </div>
       <ul class="list" v-if="list.length > 0">
         <li v-for="item in list" :key="item.id" class="fn-flex">
           <div class="fn-flex-1">
@@ -10,7 +18,7 @@
                  href="javascript:void(0)">
                 {{ item.title }}
               </a>
-              <v-btn class="btn--danger btn--small" @click="remove(item.title)">
+              <v-btn class="btn--danger btn--small" @click="remove(item.id)">
                 {{ $t('delete', $store.state.locale) }}
               </v-btn>
             </div>
@@ -42,7 +50,8 @@
         currentPageNum: 1,
         pageCount: 1,
         windowSize: 1,
-        list: []
+        list: [],
+        keyword: ''
       }
     },
     head () {
@@ -55,7 +64,7 @@
         window.location.href = url
       },
       async getList (currentPage = 1) {
-        const responseData = await this.axios.get(`/console/taglist?p=${currentPage}`)
+        const responseData = await this.axios.get(`/console/taglist?p=${currentPage}&key=${this.keyword}`)
         if (responseData) {
           this.$set(this, 'list', responseData.tags || [])
           this.$set(this, 'currentPageNum', responseData.pagination.currentPageNum)
@@ -63,8 +72,8 @@
           this.$set(this, 'windowSize', document.documentElement.clientWidth < 721 ? 5 : responseData.pagination.windowSize)
         }
       },
-      async remove (title) {
-        const responseData = await this.axios.delete(`/console/tags/${title}`)
+      async remove (id) {
+        const responseData = await this.axios.delete(`/console/tags/${id}`)
         if (responseData === null) {
           this.$store.commit('setSnackBar', {
             snackBar: true,
