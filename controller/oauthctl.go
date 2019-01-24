@@ -73,14 +73,14 @@ func githubCallbackAction(c *gin.Context) {
 				return
 			}
 		} else {
-			if !model.Conf.OpenRegister {
-				c.Status(http.StatusForbidden)
-
-				return
-			}
-
 			user = service.User.GetUserByName(userName)
 			if nil == user {
+				if !model.Conf.OpenRegister {
+					c.Status(http.StatusForbidden)
+
+					return
+				}
+
 				user = &model.User{
 					Name:      userName,
 					Password:  util.RandString(8),
