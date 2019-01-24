@@ -35,12 +35,12 @@ var CommunityRecommendArticles []*model.ThemeArticle
 
 func refreshRecommendArticlesPeriodically() {
 	go refreshRecommendArticles()
-	go refreshCommunityRecommendArticlesPeriodically()
+	go refreshCommunityRecommendArticles()
 
 	go func() {
 		for range time.Tick(time.Minute * 30) {
 			refreshRecommendArticles()
-			refreshCommunityRecommendArticlesPeriodically()
+			refreshCommunityRecommendArticles()
 		}
 	}()
 }
@@ -72,10 +72,10 @@ func refreshRecommendArticles() {
 			AvatarURL: authorModel.AvatarURL,
 		}
 		themeArticle := &model.ThemeArticle{
-			Title:     article.Title,
-			URL:       blogURL + article.Path,
-			CreatedAt: humanize.Time(article.CreatedAt),
-			Author:    author,
+			Title:        article.Title,
+			URL:          blogURL + article.Path,
+			CreatedAt:    humanize.Time(article.CreatedAt),
+			Author:       author,
 			CommentCount: article.CommentCount,
 			ViewCount:    article.ViewCount,
 			ThumbnailURL: util.ImageSize(images[i], 280, 90),
@@ -86,23 +86,12 @@ func refreshRecommendArticles() {
 	RecommendArticles = recommendations
 }
 
-func refreshCommunityRecommendArticlesPeriodically() {
-	go refreshCommunityRecommendArticles()
-
-	go func() {
-		for range time.Tick(time.Minute * 30) {
-			refreshCommunityRecommendArticles()
-		}
-	}()
-}
-
 func refreshCommunityRecommendArticles() {
 	defer util.Recover()
 
 	result := util.NewResult()
 	_, _, errs := gorequest.New().Get(util.HacPaiURL+"/apis/recommend/articles").
-		Set("user-agent", model.UserAgent).Timeout(30*time.Second).
-		Retry(3, 5*time.Second).EndStruct(result)
+		Set("user-agent", model.UserAgent).Timeout(10 * time.Second).EndStruct(result)
 	if nil != errs {
 		logger.Errorf("get recommend articles: %s", errs)
 
