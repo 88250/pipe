@@ -133,7 +133,9 @@ func (srv *articleService) AddArticle(article *model.Article) (err error) {
 	if article.CreatedAt.IsZero() {
 		article.CreatedAt = time.Now()
 	}
-	article.PushedAt = model.ZeroPushTime
+	if article.CreatedAt != article.PushedAt {
+		article.PushedAt = model.ZeroPushTime
+	}
 	if err := normalizeArticle(article); nil != err {
 		return err
 	}
