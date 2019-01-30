@@ -54,15 +54,15 @@ func githubCallbackAction(c *gin.Context) {
 		return
 	}
 
-	githubId := fmt.Sprintf("%v", githubUser["id"])
-	userName := githubUser["login"].(string)
+	githubId := fmt.Sprintf("%v", githubUser["userId"])
+	userName := githubUser["userName"].(string)
 	user := service.User.GetUserByGitHubId(githubId)
 	if nil == user {
 		if !service.Init.Inited() {
 			user = &model.User{
 				Name:      userName,
 				Password:  util.RandString(8),
-				AvatarURL: githubUser["avatar_url"].(string),
+				AvatarURL: githubUser["userAvatarURL"].(string),
 				GithubId:  githubId,
 			}
 
@@ -84,7 +84,7 @@ func githubCallbackAction(c *gin.Context) {
 				user = &model.User{
 					Name:      userName,
 					Password:  util.RandString(8),
-					AvatarURL: githubUser["avatar_url"].(string),
+					AvatarURL: githubUser["userAvatarURL"].(string),
 					GithubId:  githubId,
 				}
 
