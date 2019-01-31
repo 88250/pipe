@@ -63,8 +63,8 @@
 
 ## 社区
 
-* [讨论区](https://hacpai.com/tag/Pipe)
-* [报告问题](https://github.com/b3log/pipe/issues/new)
+* [讨论区](https://hacpai.com/tag/pipe)
+* [报告问题](https://github.com/b3log/pipe/issues/new/choose)
 
 ## 授权
 
