@@ -47,6 +47,14 @@ a {
 
 .pipe-content__reset {
   font-size: 14px;
+
+  a {
+    text-decoration: underline;
+    transition: $transition;
+    &:hover {
+      color: #000;
+    }
+  }
 }
 
 .pipe-comment {
