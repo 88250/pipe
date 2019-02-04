@@ -22,8 +22,8 @@
 * 聚合分类 / 标签
 * 自定义导航
 * 多主题 / 多语言
-* Atom 订阅
-* 搜索
+* Atom / RSS / Sitemap
+* 文章搜索
 * Hexo/Jekyll 导入 / 导出
 * 可配置动静分离
 * 支持 SQLite / MySQL
