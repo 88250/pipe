@@ -117,16 +117,7 @@
         }
       },
       async logout () {
-        // TODO
-        const responseData = await this.axios.post('/logout')
-        if (responseData.code === 0) {
-          window.location.href = 'https://hacpai.com/logout'
-        } else {
-          this.commit('setSnackBar', {
-            snackBar: true,
-            snackMsg: responseData.msg
-          })
-        }
+        await this.axios.post('/logout')
       }
     }
   }

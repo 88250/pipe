@@ -2,7 +2,7 @@
  * @fileoverview common tool for every theme
  *
  * @author <a href="http://vanessa.b3log.org">Liyuan Li</a>
- * @version 0.4.0.1, Oct 31, 2018
+ * @version 0.4.0.2, Feb 4, 2019
  */
 
 import $ from 'jquery'
@@ -242,10 +242,7 @@ export const KillBrowser = () => {
 export const Logout = () => {
   $.ajax({
     url: `${config.Server}/api/logout`,
-    type: 'POST',
-    success: (result) => {
-      window.location.href = 'https://hacpai.com/logout'
-    }
+    type: 'POST'
   })
 }
 
