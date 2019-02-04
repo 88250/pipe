@@ -8,16 +8,6 @@
           <div class="login__github"></div>
           <img class="fn__none" src="~assets/images/github.gif"/>
         </div>
-
-        <a class="login__link fn__flex-center" href="https://hacpai.com/register"
-           target="_blank">
-          <v-icon>hacpai-logo</v-icon>
-          <div>&nbsp;{{ $t('useHacpaiInit', $store.state.locale) }}</div>
-        </a>
-        <div class="login__link fn__pointer fn__flex-center" @click="account='pipe'">
-          <img width="16" src="~assets/images/logo.png"/>
-          <span>&nbsp;{{ $t('usePipeInit', $store.state.locale) }}</span>
-        </div>
       </div>
       <div v-if="account==='pipe'">
         <br>

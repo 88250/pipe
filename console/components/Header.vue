@@ -118,6 +118,7 @@
       },
       async logout () {
         await this.axios.post('/logout')
+        window.location.href = '/'
       }
     }
   }
