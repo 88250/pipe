@@ -39,6 +39,18 @@ func showIndexAction(c *gin.Context) {
 	t.Execute(c.Writer, nil)
 }
 
+func showInitPageAction(c *gin.Context) {
+	t, err := template.ParseFiles(filepath.ToSlash(filepath.Join(model.Conf.StaticRoot, "console/dist/init/index.html")))
+	if nil != err {
+		logger.Errorf("load init page failed: " + err.Error())
+		c.String(http.StatusNotFound, "load init page failed")
+
+		return
+	}
+
+	t.Execute(c.Writer, nil)
+}
+
 func showPlatInfoAction(c *gin.Context) {
 	result := util.NewResult()
 	defer c.JSON(http.StatusOK, result)
