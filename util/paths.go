@@ -22,42 +22,40 @@ import (
 
 // Path prefixes.
 const (
-	PathRoot            = "/"
+	PathRoot           = "/"
 	PathInit            = "/init"
-	PathSearch          = "/search"
-	PathOpensearch      = "/opensearch.xml"
-	PathBlogs           = "/blogs"
-	PathConsoleDist     = "/console/dist"
-	PathAdmin           = "/admin"
-	PathAPI             = "/api"
-	PathFavicon         = "/favicon.ico"
-	PathTheme           = "/theme"
-	PathActivities      = "/activities"
-	PathArchives        = "/archives"
-	PathArticles        = "/articles"
-	PathAuthors         = "/authors"
-	PathCategories      = "/categories"
-	PathTags            = "/tags"
-	PathComments        = "/comments"
-	PathAtom            = "/atom"
-	PathRSS             = "/rss"
-	PathSitemap         = "/sitemap.xml"
-	PathUpload          = "/upload"
-	PathFetchUpload     = "/fetch-upload"
-	PathChangelogs      = "/changelogs"
-	PathRobots          = "/robots.txt"
+	PathSearch         = "/search"
+	PathOpensearch     = "/opensearch.xml"
+	PathBlogs          = "/blogs"
+	PathConsoleDist    = "/console/dist"
+	PathAdmin          = "/admin"
+	PathAPI            = "/api"
+	PathFavicon        = "/favicon.ico"
+	PathTheme          = "/theme"
+	PathActivities     = "/activities"
+	PathArchives       = "/archives"
+	PathArticles       = "/articles"
+	PathAuthors        = "/authors"
+	PathCategories     = "/categories"
+	PathTags           = "/tags"
+	PathComments       = "/comments"
+	PathAtom           = "/atom"
+	PathRSS            = "/rss"
+	PathSitemap        = "/sitemap.xml"
+	PathUpload         = "/upload"
+	PathFetchUpload    = "/fetch-upload"
+	PathChangelogs     = "/changelogs"
+	PathRobots         = "/robots.txt"
 	PathAPIsSymArticle = "/apis/symphony/article"
 	PathAPIsSymComment = "/apis/symphony/comment"
-	PathPlatInfo        = "/plat/info"
-	PathRegister        = "/register"
-	PathLogin           = "/login"
+	PathPlatInfo       = "/plat/info"
 )
 
 var reservedPaths = []string{
-	PathInit, PathSearch, PathOpensearch, PathBlogs, PathConsoleDist, PathAdmin, PathAPI, PathFavicon, PathTheme,
+	PathSearch, PathOpensearch, PathBlogs, PathConsoleDist, PathAdmin, PathAPI, PathFavicon, PathTheme,
 	PathActivities, PathArchives, PathAuthors, PathCategories, PathTags, PathComments, PathAtom, PathRSS,
 	PathSitemap, PathUpload, PathFetchUpload, PathChangelogs, PathRobots, PathAPIsSymArticle,
-	PathAPIsSymComment, PathPlatInfo, PathRegister, PathLogin,
+	PathAPIsSymComment, PathPlatInfo,
 }
 
 // IsReservedPath checks the specified path is a reserved path or not.

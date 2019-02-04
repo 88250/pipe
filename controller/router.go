@@ -77,10 +77,6 @@ func MapRoutes() *gin.Engine {
 	ret.GET(util.PathSitemap, outputSitemapAction)
 
 	api := ret.Group(util.PathAPI)
-	api.POST("/init", initAction)
-	api.POST("/init/local", initLocalAction)
-	api.POST("/register", registerAction)
-	api.POST("/login", loginAction)
 	api.POST("/logout", logoutAction)
 	api.Any("/hp/*apis", util.HacPaiAPI())
 	api.GET("/status", getStatusAction)
@@ -191,8 +187,6 @@ func MapRoutes() *gin.Engine {
 	indexGroup := ret.Group("")
 	indexGroup.Use(fillUser)
 	indexGroup.GET("", showIndexAction)
-	indexGroup.GET(util.PathLogin, showLoginPageAction)
-	indexGroup.GET(util.PathRegister, showRegisterPageAction)
 
 	initGroup := ret.Group(util.PathInit)
 	initGroup.Use(fillUser)
