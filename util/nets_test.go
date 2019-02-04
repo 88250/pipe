@@ -61,3 +61,11 @@ func TestIsDomain(t *testing.T) {
 		t.Errorf("[8.8.8.8] is not a domain")
 	}
 }
+
+func TestIsBot(t *testing.T) {
+	if !IsBot("Sym") {
+		t.Errorf("[Sym] is not a bot")
+
+		return
+	}
+}

@@ -63,6 +63,7 @@ func githubCallbackAction(c *gin.Context) {
 				Name:      userName,
 				Password:  util.RandString(8),
 				AvatarURL: githubUser["userAvatarURL"].(string),
+				B3Key:     githubId,
 				GithubId:  githubId,
 			}
 
@@ -85,6 +86,7 @@ func githubCallbackAction(c *gin.Context) {
 					Name:      userName,
 					Password:  util.RandString(8),
 					AvatarURL: githubUser["userAvatarURL"].(string),
+					B3Key:     githubId,
 					GithubId:  githubId,
 				}
 
@@ -96,6 +98,7 @@ func githubCallbackAction(c *gin.Context) {
 				}
 			} else {
 				user.GithubId = githubId
+				user.B3Key = githubId
 				service.User.UpdateUser(user)
 			}
 		}

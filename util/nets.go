@@ -17,6 +17,7 @@
 package util
 
 import (
+	"github.com/mssola/user_agent"
 	"net"
 	"strings"
 
@@ -46,4 +47,11 @@ func GetRemoteAddr(c *gin.Context) string {
 	}
 
 	return strings.Split(ret, ",")[0]
+}
+
+// IsBot checks the specified user-agent is a bot.
+func IsBot(uaStr string) bool {
+	var ua = user_agent.New(uaStr)
+
+	return ua.Bot() || strings.HasPrefix(uaStr, "Sym")
 }

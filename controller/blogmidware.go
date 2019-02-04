@@ -33,6 +33,26 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// DataModel represents data model.
+type DataModel map[string]interface{}
+
+func fillUser(c *gin.Context) {
+	inited := service.Init.Inited()
+	if !inited && util.PathInit != c.Request.URL.Path {
+		c.Redirect(http.StatusSeeOther, model.Conf.Server+util.PathInit)
+		c.Abort()
+
+		return
+	}
+
+	dataModel := &DataModel{}
+	c.Set("dataModel", dataModel)
+	session := util.GetSession(c)
+	(*dataModel)["User"] = session
+
+	c.Next()
+}
+
 func resolveBlog(c *gin.Context) {
 	username := c.Param("username")
 	if "" == username {
