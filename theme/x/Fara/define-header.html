@@ -66,17 +66,11 @@
     </a>
 
     {{if eq .User.URole 0}}
-    <a href="{{.Conf.Server}}/login" class="fn__flex-center">
+    <a href="{{.Conf.Server}}/init" class="fn__flex-center">
         <svg>
             <use xlink:href="#icon-login"></use>
         </svg>
-        {{.I18n.Login}}
-    </a>
-    <a href="{{.Conf.Server}}/register" class="fn__flex-center">
-        <svg>
-            <use xlink:href="#icon-register"></use>
-        </svg>
-        {{.I18n.Register}}
+        {{.I18n.StartToUse}}
     </a>
     {{else}}
     <a class="fn__flex-center"

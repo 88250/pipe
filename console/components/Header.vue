@@ -7,7 +7,7 @@
       </a>
     </div>
     <div class="header__nav fn__flex-1 fn__flex">
-      <template v-if="$store.state.role === 0">
+      <template v-if="$store.state.role === 0 && $route.path !== '/init'">
         <span class="fn__flex-1"> &nbsp;</span>
         <span>
           <nuxt-link to="/init" class="btn--space btn--success btn btn--small">
@@ -15,7 +15,7 @@
           </nuxt-link>
         </span>
       </template>
-      <template v-else>
+      <template v-if="$store.state.role !== 0">
         <span class="header__bar--icon fn__flex-1">
           <span v-if="$route.path.indexOf('/admin') > -1 && from !== 'error'">
             <div class="side__icon fn__left" @click="toggleSide">
@@ -118,6 +118,7 @@
       async logout () {
         const responseData = await this.axios.post('/logout')
         if (responseData.code === 0) {
+          this.$store.commit('setBodySide', '')
           this.$router.push('/')
         } else {
           this.commit('setSnackBar', {

@@ -34,8 +34,7 @@
     </div>
     <div class="header__status">
         {{if eq .User.URole 0}}
-        <a href="{{.Conf.Server}}/login">{{.I18n.Login}}</a>
-        <a href="{{.Conf.Server}}/register">{{.I18n.Register}}</a>
+        <a href="{{.Conf.Server}}/init">{{.I18n.StartToUse}}</a>
         {{else}}
         <a class="avatar"
            href="{{.Conf.Server}}/{{if ne .User.URole 4}}admin{{end}}"

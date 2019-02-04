@@ -49,7 +49,6 @@
         </a>
 
         {{if eq .User.URole 0}}
-        <a href="{{.Conf.Server}}/register" class="header__nav-btn">{{.I18n.Register}}</a>
         {{else}}
         <a href="{{.Conf.Server}}/{{if ne .User.URole 4}}admin/{{end}}">
             <svg>

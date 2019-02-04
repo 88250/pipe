@@ -2,7 +2,7 @@
  * @fileoverview article tool for every theme
  *
  * @author <a href="http://vanessa.b3log.org">Liyuan Li</a>
- * @version 0.3.1.0, Jan 7, 2019
+ * @version 0.3.1.1, Feb 5, 2019
  */
 
 import $ from 'jquery'
@@ -117,7 +117,7 @@ export const InitHljs = () => {
 export const ShowEditor = (reply, id, commentId) => {
   const $editor = $('#pipeEditor')
   if ($editor.length === 0) {
-    location.href = 'https://hacpai.com/login'
+    location.href = `${config.Server}/init`
     return
   }
   if (commentId) {

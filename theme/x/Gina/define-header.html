@@ -45,8 +45,7 @@
         </a>
         <div class="header__tool">
             {{if eq .User.URole 0}}
-            <a href="{{.Conf.Server}}/register" class="fn__right ft-orange">{{.I18n.Register}}</a>
-            <a href="{{.Conf.Server}}/login" class="fn__right">{{.I18n.Login}}</a>
+            <a href="{{.Conf.Server}}/init" class="fn__right ft-orange">{{.I18n.StartToUse}}</a>
             {{else}}
             <a class="avatar fn__right"
                href="{{.Conf.Server}}/{{if ne .User.URole 4}}admin/{{end}}"
