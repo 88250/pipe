@@ -115,8 +115,16 @@
           })
         }
       },
-      logout () {
-        this.axios.post('/logout')
+      async logout () {
+        const responseData = await this.axios.post('/logout')
+        if (responseData.code === 0) {
+          this.$router.push('/')
+        } else {
+          this.commit('setSnackBar', {
+            snackBar: true,
+            snackMsg: responseData.msg
+          })
+        }
       }
     }
   }

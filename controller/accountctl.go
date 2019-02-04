@@ -19,13 +19,16 @@ package controller
 import (
 	"net/http"
 
-	"github.com/b3log/pipe/model"
+	"github.com/b3log/pipe/util"
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
 )
 
 // logoutAction logout a user.
 func logoutAction(c *gin.Context) {
+	result := util.NewResult()
+	defer c.JSON(http.StatusOK, result)
+
 	session := sessions.Default(c)
 	session.Options(sessions.Options{
 		Path:   "/",
@@ -35,6 +38,4 @@ func logoutAction(c *gin.Context) {
 	if err := session.Save(); nil != err {
 		logger.Errorf("saves session failed: " + err.Error())
 	}
-
-	c.Redirect(http.StatusSeeOther, model.Conf.Server)
 }
