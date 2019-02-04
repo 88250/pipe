@@ -1,6 +1,6 @@
 <template>
   <v-app :class="$store.state.bodySide" id="pipe">
-    <pipe-header  from="default"/>
+    <pipe-header from="default"/>
     <side v-if="$route.path.indexOf('/admin') > -1"/>
     <div class="main">
       <div class="content" v-if="$route.path.indexOf('/admin') > -1">

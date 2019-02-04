@@ -10,9 +10,8 @@
       <template v-if="$store.state.role === 0">
         <span class="fn__flex-1"> &nbsp;</span>
         <span>
-          <nuxt-link to="/login">{{ $t('login', $store.state.locale)}}</nuxt-link>
-          <nuxt-link to="/register" class="btn--space btn--success btn btn--small">
-            {{ $t('register', $store.state.locale)}}
+          <nuxt-link to="/init" class="btn--space btn--success btn btn--small">
+            {{ $t('startToUse', $store.state.locale)}}
           </nuxt-link>
         </span>
       </template>
@@ -116,9 +115,8 @@
           })
         }
       },
-      async logout () {
-        await this.axios.post('/logout')
-        window.location.href = '/'
+      logout () {
+        this.axios.post('/logout')
       }
     }
   }

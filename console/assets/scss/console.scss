@@ -25,26 +25,16 @@
 
 // login
 .login {
-  padding: 30px;
   &__content {
     height: 300px;
-  }
+    display: flex;
+    align-items: center;
 
-  &__link {
-    margin: 0 25px;
-  }
-
-  &__image {
-    &.card {
-      display: block;
-      height: 120px;
-      width: 120px;
-      margin: 54px auto;
-      svg {
-        color: #fff;
-        height: 100px;
-        width: 100px;
-        padding: 10px;
+    & > .fn__pointer {
+      margin: 0 auto;
+      text-align: center;
+      &:hover .login__github {
+        background-image: url("~assets/images/github.gif");
       }
     }
   }
@@ -56,9 +46,6 @@
     background-size: cover;
     margin: 20px auto;
     background-position: center center;
-    &:hover {
-      background-image: url("~assets/images/github.gif");
-    }
   }
 }
 

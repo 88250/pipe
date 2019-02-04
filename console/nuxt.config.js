@@ -53,7 +53,7 @@ module.exports = {
     }
   },
   router: {
-    middleware: ['initialized', 'authenticated']
+    middleware: ['authenticated']
   },
   modules: ['@nuxtjs/proxy'],
   proxy: {
