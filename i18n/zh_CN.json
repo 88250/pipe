@@ -38,7 +38,6 @@
   "init": "初始化",
   "starIsMotivation": "你的点赞是我们最大的动力",
   "login": "登录",
-  "loginHacpai": "登录黑客派",
   "register": "注册",
   "hacpai": "黑客派",
   "reportIssue": "报告问题",
@@ -64,9 +63,6 @@
   "nextPage": "下一页",
   "experienceNow": "立即体验",
   "openPipeTravel": "开启 Pipe 之旅",
-  "registerHacpaiAccount": "注册黑客派",
-  "hacpaiEmail": "黑客派邮箱",
-  "hacpaiAccount": "黑客派账号",
   "nickname": "昵称",
   "delete": "删除",
   "edit": "编辑",
@@ -184,8 +180,8 @@
   "3rdStatistic": "第三方统计",
   "baiduStatistic": "百度统计 ID",
   "about3": "如果你对开源感兴趣，想贡献自己的一份力量，欢迎<a href='https://hacpai.com/article/1463025124998' target='_blank'>加入我们</a>！",
-  "about4": "<a href='https://hacpai.com/tag/Pipe' target='_blank'>Pipe</a> 是一款开源（<a href='http://www.gnu.org/licenses/gpl-3.0.html' target='_blank'>GPLv3</a>）的博客平台，由 <a href='https://github.com/b3log' target='_blank'>B3log 开源</a>组织维护。",
-  "index2": "登录<a href='https://github.com'>GitHub</a>账号后即可开始使用<br><br>",
+  "about4": "<a href='https://hacpai.com/tag/pipe' target='_blank'>Pipe</a> 是一款开源（<a href='http://www.gnu.org/licenses/gpl-3.0.html' target='_blank'>GPLv3</a>）的博客平台，由 <a href='https://github.com/b3log' target='_blank'>B3log 开源</a>组织维护。",
+  "index2": "登录 <a href='https://github.com'>GitHub</a> 账号后即可开始使用<br><br>",
   "index3": "如果你觉得 <a target='_blank' href='https://github.com/b3log/pipe'>Pipe</a> 还不错，请为我们点赞",
   "password": "密码"
 }
