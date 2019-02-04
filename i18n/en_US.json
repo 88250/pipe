@@ -2,6 +2,8 @@
   "syncToCommunity": "sync to community",
   "isGoTo": "Your changes will not be saved. Do you want to continue?",
   "ad": "advertisement",
+  "month": "Month",
+  "useGitHub": "Use GitHub to ",
   "userName": "User Name",
   "popularBlog": "Popular Blog",
   "createdTime": "Created Time",
