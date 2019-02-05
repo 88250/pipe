@@ -3,6 +3,7 @@
     <div class="card" ref="content">
       <div class="login__content">
         <div class="fn__pointer" @click="loginGitHub">
+          <br/>
           <div v-html="$t('index2', $store.state.locale)"></div>
           <div class="login__github"></div>
           <img class="fn__none" src="~assets/images/github.gif"/>
@@ -31,7 +32,7 @@
       loginGitHub () {
         this.$store.commit('setSnackBar', {
           snackBar: true,
-          snackMsg: 'Loading...',
+          snackMsg: this.$t('processing', this.$store.state.locale),
           snackModify: 'success',
         })
         if (!this.clickedGitHub) {

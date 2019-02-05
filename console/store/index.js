@@ -29,6 +29,9 @@ export const mutations = {
   setBodySide (state, data) {
     state.bodySide = data
   },
+  setLogout (state, data) {
+    state.role = data
+  },
   setStatus (state, data) {
     state.locale = data.locale
     state.version = data.version

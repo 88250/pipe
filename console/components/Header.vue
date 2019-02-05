@@ -119,6 +119,7 @@
         const responseData = await this.axios.post('/logout')
         if (responseData.code === 0) {
           this.$store.commit('setBodySide', '')
+          this.$store.commit('setLogout', 0)
           this.$router.push('/')
         } else {
           this.commit('setSnackBar', {
