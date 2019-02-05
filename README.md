@@ -83,6 +83,7 @@ Pipe 使用 [GPLv3](https://www.gnu.org/licenses/gpl-3.0.txt) 开源协议。
 * [Blackfriday](github.com/russross/blackfriday)：golang Markdown 处理器
 * [SQLite](https://www.sqlite.org)：使用广泛的嵌入式 SQL 引擎
 * [GCache](https://github.com/bluele/gcache)：golang 缓存库
+* [Vditor](https://github.com/b3log/vditor)： 一款浏览器端的 Markdown 编辑器，使用 TypeScript 实现
 
 ----
 
