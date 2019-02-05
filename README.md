@@ -2,7 +2,7 @@
 
 ## 简介
 
-[Pipe](https://github.com/b3log/pipe) 是一款小而美的开源博客平台，通过 [GitHub](https://github.com) 账号登录即可使用。
+[Pipe](https://github.com/b3log/pipe) 是一款小而美的开源博客平台，内置了 7 套精心制作的皮肤。除此之外，Pipe 还有着非常活跃的[社区](https://hacpai.com)，文章分享到社区后可以让很多人看到，产生丰富的交流互动。
 
 ## 案例
 
@@ -12,8 +12,6 @@
 * [黑壳博客](http://blog.bhusk.com)
 * [zorke 的博客](http://pipe.b3log.org/blogs/zorke)
 * [一个码农](http://blog.gitor.org)
-
-你也在使用的话欢迎通过 PR 更新该列表。
 
 ## 功能
 
@@ -68,7 +66,7 @@
 
 ## 授权
 
-Pipe 使用 [GPLv3](https://www.gnu.org/licenses/gpl-3.0.txt) 开源协议，请务必遵循该开源协议相关约定。
+Pipe 使用 [GPLv3](https://www.gnu.org/licenses/gpl-3.0.txt) 开源协议。
 
 ## 鸣谢
 
