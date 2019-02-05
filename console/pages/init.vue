@@ -3,7 +3,7 @@
     <div class="card" ref="content">
       <div class="login__content">
         <div class="fn__pointer" @click="loginGitHub">
-          {{ $t('useGitHub', $store.state.locale) }}{{ $t('startToUse', $store.state.locale) }}
+          <div v-html="$t('index2', $store.state.locale)"></div>
           <div class="login__github"></div>
           <img class="fn__none" src="~assets/images/github.gif"/>
         </div>
