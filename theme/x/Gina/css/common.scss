@@ -2,7 +2,7 @@
  * skin style
  *
  * @author <a href="http://vanessa.b3log.org">Liyuan Li</a>
- * @version 0.2.1.0, Dec 24, 2018
+ * @version 0.2.1.1, Feb 5, 2019
 */
 
 @import 'variables';
@@ -211,10 +211,12 @@ a {
   &__logo {
     position: absolute;
     left: 20px;
+    background-color: rgba(255, 255, 255, .68);
     img {
       height: 35px;
       width: 35px;
       flex-shrink: 0;
+      margin-top: 15px;
     }
 
     div {
