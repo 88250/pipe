@@ -30,19 +30,21 @@
 
 ### 初始化
 
-![初始化](https://user-images.githubusercontent.com/873584/34195698-e860c0c4-e599-11e7-9d4f-32307712324d.jpg)
+![init](https://user-images.githubusercontent.com/873584/52255025-ab9d2780-294b-11e9-88ba-e80a9018d25f.png)
 
 ### 管理后台
 
-![管理后台](https://user-images.githubusercontent.com/873584/34195907-b390adf4-e59a-11e7-8ef7-97f8393c770d.jpg)
+![console-index](https://user-images.githubusercontent.com/873584/52255023-a9d36400-294b-11e9-9c9f-a99c208d6b52.png)
 
 ### 编辑文章
 
-![编辑文章](https://user-images.githubusercontent.com/873584/34195873-975c07dc-e59a-11e7-83ca-c07272c5933c.jpg)
+![article](https://user-images.githubusercontent.com/873584/52255022-a9d36400-294b-11e9-9ead-09f88c64faaa.png)
 
-### 默认主题
+### 主题选择
 
-![默认主题](https://user-images.githubusercontent.com/873584/34195948-d2b0106c-e59a-11e7-922d-b85e7a172eef.jpg)
+### 主题 Gina
+
+![index](https://user-images.githubusercontent.com/873584/52255024-aa6bfa80-294b-11e9-9cfc-2c6cfc3d687c.png)
 
 ## 安装
 
