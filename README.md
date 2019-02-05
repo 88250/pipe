@@ -38,9 +38,11 @@
 
 ### 编辑文章
 
-![article](https://user-images.githubusercontent.com/873584/52255022-a9d36400-294b-11e9-9ead-09f88c64faaa.png)
+![article](https://user-images.githubusercontent.com/873584/52255159-4dbd0f80-294c-11e9-980f-bc15cd0dd340.png)
 
 ### 主题选择
+
+![theme](https://user-images.githubusercontent.com/873584/52255174-675e5700-294c-11e9-84bf-c04fe39ce5ec.png)
 
 ### 主题 Gina
 
