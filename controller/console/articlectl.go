@@ -49,7 +49,7 @@ func MarkdownAction(c *gin.Context) {
 		return
 	}
 
-	mdText := arg["mdText"].(string)
+	mdText := arg["markdownText"].(string)
 	mdResult := util.Markdown(mdText)
 	data := map[string]interface{}{}
 	data["html"] = mdResult.ContentHTML
