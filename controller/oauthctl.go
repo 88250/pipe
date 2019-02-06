@@ -114,6 +114,8 @@ func githubCallbackAction(c *gin.Context) {
 		BID:     ownBlog.ID,
 		BURL:    ownBlog.URL,
 	}
+	logger.Infof("%+v", user)
+	logger.Infof("%+v", ownBlog)
 	if err := session.Save(c); nil != err {
 		logger.Errorf("saves session failed: " + err.Error())
 		c.Status(http.StatusInternalServerError)
