@@ -1,4 +1,13 @@
-# <img src="https://user-images.githubusercontent.com/873584/33324159-c3ea5050-d489-11e7-9f4b-75ee806a7538.png"> [Pipe](https://github.com/b3log/pipe) [![Build Status](https://img.shields.io/travis/b3log/pipe.svg?style=flat)](https://travis-ci.org/b3log/pipe) [![Go Report Card](https://goreportcard.com/badge/github.com/b3log/pipe)](https://goreportcard.com/report/github.com/b3log/pipe) [![Coverage Status](https://coveralls.io/repos/github/b3log/pipe/badge.svg?branch=master)](https://coveralls.io/github/b3log/pipe?branch=master) [![GitHub license](https://img.shields.io/github/license/b3log/pipe.svg)](https://github.com/b3log/pipe/blob/master/LICENSE)
+<p align = "center">
+<img alt="Pipe" src="https://user-images.githubusercontent.com/873584/52321153-3d6d6900-2a0e-11e9-9ea6-57974a302dbf.png">
+<br><br>
+小而美的博客平台，为未来而构建
+<br><br>
+<a href="https://travis-ci.org/b3log/pipe"><img alt="Build Status" src="https://img.shields.io/travis/b3log/pipe.svg?style=flat"></a>
+<a href="https://goreportcard.com/report/github.com/b3log/pipe"><img alt="Go Report Card" src="https://goreportcard.com/badge/github.com/b3log/pipe"></a>
+<a href="https://coveralls.io/repos/github/b3log/pipe/badge.svg?branch=master"><img alt="Coverage Status" src="https://coveralls.io/github/b3log/pipe?branch=master"></a>
+<a href="https://github.com/b3log/pipe/blob/master/LICENSE"><img alt="GPLv3" src="https://img.shields.io/github/license/b3log/pipe.svg"></a>
+</p>
 
 ## 简介
 
@@ -84,11 +93,3 @@ Pipe 使用 [GPLv3](https://www.gnu.org/licenses/gpl-3.0.txt) 开源协议。
 * [SQLite](https://www.sqlite.org)：使用广泛的嵌入式 SQL 引擎
 * [GCache](https://github.com/bluele/gcache)：golang 缓存库
 * [Vditor](https://github.com/b3log/vditor)： 一款浏览器端的 Markdown 编辑器，使用 TypeScript 实现
-
-----
-
-<p align = "center">
-<strong>小而美的博客平台，为未来而构建</strong>
-<br><br>
-<img src="https://user-images.githubusercontent.com/873584/33324033-441773da-d489-11e7-8d39-78abbeb563f0.png">
-</p>
