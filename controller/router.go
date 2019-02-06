@@ -193,6 +193,7 @@ func MapRoutes() *gin.Engine {
 	initGroup.GET("", showInitPageAction)
 
 	ret.Static(util.PathConsoleDist, staticPath("console/dist"))
+	ret.Static("/dist/vditor", staticPath("console/dist/vditor"))
 	ret.StaticFile(util.PathChangelogs, staticPath("changelogs.html"))
 	ret.StaticFile(util.PathRobots, staticPath("theme/robots.txt"))
 	ret.NoRoute(func(c *gin.Context) {
