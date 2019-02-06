@@ -42,8 +42,6 @@ const (
 	PathAtom           = "/atom"
 	PathRSS            = "/rss"
 	PathSitemap        = "/sitemap.xml"
-	PathUpload         = "/upload"
-	PathFetchUpload    = "/fetch-upload"
 	PathChangelogs     = "/changelogs"
 	PathRobots         = "/robots.txt"
 	PathAPIsSymArticle = "/apis/symphony/article"
@@ -54,7 +52,7 @@ const (
 var reservedPaths = []string{
 	PathSearch, PathOpensearch, PathBlogs, PathConsoleDist, PathAdmin, PathAPI, PathFavicon, PathTheme,
 	PathActivities, PathArchives, PathAuthors, PathCategories, PathTags, PathComments, PathAtom, PathRSS,
-	PathSitemap, PathUpload, PathFetchUpload, PathChangelogs, PathRobots, PathAPIsSymArticle,
+	PathSitemap, PathChangelogs, PathRobots, PathAPIsSymArticle,
 	PathAPIsSymComment, PathPlatInfo,
 }
 
