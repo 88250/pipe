@@ -43,6 +43,7 @@
     "jquery": "^3.2.1",
     "nprogress": "^0.2.0",
     "qrious": "^4.0.2",
-    "turndown": "^5.0.1"
+    "turndown": "^5.0.1",
+    "vditor": "^0.1.2"
   }
 }

@@ -6,7 +6,7 @@
  */
 
 import $ from 'jquery'
-import { Editor } from './lib/b3log/editor/index'
+import Vditor from 'vditor'
 import { LazyLoadCSSImage, LazyLoadImage, ParseMarkdown } from './common'
 import config from '../../pipe.json'
 
@@ -268,73 +268,40 @@ ${$it.data('label2')}`).click(function () {
   }
 
   // init Editor
-  const label = $('#pipeEditorComment').data('label').split(',')
-  const $b3logEditor = Editor({
-    id: 'pipeEditorComment',
+  const vditor = Vditor('pipeEditorComment', {
     placeholder: $('#pipeEditorComment').data('placeholder'),
-    tipClass: 'pipe-tooltipped pipe-tooltipped--e',
-    emojiURL: 'https://www.webpagefx.com/tools/emoji-cheat-sheet/',
-    label: {
-      emoji: label[0] + ' <ctrl+&frasl;>',
-      bold: label[1] + ' <ctrl+b>',
-      italic: label[2] + ' <ctrl+i>',
-      quote: label[3] + ' <ctrl+e>',
-      link: label[4] + ' <ctrl+k>',
-      upload: label[5],
-      unorderedList: label[6] + ' <ctrl+l>',
-      orderedList: label[7] + ' <ctrl+shift+l>',
-      view: label[8] + ' <ctrl+d>',
-      question: label[9],
-      fullscreen: label[10] + ' <ctrl+shift+a>',
-      emojiTip: 'EMOJI CHEAT SHEET',
-    },
     height: 180,
-    keyup: (event) => {
-      localStorage.setItem('pipeEditorComment', event.target.value)
-    },
     esc: _hideEditor,
     ctrlEnter: () => {
       $('#pipeEditorAdd').click()
     },
-    hasView: false,
-    uploadURL: `${$('#pipeEditorComment').data('blogurl')}/upload`,
-    fetchUpload: (url, succCB) => {
-      $.ajax({
-        url: `${$('#pipeEditorComment').data('blogurl')}/fetch-upload`,
-        type: 'POST',
-        data: JSON.stringify({
-          url,
-        }),
-        success: function (result) {
-          succCB(result.data.originalURL, result.data.url)
-        },
-      })
+    preview: {
+      delay: 500,
+      show: data.show,
+      url: `${process.env.Server}/api/console/markdown`,
+      parse: (element) => {
+        if (element.style.display === 'none') {
+          return
+        }
+        LazyLoadImage()
+        LazyLoadCSSImage()
+        InitHljs()
+        ParseMarkdown()
+      },
     },
-    previewClass: 'pipe-content__reset',
-    staticServePath: config.StaticServer || config.Server,
-    change: (value, $preview) => {
-      if ($.trim(value) === '' || !$preview) {
-        $preview && $preview.html('')
-        return
-      }
-      $.ajax({
-        url: `${config.Server}/api/console/markdown`,
-        type: 'POST',
-        data: JSON.stringify({
-          mdText: value,
-        }),
-        success: function (result) {
-          $preview.html(result.data.html)
-          LazyLoadImage()
-          LazyLoadCSSImage()
-          InitHljs()
-          ParseMarkdown()
-        },
-      })
+    upload: {
+      max: 10 * 1024 * 1024,
+      url: `${$('#pipeEditorComment').data('blogurl')}/upload`,
+    },
+    counter: 2048,
+    resize: {
+      enable: true,
+    },
+    lang: $('#pipeEditorComment').data('lang'),
+    classes: {
+      preview: 'pipe-content__reset',
     },
   })
-
-  $b3logEditor.val(localStorage.getItem('pipeEditorComment'))
 
   // editor cancel
   $('#pipeEditorCancel').click(function () {
@@ -353,14 +320,14 @@ ${$it.data('label2')}`).click(function () {
       return
     }
 
-    if ($.trim($b3logEditor.val()).length === 0) {
+    if ($.trim(vditor.getValue()).length === 0) {
       alert(label2)
       return
     }
 
     let requestData = {
       'articleID': $editor.data('id'),
-      'content': $b3logEditor.val(),
+      'content': vditor.getValue(),
     }
 
     if ($editor.data('commentid')) {
@@ -407,8 +374,7 @@ ${$it.data('label2')}`).click(function () {
           ParseMarkdown()
           InitHljs()
 
-          $b3logEditor.val('')
-          localStorage.removeItem('pipeEditorComment')
+          vditor.setValue('')
         } else {
           alert(result.msg)
         }
