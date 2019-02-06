@@ -6,7 +6,6 @@
  */
 
 import $ from 'jquery'
-import Vditor from 'vditor'
 import { LazyLoadCSSImage, LazyLoadImage, ParseMarkdown } from './common'
 import config from '../../pipe.json'
 
@@ -130,6 +129,57 @@ export const ShowEditor = (reply, id, commentId) => {
   $('body').css('padding-bottom', $editor.outerHeight() + 'px')
   $('#pipeEditorReplyTarget').text(reply)
   $('#pipeEditorComment textarea').focus()
+
+  if (typeof Vditor !== 'undefined') {
+    return
+  }
+
+  $.ajax({
+    method: 'GET',
+    url: `${config.StaticServer}/dist/vditor/index.min.js`,
+    dataType: 'script',
+    cache: true,
+    success: () => {
+      window.vditor = new Vditor('pipeEditorComment', {
+        placeholder: $('#pipeEditorComment').data('placeholder'),
+        height: 180,
+        esc: () => {
+          $('#pipeEditorCancel').click()
+        },
+        ctrlEnter: () => {
+          $('#pipeEditorAdd').click()
+        },
+        preview: {
+          delay: 500,
+          show: false,
+          url: `${config.Server}/api/console/markdown`,
+          parse: (element) => {
+            if (element.style.display === 'none') {
+              return
+            }
+            LazyLoadImage()
+            LazyLoadCSSImage()
+            InitHljs()
+            ParseMarkdown()
+          },
+        },
+        upload: {
+          max: 10 * 1024 * 1024,
+          url: `${$('#pipeEditorComment').data('blogurl')}/upload`,
+        },
+        counter: 2048,
+        resize: {
+          enable: true,
+          position: 'top'
+        },
+        lang: $('#pipeEditorComment').data('lang'),
+        classes: {
+          preview: 'pipe-content__reset',
+        },
+      })
+    },
+  })
+
 }
 
 export const InitComment = () => {
@@ -266,42 +316,6 @@ ${$it.data('label2')}`).click(function () {
   if ($('#pipeEditorComment').length === 0) {
     return
   }
-
-  // init Editor
-  const vditor = Vditor('pipeEditorComment', {
-    placeholder: $('#pipeEditorComment').data('placeholder'),
-    height: 180,
-    esc: _hideEditor,
-    ctrlEnter: () => {
-      $('#pipeEditorAdd').click()
-    },
-    preview: {
-      delay: 500,
-      show: data.show,
-      url: `${process.env.Server}/api/console/markdown`,
-      parse: (element) => {
-        if (element.style.display === 'none') {
-          return
-        }
-        LazyLoadImage()
-        LazyLoadCSSImage()
-        InitHljs()
-        ParseMarkdown()
-      },
-    },
-    upload: {
-      max: 10 * 1024 * 1024,
-      url: `${$('#pipeEditorComment').data('blogurl')}/upload`,
-    },
-    counter: 2048,
-    resize: {
-      enable: true,
-    },
-    lang: $('#pipeEditorComment').data('lang'),
-    classes: {
-      preview: 'pipe-content__reset',
-    },
-  })
 
   // editor cancel
   $('#pipeEditorCancel').click(function () {
