@@ -1,4 +1,14 @@
-# <img src="https://user-images.githubusercontent.com/873584/33324159-c3ea5050-d489-11e7-9f4b-75ee806a7538.png"> [Pipe](https://github.com/b3log/pipe) [![Build Status](https://img.shields.io/travis/b3log/pipe.svg?style=flat)](https://travis-ci.org/b3log/pipe) [![Go Report Card](https://goreportcard.com/badge/github.com/b3log/pipe)](https://goreportcard.com/report/github.com/b3log/pipe) [![Coverage Status](https://coveralls.io/repos/github/b3log/pipe/badge.svg?branch=master)](https://coveralls.io/github/b3log/pipe?branch=master) [![GitHub license](https://img.shields.io/github/license/b3log/pipe.svg)](https://github.com/b3log/pipe/blob/master/LICENSE)
+<p align = "center">
+<img alt="Pipe" src="https://user-images.githubusercontent.com/873584/52321153-3d6d6900-2a0e-11e9-9ea6-57974a302dbf.png">
+<br><br>
+小而美的博客平台，为未来而构建
+<br><br>
+<a title="Build Status" target="_blank" href="https://travis-ci.org/b3log/pipe"><img src="https://img.shields.io/travis/b3log/pipe.svg?style=flat-square"></a>
+<a title="Go Report Card" target="_blank" href="https://goreportcard.com/report/github.com/b3log/pipe"><img src="https://goreportcard.com/badge/github.com/b3log/pipe"></a>
+<a title="Coverage Status" target="_blank" href="https://coveralls.io/repos/github/b3log/pipe/badge.svg?branch=master"><img src="https://img.shields.io/coveralls/github/b3log/pipe.svg?style=flat-square"></a>
+<a title="GPLv3" target="_blank" href="https://github.com/b3log/pipe/blob/master/LICENSE"><img src="https://img.shields.io/badge/license-GPLv3-orange.svg?style=flat-square"></a>
+<a title="Downloads" target="_blank" href="https://github.com/b3log/pipe/releases"><img src="https://img.shields.io/github/downloads/b3log/pipe/total.svg?style=flat-square"></a>
+</p>
 
 ## 简介
 
@@ -78,17 +88,9 @@ Pipe 使用 [GPLv3](https://www.gnu.org/licenses/gpl-3.0.txt) 开源协议。
 * [Vue.js](https://github.com/vuejs/vue)：渐进式 JavaScript 框架
 * [Nuxt.js](https://github.com/nuxt/nuxt.js)：Vue.js 框架
 * [Vuetify](https://github.com/vanessa219/vuetify)：Vue.js 的 Material 组件框架
+* [Vditor](https://github.com/b3log/vditor)： 一款浏览器端的 Markdown 编辑器，使用 TypeScript 实现
 * [Gin](https://github.com/gin-gonic/gin)：又快又好用的 golang HTTP web 框架
 * [GORM](https://github.com/jinzhu/gorm)：极好的 golang ORM 库
 * [Blackfriday](github.com/russross/blackfriday)：golang Markdown 处理器
 * [SQLite](https://www.sqlite.org)：使用广泛的嵌入式 SQL 引擎
 * [GCache](https://github.com/bluele/gcache)：golang 缓存库
-* [Vditor](https://github.com/b3log/vditor)： 一款浏览器端的 Markdown 编辑器，使用 TypeScript 实现
-
-----
-
-<p align = "center">
-<strong>小而美的博客平台，为未来而构建</strong>
-<br><br>
-<img src="https://user-images.githubusercontent.com/873584/33324033-441773da-d489-11e7-8d39-78abbeb563f0.png">
-</p>

@@ -72,7 +72,6 @@ func MapRoutes() *gin.Engine {
 		HttpOnly: true,
 	})
 	ret.Use(sessions.Sessions("pipe", store))
-	ret.POST(util.PathUpload, uploadAction)
 	ret.GET(util.PathPlatInfo, showPlatInfoAction)
 	ret.GET(util.PathSitemap, outputSitemapAction)
 
@@ -141,7 +140,6 @@ func MapRoutes() *gin.Engine {
 	consoleSettingsGroup.PUT("/ad", console.UpdateAdSettingsAction)
 	consoleSettingsGroup.GET("/account", console.GetAccountAction)
 	consoleSettingsGroup.PUT("/account", console.UpdateAccountAction)
-	consoleSettingsGroup.PUT("/account/password", console.UpdatePasswordAction)
 
 	ret.StaticFile(util.PathFavicon, staticPath("console/static/favicon.ico"))
 
@@ -237,14 +235,6 @@ func routePath(c *gin.Context) {
 		return
 	case util.PathRSS:
 		outputRSSAction(c)
-
-		return
-	case util.PathUpload:
-		uploadAction(c)
-
-		return
-	case util.PathFetchUpload:
-		fetchUploadAction(c)
 
 		return
 	case util.PathSearch:
