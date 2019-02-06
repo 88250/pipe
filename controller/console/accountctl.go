@@ -24,32 +24,6 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// UpdatePasswordAction updates a user's password.
-func UpdatePasswordAction(c *gin.Context) {
-	result := util.NewResult()
-	defer c.JSON(http.StatusOK, result)
-
-	arg := map[string]interface{}{}
-	if err := c.BindJSON(&arg); nil != err {
-		result.Code = -1
-		result.Msg = "parses update user's password request failed"
-
-		return
-	}
-
-	password := arg["password"].(string)
-
-	session := util.GetSession(c)
-	user := service.User.GetUserByName(session.UName)
-	user.Password = password
-	if err := service.User.UpdateUser(user); nil != err {
-		result.Code = -1
-		result.Msg = err.Error()
-
-		return
-	}
-}
-
 // UpdateAccountAction updates an account.
 func UpdateAccountAction(c *gin.Context) {
 	result := util.NewResult()

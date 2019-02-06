@@ -140,7 +140,6 @@ func MapRoutes() *gin.Engine {
 	consoleSettingsGroup.PUT("/ad", console.UpdateAdSettingsAction)
 	consoleSettingsGroup.GET("/account", console.GetAccountAction)
 	consoleSettingsGroup.PUT("/account", console.UpdateAccountAction)
-	consoleSettingsGroup.PUT("/account/password", console.UpdatePasswordAction)
 
 	ret.StaticFile(util.PathFavicon, staticPath("console/static/favicon.ico"))
 
