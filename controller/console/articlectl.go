@@ -51,9 +51,7 @@ func MarkdownAction(c *gin.Context) {
 
 	mdText := arg["markdownText"].(string)
 	mdResult := util.Markdown(mdText)
-	data := map[string]interface{}{}
-	data["html"] = mdResult.ContentHTML
-	result.Data = data
+	result.Data = mdResult.ContentHTML
 }
 
 // AddArticleAction adds a new article.
