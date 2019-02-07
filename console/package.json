@@ -10,8 +10,8 @@
   },
   "scripts": {
     "mock": "apimocker --config ./mock/mock.json",
-    "dev": "nuxt",
-    "build": "nuxt build",
+    "dev": "nuxt && cp -r node_modules/vditor/dist/vditor dist",
+    "build": "nuxt build  && cp -r node_modules/vditor/dist/vditor dist",
     "start": "nuxt start",
     "generate": "nuxt generate",
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
