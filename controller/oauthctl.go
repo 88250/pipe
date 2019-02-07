@@ -19,6 +19,7 @@ package controller
 import (
 	"fmt"
 	"net/http"
+	"strings"
 
 	"github.com/b3log/pipe/model"
 	"github.com/b3log/pipe/service"
@@ -30,7 +31,14 @@ var states = map[string]string{}
 
 // redirectGitHubLoginAction redirects to GitHub auth page.
 func redirectGitHubLoginAction(c *gin.Context) {
-	state := util.RandString(16) + model.Conf.Server
+	referer := c.Request.URL.Query().Get("referer")
+	if "" == referer {
+		referer = model.Conf.Server
+	}
+	if strings.HasSuffix(referer, "/") {
+		referer = referer[:len(referer)-1]
+	}
+	state := util.RandString(16) + referer
 	states[state] = state
 	path := "https://github.com/login/oauth/authorize" + "?client_id=af7df3c80f26af88a8b3&state=" + state + "&scope=public_repo,user"
 
@@ -45,6 +53,8 @@ func githubCallbackAction(c *gin.Context) {
 		return
 	}
 	delete(states, state)
+
+	referer := state[16:]
 
 	accessToken := c.Query("ak")
 	githubUser := util.GitHubUserInfo(accessToken)
@@ -119,5 +129,5 @@ func githubCallbackAction(c *gin.Context) {
 		c.Status(http.StatusInternalServerError)
 	}
 
-	c.Redirect(http.StatusSeeOther, model.Conf.Server+util.PathAdmin)
+	c.Redirect(http.StatusSeeOther, referer)
 }
