@@ -257,6 +257,10 @@ func routePath(c *gin.Context) {
 		}
 
 		return
+	case "/api/oauth/github/callback":
+		githubCallbackAction(c)
+
+		return
 	}
 
 	if strings.Contains(path, util.PathArchives+"/") {

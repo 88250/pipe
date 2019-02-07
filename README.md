@@ -12,7 +12,7 @@
 
 ## 简介
 
-[Pipe](https://github.com/b3log/pipe) 是一款小而美的开源博客平台，内置了 7 套精心制作的皮肤。除此之外，Pipe 还有着非常活跃的[社区](https://hacpai.com)，文章分享到社区后可以让很多人看到，产生丰富的交流互动。
+[Pipe](https://github.com/b3log/pipe) 是一款小而美的开源博客平台，专为程序员设计。Pipe 有着非常活跃的[社区](https://hacpai.com)，文章自动推送到社区后可以让很多人看到，产生丰富的交流互动。
 
 ## 案例
 

@@ -36,7 +36,7 @@
           snackModify: 'success',
         })
         if (!this.clickedGitHub) {
-          window.location.href = `${process.env.AxiosBaseURL}/oauth/github/redirect`
+          window.location.href = `${process.env.AxiosBaseURL}/oauth/github/redirect?referer=${document.referrer}`
           this.$set(this, 'clickedGitHub', true)
         }
       },
