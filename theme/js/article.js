@@ -116,7 +116,7 @@ export const InitHljs = () => {
 export const ShowEditor = (reply, id, commentId) => {
   const $editor = $('#pipeEditor')
   if ($editor.length === 0) {
-    location.href = `${config.Server}/init`
+    location.href = `${config.Server}/start`
     return
   }
   if (commentId) {

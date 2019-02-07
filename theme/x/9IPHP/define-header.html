@@ -13,7 +13,7 @@
         <svg class="fn__none"><use xlink:href="#icon-toc"></use></svg>
         <span class="fn__right">
             {{if eq .User.URole 0}}
-             <a href="{{.Conf.Server}}/init" class="header__btn ft-orange">{{.I18n.StartToUse}}</a>
+             <a href="{{.Conf.Server}}/start" class="header__btn ft-orange">{{.I18n.StartToUse}}</a>
             {{else}}
             <a class="avatar pipe-tooltipped pipe-tooltipped--w"
                aria-label="{{.I18n.manage}}"
@@ -78,7 +78,7 @@
         {{.I18n.Search}}
     </a>
     {{if eq .User.URole 0}}
-    <a href="{{.Conf.Server}}/init">{{.I18n.StartToUse}}</a>
+    <a href="{{.Conf.Server}}/start">{{.I18n.StartToUse}}</a>
     {{else}}
     <a href="{{.Conf.Server}}/{{if ne .User.URole 4}}admin/{{end}}">
         <svg>

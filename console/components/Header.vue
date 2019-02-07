@@ -7,10 +7,10 @@
       </a>
     </div>
     <div class="header__nav fn__flex-1 fn__flex">
-      <template v-if="$store.state.role === 0 && $route.path !== '/init'">
+      <template v-if="$store.state.role === 0 && $route.path !== '/start'">
         <span class="fn__flex-1"> &nbsp;</span>
         <span>
-          <nuxt-link to="/init" class="btn--space btn--success btn btn--small">
+          <nuxt-link to="/start" class="btn--space btn--success btn btn--small">
             {{ $t('startToUse', $store.state.locale)}}
           </nuxt-link>
         </span>

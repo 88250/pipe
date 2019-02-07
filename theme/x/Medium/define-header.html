@@ -15,7 +15,7 @@
                 </svg>
             </a>
             {{if eq .User.URole 0}}
-            <a href="{{.Conf.Server}}/init" class="header__a header__a--border">{{.I18n.StartToUse}}</a>
+            <a href="{{.Conf.Server}}/start" class="header__a header__a--border">{{.I18n.StartToUse}}</a>
             {{else}}
             <a class="avatar pipe-tooltipped pipe-tooltipped--w header__icon"
                aria-label="{{.I18n.Manage}}"

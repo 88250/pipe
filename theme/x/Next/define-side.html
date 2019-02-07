@@ -20,7 +20,7 @@
         <div class="side__board">{{.Setting.BasicNoticeBoard}}</div>
 
         {{if eq .User.URole 0}}
-        <a href="{{.Conf.Server}}/init" class="side__btn">{{.I18n.StartToUse}}</a>
+        <a href="{{.Conf.Server}}/start" class="side__btn">{{.I18n.StartToUse}}</a>
         {{else}}
         <a class="side__btn"
            href="{{.Conf.Server}}/{{if ne .User.URole 4}}admin/{{end}}">{{.I18n.Manage}}</a>

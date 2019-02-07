@@ -23,7 +23,7 @@ import (
 // Path prefixes.
 const (
 	PathRoot           = "/"
-	PathInit            = "/init"
+	PathInit            = "/start"
 	PathSearch         = "/search"
 	PathOpensearch     = "/opensearch.xml"
 	PathBlogs          = "/blogs"
