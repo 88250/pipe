@@ -2,7 +2,7 @@
  * @fileoverview article tool for every theme
  *
  * @author <a href="http://vanessa.b3log.org">Liyuan Li</a>
- * @version 0.3.1.1, Feb 5, 2019
+ * @version 0.3.1.2, Feb 7, 2019
  */
 
 import $ from 'jquery'
@@ -136,7 +136,7 @@ export const ShowEditor = (reply, id, commentId) => {
 
   $.ajax({
     method: 'GET',
-    url: `${config.StaticServer}/dist/vditor/index.min.js`,
+    url: 'https://vditor.b3log.org/0.1.3/index.min.js',
     dataType: 'script',
     cache: true,
     success: () => {
@@ -165,12 +165,12 @@ export const ShowEditor = (reply, id, commentId) => {
         },
         upload: {
           max: 10 * 1024 * 1024,
-          url: `${$('#pipeEditorComment').data('blogurl')}/upload`,
+          url: 'https://hacpai.com/upload/editor',
         },
         counter: 2048,
         resize: {
           enable: true,
-          position: 'top'
+          position: 'top',
         },
         lang: $('#pipeEditorComment').data('lang'),
         classes: {
