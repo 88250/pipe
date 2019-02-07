@@ -210,13 +210,13 @@
               LazyLoadImage()
               let hasMathJax = false
               let hasFlow = false
-              if (text.split('$').length > 2 ||
-                (text.split('\\(').length > 1 &&
-                  text.split('\\)').length > 1)) {
+              if (element.innerHTML.split('$').length > 2 ||
+                (element.innerHTML.split('\\(').length > 1 &&
+                  element.innerHTML.split('\\)').length > 1)) {
                 hasMathJax = true
               }
 
-              if (text.indexOf('<code class="language-flow"') > -1) {
+              if (element.innerHTML.indexOf('<code class="language-flow"') > -1) {
                 hasFlow = true
               }
 
@@ -264,7 +264,7 @@
           },
           upload: {
             max: 10 * 1024 * 1024,
-            url: `${process.env.Server}/upload`,
+            url: 'https://hacpai.com/upload/editor',
           },
           height: data.height,
           counter: 102400,
@@ -502,7 +502,7 @@
   }
 </script>
 <style lang="scss">
-  @import '~vditor/dist/vditor/index.classic';
+  @import '~vditor/dist/index.classic';
 </style>
 <style lang="sass">
   .article-post__carousel
