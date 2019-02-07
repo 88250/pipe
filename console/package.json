@@ -22,9 +22,10 @@
     "babel-polyfill": "^6.26.0",
     "particles.js": "^2.0.0",
     "sha512crypt-node": "^0.1.0",
+    "vditor": "^0.1.2",
     "vue-axios": "^2.1.4",
     "vue-i18n": "^8.4.0",
-    "vuetify": "git+https://github.com/Vanessa219/vuetify.git#v1.2.10"
+    "vuetify": "git+https://github.com/Vanessa219/vuetify.git#v1.2.11"
   },
   "devDependencies": {
     "@nuxtjs/proxy": "^1.3.1",
