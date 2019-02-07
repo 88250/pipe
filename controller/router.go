@@ -188,7 +188,7 @@ func MapRoutes() *gin.Engine {
 
 	initGroup := ret.Group(util.PathInit)
 	initGroup.Use(fillUser)
-	initGroup.GET("", showInitPageAction)
+	initGroup.GET("", showStartPageAction)
 
 	ret.Static(util.PathConsoleDist, staticPath("console/dist"))
 	ret.Static("/dist/vditor", staticPath("console/dist/vditor"))

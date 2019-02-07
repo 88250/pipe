@@ -39,11 +39,11 @@ func showIndexAction(c *gin.Context) {
 	t.Execute(c.Writer, nil)
 }
 
-func showInitPageAction(c *gin.Context) {
+func showStartPageAction(c *gin.Context) {
 	t, err := template.ParseFiles(filepath.ToSlash(filepath.Join(model.Conf.StaticRoot, "console/dist/start/index.html")))
 	if nil != err {
-		logger.Errorf("load init page failed: " + err.Error())
-		c.String(http.StatusNotFound, "load init page failed")
+		logger.Errorf("load start page failed: " + err.Error())
+		c.String(http.StatusNotFound, "load start page failed")
 
 		return
 	}
