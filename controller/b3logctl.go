@@ -40,6 +40,17 @@ func addSymCommentAction(c *gin.Context) {
 		return
 	}
 
+	client := arg["client"].(map[string]interface{})
+	b3Key := client["userB3Key"].(string)
+	articleAuthorName := client["userName"].(string)
+	articleAuthor := service.User.GetUserByName(articleAuthorName)
+	if articleAuthor.B3Key != b3Key {
+		result.Code = -1
+		result.Msg = "wrong B3 Key"
+
+		return
+	}
+
 	requestCmt := arg["comment"].(map[string]interface{})
 	articleId, err := strconv.ParseUint(requestCmt["articleId"].(string), 10, 64)
 	if nil != err {
