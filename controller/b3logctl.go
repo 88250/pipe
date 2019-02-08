@@ -97,6 +97,17 @@ func addSymArticleAction(c *gin.Context) {
 		return
 	}
 
+	client := arg["client"].(map[string]interface{})
+	b3Key := client["userB3Key"].(string)
+	articleAuthorName := client["userName"].(string)
+	articleAuthor := service.User.GetUserByName(articleAuthorName)
+	if articleAuthor.B3Key != b3Key {
+		result.Code = -1
+		result.Msg = "wrong B3 Key"
+
+		return
+	}
+
 	requestArticle := arg["article"].(map[string]interface{})
 	articleId, err := strconv.ParseUint(requestArticle["oId"].(string), 10, 64)
 	if nil != err {
@@ -107,21 +118,13 @@ func addSymArticleAction(c *gin.Context) {
 	}
 
 	blogID := getBlogID(c)
-	b3Key := requestArticle["userB3Key"].(string)
-	blogAdmin := service.User.GetBlogAdmin(blogID)
-	if b3Key != blogAdmin.B3Key {
-		result.Code = -1
-		result.Msg = "B3 key not match, ignored add article"
-
-		return
-	}
 
 	article := &model.Article{
-		BlogID:   blogID,
-		AuthorID: blogAdmin.ID,
-		Title:    requestArticle["articleTitle"].(string),
-		Tags:     requestArticle["articleTags"].(string),
-		Content:  requestArticle["articleContent"].(string),
+		BlogID:      blogID,
+		AuthorID:    articleAuthor.ID,
+		Title:       requestArticle["articleTitle"].(string),
+		Tags:        requestArticle["articleTags"].(string),
+		Content:     requestArticle["articleContent"].(string),
 		Commentable: true,
 	}
 	article.ID = articleId
@@ -150,21 +153,22 @@ func updateSymArticleAction(c *gin.Context) {
 		return
 	}
 
+	client := arg["client"].(map[string]interface{})
+	b3Key := client["userB3Key"].(string)
+	articleAuthorName := client["userName"].(string)
+	articleAuthor := service.User.GetUserByName(articleAuthorName)
+	if articleAuthor.B3Key != b3Key {
+		result.Code = -1
+		result.Msg = "wrong B3 Key"
+
+		return
+	}
+
 	requestArticle := arg["article"].(map[string]interface{})
 	articleId, err := strconv.ParseUint(requestArticle["oId"].(string), 10, 64)
 	if nil != err {
 		result.Code = -1
 		result.Msg = "parses update article request failed"
-
-		return
-	}
-
-	blogID := getBlogID(c)
-	b3Key := requestArticle["userB3Key"].(string)
-	blogAdmin := service.User.GetBlogAdmin(blogID)
-	if b3Key != blogAdmin.B3Key {
-		result.Code = -1
-		result.Msg = "B3 key not match, ignored add article"
 
 		return
 	}
