@@ -64,7 +64,6 @@ func UploadToken(c *gin.Context) {
 	defer c.JSON(http.StatusOK, result)
 
 	session := util.GetSession(c)
-
 	if "" == session.UB3Key {
 		result.Code = 1
 
@@ -112,7 +111,7 @@ func UploadToken(c *gin.Context) {
 	}
 
 	resultData := requestResult.Data.(map[string]interface{})
-	uploadToken = resultData["token"].(string)
+	uploadToken = resultData["uploadToken"].(string)
 	uploadURL = resultData["uploadURL"].(string)
 	uploadTokenTime = now
 	result.Data = requestResult.Data
