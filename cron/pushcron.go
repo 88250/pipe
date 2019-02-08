@@ -18,7 +18,6 @@ package cron
 
 import (
 	"net/url"
-	"strings"
 	"time"
 
 	"github.com/b3log/pipe/model"
@@ -50,11 +49,6 @@ func pushArticles() {
 		author := service.User.GetUser(article.AuthorID)
 		b3Key := author.B3Key
 		b3Name := author.Name
-		if "" == b3Key && !strings.Contains(model.Conf.Server, "pipe.b3log.org") {
-			pa := service.User.GetPlatformAdmin()
-			b3Key = pa.B3Key
-			b3Name = pa.Name
-		}
 		if "" == b3Key {
 			continue
 		}
@@ -70,12 +64,12 @@ func pushArticles() {
 				"content":   article.Content,
 			},
 			"client": map[string]interface{}{
-				"name":  "Pipe",
-				"ver":   model.Version,
-				"title": blogTitleSetting.Value,
-				"host":  blogURLSetting.Value,
-				"email": b3Name,
-				"key":   b3Key,
+				"name":      "Pipe",
+				"ver":       model.Version,
+				"title":     blogTitleSetting.Value,
+				"host":      blogURLSetting.Value,
+				"userName":  b3Name,
+				"userB3Key": b3Key,
 			},
 		}
 		result := &map[string]interface{}{}
@@ -112,15 +106,8 @@ func pushComments() {
 	comments := service.Comment.GetUnpushedComments()
 	for _, comment := range comments {
 		author := service.User.GetUser(comment.AuthorID)
-		article := service.Article.ConsoleGetArticle(comment.ArticleID)
-		articleAuthor := service.User.GetUser(article.AuthorID)
-		b3Key := articleAuthor.B3Key
-		b3Name := articleAuthor.Name
-		if "" == b3Key {
-			pa := service.User.GetPlatformAdmin()
-			b3Key = pa.B3Key
-			b3Name = pa.Name
-		}
+		b3Key := author.B3Key
+		b3Name := author.Name
 		if "" == b3Key {
 			continue
 		}
@@ -128,19 +115,17 @@ func pushComments() {
 		blogTitleSetting := service.Setting.GetSetting(model.SettingCategoryBasic, model.SettingNameBasicBlogTitle, comment.BlogID)
 		requestJSON := map[string]interface{}{
 			"comment": map[string]interface{}{
-				"id":          comment.ID,
-				"articleId":   comment.ArticleID,
-				"content":     comment.Content,
-				"authorName":  author.Name,
-				"authorEmail": "",
+				"id":        comment.ID,
+				"articleId": comment.ArticleID,
+				"content":   comment.Content,
 			},
 			"client": map[string]interface{}{
-				"name":  "Pipe",
-				"ver":   model.Version,
-				"title": blogTitleSetting.Value,
-				"host":  model.Conf.Server,
-				"email": b3Name,
-				"key":   b3Key,
+				"name":      "Pipe",
+				"ver":       model.Version,
+				"title":     blogTitleSetting.Value,
+				"host":      model.Conf.Server,
+				"userName":  b3Name,
+				"userB3Key": b3Key,
 			},
 		}
 		result := &map[string]interface{}{}
