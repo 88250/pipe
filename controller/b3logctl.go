@@ -122,9 +122,9 @@ func addSymArticleAction(c *gin.Context) {
 	article := &model.Article{
 		BlogID:      blogID,
 		AuthorID:    articleAuthor.ID,
-		Title:       requestArticle["articleTitle"].(string),
-		Tags:        requestArticle["articleTags"].(string),
-		Content:     requestArticle["articleContent"].(string),
+		Title:       requestArticle["title"].(string),
+		Tags:        requestArticle["tags"].(string),
+		Content:     requestArticle["content"].(string),
 		Commentable: true,
 	}
 	article.ID = articleId
@@ -181,9 +181,9 @@ func updateSymArticleAction(c *gin.Context) {
 		return
 	}
 
-	article.Title = requestArticle["articleTitle"].(string)
-	article.Tags = requestArticle["articleTags"].(string)
-	article.Content = requestArticle["articleContent"].(string)
+	article.Title = requestArticle["title"].(string)
+	article.Tags = requestArticle["tags"].(string)
+	article.Content = requestArticle["content"].(string)
 
 	if err := service.Article.UpdateArticle(article); nil != err {
 		result.Code = -1
