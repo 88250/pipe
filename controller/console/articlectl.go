@@ -31,6 +31,7 @@ import (
 	"github.com/b3log/pipe/util"
 	"github.com/fatih/structs"
 	"github.com/gin-gonic/gin"
+	"github.com/parnurzeal/gorequest"
 )
 
 // Logger
@@ -52,6 +53,69 @@ func MarkdownAction(c *gin.Context) {
 	mdText := arg["markdownText"].(string)
 	mdResult := util.Markdown(mdText)
 	result.Data = mdResult.ContentHTML
+}
+
+var uploadTokenCheckTime, uploadTokenTime int64
+var uploadToken, uploadURL = "", "https://hacpai.com/upload/client"
+
+// UploadToken gets a upload token.
+func UploadToken(c *gin.Context) {
+	result := util.NewResult()
+	defer c.JSON(http.StatusOK, result)
+
+	session := util.GetSession(c)
+
+	if "" == session.UB3Key {
+		result.Code = 1
+
+		return
+	}
+
+	data := map[string]interface{}{}
+	result.Data = &data
+	now := time.Now().Unix()
+	if 3600 >= now-uploadTokenTime {
+		data["uploadToken"] = uploadToken
+		data["uploadURL"] = uploadURL
+
+		return
+	}
+
+	if 15 >= now-uploadTokenCheckTime {
+		data["uploadToken"] = uploadToken
+		data["uploadURL"] = uploadURL
+
+		return
+	}
+
+	requestJSON := map[string]interface{}{
+		"userName":  session.UName,
+		"userB3Key": session.UB3Key,
+	}
+
+	requestResult := util.NewResult()
+	_, _, errs := gorequest.New().Post(util.HacPaiURL+"/apis/upload/token").
+		SendStruct(requestJSON).Set("user-agent", model.UserAgent).Timeout(10 * time.Second).EndStruct(requestResult)
+	uploadTokenCheckTime = now
+	if nil != errs {
+		result.Code = 1
+		logger.Errorf("get upload token failed: %s", errs)
+
+		return
+	}
+	if 0 != requestResult.Code {
+		result.Code = 1
+		result.Msg = requestResult.Msg
+		logger.Errorf(requestResult.Msg)
+
+		return
+	}
+
+	resultData := requestResult.Data.(map[string]interface{})
+	uploadToken = resultData["token"].(string)
+	uploadURL = resultData["uploadURL"].(string)
+	uploadTokenTime = now
+	result.Data = requestResult.Data
 }
 
 // AddArticleAction adds a new article.
