@@ -71,7 +71,6 @@ func githubCallbackAction(c *gin.Context) {
 		if !service.Init.Inited() {
 			user = &model.User{
 				Name:      userName,
-				Password:  util.RandString(8),
 				AvatarURL: githubUser["userAvatarURL"].(string),
 				B3Key:     githubId,
 				GithubId:  githubId,
@@ -94,7 +93,6 @@ func githubCallbackAction(c *gin.Context) {
 
 				user = &model.User{
 					Name:      userName,
-					Password:  util.RandString(8),
 					AvatarURL: githubUser["userAvatarURL"].(string),
 					B3Key:     githubId,
 					GithubId:  githubId,
