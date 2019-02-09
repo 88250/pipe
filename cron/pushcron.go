@@ -64,10 +64,10 @@ func pushArticles() {
 				"content":   article.Content,
 			},
 			"client": map[string]interface{}{
-				"name":      "Pipe",
-				"ver":       model.Version,
 				"title":     blogTitleSetting.Value,
 				"host":      blogURLSetting.Value,
+				"name":      "Pipe",
+				"ver":       model.Version,
 				"userName":  b3Name,
 				"userB3Key": b3Key,
 			},
@@ -105,19 +105,22 @@ func pushComments() {
 
 	comments := service.Comment.GetUnpushedComments()
 	for _, comment := range comments {
-		author := service.User.GetUser(comment.AuthorID)
-		b3Key := author.B3Key
-		b3Name := author.Name
+		article := service.Article.ConsoleGetArticle(comment.ArticleID)
+		articleAuthor := service.User.GetUser(article.AuthorID)
+		b3Key := articleAuthor.B3Key
+		b3Name := articleAuthor.Name
 		if "" == b3Key {
 			continue
 		}
 
+		author := service.User.GetUser(comment.AuthorID)
 		blogTitleSetting := service.Setting.GetSetting(model.SettingCategoryBasic, model.SettingNameBasicBlogTitle, comment.BlogID)
 		requestJSON := map[string]interface{}{
 			"comment": map[string]interface{}{
 				"id":        comment.ID,
 				"articleId": comment.ArticleID,
 				"content":   comment.Content,
+				"author":    author.Name,
 			},
 			"client": map[string]interface{}{
 				"name":      "Pipe",
