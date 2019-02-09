@@ -17,7 +17,6 @@
 package controller
 
 import (
-	"fmt"
 	"net/http"
 	"strconv"
 
@@ -66,8 +65,8 @@ func addSymCommentAction(c *gin.Context) {
 		ArticleID:       articleId,
 		AuthorID:        model.SyncCommentAuthorID,
 		Content:         requestCmt["content"].(string),
-		IP:              requestCmt["ip"].(string),
-		UserAgent:       requestCmt["ua"].(string),
+		IP:              "",
+		UserAgent:       "",
 		AuthorName:      requestCmt["authorName"].(string),
 		AuthorURL:       requestCmt["authorURL"].(string),
 		AuthorAvatarURL: requestCmt["authorAvatarURL"].(string),
@@ -117,77 +116,36 @@ func addSymArticleAction(c *gin.Context) {
 		return
 	}
 
-	blogID := getBlogID(c)
-
-	article := &model.Article{
-		BlogID:      blogID,
-		AuthorID:    articleAuthor.ID,
-		Title:       requestArticle["title"].(string),
-		Tags:        requestArticle["tags"].(string),
-		Content:     requestArticle["content"].(string),
-		Commentable: true,
-	}
-	article.ID = articleId
-
-	if err := service.Article.AddArticle(article); nil != err {
-		result.Code = -1
-		result.Msg = err.Error()
-	}
-
-	if err := service.Article.UpdatePushedAt(article); nil != err {
-		result.Code = -1
-		result.Msg = err.Error()
-	}
-}
-
-// updateSymArticleAction updates an article come from Sym. Sees https://hacpai.com/article/1457158841475 for more details.
-func updateSymArticleAction(c *gin.Context) {
-	result := util.NewResult()
-	defer c.JSON(http.StatusOK, result)
-
-	arg := map[string]interface{}{}
-	if err := c.BindJSON(&arg); nil != err {
-		result.Code = -1
-		result.Msg = "parses update article request failed"
-
-		return
-	}
-
-	client := arg["client"].(map[string]interface{})
-	b3Key := client["userB3Key"].(string)
-	articleAuthorName := client["userName"].(string)
-	articleAuthor := service.User.GetUserByName(articleAuthorName)
-	if articleAuthor.B3Key != b3Key {
-		result.Code = -1
-		result.Msg = "wrong B3 Key"
-
-		return
-	}
-
-	requestArticle := arg["article"].(map[string]interface{})
-	articleId, err := strconv.ParseUint(requestArticle["oId"].(string), 10, 64)
-	if nil != err {
-		result.Code = -1
-		result.Msg = "parses update article request failed"
-
-		return
-	}
-
 	article := service.Article.ConsoleGetArticle(articleId)
 	if nil == article {
-		result.Code = -1
-		result.Msg = "not found article [ID=" + fmt.Sprintf("%d", articleId) + "] to update"
+		blogID := getBlogID(c)
+		article := &model.Article{
+			BlogID:      blogID,
+			AuthorID:    articleAuthor.ID,
+			Title:       requestArticle["title"].(string),
+			Tags:        requestArticle["tags"].(string),
+			Content:     requestArticle["content"].(string),
+			Commentable: true,
+		}
+		article.ID = articleId
 
-		return
-	}
+		if err := service.Article.AddArticle(article); nil != err {
+			result.Code = -1
+			result.Msg = err.Error()
 
-	article.Title = requestArticle["title"].(string)
-	article.Tags = requestArticle["tags"].(string)
-	article.Content = requestArticle["content"].(string)
+			return
+		}
+	} else {
+		article.Title = requestArticle["title"].(string)
+		article.Tags = requestArticle["tags"].(string)
+		article.Content = requestArticle["content"].(string)
 
-	if err := service.Article.UpdateArticle(article); nil != err {
-		result.Code = -1
-		result.Msg = err.Error()
+		if err := service.Article.UpdateArticle(article); nil != err {
+			result.Code = -1
+			result.Msg = err.Error()
+
+			return
+		}
 	}
 
 	if err := service.Article.UpdatePushedAt(article); nil != err {

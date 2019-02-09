@@ -250,11 +250,7 @@ func routePath(c *gin.Context) {
 
 		return
 	case util.PathAPIsSymArticle:
-		if "POST" == c.Request.Method {
-			addSymArticleAction(c)
-		} else if "PUT" == c.Request.Method {
-			updateSymArticleAction(c)
-		}
+		addSymArticleAction(c)
 
 		return
 	case "/api/oauth/github/callback":
