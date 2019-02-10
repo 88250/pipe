@@ -39,6 +39,8 @@ func addSymCommentAction(c *gin.Context) {
 		return
 	}
 
+	logger.Infof("Add a comment from Sym: %+v", arg)
+
 	client := arg["client"].(map[string]interface{})
 	b3Key := client["userB3Key"].(string)
 	articleAuthorName := client["userName"].(string)
@@ -95,6 +97,8 @@ func addSymArticleAction(c *gin.Context) {
 
 		return
 	}
+
+	logger.Infof("Add an article from Sym: %+v", arg)
 
 	client := arg["client"].(map[string]interface{})
 	b3Key := client["userB3Key"].(string)
