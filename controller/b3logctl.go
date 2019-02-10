@@ -39,6 +39,8 @@ func addSymCommentAction(c *gin.Context) {
 		return
 	}
 
+	logger.Infof("Add a comment from Sym: %+v", arg)
+
 	client := arg["client"].(map[string]interface{})
 	b3Key := client["userB3Key"].(string)
 	articleAuthorName := client["userName"].(string)
@@ -96,6 +98,8 @@ func addSymArticleAction(c *gin.Context) {
 		return
 	}
 
+	logger.Infof("Add an article from Sym: %+v", arg)
+
 	client := arg["client"].(map[string]interface{})
 	b3Key := client["userB3Key"].(string)
 	articleAuthorName := client["userName"].(string)
@@ -108,7 +112,7 @@ func addSymArticleAction(c *gin.Context) {
 	}
 
 	requestArticle := arg["article"].(map[string]interface{})
-	articleId, err := strconv.ParseUint(requestArticle["oId"].(string), 10, 64)
+	articleId, err := strconv.ParseUint(requestArticle["id"].(string), 10, 64)
 	if nil != err {
 		result.Code = -1
 		result.Msg = "parses add article request failed"
