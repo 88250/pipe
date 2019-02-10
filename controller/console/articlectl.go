@@ -358,7 +358,7 @@ func GetArticleThumbsAction(c *gin.Context) {
 	}
 	h, _ := strconv.Atoi(c.Query("h"))
 	if h < 1 {
-		h = 520
+		h = 540
 	}
 
 	var styledURLs []string
