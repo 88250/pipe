@@ -227,7 +227,7 @@ func initNavigation(tx *gorm.DB, blogID uint64) error {
 }
 
 func helloWorld(tx *gorm.DB, admin *model.User, blogID uint64) error {
-	content := `![Hello](` + util.RandImage() + `?imageView2/1/w/960/h/540/interlace/1/q/100)
+	content := `![Hello](` + util.ImageSize(util.RandImage(), 960, 540) + `)
 
 欢迎使用 [Pipe](https://github.com/b3log/pipe) 博客平台。这是一篇自动生成的演示文章，编辑或者删除它，然后开始你的独立博客之旅！
 
