@@ -128,7 +128,10 @@ export const ShowEditor = (reply, id, commentId) => {
   $editor.css({'bottom': '0', 'opacity': 1}).data('id', id)
   $('body').css('padding-bottom', $editor.outerHeight() + 'px')
   $('#pipeEditorReplyTarget').text(reply)
-  $('#pipeEditorComment textarea').focus()
+
+  if (typeof vditor !== 'undefined') {
+    vditor.focus()
+  }
 
   if (typeof Vditor !== 'undefined') {
     return
