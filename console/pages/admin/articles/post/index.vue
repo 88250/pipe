@@ -70,7 +70,7 @@
           class="checkbox__icon"></span>
           {{ $t('top', $store.state.locale) }}
         </label>
-        <label class="checkbox btn--space" v-if="!$route.query.id">
+        <label class="checkbox btn--space">
           <input
             type="checkbox"
             :checked="syncToCommunity"
@@ -107,8 +107,7 @@
         <v-btn @click="edit($route.query.id)" class="btn--info btn--space btn--margin-t30" v-if="$route.query.id">
           {{ $t('submit', $store.state.locale) }}
         </v-btn>
-        <v-btn @click="edit()" class="btn--info btn--margin-t30" v-else>{{ $t('publish', $store.state.locale)
-          }}
+        <v-btn @click="edit()" class="btn--info btn--margin-t30" v-else>{{ $t('publish', $store.state.locale) }}
         </v-btn>
       </div>
     </div>
@@ -123,6 +122,10 @@
   export default {
     data () {
       return {
+        tokenURL: {
+          URL: '',
+          token: '',
+        },
         error: false,
         errorMsg: '',
         content: '',
@@ -264,7 +267,8 @@
           },
           upload: {
             max: 10 * 1024 * 1024,
-            url: 'https://hacpai.com/upload/editor',
+            url: this.tokenURL.URL,
+            token: this.tokenURL.token,
           },
           height: data.height,
           counter: 102400,
@@ -317,7 +321,7 @@
         }
       },
       async getThumbs () {
-        const responseData = await this.axios.get(`console/thumbs?n=5&w=768&h=432`)
+        const responseData = await this.axios.get('console/thumbs?n=5&w=768&h=432')
         if (responseData) {
           this.$set(this, 'thumbs', responseData)
         }
@@ -453,6 +457,14 @@
       },
     },
     async mounted () {
+      const responseData = await this.axios.get('console/upload/token')
+      if (responseData) {
+        this.$set(this, 'tokenURL', {
+          token: responseData.uploadToken || '',
+          URL: responseData.uploadURL || '',
+        })
+      }
+
       this.contentEditor = this._initEditor({
         id: 'contentEditor',
         show: true,
@@ -498,6 +510,8 @@
       this.$store.dispatch('getTags')
 
       this.getThumbs()
+
+      this.contentEditor.focus()
     },
   }
 </script>
