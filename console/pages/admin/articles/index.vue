@@ -230,7 +230,7 @@
         }
       },
       async syncToCommunity (id) {
-        const responseData = await this.axios.delete(`/console/articles/${id}/push`)
+        const responseData = await this.axios.get(`/console/articles/${id}/push`)
         if (responseData === null) {
           this.$store.commit('setSnackBar', {
             snackBar: true,
