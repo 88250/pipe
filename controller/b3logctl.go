@@ -123,7 +123,7 @@ func addSymArticleAction(c *gin.Context) {
 	article := service.Article.ConsoleGetArticle(articleId)
 	if nil == article {
 		blogID := getBlogID(c)
-		article := &model.Article{
+		article = &model.Article{
 			BlogID:      blogID,
 			AuthorID:    articleAuthor.ID,
 			Title:       requestArticle["title"].(string),
