@@ -69,6 +69,9 @@
                 <v-list-tile class="list__tile--link" @click.stop="goEdit(item.id)">
                   {{ $t('edit', $store.state.locale) }}
                 </v-list-tile>
+                <v-list-tile class="list__tile--link" @click.stop="syncToCommunity(item.id)">
+                  {{ $t('syncToCommunity', $store.state.locale) }}
+                </v-list-tile>
                 <v-list-tile class="list__tile--link" @click.stop="remove(item.id)">
                   {{ $t('delete', $store.state.locale) }}
                 </v-list-tile>
@@ -224,6 +227,16 @@
             snackModify: 'success'
           })
           this.getList()
+        }
+      },
+      async syncToCommunity (id) {
+        const responseData = await this.axios.delete(`/console/articles/${id}/push`)
+        if (responseData === null) {
+          this.$store.commit('setSnackBar', {
+            snackBar: true,
+            snackMsg: this.$t('syncSuccess', this.$store.state.locale),
+            snackModify: 'success'
+          })
         }
       },
       goEdit (id) {

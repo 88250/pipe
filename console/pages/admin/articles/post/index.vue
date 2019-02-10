@@ -154,7 +154,7 @@
         commentable: true,
         useThumbs: false,
         topped: false,
-        syncToCommunity: false,
+        syncToCommunity: true,
         thumbs: ['', '', '', '', '', ''],
         edited: false,
       }
@@ -498,7 +498,6 @@
           this.$set(this, 'tags', responseData.tags.split(','))
           this.$set(this, 'commentable', responseData.commentable)
           this.$set(this, 'topped', responseData.topped)
-          this.$set(this, 'syncToCommunity', responseData.syncToCommunity)
           this.abstractEditor.setValue(responseData.abstract)
           this.contentEditor.setValue(responseData.content)
         }
