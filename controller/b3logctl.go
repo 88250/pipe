@@ -112,7 +112,7 @@ func addSymArticleAction(c *gin.Context) {
 	}
 
 	requestArticle := arg["article"].(map[string]interface{})
-	articleId, err := strconv.ParseUint(requestArticle["oId"].(string), 10, 64)
+	articleId, err := strconv.ParseUint(requestArticle["id"].(string), 10, 64)
 	if nil != err {
 		result.Code = -1
 		result.Msg = "parses add article request failed"
