@@ -26,6 +26,8 @@ import (
 	"sync"
 	"time"
 
+	"github.com/parnurzeal/gorequest"
+
 	"github.com/b3log/pipe/model"
 	"github.com/b3log/pipe/util"
 	"github.com/jinzhu/gorm"
@@ -330,6 +332,52 @@ func (srv *articleService) GetMostCommentArticles(size int, blogID uint64) (ret 
 	}
 
 	return
+}
+
+func (srv *articleService) ConsolePushArticle(article *model.Article) {
+	if nil == article {
+		return
+	}
+
+	author := User.GetUser(article.AuthorID)
+	b3Key := author.B3Key
+	b3Name := author.Name
+	if "" == b3Key {
+		return
+	}
+
+	blogTitleSetting := Setting.GetSetting(model.SettingCategoryBasic, model.SettingNameBasicBlogTitle, article.BlogID)
+	blogURLSetting := Setting.GetSetting(model.SettingCategoryBasic, model.SettingNameBasicBlogURL, article.BlogID)
+	requestJSON := map[string]interface{}{
+		"article": map[string]interface{}{
+			"id":        article.ID,
+			"title":     article.Title,
+			"permalink": article.Path,
+			"tags":      article.Tags,
+			"content":   article.Content,
+		},
+		"client": map[string]interface{}{
+			"title":     blogTitleSetting.Value,
+			"host":      blogURLSetting.Value,
+			"name":      "Pipe",
+			"ver":       model.Version,
+			"userName":  b3Name,
+			"userB3Key": b3Key,
+		},
+	}
+	result := util.NewResult()
+	_, _, errs := gorequest.New().Post("https://rhythm.b3log.org/api/article").SendMap(requestJSON).
+		Set("user-agent", model.UserAgent).Timeout(30*time.Second).
+		Retry(3, 5*time.Second).EndStruct(result)
+	if nil != errs {
+		logger.Debugf("push article to Rhy failed: " + errs[0].Error())
+	}
+	if 0 != result.Code {
+		logger.Debugf("push article to Rhy failed: " + result.Msg)
+	}
+
+	article.PushedAt = article.UpdatedAt
+	Article.UpdatePushedAt(article)
 }
 
 func (srv *articleService) ConsoleGetArticle(id uint64) *model.Article {

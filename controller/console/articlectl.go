@@ -37,6 +37,29 @@ import (
 // Logger
 var logger = log.NewLogger(os.Stdout)
 
+// PushArticle2RhyAction pushes an article to community.
+func PushArticle2RhyAction(c *gin.Context) {
+	result := util.NewResult()
+	defer c.JSON(http.StatusOK, result)
+
+	idArg := c.Param("id")
+	id, err := strconv.ParseUint(idArg, 10, 64)
+	if nil != err {
+		result.Code = -1
+
+		return
+	}
+
+	article := service.Article.ConsoleGetArticle(uint64(id))
+	if nil == article {
+		result.Code = -1
+
+		return
+	}
+
+	service.Article.ConsolePushArticle(article)
+}
+
 // MarkdownAction handles markdown text to HTML.
 func MarkdownAction(c *gin.Context) {
 	result := util.NewResult()
@@ -58,8 +81,8 @@ func MarkdownAction(c *gin.Context) {
 var uploadTokenCheckTime, uploadTokenTime int64
 var uploadToken, uploadURL = "", "https://hacpai.com/upload/client"
 
-// UploadToken gets a upload token.
-func UploadToken(c *gin.Context) {
+// UploadTokenAction gets a upload token.
+func UploadTokenAction(c *gin.Context) {
 	result := util.NewResult()
 	defer c.JSON(http.StatusOK, result)
 
@@ -93,7 +116,7 @@ func UploadToken(c *gin.Context) {
 	}
 
 	requestResult := util.NewResult()
-	_, _, errs := gorequest.New().Post(util.HacPaiURL+"/apis/upload/token").
+	_, _, errs := gorequest.New().Post(util.HacPaiURL + "/apis/upload/token").
 		SendStruct(requestJSON).Set("user-agent", model.UserAgent).Timeout(10 * time.Second).EndStruct(requestResult)
 	uploadTokenCheckTime = now
 	if nil != errs {
