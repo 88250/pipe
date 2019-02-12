@@ -101,10 +101,12 @@ func pushComments() {
 			Set("user-agent", model.UserAgent).Timeout(30*time.Second).
 			Retry(3, 5*time.Second).EndStruct(result)
 		if nil != errs {
-			logger.Errorf("push comment to Rhythm failed: " + errs[0].Error())
+			logger.Errorf("push a comment to Rhy failed: " + errs[0].Error())
+		} else {
+			logger.Infof("push a comment to Rhy result: %+v", result)
 		}
-
 		comment.PushedAt = comment.UpdatedAt
+
 		service.Comment.UpdatePushedAt(comment)
 	}
 }

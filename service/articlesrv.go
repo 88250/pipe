@@ -370,10 +370,9 @@ func (srv *articleService) ConsolePushArticle(article *model.Article) {
 		Set("user-agent", model.UserAgent).Timeout(30*time.Second).
 		Retry(3, 5*time.Second).EndStruct(result)
 	if nil != errs {
-		logger.Debugf("push article to Rhy failed: " + errs[0].Error())
-	}
-	if 0 != result.Code {
-		logger.Debugf("push article to Rhy failed: " + result.Msg)
+		logger.Debugf("push an article to Rhy failed: " + errs[0].Error())
+	} else {
+		logger.Infof("push an article to Rhy result: %+v", result)
 	}
 
 	article.PushedAt = article.UpdatedAt
