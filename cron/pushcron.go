@@ -85,7 +85,7 @@ func pushComments() {
 				"id":        comment.ID,
 				"articleId": comment.ArticleID,
 				"content":   comment.Content,
-				"author":    author.Name,
+				"authorName":    author.Name,
 			},
 			"client": map[string]interface{}{
 				"name":      "Pipe",
