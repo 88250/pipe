@@ -20,6 +20,7 @@ import (
 	"bytes"
 	"html/template"
 	"net/http"
+	"path/filepath"
 	"strconv"
 	"strings"
 
@@ -27,7 +28,6 @@ import (
 	"github.com/b3log/pipe/service"
 	"github.com/b3log/pipe/util"
 	"github.com/gin-gonic/gin"
-	"path/filepath"
 )
 
 func getRepliesAction(c *gin.Context) {
@@ -125,12 +125,16 @@ func addCommentAction(c *gin.Context) {
 	if 0 != comment.ParentCommentID {
 		parentCommentModel := service.Comment.GetComment(comment.ParentCommentID)
 		if nil != parentCommentModel {
-			parentCommentAuthorModel := service.User.GetUser(parentCommentModel.AuthorID)
+			parentCommentAuthorName := parentCommentModel.AuthorName
+			if "" == parentCommentAuthorName {
+				parentCommentAuthorModel := service.User.GetUser(parentCommentModel.AuthorID)
+				parentCommentAuthorName = parentCommentAuthorModel.Name
+			}
 			parentComment := &model.ThemeComment{
 				ID:  parentCommentModel.ID,
 				URL: getBlogURL(c) + article.Path + "?p=" + strconv.Itoa(page) + "#pipeComment" + strconv.Itoa(int(parentCommentModel.ID)),
 				Author: &model.ThemeAuthor{
-					Name: parentCommentAuthorModel.Name,
+					Name: parentCommentAuthorName,
 				},
 			}
 			themeComment.Parent = parentComment
