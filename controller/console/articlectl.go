@@ -359,6 +359,18 @@ func UpdateArticleAction(c *gin.Context) {
 		AuthorID:    session.UID,
 	}
 
+	oldArticle := service.Article.ConsoleGetArticle(id)
+	if nil == oldArticle {
+		result.Code = -1
+		result.Msg = err.Error()
+
+		return
+	}
+
+	if !arg["syncToCommunity"].(bool) {
+		article.PushedAt = oldArticle.PushedAt
+	}
+
 	if err := service.Article.UpdateArticle(article); nil != err {
 		result.Code = -1
 		result.Msg = err.Error()

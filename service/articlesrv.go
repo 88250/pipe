@@ -479,7 +479,10 @@ func (srv *articleService) UpdateArticle(article *model.Article) (err error) {
 	oldArticle.Topped = article.Topped
 	now := time.Now()
 	oldArticle.UpdatedAt = now
-	oldArticle.PushedAt = model.ZeroPushTime
+
+	if article.PushedAt.IsZero() {
+		oldArticle.PushedAt = model.ZeroPushTime
+	}
 
 	tagStr, err := normalizeTagStr(article.Tags)
 	if nil != err {
