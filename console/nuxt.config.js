@@ -52,9 +52,9 @@ module.exports = {
       }
     }
   },
-  router: {
-    middleware: ['authenticated']
-  },
+  // router: {
+  //   middleware: ['authenticated']
+  // },
   modules: ['@nuxtjs/proxy'],
   proxy: {
     '/api': {

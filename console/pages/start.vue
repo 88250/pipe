@@ -3,8 +3,8 @@
     <div class="card" ref="content">
       <div class="login__content">
         <div class="fn__pointer" @click="loginGitHub">
-          <br/>
-          <div v-html="$t('index2', $store.state.locale)"></div>
+          <br/><br/>
+          <v-btn class="btn--small btn--info">{{ $t('index2', $store.state.locale) }}</v-btn>
           <div class="login__github"></div>
           <img class="fn__none" src="~assets/images/github.gif"/>
         </div>

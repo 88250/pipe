@@ -447,7 +447,7 @@
         if (localStorage.getItem('article-syncToCommunity')) {
           this.$set(this, 'syncToCommunity', localStorage.getItem('article-syncToCommunity') === 'true')
         } else {
-          this.$set(this, 'syncToCommunity', false)
+          this.$set(this, 'syncToCommunity', true)
         }
         if (localStorage.getItem('article-topped')) {
           this.$set(this, 'topped', localStorage.getItem('article-topped') === 'true')
