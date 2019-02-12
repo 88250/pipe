@@ -47,7 +47,7 @@ const Common = {
       if ($('#pipeComments').length === 1) {
         $.ajax({
           method: 'GET',
-          url: `${config.StaticServer}/theme/x/Littlewin/js/article.min.js`,
+          url: `${config.StaticServer}/theme/x/Littlewin/js/article.min.js?${config.StaticResourceVersion}`,
           dataType: 'script',
           cache: true,
         })

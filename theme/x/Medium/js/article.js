@@ -7,7 +7,7 @@
 
 import $ from 'jquery'
 import QRious from 'qrious'
-import { InitComment, InitToc, ShowEditor, InitHljs } from '../../../js/article'
+import { InitComment, ShowEditor, InitHljs } from '../../../js/article'
 import './common'
 
 const Article = {
