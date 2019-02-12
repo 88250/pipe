@@ -42,10 +42,14 @@ func redirectGitHubLoginAction(c *gin.Context) {
 	states[state] = state
 	path := "https://github.com/login/oauth/authorize" + "?client_id=af7df3c80f26af88a8b3&state=" + state + "&scope=public_repo,user"
 
+	logger.Infof("redirect to github [" + path + "]")
+
 	c.Redirect(http.StatusSeeOther, path)
 }
 
 func githubCallbackAction(c *gin.Context) {
+	logger.Infof("github callback [" + c.Request.URL.String() + "]")
+
 	state := c.Query("state")
 	if _, exist := states[state]; !exist {
 		c.Status(http.StatusForbidden)
