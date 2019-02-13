@@ -88,7 +88,7 @@ Pipe 使用 [GPLv3](https://www.gnu.org/licenses/gpl-3.0.txt) 开源协议。
 * [Vue.js](https://github.com/vuejs/vue)：渐进式 JavaScript 框架
 * [Nuxt.js](https://github.com/nuxt/nuxt.js)：Vue.js 框架
 * [Vuetify](https://github.com/vanessa219/vuetify)：Vue.js 的 Material 组件框架
-* [Vditor](https://github.com/b3log/vditor)： 一款浏览器端的 Markdown 编辑器，使用 TypeScript 实现
+* [Vditor](https://github.com/b3log/vditor)： 浏览器端的 Markdown 编辑器
 * [Gin](https://github.com/gin-gonic/gin)：又快又好用的 golang HTTP web 框架
 * [GORM](https://github.com/jinzhu/gorm)：极好的 golang ORM 库
 * [Blackfriday](github.com/russross/blackfriday)：golang Markdown 处理器
