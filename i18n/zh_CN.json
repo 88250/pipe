@@ -1,4 +1,6 @@
 {
+  "inputContent": "请输入正文",
+  "inputAbstract": "请输入摘要",
   "syncSuccess": "同步成功",
   "processing": "处理中...",
   "startToUse": "开始使用",

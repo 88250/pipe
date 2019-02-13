@@ -11,7 +11,7 @@
           @change="setLocalstorage('title')"
         ></v-text-field>
 
-        <div id="contentEditor"></div>
+        <div id="contentEditor" style="height: 480px;background-color: #f6f8fa"></div>
 
         <v-select
           v-model="tags"
@@ -19,8 +19,6 @@
           chips
           tags
           :items="$store.state.tagsItems"
-          required
-          :rules="tagsRules"
           @change="setLocalstorage"
         ></v-select>
 
@@ -39,7 +37,7 @@
           @keyup="setLocalstorage('time')"
         ></v-text-field>
 
-        <div id="abstractEditor"></div>
+        <div id="abstractEditor" style="height: 160px;background-color: #f6f8fa"></div>
 
         <label class="checkbox">
           <input
@@ -137,9 +135,6 @@
         ],
         linkRules: [
           (v) => maxSize.call(this, v, 255),
-        ],
-        tagsRules: [
-          (v) => this.tags.length > 0 || this.$t('required', this.$store.state.locale),
         ],
         timeRules: [
           (v) => (v.length === 0 ||
@@ -279,6 +274,7 @@
           classes: {
             preview: 'pipe-content__reset',
           },
+          placeholder: data.placeholder
         })
       },
       setLocalstorage (type) {
@@ -469,12 +465,14 @@
         id: 'contentEditor',
         show: true,
         height: 480,
+        placeholder: this.$t('inputContent', this.$store.state.locale)
       })
 
       this.abstractEditor = this._initEditor({
         id: 'abstractEditor',
         height: 160,
         show: false,
+        placeholder: this.$t('inputAbstract', this.$store.state.locale)
       })
 
       const id = this.$route.query.id

@@ -1,4 +1,6 @@
 {
+  "inputContent": "Please input Content",
+  "inputAbstract": "Please input Abstract",
   "syncSuccess": "Sync Success",
   "processing": "Processing...",
   "startToUse": "Start",
