@@ -483,10 +483,7 @@ func (srv *articleService) UpdateArticle(article *model.Article) (err error) {
 		oldArticle.PushedAt = model.ZeroPushTime
 	}
 
-	tagStr, err := normalizeTagStr(article.Tags)
-	if nil != err {
-		return
-	}
+	tagStr := normalizeTagStr(article.Tags)
 	oldArticle.Tags = tagStr
 
 	if err = normalizeArticlePath(article); nil != err {
@@ -560,10 +557,7 @@ func normalizeArticle(article *model.Article) error {
 		return errors.New("invalid path [" + article.Path + "]")
 	}
 
-	tagStr, err := normalizeTagStr(article.Tags)
-	if nil != err {
-		return err
-	}
+	tagStr := normalizeTagStr(article.Tags)
 	article.Tags = tagStr
 
 	if 1 > article.ID {
@@ -577,16 +571,16 @@ func normalizeArticle(article *model.Article) error {
 	return nil
 }
 
-func normalizeTagStr(tagStr string) (string, error) {
+func normalizeTagStr(tagStr string) string {
 	reg := regexp.MustCompile(`\s+`)
-	tagStrTmp := reg.ReplaceAllString(tagStr, "")
-	tagStrTmp = strings.Replace(tagStrTmp, "，", ",", -1)
-	tagStrTmp = strings.Replace(tagStrTmp, "、", ",", -1)
-	tagStrTmp = strings.Replace(tagStrTmp, "；", ",", -1)
-	tagStrTmp = strings.Replace(tagStrTmp, ";", ",", -1)
+	ret := reg.ReplaceAllString(tagStr, "")
+	ret = strings.Replace(ret, "，", ",", -1)
+	ret = strings.Replace(ret, "、", ",", -1)
+	ret = strings.Replace(ret, "；", ",", -1)
+	ret = strings.Replace(ret, ";", ",", -1)
 
 	reg = regexp.MustCompile(`[\\u4e00-\\u9fa5,\\w,&,\\+,-,\\.]+`)
-	tags := strings.Split(tagStrTmp, ",")
+	tags := strings.Split(ret, ",")
 	var retTags []string
 	for _, tag := range tags {
 		if contains(retTags, tag) {
@@ -600,11 +594,11 @@ func normalizeTagStr(tagStr string) (string, error) {
 		retTags = append(retTags, tag)
 	}
 
-	if "" == tagStrTmp {
-		return "", errors.New("invalid tags [" + tagStrTmp + "]")
+	if "" == ret {
+		return "待分类"
 	}
 
-	return tagStrTmp, nil
+	return ret
 }
 
 func removeTagArticleRels(tx *gorm.DB, article *model.Article) error {

@@ -68,10 +68,7 @@ func (srv *categoryService) UpdateCategory(category *model.Category) error {
 		return fmt.Errorf("not found category [id=%d] to update", category.ID)
 	}
 
-	tagStr, err := normalizeTagStr(category.Tags)
-	if nil != err {
-		return err
-	}
+	tagStr := normalizeTagStr(category.Tags)
 	category.Tags = tagStr
 
 	if err := normalizeCategoryPath(category); nil != err {
@@ -113,10 +110,7 @@ func (srv *categoryService) AddCategory(category *model.Category) error {
 	srv.mutex.Lock()
 	defer srv.mutex.Unlock()
 
-	tagStr, err := normalizeTagStr(category.Tags)
-	if nil != err {
-		return err
-	}
+	tagStr := normalizeTagStr(category.Tags)
 	category.Tags = tagStr
 
 	if err := normalizeCategoryPath(category); nil != err {
