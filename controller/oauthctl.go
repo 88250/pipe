@@ -59,7 +59,9 @@ func githubCallbackAction(c *gin.Context) {
 	delete(states, state)
 
 	referer := state[16:]
-
+	if strings.Contains(referer, "__0") || strings.Contains(referer, "__1") {
+		referer = referer[:len("__0")]
+	}
 	accessToken := c.Query("ak")
 	githubUser := util.GitHubUserInfo(accessToken)
 	if nil == githubUser {
