@@ -32,8 +32,8 @@ var states = map[string]string{}
 // redirectGitHubLoginAction redirects to GitHub auth page.
 func redirectGitHubLoginAction(c *gin.Context) {
 	referer := c.Request.URL.Query().Get("referer")
-	if "" == referer {
-		referer = model.Conf.Server
+	if "" == referer || !strings.Contains(referer, "://") {
+		referer = model.Conf.Server + referer
 	}
 	if strings.HasSuffix(referer, "/") {
 		referer = referer[:len(referer)-1]
