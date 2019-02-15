@@ -34,7 +34,7 @@ var states = map[string]string{}
 // redirectGitHubLoginAction redirects to GitHub auth page.
 func redirectGitHubLoginAction(c *gin.Context) {
 	requestResult := util.NewResult()
-	_, _, errs := gorequest.New().Post(util.HacPaiURL+"/oauth/pipe/client").
+	_, _, errs := gorequest.New().Get(util.HacPaiURL+"/oauth/pipe/client").
 		Set("user-agent", model.UserAgent).Timeout(10 * time.Second).EndStruct(requestResult)
 	if nil != errs {
 		logger.Errorf("get oauth client id failed: %+v", errs)
