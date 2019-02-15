@@ -2,7 +2,7 @@
  * @fileoverview article tool for every theme
  *
  * @author <a href="http://vanessa.b3log.org">Liyuan Li</a>
- * @version 0.3.1.3, Feb 10, 2019
+ * @version 0.3.1.4, Feb 15, 2019
  */
 
 import $ from 'jquery'
@@ -126,7 +126,7 @@ export const ShowEditor = (reply, id, commentId) => {
   }
 
   $editor.css({'bottom': '0', 'opacity': 1}).data('id', id)
-  $('body').css('padding-bottom', $editor.outerHeight() + 'px')
+  $('body').css('padding-bottom', 268)
   $('#pipeEditorReplyTarget').text(reply)
 
   if (typeof vditor !== 'undefined') {
@@ -139,7 +139,7 @@ export const ShowEditor = (reply, id, commentId) => {
 
   $.ajax({
     method: 'GET',
-    url: 'https://vditor.b3log.org/0.1.7/index.min.js',
+    url: 'https://vditor.b3log.org/0.1.8/index.min.js',
     dataType: 'script',
     cache: true,
     success: () => {
@@ -170,6 +170,9 @@ export const ShowEditor = (reply, id, commentId) => {
         resize: {
           enable: true,
           position: 'top',
+          after: () => {
+            $('body').css('padding-bottom', $('#pipeEditor').outerHeight())
+          }
         },
         lang: $('#pipeEditorComment').data('lang'),
         toolbar:  [

@@ -264,17 +264,18 @@
             max: 10 * 1024 * 1024,
             url: this.tokenURL.URL,
             token: this.tokenURL.token,
+            filename: name => name.replace(/\?|\\|\/|:|\||<|>|\*|\[|\]|\s+/g, '-'),
           },
           height: data.height,
           counter: 102400,
           resize: {
-            enable: false,
+            enable: data.resize,
           },
           lang: this.$store.state.locale,
           classes: {
             preview: 'pipe-content__reset',
           },
-          placeholder: data.placeholder
+          placeholder: data.placeholder,
         })
       },
       setLocalstorage (type) {
@@ -465,14 +466,16 @@
         id: 'contentEditor',
         show: true,
         height: 480,
-        placeholder: this.$t('inputContent', this.$store.state.locale)
+        placeholder: this.$t('inputContent', this.$store.state.locale),
+        resize: false,
       })
 
       this.abstractEditor = this._initEditor({
         id: 'abstractEditor',
         height: 160,
         show: false,
-        placeholder: this.$t('inputAbstract', this.$store.state.locale)
+        placeholder: this.$t('inputAbstract', this.$store.state.locale),
+        resize: true,
       })
 
       const id = this.$route.query.id
@@ -513,7 +516,7 @@
   }
 </script>
 <style lang="scss">
-  @import '~vditor/dist/index.classic';
+  @import '~vditor/src/assets/scss/classic';
 </style>
 <style lang="sass">
   .article-post__carousel
