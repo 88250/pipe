@@ -3,6 +3,7 @@
     <div class="card login__content" ref="content">
       <div class="login__github" @click="loginGitHub"></div>
       <img class="fn__none" src="~assets/images/github.gif"/>
+      <a href="https://hacpai.com/article/1463025124998" target="_blank">B3log 开源组织欢迎大家加入！</a><br>
       <label class="checkbox ft__12">
         <input
           type="checkbox"
