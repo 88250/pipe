@@ -54,7 +54,7 @@ func stack() []byte {
 		fmt.Fprintf(buf, "%s:%d (0x%x)\n", file, line, pc)
 		if file != lastFile {
 			data, err := ioutil.ReadFile(file)
-			if err != nil {
+			if nil != err {
 				continue
 			}
 			lines = bytes.Split(data, []byte{'\n'})
