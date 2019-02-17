@@ -51,7 +51,7 @@ func (srv *upgradeService) Perform() {
 	}
 
 	if fromVer == currentVer {
-		perform()
+		perform186_187()
 
 		return
 	}
@@ -59,7 +59,7 @@ func (srv *upgradeService) Perform() {
 	logger.Fatalf("attempt to skip more than one version to upgrade. Expected: %s, Actually: %s", fromVer, currentVer)
 }
 
-func perform() {
+func perform186_187() {
 	logger.Infof("upgrading from version [%s] to version [%s]....", fromVer, toVer)
 
 	var allSettings []model.Setting
@@ -83,32 +83,6 @@ func perform() {
 			tx.Rollback()
 
 			logger.Fatalf("update setting [%+v] failed: %s", setting, err.Error())
-		}
-	}
-
-	rows, err := tx.Model(&model.Setting{}).Select("`blog_id`").Group("`blog_id`").Rows()
-	defer rows.Close()
-	if nil != err {
-		tx.Rollback()
-
-		logger.Fatalf("update settings failed: %s", err.Error())
-	}
-	for rows.Next() {
-		var blogID uint64
-		err := rows.Scan(&blogID)
-		if nil != err {
-			tx.Rollback()
-
-			logger.Fatalf("update settings failed: %s", err.Error())
-		}
-
-		googleAdSenseArticleEmbedSetting := &model.Setting{
-			Category: model.SettingCategoryAd,
-			Name:     model.SettingNameAdGoogleAdSenseArticleEmbed,
-			Value:    "",
-			BlogID:   blogID}
-		if err := Setting.AddSetting(googleAdSenseArticleEmbedSetting); nil != err {
-			logger.Error("create Google AdSense setting failed: " + err.Error())
 		}
 	}
 
