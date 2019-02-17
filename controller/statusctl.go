@@ -45,7 +45,7 @@ func getStatusAction(c *gin.Context) {
 
 	platformStatus, err := service.Init.Status()
 	if nil != err {
-		result.Code = -1
+		result.Code = util.CodeErr
 		result.Msg = err.Error()
 
 		return

@@ -62,7 +62,7 @@ func UpdateBasicSettingsAction(c *gin.Context) {
 
 	args := map[string]interface{}{}
 	if err := c.BindJSON(&args); nil != err {
-		result.Code = -1
+		result.Code = util.CodeErr
 		result.Msg = "parses update basic settings request failed"
 
 		return
@@ -87,7 +87,7 @@ func UpdateBasicSettingsAction(c *gin.Context) {
 
 			url, err := url.Parse(blogURL)
 			if nil != err {
-				result.Code = -1
+				result.Code = util.CodeErr
 				result.Msg = "invalid URL format"
 
 				return
@@ -110,7 +110,7 @@ func UpdateBasicSettingsAction(c *gin.Context) {
 	}
 
 	if err := service.Setting.UpdateSettings(model.SettingCategoryBasic, basics, session.BID); nil != err {
-		result.Code = -1
+		result.Code = util.CodeErr
 		result.Msg = err.Error()
 	}
 }
@@ -147,7 +147,7 @@ func UpdatePreferenceSettingsAction(c *gin.Context) {
 
 	args := map[string]interface{}{}
 	if err := c.BindJSON(&args); nil != err {
-		result.Code = -1
+		result.Code = util.CodeErr
 		result.Msg = "parses update preference settings request failed"
 
 		return
@@ -174,7 +174,7 @@ func UpdatePreferenceSettingsAction(c *gin.Context) {
 	}
 
 	if err := service.Setting.UpdateSettings(model.SettingCategoryPreference, prefs, session.BID); nil != err {
-		result.Code = -1
+		result.Code = util.CodeErr
 		result.Msg = err.Error()
 	}
 }
@@ -196,7 +196,7 @@ func UpdateSignSettingsAction(c *gin.Context) {
 
 	args := map[string]interface{}{}
 	if err := c.BindJSON(&args); nil != err {
-		result.Code = -1
+		result.Code = util.CodeErr
 		result.Msg = "parses update sign settings request failed"
 
 		return
@@ -213,7 +213,7 @@ func UpdateSignSettingsAction(c *gin.Context) {
 	signs = append(signs, sign)
 
 	if err := service.Setting.UpdateSettings(model.SettingCategorySign, signs, session.BID); nil != err {
-		result.Code = -1
+		result.Code = util.CodeErr
 		result.Msg = err.Error()
 	}
 }
@@ -239,7 +239,7 @@ func UpdateI18nSettingsAction(c *gin.Context) {
 
 	args := map[string]interface{}{}
 	if err := c.BindJSON(&args); nil != err {
-		result.Code = -1
+		result.Code = util.CodeErr
 		result.Msg = "parses update i18n settings request failed"
 
 		return
@@ -258,7 +258,7 @@ func UpdateI18nSettingsAction(c *gin.Context) {
 	}
 
 	if err := service.Setting.UpdateSettings(model.SettingCategoryI18n, i18ns, session.BID); nil != err {
-		result.Code = -1
+		result.Code = util.CodeErr
 		result.Msg = err.Error()
 	}
 }
@@ -294,7 +294,7 @@ func UpdateFeedSettingsAction(c *gin.Context) {
 
 	args := map[string]interface{}{}
 	if err := c.BindJSON(&args); nil != err {
-		result.Code = -1
+		result.Code = util.CodeErr
 		result.Msg = "parses update feed settings request failed"
 
 		return
@@ -321,7 +321,7 @@ func UpdateFeedSettingsAction(c *gin.Context) {
 	}
 
 	if err := service.Setting.UpdateSettings(model.SettingCategoryFeed, feeds, session.BID); nil != err {
-		result.Code = -1
+		result.Code = util.CodeErr
 		result.Msg = err.Error()
 	}
 }
@@ -346,7 +346,7 @@ func UpdateThirdStatisticSettingsAction(c *gin.Context) {
 
 	args := map[string]interface{}{}
 	if err := c.BindJSON(&args); nil != err {
-		result.Code = -1
+		result.Code = util.CodeErr
 		result.Msg = "parses update third statistic settings request failed"
 
 		return
@@ -363,7 +363,7 @@ func UpdateThirdStatisticSettingsAction(c *gin.Context) {
 	thridStatistics = append(thridStatistics, baiduStatistic)
 
 	if err := service.Setting.UpdateSettings(model.SettingCategoryThirdStatistic, thridStatistics, session.BID); nil != err {
-		result.Code = -1
+		result.Code = util.CodeErr
 		result.Msg = err.Error()
 	}
 }
@@ -388,7 +388,7 @@ func UpdateAdSettingsAction(c *gin.Context) {
 
 	args := map[string]interface{}{}
 	if err := c.BindJSON(&args); nil != err {
-		result.Code = -1
+		result.Code = util.CodeErr
 		result.Msg = "parses update ad settings request failed"
 
 		return
@@ -397,7 +397,7 @@ func UpdateAdSettingsAction(c *gin.Context) {
 	googleAdSenseArticleEmbedVal := args["adGoogleAdSenseArticleEmbed"].(string)
 	googleAdSenseArticleEmbedVal = strings.TrimSpace(googleAdSenseArticleEmbedVal)
 	if !strings.HasPrefix(googleAdSenseArticleEmbedVal, "<ins ") || !strings.HasSuffix(googleAdSenseArticleEmbedVal, "</ins>") {
-		result.Code = -1
+		result.Code = util.CodeErr
 		result.Msg = "please just put <ins>....</ins> part"
 
 		return
@@ -414,7 +414,7 @@ func UpdateAdSettingsAction(c *gin.Context) {
 	ads = append(ads, googleAdSenseArticleEmbed)
 
 	if err := service.Setting.UpdateSettings(model.SettingCategoryAd, ads, session.BID); nil != err {
-		result.Code = -1
+		result.Code = util.CodeErr
 		result.Msg = err.Error()
 	}
 }

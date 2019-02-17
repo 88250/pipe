@@ -79,7 +79,7 @@ func RemoveTagsAction(c *gin.Context) {
 	idArg := c.Param("id")
 	id, err := strconv.ParseUint(idArg, 10, 64)
 	if nil != err {
-		result.Code = -1
+		result.Code = util.CodeErr
 		result.Msg = err.Error()
 
 		return
@@ -88,7 +88,7 @@ func RemoveTagsAction(c *gin.Context) {
 	blogID := session.BID
 
 	if err := service.Tag.RemoveTag(id, blogID); nil != err {
-		result.Code = -1
+		result.Code = util.CodeErr
 		result.Msg = err.Error()
 	}
 

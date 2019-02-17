@@ -33,7 +33,7 @@ func addSymCommentAction(c *gin.Context) {
 
 	arg := map[string]interface{}{}
 	if err := c.BindJSON(&arg); nil != err {
-		result.Code = -1
+		result.Code = util.CodeErr
 		result.Msg = "parses add comment request failed"
 
 		return
@@ -46,7 +46,7 @@ func addSymCommentAction(c *gin.Context) {
 	articleAuthorName := client["userName"].(string)
 	articleAuthor := service.User.GetUserByName(articleAuthorName)
 	if articleAuthor.B3Key != b3Key {
-		result.Code = -1
+		result.Code = util.CodeErr
 		result.Msg = "wrong B3 Key"
 
 		return
@@ -55,7 +55,7 @@ func addSymCommentAction(c *gin.Context) {
 	requestCmt := arg["comment"].(map[string]interface{})
 	articleId, err := strconv.ParseUint(requestCmt["articleId"].(string), 10, 64)
 	if nil != err {
-		result.Code = -1
+		result.Code = util.CodeErr
 		result.Msg = "parses add comment request failed"
 
 		return
@@ -75,12 +75,12 @@ func addSymCommentAction(c *gin.Context) {
 	}
 
 	if err := service.Comment.AddComment(comment); nil != err {
-		result.Code = -1
+		result.Code = util.CodeErr
 		result.Msg = err.Error()
 	}
 
 	if err := service.Comment.UpdatePushedAt(comment); nil != err {
-		result.Code = -1
+		result.Code = util.CodeErr
 		result.Msg = err.Error()
 	}
 }
@@ -92,7 +92,7 @@ func addSymArticleAction(c *gin.Context) {
 
 	arg := map[string]interface{}{}
 	if err := c.BindJSON(&arg); nil != err {
-		result.Code = -1
+		result.Code = util.CodeErr
 		result.Msg = "parses add article request failed"
 
 		return
@@ -105,7 +105,7 @@ func addSymArticleAction(c *gin.Context) {
 	articleAuthorName := client["userName"].(string)
 	articleAuthor := service.User.GetUserByName(articleAuthorName)
 	if articleAuthor.B3Key != b3Key {
-		result.Code = -1
+		result.Code = util.CodeErr
 		result.Msg = "wrong B3 Key"
 
 		return
@@ -114,7 +114,7 @@ func addSymArticleAction(c *gin.Context) {
 	requestArticle := arg["article"].(map[string]interface{})
 	articleId, err := strconv.ParseUint(requestArticle["id"].(string), 10, 64)
 	if nil != err {
-		result.Code = -1
+		result.Code = util.CodeErr
 		result.Msg = "parses add article request failed"
 
 		return
@@ -134,7 +134,7 @@ func addSymArticleAction(c *gin.Context) {
 		article.ID = articleId
 
 		if err := service.Article.AddArticle(article); nil != err {
-			result.Code = -1
+			result.Code = util.CodeErr
 			result.Msg = err.Error()
 
 			return
@@ -145,7 +145,7 @@ func addSymArticleAction(c *gin.Context) {
 		article.Content = requestArticle["content"].(string)
 
 		if err := service.Article.UpdateArticle(article); nil != err {
-			result.Code = -1
+			result.Code = util.CodeErr
 			result.Msg = err.Error()
 
 			return
@@ -153,7 +153,7 @@ func addSymArticleAction(c *gin.Context) {
 	}
 
 	if err := service.Article.UpdatePushedAt(article); nil != err {
-		result.Code = -1
+		result.Code = util.CodeErr
 		result.Msg = err.Error()
 	}
 }

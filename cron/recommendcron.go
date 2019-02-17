@@ -97,7 +97,7 @@ func refreshCommunityRecommendArticles() {
 
 		return
 	}
-	if 0 != result.Code {
+	if util.CodeOk != result.Code {
 		return
 	}
 

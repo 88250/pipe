@@ -35,7 +35,7 @@ func ExportMarkdownAction(c *gin.Context) {
 
 	session := util.GetSession(c)
 	if nil == session {
-		result.Code = -1
+		result.Code = util.CodeErr
 		result.Msg = "please login before export"
 
 		return
@@ -47,7 +47,7 @@ func ExportMarkdownAction(c *gin.Context) {
 	zipFile, err := util.Zip.Create(zipFilePath)
 	if nil != err {
 		logger.Errorf("create zip file [" + zipFilePath + "] failed: " + err.Error())
-		result.Code = -1
+		result.Code = util.CodeErr
 		result.Msg = "create zip file failed"
 
 		return
@@ -62,7 +62,7 @@ func ExportMarkdownAction(c *gin.Context) {
 		file, err := os.Open(zipFilePath)
 		if nil != err {
 			logger.Errorf("open zip file [" + zipFilePath + " failed: " + err.Error())
-			result.Code = -1
+			result.Code = util.CodeErr
 			result.Msg = "open zip file failed"
 
 			return
@@ -77,14 +77,14 @@ func ExportMarkdownAction(c *gin.Context) {
 	zipPath := filepath.Join(tempDir, session.UName+"-export-md")
 	if err = os.RemoveAll(zipPath); nil != err {
 		logger.Errorf("remove temp dir [" + zipPath + "] failed: " + err.Error())
-		result.Code = -1
+		result.Code = util.CodeErr
 		result.Msg = "remove temp dir failed"
 
 		return
 	}
 	if err = os.Mkdir(zipPath, 0755); nil != err {
 		logger.Errorf("make temp dir [" + zipPath + "] failed: " + err.Error())
-		result.Code = -1
+		result.Code = util.CodeErr
 		result.Msg = "make temp dir failed"
 
 		return
@@ -99,7 +99,7 @@ func ExportMarkdownAction(c *gin.Context) {
 	zipFile.AddDirectory(session.UName+"-export-md", zipPath)
 	if err := zipFile.Close(); nil != err {
 		logger.Errorf("zip failed: " + err.Error())
-		result.Code = -1
+		result.Code = util.CodeErr
 		result.Msg = "zip failed"
 
 		return
@@ -107,7 +107,7 @@ func ExportMarkdownAction(c *gin.Context) {
 	file, err := os.Open(zipFilePath)
 	if nil != err {
 		logger.Errorf("open zip file [" + zipFilePath + " failed: " + err.Error())
-		result.Code = -1
+		result.Code = util.CodeErr
 		result.Msg = "open zip file failed"
 
 		return

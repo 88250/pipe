@@ -76,7 +76,7 @@ func addCommentAction(c *gin.Context) {
 	blogID := getBlogID(c)
 	session := util.GetSession(c)
 	if nil == session {
-		result.Code = -1
+		result.Code = util.CodeErr
 		result.Msg = "please login before comment"
 
 		return
@@ -87,7 +87,7 @@ func addCommentAction(c *gin.Context) {
 		BlogID:   blogID,
 	}
 	if err := c.BindJSON(comment); nil != err {
-		result.Code = -1
+		result.Code = util.CodeErr
 		result.Msg = "parses add comment request failed"
 
 		return
@@ -96,7 +96,7 @@ func addCommentAction(c *gin.Context) {
 	comment.IP = util.GetRemoteAddr(c)
 
 	if err := service.Comment.AddComment(comment); nil != err {
-		result.Code = -1
+		result.Code = util.CodeErr
 		result.Msg = err.Error()
 	}
 

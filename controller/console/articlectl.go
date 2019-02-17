@@ -45,14 +45,14 @@ func PushArticle2RhyAction(c *gin.Context) {
 	idArg := c.Param("id")
 	id, err := strconv.ParseUint(idArg, 10, 64)
 	if nil != err {
-		result.Code = -1
+		result.Code = util.CodeErr
 
 		return
 	}
 
 	article := service.Article.ConsoleGetArticle(uint64(id))
 	if nil == article {
-		result.Code = -1
+		result.Code = util.CodeErr
 
 		return
 	}
@@ -67,7 +67,7 @@ func MarkdownAction(c *gin.Context) {
 
 	arg := map[string]interface{}{}
 	if err := c.BindJSON(&arg); nil != err {
-		result.Code = -1
+		result.Code = util.CodeErr
 		result.Msg = "parses markdown request failed"
 
 		return
@@ -88,7 +88,7 @@ func UploadTokenAction(c *gin.Context) {
 
 	session := util.GetSession(c)
 	if "" == session.UB3Key {
-		result.Code = 1
+		result.Code = util.CodeErr
 
 		return
 	}
@@ -120,13 +120,13 @@ func UploadTokenAction(c *gin.Context) {
 		SendStruct(requestJSON).Set("user-agent", model.UserAgent).Timeout(10 * time.Second).EndStruct(requestResult)
 	uploadTokenCheckTime = now
 	if nil != errs {
-		result.Code = 1
+		result.Code = util.CodeErr
 		logger.Errorf("get upload token failed: %s", errs)
 
 		return
 	}
-	if 0 != requestResult.Code {
-		result.Code = 1
+	if util.CodeOk != requestResult.Code {
+		result.Code = util.CodeErr
 		result.Msg = requestResult.Msg
 		logger.Errorf(requestResult.Msg)
 
@@ -147,7 +147,7 @@ func AddArticleAction(c *gin.Context) {
 
 	arg := map[string]interface{}{}
 	if err := c.BindJSON(&arg); nil != err {
-		result.Code = -1
+		result.Code = util.CodeErr
 		result.Msg = "parses add article request failed"
 
 		return
@@ -156,7 +156,7 @@ func AddArticleAction(c *gin.Context) {
 	createdAt, err := dateparse.ParseAny(arg["time"].(string))
 	if nil != err {
 		if "" != arg["time"].(string) {
-			result.Code = -1
+			result.Code = util.CodeErr
 			result.Msg = "parses article create time failed"
 
 			return
@@ -186,7 +186,7 @@ func AddArticleAction(c *gin.Context) {
 	}
 
 	if err := service.Article.AddArticle(article); nil != err {
-		result.Code = -1
+		result.Code = util.CodeErr
 		result.Msg = err.Error()
 	}
 }
@@ -199,14 +199,14 @@ func GetArticleAction(c *gin.Context) {
 	idArg := c.Param("id")
 	id, err := strconv.ParseUint(idArg, 10, 64)
 	if nil != err {
-		result.Code = -1
+		result.Code = util.CodeErr
 
 		return
 	}
 
 	article := service.Article.ConsoleGetArticle(uint64(id))
 	if nil == article {
-		result.Code = -1
+		result.Code = util.CodeErr
 
 		return
 	}
@@ -274,7 +274,7 @@ func RemoveArticleAction(c *gin.Context) {
 	idArg := c.Param("id")
 	id, err := strconv.ParseUint(idArg, 10, 64)
 	if nil != err {
-		result.Code = -1
+		result.Code = util.CodeErr
 		result.Msg = err.Error()
 
 		return
@@ -284,7 +284,7 @@ func RemoveArticleAction(c *gin.Context) {
 	blogID := session.BID
 
 	if err := service.Article.RemoveArticle(id, blogID); nil != err {
-		result.Code = -1
+		result.Code = util.CodeErr
 		result.Msg = err.Error()
 	}
 }
@@ -296,7 +296,7 @@ func RemoveArticlesAction(c *gin.Context) {
 
 	arg := map[string]interface{}{}
 	if err := c.BindJSON(&arg); nil != err {
-		result.Code = -1
+		result.Code = util.CodeErr
 		result.Msg = "parses batch remove articles request failed"
 
 		return
@@ -321,7 +321,7 @@ func UpdateArticleAction(c *gin.Context) {
 	idArg := c.Param("id")
 	id, err := strconv.ParseUint(idArg, 10, 64)
 	if nil != err {
-		result.Code = -1
+		result.Code = util.CodeErr
 		result.Msg = err.Error()
 
 		return
@@ -329,7 +329,7 @@ func UpdateArticleAction(c *gin.Context) {
 
 	arg := map[string]interface{}{}
 	if err := c.BindJSON(&arg); nil != err {
-		result.Code = -1
+		result.Code = util.CodeErr
 		result.Msg = "parses update article request failed"
 
 		return
@@ -337,7 +337,7 @@ func UpdateArticleAction(c *gin.Context) {
 
 	createdAt, err := dateparse.ParseAny(arg["time"].(string))
 	if nil != err {
-		result.Code = -1
+		result.Code = util.CodeErr
 		result.Msg = "parses article create time failed"
 
 		return
@@ -361,7 +361,7 @@ func UpdateArticleAction(c *gin.Context) {
 
 	oldArticle := service.Article.ConsoleGetArticle(id)
 	if nil == oldArticle {
-		result.Code = -1
+		result.Code = util.CodeErr
 		result.Msg = err.Error()
 
 		return
@@ -372,7 +372,7 @@ func UpdateArticleAction(c *gin.Context) {
 	}
 
 	if err := service.Article.UpdateArticle(article); nil != err {
-		result.Code = -1
+		result.Code = util.CodeErr
 		result.Msg = err.Error()
 	}
 }

@@ -88,7 +88,7 @@ func RemoveCommentAction(c *gin.Context) {
 	idArg := c.Param("id")
 	id, err := strconv.ParseUint(idArg, 10, 64)
 	if nil != err {
-		result.Code = -1
+		result.Code = util.CodeErr
 		result.Msg = err.Error()
 
 		return
@@ -98,7 +98,7 @@ func RemoveCommentAction(c *gin.Context) {
 	blogID := session.BID
 
 	if err := service.Comment.RemoveComment(id, blogID); nil != err {
-		result.Code = -1
+		result.Code = util.CodeErr
 		result.Msg = err.Error()
 	}
 }
@@ -110,7 +110,7 @@ func RemoveCommentsAction(c *gin.Context) {
 
 	arg := map[string]interface{}{}
 	if err := c.BindJSON(&arg); nil != err {
-		result.Code = -1
+		result.Code = util.CodeErr
 		result.Msg = "parses batch remove comments request failed"
 
 		return

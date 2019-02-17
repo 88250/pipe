@@ -31,7 +31,7 @@ func UpdateAccountAction(c *gin.Context) {
 
 	arg := map[string]interface{}{}
 	if err := c.BindJSON(&arg); nil != err {
-		result.Code = -1
+		result.Code = util.CodeErr
 		result.Msg = "parses update account request failed"
 
 		return
@@ -45,7 +45,7 @@ func UpdateAccountAction(c *gin.Context) {
 	user.B3Key = b3Key
 	user.AvatarURL = avatarURL
 	if err := service.User.UpdateUser(user); nil != err {
-		result.Code = -1
+		result.Code = util.CodeErr
 		result.Msg = err.Error()
 
 		return

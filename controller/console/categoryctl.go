@@ -34,7 +34,7 @@ func UpdateCategoryAction(c *gin.Context) {
 	idArg := c.Param("id")
 	id, err := strconv.ParseUint(idArg, 10, 64)
 	if nil != err {
-		result.Code = -1
+		result.Code = util.CodeErr
 		result.Msg = err.Error()
 
 		return
@@ -42,7 +42,7 @@ func UpdateCategoryAction(c *gin.Context) {
 
 	category := &model.Category{Model: model.Model{ID: uint64(id)}}
 	if err := c.BindJSON(category); nil != err {
-		result.Code = -1
+		result.Code = util.CodeErr
 		result.Msg = "parses update category request failed"
 
 		return
@@ -52,7 +52,7 @@ func UpdateCategoryAction(c *gin.Context) {
 	category.BlogID = session.BID
 
 	if err := service.Category.UpdateCategory(category); nil != err {
-		result.Code = -1
+		result.Code = util.CodeErr
 		result.Msg = err.Error()
 	}
 }
@@ -65,7 +65,7 @@ func GetCategoryAction(c *gin.Context) {
 	idArg := c.Param("id")
 	id, err := strconv.ParseUint(idArg, 10, 64)
 	if nil != err {
-		result.Code = -1
+		result.Code = util.CodeErr
 		result.Msg = err.Error()
 
 		return
@@ -73,7 +73,7 @@ func GetCategoryAction(c *gin.Context) {
 
 	data := service.Category.ConsoleGetCategory(id)
 	if nil == data {
-		result.Code = -1
+		result.Code = util.CodeErr
 
 		return
 	}
@@ -117,7 +117,7 @@ func AddCategoryAction(c *gin.Context) {
 
 	category := &model.Category{}
 	if err := c.BindJSON(category); nil != err {
-		result.Code = -1
+		result.Code = util.CodeErr
 		result.Msg = "parses add category request failed"
 
 		return
@@ -125,7 +125,7 @@ func AddCategoryAction(c *gin.Context) {
 
 	category.BlogID = session.BID
 	if err := service.Category.AddCategory(category); nil != err {
-		result.Code = -1
+		result.Code = util.CodeErr
 		result.Msg = err.Error()
 	}
 }
@@ -138,7 +138,7 @@ func RemoveCategoryAction(c *gin.Context) {
 	idArg := c.Param("id")
 	id, err := strconv.ParseUint(idArg, 10, 64)
 	if nil != err {
-		result.Code = -1
+		result.Code = util.CodeErr
 		result.Msg = err.Error()
 
 		return
@@ -147,7 +147,7 @@ func RemoveCategoryAction(c *gin.Context) {
 	session := util.GetSession(c)
 	blogID := session.BID
 	if err := service.Category.RemoveCategory(id, blogID); nil != err {
-		result.Code = -1
+		result.Code = util.CodeErr
 		result.Msg = err.Error()
 	}
 }

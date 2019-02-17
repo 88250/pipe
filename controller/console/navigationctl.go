@@ -62,14 +62,14 @@ func GetNavigationAction(c *gin.Context) {
 	idArg := c.Param("id")
 	id, err := strconv.ParseUint(idArg, 10, 64)
 	if nil != err {
-		result.Code = -1
+		result.Code = util.CodeErr
 
 		return
 	}
 
 	data := service.Navigation.ConsoleGetNavigation(uint64(id))
 	if nil == data {
-		result.Code = -1
+		result.Code = util.CodeErr
 
 		return
 	}
@@ -85,7 +85,7 @@ func RemoveNavigationAction(c *gin.Context) {
 	idArg := c.Param("id")
 	id, err := strconv.ParseUint(idArg, 10, 64)
 	if nil != err {
-		result.Code = -1
+		result.Code = util.CodeErr
 		result.Msg = err.Error()
 
 		return
@@ -95,7 +95,7 @@ func RemoveNavigationAction(c *gin.Context) {
 	blogID := session.BID
 
 	if err := service.Navigation.RemoveNavigation(uint64(id), blogID); nil != err {
-		result.Code = -1
+		result.Code = util.CodeErr
 		result.Msg = err.Error()
 	}
 }
@@ -108,7 +108,7 @@ func UpdateNavigationAction(c *gin.Context) {
 	idArg := c.Param("id")
 	id, err := strconv.ParseUint(idArg, 10, 64)
 	if nil != err {
-		result.Code = -1
+		result.Code = util.CodeErr
 		result.Msg = err.Error()
 
 		return
@@ -116,7 +116,7 @@ func UpdateNavigationAction(c *gin.Context) {
 
 	navigation := &model.Navigation{Model: model.Model{ID: uint64(id)}}
 	if err := c.BindJSON(navigation); nil != err {
-		result.Code = -1
+		result.Code = util.CodeErr
 		result.Msg = "parses update navigation request failed"
 
 		return
@@ -126,7 +126,7 @@ func UpdateNavigationAction(c *gin.Context) {
 	navigation.BlogID = session.BID
 
 	if err := service.Navigation.UpdateNavigation(navigation); nil != err {
-		result.Code = -1
+		result.Code = util.CodeErr
 		result.Msg = err.Error()
 	}
 }
@@ -140,7 +140,7 @@ func AddNavigationAction(c *gin.Context) {
 
 	navigation := &model.Navigation{}
 	if err := c.BindJSON(navigation); nil != err {
-		result.Code = -1
+		result.Code = util.CodeErr
 		result.Msg = "parses add navigation request failed"
 
 		return
@@ -148,7 +148,7 @@ func AddNavigationAction(c *gin.Context) {
 
 	navigation.BlogID = session.BID
 	if err := service.Navigation.AddNavigation(navigation); nil != err {
-		result.Code = -1
+		result.Code = util.CodeErr
 		result.Msg = err.Error()
 	}
 }

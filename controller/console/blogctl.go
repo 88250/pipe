@@ -36,7 +36,7 @@ func BlogSwitchAction(c *gin.Context) {
 	idArg := c.Param("id")
 	blogID, err := strconv.ParseUint(idArg, 10, 64)
 	if nil != err {
-		result.Code = -1
+		result.Code = util.CodeErr
 
 		return
 	}
@@ -46,7 +46,7 @@ func BlogSwitchAction(c *gin.Context) {
 
 	userBlogs := service.User.GetUserBlogs(userID)
 	if 1 > len(userBlogs) {
-		result.Code = -1
+		result.Code = util.CodeErr
 		result.Msg = "switch blog failed"
 
 		return
@@ -62,7 +62,7 @@ func BlogSwitchAction(c *gin.Context) {
 	}
 
 	if -1 == role {
-		result.Code = -1
+		result.Code = util.CodeErr
 		result.Msg = "switch blog failed"
 
 		return
@@ -86,7 +86,7 @@ func CheckVersionAction(c *gin.Context) {
 		Set("User-Agent", model.UserAgent).Timeout(30*time.Second).
 		Retry(3, 5*time.Second).EndStruct(&rhyResult)
 	if nil != errs {
-		result.Code = -1
+		result.Code = util.CodeErr
 		result.Msg = errs[0].Error()
 
 		return

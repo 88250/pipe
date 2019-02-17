@@ -32,7 +32,7 @@ func AddUserAction(c *gin.Context) {
 
 	arg := map[string]interface{}{}
 	if err := c.BindJSON(&arg); nil != err {
-		result.Code = -1
+		result.Code = util.CodeErr
 		result.Msg = "parses add user request failed"
 
 		return
@@ -41,7 +41,7 @@ func AddUserAction(c *gin.Context) {
 	name := arg["name"].(string)
 	user := service.User.GetUserByName(name)
 	if nil == user {
-		result.Code = -1
+		result.Code = util.CodeErr
 		result.Msg = "the user should login first"
 
 		return
@@ -49,7 +49,7 @@ func AddUserAction(c *gin.Context) {
 
 	session := util.GetSession(c)
 	if err := service.User.AddUserToBlog(user.ID, session.BID); nil != err {
-		result.Code = -1
+		result.Code = util.CodeErr
 		result.Msg = err.Error()
 
 		return

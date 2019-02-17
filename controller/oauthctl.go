@@ -42,7 +42,7 @@ func redirectGitHubLoginAction(c *gin.Context) {
 
 		return
 	}
-	if 0 != requestResult.Code {
+	if util.CodeOk != requestResult.Code {
 		logger.Errorf("get oauth client id failed [code=%d, msg=%s]", requestResult.Code, requestResult.Msg)
 		c.Status(http.StatusNotFound)
 

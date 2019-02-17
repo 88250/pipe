@@ -43,7 +43,7 @@ func UpdateThemeAction(c *gin.Context) {
 		},
 	}
 	if err := service.Setting.UpdateSettings(model.SettingCategoryTheme, settings, session.BID); nil != err {
-		result.Code = -1
+		result.Code = util.CodeErr
 		result.Msg = err.Error()
 	}
 }
