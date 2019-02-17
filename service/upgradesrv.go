@@ -32,7 +32,7 @@ type upgradeService struct {
 }
 
 const (
-	fromVer = "1.8.5"
+	fromVer = "1.8.6"
 	toVer   = model.Version
 )
 
