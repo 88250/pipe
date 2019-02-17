@@ -96,8 +96,8 @@ func perform187_188() {
 
 		if err := tx.Create(&model.Setting{
 			Category: model.SettingCategoryPreference,
-			Name:     model.SettingNamePreferenceRecommendedArticleListSize,
-			Value:    strconv.Itoa(model.SettingPreferenceRecommendedArticleListSizeDefault),
+			Name:     model.SettingNamePreferenceRecommendArticleListSize,
+			Value:    strconv.Itoa(model.SettingPreferenceRecommendArticleListSizeDefault),
 			BlogID:   blogID}).Error; nil != err {
 			tx.Rollback()
 
