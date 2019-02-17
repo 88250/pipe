@@ -26,6 +26,8 @@ export default (ctx) => {
       // get and delete use snack tip
       if (response.data.code === 0) {
         return response.data.data
+      } else if(response.data.code == -2) {
+        window.location.href = `${ctx.env.Server}/start`
       } else {
         ctx.store.commit('setSnackBar', {
           snackBar: true,
