@@ -3,15 +3,6 @@
     <div class="card login__content" ref="content">
       <div class="login__github" @click="loginGitHub"></div>
       <img class="fn__none" src="~assets/images/github.gif"/>
-      <a href="https://hacpai.com/article/1463025124998" target="_blank">B3log 开源组织欢迎大家加入！</a><br>
-      <label class="checkbox ft__12">
-        <input
-          type="checkbox"
-          :checked="isAgreen"
-          @click="isAgreen = !isAgreen"/><span
-        class="checkbox__icon"></span>
-        是否愿意在 GitHub 上收藏该<a href="https://github.com/b3log/pipe" target="_blank">项目</a>并关注<a href="https://github.com/88250" target="_blank">开发者</a>
-      </label> <br>
       <v-btn class="btn--small btn--info" @click="loginGitHub">{{ $t('index2', $store.state.locale) }}</v-btn>
       <div class="start__space"></div>
       <a class="ft__12 fn__pointer" @click="toggleIntro">查看 GitHub 数据使用说明</a>
@@ -23,6 +14,16 @@
         </ul>
       </div>
       <div class="start__space"></div>
+      <label class="start__checkbox checkbox ft__12">
+        <input
+          type="checkbox"
+          :checked="isAgreen"
+          @click="isAgreen = !isAgreen"/><span
+        class="checkbox__icon"></span>
+        是否愿意在 GitHub 上收藏该<a href="https://github.com/b3log/solo" target="_blank">项目</a>、关注<a
+        href="https://github.com/88250" target="_blank">开发者</a>并加入 <a href="https://github.com/b3log" target="_blank">B3log
+        开源组织</a>
+      </label>
     </div>
   </div>
 </template>
@@ -35,7 +36,7 @@
     data () {
       return {
         clickedGitHub: false,
-        isAgreen: true,
+        isAgreen: false,
         showIntro: false,
       }
     },
@@ -76,6 +77,18 @@
       text-align: left
       width: 300px
       margin: 0 auto
+      ul
+        margin-bottom: 0 !important
     &__space
-      height: 20px
+      height: 10px
+    &__checkbox
+      margin: 0 20px
+      color: #999
+      a
+        text-decoration: underline
+        color: #67757c
+
+  @media (max-width: 470px)
+    .start__checkbox
+      line-height: 18px !important
 </style>
