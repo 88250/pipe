@@ -62,9 +62,7 @@
 
 ## 安装
 
-[下载](https://pan.baidu.com/s/1jHPtHLO)最新的发布包解压，进入解压目录运行 pipe/pipe.exe 可执行文件即可。
-
-**如果你不想自己维护服务器，可以直接使用我们运维的 [Pipe 服务](http://pipe.b3log.org)，域名绑定请联系 QQ845765。**
+[下载](https://github.com/b3log/pipe/releases)最新的发布包解压，进入解压目录运行 pipe/pipe.exe 可执行文件即可。
 
 ## 文档
 
