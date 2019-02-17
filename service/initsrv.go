@@ -452,8 +452,8 @@ func initPreferenceSettings(tx *gorm.DB, blogID uint64) error {
 	}
 	if err := tx.Create(&model.Setting{
 		Category: model.SettingCategoryPreference,
-		Name:     model.SettingNamePreferenceRecommendedArticleListSize,
-		Value:    strconv.Itoa(model.SettingPreferenceRecommendedArticleListSizeDefault),
+		Name:     model.SettingNamePreferenceRecommendArticleListSize,
+		Value:    strconv.Itoa(model.SettingPreferenceRecommendArticleListSizeDefault),
 		BlogID:   blogID}).Error; nil != err {
 		return err
 	}

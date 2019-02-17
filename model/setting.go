@@ -76,7 +76,7 @@ const (
 	SettingNamePreferenceMostUseTagListSize         = "preferenceMostUseTagListSize"
 	SettingNamePreferenceMostViewArticleListSize    = "preferenceMostViewArticleListSize"
 	SettingNamePreferenceRecentCommentListSize      = "preferenceRecentCommentListSize"
-	SettingNamePreferenceRecommendedArticleListSize = "preferenceRecommendedArticleListSize"
+	SettingNamePreferenceRecommendArticleListSize   = "preferenceRecommendArticleListSize"
 )
 
 // Setting values of category "preference".
@@ -92,7 +92,7 @@ const (
 	SettingPreferenceMostUseTagListSizeDefault         = 15
 	SettingPreferenceMostViewArticleListSizeDefault    = 15
 	SettingPreferenceRecentCommentListSizeDefault      = 7
-	SettingPreferenceRecommendedArticleListSizeDefault = 0
+	SettingPreferenceRecommendArticleListSizeDefault   = 0
 )
 
 // Setting names of category "sign".
