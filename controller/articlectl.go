@@ -233,7 +233,12 @@ func showArticleAction(c *gin.Context) {
 
 	dataModel["Comments"] = comments
 	dataModel["Pagination"] = pagination
-	dataModel["RecommendArticles"] = getRecommendArticles()
+	recommendArticleSetting := service.Setting.GetSetting(model.SettingCategoryPreference, model.SettingNamePreferenceRecommendArticleListSize, blogID)
+	recommendArticleSize, err := strconv.Atoi(recommendArticleSetting.Value)
+	if nil != err {
+		recommendArticleSize = 7
+	}
+	dataModel["RecommendArticles"] = getRecommendArticles(recommendArticleSize)
 	fillPreviousArticle(c, articleModel, &dataModel)
 	fillNextArticle(c, articleModel, &dataModel)
 	dataModel["ToC"] = template.HTML(toc(dataModel["Article"].(*model.ThemeArticle)))
@@ -311,10 +316,14 @@ func toc(article *model.ThemeArticle) string {
 	return builder.String()
 }
 
-func getRecommendArticles() []*model.ThemeArticle {
+func getRecommendArticles(size int) []*model.ThemeArticle {
 	var ret []*model.ThemeArticle
 
-	indics := util.RandInts(0, len(cron.RecommendArticles), 7)
+	if 0 >= size {
+		return ret
+	}
+
+	indics := util.RandInts(0, len(cron.RecommendArticles), size)
 	for _, index := range indics {
 		article := cron.RecommendArticles[index]
 
