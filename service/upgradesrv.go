@@ -62,23 +62,14 @@ func (srv *upgradeService) Perform() {
 func perform186_187() {
 	logger.Infof("upgrading from version [%s] to version [%s]....", fromVer, toVer)
 
-	var allSettings []model.Setting
-	if err := db.Find(&allSettings).Error; nil != err {
+	var verSettings []model.Setting
+	if err := db.Model(&model.Setting{}).Where("`name`= ?", model.SettingNameSystemVer).Find(&verSettings).Error; nil != err {
 		logger.Fatalf("load settings failed: %s", err)
 	}
 
-	var updateSettings []model.Setting
-	for _, setting := range allSettings {
-		if model.SettingNameSystemVer == setting.Name {
-			setting.Value = model.Version
-			updateSettings = append(updateSettings, setting)
-
-			continue
-		}
-	}
-
 	tx := db.Begin()
-	for _, setting := range updateSettings {
+	for _, setting := range verSettings {
+		setting.Value = model.Version
 		if err := tx.Save(setting).Error; nil != err {
 			tx.Rollback()
 
