@@ -17,6 +17,7 @@
 package service
 
 import (
+	"strconv"
 	"sync"
 
 	"github.com/b3log/pipe/model"
@@ -57,6 +58,56 @@ func (srv *upgradeService) Perform() {
 	}
 
 	logger.Fatalf("attempt to skip more than one version to upgrade. Expected: %s, Actually: %s", fromVer, currentVer)
+}
+
+func perform187_188() {
+	logger.Infof("upgrading from version [%s] to version [%s]....", fromVer, toVer)
+
+	var verSettings []model.Setting
+	if err := db.Model(&model.Setting{}).Where("`name`= ?", model.SettingNameSystemVer).Find(&verSettings).Error; nil != err {
+		logger.Fatalf("load settings failed: %s", err)
+	}
+
+	tx := db.Begin()
+	for _, setting := range verSettings {
+		setting.Value = model.Version
+		if err := tx.Save(setting).Error; nil != err {
+			tx.Rollback()
+
+			logger.Fatalf("update setting [%+v] failed: %s", setting, err.Error())
+		}
+	}
+
+	rows, err := tx.Model(&model.Setting{}).Select("`blog_id`").Group("`blog_id`").Rows()
+	defer rows.Close()
+	if nil != err {
+		tx.Rollback()
+
+		logger.Fatalf("update settings failed: %s", err.Error())
+	}
+	for rows.Next() {
+		var blogID uint64
+		err := rows.Scan(&blogID)
+		if nil != err {
+			tx.Rollback()
+
+			logger.Fatalf("update settings failed: %s", err.Error())
+		}
+
+		if err := tx.Create(&model.Setting{
+			Category: model.SettingCategoryPreference,
+			Name:     model.SettingNamePreferenceRecommendedArticleListSize,
+			Value:    strconv.Itoa(model.SettingPreferenceRecommendedArticleListSizeDefault),
+			BlogID:   blogID}).Error; nil != err {
+			tx.Rollback()
+
+			logger.Fatalf("update settings failed: %s", err.Error())
+		}
+	}
+
+	tx.Commit()
+
+	logger.Infof("upgraded from version [%s] to version [%s] successfully :-)", fromVer, toVer)
 }
 
 func perform186_187() {
