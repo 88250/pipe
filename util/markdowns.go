@@ -218,16 +218,25 @@ func runesToString(runes []rune) (ret string) {
 	return
 }
 
-var emojiRegx = regexp.MustCompile(":[a-z_]+:")
+var emojiRegx = regexp.MustCompile(":[\\w]+:")
+var emojiImages = []string{"c.png", "d.png", "e50a.png", "f.png", "g.png", "huaji.gif", "i.png", "j.png", "k.png", "octocat.png", "r.png", "trollface.png", "u.png"}
+
+func emojiImg(emojiASCII string) string {
+	for _, img := range emojiImages {
+		if emojiASCII == img[:strings.Index(img, ".")] {
+			return "<img class=\"emoji\" src=\"https://vditor.b3log.org/images/" + img + "\">";
+		}
+	}
+
+	return ":" + emojiASCII + ":";
+}
 
 func emojify(text string) string {
 	return emojiRegx.ReplaceAllStringFunc(text, func(emojiASCII string) string {
 		emojiASCII = strings.Replace(emojiASCII, ":", "", -1)
 		emoji := turtle.Emojis[emojiASCII]
 		if nil == emoji {
-			//logger.Warn("not found [" + emojiASCII + "]")
-
-			return emojiASCII
+			return emojiImg(emojiASCII)
 		}
 
 		return emoji.Char
