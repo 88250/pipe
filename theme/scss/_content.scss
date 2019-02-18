@@ -2,7 +2,7 @@
  * article content reset.
  *
  * @author <a href="http://vanessa.b3log.org">Liyuan Li</a>
- * @version 0.2.0.0, Feb 5, 2019
+ * @version 0.3.0.0, Feb 17, 2019
  */
 @import 'mixin';
 
@@ -205,6 +205,16 @@
       margin-left: -2em;
       vertical-align: middle;
     }
+  }
+
+  .emoji {
+    cursor: auto;
+    width: 18px;
+    height: 18px;
+    display: inline-block;
+    margin-bottom: .25em;
+    background-size: contain;
+    vertical-align: text-top;
   }
 }
 
