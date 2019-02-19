@@ -2,7 +2,7 @@
  * skin style
  *
  * @author <a href="http://vanessa.b3log.org">Liyuan Li</a>
- * @version 0.1.1.0, Dec 24, 2018
+ * @version 0.1.1.1, Feb 19, 2019
 */
 @import 'variables';
 @import '../../../scss/basic';
@@ -526,7 +526,7 @@ a {
       svg {
         height: 24px;
         width: 24px;
-        margin-top: -3px;
+        margin-top: 3px;
       }
     }
     &__nav a {
