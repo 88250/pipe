@@ -2,7 +2,7 @@
  * @fileoverview article tool for every theme
  *
  * @author <a href="http://vanessa.b3log.org">Liyuan Li</a>
- * @version 0.3.1.5, Feb 18, 2019
+ * @version 0.3.1.6, Feb 19, 2019
  */
 
 import $ from 'jquery'
@@ -139,7 +139,7 @@ export const ShowEditor = (reply, id, commentId) => {
 
   $.ajax({
     method: 'GET',
-    url: 'https://vditor.b3log.org/0.2.0/index.min.js',
+    url: 'https://cdn.jsdelivr.net/npm/vditor/dist/index.min.js',
     dataType: 'script',
     cache: true,
     success: () => {
