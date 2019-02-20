@@ -48,7 +48,6 @@ func redirectGitHubLoginAction(c *gin.Context) {
 		return
 	}
 	clientId := requestResult.Data.(string)
-	clientId = "31e7025bcd34daeeb954"
 
 	referer := c.Request.URL.Query().Get("referer")
 	if "" == referer || !strings.Contains(referer, "://") {
