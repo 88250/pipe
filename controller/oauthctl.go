@@ -17,7 +17,6 @@
 package controller
 
 import (
-	"fmt"
 	"net/http"
 	"strings"
 	"time"
@@ -49,6 +48,7 @@ func redirectGitHubLoginAction(c *gin.Context) {
 		return
 	}
 	clientId := requestResult.Data.(string)
+	clientId = "31e7025bcd34daeeb954"
 
 	referer := c.Request.URL.Query().Get("referer")
 	if "" == referer || !strings.Contains(referer, "://") {
@@ -89,7 +89,7 @@ func githubCallbackAction(c *gin.Context) {
 		return
 	}
 
-	githubId := fmt.Sprintf("%v", githubUser["userId"])
+	githubId := githubUser["userId"].(string)
 	userName := githubUser["userName"].(string)
 	user := service.User.GetUserByGitHubId(githubId)
 	if nil == user {
