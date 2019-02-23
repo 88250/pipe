@@ -214,7 +214,7 @@ func initNavigation(tx *gorm.DB, blogID uint64) error {
 	navigation := &model.Navigation{
 		Title:      "黑客派",
 		URL:        util.HacPaiURL,
-		IconURL:    "theme/images/hacpai-logo@72.png",
+		IconURL:    model.Conf.StaticServer + "theme/images/hacpai-logo@72.png",
 		OpenMethod: model.NavigationOpenMethodBlank,
 		Number:     0,
 		BlogID:     blogID,
