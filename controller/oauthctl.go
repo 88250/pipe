@@ -17,7 +17,6 @@
 package controller
 
 import (
-	"fmt"
 	"net/http"
 	"strings"
 	"time"
@@ -89,7 +88,7 @@ func githubCallbackAction(c *gin.Context) {
 		return
 	}
 
-	githubId := fmt.Sprintf("%v", githubUser["userId"])
+	githubId := githubUser["userId"].(string)
 	userName := githubUser["userName"].(string)
 	user := service.User.GetUserByGitHubId(githubId)
 	if nil == user {
