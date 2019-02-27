@@ -33,7 +33,7 @@ var states = map[string]string{}
 // redirectGitHubLoginAction redirects to GitHub auth page.
 func redirectGitHubLoginAction(c *gin.Context) {
 	requestResult := util.NewResult()
-	_, _, errs := gorequest.New().Get(util.HacPaiURL+"/oauth/pipe/client").
+	_, _, errs := gorequest.New().Get(util.HacPaiURL+"/oauth/pipe/client2").
 		Set("user-agent", model.UserAgent).Timeout(10 * time.Second).EndStruct(requestResult)
 	if nil != errs {
 		logger.Errorf("get oauth client id failed: %+v", errs)
@@ -47,7 +47,9 @@ func redirectGitHubLoginAction(c *gin.Context) {
 
 		return
 	}
-	clientId := requestResult.Data.(string)
+	data := requestResult.Data.(map[string]interface{})
+	clientId := data["clientId"].(string)
+	loginAuthURL := data["loginAuthURL"].(string)
 
 	referer := c.Request.URL.Query().Get("referer")
 	if "" == referer || !strings.Contains(referer, "://") {
@@ -58,7 +60,7 @@ func redirectGitHubLoginAction(c *gin.Context) {
 	}
 	state := util.RandString(16) + referer
 	states[state] = state
-	path := "https://github.com/login/oauth/authorize" + "?client_id=" + clientId + "&state=" + state + "&scope=public_repo,read:user,user:email,user:follow"
+	path := loginAuthURL + "?client_id=" + clientId + "&state=" + state + "&scope=public_repo,read:user,user:email,user:follow"
 
 	logger.Infof("redirect to github [" + path + "]")
 
