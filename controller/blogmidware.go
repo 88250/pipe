@@ -264,8 +264,13 @@ func fillRecentComments(c *gin.Context, settingMap *map[string]interface{}, data
 
 		page := service.Comment.GetCommentPage(comment.ArticleID, comment.ID, blogID)
 		article := service.Article.ConsoleGetArticle(comment.ArticleID)
+
+		title := util.Markdown(comment.Content).AbstractText
+		if "" == title {
+			continue
+		}
 		themeComment := &model.ThemeComment{
-			Title:     util.Markdown(comment.Content).AbstractText,
+			Title:     title,
 			URL:       getBlogURL(c) + article.Path + "?p=" + strconv.Itoa(page) + "#pipeComment" + strconv.Itoa(int(comment.ID)),
 			CreatedAt: humanize.Time(comment.CreatedAt),
 			Author:    author,
