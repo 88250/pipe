@@ -32,11 +32,6 @@ type upgradeService struct {
 	mutex *sync.Mutex
 }
 
-const (
-	fromVer = "1.8.6"
-	toVer   = model.Version
-)
-
 func (srv *upgradeService) Perform() {
 	if !Init.Inited() {
 		return
@@ -51,17 +46,19 @@ func (srv *upgradeService) Perform() {
 		return
 	}
 
-	if fromVer == currentVer {
+	switch currentVer {
+	case "1.8.6":
 		perform186_187()
-
-		return
+		fallthrough
+	case "1.8.7":
+		perform187_188()
+	default:
+		logger.Fatalf("please upgrade to v1.8.7 first")
 	}
-
-	logger.Fatalf("attempt to skip more than one version to upgrade. Expected: %s, Actually: %s", fromVer, currentVer)
 }
 
 func perform187_188() {
-	logger.Infof("upgrading from version [%s] to version [%s]....", fromVer, toVer)
+	logger.Infof("upgrading from version [1.8.7] to version [1.8.8]....")
 
 	var verSettings []model.Setting
 	if err := db.Model(&model.Setting{}).Where("`name`= ?", model.SettingNameSystemVer).Find(&verSettings).Error; nil != err {
@@ -79,12 +76,13 @@ func perform187_188() {
 	}
 
 	rows, err := tx.Model(&model.Setting{}).Select("`blog_id`").Group("`blog_id`").Rows()
-	defer rows.Close()
 	if nil != err {
 		tx.Rollback()
 
 		logger.Fatalf("update settings failed: %s", err.Error())
 	}
+
+	blogIDs := []uint64{}
 	for rows.Next() {
 		var blogID uint64
 		err := rows.Scan(&blogID)
@@ -93,7 +91,11 @@ func perform187_188() {
 
 			logger.Fatalf("update settings failed: %s", err.Error())
 		}
+		blogIDs = append(blogIDs, blogID)
+	}
+	rows.Close()
 
+	for _, blogID := range blogIDs {
 		if err := tx.Create(&model.Setting{
 			Category: model.SettingCategoryPreference,
 			Name:     model.SettingNamePreferenceRecommendArticleListSize,
@@ -107,11 +109,11 @@ func perform187_188() {
 
 	tx.Commit()
 
-	logger.Infof("upgraded from version [%s] to version [%s] successfully :-)", fromVer, toVer)
+	logger.Infof("upgraded from version [1.8.7] to version [1.8.8] successfully")
 }
 
 func perform186_187() {
-	logger.Infof("upgrading from version [%s] to version [%s]....", fromVer, toVer)
+	logger.Infof("upgrading from version [1.8.6] to version [1.8.7]....")
 
 	var verSettings []model.Setting
 	if err := db.Model(&model.Setting{}).Where("`name`= ?", model.SettingNameSystemVer).Find(&verSettings).Error; nil != err {
@@ -130,5 +132,5 @@ func perform186_187() {
 
 	tx.Commit()
 
-	logger.Infof("upgraded from version [%s] to version [%s] successfully :-)", fromVer, toVer)
+	logger.Infof("upgraded from version [1.8.6] to version [1.8.7] successfully")
 }
