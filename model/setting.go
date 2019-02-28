@@ -92,7 +92,7 @@ const (
 	SettingPreferenceMostUseTagListSizeDefault         = 15
 	SettingPreferenceMostViewArticleListSizeDefault    = 15
 	SettingPreferenceRecentCommentListSizeDefault      = 7
-	SettingPreferenceRecommendArticleListSizeDefault   = 0
+	SettingPreferenceRecommendArticleListSizeDefault   = 1
 )
 
 // Setting names of category "sign".
