@@ -2,7 +2,7 @@
  * skin style
  *
  * @author <a href="http://vanessa.b3log.org">Liyuan Li</a>
- * @version 0.2.1.0, Dec 24, 2018
+ * @version 0.2.1.1, Mar 2, 2019
 */
 
 @import 'variables';
@@ -17,6 +17,7 @@ body {
   display: flex;
   flex-direction: column;
   height: 100%;
+  min-height: 100%;
 }
 
 a {
