@@ -21,7 +21,7 @@ import (
 )
 
 func TestGitHubUserInfo(t *testing.T) {
-	user := GitHubUserInfo("error tk")
+	user := GitHubUserInfo("nil ak for pipe testing")
 	if nil != user {
 		t.Error("get a user")
 
