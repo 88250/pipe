@@ -118,9 +118,6 @@ func (srv *initService) initBlog(tx *gorm.DB, admin *model.User, blogID uint64) 
 	if err := initStatisticSettings(tx, blogID); nil != err {
 		return err
 	}
-	if err := initNavigation(tx, blogID); nil != err {
-		return err
-	}
 	if err := helloWorld(tx, admin, blogID); nil != err {
 		return err
 	}
@@ -204,22 +201,6 @@ func initBlogAdmin(tx *gorm.DB, admin *model.User, blogID uint64) error {
 		BlogID: blogID,
 	}
 	if err := tx.Create(blogUser).Error; nil != err {
-		return err
-	}
-
-	return nil
-}
-
-func initNavigation(tx *gorm.DB, blogID uint64) error {
-	navigation := &model.Navigation{
-		Title:      "黑客派",
-		URL:        util.HacPaiURL,
-		IconURL:    model.Conf.StaticServer + "/theme/images/hacpai-logo@72.png",
-		OpenMethod: model.NavigationOpenMethodBlank,
-		Number:     0,
-		BlogID:     blogID,
-	}
-	if err := tx.Create(navigation).Error; nil != err {
 		return err
 	}
 
