@@ -61,7 +61,23 @@ func addSymCommentAction(c *gin.Context) {
 		return
 	}
 
+	article := service.Article.ConsoleGetArticle(articleId)
+	if nil == article {
+		result.Code = util.CodeErr
+		result.Msg = "not found the specified article"
+
+		return
+	}
+
 	blogID := getBlogID(c)
+	commentableSetting := service.Setting.GetSetting(model.SettingCategoryBasic, model.SettingNameBasicCommentable, blogID)
+	if "true" != commentableSetting.Value || !article.Commentable {
+		result.Code = util.CodeErr
+		result.Msg = "not allow comment"
+
+		return
+	}
+
 	comment := &model.Comment{
 		BlogID:          blogID,
 		ArticleID:       articleId,
