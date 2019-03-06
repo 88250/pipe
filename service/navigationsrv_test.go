@@ -25,32 +25,28 @@ import (
 func TestConsoleGetNavigations(t *testing.T) {
 	navigations, pagination := Navigation.ConsoleGetNavigations(1, 1)
 
-	if 1 != len(navigations) {
-		t.Errorf("expected is [%d], actual is [%d]", 1, len(navigations))
+	if 0 != len(navigations) {
+		t.Errorf("expected is [%d], actual is [%d]", 0, len(navigations))
 	}
-	if 1 != pagination.RecordCount {
-		t.Errorf("expected is [%d], actual is [%d]", 1, pagination.RecordCount)
+	if 0 != pagination.RecordCount {
+		t.Errorf("expected is [%d], actual is [%d]", 0, pagination.RecordCount)
 	}
 }
 
 func TestGetNavigations(t *testing.T) {
 	navigations := Navigation.GetNavigations(1)
 
-	if 1 != len(navigations) {
-		t.Errorf("expected is [%d], actual is [%d]", 1, len(navigations))
+	if 0 != len(navigations) {
+		t.Errorf("expected is [%d], actual is [%d]", 0, len(navigations))
 	}
 }
 
 func TestConsoleGetNavigation(t *testing.T) {
 	navigation := Navigation.ConsoleGetNavigation(1)
-	if nil == navigation {
-		t.Errorf("navigation is nil")
+	if nil != navigation {
+		t.Errorf("navigation is not nil")
 
 		return
-	}
-
-	if 1 != navigation.ID {
-		t.Errorf("id is not [1]")
 	}
 }
 
@@ -77,13 +73,13 @@ func TestConsoleAddNavigation(t *testing.T) {
 		return
 	}
 
-	if 2 != navigation.ID {
+	if 1 != navigation.ID {
 		t.Errorf("id is not [2]")
 	}
 }
 
 func TestConsoleUpdateNavigation(t *testing.T) {
-	navigation := Navigation.ConsoleGetNavigation(2)
+	navigation := Navigation.ConsoleGetNavigation(1)
 	if nil == navigation {
 		t.Errorf("navigation is nil")
 
@@ -97,7 +93,7 @@ func TestConsoleUpdateNavigation(t *testing.T) {
 		return
 	}
 
-	navigation = Navigation.ConsoleGetNavigation(2)
+	navigation = Navigation.ConsoleGetNavigation(1)
 	if nil == navigation {
 		t.Errorf("navigation is nil")
 

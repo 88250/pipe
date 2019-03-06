@@ -219,7 +219,7 @@ func runesToString(runes []rune) (ret string) {
 }
 
 var emojiRegx = regexp.MustCompile(":[\\w]+:")
-var emojiImages = []string{"c.png", "d.png", "e50a.png", "f.png", "g.png", "huaji.gif", "i.png", "j.png", "k.png", "octocat.png", "r.png", "trollface.png", "u.png"}
+var emojiImages = []string{"c.png", "d.png", "e50a.png", "f.png", "g.png", "huaji.gif", "doge.png", "i.png", "j.png", "k.png", "octocat.png", "r.png", "trollface.png", "u.png"}
 
 func emojiImg(emojiASCII string) string {
 	for _, img := range emojiImages {
