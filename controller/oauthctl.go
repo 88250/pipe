@@ -60,7 +60,7 @@ func redirectGitHubLoginAction(c *gin.Context) {
 	}
 	state := util.RandString(16) + referer
 	states[state] = state
-	path := loginAuthURL + "?client_id=" + clientId + "&state=" + state + "&scope=public_repo,read:user,user:email,user:follow"
+	path := loginAuthURL + "?client_id=" + clientId + "&state=" + state + "&scope=public_repo,read:user,user:follow"
 
 	logger.Infof("redirect to github [" + path + "]")
 
