@@ -33,7 +33,7 @@ var states = map[string]string{}
 // redirectGitHubLoginAction redirects to GitHub auth page.
 func redirectGitHubLoginAction(c *gin.Context) {
 	requestResult := util.NewResult()
-	_, _, errs := gorequest.New().Get(util.HacPaiURL+"/oauth/pipe/client2").
+	_, _, errs := gorequest.New().Get(util.HacPaiURL + "/oauth/pipe/client2").
 		Set("user-agent", model.UserAgent).Timeout(10 * time.Second).EndStruct(requestResult)
 	if nil != errs {
 		logger.Errorf("get oauth client id failed: %+v", errs)
@@ -72,7 +72,7 @@ func githubCallbackAction(c *gin.Context) {
 
 	state := c.Query("state")
 	if _, exist := states[state]; !exist {
-		c.Status(http.StatusForbidden)
+		c.Status(http.StatusBadRequest)
 
 		return
 	}
@@ -85,7 +85,8 @@ func githubCallbackAction(c *gin.Context) {
 	accessToken := c.Query("ak")
 	githubUser := util.GitHubUserInfo(accessToken)
 	if nil == githubUser {
-		c.Status(http.StatusForbidden)
+		logger.Warnf("can not get user info with token [" + accessToken + "]")
+		c.Status(http.StatusUnauthorized)
 
 		return
 	}
@@ -111,12 +112,6 @@ func githubCallbackAction(c *gin.Context) {
 		} else {
 			user = service.User.GetUserByName(userName)
 			if nil == user {
-				if !model.Conf.OpenRegister {
-					c.Status(http.StatusForbidden)
-
-					return
-				}
-
 				user = &model.User{
 					Name:      userName,
 					AvatarURL: githubUser["userAvatarURL"].(string),
@@ -139,6 +134,13 @@ func githubCallbackAction(c *gin.Context) {
 	}
 
 	ownBlog := service.User.GetOwnBlog(user.ID)
+	if nil == ownBlog {
+		logger.Warnf("can not get user by name [" + userName + "]")
+		c.Status(http.StatusNotFound)
+
+		return
+	}
+
 	session := &util.SessionData{
 		UID:     user.ID,
 		UName:   user.Name,
