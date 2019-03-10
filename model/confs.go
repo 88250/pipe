@@ -119,6 +119,10 @@ func LoadConf() {
 		Conf.ShowSQL = true
 	}
 
+	if "" == Conf.SessionSecret {
+		Conf.SessionSecret = util.RandString(32)
+	}
+
 	home, err := util.UserHome()
 	if nil != err {
 		logger.Fatal("can't find user home directory: " + err.Error())
