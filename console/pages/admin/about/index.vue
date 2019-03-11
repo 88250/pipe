@@ -38,7 +38,7 @@
               <v-icon>file-text</v-icon>
               {{ $t('doc', $store.state.locale) }}
             </a>
-            <a href="https://hacpai.com/tag/Pipe" target="_blank" class="about__link btn btn--info">
+            <a href="https://hacpai.com/tag/pipe" target="_blank" class="about__link btn btn--info">
               <v-icon>hacpai-logo2</v-icon>
               {{ $t('community', $store.state.locale) }}
             </a>
