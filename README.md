@@ -40,9 +40,9 @@
 
 ## 界面
 
-### 初始化
+### 开始使用
 
-![init](https://user-images.githubusercontent.com/873584/52255025-ab9d2780-294b-11e9-88ba-e80a9018d25f.png)
+![init](https://user-images.githubusercontent.com/873584/53852374-d044f780-3ffc-11e9-92bb-ea3e6c53ab1c.png)
 
 ### 管理后台
 
