@@ -120,6 +120,7 @@
   export default {
     data () {
       return {
+        markedAvailable: false,
         tokenURL: {
           URL: '',
           token: '',
@@ -193,6 +194,16 @@
       }
     },
     methods: {
+      addStyle (url, id) {
+        if (!document.getElementById(id)) {
+          const styleElement = document.createElement('link')
+          styleElement.id = id
+          styleElement.setAttribute('rel', 'stylesheet')
+          styleElement.setAttribute('type', 'text/css')
+          styleElement.setAttribute('href', url)
+          document.getElementsByTagName('head')[0].appendChild(styleElement)
+        }
+      },
       _initEditor (data) {
         return new Vditor(data.id, {
           cache: this.$route.query.id ? false : true,
@@ -204,59 +215,10 @@
               if (element.style.display === 'none') {
                 return
               }
-
               LazyLoadImage()
-              let hasMathJax = false
-              let hasFlow = false
-              if (element.innerHTML.split('$').length > 2 ||
-                (element.innerHTML.split('\\(').length > 1 &&
-                  element.innerHTML.split('\\)').length > 1)) {
-                hasMathJax = true
-              }
-
-              if (element.innerHTML.indexOf('<code class="language-flow"') > -1) {
-                hasFlow = true
-              }
-
-              if (hasMathJax) {
-                if (typeof MathJax !== 'undefined') {
-                  window.MathJax.Hub.Typeset()
-                } else {
-                  asyncLoadScript(
-                    'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML',
-                    () => {
-                      window.MathJax.Hub.Config({
-                        tex2jax: {
-                          inlineMath: [['$', '$'], ['\\(', '\\)']],
-                          displayMath: [['$$', '$$']],
-                          processEscapes: true,
-                          processEnvironments: true,
-                          skipTags: ['pre', 'code', 'script'],
-                        },
-                      })
-                    })
-                }
-              }
-
-              if (hasFlow) {
-                const initFlow = function () {
-                  document.querySelectorAll('.pipe-content__reset .language-flow').forEach(function (it, index) {
-                    const id = 'pipeFlow' + (new Date()).getTime() + index
-                    it.style.display = 'none'
-                    const diagram = window.flowchart.parse(it.textContent)
-                    it.parentElement.outerHTML = `<div class="ft__center" id="${id}"></div>`
-                    diagram.drawSVG(id)
-                    document.getElementById(id).firstChild.style.height = 'auto'
-                    document.getElementById(id).firstChild.style.width = 'auto'
-                  })
-                }
-
-                if (typeof (flowchart) !== 'undefined') {
-                  initFlow()
-                } else {
-                  asyncLoadScript((process.env.StaticServer || process.env.Server) + '/theme/js/lib/flowchart.min.js',
-                    initFlow)
-                }
+              if (!this.markedAvailable) {
+                hljs.initHighlighting.called = false
+                hljs.initHighlighting()
               }
             },
           },
@@ -272,9 +234,6 @@
             enable: data.resize,
           },
           lang: this.$store.state.locale,
-          classes: {
-            preview: 'pipe-content__reset',
-          },
           placeholder: data.placeholder,
         })
       },
@@ -460,6 +419,7 @@
           token: responseData.uploadToken || '',
           URL: responseData.uploadURL || '',
         })
+        this.$set(this, 'markedAvailable', responseData.markedAvailable)
       }
 
       this.contentEditor = this._initEditor({
@@ -512,12 +472,11 @@
       this.getThumbs()
 
       this.contentEditor.focus()
+
+      this.addStyle('https://cdn.jsdelivr.net/npm/highlight.js@9.15.6/styles/atom-one-light.min.css', 'vditorHljsStyle')
     },
   }
 </script>
-<style lang="scss">
-  @import '~vditor/src/assets/scss/classic';
-</style>
 <style lang="sass">
   .article-post__carousel
     margin: 0 auto
@@ -536,6 +495,6 @@
         height: 20px
         width: 20px
 
-    .pipe-content__reset img
+    .vditor-reset img
     cursor: auto
 </style>

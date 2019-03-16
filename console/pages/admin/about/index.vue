@@ -8,7 +8,7 @@
              target="_blank"
              href="https://b3log.org/donate.html">{{ $t('becomeSponsor', $store.state.locale) }}</a>
         </div>
-        <div class="fn__flex-1 pipe-content__reset">
+        <div class="fn__flex-1 vditor-reset">
           <h2 class="fn__clear" v-if="isLatest">
             <span class="fn__left">
               {{ $t('about1', $store.state.locale) }}
@@ -82,7 +82,7 @@
   @import '~assets/scss/_variables'
 
   .admin__about
-    .pipe-content__reset h2
+    .vditor-reset h2
       font-size: 1.4em
     .about
       &__side
@@ -110,6 +110,6 @@
         text-align: center
         margin: 15px
         width: auto
-      .pipe-content__reset h2
+      .vditor-reset h2
         font-size: 1.2em
 </style>

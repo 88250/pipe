@@ -15,7 +15,7 @@ export const LazyLoadImage = () => {
   }
 
   if (!('IntersectionObserver' in window)) {
-    document.querySelectorAll('.pipe-content__reset img').forEach((data) => {
+    document.querySelectorAll('.vditor-reset img').forEach((data) => {
       if (data.getAttribute('data-src')) {
         loadImg(data)
       }
@@ -25,7 +25,7 @@ export const LazyLoadImage = () => {
 
   if (window.imageIntersectionObserver) {
     window.imageIntersectionObserver.disconnect()
-    document.querySelectorAll('.pipe-content__reset img').forEach(function (data) {
+    document.querySelectorAll('.vditor-reset img').forEach(function (data) {
       window.imageIntersectionObserver.observe(data)
     })
   } else {
@@ -36,7 +36,7 @@ export const LazyLoadImage = () => {
         }
       })
     })
-    document.querySelectorAll('.pipe-content__reset img').forEach(function (data) {
+    document.querySelectorAll('.vditor-reset img').forEach(function (data) {
       window.imageIntersectionObserver.observe(data)
     })
   }

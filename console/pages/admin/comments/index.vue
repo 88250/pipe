@@ -67,7 +67,7 @@
               </v-btn>
             </div>
           </div>
-          <div class="pipe-content__reset" v-html="item.content"></div>
+          <div class="vditor-reset" v-html="item.content"></div>
           <div class="list__meta">
             <time class="fn-nowrap">{{ item.createdAt }}</time>
           </div>

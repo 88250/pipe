@@ -6,7 +6,7 @@
       <v-btn class="btn--small btn--info" @click="loginGitHub">{{ $t('index2', $store.state.locale) }}</v-btn>
       <div class="start__space"></div>
       <a class="ft__12 fn__pointer" @click="toggleIntro">查看 GitHub 数据使用说明</a>
-      <div class="pipe-content__reset ft__12 start__intro" v-show="showIntro">
+      <div class="vditor-reset ft__12 start__intro" v-show="showIntro">
         <ul>
           <li>获取用户名、昵称、头像用于账号初始化</li>
           <li>获取公开仓库信息用于展示</li>
