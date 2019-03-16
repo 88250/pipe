@@ -6,7 +6,7 @@
  */
 
 import $ from 'jquery'
-import { LazyLoadCSSImage, LazyLoadImage, ParseMarkdown } from './common'
+import { LazyLoadCSSImage, LazyLoadImage, ParseMarkdown, ParseHljs } from './common'
 import config from '../../pipe.json'
 
 /**
@@ -61,51 +61,6 @@ export const InitToc = (
   $(window).scroll()
 }
 
-export const InitHljs = () => {
-  const $codes = $('pre code')
-  if ($codes.length === 0) {
-    return false
-  }
-
-  var parseHljs = function () {
-    $codes.each(function (i, block) {
-      var $it = $(this)
-      if ($it.hasClass('language-flow')) {
-        return
-      }
-
-      if ($it.parent().find('.pipe-code__copy').length > 0) {
-        return
-      }
-
-      $it.css({'max-height': $(window).height() - 40}).
-        parent().
-        prepend(`<textarea>${$it.text()}</textarea><div 
-          aria-label="copy" onmouseover="this.setAttribute('aria-label', 'Copy')" 
-          class="pipe-code__copy pipe-tooltipped pipe-tooltipped--w" 
-          onclick="this.previousElementSibling.select();document.execCommand('copy');this.setAttribute('aria-label','Copied')"><svg><use xlink:href="#copy"></use></svg></div>`)
-
-      if (!$('#pipeLang').data('markedavailable')) {
-        hljs.highlightBlock(block)
-      }
-    })
-  }
-
-  if (typeof hljs === 'undefined' && !$('#pipeLang').data('markedavailable')) {
-    $.ajax({
-      method: 'GET',
-      url: (config.StaticServer || config.Server) +
-      '/theme/js/lib/highlight.min.js?9.12.0',
-      dataType: 'script',
-      cache: true,
-    }).done(function () {
-      parseHljs()
-    })
-  } else {
-    parseHljs()
-  }
-}
-
 /**
  * @description 展开编辑器
  * @param {String} reply 回复对象的名称
@@ -133,81 +88,69 @@ export const ShowEditor = (reply, id, commentId) => {
     vditor.focus()
   }
 
-  if (typeof Vditor !== 'undefined') {
+  if (typeof vditor !== 'undefined') {
     return
   }
 
-  $.ajax({
-    method: 'GET',
-    url: 'https://cdn.jsdelivr.net/npm/vditor@0.3.0',
-    dataType: 'script',
-    cache: true,
-    success: () => {
-      window.vditor = new Vditor('pipeEditorComment', {
-        placeholder: $('#pipeEditorComment').data('placeholder'),
-        height: 180,
-        esc: () => {
-          $('#pipeEditorCancel').click()
-        },
-        ctrlEnter: () => {
-          $('#pipeEditorAdd').click()
-        },
-        preview: {
-          delay: 500,
-          show: false,
-          url: `${config.Server}/api/console/markdown`,
-          parse: (element) => {
-            if (element.style.display === 'none') {
-              return
-            }
-            LazyLoadImage()
-            LazyLoadCSSImage()
-            InitHljs()
-            ParseMarkdown()
-          },
-        },
-        counter: 2048,
-        resize: {
-          enable: true,
-          position: 'top',
-          after: () => {
-            $('body').css('padding-bottom', $('#pipeEditor').outerHeight())
-          }
-        },
-        lang: $('#pipeEditorComment').data('lang'),
-        toolbar:  [
-          'emoji',
-          'headings',
-          'bold',
-          'italic',
-          'strike',
-          '|',
-          'line',
-          'quote',
-          '|',
-          'list',
-          'ordered-list',
-          'check',
-          '|',
-          'code',
-          'inline-code',
-          '|',
-          'undo',
-          'redo',
-          '|',
-          'link',
-          'table',
-          '|',
-          'preview',
-          'fullscreen',
-          'info',
-          'help',
-        ],
-        classes: {
-          preview: 'pipe-content__reset',
-        },
-      })
+  window.vditor = new Vditor('pipeEditorComment', {
+    placeholder: $('#pipeEditorComment').data('placeholder'),
+    height: 180,
+    esc: () => {
+      $('#pipeEditorCancel').click()
     },
+    ctrlEnter: () => {
+      $('#pipeEditorAdd').click()
+    },
+    preview: {
+      delay: 500,
+      show: false,
+      url: `${config.Server}/api/console/markdown`,
+      parse: (element) => {
+        if (element.style.display === 'none') {
+          return
+        }
+        LazyLoadImage()
+        LazyLoadCSSImage()
+        ParseHljs()
+      },
+    },
+    counter: 2048,
+    resize: {
+      enable: true,
+      position: 'top',
+      after: () => {
+        $('body').css('padding-bottom', $('#pipeEditor').outerHeight())
+      },
+    },
+    lang: $('#pipeLang').data('lang'),
+    toolbar: [
+      'emoji',
+      'headings',
+      'bold',
+      'italic',
+      'strike',
+      '|',
+      'line',
+      'quote',
+      '|',
+      'list',
+      'ordered-list',
+      'check',
+      '|',
+      'code',
+      'inline-code',
+      '|',
+      'undo',
+      'redo',
+      '|',
+      'link',
+      'table',
+      '|',
+      'preview',
+      'fullscreen',
+      'info',
+      'help',
+    ],
   })
 
 }
@@ -271,7 +214,7 @@ export const InitComment = () => {
                     <div class="pipe-comment__body">
                         <a href="${item.Author.URL}" class="ft__gray">${item.Author.Name}</a>
                         <span class="ft__nowrap ft__12 ft__gray"> • ${item.CreatedAt}</span>
-                        <div class="pipe-content__reset">
+                        <div class="vditor-reset">
                              ${item.Content}
                         </div>
                     </div>
@@ -285,7 +228,7 @@ export const InitComment = () => {
             })
             LazyLoadImage()
             LazyLoadCSSImage()
-            InitHljs()
+            ParseHljs()
             ParseMarkdown()
           } else {
             alert(result.msg)
@@ -416,7 +359,7 @@ ${$it.data('label2')}`).click(function () {
           LazyLoadCSSImage()
           LazyLoadImage()
           ParseMarkdown()
-          InitHljs()
+          ParseHljs()
 
           vditor.setValue('')
         } else {

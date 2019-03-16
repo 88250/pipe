@@ -7,7 +7,7 @@
 
 import $ from 'jquery'
 import QRious from 'qrious'
-import {InitComment, InitToc, ShowEditor, InitHljs} from '../../../js/article'
+import {InitComment} from '../../../js/article'
 import './common'
 
 const Article = {
@@ -16,7 +16,6 @@ const Article = {
    */
   init: () => {
     InitComment()
-    InitHljs()
 
     Article._share();
   },

@@ -10,77 +10,37 @@ import config from '../../pipe.json'
 import NProgress from 'nprogress'
 import pjax from './lib/pjax'
 
+
+export const ParseHljs = () => {
+  const $codes = $('.vditor-reset pre > code')
+  if ($codes.length === 0) {
+    return false
+  }
+
+  if (!$('#pipeLang').data('markedavailable')) {
+    if (typeof hljs === 'undefined') {
+      $.ajax({
+        url: 'https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.6/build/highlight.min.js',
+        dataType: 'script',
+        cache: true,
+        success: function () {
+          hljs.initHighlighting.called = false
+          hljs.initHighlighting()
+        },
+      })
+    } else {
+      hljs.initHighlighting.called = false
+      hljs.initHighlighting()
+    }
+  }
+}
 /**
  * @description 初始化 markdown 解析
  */
 export const ParseMarkdown = () => {
-  let hasMathJax = false;
-  let hasFlow = false;
-  // 按需加载 MathJax
-  $('.pipe-content__reset').each(function () {
-    if ($(this).text().split('$').length > 2 ||
-      ($(this).text().split('\\(').length > 1 &&
-        $(this).text().split('\\)').length > 1)) {
-      hasMathJax = true;
-    }
-
-    if ($(this).find('code.language-flow').length > 0) {
-      hasFlow = true
-    }
-  });
-
-  if (hasMathJax) {
-    if (typeof MathJax !== 'undefined') {
-      MathJax.Hub.Typeset();
-    } else {
-      $.ajax({
-        method: 'GET',
-        url: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML',
-        dataType: 'script',
-        cache: true
-      }).done(function () {
-        MathJax.Hub.Config({
-          tex2jax: {
-            inlineMath: [['$', '$'], ['\\(', '\\)']],
-            displayMath: [['$$', '$$']],
-            processEscapes: true,
-            processEnvironments: true,
-            skipTags: ['pre', 'code', 'script']
-          }
-        });
-      });
-    }
-  }
-
-  if (hasFlow) {
-    const initFlow = function () {
-      $('.pipe-content__reset code.language-flow').each(function (index) {
-        const $it = $(this);
-        const id = 'pipeFlowChart' + (new Date()).getTime() + index;
-        $it.hide();
-        $it.parent().after('<div class="ft__center" id="' + id + '"></div>')
-
-        const diagram = flowchart.parse($.trim($it.text()));
-        diagram.drawSVG(id);
-
-        $it.parent().remove();
-        $('#' + id).find('svg').height('auto').width('auto');
-      });
-    };
-
-    if (typeof flowchart !== 'undefined') {
-      initFlow();
-    } else {
-      $.ajax({
-        method: 'GET',
-        url: (config.StaticServer || config.Server) + '/theme/js/lib/flowchart.min.js',
-        dataType: 'script',
-        cache: true
-      }).done(function () {
-        initFlow()
-      });
-    }
-  }
+  Vditor.mermaidRender(document.body)
+  Vditor.mathRender(document.body)
+  Vditor.codeRender(document.body, $('#pipeLang').data('lang'))
 }
 
 /**
@@ -114,7 +74,7 @@ export const PreviewImg = () => {
     }
   }
   // init
-  $('body').on('click', '.pipe-content__reset img', function () {
+  $('body').on('click', '.vditor-reset img', function () {
     _previewImg(this)
   });
 }
@@ -272,7 +232,7 @@ const addCopyright = () => {
     ]
   }
 
-  $('body').on('copy', '.pipe-content__reset', function (event) {
+  $('body').on('copy', '.vditor-reset', function (event) {
     if (!window.getSelection) {
       return
     }
@@ -335,6 +295,7 @@ export const initPjax = (cb) => {
         LazyLoadCSSImage()
         LazyLoadImage()
         ParseMarkdown()
+        ParseHljs()
         cb && cb()
       }
     });
@@ -350,17 +311,22 @@ export const initPjax = (cb) => {
 }
 
 (() => {
+  $.ajax({
+    method: 'GET',
+    url: 'https://cdn.jsdelivr.net/npm/vditor@1.1.10/dist/index.min.js',
+    dataType: 'script',
+    cache: true,
+    success: () => {
+      ParseMarkdown()
+      ParseHljs()
+    }
+  })
   TrimB3Id()
   LazyLoadCSSImage()
   LazyLoadImage()
-  ParseMarkdown()
   addCopyright()
 
   if ('serviceWorker' in navigator && 'caches' in window && 'fetch' in window && config.RuntimeMode === 'prod') {
     // navigator.serviceWorker.register(`${config.Server}/sw.min.js?${config.StaticResourceVersion}`, {scope: '/'})
-  }
-
-  if (navigator.userAgent.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)) {
-    return
   }
 })()

@@ -6,7 +6,7 @@
  */
 
 import $ from 'jquery'
-import {InitComment, InitToc, ShowEditor, InitHljs} from '../../../js/article'
+import {InitComment, InitToc} from '../../../js/article'
 import './common'
 
 const Article = {
@@ -27,7 +27,6 @@ const Article = {
     }
 
     InitComment()
-    InitHljs()
   },
 }
 

@@ -23,12 +23,6 @@ body {
   text-rendering: geometricPrecision;
 }
 
-.pipe-content__reset {
-  pre > code {
-    background-image: url(../../../images/code-bg.png);
-  }
-}
-
 a {
   color: $blue;
 }
