@@ -258,6 +258,10 @@ func routePath(c *gin.Context) {
 		githubCallbackAction(c)
 
 		return
+	case "/api/markdown":
+		console.MarkdownAction(c)
+
+		return
 	}
 
 	if strings.Contains(path, util.PathArchives+"/") {
