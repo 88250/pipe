@@ -104,7 +104,7 @@ export const ShowEditor = (reply, id, commentId) => {
     preview: {
       delay: 500,
       show: false,
-      url: `${config.Server}/api/console/markdown`,
+      url: `${$('#pipeEditorComment').data('blogurl')}/api/markdown`,
       parse: (element) => {
         if (element.style.display === 'none') {
           return
