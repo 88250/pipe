@@ -84,11 +84,8 @@ export const ShowEditor = (reply, id, commentId) => {
   $('body').css('padding-bottom', 268)
   $('#pipeEditorReplyTarget').text(reply)
 
-  if (typeof vditor !== 'undefined') {
+  if ($('#pipeEditorComment').hasClass('vditor')) {
     vditor.focus()
-  }
-
-  if (typeof vditor !== 'undefined') {
     return
   }
 
