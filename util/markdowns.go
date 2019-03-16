@@ -49,21 +49,21 @@ var MarkedAvailable = false
 func LoadMarkdown() {
 	request, err := http.NewRequest("POST", "http://localhost:8250", strings.NewReader("旧日的足迹"))
 	if nil != err {
-		logger.Info("[marked] is not available, uses built-in [blackfriday] for markdown processing")
+		logger.Info("[markdown-http] is not available, uses built-in [blackfriday] for markdown processing")
 
 		return
 	}
 	http.DefaultClient.Timeout = 2 * time.Second
 	response, err := http.DefaultClient.Do(request)
 	if nil != err {
-		logger.Info("[marked] is not available, uses built-in [blackfriday] for markdown processing")
+		logger.Info("[markdown-http] is not available, uses built-in [blackfriday] for markdown processing")
 
 		return
 	}
 	defer response.Body.Close()
 	data, err := ioutil.ReadAll(response.Body)
 	if nil != err {
-		logger.Info("[marked] is not available, uses built-in [blackfriday] for markdown processing")
+		logger.Info("[markdown-http] is not available, uses built-in [blackfriday] for markdown processing")
 
 		return
 	}
@@ -71,9 +71,9 @@ func LoadMarkdown() {
 	content := string(data)
 	MarkedAvailable = "<p>旧日的足迹</p>\n" == content
 	if MarkedAvailable {
-		logger.Debug("[marked] is available, uses it for markdown processing")
+		logger.Debug("[markdown-http] is available, uses it for markdown processing")
 	} else {
-		logger.Debug("[marked] is not available, uses built-in [blackfriday] for markdown processing")
+		logger.Debug("[markdown-http] is not available, uses built-in [blackfriday] for markdown processing")
 	}
 }
 
@@ -87,7 +87,7 @@ func marked(mdText string) []byte {
 	http.DefaultClient.Timeout = time.Second
 	response, err := http.DefaultClient.Do(request)
 	if nil != err {
-		logger.Warnf("[marked] failed [err=" + err.Error() + "], uses built-in [blackfriday] instead")
+		logger.Warnf("[markdown-http] failed [err=" + err.Error() + "], uses built-in [blackfriday] instead")
 
 		return bf(mdText)
 	}
