@@ -137,6 +137,7 @@ func UploadTokenAction(c *gin.Context) {
 	uploadToken = resultData["uploadToken"].(string)
 	uploadURL = resultData["uploadURL"].(string)
 	uploadTokenTime = now
+	resultData["markedAvailable"] = util.MarkedAvailable
 	result.Data = requestResult.Data
 }
 
