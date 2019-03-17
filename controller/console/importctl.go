@@ -34,7 +34,7 @@ func ImportMarkdownAction(c *gin.Context) {
 	defer c.JSON(http.StatusOK, result)
 
 	session := util.GetSession(c)
-	if nil == session {
+	if 0 == session.UID {
 		result.Code = util.CodeErr
 		result.Msg = "please login before import"
 

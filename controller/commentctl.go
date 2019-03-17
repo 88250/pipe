@@ -75,7 +75,7 @@ func addCommentAction(c *gin.Context) {
 
 	blogID := getBlogID(c)
 	session := util.GetSession(c)
-	if nil == session {
+	if 0 == session.UID {
 		result.Code = util.CodeErr
 		result.Msg = "please login before comment"
 
