@@ -124,7 +124,7 @@ func showArticleAction(c *gin.Context) {
 	mdResult := util.Markdown(articleModel.Content)
 
 	gaSetting := service.Setting.GetSetting(model.SettingCategoryAd, model.SettingNameAdGoogleAdSenseArticleEmbed, blogID)
-	if 0 < len(gaSetting.Value) {
+	if nil != gaSetting && 0 < len(gaSetting.Value) {
 		// 嵌入 Google AdSense 文章广告
 		if idx := strings.Index(mdResult.ContentHTML, "</p>"); 0 < idx {
 			idx = idx + len("</p>")
