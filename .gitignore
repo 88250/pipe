@@ -14,7 +14,8 @@ pipe
 
 # Theme
 /theme/node_modules
+/theme/sw.min.js
+/theme/sw.min.js.tpl
 
 # IDE
 .idea/
-

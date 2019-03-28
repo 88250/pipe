@@ -65,7 +65,17 @@ function updateVersion () {
       replace(/"StaticResourceVersion": "\d{13}"/,
         `"StaticResourceVersion": "${newVersion}"`), 'UTF-8')
 
-  // min sw.js
+  // min sw.min.js.tpl
+  browserify({entries: `./sw.js`}).
+    transform('babelify', {presets: ['@babel/preset-env']}).
+    bundle().
+    on('error', function (err) { console.error(err) }).
+    pipe(source('sw.min.js.tpl')).
+    pipe(buffer()).
+    pipe(uglify()).
+    pipe(gulp.dest('.'))
+
+  // min sw.min.js
   return browserify({entries: `./sw.js`}).
     transform('babelify', {presets: ['@babel/preset-env']}).
     bundle().
