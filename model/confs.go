@@ -154,6 +154,7 @@ func LoadConf() {
 	}
 	if "" != *confMySQL {
 		Conf.MySQL = *confMySQL
+		Conf.SQLite = ""
 	}
 
 	if "" != *confPort {
