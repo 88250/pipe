@@ -2,7 +2,7 @@
  * @fileoverview util and every page should be used.
  *
  * @author <a href="http://vanessa.b3log.org">Liyuan Li</a>
- * @version 0.3.0.0, Oct 31, 2018
+ * @version 0.4.0.0, Mar 28, 2019
  */
 
 import $ from 'jquery'
@@ -13,7 +13,6 @@ import {
   KillBrowser,
   PreviewImg,
 } from '../../../js/common'
-import config from '../../../../pipe.json'
 
 const Common = {
   /**
@@ -35,9 +34,9 @@ const Common = {
         {
           name: 'Kiss The Rain',
           artist: '이루마',
-          url: `${config.StaticServer}/theme/x/Littlewin/images/kisstherain.mp3`,
-          cover: `${config.StaticServer}/theme/x/Littlewin/images/kisstherain.jpeg`,
-          lrc: `${config.StaticServer}/theme/x/Littlewin/images/kisstherain.lrc`,
+          url: `${$('#pipeLang').data('staticserver')}/theme/x/Littlewin/images/kisstherain.mp3`,
+          cover: `${$('#pipeLang').data('staticserver')}/theme/x/Littlewin/images/kisstherain.jpeg`,
+          lrc: `${$('#pipeLang').data('staticserver')}/theme/x/Littlewin/images/kisstherain.lrc`,
           theme: '#60b044',
         },
       ],
@@ -47,7 +46,7 @@ const Common = {
       if ($('#pipeComments').length === 1) {
         $.ajax({
           method: 'GET',
-          url: `${config.StaticServer}/theme/x/Littlewin/js/article.min.js?${config.StaticResourceVersion}`,
+          url: `${$('#pipeLang').data('staticserver')}/theme/x/Littlewin/js/article.min.js?${$('#pipeLang').data('staticresourceversion')}`,
           dataType: 'script',
           cache: true,
         })

@@ -2,12 +2,11 @@
  * @fileoverview article tool for every theme
  *
  * @author <a href="http://vanessa.b3log.org">Liyuan Li</a>
- * @version 0.3.1.7, Mar 5, 2019
+ * @version 0.4.0.0, Mar 28, 2019
  */
 
 import $ from 'jquery'
 import { LazyLoadCSSImage, LazyLoadImage, ParseMarkdown, ParseHljs } from './common'
-import config from '../../pipe.json'
 
 /**
  * @description 初始化目录
@@ -71,7 +70,7 @@ export const InitToc = (
 export const ShowEditor = (reply, id, commentId) => {
   const $editor = $('#pipeEditor')
   if ($editor.length === 0) {
-    location.href = `${config.Server}/start`
+    location.href = `${$('#pipeLang').data('server')}/start`
     return
   }
   if (commentId) {

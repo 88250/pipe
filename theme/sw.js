@@ -2,15 +2,13 @@
  * @fileoverview service work.
  *
  * @author <a href="http://vanessa.b3log.org">Liyuan Li</a>
- * @version 0.1.1.0, Jan 2, 2018
+ * @version 0.2.0.0, Mar 28, 2019
  */
 
-import config from '../pipe.json'
 
-const version = config.StaticResourceVersion;
-const staticServePath = config.StaticServer || config.Server;
-const imgServePath = 'https://img.hacpai.com/';
-const servePath = config.Server;
+const version = '${StaticResourceVersion}';
+const staticServePath = 'http://staticserver.tpl.json';
+const servePath = 'http://server.tpl.json';
 /**
  * @description add offline cache
  */
@@ -20,10 +18,9 @@ self.addEventListener('activate', event => {
     caches.keys().then(function (keyList) {
       return Promise.all(keyList.map(async function (key) {
         const storageStats = await navigator.storage.estimate();
-        if (key !== 'pipe-html' && key !== 'pipe-image' &&
-          key !== 'pipe-static-' + version) {
+        if (key !== 'pipe-html' && key !== 'pipe-static-' + version) {
           return caches.delete(key);
-        } else if (storageStats.usage / storageStats.quota > 0.8 && (key === 'pipe-html' || key === 'pipe-image')) {
+        } else if (storageStats.usage / storageStats.quota > 0.8 && key === 'pipe-html') {
           console.log(`clear ${key} cache`);
           return caches.delete(key);
         }
@@ -74,13 +71,7 @@ self.addEventListener('fetch', event => {
         return response ||
           // 没有指定的静态资源从服务器拉取
           fetch(event.request).then(function (fetchResponse) {
-            if (event.request.url.indexOf(imgServePath) > -1) {
-              // 对用户头像、图片进行缓存
-              return caches.open('pipe-image').then(function (cache) {
-                cache.put(event.request, fetchResponse.clone());
-                return fetchResponse;
-              });
-            } else if (event.request.url.indexOf(staticServePath) > -1) {
+           if (event.request.url.indexOf(staticServePath) > -1) {
               // 对 css, js, image 进行缓存
               return caches.open('pipe-static-' + version).then(function (cache) {
                 cache.put(event.request, fetchResponse.clone());

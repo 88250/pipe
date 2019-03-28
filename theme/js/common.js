@@ -2,14 +2,12 @@
  * @fileoverview common tool for every theme
  *
  * @author <a href="http://vanessa.b3log.org">Liyuan Li</a>
- * @version 0.4.0.2, Feb 4, 2019
+ * @version 0.5.0.0, Mar 28, 2019
  */
 
 import $ from 'jquery'
-import config from '../../pipe.json'
 import NProgress from 'nprogress'
 import pjax from './lib/pjax'
-
 
 export const ParseHljs = () => {
   const $codes = $('.vditor-reset pre > code')
@@ -48,35 +46,39 @@ export const ParseMarkdown = () => {
  */
 export const PreviewImg = () => {
   const _previewImg = (it) => {
-    const $it = $(it);
+    const $it = $(it)
     var top = it.offsetTop,
-      left = it.offsetLeft;
+      left = it.offsetLeft
 
-    $('body').append('<div class="pipe-preview__img" onclick="this.remove()"><img style="transform: translate3d(' +
-      Math.max(0, left) + 'px, ' + Math.max(0, (top - $(window).scrollTop())) + 'px, 0)" src="' +
-      ($it.attr('src').split('?imageView2')[0]) + '"></div>');
+    $('body').
+      append('<div class="pipe-preview__img" onclick="this.remove()"><img style="transform: translate3d(' +
+        Math.max(0, left) + 'px, ' +
+        Math.max(0, (top - $(window).scrollTop())) + 'px, 0)" src="' +
+        ($it.attr('src').split('?imageView2')[0]) + '"></div>')
 
     $('.pipe-preview__img').css({
       'background-color': '#fff',
-      'position': 'fixed'
-    });
+      'position': 'fixed',
+    })
 
     $('.pipe-preview__img img')[0].onload = function () {
-      const $previewImage = $('.pipe-preview__img');
+      const $previewImage = $('.pipe-preview__img')
       $previewImage.find('img').css('transform', 'translate3d(' +
-        (Math.max(0, $(window).width() - $previewImage.find('img').width()) / 2) + 'px, ' +
-        (Math.max(0, $(window).height() - $previewImage.find('img').height()) / 2) + 'px, 0)');
+        (Math.max(0, $(window).width() - $previewImage.find('img').width()) /
+          2) + 'px, ' +
+        (Math.max(0, $(window).height() - $previewImage.find('img').height()) /
+          2) + 'px, 0)')
 
       // fixed chrome render transform bug
       setTimeout(function () {
-        $previewImage.width($(window).width());
-      }, 300);
+        $previewImage.width($(window).width())
+      }, 300)
     }
   }
   // init
   $('body').on('click', '.vditor-reset img', function () {
     _previewImg(this)
-  });
+  })
 }
 
 /**
@@ -112,7 +114,9 @@ export const LazyLoadImage = () => {
   } else {
     window.imageIntersectionObserver = new IntersectionObserver((entries) => {
       entries.forEach((entrie) => {
-        if ((typeof entrie.isIntersecting === 'undefined' ? entrie.intersectionRatio !== 0 : entrie.isIntersecting)
+        if ((typeof entrie.isIntersecting === 'undefined'
+          ? entrie.intersectionRatio !== 0
+          : entrie.isIntersecting)
           && entrie.target.getAttribute('data-src')) {
           loadImg(entrie.target)
         }
@@ -159,14 +163,18 @@ export const LazyLoadCSSImage = () => {
       window.CSSImageIntersectionObserver.observe(this)
     })
   } else {
-    window.CSSImageIntersectionObserver = new IntersectionObserver((entries) => {
-      entries.forEach((entrie) => {
-        if ((typeof entrie.isIntersecting === 'undefined' ? entrie.intersectionRatio !== 0 : entrie.isIntersecting)
-          && entrie.target.getAttribute('data-src') && entrie.target.tagName.toLocaleLowerCase() !== 'img') {
-          loadCSSImage(entrie.target)
-        }
+    window.CSSImageIntersectionObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entrie) => {
+          if ((typeof entrie.isIntersecting === 'undefined'
+            ? entrie.intersectionRatio !== 0
+            : entrie.isIntersecting)
+            && entrie.target.getAttribute('data-src') &&
+            entrie.target.tagName.toLocaleLowerCase() !== 'img') {
+            loadCSSImage(entrie.target)
+          }
+        })
       })
-    })
     $cssImage.each(function () {
       if (this.tagName.toLowerCase() === 'img') {
         return
@@ -201,8 +209,8 @@ export const KillBrowser = () => {
  */
 export const Logout = () => {
   $.ajax({
-    url: `${config.Server}/api/logout`,
-    type: 'POST'
+    url: `${$('#pipeLang').data('server')}/api/logout`,
+    type: 'POST',
   })
 }
 
@@ -214,7 +222,9 @@ const TrimB3Id = () => {
   if (search.indexOf('b3id') === -1) {
     return
   }
-  history.replaceState('', '', window.location.href.replace(/(&b3id=\w{8})|(b3id=\w{8}&)|(\?b3id=\w{8})/, ''))
+  history.replaceState('', '',
+    window.location.href.replace(/(&b3id=\w{8})|(b3id=\w{8}&)|(\?b3id=\w{8})/,
+      ''))
 }
 
 /**
@@ -246,15 +256,18 @@ const addCopyright = () => {
     }
 
     if (selectionObj.rangeCount) {
-      var container = document.createElement("div");
+      var container = document.createElement('div')
       for (var i = 0, len = selectionObj.rangeCount; i < len; ++i) {
-        container.appendChild(selectionObj.getRangeAt(i).cloneContents());
+        container.appendChild(selectionObj.getRangeAt(i).cloneContents())
       }
     }
 
     if ('object' === typeof event.originalEvent.clipboardData) {
-      event.originalEvent.clipboardData.setData('text/html', container.innerHTML + genCopy(author, link).join('<br>'))
-      event.originalEvent.clipboardData.setData('text/plain', selectionObj.toString() + genCopy(author, link).join('\n'))
+      event.originalEvent.clipboardData.setData(
+        'text/html', container.innerHTML + genCopy(author, link).join('<br>'))
+      event.originalEvent.clipboardData.setData(
+        'text/plain', selectionObj.toString() +
+        genCopy(author, link).join('\n'))
       container.remove()
       event.preventDefault()
       return
@@ -263,7 +276,7 @@ const addCopyright = () => {
     $('body').append(`<div id="pipeFixCopy" style="position: fixed; left: -9999px;">
 ${selectionObj.toString()}${genCopy(author, link).join('<br>')}</div>`)
     window.getSelection().selectAllChildren($('#pipeFixCopy')[0])
-    setTimeout(function() {
+    setTimeout(function () {
       $('#pipeFixCopy').remove()
     }, 200)
   })
@@ -282,9 +295,9 @@ export const initPjax = (cb) => {
       cache: false,
       storage: true,
       titleSuffix: '',
-      filter: function(href){
-        if (href.indexOf('/atom') > -1  ||
-          href.indexOf(config.Server + '/admin') > -1) {
+      filter: function (href) {
+        if (href.indexOf('/atom') > -1 ||
+          href.indexOf($('#pipeLang').data('server') + '/admin') > -1) {
           return true
         } else if (href.indexOf($('#script').data('blogurl')) > -1) {
           return false
@@ -297,16 +310,16 @@ export const initPjax = (cb) => {
         ParseMarkdown()
         ParseHljs()
         cb && cb()
-      }
-    });
-    NProgress.configure({ showSpinner: false });
-    $('#pjax').bind('pjax.start', function(){
-      NProgress.start();
-    });
-    $('#pjax').bind('pjax.end', function(){
-      window.scroll(window.scrollX,0)
-      NProgress.done();
-    });
+      },
+    })
+    NProgress.configure({showSpinner: false})
+    $('#pjax').bind('pjax.start', function () {
+      NProgress.start()
+    })
+    $('#pjax').bind('pjax.end', function () {
+      window.scroll(window.scrollX, 0)
+      NProgress.done()
+    })
   }
 }
 
@@ -319,14 +332,14 @@ export const initPjax = (cb) => {
     success: () => {
       ParseMarkdown()
       ParseHljs()
-    }
+    },
   })
   TrimB3Id()
   LazyLoadCSSImage()
   LazyLoadImage()
   addCopyright()
 
-  if ('serviceWorker' in navigator && 'caches' in window && 'fetch' in window && config.RuntimeMode === 'prod') {
-    // navigator.serviceWorker.register(`${config.Server}/sw.min.js?${config.StaticResourceVersion}`, {scope: '/'})
-  }
+  // if ('serviceWorker' in navigator && 'caches' in window && 'fetch' in window && config.RuntimeMode === 'prod') {
+  // navigator.serviceWorker.register(`${config.Server}/sw.min.js?${config.StaticResourceVersion}`, {scope: '/'})
+  // }
 })()

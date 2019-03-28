@@ -2,7 +2,7 @@
  * @fileoverview util and every page should be used.
  *
  * @author <a href="http://vanessa.b3log.org">Liyuan Li</a>
- * @version 0.3.0.0, Nov 1, 2018
+ * @version 0.4.0.0, Mar 28, 2019
  */
 
 import $ from 'jquery'
@@ -12,7 +12,6 @@ import {
   KillBrowser,
   PreviewImg,
 } from '../../../js/common'
-import config from '../../../../pipe.json'
 
 const Common = {
   /**
@@ -25,7 +24,7 @@ const Common = {
       if ($('#pipeComments').length === 1) {
         $.ajax({
           method: 'GET',
-          url: `${config.StaticServer}/theme/x/Next/js/article.min.js?${config.StaticResourceVersion}`,
+          url: `${$('#pipeLang').data('staticserver')}/theme/x/Next/js/article.min.js?${$('#pipeLang').data('staticresourceversion')}`,
           dataType: 'script',
           cache: true,
         })
