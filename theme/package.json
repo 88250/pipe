@@ -24,17 +24,17 @@
     "build": "gulp"
   },
   "devDependencies": {
-    "@babel/core": "^7.1.5",
-    "@babel/preset-env": "^7.1.5",
+    "@babel/core": "^7.4.0",
+    "@babel/preset-env": "^7.4.2",
     "babelify": "^10.0.0",
     "browserify": "^16.2.3",
     "gulp": "^4.0.0",
     "gulp-clean": "^0.4.0",
-    "gulp-clean-css": "^3.10.0",
+    "gulp-clean-css": "^4.0.0",
     "gulp-concat": "^2.6.1",
     "gulp-rename": "^1.4.0",
     "gulp-sass": "^4.0.2",
-    "gulp-uglify": "^3.0.1",
+    "gulp-uglify": "^3.0.2",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^2.0.0"
   },
@@ -43,6 +43,6 @@
     "jquery": "^3.2.1",
     "nprogress": "^0.2.0",
     "qrious": "^4.0.2",
-    "turndown": "^5.0.1"
+    "turndown": "^5.0.3"
   }
 }
