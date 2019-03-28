@@ -114,26 +114,9 @@ func replaceServerConf() {
 		logger.Fatal("replace sw.min.js in [" + path + "] failed: " + err.Error())
 	}
 
-	paths, err := filepath.Glob("console/dist/*.js.tpl")
-	if 0 < len(paths) {
-		for _, path := range paths {
-			data, err := ioutil.ReadFile(path)
-			if nil != err {
-				logger.Fatal("read file [" + path + "] failed: " + err.Error())
-			}
-			content := string(data)
-			content = strings.Replace(content, "http://server.tpl.json", model.Conf.Server, -1)
-			content = strings.Replace(content, "http://staticserver.tpl.json", model.Conf.StaticServer, -1)
-			writePath := strings.TrimSuffix(path, ".tpl")
-			if err = ioutil.WriteFile(writePath, []byte(content), 0644); nil != err {
-				logger.Fatal("replace server conf in [" + writePath + "] failed: " + err.Error())
-			}
-		}
-	}
-
 	if util.File.IsExist("console/dist/") { // not exist if npm run dev
 		err = filepath.Walk("console/dist/", func(path string, f os.FileInfo, err error) error {
-			if strings.HasSuffix(path, ".html.tpl") {
+			if strings.HasSuffix(path, ".tpl") {
 				data, err := ioutil.ReadFile(path)
 				if nil != err {
 					logger.Fatal("read file [" + path + "] failed: " + err.Error())
