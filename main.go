@@ -101,7 +101,7 @@ func handleSignal(server *http.Server) {
 }
 
 func replaceServerConf() {
-	path := "theme/sw.min.js"
+	path := "theme/sw.min.js.tpl"
 	data, err := ioutil.ReadFile(path)
 	if nil != err {
 		logger.Fatal("read file [" + path + "] failed: " + err.Error())
@@ -110,7 +110,8 @@ func replaceServerConf() {
 	content = strings.Replace(content, "http://server.tpl.json", model.Conf.Server, -1)
 	content = strings.Replace(content, "http://staticserver.tpl.json", model.Conf.StaticServer, -1)
 	content = strings.Replace(content, "${StaticResourceVersion}", model.Conf.StaticResourceVersion, -1)
-	if err = ioutil.WriteFile(path, []byte(content), 0644); nil != err {
+	writePath := strings.TrimSuffix(path, ".tpl")
+	if err = ioutil.WriteFile(writePath, []byte(content), 0644); nil != err {
 		logger.Fatal("replace sw.min.js in [" + path + "] failed: " + err.Error())
 	}
 
