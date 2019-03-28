@@ -64,9 +64,8 @@
 
 ### 本地试用
 
-[下载](https://github.com/b3log/pipe/releases)最新的发布包解压，进入解压目录运行 pipe/pipe.exe 可执行文件即可。
-
-从源码构建可参考[这里](https://hacpai.com/article/1533965022328)。
+* [下载](https://github.com/b3log/pipe/releases)最新的发布包解压，进入解压目录运行 pipe/pipe.exe
+* 从源码构建可参考[这里](https://hacpai.com/article/1533965022328)
 
 **请注意**：我们不建议通过发布包或者源码构建部署，因为这样的部署方式在将来有新版本发布时升级会比较麻烦。
 这两种方式请仅用于本地试用，线上生产环境建议通过 Docker 部署。
@@ -95,12 +94,6 @@ docker pull b3log/pipe
   docker run --detach --name pipe --volume ~/pipe.db:/opt/pipe/pipe.db --publish 5897:5897 \
       b3log/pipe --sqlite="/opt/pipe/pipe.db" --runtime_mode=prod --server=http://localhost:5897
   ```
-
-启动参数说明：
-
-* `--listen_port`：进程监听端口
-* `--server_scheme`：最终访问协议，如果反代服务启用了 HTTPS 这里也需要改为 `https`
-* `--server_host`：最终访问域名或公网 IP，不要带端口号
 
 完整启动参数的说明可以使用 `-h` 来查看。
 
