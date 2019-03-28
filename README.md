@@ -84,7 +84,7 @@ docker pull b3log/pipe
   
   ```shell
   docker run --detach --name pipe --network=host \
-      b3log/pipe --mysql="root:123456@(127.0.0.1:3306)/pipe?charset=utf8mb4&parseTime=True&loc=Local" --runtime_mode=prod --server=http://localhost:5897
+      b3log/pipe --mysql="root:123456@(127.0.0.1:3306)/pipe?charset=utf8mb4&parseTime=True&loc=Local" --runtime_mode=prod --port=5897 --server=http://localhost:5897
   ```
   为了简单，使用了主机网络模式来连接主机上的 MySQL。
   
@@ -92,8 +92,13 @@ docker pull b3log/pipe
 
   ```shell
   docker run --detach --name pipe --volume ~/pipe.db:/opt/pipe/pipe.db --publish 5897:5897 \
-      b3log/pipe --sqlite="/opt/pipe/pipe.db" --runtime_mode=prod --server=http://localhost:5897
+      b3log/pipe --sqlite="/opt/pipe/pipe.db" --runtime_mode=prod --port=5897 --server=http://localhost:5897
   ```
+  
+启动参数说明：
+
+* `--port`：进程监听端口
+* `--server`：访问时的链接
 
 完整启动参数的说明可以使用 `-h` 来查看。
 
