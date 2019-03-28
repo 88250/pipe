@@ -1,19 +1,22 @@
-FROM alpine:3.7
-LABEL maintainer = "abcdsxg@gmail.com"
+FROM node:10.15.3 as NODE_BUILD
 
-ENV PIPE_VERSION v1.8.6
-ENV GLIBC_VERSION 2.27-r0
+WORKDIR /go/src/github.com/b3log/pipe/
+ADD . /go/src/github.com/b3log/pipe/
+RUN cd console && npm install && npm run build && cd ../theme && npm install && npm run build && \
+    rm -rf node_modules && cd ../console && rm -rf node_modules
+FROM golang:alpine as GO_BUILD
+WORKDIR /go/src/github.com/b3log/pipe/
+COPY --from=NODE_BUILD /go/src/github.com/b3log/pipe/ /go/src/github.com/b3log/pipe/
+RUN apk add --no-cache gcc musl-dev && go build -i -v
 
-WORKDIR /opt/
+FROM alpine:latest
+LABEL maintainer="Liang Ding<d@b3log.org>"
 
-RUN set -ex && \
-    apk --no-cache add ca-certificates && \
-    wget -q -O /etc/apk/keys/sgerrand.rsa.pub https://alpine-pkgs.sgerrand.com/sgerrand.rsa.pub && \
-    wget https://github.com/sgerrand/alpine-pkg-glibc/releases/download/${GLIBC_VERSION}/glibc-${GLIBC_VERSION}.apk && \
-    apk add glibc-${GLIBC_VERSION}.apk && \
-    wget -O pipe${PIPE_VERSION}.zip https://github.com/b3log/pipe/releases/download/${PIPE_VERSION}/pipe-${PIPE_VERSION}-linux.zip && \
-    unzip pipe${PIPE_VERSION}.zip && \
-    chmod +x pipe && \
-    rm -f pipe${PIPE_VERSION}.zip glibc-${GLIBC_VERSION}.apk
+WORKDIR /opt/pipe
+COPY --from=GO_BUILD /go/src/github.com/b3log/pipe/ /opt/pipe/
+ENV TZ=Asia/Shanghai
+RUN ln -snf /usr/share/zoneinfo/${TZ} /etc/localtime && echo ${TZ} > /etc/timezone
 
-CMD ["/opt/pipe"]
+EXPOSE 5897
+
+ENTRYPOINT [ "/opt/pipe/pipe" ]

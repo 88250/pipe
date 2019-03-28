@@ -10,6 +10,7 @@
 <a title="GPLv3" target="_blank" href="https://github.com/b3log/pipe/blob/master/LICENSE"><img src="https://img.shields.io/badge/license-GPLv3-orange.svg?style=flat-square"></a>
 <a title="Releases" target="_blank" href="https://github.com/b3log/pipe/releases"><img src="https://img.shields.io/github/release/b3log/pipe.svg?style=flat-square"></a>
 <a title="Downloads" target="_blank" href="https://github.com/b3log/pipe/releases"><img src="https://img.shields.io/github/downloads/b3log/pipe/total.svg?style=flat-square"></a>
+<a title="Docker Pulls" target="_blank" href="https://hub.docker.com/r/b3log/pipe"><img src="https://img.shields.io/docker/pulls/b3log/pipe.svg?style=flat-square&color=blueviolet"></a>
 </p>
 
 ## 简介
@@ -42,7 +43,7 @@
 
 ### 开始使用
 
-![init](https://user-images.githubusercontent.com/873584/53852374-d044f780-3ffc-11e9-92bb-ea3e6c53ab1c.png)
+![start](https://user-images.githubusercontent.com/873584/53852374-d044f780-3ffc-11e9-92bb-ea3e6c53ab1c.png)
 
 ### 管理后台
 
@@ -62,7 +63,52 @@
 
 ## 安装
 
-[下载](https://github.com/b3log/pipe/releases)最新的发布包解压，进入解压目录运行 pipe/pipe.exe 可执行文件即可。
+### 本地试用
+
+* [下载](https://github.com/b3log/pipe/releases)最新的发布包解压，进入解压目录运行 pipe/pipe.exe
+* 从源码构建可参考[这里](https://hacpai.com/article/1533965022328)
+
+**请注意**：我们不建议通过发布包或者源码构建部署，因为这样的部署方式在将来有新版本发布时升级会比较麻烦。
+这两种方式请仅用于本地试用，线上生产环境建议通过 Docker 部署。
+
+### Docker 部署
+
+获取最新镜像：
+
+```shell
+docker pull b3log/pipe
+```
+
+* 使用 MySQL
+
+  先手动建库（库名 `pipe`，字符集使用 `utf8mb4`，排序规则 `utf8mb4_general_ci`），然后启动容器：
+  
+  ```shell
+  docker run --detach --name pipe --network=host \
+      b3log/pipe --mysql="root:123456@(127.0.0.1:3306)/pipe?charset=utf8mb4&parseTime=True&loc=Local" --runtime_mode=prod --port=5897 --server=http://localhost:5897
+  ```
+  为了简单，使用了主机网络模式来连接主机上的 MySQL。
+  
+* 使用 SQLite
+
+  ```shell
+  docker run --detach --name pipe --volume ~/pipe.db:/opt/pipe/pipe.db --publish 5897:5897 \
+      b3log/pipe --sqlite="/opt/pipe/pipe.db" --runtime_mode=prod --port=5897 --server=http://localhost:5897
+  ```
+  
+启动参数说明：
+
+* `--port`：进程监听端口
+* `--server`：访问时的链接
+
+完整启动参数的说明可以使用 `-h` 来查看。
+
+### Docker 升级
+
+1. 拉取最新镜像
+2. 重启容器
+
+可参考[这里](https://github.com/b3log/pipe/blob/master/docker-restart.sh)编写一个重启脚本，并通过 crontab 每日凌晨运行来实现自动更新。
 
 ## 文档
 
