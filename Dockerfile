@@ -19,4 +19,4 @@ RUN ln -snf /usr/share/zoneinfo/${TZ} /etc/localtime && echo ${TZ} > /etc/timezo
 
 EXPOSE 5897
 
-ENTRYPOINT [ "/opt/pipe/pipe", "--version"]
+ENTRYPOINT [ "/opt/pipe/pipe" ]
