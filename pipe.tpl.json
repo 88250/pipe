@@ -1,6 +1,5 @@
 {
   "Server": "${Server}",
-  "StaticServer": "${StaticServer}",
-  "MockServer": "http://localhost:8888",
+  "StaticServer": "http://pipe.tpl.json",
   "AxiosBaseURL": "/api"
 }
