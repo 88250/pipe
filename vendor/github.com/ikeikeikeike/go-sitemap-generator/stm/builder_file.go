@@ -35,7 +35,7 @@ type BuilderFile struct {
 // Add method joins old bytes with creates bytes by it calls from Sitemap.Add method.
 func (b *BuilderFile) Add(url interface{}) BuilderError {
 	u := MergeMap(url.(URL),
-		URL{"host": b.loc.opts.defaultHost},
+		URL{{"host", b.loc.opts.defaultHost}},
 	)
 
 	b.linkcnt++

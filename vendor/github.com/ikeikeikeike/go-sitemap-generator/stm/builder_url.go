@@ -53,8 +53,17 @@ type sitemapURL struct {
 func (su *sitemapURL) validate() error {
 	var key string
 	var invalid bool
+	var locOk, hostOk bool
 
-	for key = range su.data {
+	for _, value := range su.data {
+		key = value[0].(string)
+		switch key {
+		case "loc":
+			locOk = true
+		case "host":
+			hostOk = true
+		}
+
 		invalid = true
 		for _, name := range fieldnames {
 			if key == name {
@@ -71,11 +80,11 @@ func (su *sitemapURL) validate() error {
 		msg := fmt.Sprintf("Unknown map's key `%s` in URL type", key)
 		return errors.New(msg)
 	}
-	if _, ok := su.data["loc"]; !ok {
+	if !locOk {
 		msg := fmt.Sprintf("URL type must have `loc` map's key")
 		return errors.New(msg)
 	}
-	if _, ok := su.data["host"]; !ok {
+	if !hostOk {
 		msg := fmt.Sprintf("URL type must have `host` map's key")
 		return errors.New(msg)
 	}
@@ -88,9 +97,10 @@ func (su *sitemapURL) XML() []byte {
 	url := doc.CreateElement("url")
 
 	SetBuilderElementValue(url, su.data.URLJoinBy("loc", "host", "loc"), "loc")
-	SetBuilderElementValue(url, su.data, "expires")
-	SetBuilderElementValue(url, su.data, "mobile")
-
+	if _, ok := SetBuilderElementValue(url, su.data, "lastmod"); !ok {
+		lastmod := url.CreateElement("lastmod")
+		lastmod.SetText(time.Now().Format(time.RFC3339))
+	}
 	if _, ok := SetBuilderElementValue(url, su.data, "changefreq"); !ok {
 		changefreq := url.CreateElement("changefreq")
 		changefreq.SetText("weekly")
@@ -99,11 +109,8 @@ func (su *sitemapURL) XML() []byte {
 		priority := url.CreateElement("priority")
 		priority.SetText("0.5")
 	}
-	if _, ok := SetBuilderElementValue(url, su.data, "lastmod"); !ok {
-		lastmod := url.CreateElement("lastmod")
-		lastmod.SetText(time.Now().Format(time.RFC3339))
-	}
-
+	SetBuilderElementValue(url, su.data, "expires")
+	SetBuilderElementValue(url, su.data, "mobile")
 	SetBuilderElementValue(url, su.data, "news")
 	SetBuilderElementValue(url, su.data, "video")
 	SetBuilderElementValue(url, su.data, "image")

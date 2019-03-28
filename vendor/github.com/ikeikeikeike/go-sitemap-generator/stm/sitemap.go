@@ -6,9 +6,13 @@ import (
 )
 
 // NewSitemap returns the created the Sitemap's pointer
-func NewSitemap() *Sitemap {
+func NewSitemap(maxProc int) *Sitemap {
 	log.SetFlags(log.LstdFlags | log.Llongfile)
-	runtime.GOMAXPROCS(runtime.NumCPU())
+	if maxProc < 1 || maxProc > runtime.NumCPU() {
+		maxProc = runtime.NumCPU()
+	}
+	log.Printf("Max processors %d\n", maxProc)
+	runtime.GOMAXPROCS(maxProc)
 
 	sm := &Sitemap{
 		opts: NewOptions(),

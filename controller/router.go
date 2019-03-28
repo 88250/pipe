@@ -30,6 +30,7 @@ import (
 	"github.com/b3log/pipe/theme"
 	"github.com/b3log/pipe/util"
 	"github.com/gin-contrib/sessions"
+	"github.com/gin-contrib/sessions/cookie"
 	"github.com/gin-gonic/gin"
 )
 
@@ -64,7 +65,7 @@ func MapRoutes() *gin.Engine {
 	}
 	ret.Use(gin.Recovery())
 
-	store := sessions.NewCookieStore([]byte(model.Conf.SessionSecret))
+	store := cookie.NewStore([]byte(model.Conf.SessionSecret))
 	store.Options(sessions.Options{
 		Path:     "/",
 		MaxAge:   model.Conf.SessionMaxAge,

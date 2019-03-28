@@ -107,7 +107,7 @@ func (c *LFUCache) Get(key interface{}) (interface{}, error) {
 	return v, err
 }
 
-// Get a value from cache pool using key if it exists.
+// GetIFPresent gets a value from cache pool using key if it exists.
 // If it dose not exists key, returns KeyNotFoundError.
 // And send a request which refresh value for specified key if cache object has LoaderFunc.
 func (c *LFUCache) GetIFPresent(key interface{}) (interface{}, error) {
@@ -213,7 +213,23 @@ func (c *LFUCache) evict(count int) {
 	}
 }
 
-// Removes the provided key from the cache.
+// Has checks if key exists in cache
+func (c *LFUCache) Has(key interface{}) bool {
+	c.mu.RLock()
+	defer c.mu.RUnlock()
+	now := time.Now()
+	return c.has(key, &now)
+}
+
+func (c *LFUCache) has(key interface{}, now *time.Time) bool {
+	item, ok := c.items[key]
+	if !ok {
+		return false
+	}
+	return !item.IsExpired(now)
+}
+
+// Remove removes the provided key from the cache.
 func (c *LFUCache) Remove(key interface{}) bool {
 	c.mu.Lock()
 	defer c.mu.Unlock()
@@ -250,7 +266,7 @@ func (c *LFUCache) keys() []interface{} {
 	return keys
 }
 
-// Returns a slice of the keys in the cache.
+// Keys returns a slice of the keys in the cache.
 func (c *LFUCache) Keys() []interface{} {
 	keys := []interface{}{}
 	for _, k := range c.keys() {
@@ -262,7 +278,7 @@ func (c *LFUCache) Keys() []interface{} {
 	return keys
 }
 
-// Returns all key-value pairs in the cache.
+// GetALL returns all key-value pairs in the cache.
 func (c *LFUCache) GetALL() map[interface{}]interface{} {
 	m := make(map[interface{}]interface{})
 	for _, k := range c.keys() {
@@ -274,7 +290,7 @@ func (c *LFUCache) GetALL() map[interface{}]interface{} {
 	return m
 }
 
-// Returns the number of items in the cache.
+// Len returns the number of items in the cache.
 func (c *LFUCache) Len() int {
 	return len(c.GetALL())
 }
@@ -306,7 +322,7 @@ type lfuItem struct {
 	expiration  *time.Time
 }
 
-// returns boolean value whether this item is expired or not.
+// IsExpired returns boolean value whether this item is expired or not.
 func (it *lfuItem) IsExpired(now *time.Time) bool {
 	if it.expiration == nil {
 		return false

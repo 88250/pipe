@@ -1,6 +1,7 @@
 package gorm
 
 import (
+	"encoding/json"
 	"fmt"
 	"reflect"
 	"strings"
@@ -32,15 +33,15 @@ func (s *postgres) DataTypeOf(field *StructField) string {
 		case reflect.Bool:
 			sqlType = "boolean"
 		case reflect.Int, reflect.Int8, reflect.Int16, reflect.Int32, reflect.Uint, reflect.Uint8, reflect.Uint16, reflect.Uintptr:
-			if _, ok := field.TagSettings["AUTO_INCREMENT"]; ok || field.IsPrimaryKey {
-				field.TagSettings["AUTO_INCREMENT"] = "AUTO_INCREMENT"
+			if s.fieldCanAutoIncrement(field) {
+				field.TagSettingsSet("AUTO_INCREMENT", "AUTO_INCREMENT")
 				sqlType = "serial"
 			} else {
 				sqlType = "integer"
 			}
 		case reflect.Int64, reflect.Uint32, reflect.Uint64:
-			if _, ok := field.TagSettings["AUTO_INCREMENT"]; ok || field.IsPrimaryKey {
-				field.TagSettings["AUTO_INCREMENT"] = "AUTO_INCREMENT"
+			if s.fieldCanAutoIncrement(field) {
+				field.TagSettingsSet("AUTO_INCREMENT", "AUTO_INCREMENT")
 				sqlType = "bigserial"
 			} else {
 				sqlType = "bigint"
@@ -48,7 +49,7 @@ func (s *postgres) DataTypeOf(field *StructField) string {
 		case reflect.Float32, reflect.Float64:
 			sqlType = "numeric"
 		case reflect.String:
-			if _, ok := field.TagSettings["SIZE"]; !ok {
+			if _, ok := field.TagSettingsGet("SIZE"); !ok {
 				size = 0 // if SIZE haven't been set, use `text` as the default type, as there are no performance different
 			}
 
@@ -68,8 +69,13 @@ func (s *postgres) DataTypeOf(field *StructField) string {
 		default:
 			if IsByteArrayOrSlice(dataValue) {
 				sqlType = "bytea"
+
 				if isUUID(dataValue) {
 					sqlType = "uuid"
+				}
+
+				if isJSON(dataValue) {
+					sqlType = "jsonb"
 				}
 			}
 		}
@@ -129,4 +135,9 @@ func isUUID(value reflect.Value) bool {
 	typename := value.Type().Name()
 	lower := strings.ToLower(typename)
 	return "uuid" == lower || "guid" == lower
+}
+
+func isJSON(value reflect.Value) bool {
+	_, ok := value.Interface().(json.RawMessage)
+	return ok
 }

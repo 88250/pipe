@@ -15,6 +15,15 @@ func init() {
 
 // queryCallback used to query data from database
 func queryCallback(scope *Scope) {
+	if _, skip := scope.InstanceGet("gorm:skip_query_callback"); skip {
+		return
+	}
+	
+	//we are only preloading relations, dont touch base model
+	if _, skip := scope.InstanceGet("gorm:only_preload"); skip {
+		return
+	}
+
 	defer scope.trace(NowFunc())
 
 	var (

@@ -1,8 +1,6 @@
 package stm
 
-import (
-	"fmt"
-)
+import "fmt"
 
 var poolBuffer = NewBufferPool()
 
@@ -32,16 +30,29 @@ type Attrs []interface{}
 type Attr map[string]string
 
 // URL User should use this typedef in main func.
-type URL map[string]interface{}
+type URL [][]interface{}
 
 // URLJoinBy that's convenient.
 func (u URL) URLJoinBy(key string, joins ...string) URL {
 	var values []string
 	for _, k := range joins {
-		values = append(values, fmt.Sprint(u[k]))
+		var vals interface{}
+		for _, v := range u {
+			if v[0] == k {
+				vals = v[1]
+				break
+			}
+		}
+		values = append(values, fmt.Sprint(vals))
 	}
-
-	u[key] = URLJoin("", values...)
+	var index int
+	var v []interface{}
+	for index, v = range u {
+		if v[0] == key {
+			break
+		}
+	}
+	u[index][1] = URLJoin("", values...)
 	return u
 }
 
@@ -51,10 +62,23 @@ func (u *URL) BungURLJoinBy(key string, joins ...string) {
 
 	var values []string
 	for _, k := range joins {
-		values = append(values, fmt.Sprint(orig[k]))
+		var vals interface{}
+		for _, v := range *u {
+			if v[0] == k {
+				vals = v[1]
+				break
+			}
+		}
+		values = append(values, fmt.Sprint(vals))
 	}
-
-	orig[key] = URLJoin("", values...)
+	var index int
+	var v []interface{}
+	for index, v = range *u {
+		if v[0] == key {
+			break
+		}
+	}
+	orig[index][1] = URLJoin("", values...)
 	*u = orig
 }
 

@@ -21,7 +21,7 @@ func (b *BuilderIndexfile) Add(link interface{}) BuilderError {
 	bldr := link.(*BuilderFile)
 	bldr.Write()
 
-	smu := NewSitemapIndexURL(b.opts, URL{"loc": bldr.loc.URL()})
+	smu := NewSitemapIndexURL(b.opts, URL{{"loc", bldr.loc.URL()}})
 	b.content = append(b.content, smu.XML()...)
 
 	b.totalcnt += bldr.linkcnt

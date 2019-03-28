@@ -80,7 +80,7 @@ type AtomFeed struct {
 	Link        *AtomLink
 	Author      *AtomAuthor `xml:"author,omitempty"`
 	Contributor *AtomContributor
-	Entries     []*AtomEntry
+	Entries     []*AtomEntry `xml:"entry"`
 }
 
 type Atom struct {
@@ -90,7 +90,7 @@ type Atom struct {
 func newAtomEntry(i *Item) *AtomEntry {
 	id := i.Id
 	// assume the description is html
-	c := &AtomContent{Content: i.Description, Type: "html"}
+	s := &AtomSummary{Content: i.Description, Type: "html"}
 
 	if len(id) == 0 {
 		// if there's no id set, try to create one, either from data or just a uuid
@@ -117,9 +117,14 @@ func newAtomEntry(i *Item) *AtomEntry {
 	x := &AtomEntry{
 		Title:   i.Title,
 		Links:   []AtomLink{{Href: i.Link.Href, Rel: link_rel, Type: i.Link.Type}},
-		Content: c,
 		Id:      id,
 		Updated: anyTimeFormat(time.RFC3339, i.Updated, i.Created),
+		Summary: s,
+	}
+
+	// if there's a content, assume it's html
+	if len(i.Content) > 0 {
+		x.Content = &AtomContent{Content: i.Content, Type: "html"}
 	}
 
 	if i.Enclosure != nil && link_rel != "enclosure" {
@@ -153,12 +158,12 @@ func (a *Atom) AtomFeed() *AtomFeed {
 	return feed
 }
 
-// return an XML-Ready object for an Atom object
+// FeedXml returns an XML-Ready object for an Atom object
 func (a *Atom) FeedXml() interface{} {
 	return a.AtomFeed()
 }
 
-// return an XML-ready object for an AtomFeed object
+// FeedXml returns an XML-ready object for an AtomFeed object
 func (a *AtomFeed) FeedXml() interface{} {
 	return a
 }

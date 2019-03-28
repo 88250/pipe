@@ -15,6 +15,12 @@ func NewFileAdapter() *FileAdapter {
 // FileAdapter provides implementation for the Adapter interface.
 type FileAdapter struct{}
 
+// Bytes gets written content.
+func (adp *FileAdapter) Bytes() [][]byte {
+	// TODO
+	return nil
+}
+
 // Write will create sitemap xml file into the file systems.
 func (adp *FileAdapter) Write(loc *Location, data []byte) {
 	dir := loc.Directory()

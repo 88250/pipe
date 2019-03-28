@@ -35,15 +35,19 @@ func (c *ARC) init() {
 }
 
 func (c *ARC) replace(key interface{}) {
+	if !c.isCacheFull() {
+		return
+	}
 	var old interface{}
-	if (c.t1.Len() > 0 && c.b2.Has(key) && c.t1.Len() == c.part) || (c.t1.Len() > c.part) {
+	if c.t1.Len() > 0 && ((c.b2.Has(key) && c.t1.Len() == c.part) || (c.t1.Len() > c.part)) {
 		old = c.t1.RemoveTail()
 		c.b1.PushFront(old)
-	} else if c.t2.l.Len() > 0 {
+	} else if c.t2.Len() > 0 {
 		old = c.t2.RemoveTail()
 		c.b2.PushFront(old)
 	} else {
-		return
+		old = c.t1.RemoveTail()
+		c.b1.PushFront(old)
 	}
 	item, ok := c.items[old]
 	if ok {
@@ -112,7 +116,7 @@ func (c *ARC) set(key, value interface{}) (interface{}, error) {
 	}
 
 	if elt := c.b1.Lookup(key); elt != nil {
-		c.part = minInt(c.size, c.part+maxInt(c.b2.Len()/c.b1.Len(), 1))
+		c.setPart(minInt(c.size, c.part+maxInt(c.b2.Len()/c.b1.Len(), 1)))
 		c.replace(key)
 		c.b1.Remove(key, elt)
 		c.t2.PushFront(key)
@@ -120,14 +124,14 @@ func (c *ARC) set(key, value interface{}) (interface{}, error) {
 	}
 
 	if elt := c.b2.Lookup(key); elt != nil {
-		c.part = maxInt(0, c.part-maxInt(c.b1.Len()/c.b2.Len(), 1))
+		c.setPart(maxInt(0, c.part-maxInt(c.b1.Len()/c.b2.Len(), 1)))
 		c.replace(key)
 		c.b2.Remove(key, elt)
 		c.t2.PushFront(key)
 		return item, nil
 	}
 
-	if c.t1.Len()+c.b1.Len() == c.size {
+	if c.isCacheFull() && c.t1.Len()+c.b1.Len() == c.size {
 		if c.t1.Len() < c.size {
 			c.b1.RemoveTail()
 			c.replace(key)
@@ -145,7 +149,11 @@ func (c *ARC) set(key, value interface{}) (interface{}, error) {
 		total := c.t1.Len() + c.b1.Len() + c.t2.Len() + c.b2.Len()
 		if total >= c.size {
 			if total == (2 * c.size) {
-				c.b2.RemoveTail()
+				if c.b2.Len() > 0 {
+					c.b2.RemoveTail()
+				} else {
+					c.b1.RemoveTail()
+				}
 			}
 			c.replace(key)
 		}
@@ -163,7 +171,7 @@ func (c *ARC) Get(key interface{}) (interface{}, error) {
 	return v, err
 }
 
-// Get a value from cache pool using key if it exists.
+// GetIFPresent gets a value from cache pool using key if it exists.
 // If it dose not exists key, returns KeyNotFoundError.
 // And send a request which refresh value for specified key if cache object has LoaderFunc.
 func (c *ARC) GetIFPresent(key interface{}) (interface{}, error) {
@@ -255,6 +263,22 @@ func (c *ARC) getWithLoader(key interface{}, isWait bool) (interface{}, error) {
 	return value, nil
 }
 
+// Has checks if key exists in cache
+func (c *ARC) Has(key interface{}) bool {
+	c.mu.RLock()
+	defer c.mu.RUnlock()
+	now := time.Now()
+	return c.has(key, &now)
+}
+
+func (c *ARC) has(key interface{}, now *time.Time) bool {
+	item, ok := c.items[key]
+	if !ok {
+		return false
+	}
+	return !item.IsExpired(now)
+}
+
 // Remove removes the provided key from the cache.
 func (c *ARC) Remove(key interface{}) bool {
 	c.mu.Lock()
@@ -313,7 +337,7 @@ func (c *ARC) Keys() []interface{} {
 	return keys
 }
 
-// Returns all key-value pairs in the cache.
+// GetALL returns all key-value pairs in the cache.
 func (c *ARC) GetALL() map[interface{}]interface{} {
 	m := make(map[interface{}]interface{})
 	for _, k := range c.keys() {
@@ -344,7 +368,17 @@ func (c *ARC) Purge() {
 	c.init()
 }
 
-// returns boolean value whether this item is expired or not.
+func (c *ARC) setPart(p int) {
+	if c.isCacheFull() {
+		c.part = p
+	}
+}
+
+func (c *ARC) isCacheFull() bool {
+	return (c.t1.Len() + c.t2.Len()) == c.size
+}
+
+// IsExpired returns boolean value whether this item is expired or not.
 func (it *arcItem) IsExpired(now *time.Time) bool {
 	if it.expiration == nil {
 		return false

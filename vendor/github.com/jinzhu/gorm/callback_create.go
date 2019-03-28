@@ -59,7 +59,7 @@ func createCallback(scope *Scope) {
 
 		for _, field := range scope.Fields() {
 			if scope.changeableField(field) {
-				if field.IsNormal {
+				if field.IsNormal && !field.IsIgnored {
 					if field.IsBlank && field.HasDefaultValue {
 						blankColumnsWithDefaultValue = append(blankColumnsWithDefaultValue, scope.Quote(field.DBName))
 						scope.InstanceSet("gorm:blank_columns_with_default_value", blankColumnsWithDefaultValue)
@@ -97,8 +97,9 @@ func createCallback(scope *Scope) {
 
 		if len(columns) == 0 {
 			scope.Raw(fmt.Sprintf(
-				"INSERT INTO %v DEFAULT VALUES%v%v",
+				"INSERT INTO %v %v%v%v",
 				quotedTableName,
+				scope.Dialect().DefaultValueStr(),
 				addExtraSpaceIfExist(extraOption),
 				addExtraSpaceIfExist(lastInsertIDReturningSuffix),
 			))

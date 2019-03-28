@@ -9,7 +9,6 @@ import (
 	"time"
 
 	"github.com/beevik/etree"
-	"github.com/imdario/mergo"
 )
 
 // BufferPool is
@@ -41,7 +40,7 @@ func (bp *BufferPool) Put(b *bytes.Buffer) {
 
 // SetBuilderElementValue if it will change to struct from map if the future's
 // author is feeling a bothersome in this function.
-func SetBuilderElementValue(elm *etree.Element, data map[string]interface{}, basekey string) (*etree.Element, bool) {
+func SetBuilderElementValue(elm *etree.Element, data [][]interface{}, basekey string) (*etree.Element, bool) {
 	var child *etree.Element
 
 	key := basekey
@@ -54,86 +53,112 @@ func SetBuilderElementValue(elm *etree.Element, data map[string]interface{}, bas
 		key = fmt.Sprintf("%s:%s", sk, basekey)
 	}
 
-	if values, ok := data[basekey]; ok {
-		switch value := values.(type) {
-		case nil:
-		default:
-			child = elm.CreateElement(key)
-			child.SetText(fmt.Sprint(value))
-		case int:
-			child = elm.CreateElement(key)
-			child.SetText(fmt.Sprint(value))
-		case string:
-			child = elm.CreateElement(key)
-			child.SetText(value)
-		case float64, float32:
-			child = elm.CreateElement(key)
-			child.SetText(fmt.Sprint(value))
-		case time.Time:
-			child = elm.CreateElement(key)
-			child.SetText(value.Format(time.RFC3339))
-		case bool:
-			_ = elm.CreateElement(fmt.Sprintf("%s:%s", key, key))
-		case []int:
-			for _, v := range value {
-				child = elm.CreateElement(key)
-				child.SetText(fmt.Sprint(v))
-			}
-		case []string:
-			for _, v := range value {
-				child = elm.CreateElement(key)
-				child.SetText(v)
-			}
-		case Attrs:
-			val, attrs := value[0], value[1]
+	var values interface{}
+	var found bool
+	for _, v := range data {
+		if v[0] == basekey {
+			values = v[1]
+			found = true
+			break
+		}
+	}
+	if !found {
+		return child, false
+	}
 
-			child, _ = SetBuilderElementValue(elm, URL{basekey: val}, basekey)
-			switch attr := attrs.(type) {
-			case map[string]string:
-				for k, v := range attr {
-					child.CreateAttr(k, v)
-				}
-			// TODO: gotta remove below
-			case Attr:
-				for k, v := range attr {
-					child.CreateAttr(k, v)
-				}
+	switch value := values.(type) {
+	case nil:
+	default:
+		child = elm.CreateElement(key)
+		child.SetText(fmt.Sprint(value))
+	case int:
+		child = elm.CreateElement(key)
+		child.SetText(fmt.Sprint(value))
+	case string:
+		child = elm.CreateElement(key)
+		child.SetText(value)
+	case float64, float32:
+		child = elm.CreateElement(key)
+		child.SetText(fmt.Sprint(value))
+	case time.Time:
+		child = elm.CreateElement(key)
+		child.SetText(value.Format(time.RFC3339))
+	case bool:
+		_ = elm.CreateElement(fmt.Sprintf("%s:%s", key, key))
+	case []int:
+		for _, v := range value {
+			child = elm.CreateElement(key)
+			child.SetText(fmt.Sprint(v))
+		}
+	case []string:
+		for _, v := range value {
+			child = elm.CreateElement(key)
+			child.SetText(v)
+		}
+	case []Attr:
+		for _, attr := range value {
+			child = elm.CreateElement(key)
+			for k, v := range attr {
+				child.CreateAttr(k, v)
 			}
+		}
+	case Attrs:
+		val, attrs := value[0], value[1]
 
-		case interface{}:
-			var childkey string
-			if sk == "" {
-				childkey = fmt.Sprintf("%s:%s", key, key)
-			} else {
-				childkey = fmt.Sprint(key)
+		child, _ = SetBuilderElementValue(elm, URL{[]interface{}{basekey, val}}, basekey)
+		switch attr := attrs.(type) {
+		case map[string]string:
+			for k, v := range attr {
+				child.CreateAttr(k, v)
 			}
-
-			switch value := values.(type) {
-			case []URL:
-				for _, v := range value {
-					child := elm.CreateElement(childkey)
-					for ck := range v {
-						SetBuilderElementValue(child, v, ck)
-					}
-				}
-			case URL:
-				child := elm.CreateElement(childkey)
-				for ck := range value {
-					SetBuilderElementValue(child, value, ck)
-				}
+		// TODO: gotta remove below
+		case Attr:
+			for k, v := range attr {
+				child.CreateAttr(k, v)
 			}
 		}
 
-		return child, true
-	}
+	case interface{}:
+		var childkey string
+		if sk == "" {
+			childkey = fmt.Sprintf("%s:%s", key, key)
+		} else {
+			childkey = fmt.Sprint(key)
+		}
 
-	return child, false
+		switch value := values.(type) {
+		case []URL:
+			for _, val := range value {
+				child := elm.CreateElement(childkey)
+				for _, v := range val {
+					SetBuilderElementValue(child, val, v[0].(string))
+				}
+			}
+		case URL:
+			child := elm.CreateElement(childkey)
+			for _, v := range value {
+				SetBuilderElementValue(child, value, v[0].(string))
+			}
+		}
+	}
+	return child, true
 }
 
 // MergeMap TODO: Slow function: It wants to change fast function
-func MergeMap(src, dst map[string]interface{}) map[string]interface{} {
-	mergo.MapWithOverwrite(&dst, src)
-	return dst
+func MergeMap(src, dst [][]interface{}) [][]interface{} {
+	for _, v := range dst {
+		found := false
+		for _, vSrc := range src {
+			if v[0] == vSrc[0] {
+				found = true
+				break
+			}
+		}
+		if !found {
+			src = append(src, v)
+		}
+	}
+	return src
 }
 
 // ToLowerString converts lower strings from including capital or upper strings.

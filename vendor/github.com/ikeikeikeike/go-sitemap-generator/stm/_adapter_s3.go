@@ -20,6 +20,12 @@ type S3Adapter struct {
 	Creds  *credentials.Credentials
 }
 
+// Bytes gets written content.
+func (adp *S3Adapter) Bytes() [][]byte {
+	// TODO
+	return nil
+}
+
 // Write will create sitemap xml file into the s3.
 func (adp *S3Adapter) Write(loc *Location, data []byte) {
 	var reader io.Reader = bytes.NewReader(data)
