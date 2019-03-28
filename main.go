@@ -17,7 +17,6 @@
 package main
 
 import (
-	"fmt"
 	"io"
 	"io/ioutil"
 	"math/rand"
@@ -102,35 +101,32 @@ func handleSignal(server *http.Server) {
 }
 
 func replaceServerConf() {
-	err := filepath.Walk(filepath.ToSlash(filepath.Join(model.Conf.StaticRoot, "theme")), func(path string, f os.FileInfo, err error) error {
-		if strings.HasSuffix(path, ".min.js") {
-			data, e := ioutil.ReadFile(path)
-			if nil != e {
-				logger.Fatal("read file [" + path + "] failed: " + err.Error())
-			}
-			content := string(data)
-			if !strings.Contains(content, "exports={Server:") {
-				return err
-			}
+	//err := filepath.Walk(filepath.ToSlash(filepath.Join(model.Conf.StaticRoot, "theme")), func(path string, f os.FileInfo, err error) error {
+	//	if strings.HasSuffix(path, ".min.js.tpl") {
+	//		data, e := ioutil.ReadFile(path)
+	//		if nil != e {
+	//			logger.Fatal("read file [" + path + "] failed: " + err.Error())
+	//		}
+	//		content := string(data)
+	//		if !strings.Contains(content, "http://localhost:5897") {
+	//			return err
+	//		}
+	//
+	//
+	//		content = strings.Replace(content, "http://localhost:5897", model.Conf.Server, -1)
+	//		content = strings.Replace(content, "")
+	//		if e = ioutil.WriteFile(path, []byte(content), 0644); nil != e {
+	//			logger.Fatal("replace server conf in [" + path + "] failed: " + err.Error())
+	//		}
+	//	}
+	//
+	//	return err
+	//})
+	//if nil != err {
+	//	logger.Fatal("replace server conf in [theme] failed: " + err.Error())
+	//}
 
-			json := "{Server:" + strings.Split(content, "{Server:")[1]
-			json = strings.Split(json, "}}")[0] + "}"
-			newJSON := "{Server:\"" + model.Conf.Server + "\",StaticServer:\"" + model.Conf.StaticServer + "\",StaticResourceVersion:\"" +
-				model.Conf.StaticResourceVersion + "\",RuntimeMode:\"" + model.Conf.RuntimeMode + "\",AxiosBaseURL:\"" + model.Conf.AxiosBaseURL +
-				"\",MockServer:\"" + model.Conf.MockServer + "\"}"
-			content = strings.Replace(content, json, newJSON, -1)
-			if e = ioutil.WriteFile(path, []byte(content), 0644); nil != e {
-				logger.Fatal("replace server conf in [" + path + "] failed: " + err.Error())
-			}
-		}
-
-		return err
-	})
-	if nil != err {
-		logger.Fatal("replace server conf in [theme] failed: " + err.Error())
-	}
-
-	paths, err := filepath.Glob(filepath.ToSlash(filepath.Join(model.Conf.StaticRoot, "console/dist/*.js")))
+	paths, err := filepath.Glob(filepath.ToSlash(filepath.Join(model.Conf.StaticRoot, "console/dist/*.js.tpl")))
 	if 0 < len(paths) {
 		for _, path := range paths {
 			data, e := ioutil.ReadFile(path)
@@ -138,32 +134,16 @@ func replaceServerConf() {
 				logger.Fatal("read file [" + path + "] failed: " + err.Error())
 			}
 			content := string(data)
-			if strings.Contains(content, "{rel:\"manifest") {
-				json := "{rel:\"manifest\",href:\"" + strings.Split(content, "{rel:\"manifest\",href:\"")[1]
-				json = strings.Split(json, "}]")[0] + "}"
-				newJSON := "{rel:\"manifest\",href:\"" + model.Conf.StaticServer + "/theme/js/manifest.json\"}"
-				content = strings.Replace(content, json, newJSON, -1)
-			}
-			if strings.Contains(content, "env:{Server:") {
-				json := "env:{Server:" + strings.Split(content, "env:{Server:")[1]
-				json = strings.Split(json, "}}")[0] + "}"
-				newJSON := "env:{Server:\"" + model.Conf.Server + "\",StaticServer:\"" + model.Conf.StaticServer + "\",StaticResourceVersion:\"" +
-					model.Conf.StaticResourceVersion + "\",RuntimeMode:\"" + model.Conf.RuntimeMode + "\",AxiosBaseURL:\"" + model.Conf.AxiosBaseURL +
-					"\",MockServer:\"" + model.Conf.MockServer + "\"}"
-				content = strings.Replace(content, json, newJSON, -1)
-			}
-			if strings.Contains(content, "/console/dist/") {
-				part := strings.Split(content, "/console/dist/")[0]
-				part = part[strings.LastIndex(part, "\"")+1:]
-				content = strings.Replace(content, part, model.Conf.StaticServer, -1)
-			}
-			if e = ioutil.WriteFile(path, []byte(content), 0644); nil != e {
-				logger.Fatal("replace server conf in [" + path + "] failed: " + err.Error())
+			content = strings.Replace(content, "${Server}", model.Conf.Server, -1)
+			content = strings.Replace(content, "${StaticServer}", model.Conf.StaticServer, -1)
+			writePath := strings.TrimRight(path, ".tpl")
+			if e = ioutil.WriteFile(writePath, []byte(content), 0644); nil != e {
+				logger.Fatal("replace server conf in [" + writePath + "] failed: " + err.Error())
 			}
 		}
 	}
 
-	if util.File.IsExist("console/dist/") { // dose not exist if npm run dev
+	if util.File.IsExist("console/dist/") { // not exist if npm run dev
 		err = filepath.Walk(filepath.ToSlash(filepath.Join(model.Conf.StaticRoot, "console/dist/")), func(path string, f os.FileInfo, err error) error {
 			if strings.HasSuffix(path, ".html") {
 				data, e := ioutil.ReadFile(path)
@@ -171,22 +151,11 @@ func replaceServerConf() {
 					logger.Fatal("read file [" + path + "] failed: " + err.Error())
 				}
 				content := string(data)
-				if strings.Contains(content, "rel=\"manifest\" href=\"") {
-					rel := "rel=\"manifest\" href=\"" + strings.Split(content, "rel=\"manifest\" href=\"")[1]
-					rel = strings.Split(rel, "/>")[0] + "/>"
-					newRel := "rel=\"manifest\" href=\"" + model.Conf.StaticServer + "/theme/js/manifest.json\"/>"
-					content = strings.Replace(content, rel, newRel, -1)
-				}
-				if strings.Contains(content, "/console/dist/") {
-					part := strings.Split(content, "/console/dist/")[0]
-					part = part[strings.LastIndex(part, "\"")+1:]
-					content = strings.Replace(content, part, model.Conf.StaticServer, -1)
-				}
-				v := fmt.Sprintf("%d", time.Now().Unix())
-				content = strings.Replace(content, ".js\"", ".js?"+v+"\"", -1)
-				content = strings.Replace(content, ".json\"", ".json?"+v+"\"", -1)
-				if e = ioutil.WriteFile(path, []byte(content), 0644); nil != e {
-					logger.Fatal("replace server conf in [" + path + "] failed: " + err.Error())
+				content = strings.Replace(content, "${Server}", model.Conf.Server, -1)
+				content = strings.Replace(content, "${StaticServer}", model.Conf.StaticServer, -1)
+				writePath := strings.TrimRight(path, ".tpl")
+				if e = ioutil.WriteFile(writePath, []byte(content), 0644); nil != e {
+					logger.Fatal("replace server conf in [" + writePath + "] failed: " + err.Error())
 				}
 			}
 
