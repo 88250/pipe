@@ -8,7 +8,7 @@ FROM golang:latest as GO_BUILD
 WORKDIR /go/src/github.com/b3log/pipe/
 COPY --from=NODE_BUILD /go/src/github.com/b3log/pipe/ /go/src/github.com/b3log/pipe/
 ENV GO111MODULE=on
-RUN apk add --no-cache gcc musl-dev && go build -i -v
+RUN go build -i -v
 
 FROM alpine:latest
 LABEL maintainer="Liang Ding<d@b3log.org>"
