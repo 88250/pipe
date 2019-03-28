@@ -224,11 +224,11 @@ var emojiImages = []string{"c.png", "d.png", "e50a.png", "f.png", "g.png", "huaj
 func emojiImg(emojiASCII string) string {
 	for _, img := range emojiImages {
 		if emojiASCII == img[:strings.Index(img, ".")] {
-			return "<img class=\"emoji\" src=\"https://cdn.jsdelivr.net/npm/vditor/src/assets/emoji/" + img + "\">";
+			return "<img class=\"emoji\" src=\"https://cdn.jsdelivr.net/npm/vditor/src/assets/emoji/" + img + "\">"
 		}
 	}
 
-	return ":" + emojiASCII + ":";
+	return ":" + emojiASCII + ":"
 }
 
 func emojify(text string) string {
