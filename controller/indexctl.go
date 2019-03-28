@@ -28,7 +28,7 @@ import (
 )
 
 func showIndexAction(c *gin.Context) {
-	t, err := template.ParseFiles(filepath.ToSlash(filepath.Join(model.Conf.StaticRoot, "console/dist/index.html")))
+	t, err := template.ParseFiles(filepath.ToSlash("console/dist/index.html"))
 	if nil != err {
 		logger.Errorf("load index page failed: " + err.Error())
 		c.String(http.StatusNotFound, "load index page failed")
@@ -40,7 +40,7 @@ func showIndexAction(c *gin.Context) {
 }
 
 func showStartPageAction(c *gin.Context) {
-	t, err := template.ParseFiles(filepath.ToSlash(filepath.Join(model.Conf.StaticRoot, "console/dist/start/index.html")))
+	t, err := template.ParseFiles(filepath.ToSlash("console/dist/start/index.html"))
 	if nil != err {
 		logger.Errorf("load start page failed: " + err.Error())
 		c.String(http.StatusNotFound, "load start page failed")

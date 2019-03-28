@@ -23,7 +23,6 @@ import (
 
 	"github.com/b3log/pipe/log"
 	"github.com/b3log/pipe/util"
-	"github.com/b3log/pipe/model"
 )
 
 // Logger
@@ -37,7 +36,7 @@ var Themes []string
 
 // Load loads themes.
 func Load() {
-	f, _ := os.Open(filepath.ToSlash(filepath.Join(model.Conf.StaticRoot, "theme/x")))
+	f, _ := os.Open(filepath.ToSlash("theme/x"))
 	names, _ := f.Readdirnames(-1)
 	f.Close()
 

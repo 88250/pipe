@@ -143,31 +143,31 @@ func MapRoutes() *gin.Engine {
 	consoleSettingsGroup.GET("/account", console.GetAccountAction)
 	consoleSettingsGroup.PUT("/account", console.UpdateAccountAction)
 
-	ret.StaticFile(util.PathFavicon, staticPath("console/static/favicon.ico"))
+	ret.StaticFile(util.PathFavicon, filepath.ToSlash("console/static/favicon.ico"))
 
-	ret.Static(util.PathTheme+"/scss", staticPath("theme/scss"))
-	ret.Static(util.PathTheme+"/js", staticPath("theme/js"))
-	ret.Static(util.PathTheme+"/images", staticPath("theme/images"))
-	ret.StaticFile("/sw.min.js", staticPath("theme/sw.min.js"))
-	ret.StaticFile("/halt.html", staticPath("theme/halt.html"))
+	ret.Static(util.PathTheme+"/scss", filepath.ToSlash("theme/scss"))
+	ret.Static(util.PathTheme+"/js", filepath.ToSlash("theme/js"))
+	ret.Static(util.PathTheme+"/images", filepath.ToSlash("theme/images"))
+	ret.StaticFile("/sw.min.js", filepath.ToSlash("theme/sw.min.js"))
+	ret.StaticFile("/halt.html", filepath.ToSlash("theme/halt.html"))
 
 	for _, theme := range theme.Themes {
-		themePath := staticPath("theme/x/" + theme)
+		themePath := filepath.ToSlash("theme/x/" + theme)
 		ret.Static("/theme/x/"+theme+"/css", themePath+"/css")
 		ret.Static("/theme/x/"+theme+"/js", themePath+"/js")
 		ret.Static("/theme/x/"+theme+"/images", themePath+"/images")
 		ret.StaticFile("/theme/x/"+theme+"/thumbnail.jpg", themePath+"/thumbnail.jpg")
 	}
-	themeTemplates, err := filepath.Glob(staticPath("theme/x/*/*.html"))
+	themeTemplates, err := filepath.Glob(filepath.ToSlash("theme/x/*/*.html"))
 	if nil != err {
 		logger.Fatal("load theme templates failed: " + err.Error())
 	}
-	themeTemplates = append(themeTemplates, staticPath("theme/search/index.html"))
-	commentTemplates, err := filepath.Glob(staticPath("theme/comment/*.html"))
+	themeTemplates = append(themeTemplates, filepath.ToSlash("theme/search/index.html"))
+	commentTemplates, err := filepath.Glob(filepath.ToSlash("theme/comment/*.html"))
 	if nil != err {
 		logger.Fatal("load comment templates failed: " + err.Error())
 	}
-	headTemplates, err := filepath.Glob(staticPath("theme/head/*.html"))
+	headTemplates, err := filepath.Glob(filepath.ToSlash("theme/head/*.html"))
 	if nil != err {
 		logger.Fatal("load head templates failed: " + err.Error())
 	}
@@ -192,9 +192,9 @@ func MapRoutes() *gin.Engine {
 	initGroup.Use(fillUser)
 	initGroup.GET("", showStartPageAction)
 
-	ret.Static(util.PathConsoleDist, staticPath("console/dist"))
-	ret.StaticFile(util.PathChangelogs, staticPath("changelogs.html"))
-	ret.StaticFile(util.PathRobots, staticPath("theme/robots.txt"))
+	ret.Static(util.PathConsoleDist, filepath.ToSlash("console/dist"))
+	ret.StaticFile(util.PathChangelogs, filepath.ToSlash("changelogs.html"))
+	ret.StaticFile(util.PathRobots, filepath.ToSlash("theme/robots.txt"))
 	ret.NoRoute(func(c *gin.Context) {
 		notFound(c)
 	})
@@ -303,8 +303,4 @@ func routePath(c *gin.Context) {
 
 	logger.Tracef("can't handle path [" + path + "]")
 	notFound(c)
-}
-
-func staticPath(relativePath string) string {
-	return filepath.ToSlash(filepath.Join(model.Conf.StaticRoot, relativePath))
 }

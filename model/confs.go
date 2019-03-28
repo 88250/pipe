@@ -23,14 +23,13 @@ import (
 	"fmt"
 	"io/ioutil"
 	"os"
-	"path/filepath"
 	"strconv"
 	"strings"
 	"time"
 
 	"github.com/b3log/pipe/log"
-	"github.com/jinzhu/gorm"
 	"github.com/b3log/pipe/util"
+	"github.com/jinzhu/gorm"
 )
 
 // Logger
@@ -69,7 +68,6 @@ type Configuration struct {
 	RuntimeMode           string // runtime mode (dev/prod)
 	SQLite                string // SQLite database file path
 	MySQL                 string // MySQL connection URL
-	StaticRoot            string // static resources file root path
 	Port                  string // listen port
 	AxiosBaseURL          string // axio base URL
 	MockServer            string // mock server
@@ -87,7 +85,6 @@ func LoadConf() {
 	confRuntimeMode := flag.String("runtime_mode", "", "this will override Conf.RuntimeMode if specified")
 	confSQLite := flag.String("sqlite", "", "this will override Conf.SQLite if specified")
 	confMySQL := flag.String("mysql", "", "this will override Conf.MySQL if specified")
-	confStaticRoot := flag.String("static_root", "", "this will override Conf.StaticRoot if specified")
 	confPort := flag.String("port", "", "this will override Conf.Port if specified")
 	s2m := flag.Bool("s2m", false, "dumps SQLite data to MySQL SQL script file")
 
@@ -157,12 +154,6 @@ func LoadConf() {
 	}
 	if "" != *confMySQL {
 		Conf.MySQL = *confMySQL
-	}
-
-	Conf.StaticRoot = ""
-	if "" != *confStaticRoot {
-		Conf.StaticRoot = *confStaticRoot
-		Conf.StaticRoot = filepath.Dir(Conf.StaticRoot)
 	}
 
 	if "" != *confPort {

@@ -126,7 +126,7 @@ func replaceServerConf() {
 	//	logger.Fatal("replace server conf in [theme] failed: " + err.Error())
 	//}
 
-	paths, err := filepath.Glob(filepath.ToSlash(filepath.Join(model.Conf.StaticRoot, "console/dist/*.js.tpl")))
+	paths, err := filepath.Glob(filepath.ToSlash("console/dist/*.js.tpl"))
 	if 0 < len(paths) {
 		for _, path := range paths {
 			data, e := ioutil.ReadFile(path)
@@ -144,7 +144,7 @@ func replaceServerConf() {
 	}
 
 	if util.File.IsExist("console/dist/") { // not exist if npm run dev
-		err = filepath.Walk(filepath.ToSlash(filepath.Join(model.Conf.StaticRoot, "console/dist/")), func(path string, f os.FileInfo, err error) error {
+		err = filepath.Walk(filepath.ToSlash("console/dist/"), func(path string, f os.FileInfo, err error) error {
 			if strings.HasSuffix(path, ".html") {
 				data, e := ioutil.ReadFile(path)
 				if nil != e {
