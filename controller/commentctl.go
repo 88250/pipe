@@ -20,7 +20,6 @@ import (
 	"bytes"
 	"html/template"
 	"net/http"
-	"path/filepath"
 	"strconv"
 	"strings"
 
@@ -143,7 +142,7 @@ func addCommentAction(c *gin.Context) {
 	dataModel["Item"] = themeComment
 	dataModel["ArticleID"] = comment.ArticleID
 
-	t := template.Must(template.New("").ParseFiles(filepath.ToSlash("theme/comment/comment.html")))
+	t := template.Must(template.New("").ParseFiles("theme/comment/comment.html"))
 
 	htmlBuilder := bytes.Buffer{}
 	if err := t.ExecuteTemplate(&htmlBuilder, "comment/comment", dataModel); nil != err {
