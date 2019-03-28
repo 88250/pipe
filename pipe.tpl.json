@@ -1,5 +1,5 @@
 {
-  "Server": "${Server}",
-  "StaticServer": "http://pipe.tpl.json",
+  "Server": "http://server.tpl.json",
+  "StaticServer": "http://staticserver.tpl.json",
   "AxiosBaseURL": "/api"
 }
