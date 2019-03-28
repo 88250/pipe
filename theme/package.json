@@ -20,8 +20,9 @@
     }
   ],
   "scripts": {
+    "genTpl": "node js/tool/genTpl",
     "dev": "gulp watch",
-    "build": "gulp"
+    "build": "gulp && npm run genTpl"
   },
   "devDependencies": {
     "@babel/core": "^7.4.0",
