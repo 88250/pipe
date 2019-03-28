@@ -7,7 +7,7 @@ RUN cd console && npm install && npm run build && cd ../theme && npm install && 
 FROM golang:alpine as GO_BUILD
 WORKDIR /go/src/github.com/b3log/pipe/
 COPY --from=NODE_BUILD /go/src/github.com/b3log/pipe/ /go/src/github.com/b3log/pipe/
-RUN apk add --no-cache gcc musl-dev ca-certificates && go build -i -v
+RUN apk add --no-cache gcc musl-dev && go build -i -v
 
 FROM alpine:latest
 LABEL maintainer="Liang Ding<d@b3log.org>"
@@ -15,7 +15,7 @@ LABEL maintainer="Liang Ding<d@b3log.org>"
 WORKDIR /opt/pipe
 COPY --from=GO_BUILD /go/src/github.com/b3log/pipe/ /opt/pipe/
 ENV TZ=Asia/Shanghai
-RUN ln -snf /usr/share/zoneinfo/${TZ} /etc/localtime && echo ${TZ} > /etc/timezone
+RUN ln -snf /usr/share/zoneinfo/${TZ} /etc/localtime && echo ${TZ} > /etc/timezone && apk add --no-cache ca-certificates
 
 EXPOSE 5897
 
