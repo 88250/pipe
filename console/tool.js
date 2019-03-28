@@ -1,21 +1,19 @@
 const fs = require('fs')
-const path = require(path)
-fs.readdirSync('./dist').forEach(function (file) {
-  if (path.extname(file) === 'js') {
-    fs.writeFileSync(`${jsPath}/common.min.js.tpl`,
-      fs.readFileSync(`${jsPath}/common.min.js`))
-  }
+const path = require('path')
 
-  const jsPath = `./x/${file}/js/`
-  if (file === '.DS_Store') {
-    return
-  }
-  try {
-    fs.writeFileSync(`${jsPath}/common.min.js.tpl`,
-      fs.readFileSync(`${jsPath}/common.min.js`))
-    fs.writeFileSync(`${jsPath}/article.min.js.tpl`,
-      fs.readFileSync(`${jsPath}/article.min.js`))
-  } catch (e) {
-    console.log(e)
-  }
-})
+const readDirSync = (root) => {
+  const pathList = fs.readdirSync(root)
+  pathList.forEach(function (file) {
+    const info = fs.statSync(root + '/' + file)
+    if (info.isDirectory()) {
+      readDirSync(root + '/' + file)
+    } else {
+      if (path.extname(file) === '.js' || path.extname(file) === '.html') {
+        fs.writeFileSync(`${root}/${file}.tpl`,
+          fs.readFileSync(`${root}/${file}`))
+        console.log(`gen tpl: ${root}/${file}.tpl`)
+      }
+    }
+  })
+}
+readDirSync('./dist')
