@@ -1,20 +1,21 @@
-FROM node:alpine as NODE_BUILD
-ADD . /tmp
-RUN cd /tmp/console && npm install && npm run build && cd ../theme && npm install && npm run build
+FROM node:10.15.3 as NODE_BUILD
 
-FROM golang:alpine as GOLANG_BUILD
 WORKDIR /go/src/github.com/b3log/pipe/
-COPY --from=NODE_BUILD /tmp .
-RUN go build -i -v
+ADD . /go/src/github.com/b3log/pipe/
+RUN cd console && npm install && npm run build && rm -rf node_modules && cd ../theme && npm install && npm run build && rm -rf node_modules
 
-FROM apline
+FROM golang:alpine as GO_BUILD
+WORKDIR /go/src/github.com/b3log/pipe/
+COPY --from=NODE_BUILD /go/src/github.com/b3log/pipe/ /go/src/github.com/b3log/pipe/
+RUN apk add --no-cache gcc musl-dev && go build -i -v
+
+FROM apline:latest
 LABEL maintainer="Liang Ding<d@b3log.org>"
 
 WORKDIR /opt/pipe
+COPY --from=GO_BUILD /go/src/github.com/b3log/pipe/ /opt/pipe/
 ENV TZ=Asia/Shanghai
-RUN ln -snf /usr/share/zoneinfo/${TZ} /etc/localtime && echo ${TZ} > /etc/timezone \
-    && cp /go/src/github.com/b3log/pipe/* /opt/pipe/ \
-    && rm -rf /tmp/*
+RUN ln -snf /usr/share/zoneinfo/${TZ} /etc/localtime && echo ${TZ} > /etc/timezone
 
 EXPOSE 5897
 
