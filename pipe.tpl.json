@@ -1,0 +1,6 @@
+{
+  "Server": "http://localhost:5897",
+  "StaticServer": "",
+  "MockServer": "http://localhost:8888",
+  "AxiosBaseURL": "/api"
+}

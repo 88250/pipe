@@ -11,7 +11,8 @@
   "scripts": {
     "mock": "apimocker --config ./mock/mock.json",
     "dev": "nuxt",
-    "build": "nuxt build",
+    "genTpl": "node tool.js",
+    "build": "nuxt build -c nuxt.config.build.js",
     "start": "nuxt start",
     "generate": "nuxt generate",
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
