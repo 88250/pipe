@@ -22,7 +22,6 @@ import (
 	"fmt"
 	"io/ioutil"
 	"os"
-	"path/filepath"
 	"sort"
 	"strings"
 
@@ -60,7 +59,7 @@ func Load() {
 }
 
 func load(localeStr string) {
-	bytes, err := ioutil.ReadFile(filepath.ToSlash("i18n/" + localeStr + ".json"))
+	bytes, err := ioutil.ReadFile("i18n/" + localeStr + ".json")
 	if nil != err {
 		logger.Fatal("reads i18n configurations fialed: " + err.Error())
 	}

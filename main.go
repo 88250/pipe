@@ -101,60 +101,48 @@ func handleSignal(server *http.Server) {
 }
 
 func replaceServerConf() {
-	//err := filepath.Walk(filepath.ToSlash(filepath.Join(model.Conf.StaticRoot, "theme")), func(path string, f os.FileInfo, err error) error {
-	//	if strings.HasSuffix(path, ".min.js.tpl") {
-	//		data, e := ioutil.ReadFile(path)
-	//		if nil != e {
-	//			logger.Fatal("read file [" + path + "] failed: " + err.Error())
-	//		}
-	//		content := string(data)
-	//		if !strings.Contains(content, "http://localhost:5897") {
-	//			return err
-	//		}
-	//
-	//
-	//		content = strings.Replace(content, "http://localhost:5897", model.Conf.Server, -1)
-	//		content = strings.Replace(content, "")
-	//		if e = ioutil.WriteFile(path, []byte(content), 0644); nil != e {
-	//			logger.Fatal("replace server conf in [" + path + "] failed: " + err.Error())
-	//		}
-	//	}
-	//
-	//	return err
-	//})
-	//if nil != err {
-	//	logger.Fatal("replace server conf in [theme] failed: " + err.Error())
-	//}
+	path := "theme/sw.min.js"
+	data, err := ioutil.ReadFile(path)
+	if nil != err {
+		logger.Fatal("read file [" + path + "] failed: " + err.Error())
+	}
+	content := string(data)
+	content = strings.Replace(content, "http://server.tpl.json", model.Conf.Server, -1)
+	content = strings.Replace(content, "http://staticserver.tpl.json", model.Conf.StaticServer, -1)
+	content = strings.Replace(content, "${StaticResourceVersion}", model.Conf.StaticResourceVersion, -1)
+	if err = ioutil.WriteFile(path, []byte(content), 0644); nil != err {
+		logger.Fatal("replace sw.min.js in [" + path + "] failed: " + err.Error())
+	}
 
-	paths, err := filepath.Glob(filepath.ToSlash("console/dist/*.js.tpl"))
+	paths, err := filepath.Glob("console/dist/*.js.tpl")
 	if 0 < len(paths) {
 		for _, path := range paths {
-			data, e := ioutil.ReadFile(path)
-			if nil != e {
+			data, err := ioutil.ReadFile(path)
+			if nil != err {
 				logger.Fatal("read file [" + path + "] failed: " + err.Error())
 			}
 			content := string(data)
 			content = strings.Replace(content, "http://server.tpl.json", model.Conf.Server, -1)
 			content = strings.Replace(content, "http://staticserver.tpl.json", model.Conf.StaticServer, -1)
 			writePath := strings.TrimSuffix(path, ".tpl")
-			if e = ioutil.WriteFile(writePath, []byte(content), 0644); nil != e {
+			if err = ioutil.WriteFile(writePath, []byte(content), 0644); nil != err {
 				logger.Fatal("replace server conf in [" + writePath + "] failed: " + err.Error())
 			}
 		}
 	}
 
 	if util.File.IsExist("console/dist/") { // not exist if npm run dev
-		err = filepath.Walk(filepath.ToSlash("console/dist/"), func(path string, f os.FileInfo, err error) error {
+		err = filepath.Walk("console/dist/", func(path string, f os.FileInfo, err error) error {
 			if strings.HasSuffix(path, ".html.tpl") {
-				data, e := ioutil.ReadFile(path)
-				if nil != e {
+				data, err := ioutil.ReadFile(path)
+				if nil != err {
 					logger.Fatal("read file [" + path + "] failed: " + err.Error())
 				}
 				content := string(data)
 				content = strings.Replace(content, "http://server.tpl.json", model.Conf.Server, -1)
 				content = strings.Replace(content, "http://staticserver.tpl.json", model.Conf.StaticServer, -1)
 				writePath := strings.TrimSuffix(path, ".tpl")
-				if e = ioutil.WriteFile(writePath, []byte(content), 0644); nil != e {
+				if err = ioutil.WriteFile(writePath, []byte(content), 0644); nil != err {
 					logger.Fatal("replace server conf in [" + writePath + "] failed: " + err.Error())
 				}
 			}
