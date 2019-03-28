@@ -78,7 +78,9 @@ func main() {
 	handleSignal(server)
 
 	logger.Infof("Pipe (v%s) is running [%s]", model.Version, model.Conf.Server)
-	server.ListenAndServe()
+	if err :=server.ListenAndServe();nil != err {
+		logger.Fatalf("listen and serve failed: " + err.Error())
+	}
 }
 
 // handleSignal handles system signal for graceful shutdown.
