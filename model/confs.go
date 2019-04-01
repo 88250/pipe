@@ -64,7 +64,7 @@ type Configuration struct {
 	LogLevel              string // logging level: trace/debug/info/warn/error/fatal
 	ShowSQL               bool   // whether print sql in log
 	SessionSecret         string // HTTP session secret
-	SessionMaxAge         int    // HTTP session max age (in seciond)
+	SessionMaxAge         int    // HTTP session max age (in second)
 	RuntimeMode           string // runtime mode (dev/prod)
 	SQLite                string // SQLite database file path
 	MySQL                 string // MySQL connection URL
@@ -82,6 +82,8 @@ func LoadConf() {
 	confStaticResourceVer := flag.String("static_resource_ver", "", "this will override Conf.StaticResourceVersion if specified")
 	confLogLevel := flag.String("log_level", "", "this will override Conf.LogLevel if specified")
 	confShowSQL := flag.Bool("show_sql", false, "this will override Conf.ShowSQL if specified")
+	confSessionSecret := flag.String("session_secret", "", "this will override Conf.SessionSecret")
+	confSessionMaxAge := flag.Int("session_max_age", 0, "this will override Conf.SessionMaxAge")
 	confRuntimeMode := flag.String("runtime_mode", "", "this will override Conf.RuntimeMode if specified")
 	confSQLite := flag.String("sqlite", "", "this will override Conf.SQLite if specified")
 	confMySQL := flag.String("mysql", "", "this will override Conf.MySQL if specified")
@@ -114,6 +116,14 @@ func LoadConf() {
 
 	if *confShowSQL {
 		Conf.ShowSQL = true
+	}
+
+	if "" != *confSessionSecret {
+		Conf.SessionSecret = *confSessionSecret
+	}
+
+	if 0 < *confSessionMaxAge {
+		Conf.SessionMaxAge = *confSessionMaxAge
 	}
 
 	if "" == Conf.SessionSecret {
