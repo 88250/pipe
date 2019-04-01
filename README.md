@@ -23,7 +23,7 @@
 * [Vanessa](http://vanessa.b3log.org)
 * [图解吧](http://tujie8.net)
 * [黑壳博客](http://blog.bhusk.com)
-* [zorke 的博客](http://pipe.b3log.org/blogs/zorke)
+* [zorke 的博客](https://www.zorkelvll.cn)
 * [一个码农](http://blog.gitor.org)
 
 ## 功能
