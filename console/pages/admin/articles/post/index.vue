@@ -465,13 +465,14 @@
       } else {
         // set storage
         this._setDefaultLocalStorage()
+        setTimeout(() => {
+          document.querySelector('.input-group__input input').focus()
+        }, 100)
       }
       // get tags
       this.$store.dispatch('getTags')
 
       this.getThumbs()
-
-      this.contentEditor.focus()
 
       this.addStyle('https://cdn.jsdelivr.net/npm/vditor@1.3.3/dist/js/highlight.js@9.15.6/styles/atom-one-light.css', 'vditorHljsStyle')
     },
