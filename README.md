@@ -9,8 +9,10 @@
 <a title="Code Size" target="_blank" href="https://github.com/b3log/pipe"><img src="https://img.shields.io/github/languages/code-size/b3log/pipe.svg?style=flat-square"></a>
 <a title="GPLv3" target="_blank" href="https://github.com/b3log/pipe/blob/master/LICENSE"><img src="https://img.shields.io/badge/license-GPLv3-orange.svg?style=flat-square"></a>
 <a title="Releases" target="_blank" href="https://github.com/b3log/pipe/releases"><img src="https://img.shields.io/github/release/b3log/pipe.svg?style=flat-square"></a>
-<a title="Downloads" target="_blank" href="https://github.com/b3log/pipe/releases"><img src="https://img.shields.io/github/downloads/b3log/pipe/total.svg?style=flat-square"></a>
 <a title="Docker Pulls" target="_blank" href="https://hub.docker.com/r/b3log/pipe"><img src="https://img.shields.io/docker/pulls/b3log/pipe.svg?style=flat-square&color=blueviolet"></a>
+<!--
+<a title="Docker Image Size" target="_blank" href="https://hub.docker.com/r/b3log/pipe"><img src="https://img.shields.io/microbadger/image-size/b3log/pipe.svg?style=flat-square&color=ff96b4"></a>
+-->
 <a title="Hits" target="_blank" href="https://github.com/b3log/hits"><img src="https://hits.b3log.org/b3log/pipe.svg"></a>
 </p>
 
