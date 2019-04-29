@@ -46,23 +46,23 @@
 
 ### 开始使用
 
-![start](https://user-images.githubusercontent.com/873584/53852374-d044f780-3ffc-11e9-92bb-ea3e6c53ab1c.png)
+![start](https://user-images.githubusercontent.com/873584/56882188-78bf8700-6a95-11e9-9aab-841340d809ea.png)
 
 ### 管理后台
 
-![console-index](https://user-images.githubusercontent.com/873584/52255023-a9d36400-294b-11e9-9c9f-a99c208d6b52.png)
+![console](https://user-images.githubusercontent.com/873584/56882183-7826f080-6a95-11e9-92ab-447c8f05c1ac.png)
 
 ### 编辑文章
 
-![article](https://user-images.githubusercontent.com/873584/52255159-4dbd0f80-294c-11e9-980f-bc15cd0dd340.png)
+![post](https://user-images.githubusercontent.com/873584/56882187-78bf8700-6a95-11e9-9147-822df8a32ffc.png)
 
 ### 主题选择
 
-![theme](https://user-images.githubusercontent.com/873584/52255174-675e5700-294c-11e9-84bf-c04fe39ce5ec.png)
+![theme](https://user-images.githubusercontent.com/873584/56882189-78bf8700-6a95-11e9-8b63-ab1f3a8b9a21.png)
 
 ### 主题 Gina
 
-![index](https://user-images.githubusercontent.com/873584/52255024-aa6bfa80-294b-11e9-9cfc-2c6cfc3d687c.png)
+![gina](https://user-images.githubusercontent.com/873584/56882185-7826f080-6a95-11e9-9809-79a6eaaf784c.png)
 
 ## 安装
 
