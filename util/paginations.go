@@ -33,7 +33,7 @@ type Pagination struct {
 	PageNums        []int  `json:"pageNums"`
 	NextPageNum     int    `json:"nextPageNum"`
 	PreviousPageNum int    `json:"previousPageNum"`
-	FirstPageNum    int    `josn:"firstPageNum"`
+	FirstPageNum    int    `json:"firstPageNum"`
 	LastPageNum     int    `json:"lastPageNum"`
 	PageURL         string `json:"pageURL"`
 }
