@@ -13,6 +13,16 @@
 <a title="Docker Pulls" target="_blank" href="https://hub.docker.com/r/b3log/pipe"><img src="https://img.shields.io/docker/pulls/b3log/pipe.svg?style=flat-square&color=blueviolet"></a>
 <a title="Docker Image Size" target="_blank" href="https://hub.docker.com/r/b3log/pipe"><img src="https://img.shields.io/microbadger/image-size/b3log/pipe.svg?style=flat-square&color=ff96b4"></a>
 <a title="Hits" target="_blank" href="https://github.com/b3log/hits"><img src="https://hits.b3log.org/b3log/pipe.svg"></a>
+<br>
+<a title="GitHub Commits" target="_blank" href="https://github.com/b3log/pipe/commits/master"><img src="https://img.shields.io/github/commit-activity/m/b3log/pipe.svg?style=flat-square"></a>
+<a title="Last Commit" target="_blank" href="https://github.com/b3log/pipe/commits/master"><img src="https://img.shields.io/github/last-commit/b3log/pipe.svg?style=flat-square"></a>
+<a title="GitHub Pull Requests" target="_blank" href="https://github.com/b3log/pipe/pulls"><img src="https://img.shields.io/github/issues-pr-closed/b3log/pipe.svg?style=flat-square&color=FF9966"></a>
+<a title="Hits" target="_blank" href="https://github.com/b3log/hits"><img src="https://hits.b3log.org/b3log/pipe.svg"></a>
+<br><br>
+<a title="GitHub Watchers" target="_blank" href="https://github.com/b3log/pipe/watchers"><img src="https://img.shields.io/github/watchers/b3log/pipe.svg?label=Watchers&style=social"></a>&nbsp;&nbsp;
+<a title="GitHub Stars" target="_blank" href="https://github.com/b3log/pipe/stargazers"><img src="https://img.shields.io/github/stars/b3log/pipe.svg?label=Stars&style=social"></a>&nbsp;&nbsp;
+<a title="GitHub Forks" target="_blank" href="https://github.com/b3log/pipe/network/members"><img src="https://img.shields.io/github/forks/b3log/pipe.svg?label=Forks&style=social"></a>&nbsp;&nbsp;
+<a title="Author GitHub Followers" target="_blank" href="https://github.com/88250"><img src="https://img.shields.io/github/followers/88250.svg?label=Followers&style=social"></a>
 </p>
 
 ## 简介
