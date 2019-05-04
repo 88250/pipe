@@ -410,6 +410,9 @@
         } else {
           this.$set(this, 'topped', false)
         }
+        setTimeout(() => {
+          document.querySelector('.input-group__input input').focus()
+        }, 100)
       },
     },
     async mounted () {
