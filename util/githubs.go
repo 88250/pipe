@@ -17,6 +17,7 @@
 package util
 
 import (
+	"crypto/tls"
 	"net/http"
 	"time"
 
@@ -26,7 +27,8 @@ import (
 // GitHubUserInfo returns GitHub user info specified by the given access token.
 func GitHubUserInfo(accessToken string) (ret map[string]interface{}) {
 	result := map[string]interface{}{}
-	response, data, errors := gorequest.New().Get("https://hacpai.com/github/user?ak="+accessToken).Timeout(7*time.Second).
+	response, data, errors := gorequest.New().TLSClientConfig(&tls.Config{InsecureSkipVerify: true}).
+		Get(HacPaiURL+"/github/user?ak="+accessToken).Timeout(7*time.Second).
 		Set("User-Agent", "Pipe; +https://github.com/b3log/pipe").EndStruct(&result)
 	if nil != errors || http.StatusOK != response.StatusCode {
 		logger.Errorf("get github user info failed: %+v, %s", errors, data)

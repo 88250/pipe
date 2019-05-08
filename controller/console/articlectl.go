@@ -18,6 +18,7 @@
 package console
 
 import (
+	"crypto/tls"
 	"net/http"
 	"os"
 	"strconv"
@@ -116,7 +117,8 @@ func UploadTokenAction(c *gin.Context) {
 	}
 
 	requestResult := util.NewResult()
-	_, _, errs := gorequest.New().Post(util.HacPaiURL + "/apis/upload/token").
+	_, _, errs := gorequest.New().TLSClientConfig(&tls.Config{InsecureSkipVerify: true}).
+		Post(util.HacPaiURL+"/apis/upload/token").
 		SendStruct(requestJSON).Set("user-agent", model.UserAgent).Timeout(10 * time.Second).EndStruct(requestResult)
 	uploadTokenCheckTime = now
 	if nil != errs {

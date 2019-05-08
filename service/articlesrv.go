@@ -17,6 +17,7 @@
 package service
 
 import (
+	"crypto/tls"
 	"errors"
 	"fmt"
 	"net/url"
@@ -366,7 +367,8 @@ func (srv *articleService) ConsolePushArticle(article *model.Article) {
 		},
 	}
 	result := util.NewResult()
-	_, _, errs := gorequest.New().Post("https://rhythm.b3log.org/api/article").SendMap(requestJSON).
+	_, _, errs := gorequest.New().TLSClientConfig(&tls.Config{InsecureSkipVerify: true}).
+		Post("https://rhythm.b3log.org/api/article").SendMap(requestJSON).
 		Set("user-agent", model.UserAgent).Timeout(30*time.Second).
 		Retry(3, 5*time.Second).EndStruct(result)
 	if nil != errs {

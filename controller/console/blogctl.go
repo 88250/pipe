@@ -17,6 +17,7 @@
 package console
 
 import (
+	"crypto/tls"
 	"net/http"
 	"strconv"
 	"time"
@@ -81,7 +82,7 @@ func CheckVersionAction(c *gin.Context) {
 	defer c.JSON(http.StatusOK, result)
 
 	rhyResult := map[string]interface{}{}
-	request := gorequest.New()
+	request := gorequest.New().TLSClientConfig(&tls.Config{InsecureSkipVerify: true})
 	_, _, errs := request.Get("https://rhythm.b3log.org/version/pipe/latest/"+model.Version).
 		Set("User-Agent", model.UserAgent).Timeout(30*time.Second).
 		Retry(3, 5*time.Second).EndStruct(&rhyResult)

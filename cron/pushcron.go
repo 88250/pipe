@@ -17,6 +17,7 @@
 package cron
 
 import (
+	"crypto/tls"
 	"net/url"
 	"time"
 
@@ -82,10 +83,10 @@ func pushComments() {
 		blogTitleSetting := service.Setting.GetSetting(model.SettingCategoryBasic, model.SettingNameBasicBlogTitle, comment.BlogID)
 		requestJSON := map[string]interface{}{
 			"comment": map[string]interface{}{
-				"id":        comment.ID,
-				"articleId": comment.ArticleID,
-				"content":   comment.Content,
-				"authorName":    author.Name,
+				"id":         comment.ID,
+				"articleId":  comment.ArticleID,
+				"content":    comment.Content,
+				"authorName": author.Name,
 			},
 			"client": map[string]interface{}{
 				"name":      "Pipe",
@@ -97,7 +98,8 @@ func pushComments() {
 			},
 		}
 		result := &map[string]interface{}{}
-		_, _, errs := gorequest.New().Post("https://rhythm.b3log.org/api/comment").SendMap(requestJSON).
+		_, _, errs := gorequest.New().TLSClientConfig(&tls.Config{InsecureSkipVerify: true}).
+			Post("https://rhythm.b3log.org/api/comment").SendMap(requestJSON).
 			Set("user-agent", model.UserAgent).Timeout(30*time.Second).
 			Retry(3, 5*time.Second).EndStruct(result)
 		if nil != errs {
