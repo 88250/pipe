@@ -28,10 +28,10 @@ import (
 	"syscall"
 	"time"
 
+	"github.com/b3log/gulu"
 	"github.com/b3log/pipe/controller"
 	"github.com/b3log/pipe/cron"
 	"github.com/b3log/pipe/i18n"
-	"github.com/b3log/gulu"
 	"github.com/b3log/pipe/model"
 	"github.com/b3log/pipe/service"
 	"github.com/b3log/pipe/theme"
@@ -40,13 +40,13 @@ import (
 )
 
 // Logger
-var logger *log.Logger
+var logger *gulu.Logger
 
 // The only one init function in pipe.
 func init() {
 	rand.Seed(time.Now().UTC().UnixNano())
 
-	log.SetLevel("warn")
+	gulu.Log.SetLevel("warn")
 	logger = gulu.Log.NewLogger(os.Stdout)
 
 	model.LoadConf()
@@ -104,7 +104,7 @@ func handleSignal(server *http.Server) {
 
 func replaceServerConf() {
 	path := "theme/sw.min.js.tpl"
-	if util.File.IsExist(path) {
+	if gulu.File.IsExist(path) {
 		data, err := ioutil.ReadFile(path)
 		if nil != err {
 			logger.Fatal("read file [" + path + "] failed: " + err.Error())
@@ -119,7 +119,7 @@ func replaceServerConf() {
 		}
 	}
 
-	if util.File.IsExist("console/dist/") {
+	if gulu.File.IsExist("console/dist/") {
 		err := filepath.Walk("console/dist/", func(path string, f os.FileInfo, err error) error {
 			if strings.HasSuffix(path, ".tpl") {
 				data, err := ioutil.ReadFile(path)

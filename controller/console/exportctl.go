@@ -23,6 +23,7 @@ import (
 	"os"
 	"path/filepath"
 
+	"github.com/b3log/gulu"
 	"github.com/b3log/pipe/service"
 	"github.com/b3log/pipe/util"
 	"github.com/gin-gonic/gin"
@@ -44,7 +45,7 @@ func ExportMarkdownAction(c *gin.Context) {
 	tempDir := os.TempDir()
 	logger.Trace("temp dir path is [" + tempDir + "]")
 	zipFilePath := filepath.Join(tempDir, session.UName+"-export-md.zip")
-	zipFile, err := util.Zip.Create(zipFilePath)
+	zipFile, err := gulu.Zip.Create(zipFilePath)
 	if nil != err {
 		logger.Errorf("create zip file [" + zipFilePath + "] failed: " + err.Error())
 		result.Code = util.CodeErr

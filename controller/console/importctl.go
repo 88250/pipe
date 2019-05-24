@@ -23,6 +23,7 @@ import (
 	"os"
 	"path/filepath"
 
+	"github.com/b3log/gulu"
 	"github.com/b3log/pipe/service"
 	"github.com/b3log/pipe/util"
 	"github.com/gin-gonic/gin"
@@ -99,7 +100,7 @@ func ImportMarkdownAction(c *gin.Context) {
 
 		return
 	}
-	if err = util.Zip.Unzip(zipFilePath, unzipPath); nil != err {
+	if err = gulu.Zip.Unzip(zipFilePath, unzipPath); nil != err {
 		logger.Errorf("unzip [" + zipFilePath + "] to [" + unzipPath + "] failed: " + err.Error())
 		result.Code = util.CodeErr
 		result.Msg = "unzip failed"
