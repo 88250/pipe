@@ -18,12 +18,12 @@ package controller
 
 import (
 	"bytes"
-	"github.com/b3log/gulu"
 	"html/template"
 	"net/http"
 	"strconv"
 	"strings"
 
+	"github.com/b3log/gulu"
 	"github.com/b3log/pipe/model"
 	"github.com/b3log/pipe/service"
 	"github.com/b3log/pipe/util"

@@ -24,8 +24,8 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/b3log/pipe/controller/console"
 	"github.com/b3log/gulu"
+	"github.com/b3log/pipe/controller/console"
 	"github.com/b3log/pipe/model"
 	"github.com/b3log/pipe/theme"
 	"github.com/b3log/pipe/util"

@@ -17,10 +17,10 @@
 package controller
 
 import (
-	"github.com/b3log/gulu"
 	"net/http"
 	"text/template"
 
+	"github.com/b3log/gulu"
 	"github.com/b3log/pipe/model"
 	"github.com/b3log/pipe/service"
 	"github.com/gin-gonic/gin"

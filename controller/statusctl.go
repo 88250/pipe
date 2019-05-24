@@ -17,9 +17,9 @@
 package controller
 
 import (
-	"github.com/b3log/gulu"
 	"net/http"
 
+	"github.com/b3log/gulu"
 	"github.com/b3log/pipe/model"
 	"github.com/b3log/pipe/service"
 	"github.com/b3log/pipe/util"
