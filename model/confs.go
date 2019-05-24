@@ -28,7 +28,6 @@ import (
 	"time"
 
 	"github.com/b3log/gulu"
-	"github.com/b3log/pipe/util"
 	"github.com/jinzhu/gorm"
 )
 
@@ -127,7 +126,7 @@ func LoadConf() {
 	}
 
 	if "" == Conf.SessionSecret {
-		Conf.SessionSecret = util.RandString(32)
+		Conf.SessionSecret = gulu.Rand.String(32)
 	}
 
 	home, err := gulu.OS.Home()

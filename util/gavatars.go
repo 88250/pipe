@@ -34,7 +34,7 @@ var logger = gulu.Log.NewLogger(os.Stdout)
 func RandAvatarData() (ret []byte) {
 	modes := []string{"identicon", "monsterid", "wavatar", "retro", "robohash"}
 	d := modes[rand.Intn(len(modes))]
-	h := RandString(16)
+	h := gulu.Rand.String(16)
 
 	http.DefaultClient.Timeout = 2 * time.Second
 	response, err := http.Get("http://www.gravatar.com/avatar/" + h + "?s=256&d=" + d)

@@ -24,6 +24,7 @@ import (
 	"strings"
 
 	"github.com/PuerkitoBio/goquery"
+	"github.com/b3log/gulu"
 	"github.com/b3log/pipe/cron"
 	"github.com/b3log/pipe/model"
 	"github.com/b3log/pipe/service"
@@ -323,7 +324,7 @@ func getRecommendArticles(size int) []*model.ThemeArticle {
 		return ret
 	}
 
-	indics := util.RandInts(0, len(cron.RecommendArticles), size)
+	indics := gulu.Rand.Ints(0, len(cron.RecommendArticles), size)
 	for _, index := range indics {
 		article := cron.RecommendArticles[index]
 

@@ -61,7 +61,7 @@ func redirectGitHubLoginAction(c *gin.Context) {
 	if strings.HasSuffix(referer, "/") {
 		referer = referer[:len(referer)-1]
 	}
-	state := util.RandString(16) + referer
+	state := gulu.Rand.String(16) + referer
 	states[state] = state
 	path := loginAuthURL + "?client_id=" + clientId + "&state=" + state + "&scope=public_repo,read:user,user:follow"
 

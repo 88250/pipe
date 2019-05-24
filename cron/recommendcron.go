@@ -45,7 +45,7 @@ func refreshRecommendArticles() {
 	size := 7
 	articles := service.Article.GetPlatMostViewArticles(size)
 	size = len(articles)
-	indics := util.RandInts(0, size, size)
+	indics := gulu.Rand.Ints(0, size, size)
 	images := util.RandImages(size)
 	indics = indics[:len(images)]
 	var recommendations []*model.ThemeArticle

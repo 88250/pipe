@@ -6,7 +6,7 @@ require (
 	cloud.google.com/go v0.37.1 // indirect
 	github.com/PuerkitoBio/goquery v1.5.0
 	github.com/araddon/dateparse v0.0.0-20190223010137-262228af701e
-	github.com/b3log/gulu v0.0.0-20190524131809-b139a1750dff
+	github.com/b3log/gulu v0.0.0-20190524151330-5ed3fd9a7c51
 	github.com/beevik/etree v1.1.0 // indirect
 	github.com/bluele/gcache v0.0.0-20190301044115-79ae3b2d8680
 	github.com/clbanning/mxj v1.8.4 // indirect
@@ -39,9 +39,9 @@ require (
 	github.com/vinta/pangu v3.0.0+incompatible
 	golang.org/x/crypto v0.0.0-20190513172903-22d7a77e9e5f // indirect
 	golang.org/x/net v0.0.0-20190522155817-f3200d17e092 // indirect
-	golang.org/x/sys v0.0.0-20190524122548-abf6ff778158 // indirect
+	golang.org/x/sys v0.0.0-20190524151252-c3d486d151ce // indirect
 	golang.org/x/text v0.3.2
-	golang.org/x/tools v0.0.0-20190524125531-991f2949994b // indirect
+	golang.org/x/tools v0.0.0-20190524140312-2c0ae7006135 // indirect
 	gopkg.in/mgo.v2 v2.0.0-20180705113604-9856a29383ce // indirect
 	gopkg.in/russross/blackfriday.v2 v2.0.1
 	gopkg.in/yaml.v2 v2.2.2
