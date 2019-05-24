@@ -17,12 +17,12 @@
 package service
 
 import (
+	"github.com/b3log/gulu"
 	"log"
 	"os"
 	"testing"
 
 	"github.com/b3log/pipe/model"
-	"github.com/b3log/pipe/util"
 )
 
 const (
@@ -37,7 +37,7 @@ func TestMain(m *testing.M) {
 }
 
 func setup() {
-	home, err := util.UserHome()
+	home, err := gulu.OS.Home()
 	if nil != err {
 		logger.Fatal(err)
 	}
@@ -45,7 +45,7 @@ func setup() {
 	model.Conf = &model.Configuration{}
 	model.Conf.SQLite = home + "/pipe.test.db"
 
-	if util.File.IsExist(model.Conf.SQLite) {
+	if gulu.File.IsExist(model.Conf.SQLite) {
 		os.Remove(model.Conf.SQLite)
 	}
 
