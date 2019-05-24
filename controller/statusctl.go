@@ -17,6 +17,7 @@
 package controller
 
 import (
+	"github.com/b3log/gulu"
 	"net/http"
 
 	"github.com/b3log/pipe/model"
@@ -40,7 +41,7 @@ type Status struct {
 }
 
 func getStatusAction(c *gin.Context) {
-	result := util.NewResult()
+	result := gulu.Ret.NewResult()
 	defer c.JSON(http.StatusOK, result)
 
 	platformStatus, err := service.Init.Status()

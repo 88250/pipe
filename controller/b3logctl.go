@@ -17,6 +17,7 @@
 package controller
 
 import (
+	"github.com/b3log/gulu"
 	"net/http"
 	"strconv"
 
@@ -28,7 +29,7 @@ import (
 
 // addSymCommentAction adds a comment come from Sym. Sees https://hacpai.com/article/1457158841475 for more details.
 func addSymCommentAction(c *gin.Context) {
-	result := util.NewResult()
+	result := gulu.Ret.NewResult()
 	defer c.JSON(http.StatusOK, result)
 
 	arg := map[string]interface{}{}
@@ -103,7 +104,7 @@ func addSymCommentAction(c *gin.Context) {
 
 // addSymArticleAction adds an article come from Sym. Sees https://hacpai.com/article/1457158841475 for more details.
 func addSymArticleAction(c *gin.Context) {
-	result := util.NewResult()
+	result := gulu.Ret.NewResult()
 	defer c.JSON(http.StatusOK, result)
 
 	arg := map[string]interface{}{}

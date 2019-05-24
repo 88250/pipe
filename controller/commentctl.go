@@ -18,6 +18,7 @@ package controller
 
 import (
 	"bytes"
+	"github.com/b3log/gulu"
 	"html/template"
 	"net/http"
 	"strconv"
@@ -30,7 +31,7 @@ import (
 )
 
 func getRepliesAction(c *gin.Context) {
-	result := util.NewResult()
+	result := gulu.Ret.NewResult()
 	defer c.JSON(http.StatusOK, result)
 
 	blogID := getBlogID(c)
@@ -69,7 +70,7 @@ func getRepliesAction(c *gin.Context) {
 }
 
 func addCommentAction(c *gin.Context) {
-	result := util.NewResult()
+	result := gulu.Ret.NewResult()
 	defer c.JSON(http.StatusOK, result)
 
 	blogID := getBlogID(c)

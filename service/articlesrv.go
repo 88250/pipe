@@ -20,6 +20,7 @@ import (
 	"crypto/tls"
 	"errors"
 	"fmt"
+	"github.com/b3log/gulu"
 	"net/url"
 	"regexp"
 	"strconv"
@@ -366,7 +367,7 @@ func (srv *articleService) ConsolePushArticle(article *model.Article) {
 			"userB3Key": b3Key,
 		},
 	}
-	result := util.NewResult()
+	result := gulu.Ret.NewResult()
 	_, _, errs := gorequest.New().TLSClientConfig(&tls.Config{InsecureSkipVerify: true}).
 		Post("https://rhythm.b3log.org/api/article").SendMap(requestJSON).
 		Set("user-agent", model.UserAgent).Timeout(30*time.Second).

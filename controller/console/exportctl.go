@@ -31,7 +31,7 @@ import (
 
 // ExportMarkdownAction exports articles as markdown zip file.
 func ExportMarkdownAction(c *gin.Context) {
-	result := util.NewResult()
+	result := gulu.Ret.NewResult()
 	defer c.JSON(http.StatusOK, result)
 
 	session := util.GetSession(c)

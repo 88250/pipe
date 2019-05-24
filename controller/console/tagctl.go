@@ -17,6 +17,7 @@
 package console
 
 import (
+	"github.com/b3log/gulu"
 	"math"
 	"net/http"
 	"strconv"
@@ -29,7 +30,7 @@ import (
 
 // GetTagsAction gets tags.
 func GetTagsAction(c *gin.Context) {
-	result := util.NewResult()
+	result := gulu.Ret.NewResult()
 	defer c.JSON(http.StatusOK, result)
 
 	session := util.GetSession(c)
@@ -49,7 +50,7 @@ func GetTagsAction(c *gin.Context) {
 
 // GetTagsAction gets tags with pagination.
 func GetTagsPageAction(c *gin.Context) {
-	result := util.NewResult()
+	result := gulu.Ret.NewResult()
 	defer c.JSON(http.StatusOK, result)
 
 	session := util.GetSession(c)
@@ -73,7 +74,7 @@ func GetTagsPageAction(c *gin.Context) {
 
 // RemoveTagsAction remove tags that have no articles.
 func RemoveTagsAction(c *gin.Context) {
-	result := util.NewResult()
+	result := gulu.Ret.NewResult()
 	defer c.JSON(http.StatusOK, result)
 
 	idArg := c.Param("id")

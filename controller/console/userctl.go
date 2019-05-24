@@ -17,6 +17,7 @@
 package console
 
 import (
+	"github.com/b3log/gulu"
 	"net/http"
 
 	"github.com/b3log/pipe/model"
@@ -27,7 +28,7 @@ import (
 
 // AddUserAction adds a user.
 func AddUserAction(c *gin.Context) {
-	result := util.NewResult()
+	result := gulu.Ret.NewResult()
 	defer c.JSON(http.StatusOK, result)
 
 	arg := map[string]interface{}{}
@@ -58,7 +59,7 @@ func AddUserAction(c *gin.Context) {
 
 // GetUsersAction gets users.
 func GetUsersAction(c *gin.Context) {
-	result := util.NewResult()
+	result := gulu.Ret.NewResult()
 	defer c.JSON(http.StatusOK, result)
 
 	session := util.GetSession(c)

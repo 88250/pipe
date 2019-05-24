@@ -17,6 +17,7 @@
 package console
 
 import (
+	"github.com/b3log/gulu"
 	"net/http"
 	"strconv"
 
@@ -28,7 +29,7 @@ import (
 
 // UpdateCategoryAction updates a category.
 func UpdateCategoryAction(c *gin.Context) {
-	result := util.NewResult()
+	result := gulu.Ret.NewResult()
 	defer c.JSON(http.StatusOK, result)
 
 	idArg := c.Param("id")
@@ -59,7 +60,7 @@ func UpdateCategoryAction(c *gin.Context) {
 
 // GetCategoryAction gets a category.
 func GetCategoryAction(c *gin.Context) {
-	result := util.NewResult()
+	result := gulu.Ret.NewResult()
 	defer c.JSON(http.StatusOK, result)
 
 	idArg := c.Param("id")
@@ -83,7 +84,7 @@ func GetCategoryAction(c *gin.Context) {
 
 // GetCategoriesAction gets categories.
 func GetCategoriesAction(c *gin.Context) {
-	result := util.NewResult()
+	result := gulu.Ret.NewResult()
 	defer c.JSON(http.StatusOK, result)
 
 	session := util.GetSession(c)
@@ -110,7 +111,7 @@ func GetCategoriesAction(c *gin.Context) {
 
 // AddCategoryAction adds a category.
 func AddCategoryAction(c *gin.Context) {
-	result := util.NewResult()
+	result := gulu.Ret.NewResult()
 	defer c.JSON(http.StatusOK, result)
 
 	session := util.GetSession(c)
@@ -132,7 +133,7 @@ func AddCategoryAction(c *gin.Context) {
 
 // RemoveCategoryAction removes a category.
 func RemoveCategoryAction(c *gin.Context) {
-	result := util.NewResult()
+	result := gulu.Ret.NewResult()
 	defer c.JSON(http.StatusOK, result)
 
 	idArg := c.Param("id")

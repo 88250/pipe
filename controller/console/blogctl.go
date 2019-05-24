@@ -18,6 +18,7 @@ package console
 
 import (
 	"crypto/tls"
+	"github.com/b3log/gulu"
 	"net/http"
 	"strconv"
 	"time"
@@ -31,7 +32,7 @@ import (
 
 // BlogSwitchAction switches blog.
 func BlogSwitchAction(c *gin.Context) {
-	result := util.NewResult()
+	result := gulu.Ret.NewResult()
 	defer c.JSON(http.StatusOK, result)
 
 	idArg := c.Param("id")
@@ -78,7 +79,7 @@ func BlogSwitchAction(c *gin.Context) {
 
 // CheckVersionAction checks version.
 func CheckVersionAction(c *gin.Context) {
-	result := util.NewResult()
+	result := gulu.Ret.NewResult()
 	defer c.JSON(http.StatusOK, result)
 
 	rhyResult := map[string]interface{}{}

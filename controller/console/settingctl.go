@@ -18,6 +18,7 @@
 package console
 
 import (
+	"github.com/b3log/gulu"
 	"net/http"
 	"net/url"
 	"path"
@@ -32,7 +33,7 @@ import (
 
 // GetBasicSettingsAction gets basic settings.
 func GetBasicSettingsAction(c *gin.Context) {
-	result := util.NewResult()
+	result := gulu.Ret.NewResult()
 	defer c.JSON(http.StatusOK, result)
 
 	session := util.GetSession(c)
@@ -57,7 +58,7 @@ func GetBasicSettingsAction(c *gin.Context) {
 
 // UpdateBasicSettingsAction updates basic settings.
 func UpdateBasicSettingsAction(c *gin.Context) {
-	result := util.NewResult()
+	result := gulu.Ret.NewResult()
 	defer c.JSON(http.StatusOK, result)
 
 	args := map[string]interface{}{}
@@ -117,7 +118,7 @@ func UpdateBasicSettingsAction(c *gin.Context) {
 
 // GetPreferenceSettingsAction gets preference settings.
 func GetPreferenceSettingsAction(c *gin.Context) {
-	result := util.NewResult()
+	result := gulu.Ret.NewResult()
 	defer c.JSON(http.StatusOK, result)
 
 	session := util.GetSession(c)
@@ -142,7 +143,7 @@ func GetPreferenceSettingsAction(c *gin.Context) {
 
 // UpdatePreferenceSettingsAction updates preference settings.
 func UpdatePreferenceSettingsAction(c *gin.Context) {
-	result := util.NewResult()
+	result := gulu.Ret.NewResult()
 	defer c.JSON(http.StatusOK, result)
 
 	args := map[string]interface{}{}
@@ -181,7 +182,7 @@ func UpdatePreferenceSettingsAction(c *gin.Context) {
 
 // GetSignSettingsAction gets sign settings.
 func GetSignSettingsAction(c *gin.Context) {
-	result := util.NewResult()
+	result := gulu.Ret.NewResult()
 	defer c.JSON(http.StatusOK, result)
 
 	session := util.GetSession(c)
@@ -191,7 +192,7 @@ func GetSignSettingsAction(c *gin.Context) {
 
 // UpdateSignSettingsAction updates sign settings.
 func UpdateSignSettingsAction(c *gin.Context) {
-	result := util.NewResult()
+	result := gulu.Ret.NewResult()
 	defer c.JSON(http.StatusOK, result)
 
 	args := map[string]interface{}{}
@@ -220,7 +221,7 @@ func UpdateSignSettingsAction(c *gin.Context) {
 
 // GetI18nSettingsAction gets i18n settings.
 func GetI18nSettingsAction(c *gin.Context) {
-	result := util.NewResult()
+	result := gulu.Ret.NewResult()
 	defer c.JSON(http.StatusOK, result)
 
 	session := util.GetSession(c)
@@ -234,7 +235,7 @@ func GetI18nSettingsAction(c *gin.Context) {
 
 // UpdateI18nSettingsAction updates i18n settings.
 func UpdateI18nSettingsAction(c *gin.Context) {
-	result := util.NewResult()
+	result := gulu.Ret.NewResult()
 	defer c.JSON(http.StatusOK, result)
 
 	args := map[string]interface{}{}
@@ -265,7 +266,7 @@ func UpdateI18nSettingsAction(c *gin.Context) {
 
 // GetFeedSettingsAction gets feed settings.
 func GetFeedSettingsAction(c *gin.Context) {
-	result := util.NewResult()
+	result := gulu.Ret.NewResult()
 	defer c.JSON(http.StatusOK, result)
 
 	session := util.GetSession(c)
@@ -289,7 +290,7 @@ func GetFeedSettingsAction(c *gin.Context) {
 
 // UpdateFeedSettingsAction updates feed settings.
 func UpdateFeedSettingsAction(c *gin.Context) {
-	result := util.NewResult()
+	result := gulu.Ret.NewResult()
 	defer c.JSON(http.StatusOK, result)
 
 	args := map[string]interface{}{}
@@ -328,7 +329,7 @@ func UpdateFeedSettingsAction(c *gin.Context) {
 
 // GetThirdStatisticSettingsAction gets third statistic settings.
 func GetThirdStatisticSettingsAction(c *gin.Context) {
-	result := util.NewResult()
+	result := gulu.Ret.NewResult()
 	defer c.JSON(http.StatusOK, result)
 
 	session := util.GetSession(c)
@@ -341,7 +342,7 @@ func GetThirdStatisticSettingsAction(c *gin.Context) {
 
 // UpdateThirdStatisticSettingsAction updates third statistic settings.
 func UpdateThirdStatisticSettingsAction(c *gin.Context) {
-	result := util.NewResult()
+	result := gulu.Ret.NewResult()
 	defer c.JSON(http.StatusOK, result)
 
 	args := map[string]interface{}{}
@@ -370,7 +371,7 @@ func UpdateThirdStatisticSettingsAction(c *gin.Context) {
 
 // GetAdSettingsAction get advertisement settings.
 func GetAdSettingsAction(c *gin.Context) {
-	result := util.NewResult()
+	result := gulu.Ret.NewResult()
 	defer c.JSON(http.StatusOK, result)
 
 	session := util.GetSession(c)
@@ -383,7 +384,7 @@ func GetAdSettingsAction(c *gin.Context) {
 
 // UpdateAdSettingsAction update third statistic settings.
 func UpdateAdSettingsAction(c *gin.Context) {
-	result := util.NewResult()
+	result := gulu.Ret.NewResult()
 	defer c.JSON(http.StatusOK, result)
 
 	args := map[string]interface{}{}

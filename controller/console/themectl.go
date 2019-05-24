@@ -17,6 +17,7 @@
 package console
 
 import (
+	"github.com/b3log/gulu"
 	"net/http"
 
 	"github.com/b3log/pipe/model"
@@ -28,7 +29,7 @@ import (
 
 // UpdateThemeAction updates theme.
 func UpdateThemeAction(c *gin.Context) {
-	result := util.NewResult()
+	result := gulu.Ret.NewResult()
 	defer c.JSON(http.StatusOK, result)
 
 	theme := c.Param("id")
@@ -50,7 +51,7 @@ func UpdateThemeAction(c *gin.Context) {
 
 // GetThemesAction gets themes.
 func GetThemesAction(c *gin.Context) {
-	result := util.NewResult()
+	result := gulu.Ret.NewResult()
 	defer c.JSON(http.StatusOK, result)
 
 	session := util.GetSession(c)

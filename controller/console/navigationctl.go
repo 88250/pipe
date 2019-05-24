@@ -17,6 +17,7 @@
 package console
 
 import (
+	"github.com/b3log/gulu"
 	"net/http"
 	"strconv"
 
@@ -28,7 +29,7 @@ import (
 
 // GetNavigationsAction gets navigations.
 func GetNavigationsAction(c *gin.Context) {
-	result := util.NewResult()
+	result := gulu.Ret.NewResult()
 	defer c.JSON(http.StatusOK, result)
 
 	session := util.GetSession(c)
@@ -56,7 +57,7 @@ func GetNavigationsAction(c *gin.Context) {
 
 // GetNavigationAction gets a navigation.
 func GetNavigationAction(c *gin.Context) {
-	result := util.NewResult()
+	result := gulu.Ret.NewResult()
 	defer c.JSON(http.StatusOK, result)
 
 	idArg := c.Param("id")
@@ -79,7 +80,7 @@ func GetNavigationAction(c *gin.Context) {
 
 // RemoveNavigationAction remove a navigation.
 func RemoveNavigationAction(c *gin.Context) {
-	result := util.NewResult()
+	result := gulu.Ret.NewResult()
 	defer c.JSON(http.StatusOK, result)
 
 	idArg := c.Param("id")
@@ -102,7 +103,7 @@ func RemoveNavigationAction(c *gin.Context) {
 
 // UpdateNavigationAction updates a navigation.
 func UpdateNavigationAction(c *gin.Context) {
-	result := util.NewResult()
+	result := gulu.Ret.NewResult()
 	defer c.JSON(http.StatusOK, result)
 
 	idArg := c.Param("id")
@@ -133,7 +134,7 @@ func UpdateNavigationAction(c *gin.Context) {
 
 // AddNavigationAction adds a navigation.
 func AddNavigationAction(c *gin.Context) {
-	result := util.NewResult()
+	result := gulu.Ret.NewResult()
 	defer c.JSON(http.StatusOK, result)
 
 	session := util.GetSession(c)

@@ -40,7 +40,7 @@ var logger = gulu.Log.NewLogger(os.Stdout)
 
 // PushArticle2RhyAction pushes an article to community.
 func PushArticle2RhyAction(c *gin.Context) {
-	result := util.NewResult()
+	result := gulu.Ret.NewResult()
 	defer c.JSON(http.StatusOK, result)
 
 	idArg := c.Param("id")
@@ -63,7 +63,7 @@ func PushArticle2RhyAction(c *gin.Context) {
 
 // MarkdownAction handles markdown text to HTML.
 func MarkdownAction(c *gin.Context) {
-	result := util.NewResult()
+	result := gulu.Ret.NewResult()
 	defer c.JSON(http.StatusOK, result)
 
 	arg := map[string]interface{}{}
@@ -84,7 +84,7 @@ var uploadToken, uploadURL = "", "https://hacpai.com/upload/client"
 
 // UploadTokenAction gets a upload token.
 func UploadTokenAction(c *gin.Context) {
-	result := util.NewResult()
+	result := gulu.Ret.NewResult()
 	defer c.JSON(http.StatusOK, result)
 
 	session := util.GetSession(c)
@@ -116,7 +116,7 @@ func UploadTokenAction(c *gin.Context) {
 		"userB3Key": session.UB3Key,
 	}
 
-	requestResult := util.NewResult()
+	requestResult := gulu.Ret.NewResult()
 	_, _, errs := gorequest.New().TLSClientConfig(&tls.Config{InsecureSkipVerify: true}).
 		Post(util.HacPaiURL+"/apis/upload/token").
 		SendStruct(requestJSON).Set("user-agent", model.UserAgent).Timeout(10 * time.Second).EndStruct(requestResult)
@@ -145,7 +145,7 @@ func UploadTokenAction(c *gin.Context) {
 
 // AddArticleAction adds a new article.
 func AddArticleAction(c *gin.Context) {
-	result := util.NewResult()
+	result := gulu.Ret.NewResult()
 	defer c.JSON(http.StatusOK, result)
 
 	arg := map[string]interface{}{}
@@ -196,7 +196,7 @@ func AddArticleAction(c *gin.Context) {
 
 // GetArticleAction gets an article.
 func GetArticleAction(c *gin.Context) {
-	result := util.NewResult()
+	result := gulu.Ret.NewResult()
 	defer c.JSON(http.StatusOK, result)
 
 	idArg := c.Param("id")
@@ -222,7 +222,7 @@ func GetArticleAction(c *gin.Context) {
 
 // GetArticlesAction gets articles.
 func GetArticlesAction(c *gin.Context) {
-	result := util.NewResult()
+	result := gulu.Ret.NewResult()
 	defer c.JSON(http.StatusOK, result)
 
 	session := util.GetSession(c)
@@ -271,7 +271,7 @@ func GetArticlesAction(c *gin.Context) {
 
 // RemoveArticleAction removes an article.
 func RemoveArticleAction(c *gin.Context) {
-	result := util.NewResult()
+	result := gulu.Ret.NewResult()
 	defer c.JSON(http.StatusOK, result)
 
 	idArg := c.Param("id")
@@ -294,7 +294,7 @@ func RemoveArticleAction(c *gin.Context) {
 
 // RemoveArticlesAction removes articles.
 func RemoveArticlesAction(c *gin.Context) {
-	result := util.NewResult()
+	result := gulu.Ret.NewResult()
 	defer c.JSON(http.StatusOK, result)
 
 	arg := map[string]interface{}{}
@@ -318,7 +318,7 @@ func RemoveArticlesAction(c *gin.Context) {
 
 // UpdateArticleAction updates an article.
 func UpdateArticleAction(c *gin.Context) {
-	result := util.NewResult()
+	result := gulu.Ret.NewResult()
 	defer c.JSON(http.StatusOK, result)
 
 	idArg := c.Param("id")
@@ -382,7 +382,7 @@ func UpdateArticleAction(c *gin.Context) {
 
 // GetArticleThumbsAction gets article thumbnails.
 func GetArticleThumbsAction(c *gin.Context) {
-	result := util.NewResult()
+	result := gulu.Ret.NewResult()
 	defer c.JSON(http.StatusOK, result)
 
 	n, _ := strconv.Atoi(c.Query("n"))

@@ -17,12 +17,12 @@
 package controller
 
 import (
+	"github.com/b3log/gulu"
 	"net/http"
 	"text/template"
 
 	"github.com/b3log/pipe/model"
 	"github.com/b3log/pipe/service"
-	"github.com/b3log/pipe/util"
 	"github.com/gin-gonic/gin"
 )
 
@@ -51,7 +51,7 @@ func showStartPageAction(c *gin.Context) {
 }
 
 func showPlatInfoAction(c *gin.Context) {
-	result := util.NewResult()
+	result := gulu.Ret.NewResult()
 	defer c.JSON(http.StatusOK, result)
 
 	data := map[string]interface{}{}
@@ -66,7 +66,7 @@ func showPlatInfoAction(c *gin.Context) {
 }
 
 func showTopBlogsAction(c *gin.Context) {
-	result := util.NewResult()
+	result := gulu.Ret.NewResult()
 	defer c.JSON(http.StatusOK, result)
 
 	blogs := service.User.GetTopBlogs(10)

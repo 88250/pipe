@@ -31,7 +31,7 @@ import (
 
 // ImportMarkdownAction imports markdown zip file as articles.
 func ImportMarkdownAction(c *gin.Context) {
-	result := util.NewResult()
+	result := gulu.Ret.NewResult()
 	defer c.JSON(http.StatusOK, result)
 
 	session := util.GetSession(c)

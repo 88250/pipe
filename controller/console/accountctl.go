@@ -17,6 +17,7 @@
 package console
 
 import (
+	"github.com/b3log/gulu"
 	"net/http"
 
 	"github.com/b3log/pipe/service"
@@ -26,7 +27,7 @@ import (
 
 // UpdateAccountAction updates an account.
 func UpdateAccountAction(c *gin.Context) {
-	result := util.NewResult()
+	result := gulu.Ret.NewResult()
 	defer c.JSON(http.StatusOK, result)
 
 	arg := map[string]interface{}{}
@@ -57,7 +58,7 @@ func UpdateAccountAction(c *gin.Context) {
 
 // GetAccountAction gets an account.
 func GetAccountAction(c *gin.Context) {
-	result := util.NewResult()
+	result := gulu.Ret.NewResult()
 	defer c.JSON(http.StatusOK, result)
 
 	session := util.GetSession(c)

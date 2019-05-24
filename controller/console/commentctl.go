@@ -17,6 +17,7 @@
 package console
 
 import (
+	"github.com/b3log/gulu"
 	"html/template"
 	"net/http"
 	"strconv"
@@ -29,7 +30,7 @@ import (
 
 // GetCommentsAction gets comments
 func GetCommentsAction(c *gin.Context) {
-	result := util.NewResult()
+	result := gulu.Ret.NewResult()
 	defer c.JSON(http.StatusOK, result)
 
 	session := util.GetSession(c)
@@ -82,7 +83,7 @@ func GetCommentsAction(c *gin.Context) {
 
 // RemoveCommentAction removes a comment.
 func RemoveCommentAction(c *gin.Context) {
-	result := util.NewResult()
+	result := gulu.Ret.NewResult()
 	defer c.JSON(http.StatusOK, result)
 
 	idArg := c.Param("id")
@@ -105,7 +106,7 @@ func RemoveCommentAction(c *gin.Context) {
 
 // RemoveCommentsAction removes comments.
 func RemoveCommentsAction(c *gin.Context) {
-	result := util.NewResult()
+	result := gulu.Ret.NewResult()
 	defer c.JSON(http.StatusOK, result)
 
 	arg := map[string]interface{}{}
