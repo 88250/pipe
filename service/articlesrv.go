@@ -20,7 +20,6 @@ import (
 	"crypto/tls"
 	"errors"
 	"fmt"
-	"github.com/b3log/gulu"
 	"net/url"
 	"regexp"
 	"strconv"
@@ -28,11 +27,11 @@ import (
 	"sync"
 	"time"
 
-	"github.com/parnurzeal/gorequest"
-
+	"github.com/b3log/gulu"
 	"github.com/b3log/pipe/model"
 	"github.com/b3log/pipe/util"
 	"github.com/jinzhu/gorm"
+	"github.com/parnurzeal/gorequest"
 )
 
 // Article service.
