@@ -25,12 +25,11 @@ import (
 	"sort"
 	"strings"
 
-	"github.com/b3log/pipe/log"
-	"github.com/b3log/pipe/util"
+	"github.com/b3log/gulu"
 )
 
 // Logger
-var logger = log.NewLogger(os.Stdout)
+var logger = gulu.Log.NewLogger(os.Stdout)
 
 type locale struct {
 	Name     string
@@ -47,7 +46,7 @@ func Load() {
 	f.Close()
 
 	for _, name := range names {
-		if !util.IsLetter(rune(name[0])) || !strings.HasSuffix(name, ".json") {
+		if !gulu.Rune.IsLetter(rune(name[0])) || !strings.HasSuffix(name, ".json") {
 			continue
 		}
 

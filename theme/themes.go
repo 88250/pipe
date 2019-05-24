@@ -18,13 +18,13 @@
 package theme
 
 import (
-	"github.com/b3log/pipe/log"
-	"github.com/b3log/pipe/util"
 	"os"
+
+	"github.com/b3log/gulu"
 )
 
 // Logger
-var logger = log.NewLogger(os.Stdout)
+var logger = gulu.Log.NewLogger(os.Stdout)
 
 // DefaultTheme represents the default theme name.
 const DefaultTheme = "Littlewin"
@@ -39,7 +39,7 @@ func Load() {
 	f.Close()
 
 	for _, name := range names {
-		if !util.IsNumOrLetter(rune(name[0])) {
+		if !gulu.Rune.IsNumOrLetter(rune(name[0])) {
 			continue
 		}
 

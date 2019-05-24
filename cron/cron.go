@@ -20,11 +20,11 @@ package cron
 import (
 	"os"
 
-	"github.com/b3log/pipe/log"
+	"github.com/b3log/gulu"
 )
 
 // Logger
-var logger = log.NewLogger(os.Stdout)
+var logger = gulu.Log.NewLogger(os.Stdout)
 
 // Start starts all cron tasks.
 func Start() {

@@ -25,7 +25,7 @@ import (
 	"strings"
 
 	"github.com/b3log/pipe/controller/console"
-	"github.com/b3log/pipe/log"
+	"github.com/b3log/gulu"
 	"github.com/b3log/pipe/model"
 	"github.com/b3log/pipe/theme"
 	"github.com/b3log/pipe/util"
@@ -35,7 +35,7 @@ import (
 )
 
 // Logger
-var logger = log.NewLogger(os.Stdout)
+var logger = gulu.Log.NewLogger(os.Stdout)
 
 // MapRoutes returns a gin engine and binds controllers with request URLs.
 func MapRoutes() *gin.Engine {

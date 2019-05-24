@@ -31,7 +31,7 @@ import (
 	"github.com/b3log/pipe/controller"
 	"github.com/b3log/pipe/cron"
 	"github.com/b3log/pipe/i18n"
-	"github.com/b3log/pipe/log"
+	"github.com/b3log/gulu"
 	"github.com/b3log/pipe/model"
 	"github.com/b3log/pipe/service"
 	"github.com/b3log/pipe/theme"
@@ -47,7 +47,7 @@ func init() {
 	rand.Seed(time.Now().UTC().UnixNano())
 
 	log.SetLevel("warn")
-	logger = log.NewLogger(os.Stdout)
+	logger = gulu.Log.NewLogger(os.Stdout)
 
 	model.LoadConf()
 	util.LoadMarkdown()

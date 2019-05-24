@@ -19,7 +19,7 @@ package service
 import (
 	"os"
 
-	"github.com/b3log/pipe/log"
+	"github.com/b3log/gulu"
 	"github.com/b3log/pipe/model"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"  // mysql
@@ -27,7 +27,7 @@ import (
 )
 
 // Logger
-var logger = log.NewLogger(os.Stdout)
+var logger = gulu.Log.NewLogger(os.Stdout)
 
 var db *gorm.DB
 var useSQLite bool

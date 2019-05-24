@@ -20,13 +20,13 @@ package cache
 import (
 	"os"
 
-	"github.com/b3log/pipe/log"
+	"github.com/b3log/gulu"
 	"github.com/b3log/pipe/model"
 	"github.com/bluele/gcache"
 )
 
 // Logger
-var logger = log.NewLogger(os.Stdout)
+var logger = gulu.Log.NewLogger(os.Stdout)
 
 // Article cache.
 var Article = &articleCache{

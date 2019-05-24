@@ -17,11 +17,17 @@
 package util
 
 import (
-	"net/http"
-	"time"
 	"io/ioutil"
 	"math/rand"
+	"net/http"
+	"os"
+	"time"
+
+	"github.com/b3log/gulu"
 )
+
+// Logger
+var logger = gulu.Log.NewLogger(os.Stdout)
 
 // RandAvatarData returns random avatar image byte array data from Gravatar (http://www.gravatar.com).
 // Sees https://github.com/b3log/pipe/issues/131 for more details.

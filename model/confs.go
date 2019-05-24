@@ -27,13 +27,13 @@ import (
 	"strings"
 	"time"
 
-	"github.com/b3log/pipe/log"
+	"github.com/b3log/gulu"
 	"github.com/b3log/pipe/util"
 	"github.com/jinzhu/gorm"
 )
 
 // Logger
-var logger = log.NewLogger(os.Stdout)
+var logger = gulu.Log.NewLogger(os.Stdout)
 
 // Version of Pipe.
 const Version = "1.8.9"
@@ -108,10 +108,10 @@ func LoadConf() {
 		logger.Fatal("parses [pipe.json] failed: ", err)
 	}
 
-	log.SetLevel(Conf.LogLevel)
+	gulu.Log.SetLevel(Conf.LogLevel)
 	if "" != *confLogLevel {
 		Conf.LogLevel = *confLogLevel
-		log.SetLevel(*confLogLevel)
+		gulu.Log.SetLevel(*confLogLevel)
 	}
 
 	if *confShowSQL {
@@ -130,7 +130,7 @@ func LoadConf() {
 		Conf.SessionSecret = util.RandString(32)
 	}
 
-	home, err := util.UserHome()
+	home, err := gulu.OS.Home()
 	if nil != err {
 		logger.Fatal("can't find user home directory: " + err.Error())
 	}

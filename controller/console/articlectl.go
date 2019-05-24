@@ -26,7 +26,7 @@ import (
 	"time"
 
 	"github.com/araddon/dateparse"
-	"github.com/b3log/pipe/log"
+	"github.com/b3log/gulu"
 	"github.com/b3log/pipe/model"
 	"github.com/b3log/pipe/service"
 	"github.com/b3log/pipe/util"
@@ -36,7 +36,7 @@ import (
 )
 
 // Logger
-var logger = log.NewLogger(os.Stdout)
+var logger = gulu.Log.NewLogger(os.Stdout)
 
 // PushArticle2RhyAction pushes an article to community.
 func PushArticle2RhyAction(c *gin.Context) {

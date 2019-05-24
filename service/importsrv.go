@@ -24,6 +24,7 @@ import (
 	"time"
 
 	"github.com/araddon/dateparse"
+	"github.com/b3log/gulu"
 	"github.com/b3log/pipe/model"
 	"github.com/b3log/pipe/util"
 	"gopkg.in/yaml.v2"
@@ -103,7 +104,7 @@ func (srv *importService) ImportMarkdowns(mdFiles []*MarkdownFile, authorID, blo
 }
 
 func parseArticle(mdFile *MarkdownFile) *model.Article {
-	util.Recover()
+	gulu.Panic.Recover()
 
 	content := strings.TrimSpace(mdFile.Content)
 	frontMatter := strings.Split(content, "---")[0]
