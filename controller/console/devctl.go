@@ -17,6 +17,7 @@
 package console
 
 import (
+	"math/rand"
 	"net/http"
 	"strconv"
 
@@ -24,7 +25,6 @@ import (
 	"github.com/b3log/pipe/service"
 	"github.com/b3log/pipe/util"
 	"github.com/gin-gonic/gin"
-	"math/rand"
 )
 
 // GenArticlesAction generates articles for testing.
