@@ -22,7 +22,7 @@
     "babel-polyfill": "^6.26.0",
     "particles.js": "^2.0.0",
     "sha512crypt-node": "^0.1.0",
-    "vditor": "^1.3.4",
+    "vditor": "^1.4.4",
     "vue-axios": "^2.1.4",
     "vue-i18n": "^8.11.2",
     "vuetify": "git+https://github.com/Vanessa219/vuetify.git#v1.2.11"
@@ -34,13 +34,13 @@
     "eslint": "^5.16.0",
     "eslint-config-standard": "^12.0.0",
     "eslint-loader": "^2.1.2",
-    "eslint-plugin-html": "^5.0.3",
+    "eslint-plugin-html": "^5.0.5",
     "eslint-plugin-import": "^2.17.2",
-    "eslint-plugin-node": "^9.0.1",
+    "eslint-plugin-node": "^9.1.0",
     "eslint-plugin-promise": "^4.1.1",
     "eslint-plugin-standard": "^4.0.0",
     "node-sass": "^4.12.0",
-    "nuxt": "^2.6.3",
+    "nuxt": "^2.7.1",
     "sass-loader": "^7.1.0"
   }
 }
