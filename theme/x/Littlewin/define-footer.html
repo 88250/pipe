@@ -31,10 +31,6 @@
         id="script"
         data-blogurl="{{.BlogURL}}"
         data-isLogin="{{if eq .User.URole 0}}false{{else}}true{{end}}"
-        {{if .Article}}
-        src="{{.Conf.StaticServer}}/theme/x/{{.Setting.ThemeName}}/js/article.min.js?{{.Conf.StaticResourceVersion}}"
-        {{else}}
         src="{{.Conf.StaticServer}}/theme/x/{{.Setting.ThemeName}}/js/common.min.js?{{.Conf.StaticResourceVersion}}"
-        {{end}}
 ></script>
 {{end}}

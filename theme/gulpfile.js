@@ -2,7 +2,7 @@
  * @file themes tool.
  *
  * @author <a href='http://vanessa.b3log.org'>Liyuan Li</a>
- * @version 1.0.0.0, Nov 8, 2018
+ * @version 1.0.0.1, May 28, 2019
  */
 
 const gulp = require('gulp')
@@ -36,7 +36,6 @@ function baseSassProcessWatch () {
 
 function devJSProcessWatch () {
   const watcher = gulp.watch([
-    './x/*/js/article.js',
     './x/*/js/common.js'])
 
   watcher.on('change', function (entry) {
@@ -96,16 +95,6 @@ function minThemeJS () {
         bundle().
         on('error', function (err) { console.error(err) }).
         pipe(source(`${jsPath}/common.js`)).
-        pipe(rename({suffix: '.min'})).
-        pipe(buffer()).
-        pipe(uglify()).
-        pipe(gulp.dest('.'))
-      fs.statSync(`${jsPath}/article.js`)
-      browserify({entries: [`${jsPath}/article.js`]}).
-        transform('babelify', {presets: ['@babel/preset-env']}).
-        bundle().
-        on('error', function (err) { console.error(err) }).
-        pipe(source(`${jsPath}/article.js`)).
         pipe(rename({suffix: '.min'})).
         pipe(buffer()).
         pipe(uglify()).
