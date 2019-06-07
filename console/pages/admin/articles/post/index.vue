@@ -477,7 +477,7 @@
 
       this.getThumbs()
 
-      this.addStyle('https://cdn.jsdelivr.net/npm/vditor@1.5.2/dist/js/highlight.js@9.15.8/styles/atom-one-light.css', 'vditorHljsStyle')
+      this.addStyle('https://cdn.jsdelivr.net/npm/vditor@1.5.4/dist/js/highlight.js@9.15.8/styles/atom-one-light.css', 'vditorHljsStyle')
     },
   }
 </script>

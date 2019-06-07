@@ -18,7 +18,7 @@ export const ParseHljs = () => {
   if (!$('#pipeLang').data('markedavailable')) {
     if (typeof hljs === 'undefined') {
       $.ajax({
-        url: 'https://cdn.jsdelivr.net/npm/vditor@1.5.2/dist/js/highlight.js@9.15.8/highlight.pack.js',
+        url: 'https://cdn.jsdelivr.net/npm/vditor@1.5.4/dist/js/highlight.js@9.15.8/highlight.pack.js',
         dataType: 'script',
         cache: true,
         success: function () {
@@ -327,7 +327,7 @@ export const initPjax = (cb) => {
 (() => {
   $.ajax({
     method: 'GET',
-    url: 'https://cdn.jsdelivr.net/npm/vditor@1.5.2/dist/index.min.js',
+    url: 'https://cdn.jsdelivr.net/npm/vditor@1.5.4/dist/index.min.js',
     dataType: 'script',
     cache: true,
     success: () => {
