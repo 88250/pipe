@@ -17,7 +17,7 @@
       </template>
       <template v-if="$store.state.role !== 0">
         <span class="header__bar--icon fn__flex-1">
-          <span v-if="$route.path.indexOf('/admin') > -1 && from !== 'error'">
+          <span v-if="$route.path.indexOf('/admin') > -1">
             <div class="side__icon fn__left" @click="toggleSide">
               <span class="side__icon-line"></span>
               <span class="side__icon-line side__icon-line--middle"></span>
@@ -71,12 +71,6 @@
   import { initParticlesJS } from '~/plugins/utils'
 
   export default {
-    props: {
-      from: {
-        type: String,
-        required: true
-      }
-    },
     methods: {
       goAdmin () {
         this.$router.push('/admin')
