@@ -40,7 +40,6 @@ var logger = gulu.Log.NewLogger(os.Stdout)
 // MapRoutes returns a gin engine and binds controllers with request URLs.
 func MapRoutes() *gin.Engine {
 	ret := gin.New()
-	ret.Use(cors())
 	ret.SetFuncMap(template.FuncMap{
 		"dict": func(values ...interface{}) (map[string]interface{}, error) {
 			if len(values)%2 != 0 {
@@ -246,6 +245,10 @@ func routePath(c *gin.Context) {
 		return
 	case util.PathOpensearch:
 		showOpensearchAction(c)
+
+		return
+	case util.PathManifest:
+		showManifestAction(c)
 
 		return
 	case util.PathAPIsSymComment:

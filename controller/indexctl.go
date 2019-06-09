@@ -17,7 +17,9 @@
 package controller
 
 import (
+	"io/ioutil"
 	"net/http"
+	"path/filepath"
 	"text/template"
 
 	"github.com/b3log/gulu"
@@ -77,4 +79,16 @@ func showTopBlogsAction(c *gin.Context) {
 	}
 
 	result.Data = blogs
+}
+
+func showManifestAction(c *gin.Context) {
+	data, err := ioutil.ReadFile(filepath.FromSlash("theme/js/manifest.json"))
+	if nil != err {
+		notFound(c)
+
+		return
+	}
+
+	c.Writer.Header().Set("Content-Type", "application/json; charset=utf-8")
+	c.Writer.Write(data)
 }

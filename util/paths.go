@@ -23,7 +23,7 @@ import (
 // Path prefixes.
 const (
 	PathRoot           = "/"
-	PathInit            = "/start"
+	PathInit           = "/start"
 	PathSearch         = "/search"
 	PathOpensearch     = "/opensearch.xml"
 	PathBlogs          = "/blogs"
@@ -47,6 +47,7 @@ const (
 	PathAPIsSymArticle = "/apis/symphony/article"
 	PathAPIsSymComment = "/apis/symphony/comment"
 	PathPlatInfo       = "/plat/info"
+	PathManifest       = "/manifest.json"
 )
 
 var reservedPaths = []string{
