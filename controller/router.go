@@ -145,6 +145,7 @@ func MapRoutes() *gin.Engine {
 	consoleSettingsGroup.PUT("/account", console.UpdateAccountAction)
 
 	ret.StaticFile(util.PathFavicon, "console/static/favicon.ico")
+	ret.StaticFile(util.PathManifest, "console/static/manifest.json")
 
 	ret.Static(util.PathTheme+"/scss", "theme/scss")
 	ret.Static(util.PathTheme+"/js", "theme/js")

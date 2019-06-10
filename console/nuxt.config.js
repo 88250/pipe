@@ -14,7 +14,7 @@ module.exports = {
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
-      { rel: 'manifest', href: `${env.Server}/theme/js/manifest.json` }
+      { rel: 'manifest', href: `/manifest.json` }
     ]
   },
   /*
