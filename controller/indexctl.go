@@ -20,6 +20,7 @@ import (
 	"io/ioutil"
 	"net/http"
 	"path/filepath"
+	"strings"
 	"text/template"
 
 	"github.com/b3log/gulu"
@@ -89,6 +90,9 @@ func showManifestAction(c *gin.Context) {
 		return
 	}
 
+	manifest := string(data)
+	manifest = strings.ReplaceAll(manifest, "{server}", model.Conf.Server)
+
 	c.Writer.Header().Set("Content-Type", "application/json; charset=utf-8")
-	c.Writer.Write(data)
+	c.Writer.Write([]byte(manifest))
 }
