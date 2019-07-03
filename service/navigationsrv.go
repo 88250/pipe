@@ -87,7 +87,11 @@ func (srv *navigationService) UpdateNavigation(navigation *model.Navigation) err
 	}
 
 	tx := db.Begin()
-	if err := tx.Model(navigation).Updates(navigation).Error; nil != err {
+	if err := tx.Model(navigation).Updates(map[string]interface{}{
+		"Title":      navigation.Title,
+		"URL":        navigation.URL,
+		"IconURL":    navigation.IconURL,
+		"OpenMethod": navigation.OpenMethod}).Error; nil != err {
 		tx.Rollback()
 
 		return err
