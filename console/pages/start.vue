@@ -36,7 +36,7 @@
     data () {
       return {
         clickedGitHub: false,
-        isAgreen: false,
+        isAgreen: true,
         showIntro: false,
       }
     },
