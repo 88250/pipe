@@ -210,6 +210,9 @@
           preview: {
             delay: 500,
             show: data.show,
+            hljs: {
+              style: 'github'
+            },
             url: `${process.env.Server}/api/console/markdown`,
             parse: (element) => {
               if (element.style.display === 'none') {
@@ -477,7 +480,7 @@
 
       this.getThumbs()
 
-      this.addStyle('https://cdn.jsdelivr.net/npm/vditor@1.5.4/dist/js/highlight.js@9.15.8/styles/atom-one-light.css', 'vditorHljsStyle')
+      this.addStyle('https://cdn.jsdelivr.net/npm/vditor@1.5.12/dist/js/highlight.js@9.15.8/styles/github.css', 'vditorHljsStyle')
     },
   }
 </script>
