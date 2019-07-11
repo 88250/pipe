@@ -2,11 +2,16 @@
  * @fileoverview article tool for every theme
  *
  * @author <a href="http://vanessa.b3log.org">Liyuan Li</a>
- * @version 0.4.0.0, Mar 28, 2019
+ * @version 0.5.0.0, Jul 12, 2019
  */
 
 import $ from 'jquery'
-import { LazyLoadCSSImage, LazyLoadImage, ParseMarkdown, ParseHljs } from './common'
+import {
+  LazyLoadCSSImage,
+  LazyLoadImage,
+  ParseMarkdown,
+  ParseHljs,
+} from './common'
 
 /**
  * @description 初始化目录
@@ -79,13 +84,62 @@ export const ShowEditor = (reply, id, commentId) => {
     $editor.removeData('commentid')
   }
 
-  $editor.css({'bottom': '0', 'opacity': 1}).data('id', id)
-  $('body').css('padding-bottom', 268)
+  if ($(window).width() < 768) {
+    $editor.css({'bottom': 'auto', top: 0, 'opacity': 1}).data('id', id)
+  } else {
+    $editor.css({'bottom': '0', top: 'auto', 'opacity': 1}).data('id', id)
+  }
+
   $('#pipeEditorReplyTarget').text(reply)
 
   if ($('#pipeEditorComment').hasClass('vditor')) {
     vditor.focus()
     return
+  }
+
+  let toolbar = [
+    'emoji',
+    'headings',
+    'bold',
+    'italic',
+    'strike',
+    '|',
+    'line',
+    'quote',
+    '|',
+    'list',
+    'ordered-list',
+    'check',
+    '|',
+    'code',
+    'inline-code',
+    '|',
+    'undo',
+    'redo',
+    '|',
+    'link',
+    'table',
+    '|',
+    'preview',
+    'fullscreen',
+    'info',
+    'help',
+  ]
+  let resizeEnable = true
+  if ($(window).width() < 768) {
+    toolbar = [
+      'emoji',
+      'line',
+      'quote',
+      'list',
+      'ordered-list',
+      'check',
+      'link',
+      'preview',
+      'info',
+      'help',
+    ]
+    resizeEnable = false
   }
 
   window.vditor = new Vditor('pipeEditorComment', {
@@ -100,6 +154,9 @@ export const ShowEditor = (reply, id, commentId) => {
     preview: {
       delay: 500,
       show: false,
+      hljs: {
+        style: 'github',
+      },
       url: `${$('#pipeEditorComment').data('blogurl')}/api/markdown`,
       parse: (element) => {
         if (element.style.display === 'none') {
@@ -112,43 +169,12 @@ export const ShowEditor = (reply, id, commentId) => {
     },
     counter: 2048,
     resize: {
-      enable: true,
+      enable: resizeEnable,
       position: 'top',
-      after: () => {
-        $('body').css('padding-bottom', $('#pipeEditor').outerHeight())
-      },
     },
     lang: $('#pipeLang').data('lang'),
-    toolbar: [
-      'emoji',
-      'headings',
-      'bold',
-      'italic',
-      'strike',
-      '|',
-      'line',
-      'quote',
-      '|',
-      'list',
-      'ordered-list',
-      'check',
-      '|',
-      'code',
-      'inline-code',
-      '|',
-      'undo',
-      'redo',
-      '|',
-      'link',
-      'table',
-      '|',
-      'preview',
-      'fullscreen',
-      'info',
-      'help',
-    ],
+    toolbar,
   })
-
 }
 
 export const InitComment = () => {
@@ -158,8 +184,9 @@ export const InitComment = () => {
    */
   const _hideEditor = () => {
     const $editor = $('#pipeEditor')
-    $editor.css({'bottom': `-${$editor.outerHeight()}px`, 'opacity': 0})
-    $('body').css('padding-bottom', 0)
+
+    $editor.css(
+      {'bottom': `-${$editor.outerHeight()}px`, top: 'auto', 'opacity': 0})
   }
 
   // comment null reply

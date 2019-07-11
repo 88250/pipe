@@ -2,7 +2,7 @@
  * @fileoverview common tool for every theme
  *
  * @author <a href="http://vanessa.b3log.org">Liyuan Li</a>
- * @version 0.6.0.0, Jun 7, 2019
+ * @version 0.6.0.1, Jul 12, 2019
  */
 
 import $ from 'jquery'
@@ -18,7 +18,7 @@ export const ParseHljs = () => {
   if (!$('#pipeLang').data('markedavailable')) {
     if (typeof hljs === 'undefined') {
       $.ajax({
-        url: 'https://cdn.jsdelivr.net/npm/vditor@1.5.4/dist/js/highlight.js@9.15.8/highlight.pack.js',
+        url: 'https://cdn.jsdelivr.net/npm/vditor@1.5.12/dist/js/highlight.js@9.15.8/highlight.pack.js',
         dataType: 'script',
         cache: true,
         success: function () {
@@ -327,7 +327,7 @@ export const initPjax = (cb) => {
 (() => {
   $.ajax({
     method: 'GET',
-    url: 'https://cdn.jsdelivr.net/npm/vditor@1.5.4/dist/index.min.js',
+    url: 'https://cdn.jsdelivr.net/npm/vditor@1.5.12/dist/index.min.js',
     dataType: 'script',
     cache: true,
     success: () => {
