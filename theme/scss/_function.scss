@@ -2,7 +2,7 @@
  * function.
  *
  * @author <a href="http://vanessa.b3log.org">Liyuan Li</a>
- * @version 0.3.0.1, Jan 23, 2019
+ * @version 0.4.0.0, Jul 17, 2019
  */
 
 .fn {
@@ -75,6 +75,10 @@
       height: 10px;
       width: 10px;
     }
+  }
+
+  &__green {
+    color: #569e3d;
   }
 
   &__gray {
