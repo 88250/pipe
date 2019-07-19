@@ -157,6 +157,12 @@ svg {
 
     &-avatar {
       padding-left: 45px;
+      word-break: break-all;
+      -webkit-line-clamp: 2;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      -webkit-box-orient: vertical;
+      display: -webkit-box;
     }
   }
 
