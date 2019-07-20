@@ -229,7 +229,9 @@
             max: 10 * 1024 * 1024,
             url: this.tokenURL.URL,
             token: this.tokenURL.token,
-            filename: name => name.replace(/\?|\\|\/|:|\||<|>|\*|\[|\]|\s+/g, '-'),
+            filename: name => name.replace(/[^(a-zA-Z0-9\u4e00-\u9fa5\.)]/g, '').
+              replace(/[\?\\/:|<>\*\[\]\(\)\$%\{\}@~]/g, '').
+              replace('/\\s/g', ''),
           },
           height: data.height,
           counter: 102400,
