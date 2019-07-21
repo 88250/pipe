@@ -482,7 +482,7 @@
 
       this.getThumbs()
 
-      this.addStyle('https://cdn.jsdelivr.net/npm/vditor@1.5.12/dist/js/highlight.js@9.15.8/styles/github.css', 'vditorHljsStyle')
+      this.addStyle('https://cdn.jsdelivr.net/npm/vditor/dist/js/highlight.js/styles/github.css', 'vditorHljsStyle')
     },
   }
 </script>
