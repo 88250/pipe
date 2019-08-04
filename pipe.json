@@ -1,7 +1,7 @@
 {
     "Server": "http://localhost:5897",
     "StaticServer": "",
-    "StaticResourceVersion": "1564629247145",
+    "StaticResourceVersion": "1564895411214",
     "RuntimeMode": "dev",
     "LogLevel": "debug",
     "ShowSQL": false,
