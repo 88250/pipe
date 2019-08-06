@@ -209,7 +209,7 @@
           cache: this.$route.query.id ? false : true,
           preview: {
             delay: 500,
-            show: data.show,
+            mode: data.mode,
             hljs: {
               style: 'github'
             },
@@ -432,7 +432,7 @@
 
       this.contentEditor = this._initEditor({
         id: 'contentEditor',
-        show: true,
+        mode: 'both',
         height: 480,
         placeholder: this.$t('inputContent', this.$store.state.locale),
         resize: false,
@@ -441,7 +441,7 @@
       this.abstractEditor = this._initEditor({
         id: 'abstractEditor',
         height: 160,
-        show: false,
+        mode: 'editor',
         placeholder: this.$t('inputAbstract', this.$store.state.locale),
         resize: true,
       })
