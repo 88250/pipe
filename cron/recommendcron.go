@@ -40,7 +40,7 @@ func refreshRecommendArticlesPeriodically() {
 }
 
 func refreshRecommendArticles() {
-	defer gulu.Panic.Recover()
+	defer gulu.Panic.Recover(nil)
 
 	size := 7
 	articles := service.Article.GetPlatMostViewArticles(size)

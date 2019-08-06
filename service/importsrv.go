@@ -104,7 +104,7 @@ func (srv *importService) ImportMarkdowns(mdFiles []*MarkdownFile, authorID, blo
 }
 
 func parseArticle(mdFile *MarkdownFile) *model.Article {
-	gulu.Panic.Recover()
+	defer gulu.Panic.Recover(nil)
 
 	content := strings.TrimSpace(mdFile.Content)
 	frontMatter := strings.Split(content, "---")[0]

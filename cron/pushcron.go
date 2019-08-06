@@ -39,7 +39,7 @@ func pushArticlesPeriodically() {
 }
 
 func pushArticles() {
-	defer gulu.Panic.Recover()
+	defer gulu.Panic.Recover(nil)
 
 	server, _ := url.Parse(model.Conf.Server)
 	if !util.IsDomain(server.Hostname()) {
@@ -63,7 +63,7 @@ func pushCommentsPeriodically() {
 }
 
 func pushComments() {
-	defer gulu.Panic.Recover()
+	defer gulu.Panic.Recover(nil)
 
 	server, _ := url.Parse(model.Conf.Server)
 	if !util.IsDomain(server.Hostname()) {
