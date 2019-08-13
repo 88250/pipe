@@ -18,6 +18,7 @@ package service
 
 import (
 	"os"
+	"time"
 
 	"github.com/b3log/gulu"
 	"github.com/b3log/pipe/model"
@@ -63,6 +64,7 @@ func ConnectDB() {
 
 	db.DB().SetMaxIdleConns(10)
 	db.DB().SetMaxOpenConns(50)
+	db.DB().SetConnMaxLifetime(5*time.Minute)
 	db.LogMode(model.Conf.ShowSQL)
 }
 
