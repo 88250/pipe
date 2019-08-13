@@ -64,7 +64,7 @@ func ConnectDB() {
 
 	db.DB().SetMaxIdleConns(10)
 	db.DB().SetMaxOpenConns(50)
-	db.DB().SetConnMaxLifetime(5*time.Minute)
+	db.DB().SetConnMaxLifetime(5 * time.Minute)
 	db.LogMode(model.Conf.ShowSQL)
 }
 
