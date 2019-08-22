@@ -40,6 +40,7 @@ export const ParseMarkdown = () => {
   Vditor.chartRender()
   Vditor.mathRender(document.body, $('#pipeLang').data('lang'))
   Vditor.codeRender(document.body, $('#pipeLang').data('lang'))
+  Vditor.abcRender()
 }
 
 /**
@@ -327,7 +328,7 @@ export const initPjax = (cb) => {
 (() => {
   $.ajax({
     method: 'GET',
-    url: 'https://cdn.jsdelivr.net/npm/vditor@1.7.13/dist/index.min.js',
+    url: 'https://cdn.jsdelivr.net/npm/vditor@1.7.14/dist/index.min.js',
     dataType: 'script',
     cache: true,
     success: () => {
