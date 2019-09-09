@@ -2,7 +2,7 @@
  * @fileoverview common tool for every theme
  *
  * @author <a href="http://vanessa.b3log.org">Liyuan Li</a>
- * @version 0.6.0.1, Jul 12, 2019
+ * @version 0.7.0.0, Sep 9, 2019
  */
 
 import $ from 'jquery'
@@ -10,37 +10,18 @@ import NProgress from 'nprogress'
 import pjax from './lib/pjax'
 
 export const ParseHljs = () => {
-  const $codes = $('.vditor-reset pre > code')
-  if ($codes.length === 0) {
-    return false
-  }
-
-  if (!$('#pipeLang').data('markedavailable')) {
-    if (typeof hljs === 'undefined') {
-      $.ajax({
-        url: 'https://cdn.jsdelivr.net/npm/vditor/dist/js/highlight.js/highlight.pack.js',
-        dataType: 'script',
-        cache: true,
-        success: function () {
-          hljs.initHighlighting.called = false
-          hljs.initHighlighting()
-        },
-      })
-    } else {
-      hljs.initHighlighting.called = false
-      hljs.initHighlighting()
-    }
-  }
+  Vditor.highlightRender('github', !$('#pipeLang').data('markedavailable'), document)
 }
 /**
  * @description 初始化 markdown 解析
  */
 export const ParseMarkdown = () => {
-  Vditor.mermaidRender(document.body)
-  Vditor.chartRender()
-  Vditor.mathRender(document.body, $('#pipeLang').data('lang'))
   Vditor.codeRender(document.body, $('#pipeLang').data('lang'))
+  Vditor.mathRender(document.body, $('#pipeLang').data('lang'))
   Vditor.abcRender()
+  Vditor.chartRender()
+  Vditor.mediaRender(document)
+  Vditor.mermaidRender(document.body)
 }
 
 /**
@@ -328,7 +309,7 @@ export const initPjax = (cb) => {
 (() => {
   $.ajax({
     method: 'GET',
-    url: 'https://cdn.jsdelivr.net/npm/vditor@1.7.14/dist/index.min.js',
+    url: 'https://cdn.jsdelivr.net/npm/vditor@1.8.5/dist/index.min.js',
     dataType: 'script',
     cache: true,
     success: () => {

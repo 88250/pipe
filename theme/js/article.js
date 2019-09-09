@@ -122,6 +122,7 @@ export const ShowEditor = (reply, id, commentId) => {
     '|',
     'both',
     'preview',
+    'format',
     'fullscreen',
     'info',
     'help',
@@ -137,6 +138,7 @@ export const ShowEditor = (reply, id, commentId) => {
       'check',
       'link',
       'preview',
+      'format',
       'info',
       'help',
     ]
