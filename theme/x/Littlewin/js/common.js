@@ -41,6 +41,22 @@ const Common = {
           lrc: `${$('#pipeLang').data('staticserver')}/theme/x/Littlewin/images/kisstherain.lrc`,
           theme: '#60b044',
         },
+        {
+          name: 'L\'ESPOIR',
+          artist: 'Richard',
+          url: `${$('#pipeLang').data('staticserver')}/theme/x/Littlewin/images/LESPOIR.mp3`,
+          cover: `${$('#pipeLang').data('staticserver')}/theme/x/Littlewin/images/LESPOIR.jpeg`,
+          lrc: `${$('#pipeLang').data('staticserver')}/theme/x/Littlewin/images/LESPOIR.lrc`,
+          theme: '#60b044',
+        },
+        {
+          name: 'ACOMMAMOUR',
+          artist: 'Richard',
+          url: `${$('#pipeLang').data('staticserver')}/theme/x/Littlewin/images/ACOMMAMOUR.mp3`,
+          cover: `${$('#pipeLang').data('staticserver')}/theme/x/Littlewin/images/ACOMMAMOUR.jpeg`,
+          lrc: `${$('#pipeLang').data('staticserver')}/theme/x/Littlewin/images/ACOMMAMOUR.lrc`,
+          theme: '#60b044',
+        },
       ],
     })
 
