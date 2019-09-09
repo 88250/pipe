@@ -114,7 +114,7 @@
 
 <script>
   import { required, maxSize } from '~/plugins/validate'
-  import { asyncLoadScript, LazyLoadImage } from '~/plugins/utils'
+  import { LazyLoadImage } from '~/plugins/utils'
   import Vditor from 'vditor'
 
   export default {
@@ -194,16 +194,6 @@
       }
     },
     methods: {
-      addStyle (url, id) {
-        if (!document.getElementById(id)) {
-          const styleElement = document.createElement('link')
-          styleElement.id = id
-          styleElement.setAttribute('rel', 'stylesheet')
-          styleElement.setAttribute('type', 'text/css')
-          styleElement.setAttribute('href', url)
-          document.getElementsByTagName('head')[0].appendChild(styleElement)
-        }
-      },
       _initEditor (data) {
         return new Vditor(data.id, {
           cache: this.$route.query.id ? false : true,
@@ -219,10 +209,7 @@
                 return
               }
               LazyLoadImage()
-              if (!this.markedAvailable) {
-                hljs.initHighlighting.called = false
-                hljs.initHighlighting()
-              }
+              Vditor.highlightRender('github', !this.markedAvailable, document)
             },
           },
           upload: {
@@ -481,8 +468,6 @@
       this.$store.dispatch('getTags')
 
       this.getThumbs()
-
-      this.addStyle('https://cdn.jsdelivr.net/npm/vditor/dist/js/highlight.js/styles/github.css', 'vditorHljsStyle')
     },
   }
 </script>
