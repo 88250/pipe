@@ -2,7 +2,7 @@
  * @fileoverview article tool for every theme
  *
  * @author <a href="http://vanessa.b3log.org">Liyuan Li</a>
- * @version 0.5.0.1, Aug 6, 2019
+ * @version 0.5.0.2, Sep 18, 2019
  */
 
 import $ from 'jquery'
@@ -123,6 +123,8 @@ export const ShowEditor = (reply, id, commentId) => {
     'both',
     'preview',
     'format',
+    '|',
+    'devtools',
     'fullscreen',
     'info',
     'help',
