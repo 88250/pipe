@@ -157,9 +157,6 @@ export const ShowEditor = (reply, id, commentId) => {
     preview: {
       delay: 500,
       mode: 'editor',
-      hljs: {
-        style: 'github',
-      },
       url: `${$('#pipeEditorComment').data('blogurl')}/api/markdown`,
       parse: (element) => {
         if (element.style.display === 'none') {

@@ -200,9 +200,6 @@
           preview: {
             delay: 500,
             mode: data.mode,
-            hljs: {
-              style: 'github'
-            },
             url: `${process.env.Server}/api/console/markdown`,
             parse: (element) => {
               if (element.style.display === 'none') {
