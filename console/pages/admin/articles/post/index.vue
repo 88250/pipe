@@ -120,7 +120,6 @@
   export default {
     data () {
       return {
-        markedAvailable: false,
         tokenURL: {
           URL: '',
           token: '',
@@ -206,7 +205,7 @@
                 return
               }
               LazyLoadImage()
-              Vditor.highlightRender('github', !this.markedAvailable, document)
+              Vditor.highlightRender('github', false, document)
             },
           },
           upload: {
@@ -411,7 +410,6 @@
           token: responseData.uploadToken || '',
           URL: responseData.uploadURL || '',
         })
-        this.$set(this, 'markedAvailable', responseData.markedAvailable)
       }
 
       this.contentEditor = this._initEditor({
