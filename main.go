@@ -35,7 +35,6 @@ import (
 	"github.com/b3log/pipe/model"
 	"github.com/b3log/pipe/service"
 	"github.com/b3log/pipe/theme"
-	"github.com/b3log/pipe/util"
 	"github.com/gin-gonic/gin"
 )
 
@@ -50,7 +49,6 @@ func init() {
 	logger = gulu.Log.NewLogger(os.Stdout)
 
 	model.LoadConf()
-	util.LoadMarkdown()
 	i18n.Load()
 	theme.Load()
 	replaceServerConf()

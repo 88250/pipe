@@ -162,7 +162,6 @@ func fillCommon(c *gin.Context) {
 	(*dataModel)["UserCount"] = len(users)
 	(*dataModel)["BlogAdmin"] = service.User.GetBlogAdmin(blogID)
 	(*dataModel)["Navigations"] = service.Navigation.GetNavigations(blogID)
-	(*dataModel)["MarkedAvailable"] = util.MarkedAvailable
 
 	fillMostUseCategories(&settingMap, dataModel, blogID)
 	fillMostUseTags(&settingMap, dataModel, blogID)
