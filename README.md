@@ -149,10 +149,10 @@ Pipe 使用 [GPLv3](https://www.gnu.org/licenses/gpl-3.0.txt) 开源协议。
 * [Vditor](https://github.com/b3log/vditor)： 浏览器端的 Markdown 编辑器
 * [Gin](https://github.com/gin-gonic/gin)：又快又好用的 golang HTTP web 框架
 * [GORM](https://github.com/jinzhu/gorm)：极好的 golang ORM 库
-* [Blackfriday](https://github.com/russross/blackfriday)：golang Markdown 处理器
 * [SQLite](https://www.sqlite.org)：使用广泛的嵌入式 SQL 引擎
 * [GCache](https://github.com/bluele/gcache)：golang 缓存库
 * [Gulu](https://github.com/b3log/gulu)：Go 语言常用工具库，这个轱辘还算圆
+* [Lute](https://github.com/b3log/lute)：一款结构化的 Markdown 引擎，支持 Go 和 JavaScript
 
 ---
 

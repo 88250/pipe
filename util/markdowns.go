@@ -18,20 +18,15 @@ package util
 
 import (
 	"crypto/md5"
-	"io/ioutil"
-	"net/http"
 	"regexp"
 	"strings"
-	"time"
 	"unicode"
 	"unicode/utf8"
 
 	"github.com/PuerkitoBio/goquery"
+	"github.com/b3log/lute"
 	"github.com/bluele/gcache"
-	"github.com/hackebrot/turtle"
 	"github.com/microcosm-cc/bluemonday"
-	"github.com/vinta/pangu"
-	"gopkg.in/russross/blackfriday.v2"
 )
 
 var markdownCache = gcache.New(1024).LRU().Build()
@@ -41,69 +36,6 @@ type MarkdownResult struct {
 	ContentHTML  string
 	AbstractText string
 	ThumbURL     string
-}
-
-var MarkedAvailable = false
-
-// LoadMarkdown loads markdown process engine.
-func LoadMarkdown() {
-	request, err := http.NewRequest("POST", "http://localhost:8250", strings.NewReader("旧日的足迹"))
-	if nil != err {
-		logger.Info("[markdown-http] is not available, uses built-in [blackfriday] for markdown processing")
-
-		return
-	}
-	http.DefaultClient.Timeout = 2 * time.Second
-	response, err := http.DefaultClient.Do(request)
-	if nil != err {
-		logger.Info("[markdown-http] is not available, uses built-in [blackfriday] for markdown processing")
-
-		return
-	}
-	defer response.Body.Close()
-	data, err := ioutil.ReadAll(response.Body)
-	if nil != err {
-		logger.Info("[markdown-http] is not available, uses built-in [blackfriday] for markdown processing")
-
-		return
-	}
-
-	content := string(data)
-	MarkedAvailable = "<p>旧日的足迹</p>\n" == content
-	if MarkedAvailable {
-		logger.Debug("[markdown-http] is available, uses it for markdown processing")
-	} else {
-		logger.Debug("[markdown-http] is not available, uses built-in [blackfriday] for markdown processing")
-	}
-}
-
-func marked(mdText string) []byte {
-	request, err := http.NewRequest("POST", "http://localhost:8250", strings.NewReader(mdText))
-	if nil != err {
-		logger.Info("marked failed: " + err.Error())
-
-		return []byte("")
-	}
-	http.DefaultClient.Timeout = time.Second
-	response, err := http.DefaultClient.Do(request)
-	if nil != err {
-		logger.Warnf("[markdown-http] failed [err=" + err.Error() + "], uses built-in [blackfriday] instead")
-
-		return bf(mdText)
-	}
-	defer response.Body.Close()
-	ret, err := ioutil.ReadAll(response.Body)
-	if nil != err {
-		logger.Info("marked failed: " + err.Error() + ", try to use built-in md engine instead")
-
-		return bf(mdText)
-	}
-
-	return ret
-}
-
-func bf(mdText string) []byte {
-	return blackfriday.Run([]byte(mdText))
 }
 
 // Markdown process the specified markdown text to HTML.
@@ -119,46 +51,22 @@ func Markdown(mdText string) *MarkdownResult {
 		return cached.(*MarkdownResult)
 	}
 
-	mdText = emojify(mdText)
-	var unsafe []byte
-	if MarkedAvailable {
-		unsafe = marked(mdText)
-	} else {
-		unsafe = bf(mdText)
+	luteEngine := lute.New()
+	unsafe, err := luteEngine.MarkdownStr("", mdText)
+	if nil != err {
+		return &MarkdownResult{
+			ContentHTML:  err.Error(),
+			AbstractText: err.Error(),
+			ThumbURL:     "",
+		}
 	}
-	contentHTML := string(unsafe)
+	contentHTML := unsafe
 	doc, _ := goquery.NewDocumentFromReader(strings.NewReader(contentHTML))
 	doc.Find("img").Each(func(i int, ele *goquery.Selection) {
 		src, _ := ele.Attr("src")
 		ele.SetAttr("data-src", src)
 		ele.RemoveAttr("src")
 	})
-
-	doc.Find("*").Contents().FilterFunction(func(i int, ele *goquery.Selection) bool {
-		if "#text" != goquery.NodeName(ele) {
-			return false
-		}
-		parent := goquery.NodeName(ele.Parent())
-
-		return "span" != parent && "code" != parent && "pre" != parent
-	}).Each(func(i int, ele *goquery.Selection) {
-		text := ele.Text()
-		text = pangu.SpacingText(text)
-		ele.ReplaceWithHtml(text)
-	})
-
-	if !MarkedAvailable {
-		doc.Find("code").Each(func(i int, ele *goquery.Selection) {
-			code, err := ele.Html()
-			if nil != err {
-				logger.Errorf("get element [%+v]' HTML failed: %s", ele, err)
-			} else {
-				code = strings.Replace(code, "<", "&lt;", -1)
-				code = strings.Replace(code, ">", "&gt;", -1)
-				ele.SetHtml(code)
-			}
-		})
-	}
 
 	contentHTML, _ = doc.Find("body").Html()
 	contentHTML = bluemonday.UGCPolicy().AllowAttrs("class").Matching(regexp.MustCompile("^language-[a-zA-Z0-9]+$")).OnElements("code").
@@ -196,7 +104,6 @@ func Markdown(mdText string) *MarkdownResult {
 		thumbnailURL, _ = selection.Attr("data-src")
 	}
 	abstractText := strings.TrimSpace(runesToString(runes))
-	abstractText = pangu.SpacingText(abstractText)
 	abstractText = strings.Replace(abstractText, "<", "&lt;", -1)
 	abstractText = strings.Replace(abstractText, ">", "&gt;", -1)
 
@@ -216,29 +123,4 @@ func runesToString(runes []rune) (ret string) {
 	}
 
 	return
-}
-
-var emojiRegx = regexp.MustCompile(":[\\w]+:")
-var emojiImages = []string{"c.png", "d.png", "e50a.png", "f.png", "g.png", "huaji.gif", "doge.png", "i.png", "j.png", "k.png", "octocat.png", "r.png", "trollface.png", "u.png"}
-
-func emojiImg(emojiASCII string) string {
-	for _, img := range emojiImages {
-		if emojiASCII == img[:strings.Index(img, ".")] {
-			return "<img class=\"emoji\" src=\"https://cdn.jsdelivr.net/npm/vditor/src/assets/emoji/" + img + "\">"
-		}
-	}
-
-	return ":" + emojiASCII + ":"
-}
-
-func emojify(text string) string {
-	return emojiRegx.ReplaceAllStringFunc(text, func(emojiASCII string) string {
-		emojiASCII = strings.Replace(emojiASCII, ":", "", -1)
-		emoji := turtle.Emojis[emojiASCII]
-		if nil == emoji {
-			return emojiImg(emojiASCII)
-		}
-
-		return emoji.Char
-	})
 }
