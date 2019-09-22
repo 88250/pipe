@@ -71,7 +71,7 @@ func showArticlesAction(c *gin.Context) {
 		if strconv.Itoa(model.SettingPreferenceArticleListStyleValueTitleAbstract) == articleListStyleSetting.Value {
 			abstract = template.HTML(mdResult.AbstractText)
 		}
-		if "" != articleModel.Abstract {
+		if "\n" != articleModel.Abstract && "" != articleModel.Abstract {
 			abstract = template.HTML(articleModel.Abstract)
 		}
 		if strconv.Itoa(model.SettingPreferenceArticleListStyleValueTitleContent) == articleListStyleSetting.Value {

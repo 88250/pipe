@@ -104,6 +104,7 @@ func Markdown(mdText string) *MarkdownResult {
 		thumbnailURL, _ = selection.Attr("data-src")
 	}
 	abstractText := strings.TrimSpace(runesToString(runes))
+	abstractText = luteEngine.Space(abstractText)
 	abstractText = strings.Replace(abstractText, "<", "&lt;", -1)
 	abstractText = strings.Replace(abstractText, ">", "&gt;", -1)
 
