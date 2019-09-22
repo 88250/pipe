@@ -137,7 +137,7 @@ Issue 最好先建立模板，让用户提问的时候有章可循。不过即�
 https://github.com/88250 ，欢迎关注。`
 
 	abstract := Markdown(mdText).AbstractText
-	if !strings.HasPrefix(abstract, "Bootstrap 古话说得好：“万事开头难”。") {
+	if !strings.HasPrefix(abstract, "Bootstrap古话说得好：“万事开头难”。") {
 		t.Fatalf("markdown abstract failed: " + abstract)
 	}
 }
