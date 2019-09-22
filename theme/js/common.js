@@ -2,7 +2,7 @@
  * @fileoverview common tool for every theme
  *
  * @author <a href="http://vanessa.b3log.org">Liyuan Li</a>
- * @version 0.7.0.0, Sep 9, 2019
+ * @version 0.7.0.0, Sep 22, 2019
  */
 
 import $ from 'jquery'
@@ -10,7 +10,7 @@ import NProgress from 'nprogress'
 import pjax from './lib/pjax'
 
 export const ParseHljs = () => {
-  Vditor.highlightRender('github', !$('#pipeLang').data('markedavailable'), document)
+  Vditor.highlightRender('github', false, document)
 }
 /**
  * @description 初始化 markdown 解析
