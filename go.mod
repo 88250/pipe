@@ -7,7 +7,7 @@ require (
 	github.com/PuerkitoBio/goquery v1.5.0
 	github.com/araddon/dateparse v0.0.0-20190223010137-262228af701e
 	github.com/b3log/gulu v0.0.0-20190806034141-2b1d1b33ff3d
-	github.com/b3log/lute v0.0.0-20190921101848-9a24805a3ad6
+	github.com/b3log/lute v0.0.0-20190922061740-a6de76dabec1
 	github.com/beevik/etree v1.1.0 // indirect
 	github.com/bluele/gcache v0.0.0-20190301044115-79ae3b2d8680
 	github.com/clbanning/mxj v1.8.4 // indirect
@@ -34,9 +34,9 @@ require (
 	github.com/simplereach/timeutils v1.2.0 // indirect
 	github.com/smartystreets/goconvey v0.0.0-20190306220146-200a235640ff // indirect
 	github.com/vinta/pangu v3.0.0+incompatible
-	golang.org/x/crypto v0.0.0-20190701094942-4def268fd1a4 // indirect
-	golang.org/x/net v0.0.0-20190724013045-ca1201d0de80 // indirect
-	golang.org/x/sync v0.0.0-20190423024810-112230192c58 // indirect
+	golang.org/x/crypto v0.0.0-20190911031432-227b76d455e7 // indirect
+	golang.org/x/net v0.0.0-20190921015927-1a5e07d1ff72 // indirect
+	golang.org/x/sync v0.0.0-20190911185100-cd5d95a43a6e // indirect
 	gopkg.in/mgo.v2 v2.0.0-20180705113604-9856a29383ce // indirect
 	gopkg.in/yaml.v2 v2.2.2
 )
