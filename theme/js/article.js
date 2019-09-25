@@ -148,6 +148,7 @@ export const ShowEditor = (reply, id, commentId) => {
   }
 
   window.vditor = new Vditor('pipeEditorComment', {
+    tab: '\t',
     placeholder: $('#pipeEditorComment').data('placeholder'),
     height: 180,
     esc: () => {

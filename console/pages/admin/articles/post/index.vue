@@ -195,6 +195,7 @@
     methods: {
       _initEditor (data) {
         return new Vditor(data.id, {
+          tab: '\t',
           cache: this.$route.query.id ? false : true,
           preview: {
             delay: 500,
