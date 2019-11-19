@@ -43,6 +43,40 @@ const (
 	adminConsoleCategoryListWindowSize = 20
 )
 
+func (srv *categoryService) GetCategoryArticleCount(categoryID, blogID uint64) (ret int) {
+	sql := `SELECT
+	count(
+		DISTINCT (b3_pipe_articles.id)
+	) AS c
+FROM
+	b3_pipe_articles,
+	b3_pipe_correlations
+WHERE
+	b3_pipe_articles.id = b3_pipe_correlations.id1
+AND b3_pipe_correlations.type = 1
+AND b3_pipe_articles.blog_id = ?
+AND b3_pipe_correlations.id2 IN (
+	SELECT
+		id2
+	FROM
+		b3_pipe_correlations
+	WHERE
+		b3_pipe_correlations.id1 = ?
+	AND b3_pipe_correlations.type = 0
+	AND b3_pipe_correlations.blog_id = ?
+)`
+	if rows, err := db.DB().Query(sql, blogID, categoryID, blogID); nil != err {
+		logger.Errorf("get category article count failed: " + err.Error())
+	} else {
+		rows.Next()
+		if err = rows.Scan(&ret); nil != err {
+			logger.Errorf("get category article count failed: " + err.Error())
+		}
+	}
+
+	return
+}
+
 func (srv *categoryService) GetCategoryByPath(path string, blogID uint64) *model.Category {
 	path = strings.TrimSpace(path)
 	if "" == path || util.IsReservedPath(path) {

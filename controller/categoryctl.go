@@ -53,7 +53,7 @@ func showCategoriesAction(c *gin.Context) {
 			URL:          getBlogURL(c) + util.PathCategories + categoryModel.Path,
 			Description:  categoryModel.Description,
 			Tags:         themeTags,
-			ArticleCount: 8, // TODO: category article count
+			ArticleCount: service.Category.GetCategoryArticleCount(categoryModel.ID, blogID),
 		}
 		themeCategories = append(themeCategories, themeCategory)
 	}
