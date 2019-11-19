@@ -22,7 +22,7 @@
     "babel-polyfill": "^6.26.0",
     "particles.js": "^2.0.0",
     "sha512crypt-node": "^0.1.0",
-    "vditor": "^1.8.12",
+    "vditor": "^1.10.0",
     "vue-axios": "^2.1.4",
     "vue-i18n": "^8.11.2",
     "vuetify": "git+https://github.com/Vanessa219/vuetify.git#v1.2.12"

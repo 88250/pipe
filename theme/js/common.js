@@ -2,7 +2,7 @@
  * @fileoverview common tool for every theme
  *
  * @author <a href="http://vanessa.b3log.org">Liyuan Li</a>
- * @version 0.7.0.0, Sep 22, 2019
+ * @version 0.8.0.0, Nov 19, 2019
  */
 
 import $ from 'jquery'
@@ -10,14 +10,17 @@ import NProgress from 'nprogress'
 import pjax from './lib/pjax'
 
 export const ParseHljs = () => {
-  Vditor.highlightRender('github', false, document)
+  Vditor.highlightRender({
+    style: 'github',
+    enable: false,
+  }, document)
 }
 /**
  * @description 初始化 markdown 解析
  */
 export const ParseMarkdown = () => {
   Vditor.codeRender(document.body, $('#pipeLang').data('lang'))
-  Vditor.mathRender(document.body, $('#pipeLang').data('lang'))
+  Vditor.mathRender(document.body)
   Vditor.abcRender()
   Vditor.chartRender()
   Vditor.mediaRender(document)
@@ -309,7 +312,7 @@ export const initPjax = (cb) => {
 (() => {
   $.ajax({
     method: 'GET',
-    url: 'https://cdn.jsdelivr.net/npm/vditor@1.8.12/dist/index.min.js',
+    url: 'https://cdn.jsdelivr.net/npm/vditor@1.10.0/dist/index.min.js',
     dataType: 'script',
     cache: true,
     success: () => {

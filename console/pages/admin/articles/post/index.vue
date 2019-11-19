@@ -195,6 +195,7 @@
     methods: {
       _initEditor (data) {
         return new Vditor(data.id, {
+          typewriterMode: true,
           tab: '\t',
           cache: this.$route.query.id ? false : true,
           preview: {
@@ -206,7 +207,10 @@
                 return
               }
               LazyLoadImage()
-              Vditor.highlightRender('github', false, document)
+              Vditor.highlightRender({
+                style: 'github',
+                enable: false,
+              }, document)
             },
           },
           upload: {
