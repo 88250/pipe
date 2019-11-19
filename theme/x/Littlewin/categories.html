@@ -8,9 +8,10 @@
 <body>
 {{template "Littlewin/header" .}}
 <div class="fn__flex-1">
-    <div id="pjax" class="wrapper fn__flex">
+    <div class="wrapper fn__flex header__meta">
+        <div id="pjax" class="main">
         {{if .pjax}}{{noescape "<!---- pjax {#pjax} start ---->"}}{{end}}
-        <div class="main">
+            {{template "Littlewin/nav" .}}
             <div class="module ft__center module--bottom module--space">
                 <h2 class="module__logo">{{.I18n.Categories}}</h2>
                 <span id="categoriesCount">0</span> <span class="ft__fade ft__13">{{.I18n.Categories2}}</span>
@@ -27,8 +28,8 @@
             <article class="article__item module module--bottom fn__flex">
                 <header>
                     <time class="article__time">
-                        <div class="article__day">{{.ArticleCount}}</div>
-                        {{$.I18n.space}}<br>
+                        <span class="article__day">{{.ArticleCount}}</span> {{$.I18n.space}}
+                        <br>
                         {{$.I18n.article}}
                     </time>
                 </header>
@@ -45,16 +46,18 @@
                         <svg>
                             <use xlink:href="#iconTag"></use>
                         </svg>
-                        {{range .Tags}}
-                        <a href="{{.URL}}" class="article__tag" rel="tag" >{{.Title}}</a>
-                        {{end}}
+                        <span>
+                            {{range .Tags}}
+                            <a href="{{.URL}}" class="article__tag" rel="tag" >{{.Title}}</a>
+                            {{end}}
+                        </span>
                     </footer>
                 </section>
             </article>
             {{end}}
+        {{if .pjax}}{{noescape "<!---- pjax {#pjax} end ---->"}}{{end}}
         </div>
         {{template "Littlewin/side" .}}
-        {{if .pjax}}{{noescape "<!---- pjax {#pjax} end ---->"}}{{end}}
     </div>
 </div>
 {{template "Littlewin/footer" .}}

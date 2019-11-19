@@ -1,5 +1,9 @@
 {{define "Littlewin/side"}}
 <aside class="side">
+    <aside class="module--bottom">
+        <div id="player"></div>
+    </aside>
+
     {{template "Littlewin/module-list" dict "List" .MostCommentArticles "Title" .I18n.MostCommentArticle "UserCount" .UserCount}}
     {{template "Littlewin/module-list" dict "List" .MostViewArticles "Title" .I18n.MostViewArticle "UserCount" .UserCount}}
     <div class="module module--bottom">

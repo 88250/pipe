@@ -8,13 +8,14 @@
 <body>
 {{template "Littlewin/header" .}}
 <div class="fn__flex-1">
-    <div id="pjax" class="wrapper fn__flex">
+    <div class="wrapper fn__flex header__meta">
+        <div class="main" id="pjax" >
         {{if .pjax}}{{noescape "<!---- pjax {#pjax} start ---->"}}{{end}}
-        <div class="main">
+            {{template "Littlewin/nav" .}}
             {{template "Littlewin/article-list" .}}
+        {{if .pjax}}{{noescape "<!---- pjax {#pjax} end ---->"}}{{end}}
         </div>
         {{template "Littlewin/side" .}}
-        {{if .pjax}}{{noescape "<!---- pjax {#pjax} end ---->"}}{{end}}
     </div>
 </div>
 {{template "Littlewin/footer" .}}

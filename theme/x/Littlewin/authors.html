@@ -8,9 +8,10 @@
 <body>
 {{template "Littlewin/header" .}}
 <div class="fn__flex-1">
-    <div id="pjax" class="wrapper fn__flex">
+    <div class="wrapper fn__flex header__meta">
+        <div class="main" id="pjax">
         {{if .pjax}}{{noescape "<!---- pjax {#pjax} start ---->"}}{{end}}
-        <div class="main">
+            {{template "Littlewin/nav" .}}
             <div class="module ft__center module--bottom module--space">
                 <h2 class="module__logo">{{.I18n.Team}}</h2>
                 <span id="authorCount">0</span> <span class="ft__fade ft__13">{{.I18n.TeamMember2}}</span>
@@ -25,9 +26,9 @@
                 </li>
             {{end}}
             </ul>
+        {{if .pjax}}{{noescape "<!---- pjax {#pjax} end ---->"}}{{end}}
         </div>
         {{template "Littlewin/side" .}}
-        {{if .pjax}}{{noescape "<!---- pjax {#pjax} end ---->"}}{{end}}
     </div>
 </div>
 {{template "Littlewin/footer" .}}

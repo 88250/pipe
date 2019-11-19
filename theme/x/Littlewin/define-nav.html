@@ -1,0 +1,32 @@
+{{define "Littlewin/nav"}}
+<div class="header__ad fn__flex-center module module--space">
+    <svg class="fn__flex-shrink"><use xlink:href="#iconAnnounce"></use></svg>
+    <div>&nbsp; &nbsp;</div>
+    <div class="fn__flex-1">
+        {{if eq .Setting.BasicNoticeBoard ""}}
+        {{.Setting.BasicBlogSubtitle}}
+        {{else}}
+        {{.Setting.BasicNoticeBoard}}
+        {{end}}
+    </div>
+</div>
+<nav class="header__nav">
+    <a href="{{.BlogURL}}/categories">
+        {{.I18n.Categories}}
+    </a>
+    <a href="{{.BlogURL}}/tags">
+        {{.I18n.Tags}}
+    </a>
+    <a href="{{.BlogURL}}/archives">
+        {{.I18n.Archives}}
+    </a>
+    {{if gt .UserCount 1}}
+    <a href="{{.BlogURL}}/authors">
+        {{.I18n.Team}}
+    </a>
+    {{end}}
+    <a href="{{.BlogURL}}/atom" target="_blank">
+        {{.I18n.Feed}}
+    </a>
+</nav>
+{{end}}
