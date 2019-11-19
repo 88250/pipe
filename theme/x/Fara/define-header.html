@@ -47,6 +47,8 @@
     <a href="{{.URL}}" target="{{.OpenMethod}}" class="fn__flex-center">
         {{if ne "" .IconURL}}
         <img data-src="{{.IconURL}}"/>
+        {{else}}
+        <svg style="width:0;margin-right: 0"></svg>
         {{end}}
         {{.Title}}
     </a>
