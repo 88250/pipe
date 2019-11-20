@@ -64,7 +64,8 @@ func (srv *upgradeService) Perform() {
 }
 
 func perform189_190() {
-	logger.Infof("upgrading from version [1.8.9] to version [1.9.0]....")
+	fromVer := "1.8.9"
+	logger.Infof("upgrading from version [" + fromVer + "] to version [" + model.Version + "]....")
 
 	var verSettings []model.Setting
 	if err := db.Model(&model.Setting{}).Where("`name`= ?", model.SettingNameSystemVer).Find(&verSettings).Error; nil != err {
@@ -82,7 +83,7 @@ func perform189_190() {
 	}
 	tx.Commit()
 
-	logger.Infof("upgraded from version [1.8.8] to version [1.8.9] successfully")
+	logger.Infof("upgraded from version [" + fromVer + "] to version [" + model.Version + "] successfully")
 }
 
 func perform188_189() {
