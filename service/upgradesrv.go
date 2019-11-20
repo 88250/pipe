@@ -55,9 +55,34 @@ func (srv *upgradeService) Perform() {
 		fallthrough
 	case "1.8.8":
 		perform188_189()
+		fallthrough
+	case "1.8.9":
+		perform189_190()
 	default:
 		logger.Fatalf("please upgrade to v1.8.7 first")
 	}
+}
+
+func perform189_190() {
+	logger.Infof("upgrading from version [1.8.9] to version [1.9.0]....")
+
+	var verSettings []model.Setting
+	if err := db.Model(&model.Setting{}).Where("`name`= ?", model.SettingNameSystemVer).Find(&verSettings).Error; nil != err {
+		logger.Fatalf("load settings failed: %s", err)
+	}
+
+	tx := db.Begin()
+	for _, setting := range verSettings {
+		setting.Value = model.Version
+		if err := tx.Save(setting).Error; nil != err {
+			tx.Rollback()
+
+			logger.Fatalf("update setting [%+v] failed: %s", setting, err.Error())
+		}
+	}
+	tx.Commit()
+
+	logger.Infof("upgraded from version [1.8.8] to version [1.8.9] successfully")
 }
 
 func perform188_189() {
@@ -77,12 +102,10 @@ func perform188_189() {
 			logger.Fatalf("update setting [%+v] failed: %s", setting, err.Error())
 		}
 	}
-
 	tx.Commit()
 
 	logger.Infof("upgraded from version [1.8.8] to version [1.8.9] successfully")
 }
-
 
 func perform187_188() {
 	logger.Infof("upgrading from version [1.8.7] to version [1.8.8]....")
@@ -133,7 +156,6 @@ func perform187_188() {
 			logger.Fatalf("update settings failed: %s", err.Error())
 		}
 	}
-
 	tx.Commit()
 
 	logger.Infof("upgraded from version [1.8.7] to version [1.8.8] successfully")
@@ -156,7 +178,6 @@ func perform186_187() {
 			logger.Fatalf("update setting [%+v] failed: %s", setting, err.Error())
 		}
 	}
-
 	tx.Commit()
 
 	logger.Infof("upgraded from version [1.8.6] to version [1.8.7] successfully")
