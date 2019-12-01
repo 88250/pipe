@@ -19,7 +19,7 @@ package cache
 import (
 	"fmt"
 
-	"github.com/b3log/pipe/model"
+	"github.com/88250/pipe/model"
 	"github.com/bluele/gcache"
 )
 

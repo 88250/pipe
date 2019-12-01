@@ -33,7 +33,7 @@ func ImageSize(imageURL string, width, height int) string {
 }
 
 // RandImage returns an image URL randomly for article thumbnail.
-// https://github.com/b3log/bing
+// https://github.com/88250/bing
 func RandImage() string {
 	min := time.Date(2017, 11, 04, 0, 0, 0, 0, time.UTC).Unix()
 	max := time.Now().Unix()

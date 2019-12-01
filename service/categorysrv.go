@@ -23,8 +23,8 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/b3log/pipe/model"
-	"github.com/b3log/pipe/util"
+	"github.com/88250/pipe/model"
+	"github.com/88250/pipe/util"
 	"github.com/jinzhu/gorm"
 )
 

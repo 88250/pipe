@@ -19,7 +19,7 @@ package service
 import (
 	"testing"
 
-	"github.com/b3log/pipe/model"
+	"github.com/88250/pipe/model"
 )
 
 func TestAddCategory(t *testing.T) {

@@ -24,11 +24,11 @@ import (
 	"strings"
 
 	"github.com/PuerkitoBio/goquery"
-	"github.com/b3log/gulu"
-	"github.com/b3log/pipe/cron"
-	"github.com/b3log/pipe/model"
-	"github.com/b3log/pipe/service"
-	"github.com/b3log/pipe/util"
+	"github.com/88250/gulu"
+	"github.com/88250/pipe/cron"
+	"github.com/88250/pipe/model"
+	"github.com/88250/pipe/service"
+	"github.com/88250/pipe/util"
 	"github.com/gin-gonic/gin"
 	"github.com/vinta/pangu"
 )

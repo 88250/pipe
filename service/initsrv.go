@@ -22,9 +22,9 @@ import (
 	"sync"
 	"time"
 
-	"github.com/b3log/pipe/model"
-	"github.com/b3log/pipe/theme"
-	"github.com/b3log/pipe/util"
+	"github.com/88250/pipe/model"
+	"github.com/88250/pipe/theme"
+	"github.com/88250/pipe/util"
 	"github.com/jinzhu/gorm"
 )
 
@@ -218,7 +218,7 @@ Pipe 博客平台已经初始化完毕，可在管理后台 - 设置 - 基础设
 2. 在社区[个人设置 - B3](https://hacpai.com/settings/b3) 中更新 B3 Key
 3. 在 Pipe 管理后台 - 设置 - 账号中也进行同样的 B3 Key 更新
 
-最后，如果你觉得 Pipe 很赞，请到[项目主页](https://github.com/b3log/pipe)给颗星鼓励一下 :heart:`
+最后，如果你觉得 Pipe 很赞，请到[项目主页](https://github.com/88250/pipe)给颗星鼓励一下 :heart:`
 
 	now := time.Now()
 	article := &model.Article{

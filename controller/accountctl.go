@@ -19,7 +19,7 @@ package controller
 import (
 	"net/http"
 
-	"github.com/b3log/gulu"
+	"github.com/88250/gulu"
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
 )

@@ -1,13 +1,13 @@
-module github.com/b3log/pipe
+module github.com/88250/pipe
 
 go 1.12
 
 require (
 	cloud.google.com/go v0.37.1 // indirect
+	github.com/88250/gulu v0.0.0-20191129115942-f593513f6ed6
+	github.com/88250/lute v0.0.0-20191129120354-07a1827ce03f
 	github.com/PuerkitoBio/goquery v1.5.0
 	github.com/araddon/dateparse v0.0.0-20190223010137-262228af701e
-	github.com/b3log/gulu v0.0.0-20190806034141-2b1d1b33ff3d
-	github.com/b3log/lute v0.0.0-20190922061740-a6de76dabec1
 	github.com/beevik/etree v1.1.0 // indirect
 	github.com/bluele/gcache v0.0.0-20190301044115-79ae3b2d8680
 	github.com/clbanning/mxj v1.8.4 // indirect
@@ -38,7 +38,7 @@ require (
 	golang.org/x/net v0.0.0-20190921015927-1a5e07d1ff72 // indirect
 	golang.org/x/sync v0.0.0-20190911185100-cd5d95a43a6e // indirect
 	gopkg.in/mgo.v2 v2.0.0-20180705113604-9856a29383ce // indirect
-	gopkg.in/yaml.v2 v2.2.2
+	gopkg.in/yaml.v2 v2.2.7
 )
 
 replace gopkg.in/russross/blackfriday.v2 v2.0.1 => github.com/russross/blackfriday/v2 v2.0.1

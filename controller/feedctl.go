@@ -19,9 +19,9 @@ package controller
 import (
 	"strconv"
 
-	"github.com/b3log/pipe/model"
-	"github.com/b3log/pipe/service"
-	"github.com/b3log/pipe/util"
+	"github.com/88250/pipe/model"
+	"github.com/88250/pipe/service"
+	"github.com/88250/pipe/util"
 	"github.com/gin-gonic/gin"
 	"github.com/gorilla/feeds"
 )

@@ -27,7 +27,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/b3log/gulu"
+	"github.com/88250/gulu"
 	"github.com/jinzhu/gorm"
 )
 
@@ -41,7 +41,7 @@ const Version = "1.9.0"
 var Conf *Configuration
 
 // UserAgent represents HTTP client user agent.
-var UserAgent = "Pipe/" + Version + "; +https://github.com/b3log/pipe"
+var UserAgent = "Pipe/" + Version + "; +https://github.com/88250/pipe"
 
 // Models represents all models..
 var Models = []interface{}{

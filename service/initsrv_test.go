@@ -17,12 +17,12 @@
 package service
 
 import (
-	"github.com/b3log/gulu"
+	"github.com/88250/gulu"
 	"log"
 	"os"
 	"testing"
 
-	"github.com/b3log/pipe/model"
+	"github.com/88250/pipe/model"
 )
 
 const (

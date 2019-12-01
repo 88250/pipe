@@ -29,7 +29,7 @@ func GitHubUserInfo(accessToken string) (ret map[string]interface{}) {
 	result := map[string]interface{}{}
 	response, data, errors := gorequest.New().TLSClientConfig(&tls.Config{InsecureSkipVerify: true}).
 		Get(HacPaiURL+"/github/user?ak="+accessToken).Timeout(7*time.Second).
-		Set("User-Agent", "Pipe; +https://github.com/b3log/pipe").EndStruct(&result)
+		Set("User-Agent", "Pipe; +https://github.com/88250/pipe").EndStruct(&result)
 	if nil != errors || http.StatusOK != response.StatusCode {
 		logger.Errorf("get github user info failed: %+v, %s", errors, data)
 

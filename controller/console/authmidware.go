@@ -19,8 +19,8 @@ package console
 import (
 	"net/http"
 
-	"github.com/b3log/gulu"
-	"github.com/b3log/pipe/util"
+	"github.com/88250/gulu"
+	"github.com/88250/pipe/util"
 	"github.com/gin-gonic/gin"
 )
 

@@ -28,13 +28,13 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/b3log/gulu"
-	"github.com/b3log/pipe/controller"
-	"github.com/b3log/pipe/cron"
-	"github.com/b3log/pipe/i18n"
-	"github.com/b3log/pipe/model"
-	"github.com/b3log/pipe/service"
-	"github.com/b3log/pipe/theme"
+	"github.com/88250/gulu"
+	"github.com/88250/pipe/controller"
+	"github.com/88250/pipe/cron"
+	"github.com/88250/pipe/i18n"
+	"github.com/88250/pipe/model"
+	"github.com/88250/pipe/service"
+	"github.com/88250/pipe/theme"
 	"github.com/gin-gonic/gin"
 )
 

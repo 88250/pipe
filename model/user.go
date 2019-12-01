@@ -17,7 +17,7 @@
 package model
 
 import (
-	"github.com/b3log/pipe/util"
+	"github.com/88250/pipe/util"
 )
 
 // User model.

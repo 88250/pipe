@@ -20,7 +20,7 @@ package service
 import (
 	"sync"
 
-	"github.com/b3log/pipe/model"
+	"github.com/88250/pipe/model"
 	"github.com/jinzhu/gorm"
 )
 

@@ -24,7 +24,7 @@ import (
 	"unicode/utf8"
 
 	"github.com/PuerkitoBio/goquery"
-	"github.com/b3log/lute"
+	"github.com/88250/lute"
 	"github.com/bluele/gcache"
 	"github.com/microcosm-cc/bluemonday"
 )

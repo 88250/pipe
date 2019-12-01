@@ -22,10 +22,10 @@ import (
 	"strings"
 	"time"
 
-	"github.com/b3log/gulu"
-	"github.com/b3log/pipe/model"
-	"github.com/b3log/pipe/service"
-	"github.com/b3log/pipe/util"
+	"github.com/88250/gulu"
+	"github.com/88250/pipe/model"
+	"github.com/88250/pipe/service"
+	"github.com/88250/pipe/util"
 	"github.com/gin-gonic/gin"
 	"github.com/parnurzeal/gorequest"
 )
@@ -63,7 +63,7 @@ func redirectGitHubLoginAction(c *gin.Context) {
 	}
 	state := gulu.Rand.String(16) + referer
 	states[state] = state
-	path := loginAuthURL + "?client_id=" + clientId + "&state=" + state + "&scope=public_repo,read:user,user:follow"
+	path := loginAuthURL + "?client_id=" + clientId + "&state=" + state
 
 	logger.Infof("redirect to github [" + path + "]")
 

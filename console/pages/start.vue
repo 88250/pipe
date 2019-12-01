@@ -14,16 +14,6 @@
         </ul>
       </div>
       <div class="start__space"></div>
-      <label class="start__checkbox checkbox ft__12">
-        <input
-          type="checkbox"
-          :checked="isAgreen"
-          @click="isAgreen = !isAgreen"/><span
-        class="checkbox__icon"></span>
-        是否愿意在 GitHub 上收藏该<a href="https://github.com/b3log/pipe" target="_blank">项目</a>、关注<a
-        href="https://github.com/88250" target="_blank">开发者</a>并加入 <a href="https://github.com/b3log" target="_blank">B3log
-        开源组织</a>
-      </label>
     </div>
   </div>
 </template>

@@ -23,9 +23,9 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/b3log/gulu"
-	"github.com/b3log/pipe/service"
-	"github.com/b3log/pipe/util"
+	"github.com/88250/gulu"
+	"github.com/88250/pipe/service"
+	"github.com/88250/pipe/util"
 	"github.com/gin-gonic/gin"
 )
 
