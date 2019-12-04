@@ -1,7 +1,7 @@
 <template>
   <footer class="footer">
     Powered by <a href="https://b3log.org/" target="_blank">B3log 开源</a> •
-    <a href="https://github.com/b3log/pipe" target="_blank">Pipe</a> {{$store.state.version}}
+    <a href="https://github.com/88250/pipe" target="_blank">Pipe</a> {{$store.state.version}}
   </footer>
 </template>
 

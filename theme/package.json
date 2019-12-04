@@ -2,13 +2,13 @@
   "name": "Pipe",
   "version": "1.9.0",
   "description": "Pipe theme",
-  "homepage": "https://github.com/b3log/pipe",
+  "homepage": "https://github.com/88250/pipe",
   "repository": {
     "type": "git",
-    "url": "git://github.com/b3log/pipe.git"
+    "url": "git://github.com/88250/pipe.git"
   },
   "bugs": {
-    "url": "https://github.com/b3log/pipe/issues"
+    "url": "https://github.com/88250/pipe/issues"
   },
   "license": "GPLv3",
   "private": true,
