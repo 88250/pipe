@@ -26,7 +26,6 @@
     data () {
       return {
         clickedGitHub: false,
-        isAgreen: true,
         showIntro: false,
       }
     },
@@ -46,9 +45,7 @@
           snackModify: 'success',
         })
         if (!this.clickedGitHub) {
-          window.location.href = `${process.env.AxiosBaseURL}/oauth/github/redirect?referer=${document.referrer}__${this.isAgreen
-            ? '0'
-            : '1'}`
+          window.location.href = `${process.env.AxiosBaseURL}/oauth/github/redirect?referer=${document.referrer}__1}`
           this.$set(this, 'clickedGitHub', true)
         }
       },

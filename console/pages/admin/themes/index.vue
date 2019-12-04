@@ -1,7 +1,7 @@
 <template>
   <div class="admin__themes">
     <div class="theme__link">
-      <a href="https://github.com/b3log/pipe/issues/122" target="_blank">新主题推荐</a> •
+      <a href="https://github.com/88250/pipe/issues/1" target="_blank">新主题推荐</a> •
       <a href="https://hacpai.com/article/1512550354920#toc_h3_20" target="_blank">Pipe 主题开发指南</a>
     </div>
     <div class="fn__clear">

@@ -13,7 +13,7 @@
               <a :href="download" target="_blank">{{ version }}</a>
             </span>
               <iframe class="about__github fn__left"
-                      src="https://ghbtns.com/github-btn.html?user=b3log&repo=pipe&type=star&count=true&size=large"
+                      src="https://ghbtns.com/github-btn.html?user=88250&repo=pipe&type=star&count=true&size=large"
                       frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
             </h2>
             <h2 class="fn__clear" v-else>
@@ -22,16 +22,12 @@
               <a class="ft__danger" :href="download" target="_blank">{{ version }}</a>
             </span>
               <iframe class="about__github fn__left"
-                      src="https://ghbtns.com/github-btn.html?user=b3log&repo=pipe&type=star&count=true&size=large"
+                      src="https://ghbtns.com/github-btn.html?user=88250&repo=pipe&type=star&count=true&size=large"
                       frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
             </h2>
             <p v-html="$t('about4', $store.state.locale)"></p>
             <p v-html="$t('about3', $store.state.locale)"></p>
             <p>
-              <a href="https://github.com/b3log/pipe-themes" target="_blank" class="about__link btn btn--success">
-                <v-icon>github</v-icon>
-                {{ $t('theme', $store.state.locale) }}
-              </a>
               <a href="https://hacpai.com/article/1513761942333" target="_blank" class="about__link btn btn--success">
                 <v-icon>file-text</v-icon>
                 {{ $t('doc', $store.state.locale) }}
@@ -59,11 +55,11 @@
         <a href="https://b3log.org">B3log 开源组织</a>旗下包含
         <a href="https://sym.b3log.org/">Symphony</a>、
         <a href="https://solo.b3log.org/">Solo</a>、
-        <a href="https://github.com/b3log/pipe">Pipe</a>、
-        <a href="https://github.com/b3log/wide">Wide</a>、
-        <a href="https://github.com/b3log/latke">Latke</a>、
-        <a href="https://github.com/b3log/vditor">Vditor</a>、
-        <a href="https://github.com/b3log/gulu">Gulu</a>&nbsp;等一系列开源项目。随着项目规模的增长，我们需要有相应的资金支持才能持续项目的维护和开发。
+        <a href="https://github.com/88250/pipe">Pipe</a>、
+        <a href="https://github.com/88250/wide">Wide</a>、
+        <a href="https://github.com/88250/latke">Latke</a>、
+        <a href="https://github.com/vanessa219/vditor">Vditor</a>、
+        <a href="https://github.com/88250/gulu">Gulu</a>&nbsp;等一系列开源项目。随着项目规模的增长，我们需要有相应的资金支持才能持续项目的维护和开发。
         <br/> <br/>
         如果你觉得 Pipe 还算好用，可通过支付宝对我们进行赞助，谢谢 🙏
         <br/> <br/>
