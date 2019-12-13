@@ -17,42 +17,20 @@
 package controller
 
 import (
-	"crypto/tls"
-	"net/http"
-	"strings"
-	"time"
-
 	"github.com/88250/gulu"
 	"github.com/88250/pipe/model"
 	"github.com/88250/pipe/service"
 	"github.com/88250/pipe/util"
 	"github.com/gin-gonic/gin"
-	"github.com/parnurzeal/gorequest"
+	"net/http"
+	"strings"
 )
 
 var states = map[string]string{}
 
-// redirectGitHubLoginAction redirects to GitHub auth page.
-func redirectGitHubLoginAction(c *gin.Context) {
-	requestResult := gulu.Ret.NewResult()
-	_, _, errs := gorequest.New().TLSClientConfig(&tls.Config{InsecureSkipVerify: true}).
-		Get(util.HacPaiURL+"/oauth/pipe/client2").
-		Set("user-agent", model.UserAgent).Timeout(10 * time.Second).EndStruct(requestResult)
-	if nil != errs {
-		logger.Errorf("get oauth client id failed: %+v", errs)
-		c.Status(http.StatusNotFound)
-
-		return
-	}
-	if util.CodeOk != requestResult.Code {
-		logger.Errorf("get oauth client id failed [code=%d, msg=%s]", requestResult.Code, requestResult.Msg)
-		c.Status(http.StatusNotFound)
-
-		return
-	}
-	data := requestResult.Data.(map[string]interface{})
-	clientId := data["clientId"].(string)
-	loginAuthURL := data["loginAuthURL"].(string)
+// redirectLoginAction redirects to HacPai auth page.
+func redirectLoginAction(c *gin.Context) {
+	loginAuthURL := "https://hacpai.com/login?goto=" + model.Conf.Server + "/api/login/callback"
 
 	referer := c.Request.URL.Query().Get("referer")
 	if "" == referer || !strings.Contains(referer, "://") {
@@ -63,16 +41,11 @@ func redirectGitHubLoginAction(c *gin.Context) {
 	}
 	state := gulu.Rand.String(16) + referer
 	states[state] = state
-	path := loginAuthURL + "?client_id=" + clientId + "&state=" + state
-
-	logger.Infof("redirect to github [" + path + "]")
-
+	path := loginAuthURL + "?state=" + state
 	c.Redirect(http.StatusSeeOther, path)
 }
 
-func githubCallbackAction(c *gin.Context) {
-	logger.Infof("github callback [" + c.Request.URL.String() + "]")
-
+func loginCallbackAction(c *gin.Context) {
 	state := c.Query("state")
 	if _, exist := states[state]; !exist {
 		c.Status(http.StatusBadRequest)
@@ -82,23 +55,16 @@ func githubCallbackAction(c *gin.Context) {
 	delete(states, state)
 
 	referer := state[16:]
-	accessToken := c.Query("ak")
-	githubUser := util.GitHubUserInfo(accessToken)
-	if nil == githubUser {
-		logger.Warnf("can not get user info with token [" + accessToken + "]")
-		c.Status(http.StatusUnauthorized)
 
-		return
-	}
-
-	githubId := githubUser["userId"].(string)
-	userName := githubUser["userName"].(string)
+	githubId := c.Query("userId")
+	userName := c.Query("userName")
+	avatar := c.Query("avatar")
 	user := service.User.GetUserByGitHubId(githubId)
 	if nil == user {
 		if !service.Init.Inited() {
 			user = &model.User{
 				Name:      userName,
-				AvatarURL: githubUser["userAvatarURL"].(string),
+				AvatarURL: avatar,
 				B3Key:     githubId,
 				GithubId:  githubId,
 			}
@@ -114,7 +80,7 @@ func githubCallbackAction(c *gin.Context) {
 			if nil == user {
 				user = &model.User{
 					Name:      userName,
-					AvatarURL: githubUser["userAvatarURL"].(string),
+					AvatarURL: avatar,
 					B3Key:     githubId,
 					GithubId:  githubId,
 				}
@@ -128,6 +94,7 @@ func githubCallbackAction(c *gin.Context) {
 			} else {
 				user.GithubId = githubId
 				user.B3Key = githubId
+				user.AvatarURL = avatar
 				service.User.UpdateUser(user)
 			}
 		}

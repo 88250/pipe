@@ -31,14 +31,14 @@
 
   &__github {
     cursor: pointer;
-    background-image: url("~assets/images/github.png");
+    background-image: url("~assets/images/hacpai.png");
     height: 200px;
     width: 200px;
     background-size: cover;
     margin: 20px auto;
     background-position: center center;
     &:hover {
-      background-image: url("~assets/images/github.gif");
+      background-image: url("~assets/images/hacpai.png");
     }
   }
 }

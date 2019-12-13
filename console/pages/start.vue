@@ -2,17 +2,9 @@
   <div class="console" id="particles">
     <div class="card login__content" ref="content">
       <div class="login__github" @click="loginGitHub"></div>
-      <img class="fn__none" src="~assets/images/github.gif"/>
+      <img class="fn__none" src="~assets/images/hacpai.png"/>
       <v-btn class="btn--small btn--info" @click="loginGitHub">{{ $t('index2', $store.state.locale) }}</v-btn>
       <div class="start__space"></div>
-      <a class="ft__12 fn__pointer" @click="toggleIntro">查看 GitHub 数据使用说明</a>
-      <div class="vditor-reset ft__12 start__intro" v-show="showIntro">
-        <ul>
-          <li>获取用户名、头像等用于初始化</li>
-          <li>获取公开仓库信息用于展示</li>
-          <li>不会对你的已有数据进行写入</li>
-        </ul>
-      </div>
       <div class="start__space"></div>
     </div>
   </div>
@@ -45,7 +37,7 @@
           snackModify: 'success',
         })
         if (!this.clickedGitHub) {
-          window.location.href = `${process.env.AxiosBaseURL}/oauth/github/redirect?referer=${document.referrer}`
+          window.location.href = `${process.env.AxiosBaseURL}/login/redirect?referer=${document.referrer}`
           this.$set(this, 'clickedGitHub', true)
         }
       },

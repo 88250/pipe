@@ -82,8 +82,8 @@ func MapRoutes() *gin.Engine {
 	api.GET("/status", getStatusAction)
 	api.GET("/check-version", console.CheckVersionAction)
 	api.GET("/blogs/top", showTopBlogsAction)
-	api.GET("/oauth/github/redirect", redirectGitHubLoginAction)
-	api.GET("/oauth/github/callback", githubCallbackAction)
+	api.GET("/login/redirect", redirectLoginAction)
+	api.GET("/login/callback", loginCallbackAction)
 
 	consoleGroup := api.Group("/console")
 	consoleGroup.Use(console.LoginCheck)
@@ -261,7 +261,7 @@ func routePath(c *gin.Context) {
 
 		return
 	case "/api/oauth/github/callback":
-		githubCallbackAction(c)
+		loginCallbackAction(c)
 
 		return
 	case "/api/markdown":
