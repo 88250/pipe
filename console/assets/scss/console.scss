@@ -29,16 +29,23 @@
     text-align: center;
   }
 
-  &__github {
+  &__icon .icon {
+    border-radius: 10px !important;
+    fill: currentColor;
+    stroke-width: 0;
+    stroke: currentColor;
     cursor: pointer;
-    background-image: url("~assets/images/hacpai.png");
     height: 200px;
     width: 200px;
     background-size: cover;
     margin: 20px auto;
-    background-position: center center;
+    display: block;
+    color: #3b3e43;
+    transition: $transition;
+    padding-right: 46px;
+
     &:hover {
-      background-image: url("~assets/images/hacpai.png");
+     transform: scale(1.1);
     }
   }
 }

@@ -33,7 +33,7 @@
                 {{ $t('doc', $store.state.locale) }}
               </a>
               <a href="https://hacpai.com/tag/pipe" target="_blank" class="about__link btn btn--success">
-                <v-icon>hacpai-logo2</v-icon>
+                <v-icon>hacpai-logo</v-icon>
                 {{ $t('community', $store.state.locale) }}
               </a>
               <a href="https://b3log.org" target="_blank" class="about__link btn btn--success">

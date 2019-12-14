@@ -1,9 +1,14 @@
 <template>
   <div class="console" id="particles">
     <div class="card login__content" ref="content">
-      <div class="login__github" @click="loginGitHub"></div>
-      <img class="fn__none" src="~assets/images/hacpai.png"/>
+      <div @click="loginGitHub" class="login__icon">
+        <v-icon>hacpai-logo</v-icon>
+      </div>
       <v-btn class="btn--small btn--info" @click="loginGitHub">{{ $t('index2', $store.state.locale) }}</v-btn>
+      <span>&nbsp;&nbsp;</span>
+      <a href="https://hacpai.com/article/1576294445994" target="_blank"><v-icon>question</v-icon></a>
+      <div class="start__space"></div>
+      <div class="start__space"></div>
       <div class="start__space"></div>
       <div class="start__space"></div>
     </div>
