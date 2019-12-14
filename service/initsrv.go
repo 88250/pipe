@@ -214,7 +214,7 @@ Pipe 博客平台已经初始化完毕，可在管理后台 - 设置 - 基础设
 
 另外，出于安全考虑请尽快完成如下操作：
 
-1. 使用 GitHub 账号登录[社区](https://hacpai.com)
+1. 登录[社区](https://hacpai.com)
 2. 在社区[个人设置 - B3](https://hacpai.com/settings/b3) 中更新 B3 Key
 3. 在 Pipe 管理后台 - 设置 - 账号中也进行同样的 B3 Key 更新
 

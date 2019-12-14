@@ -260,7 +260,7 @@ func routePath(c *gin.Context) {
 		addSymArticleAction(c)
 
 		return
-	case "/api/oauth/github/callback":
+	case "/api/login/callback":
 		loginCallbackAction(c)
 
 		return
