@@ -157,6 +157,9 @@ export const ShowEditor = (reply, id, commentId) => {
     ctrlEnter: () => {
       $('#pipeEditorAdd').click()
     },
+    hint: {
+      emojiPath: 'https://cdn.jsdelivr.net/npm/vditor/dist/images/emoji',
+    },
     preview: {
       delay: 500,
       mode: 'editor',
