@@ -27,6 +27,26 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// blogInfoAction returns blog info.
+func blogInfoAction(c *gin.Context) {
+	result := gulu.Ret.NewResult()
+	defer c.JSON(http.StatusOK, result)
+
+	blogID := getBlogID(c)
+	blogAdmin := service.User.GetBlogAdmin(blogID)
+	platformAdmin := service.User.GetPlatformAdmin()
+
+	result.Data = map[string]interface{}{
+		"version":         model.Version,
+		"servePath":       model.Conf.Server,
+		"staticServePath": model.Conf.StaticServer,
+		"runtimeMode":     model.Conf.RuntimeMode,
+		"runtimeDatabase": service.Database(),
+		"userName":        blogAdmin.Name,
+		"platformAdmin":   platformAdmin.Name,
+	}
+}
+
 // addSymCommentAction adds a comment come from Sym. Sees https://hacpai.com/article/1457158841475 for more details.
 func addSymCommentAction(c *gin.Context) {
 	result := gulu.Ret.NewResult()
