@@ -269,7 +269,7 @@ func routePath(c *gin.Context) {
 
 		return
 	case "/blog/info":
-		blogInfoAction(c)
+		showBlogInfoAction(c)
 
 		return
 	}

@@ -46,7 +46,7 @@ const (
 	PathRobots         = "/robots.txt"
 	PathAPIsSymArticle = "/apis/symphony/article"
 	PathAPIsSymComment = "/apis/symphony/comment"
-	PathPlatInfo       = "/plat/info"
+	PathPlatInfo       = "/blog/info"
 	PathManifest       = "/manifest.json"
 )
 
