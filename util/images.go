@@ -19,13 +19,16 @@ package util
 import (
 	"math/rand"
 	"strconv"
-	"time"
 	"strings"
+	"time"
 )
+
+// CommunityFileURL is the community file service URL.
+const CommunityFileURL = "https://img.hacpai.com"
 
 // ImageSize returns image URL of Qiniu image processing style with the specified width and height.
 func ImageSize(imageURL string, width, height int) string {
-	if strings.Contains(imageURL, "imageView") || !strings.Contains(imageURL, "img.hacpai.com") {
+	if strings.Contains(imageURL, "imageView") {
 		return imageURL
 	}
 
@@ -40,7 +43,7 @@ func RandImage() string {
 	delta := max - min
 	sec := rand.Int63n(delta) + min
 
-	return time.Unix(sec, 0).Format("https://img.hacpai.com/bing/20060102.jpg")
+	return time.Unix(sec, 0).Format(CommunityFileURL + "/bing/20060102.jpg")
 }
 
 // RandImages returns random image URLs.

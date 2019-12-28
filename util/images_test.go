@@ -23,7 +23,7 @@ import (
 
 func TestRandImage(t *testing.T) {
 	url := RandImage()
-	if !strings.Contains(url, "img.hacpai.com") {
+	if !strings.Contains(url, CommunityFileURL) {
 		t.Errorf(url)
 	}
 }
