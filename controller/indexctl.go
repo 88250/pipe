@@ -54,18 +54,32 @@ func showStartPageAction(c *gin.Context) {
 }
 
 func showPlatInfoAction(c *gin.Context) {
-	result := gulu.Ret.NewResult()
-	defer c.JSON(http.StatusOK, result)
+	result := blogInfo(c)
+	c.JSON(http.StatusOK, result)
+}
 
-	data := map[string]interface{}{}
-	data["version"] = model.Version
-	data["database"] = service.Database()
-	data["mode"] = model.Conf.RuntimeMode
-	data["server"] = model.Conf.Server
-	data["staticServer"] = model.Conf.StaticServer
-	data["staticResourceVer"] = model.Conf.StaticResourceVersion
+func showBlogInfoAction(c *gin.Context) {
+	result := blogInfo(c)
+	blogID := getBlogID(c)
+	blogAdmin := service.User.GetBlogAdmin(blogID)
+	result.Data.(map[string]interface{})["userName"] = blogAdmin.Name
+	c.JSON(http.StatusOK, result)
+}
 
-	result.Data = data
+func blogInfo(c *gin.Context) (ret *gulu.Result) {
+	ret = gulu.Ret.NewResult()
+	platformAdmin := service.User.GetPlatformAdmin()
+
+	ret.Data = map[string]interface{}{
+		"version":         model.Version,
+		"servePath":       model.Conf.Server,
+		"staticServePath": model.Conf.StaticServer,
+		"runtimeMode":     model.Conf.RuntimeMode,
+		"runtimeDatabase": service.Database(),
+		"platformAdmin":   platformAdmin.Name,
+	}
+
+	return
 }
 
 func showTopBlogsAction(c *gin.Context) {

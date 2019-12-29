@@ -268,6 +268,10 @@ func routePath(c *gin.Context) {
 		console.MarkdownAction(c)
 
 		return
+	case "/blog/info":
+		showBlogInfoAction(c)
+
+		return
 	}
 
 	if strings.Contains(path, util.PathArchives+"/") {
