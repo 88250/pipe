@@ -22,7 +22,7 @@
     "babel-polyfill": "^6.26.0",
     "particles.js": "^2.0.0",
     "sha512crypt-node": "^0.1.0",
-    "vditor": "^1.10.11",
+    "vditor": "^2.0.3",
     "vue-axios": "^2.1.4",
     "vue-i18n": "^8.11.2",
     "vuetify": "git+https://github.com/Vanessa219/vuetify.git#v1.2.12"
@@ -40,7 +40,7 @@
     "eslint-plugin-promise": "^4.1.1",
     "eslint-plugin-standard": "^4.0.0",
     "node-sass": "^4.12.0",
-    "nuxt": "^2.7.1",
+    "nuxt": "^2.11.0",
     "sass-loader": "^7.1.0"
   }
 }
