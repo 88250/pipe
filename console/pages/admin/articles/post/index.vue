@@ -198,9 +198,6 @@
           typewriterMode: true,
           tab: '\t',
           cache: this.$route.query.id ? false : true,
-          hint: {
-            emojiPath: 'https://cdn.jsdelivr.net/npm/vditor/dist/images/emoji',
-          },
           preview: {
             delay: 500,
             mode: data.mode,
