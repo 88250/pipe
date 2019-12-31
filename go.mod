@@ -4,8 +4,8 @@ go 1.12
 
 require (
 	cloud.google.com/go v0.37.1 // indirect
-	github.com/88250/gulu v0.0.0-20191129115942-f593513f6ed6
-	github.com/88250/lute v0.0.0-20191129120354-07a1827ce03f
+	github.com/88250/gulu v0.0.0-20191221090949-7ec528e17061
+	github.com/88250/lute v0.0.0-20191230154728-ed9c8978a4e5
 	github.com/PuerkitoBio/goquery v1.5.0
 	github.com/araddon/dateparse v0.0.0-20190223010137-262228af701e
 	github.com/beevik/etree v1.1.0 // indirect
@@ -26,19 +26,20 @@ require (
 	github.com/jinzhu/inflection v0.0.0-20180308033659-04140366298a // indirect
 	github.com/jinzhu/now v1.0.0 // indirect
 	github.com/lib/pq v1.0.0 // indirect
+	github.com/mattn/go-isatty v0.0.11 // indirect
 	github.com/mattn/go-sqlite3 v1.10.0 // indirect
 	github.com/microcosm-cc/bluemonday v1.0.2
 	github.com/moul/http2curl v1.0.0 // indirect
 	github.com/mssola/user_agent v0.5.0
 	github.com/parnurzeal/gorequest v0.2.15
+	github.com/sergi/go-diff v1.1.0 // indirect
 	github.com/simplereach/timeutils v1.2.0 // indirect
 	github.com/smartystreets/goconvey v0.0.0-20190306220146-200a235640ff // indirect
 	github.com/vinta/pangu v3.0.0+incompatible
-	golang.org/x/crypto v0.0.0-20190911031432-227b76d455e7 // indirect
-	golang.org/x/net v0.0.0-20190921015927-1a5e07d1ff72 // indirect
+	golang.org/x/crypto v0.0.0-20191227163750-53104e6ec876 // indirect
+	golang.org/x/net v0.0.0-20191209160850-c0dbc17a3553 // indirect
 	golang.org/x/sync v0.0.0-20190911185100-cd5d95a43a6e // indirect
+	golang.org/x/sys v0.0.0-20191228213918-04cbcbbfeed8 // indirect
 	gopkg.in/mgo.v2 v2.0.0-20180705113604-9856a29383ce // indirect
 	gopkg.in/yaml.v2 v2.2.7
 )
-
-replace gopkg.in/russross/blackfriday.v2 v2.0.1 => github.com/russross/blackfriday/v2 v2.0.1
