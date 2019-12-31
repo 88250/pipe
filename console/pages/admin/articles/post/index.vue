@@ -416,6 +416,7 @@
           URL: responseData.uploadURL || '',
         })
       }
+      const id = this.$route.query.id
 
       this.contentEditor = this._initEditor({
         id: 'contentEditor',
@@ -431,9 +432,15 @@
         mode: 'editor',
         placeholder: this.$t('inputAbstract', this.$store.state.locale),
         resize: true,
+        after: () => {
+          if (!id)
+            // set storage
+            this._setDefaultLocalStorage()
+            setTimeout(() => {
+              document.querySelector('.input-group__input input').focus()
+            }, 100)
+        }
       })
-
-      const id = this.$route.query.id
 
       window.onbeforeunload = (event) => {
         if ((this.edited || this.originalContent !== this.contentEditor.getValue()) && id) {
@@ -457,13 +464,8 @@
           this.abstractEditor.setValue(responseData.abstract)
           this.contentEditor.setValue(responseData.content)
         }
-      } else {
-        // set storage
-        this._setDefaultLocalStorage()
-        setTimeout(() => {
-          document.querySelector('.input-group__input input').focus()
-        }, 100)
       }
+
       // get tags
       this.$store.dispatch('getTags')
 
