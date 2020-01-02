@@ -55,7 +55,7 @@
             <a href="{{.URL}}#pipeComments">{{.ViewCount}}</a>
             {{end}}
 
-            {{if gt .CommentCount 0}}
+            {{if and $.Commentable (gt .CommentCount 0)}}
             <span>&nbsp; &nbsp;</span>
             <svg>
                 <use xlink:href="#iconComment"></use>

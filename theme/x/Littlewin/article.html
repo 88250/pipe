@@ -52,6 +52,7 @@
                     <svg><use xlink:href="#iconEdit"></use></svg>&nbsp;{{.I18n.Edit}}
                 </a>
                 {{end}}
+                {{if $.Commentable}}
                 <span class="fn__right fn__flex-center"
                       data-title="{{.I18n.Comment}}{{.I18n.Colon}}{{.Article.Title}}"
                       id="articleCommentBtn"
@@ -60,12 +61,13 @@
                         <use xlink:href="#iconComment"></use>
                     </svg>&nbsp;{{.I18n.Comment}}
                 </span>
+                {{end}}
             </div>
             <div class="module module--space module--bottom post__meta">
                 本文由 <a rel="nofollow" href="{{.Article.Author.URL}}">{{.Article.Author.Name}}</a> 于 {{.Article.CreatedAt}}
                 发布，当前已被围观 
-                <a href="{{.Article.URL}}">{{.Article.ViewCount}}</a> 次{{if gt .Article.CommentCount 0}}，评论
-                <a href="{{.Article.URL}}#pipeComments">{{.Article.CommentCount}}</a> 次{{end}}
+                <a href="{{.Article.URL}}">{{.Article.ViewCount}}</a> 次{{if gt .Article.CommentCount 0}}{{if $.Commentable}}，评论
+                <a href="{{.Article.URL}}#pipeComments">{{.Article.CommentCount}}</a> 次{{end}}{{end}}
                 <br>
 
                 并被添加
