@@ -73,7 +73,7 @@
                     </svg>
                 </a>
 
-                {{if gt .Article.CommentCount 0}}
+                {{if and $.Commentable (gt .Article.CommentCount 0)}}
                 <a href="{{.Article.URL}}#pipeComments" aria-label="{{$.I18n.Comment}}"
                    class="pipe-tooltipped pipe-tooltipped--n">
                     {{.Article.CommentCount}}
@@ -95,9 +95,11 @@
         </div>
     </article>
 
+    {{if .Commentable}}
     <article class="article__item">
         {{template "comment/comments" .}}
     </article>
+    {{end}}
 
     <article class="article__item">
         {{if gt (len .RecommendArticles) 0}}
@@ -141,7 +143,7 @@
                            data-src="{{$item.Author.AvatarURL}}"
                            href="{{$item.Author.URL}}" target="_blank"></a>
                         <span class="fn__left ft__fade">{{$item.CreatedAt}} &nbsp; &nbsp;</span>
-                        {{if ne 0 $item.CommentCount}}
+                        {{if and $.Commentable (ne 0 $item.CommentCount)}}
                         <a href="{{$item.URL}}#comments"
                            class="ft__fade" target="_blank">
                             {{$item.CommentCount}}
