@@ -93,6 +93,22 @@ func addCommentAction(c *gin.Context) {
 		return
 	}
 
+	article := service.Article.ConsoleGetArticle(comment.ArticleID)
+	if nil == article {
+		result.Code = util.CodeErr
+		result.Msg = "not found the specified article"
+
+		return
+	}
+
+	commentableSetting := service.Setting.GetSetting(model.SettingCategoryBasic, model.SettingNameBasicCommentable, blogID)
+	if "true" != commentableSetting.Value || !article.Commentable {
+		result.Code = util.CodeErr
+		result.Msg = "not allow comment"
+
+		return
+	}
+
 	comment.IP = util.GetRemoteAddr(c)
 
 	if err := service.Comment.AddComment(comment); nil != err {
@@ -113,7 +129,6 @@ func addCommentAction(c *gin.Context) {
 		AvatarURL: session.UAvatar,
 	}
 	page := service.Comment.GetCommentPage(comment.ArticleID, comment.ID, comment.BlogID)
-	article := service.Article.ConsoleGetArticle(comment.ArticleID)
 	themeComment := &model.ThemeComment{
 		ID:        comment.ID,
 		Content:   template.HTML(util.Markdown(comment.Content).ContentHTML),
