@@ -29,8 +29,10 @@
                 <a href="{{.Article.Author.URL}}" class="name">{{.Article.Author.Name}}</a>
                 <div>
                     <time>{{.Article.CreatedAt}}</time>
+                    {{if .Commentable}}
                     •
                     <a class="small" href="{{.URL}}#pipeComments">{{.Article.CommentCount}} {{$.I18n.Comment}}</a>
+                    {{end}}
                 </div>
             </div>
         </div>
@@ -58,6 +60,7 @@
             <a href="{{.URL}}" class="post__view">{{.Article.ViewCount}} {{$.I18n.View}}</a>
 
             <div class="fn__right">
+                {{if $.Commentable}}
                 <span id="articleCommentBtn"
                       class="{{if gt .Article.CommentCount 0}}pipe-tooltipped pipe-tooltipped--n{{end}} article__edit ft-green"
                       aria-label="{{$.I18n.Comment}}"
@@ -68,6 +71,7 @@
                     </svg>
                     {{if gt .Article.CommentCount 0}}{{.Article.CommentCount}}{{else}}{{$.I18n.Comment}}{{end}} &nbsp; &nbsp;
                 </span>
+                {{end}}
 
                 <span id="articleShare">
                     <span class="article__edit" data-type="wechat">
@@ -112,8 +116,10 @@
                 <a href="{{.Article.Author.URL}}" class="name">{{.Article.Author.Name}}</a>
                 <div>
                     <time>{{.Article.CreatedAt}}</time>
+                    {{if $.Commentable}}
                     •
                     <a class="small" href="{{.URL}}#pipeComments">{{.Article.CommentCount}} {{$.I18n.Comment}}</a>
+                    {{end}}
                 </div>
             </div>
         </div>
@@ -124,6 +130,7 @@
         <div class="wrapper fn__clear">
             <a href="{{.URL}}" class="post__view">{{.Article.ViewCount}} {{$.I18n.View}}</a>
             <div class="fn__right">
+                {{if $.Commentable}}
                 <span id="articleCommentBottomBtn" class="{{if gt .Article.CommentCount 0}}pipe-tooltipped pipe-tooltipped--n{{end}} article__edit ft-green"
                       aria-label="{{$.I18n.Comment}}"
                       data-title="{{$.I18n.Comment}}{{$.I18n.Colon}}{{.Article.Title}}"
@@ -133,6 +140,7 @@
                     </svg>
                     {{if gt .Article.CommentCount 0}}{{.Article.CommentCount}}{{else}}{{$.I18n.Comment}}{{end}} &nbsp; &nbsp;
                 </span>
+                {{end}}
 
                 <span id="articleBottomShare">
                     <span class="article__edit" data-type="wechat">
@@ -210,13 +218,14 @@
                                 <div class="fn__ellipsis">
                                     <time>{{$item.CreatedAt}}</time>
                                     •
-                                    <a href="{{$item.URL}}" class="ft__gray">{{$item.ViewCount}} {{$.I18n.View}}</a> •
+                                    <a href="{{$item.URL}}" class="ft__gray">{{$item.ViewCount}} {{$.I18n.View}}</a>{{if $.Commentable}} •
                                     <a href="{{$item.URL}}#comments" class="ft__gray">
                                         {{if gt $item.CommentCount 0}}
                                         {{$item.CommentCount}}
                                         {{end}}
                                         {{$.I18n.Comment}}
                                     </a>
+                                    {{end}}
                                 </div>
                             </div>
                         </div>
@@ -229,10 +238,12 @@
             {{end}}
         </div>
 
+        {{if $.Commentable}}
         <div class="article__comment">
             <div class="comment__title">{{.I18n.Comment}}</div>
             {{template "comment/comments" .}}
         </div>
+        {{end}}
     </div>
 
 
@@ -240,6 +251,7 @@
 </div>
 
 <div class="post__side">
+    {{if $.Commentable}}
     <span id="articleSideCommentBtn" class="pipe-tooltipped pipe-tooltipped--e article__edit ft-green"
           aria-label="{{$.I18n.Comment}}"
           data-title="{{$.I18n.Comment}}{{$.I18n.Colon}}{{.Article.Title}}"
@@ -249,6 +261,7 @@
             <use xlink:href="#icon-comment"></use>
         </svg>
     </span>
+    {{end}}
     <div id="articleSideShare">
         <span class="article__edit" data-type="wechat">
             <svg><use xlink:href="#wechat"></use></svg>
