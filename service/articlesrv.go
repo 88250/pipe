@@ -502,7 +502,7 @@ func (srv *articleService) UpdateArticle(article *model.Article) (err error) {
 		}
 	}()
 	if oldArticle.CreatedAt.Format("200601") != article.CreatedAt.Format("200601") {
-		// https://github.com/b3log/pipe/issues/106
+		// 发布和修改文章可指定发布时间 https://github.com/b3log/pipe/issues/106
 		if err = Archive.UnArchiveArticleWithoutTx(tx, oldArticle); nil != err {
 			return
 		}
