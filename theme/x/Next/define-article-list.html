@@ -27,7 +27,7 @@
             <time>{{.CreatedAt}}</time> &nbsp;
             |  &nbsp;
             <a href="{{.URL}}">{{.ViewCount}}</a> {{$.I18n.View}}
-            {{if gt .CommentCount 0}}
+            {{if and $.Commentable (gt .CommentCount 0)}}
             &nbsp; |  &nbsp;
             <a href="{{.URL}}#pipeComments">{{.CommentCount}}</a> {{$.I18n.Comment}}
             {{end}}
