@@ -42,7 +42,7 @@
                         <svg><use xlink:href="#icon-view"></use></svg>
                         {{.Article.ViewCount}} {{$.I18n.View}}
                     </span>
-                    {{if gt .Article.CommentCount 0}}
+                    {{if and .Commentable (gt .Article.CommentCount 0)}}
                     &nbsp; | &nbsp;
                     <a href="{{.Article.URL}}#pipeComments" class="fn-nowrap">
                         <svg>
@@ -105,6 +105,7 @@
                 {{end}}
 
                 <span class="fn__right">
+                    {{if .Commentable}}
                     <a href="javascript:void(0)"
                         data-title="{{.I18n.Comment}}{{.I18n.Colon}}{{.Article.Title}}"
                        id="articleCommentBtn"
@@ -114,6 +115,7 @@
                         </svg>
                         {{$.I18n.Comment}}
                     </a>
+                    {{end}}
                     {{if .Article.Editable}}
                     <a href="{{$.Conf.Server}}/admin/articles/post?id={{.Article.ID}}">
                         <svg>
@@ -126,9 +128,11 @@
             </div>
             <div class="fn-mg5"></div>
         </article>
+        {{if .Commentable}}
         <div class="comment">
             {{template "comment/comments" .}}
         </div>
+        {{end}}
         <div>
             {{template "9IPHP/module-list" dict "List" .RecommendArticles "Title" .I18n.RecommendArticle "UserCount" 2}}
         </div>

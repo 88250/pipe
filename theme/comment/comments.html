@@ -1,4 +1,5 @@
 {{define "comment/comments"}}
+{{if .Commentable}}
 <div id="pipeCommentsWrap">
 {{if gt (len .Comments) 0}}
 <div id="pipeComments" class="fn__clear"
@@ -48,4 +49,5 @@
 </div>
 {{end}}
 </div>
+{{end}}
 {{end}}

@@ -47,7 +47,7 @@
                             <svg><use xlink:href="#icon-view"></use></svg>
                             {{.ViewCount}} {{$.I18n.View}}
                         </span>
-                {{if gt .CommentCount 0}}
+                {{if and $.Commentable (gt .CommentCount 0)}}
                 &nbsp; | &nbsp;
                 <a href="{{.URL}}#pipeComments" class="fn-nowrap">
                     <svg>
