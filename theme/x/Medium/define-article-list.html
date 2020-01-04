@@ -56,11 +56,12 @@
                         <a href="{{$item.Author.URL}}" class="article__author">{{$item.Author.Name}}</a><br>
                         {{end}}
                         <time>{{$item.CreatedAt}}</time>
+                        {{if $.Commentable}}
                         •
                         <a href="{{$item.URL}}#pipeComments" class="ft__gray">
                             {{if gt $item.CommentCount 0}}{{$item.CommentCount}}{{end}}
                             {{$.I18n.Comment}}</a>
-
+                        {{end}}
                     </div>
 
                     {{if .Editable}}

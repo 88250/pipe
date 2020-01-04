@@ -33,7 +33,7 @@
                     </a>
                     {{end}}
                     ,  {{.Article.ViewCount}} {{$.I18n.View}}
-                    {{if gt .Article.CommentCount 0}}
+                    {{if and $.Commentable (gt .Article.CommentCount 0)}}
                     ,
                     <a href="{{.Article.URL}}#pipeComments">
                         {{.Article.CommentCount}} {{$.I18n.Comment}}

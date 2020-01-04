@@ -50,7 +50,7 @@ const (
 	SettingNameBasicBlogTitle       = "basicBlogTitle"
 	SettingNameBasicCommentable     = "basicCommentable"
 	SettingNameBasicFooter          = "basicFooter"
-	SettingNameBasicHeader          = "basicHeader" // Removed from UI since v1.1.0 caused by issue 54 (https://github.com/b3log/pipe/issues/54)
+	SettingNameBasicHeader          = "basicHeader" // Removed from UI since v1.1.0
 	SettingNameBasicNoticeBoard     = "basicNoticeBoard"
 	SettingNameBasicMetaDescription = "basicMetaDescription"
 	SettingNameBasicMetaKeywords    = "basicMetaKeywords"
@@ -61,8 +61,8 @@ const (
 // Setting values of category "basic".
 const (
 	SettingBasicFooterDefault           = "<!-- 这里可用于放置备案信息等，支持 Markdown -->"
-	SettingBasicHeaderDefault           = "<!-- https://github.com/b3log/pipe/issues/54 -->"
-	SettingBasicBasicNoticeBoardDefault = "<!-- 支持 Markdown -->本博客由 [Pipe](https://github.com/88250/pipe) 强力驱动"
+	SettingBasicHeaderDefault           = "<!-- 支持 Markdown -->"
+	SettingBasicBasicNoticeBoardDefault = "本博客由 [Pipe](https://github.com/88250/pipe) 强力驱动"
 )
 
 // Setting names of category "preference".

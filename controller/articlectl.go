@@ -23,12 +23,12 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/PuerkitoBio/goquery"
 	"github.com/88250/gulu"
 	"github.com/88250/pipe/cron"
 	"github.com/88250/pipe/model"
 	"github.com/88250/pipe/service"
 	"github.com/88250/pipe/util"
+	"github.com/PuerkitoBio/goquery"
 	"github.com/gin-gonic/gin"
 	"github.com/vinta/pangu"
 )
@@ -176,9 +176,13 @@ func showArticleAction(c *gin.Context) {
 		Editable:       session.UID == authorModel.ID,
 	}
 
+	commentable := dataModel["Commentable"].(bool)
+	commentable = articleModel.Commentable && commentable
+	dataModel["Commentable"] = commentable
+
+	var comments []*model.ThemeComment
 	page := util.GetPage(c)
 	commentModels, pagination := service.Comment.GetArticleComments(articleModel.ID, page, blogID)
-	var comments []*model.ThemeComment
 	for _, commentModel := range commentModels {
 		author := &model.ThemeAuthor{}
 		if model.SyncCommentAuthorID == commentModel.AuthorID {

@@ -162,6 +162,7 @@ func fillCommon(c *gin.Context) {
 	(*dataModel)["UserCount"] = len(users)
 	(*dataModel)["BlogAdmin"] = service.User.GetBlogAdmin(blogID)
 	(*dataModel)["Navigations"] = service.Navigation.GetNavigations(blogID)
+	(*dataModel)["Commentable"] , _ = strconv.ParseBool(settingMap[model.SettingNameBasicCommentable].(string))
 
 	fillMostUseCategories(&settingMap, dataModel, blogID)
 	fillMostUseTags(&settingMap, dataModel, blogID)
@@ -238,6 +239,12 @@ func fillMostViewArticles(c *gin.Context, settingMap *map[string]interface{}, da
 }
 
 func fillRecentComments(c *gin.Context, settingMap *map[string]interface{}, dataModel *DataModel, blogID uint64) {
+	commentable := (*dataModel)["Commentable"].(bool)
+	if !commentable {
+		(*dataModel)["RecentComments"] =  []*model.ThemeComment{}
+		return
+	}
+
 	recentCommentSize, err := strconv.Atoi((*settingMap)[model.SettingNamePreferenceRecentCommentListSize].(string))
 	if nil != err {
 		logger.Errorf("setting [%s] should be an integer, actual is [%v]", model.SettingNamePreferenceRecentCommentListSize,
@@ -280,6 +287,12 @@ func fillRecentComments(c *gin.Context, settingMap *map[string]interface{}, data
 }
 
 func fillMostCommentArticles(c *gin.Context, settingMap *map[string]interface{}, dataModel *DataModel, blogID uint64) {
+	commentable := (*dataModel)["Commentable"].(bool)
+	if !commentable {
+		(*dataModel)["MostCommentArticles"] = []*model.ThemeArticle{}
+		return
+	}
+
 	mostCommentArticleSize, err := strconv.Atoi((*settingMap)[model.SettingNamePreferenceMostCommentArticleListSize].(string))
 	if nil != err {
 		logger.Errorf("setting [%s] should be an integer, actual is [%v]", model.SettingNamePreferenceMostCommentArticleListSize,

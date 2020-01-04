@@ -34,7 +34,7 @@
                     <time class="ft__nowrap">{{.Article.CreatedAt}}</time>
                     •
                     <span class="ft__nowrap">{{.Article.ViewCount}} {{$.I18n.View}}</span>
-                    {{if gt .Article.CommentCount 0}}
+                    {{if and .Commentable (gt .Article.CommentCount 0)}}
                     •
                     <a href="{{.Article.URL}}#pipeComments" class="ft__nowrap ft__gray">{{.Article.CommentCount}}
                         {{$.I18n.Comment}}</a>
@@ -87,6 +87,7 @@
                          data-avatar="{{.Article.Author.AvatarURLWithSize 128}}"></div>
                 </span>
             </span>
+            {{if .Commentable}}
             <span class="fn__right action__btn action__btn--space action__btn--active fn__clear"
                   data-title="{{.I18n.Comment}}{{.I18n.Colon}}{{.Article.Title}}"
                   id="articleCommentBtn"
@@ -96,6 +97,7 @@
                     <use xlink:href="#comment"></use>
                 </svg>
             </span>
+            {{end}}
         </div>
     </article>
 </div>
@@ -190,6 +192,7 @@
                     <a href="{{$item.Author.URL}}" class="ft__gray" target="_blank">{{$item.Author.Name}}</a> <br>
                     <span class="ft__12 ft__fade fn__clear">
                         {{$item.CreatedAt}}
+                       {{if $.Commentable}}
                        <a href="{{$item.URL}}#comments" class="fn__right ft__fade" target="_blank">
                            {{if ne 0 $item.CommentCount}}
                            {{$item.CommentCount}}
@@ -199,6 +202,7 @@
                            <svg><use xlink:href="#comment"></use></svg>
                            {{end}}
                        </a>
+                       {{end}}
                    </span>
                 </div>
             </div>
