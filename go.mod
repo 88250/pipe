@@ -3,43 +3,43 @@ module github.com/88250/pipe
 go 1.12
 
 require (
-	cloud.google.com/go v0.37.1 // indirect
 	github.com/88250/gulu v0.0.0-20191221090949-7ec528e17061
-	github.com/88250/lute v0.0.0-20191230154728-ed9c8978a4e5
+	github.com/88250/lute v0.0.0-20200109164411-d82a2ba83be0
 	github.com/PuerkitoBio/goquery v1.5.0
-	github.com/araddon/dateparse v0.0.0-20190223010137-262228af701e
+	github.com/andybalholm/cascadia v1.1.0 // indirect
+	github.com/araddon/dateparse v0.0.0-20190622164848-0fb0a474d195
 	github.com/beevik/etree v1.1.0 // indirect
-	github.com/bluele/gcache v0.0.0-20190301044115-79ae3b2d8680
+	github.com/bluele/gcache v0.0.0-20190518031135-bc40bd653833
 	github.com/clbanning/mxj v1.8.4 // indirect
-	github.com/denisenkom/go-mssqldb v0.0.0-20190315220205-a8ed825ac853 // indirect
+	github.com/denisenkom/go-mssqldb v0.0.0-20191128021309-1d7a30a10f73 // indirect
 	github.com/dustin/go-humanize v1.0.0
-	github.com/elazarl/goproxy v0.0.0-20181111060418-2ce16c963a8a // indirect
-	github.com/erikstmartin/go-testdb v0.0.0-20160219214506-8d10e4a1bae5 // indirect
+	github.com/elazarl/goproxy v0.0.0-20191011121108-aa519ddbe484 // indirect
+	github.com/elazarl/goproxy/ext v0.0.0-20191011121108-aa519ddbe484 // indirect
 	github.com/fatih/structs v1.1.0
-	github.com/gin-contrib/sessions v0.0.0-20190226023029-1532893d996f
-	github.com/gin-gonic/gin v1.3.0
-	github.com/go-sql-driver/mysql v1.4.1 // indirect
-	github.com/gofrs/uuid v3.2.0+incompatible // indirect
-	github.com/gorilla/feeds v1.1.0
+	github.com/gin-contrib/sessions v0.0.3
+	github.com/gin-gonic/gin v1.5.0
+	github.com/go-playground/universal-translator v0.17.0 // indirect
+	github.com/go-sql-driver/mysql v1.5.0 // indirect
+	github.com/gorilla/feeds v1.1.1
+	github.com/gorilla/sessions v1.2.0 // indirect
 	github.com/ikeikeikeike/go-sitemap-generator v2.0.1+incompatible
-	github.com/jinzhu/gorm v1.9.2
-	github.com/jinzhu/inflection v0.0.0-20180308033659-04140366298a // indirect
-	github.com/jinzhu/now v1.0.0 // indirect
-	github.com/lib/pq v1.0.0 // indirect
-	github.com/mattn/go-isatty v0.0.11 // indirect
-	github.com/mattn/go-sqlite3 v1.10.0 // indirect
+	github.com/jinzhu/gorm v1.9.12
+	github.com/jinzhu/now v1.1.1 // indirect
+	github.com/json-iterator/go v1.1.9 // indirect
+	github.com/leodido/go-urn v1.2.0 // indirect
+	github.com/lib/pq v1.3.0 // indirect
+	github.com/mattn/go-sqlite3 v2.0.2+incompatible // indirect
 	github.com/microcosm-cc/bluemonday v1.0.2
-	github.com/moul/http2curl v1.0.0 // indirect
-	github.com/mssola/user_agent v0.5.0
-	github.com/parnurzeal/gorequest v0.2.15
-	github.com/sergi/go-diff v1.1.0 // indirect
-	github.com/simplereach/timeutils v1.2.0 // indirect
-	github.com/smartystreets/goconvey v0.0.0-20190306220146-200a235640ff // indirect
+	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
+	github.com/modern-go/reflect2 v1.0.1 // indirect
+	github.com/mssola/user_agent v0.5.1
+	github.com/parnurzeal/gorequest v0.2.16
+	github.com/smartystreets/assertions v1.0.1 // indirect
+	github.com/smartystreets/goconvey v1.6.4 // indirect
 	github.com/vinta/pangu v3.0.0+incompatible
-	golang.org/x/crypto v0.0.0-20191227163750-53104e6ec876 // indirect
+	golang.org/x/crypto v0.0.0-20200109152110-61a87790db17 // indirect
 	golang.org/x/net v0.0.0-20191209160850-c0dbc17a3553 // indirect
-	golang.org/x/sync v0.0.0-20190911185100-cd5d95a43a6e // indirect
-	golang.org/x/sys v0.0.0-20191228213918-04cbcbbfeed8 // indirect
-	gopkg.in/mgo.v2 v2.0.0-20180705113604-9856a29383ce // indirect
+	gopkg.in/go-playground/validator.v9 v9.31.0 // indirect
 	gopkg.in/yaml.v2 v2.2.7
+	moul.io/http2curl v1.0.0 // indirect
 )
