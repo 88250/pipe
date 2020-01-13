@@ -33,7 +33,7 @@
                     {{end}}
                     <time>{{.Article.CreatedAt}}</time> &nbsp;
                     | &nbsp;
-                    <a href="{{.URL}}">{{.Article.ViewCount}}</a> {{$.I18n.View}}
+                    <a href="{{.URL}}"><span data-uvstaturl="{{.Article.URL}}">{{.Article.ViewCount}}</span></a> {{$.I18n.View}}
                     {{if and $.Commentable (gt .Article.CommentCount 0)}}
                     &nbsp; | &nbsp;
                     <a href="{{.URL}}#pipeComments">{{.Article.CommentCount}}</a> {{$.I18n.Comment}}

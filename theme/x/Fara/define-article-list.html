@@ -23,7 +23,7 @@
             </div>
             <div>
                 <a href="{{$item.URL}}">
-                    {{$item.ViewCount}} {{$.I18n.View}}
+                    <span data-uvstaturl="{{.URL}}">{{.ViewCount}}</span> {{$.I18n.View}}
                 </a>
             </div>
             {{if and $.Commentable (gt .CommentCount 0)}}

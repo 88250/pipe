@@ -33,7 +33,7 @@
                     {{end}}
                     <time class="ft__nowrap">{{.Article.CreatedAt}}</time>
                     •
-                    <span class="ft__nowrap">{{.Article.ViewCount}} {{$.I18n.View}}</span>
+                    <span class="ft__nowrap"><span data-uvstaturl="{{.Article.URL}}">{{.Article.ViewCount}}</span> {{$.I18n.View}}</span>
                     {{if and .Commentable (gt .Article.CommentCount 0)}}
                     •
                     <a href="{{.Article.URL}}#pipeComments" class="ft__nowrap ft__gray">{{.Article.CommentCount}}
