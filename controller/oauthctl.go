@@ -65,7 +65,7 @@ func loginCallbackAction(c *gin.Context) {
 			user = &model.User{
 				Name:      userName,
 				AvatarURL: avatar,
-				B3Key:     githubId,
+				B3Key:     userName,
 				GithubId:  githubId,
 			}
 
@@ -81,7 +81,7 @@ func loginCallbackAction(c *gin.Context) {
 				user = &model.User{
 					Name:      userName,
 					AvatarURL: avatar,
-					B3Key:     githubId,
+					B3Key:     userName,
 					GithubId:  githubId,
 				}
 
@@ -93,7 +93,7 @@ func loginCallbackAction(c *gin.Context) {
 				}
 			} else {
 				user.GithubId = githubId
-				user.B3Key = githubId
+				user.B3Key = userName
 				user.AvatarURL = avatar
 				service.User.UpdateUser(user)
 			}
