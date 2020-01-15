@@ -93,7 +93,6 @@ func loginCallbackAction(c *gin.Context) {
 				}
 			} else {
 				user.GithubId = githubId
-				user.B3Key = userName
 				user.AvatarURL = avatar
 				service.User.UpdateUser(user)
 			}
