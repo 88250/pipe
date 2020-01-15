@@ -65,7 +65,7 @@ func loginCallbackAction(c *gin.Context) {
 			user = &model.User{
 				Name:      userName,
 				AvatarURL: avatar,
-				B3Key:     githubId,
+				B3Key:     userName,
 				GithubId:  githubId,
 			}
 
@@ -81,7 +81,7 @@ func loginCallbackAction(c *gin.Context) {
 				user = &model.User{
 					Name:      userName,
 					AvatarURL: avatar,
-					B3Key:     githubId,
+					B3Key:     userName,
 					GithubId:  githubId,
 				}
 
@@ -93,10 +93,23 @@ func loginCallbackAction(c *gin.Context) {
 				}
 			} else {
 				user.GithubId = githubId
-				user.B3Key = githubId
 				user.AvatarURL = avatar
-				service.User.UpdateUser(user)
+				if err := service.User.UpdateUser(user); nil != err {
+					logger.Errorf("update user failed: " + err.Error())
+					c.Status(http.StatusInternalServerError)
+
+					return
+				}
 			}
+		}
+	} else {
+		user.Name = userName
+		user.AvatarURL = avatar
+		if err := service.User.UpdateUser(user); nil != err {
+			logger.Errorf("update user failed: " + err.Error())
+			c.Status(http.StatusInternalServerError)
+
+			return
 		}
 	}
 

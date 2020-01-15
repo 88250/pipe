@@ -45,7 +45,7 @@
                 &nbsp; | &nbsp;
                 <span class="ft__nowrap">
                             <svg><use xlink:href="#icon-view"></use></svg>
-                            {{.ViewCount}} {{$.I18n.View}}
+                            <span data-uvstaturl="{{.URL}}">{{.ViewCount}}</span> {{$.I18n.View}}
                         </span>
                 {{if and $.Commentable (gt .CommentCount 0)}}
                 &nbsp; | &nbsp;

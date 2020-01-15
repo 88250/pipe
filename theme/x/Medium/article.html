@@ -57,7 +57,7 @@
             {{if eq $.UserCount 1}}
             <time class="ft__gray">{{.Article.CreatedAt}} • </time>
             {{end}}
-            <a href="{{.URL}}" class="post__view">{{.Article.ViewCount}} {{$.I18n.View}}</a>
+            <a href="{{.URL}}" class="post__view"><span data-uvstaturl="{{.Article.URL}}">{{.Article.ViewCount}}</span> {{$.I18n.View}}</a>
 
             <div class="fn__right">
                 {{if $.Commentable}}
@@ -128,7 +128,7 @@
 
     <div class="article__toolbar">
         <div class="wrapper fn__clear">
-            <a href="{{.URL}}" class="post__view">{{.Article.ViewCount}} {{$.I18n.View}}</a>
+            <a href="{{.URL}}" class="post__view"><span data-uvstaturl="{{.URL}}">{{.Article.ViewCount}}</span> {{$.I18n.View}}</a>
             <div class="fn__right">
                 {{if $.Commentable}}
                 <span id="articleCommentBottomBtn" class="{{if gt .Article.CommentCount 0}}pipe-tooltipped pipe-tooltipped--n{{end}} article__edit ft-green"
@@ -218,7 +218,7 @@
                                 <div class="fn__ellipsis">
                                     <time>{{$item.CreatedAt}}</time>
                                     •
-                                    <a href="{{$item.URL}}" class="ft__gray">{{$item.ViewCount}} {{$.I18n.View}}</a>{{if $.Commentable}} •
+                                    <a href="{{$item.URL}}" class="ft__gray"><span data-uvstaturl="{{$item.URL}}">{{$item.ViewCount}}</span> {{$.I18n.View}}</a>{{if $.Commentable}} •
                                     <a href="{{$item.URL}}#comments" class="ft__gray">
                                         {{if gt $item.CommentCount 0}}
                                         {{$item.CommentCount}}

@@ -67,7 +67,7 @@
             <span class="fn__right">
                 <a href="{{.Article.URL}}" aria-label="{{$.I18n.View}}"
                    class="pipe-tooltipped pipe-tooltipped--n">
-                    {{.Article.ViewCount}}
+                    <span data-uvstaturl="{{.Article.URL}}">{{.Article.ViewCount}}</span>
                     <svg>
                         <use xlink:href="#icon-view"></use>
                     </svg>

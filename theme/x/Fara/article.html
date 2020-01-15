@@ -32,7 +32,7 @@
                         {{.Article.Author.Name}}
                     </a>
                     {{end}}
-                    ,  {{.Article.ViewCount}} {{$.I18n.View}}
+                    ,  <span data-uvstaturl="{{.Article.URL}}">{{.Article.ViewCount}}</span> {{$.I18n.View}}
                     {{if and $.Commentable (gt .Article.CommentCount 0)}}
                     ,
                     <a href="{{.Article.URL}}#pipeComments">

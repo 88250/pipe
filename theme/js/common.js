@@ -8,6 +8,7 @@
 import $ from 'jquery'
 import NProgress from 'nprogress'
 import pjax from './lib/pjax'
+import Uvstat from 'uvstat'
 
 export const ParseHljs = () => {
   Vditor.highlightRender({

@@ -52,7 +52,7 @@
             <svg>
                 <use xlink:href="#iconView"></use>
             </svg>
-            <a href="{{.URL}}#pipeComments">{{.ViewCount}}</a>
+            <a href="{{.URL}}#pipeComments"><span data-uvstaturl="{{.URL}}">{{.ViewCount}}</span></a>
             {{end}}
 
             {{if and $.Commentable (gt .CommentCount 0)}}
