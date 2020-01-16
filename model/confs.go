@@ -35,7 +35,7 @@ import (
 var logger = gulu.Log.NewLogger(os.Stdout)
 
 // Version of Pipe.
-const Version = "1.9.0"
+const Version = "1.9.1"
 
 // Conf of Pipe.
 var Conf *Configuration

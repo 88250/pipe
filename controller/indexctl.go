@@ -17,6 +17,7 @@
 package controller
 
 import (
+	"github.com/88250/pipe/util"
 	"io/ioutil"
 	"net/http"
 	"path/filepath"
@@ -39,6 +40,19 @@ func showIndexAction(c *gin.Context) {
 	}
 
 	t.Execute(c.Writer, nil)
+}
+
+func showChangelogsAction(c *gin.Context) {
+	data, err := ioutil.ReadFile("changelogs.md")
+	if nil != err {
+		logger.Errorf("load changelogs.md failed: " + err.Error())
+		c.String(http.StatusNotFound, "load changelogs failed")
+
+		return
+	}
+
+	result := util.Markdown(string(data))
+	c.Data(http.StatusOK, "text/html; charset=utf-8", gulu.Str.ToBytes(result.ContentHTML))
 }
 
 func showStartPageAction(c *gin.Context) {

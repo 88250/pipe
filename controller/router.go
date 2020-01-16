@@ -189,13 +189,13 @@ func MapRoutes() *gin.Engine {
 	indexGroup := ret.Group("")
 	indexGroup.Use(fillUser)
 	indexGroup.GET("", showIndexAction)
+	indexGroup.GET(util.PathChangelogs, showChangelogsAction)
 
 	initGroup := ret.Group(util.PathInit)
 	initGroup.Use(fillUser)
 	initGroup.GET("", showStartPageAction)
 
 	ret.Static(util.PathConsoleDist, "console/dist")
-	ret.StaticFile(util.PathChangelogs, "changelogs.html")
 	ret.StaticFile(util.PathRobots, "theme/robots.txt")
 	ret.NoRoute(func(c *gin.Context) {
 		notFound(c)
