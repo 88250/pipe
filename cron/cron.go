@@ -29,6 +29,7 @@ var logger = gulu.Log.NewLogger(os.Stdout)
 // Start starts all cron tasks.
 func Start() {
 	refreshRecommendArticlesPeriodically()
+	refreshBlacklistIPsPeriodically()
 	pushArticlesPeriodically()
 	pushCommentsPeriodically()
 }
