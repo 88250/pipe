@@ -177,17 +177,17 @@ func MapRoutes() *gin.Engine {
 	templates = append(templates, headTemplates...)
 	ret.LoadHTMLFiles(templates...)
 	themeGroup := ret.Group(util.PathBlogs + "/:username")
-	themeGroup.Use(fillUser, pjax, resolveBlog)
+	themeGroup.Use(blacklist, fillUser, pjax, resolveBlog)
 	themeGroup.GET("", showArticlesAction)
 	themeGroup.Any("/*path", routePath)
 
 	adminPagesGroup := ret.Group(util.PathAdmin)
-	adminPagesGroup.Use(fillUser)
+	adminPagesGroup.Use(blacklist, fillUser)
 	adminPagesGroup.GET("", console.ShowAdminPagesAction)
 	adminPagesGroup.GET("/*path", console.ShowAdminPagesAction)
 
 	indexGroup := ret.Group("")
-	indexGroup.Use(fillUser)
+	indexGroup.Use(blacklist, fillUser)
 	indexGroup.GET("", showIndexAction)
 	indexGroup.GET(util.PathChangelogs, showChangelogsAction)
 

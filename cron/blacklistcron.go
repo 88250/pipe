@@ -25,7 +25,7 @@ import (
 )
 
 // BlacklistIPs saves all banned IPs.
-var BlacklistIPs []string
+var BlacklistIPs map[string]bool
 
 func refreshBlacklistIPsPeriodically() {
 	go refreshBlacklistIPs()
@@ -49,10 +49,9 @@ func refreshBlacklistIPs() {
 		return
 	}
 
+	BlacklistIPs = map[string]bool{}
 	dataIPs := result["data"].([]interface{})
-	var ips []string
 	for _, dataIP := range dataIPs {
-		ips = append(ips, dataIP.(string))
+		BlacklistIPs[dataIP.(string)] = false
 	}
-	BlacklistIPs = ips
 }
