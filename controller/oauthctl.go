@@ -39,22 +39,21 @@ func redirectLoginAction(c *gin.Context) {
 	if strings.HasSuffix(referer, "/") {
 		referer = referer[:len(referer)-1]
 	}
-	state := gulu.Rand.String(16) + referer
-	states[state] = state
+	state := gulu.Rand.String(16)
+	states[state] = referer
 	path := loginAuthURL + "?state=" + state
 	c.Redirect(http.StatusSeeOther, path)
 }
 
 func loginCallbackAction(c *gin.Context) {
 	state := c.Query("state")
-	if _, exist := states[state]; !exist {
+	referer := states[state]
+	if "" == referer {
 		c.Status(http.StatusBadRequest)
 
 		return
 	}
 	delete(states, state)
-
-	referer := state[16:]
 
 	githubId := c.Query("userId")
 	userName := c.Query("userName")
