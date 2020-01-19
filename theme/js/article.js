@@ -105,6 +105,10 @@ export const ShowEditor = (reply, id, commentId) => {
     location.href = `${$('#pipeLang').data('server')}/start`
     return
   }
+  if ($('#vcomment').length === 1) {
+    $('#vcomment .commentToggleEditorBtn').first().click()
+    return
+  }
   if (commentId) {
     $editor.data('commentid', commentId)
   } else {

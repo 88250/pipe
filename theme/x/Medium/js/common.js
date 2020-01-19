@@ -22,7 +22,11 @@ const Common = {
   init: () => {
     PreviewImg()
     KillBrowser()
-    initPjax()
+    initPjax(() => {
+      if ($('#pipeComments').length === 1) {
+        Article.init()
+      }
+    })
 
     $(window).scroll(function () {
       if ($('#headerNav').length === 0) {
@@ -215,3 +219,4 @@ if (!window.increase) {
     Article.init()
   }
 }
+

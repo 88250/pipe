@@ -96,7 +96,13 @@
             </div>
         </article>
 
+        <div id="b3logPipeComments"></div>
+        {{if .Commentable}}
+        <div id="vcomment" style="padding: 15px"
+             data-name="{{.Article.Author.Name}}"
+             data-postId="{{.Article.ID}}"></div>
         {{template "comment/comments" .}}
+        {{end}}
 
         {{if and .PreviousArticle .NextArticle}}
         <div class="article__neighbor fn__clear">

@@ -56,7 +56,10 @@ const Common = {
     KillBrowser()
     initPjax(() => {
       $(window).scroll();
-      Common.initEvent()
+      Common.initEvent();
+      if ($('#pipeComments').length === 1) {
+        Article.init()
+      }
     })
 
     Common.initEvent()
@@ -102,7 +105,6 @@ const Article = {
    */
   init: () => {
     InitComment()
-
     Article._share();
   },
   _share: () => {

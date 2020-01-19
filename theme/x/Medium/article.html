@@ -236,9 +236,13 @@
             {{end}}
         </div>
 
+        <div id="b3logPipeComments"></div>
         {{if $.Commentable}}
         <div class="article__comment">
             <div class="comment__title">{{.I18n.Comment}}</div>
+            <div id="vcomment" class="pipe-comment__item" style="font-size: 16px"
+                 data-name="{{.Article.Author.Name}}"
+                 data-postId="{{.Article.ID}}"></div>
             {{template "comment/comments" .}}
         </div>
         {{end}}

@@ -10,15 +10,15 @@ import NProgress from 'nprogress'
 import pjax from './lib/pjax'
 import Uvstat from 'uvstat'
 import Vcomment from 'vcmt'
+import { InitVcomment } from './article'
 
 /**
  * @description 评论数、浏览数展现
  */
 const showStat = () => {
-  const uvstat = new Uvstat()
-  uvstat.addStat()
-  uvstat.renderStat()
-  uvstat.renderCmtStat()
+  window.uvstat.addStat()
+  window.uvstat.renderStat()
+  window.uvstat.renderCmtStat()
 }
 
 /**
@@ -249,6 +249,8 @@ export const initPjax = (cb) => {
         LazyLoadCSSImage()
         LazyLoadImage()
         ParseMarkdown()
+        showStat()
+        InitVcomment()
         cb && cb()
       },
     })
@@ -276,6 +278,7 @@ export const initPjax = (cb) => {
   })
   LazyLoadCSSImage()
   addCopyright()
+  window.uvstat = new Uvstat()
   showStat()
   // if ('serviceWorker' in navigator && 'caches' in window && 'fetch' in window && config.RuntimeMode === 'prod') {
   // navigator.serviceWorker.register(`${config.Server}/sw.min.js?${config.StaticResourceVersion}`, {scope: '/'})

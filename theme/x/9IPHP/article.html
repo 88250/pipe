@@ -128,8 +128,11 @@
             </div>
             <div class="fn-mg5"></div>
         </article>
+        <div id="b3logPipeComments"></div>
         {{if .Commentable}}
         <div class="comment">
+            <div id="vcomment"
+                 data-name="{{.Article.Author.Name}}" data-postId="1576897303524"></div>
             {{template "comment/comments" .}}
         </div>
         {{end}}

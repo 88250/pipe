@@ -94,8 +94,13 @@
 
             {{template "Littlewin/module-list" dict "List" .RecommendArticles "Title" .I18n.RecommendArticle "UserCount" .UserCount}}
 
-            <div class="module module--bottom module--space">
-            {{template "comment/comments" .}}
+            <div class="module module--bottom module--space" id="b3logPipeComments">
+                {{if .Commentable}}
+                <div id="vcomment" style="padding-top: 6px"
+                     data-name="{{.Article.Author.Name}}"
+                     data-postId="{{.Article.ID}}"></div>
+                {{template "comment/comments" .}}
+                {{end}}
             </div>
         {{if .pjax}}{{noescape "<!---- pjax {#pjax} end ---->"}}{{end}}
         </div>

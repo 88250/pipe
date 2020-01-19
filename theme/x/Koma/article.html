@@ -95,9 +95,11 @@
         </div>
     </article>
 
+    <div id="b3logPipeComments"></div>
     {{if .Commentable}}
     <article class="article__item">
-        {{template "comment/comments" .}}
+    <div id="vcomment" style="padding: 15px 30px;" data-name="{{.Article.Author.Name}}" data-postId="{{.Article.ID}}"></div>
+    {{template "comment/comments" .}}
     </article>
     {{end}}
 

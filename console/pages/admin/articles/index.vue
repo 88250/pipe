@@ -85,8 +85,14 @@
                  href="javascript:void(0)">{{ tag.title
                 }}</a>
             </span>
-            <span class="fn-nowrap">{{ item.commentCount }} {{ $t('comment', $store.state.locale) }}</span> •
-            <span class="fn-nowrap">{{ item.viewCount }} {{ $t('view', $store.state.locale) }}</span> •
+            <span class="fn-nowrap">
+              <span :data-uvstatcmt="item.id">{{ item.commentCount }}</span>
+              {{ $t('comment', $store.state.locale) }}
+            </span> •
+            <span class="fn-nowrap">
+              <span :data-uvstatcmt="item.url">{{ item.viewCount }}</span>
+              {{ $t('view', $store.state.locale) }}
+            </span> •
             <time class="fn-nowrap">{{ item.createdAt }}</time>
           </div>
         </div>
@@ -114,6 +120,8 @@
 </template>
 
 <script>
+  import Uvstat from '../../../../theme/node_modules/uvstat'
+
   export default {
     data () {
       return {
@@ -126,7 +134,8 @@
         windowSize: 1,
         list: [],
         userCount: 1,
-        keyword: ''
+        keyword: '',
+        uvstat: null
       }
     },
     head () {
@@ -244,7 +253,12 @@
       }
     },
     mounted () {
+      this.$set(this, 'uvstat', new Uvstat())
       this.getList()
+    },
+    updated () {
+      this.uvstat.renderStat()
+      this.uvstat.renderCmtStat()
     }
   }
 </script>
