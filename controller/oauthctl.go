@@ -30,8 +30,6 @@ var states = map[string]string{}
 
 // redirectLoginAction redirects to HacPai auth page.
 func redirectLoginAction(c *gin.Context) {
-	loginAuthURL := "https://hacpai.com/login?goto=" + model.Conf.Server + "/api/login/callback"
-
 	referer := c.Request.URL.Query().Get("referer")
 	if "" == referer || !strings.Contains(referer, "://") {
 		referer = model.Conf.Server + referer
@@ -39,6 +37,8 @@ func redirectLoginAction(c *gin.Context) {
 	if strings.HasSuffix(referer, "/") {
 		referer = referer[:len(referer)-1]
 	}
+
+	loginAuthURL := "https://hacpai.com/login?goto=" + referer + "/api/login/callback"
 	state := gulu.Rand.String(16)
 	states[state] = referer
 	path := loginAuthURL + "?state=" + state
