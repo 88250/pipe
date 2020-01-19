@@ -180,6 +180,8 @@ func showArticleAction(c *gin.Context) {
 	commentable = articleModel.Commentable && commentable
 	dataModel["Commentable"] = commentable
 
+	logger.Infof("Commentable [%v]", commentable)
+
 	var comments []*model.ThemeComment
 	page := util.GetPage(c)
 	commentModels, pagination := service.Comment.GetArticleComments(articleModel.ID, page, blogID)
