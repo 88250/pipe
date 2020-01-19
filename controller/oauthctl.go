@@ -17,13 +17,14 @@
 package controller
 
 import (
+	"net/http"
+	"net/url"
+
 	"github.com/88250/gulu"
 	"github.com/88250/pipe/model"
 	"github.com/88250/pipe/service"
 	"github.com/88250/pipe/util"
 	"github.com/gin-gonic/gin"
-	"net/http"
-	"strings"
 )
 
 var states = map[string]string{}
@@ -31,13 +32,12 @@ var states = map[string]string{}
 // redirectLoginAction redirects to HacPai auth page.
 func redirectLoginAction(c *gin.Context) {
 	referer := c.Request.URL.Query().Get("referer")
-	if "" == referer || !strings.Contains(referer, "://") {
-		referer = model.Conf.Server + referer
+	u, err := url.Parse(referer)
+	if nil != err {
+		referer = model.Conf.Server
+	} else {
+		referer = u.Scheme + "://" + u.Host
 	}
-	if strings.HasSuffix(referer, "/") {
-		referer = referer[:len(referer)-1]
-	}
-
 	loginAuthURL := "https://hacpai.com/login?goto=" + referer + "/api/login/callback"
 	state := gulu.Rand.String(16)
 	states[state] = referer
