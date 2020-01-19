@@ -9,23 +9,28 @@ import $ from 'jquery'
 import NProgress from 'nprogress'
 import pjax from './lib/pjax'
 import Uvstat from 'uvstat'
+import Vcomment from 'vcmt'
 
-export const ParseHljs = () => {
-  Vditor.highlightRender({
-    style: 'github',
-    enable: false,
-  }, document)
+/**
+ * @description 评论数、浏览数展现
+ */
+const showStat = () => {
+  const uvstat = new Uvstat()
+  uvstat.addStat()
+  uvstat.renderStat()
+  uvstat.renderCmtStat()
 }
+
 /**
  * @description 初始化 markdown 解析
  */
 export const ParseMarkdown = () => {
-  Vditor.codeRender(document.body, $('#pipeLang').data('lang'))
-  Vditor.mathRender(document.body)
-  Vditor.abcRender()
-  Vditor.chartRender()
-  Vditor.mediaRender(document)
-  Vditor.mermaidRender(document.body)
+  Vcomment.parseMarkdown({
+    lang: $('#pipeLang').data('lang'),
+    hljsEnable: false,
+    hljsStyle: 'github',
+    lineNumber: false,
+  })
 }
 
 /**
@@ -38,7 +43,8 @@ export const PreviewImg = () => {
       left = it.offsetLeft
 
     $('body').
-      append('<div class="pipe-preview__img" onclick="this.remove()"><img style="transform: translate3d(' +
+      append(
+        '<div class="pipe-preview__img" onclick="this.remove()"><img style="transform: translate3d(' +
         Math.max(0, left) + 'px, ' +
         Math.max(0, (top - $(window).scrollTop())) + 'px, 0)" src="' +
         ($it.attr('src').split('?imageView2')[0]) + '"></div>')
@@ -73,46 +79,7 @@ export const PreviewImg = () => {
  * @returns {boolean}
  */
 export const LazyLoadImage = () => {
-  const loadImg = (it) => {
-    const testImage = document.createElement('img')
-    testImage.src = it.getAttribute('data-src')
-    testImage.addEventListener('load', () => {
-      it.src = testImage.src
-      it.style.backgroundImage = 'none'
-      it.style.backgroundColor = 'transparent'
-    })
-    it.removeAttribute('data-src')
-  }
-
-  if (!('IntersectionObserver' in window)) {
-    $('img').each(function () {
-      if (this.getAttribute('data-src')) {
-        loadImg(this)
-      }
-    })
-    return false
-  }
-
-  if (window.imageIntersectionObserver) {
-    window.imageIntersectionObserver.disconnect()
-    $('img').each(function () {
-      window.imageIntersectionObserver.observe(this)
-    })
-  } else {
-    window.imageIntersectionObserver = new IntersectionObserver((entries) => {
-      entries.forEach((entrie) => {
-        if ((typeof entrie.isIntersecting === 'undefined'
-          ? entrie.intersectionRatio !== 0
-          : entrie.isIntersecting)
-          && entrie.target.getAttribute('data-src')) {
-          loadImg(entrie.target)
-        }
-      })
-    })
-    $('img').each(function () {
-      window.imageIntersectionObserver.observe(this)
-    })
-  }
+  Vcomment.lazyLoadImage()
 }
 
 /**
@@ -202,19 +169,6 @@ export const Logout = () => {
 }
 
 /**
- * @description 去除查询字符串中的 'b3id=xxx' 参数
- */
-const TrimB3Id = () => {
-  const search = location.search
-  if (search.indexOf('b3id') === -1) {
-    return
-  }
-  history.replaceState('', '',
-    window.location.href.replace(/(&b3id=\w{8})|(b3id=\w{8}&)|(\?b3id=\w{8})/,
-      ''))
-}
-
-/**
  * @description 添加版权
  */
 const addCopyright = () => {
@@ -295,7 +249,6 @@ export const initPjax = (cb) => {
         LazyLoadCSSImage()
         LazyLoadImage()
         ParseMarkdown()
-        ParseHljs()
         cb && cb()
       },
     })
@@ -318,14 +271,12 @@ export const initPjax = (cb) => {
     cache: true,
     success: () => {
       ParseMarkdown()
-      ParseHljs()
     },
   })
-  TrimB3Id()
   LazyLoadCSSImage()
   LazyLoadImage()
   addCopyright()
-
+  showStat()
   // if ('serviceWorker' in navigator && 'caches' in window && 'fetch' in window && config.RuntimeMode === 'prod') {
   // navigator.serviceWorker.register(`${config.Server}/sw.min.js?${config.StaticResourceVersion}`, {scope: '/'})
   // }

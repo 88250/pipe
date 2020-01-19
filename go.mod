@@ -4,7 +4,7 @@ go 1.12
 
 require (
 	github.com/88250/gulu v0.0.0-20191221090949-7ec528e17061
-	github.com/88250/lute v0.0.0-20200109164411-d82a2ba83be0
+	github.com/88250/lute v0.0.0-20200117164217-ede7de4b5a81
 	github.com/PuerkitoBio/goquery v1.5.0
 	github.com/andybalholm/cascadia v1.1.0 // indirect
 	github.com/araddon/dateparse v0.0.0-20190622164848-0fb0a474d195
@@ -34,11 +34,11 @@ require (
 	github.com/modern-go/reflect2 v1.0.1 // indirect
 	github.com/mssola/user_agent v0.5.1
 	github.com/parnurzeal/gorequest v0.2.16
+	github.com/pkg/errors v0.9.1 // indirect
 	github.com/smartystreets/assertions v1.0.1 // indirect
 	github.com/smartystreets/goconvey v1.6.4 // indirect
 	github.com/vinta/pangu v3.0.0+incompatible
-	golang.org/x/crypto v0.0.0-20200109152110-61a87790db17 // indirect
-	golang.org/x/net v0.0.0-20191209160850-c0dbc17a3553 // indirect
+	golang.org/x/net v0.0.0-20200114155413-6afb5195e5aa // indirect
 	gopkg.in/go-playground/validator.v9 v9.31.0 // indirect
 	gopkg.in/yaml.v2 v2.2.7
 	moul.io/http2curl v1.0.0 // indirect

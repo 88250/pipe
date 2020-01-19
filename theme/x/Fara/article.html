@@ -33,7 +33,8 @@
                     </a>
                     {{end}}
                     ,  <span data-uvstaturl="{{.Article.URL}}">{{.Article.ViewCount}}</span> {{$.I18n.View}}
-                    {{if and $.Commentable (gt .Article.CommentCount 0)}}
+                    `{{$.Commentable}}`
+                    {{if $.Commentable}}
                     ,
                     <a href="{{.Article.URL}}#pipeComments">
                         {{.Article.CommentCount}} {{$.I18n.Comment}}

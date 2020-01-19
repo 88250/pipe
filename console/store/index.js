@@ -71,12 +71,6 @@ export const mutations = {
 
 export const actions = {
   async nuxtClientInit ({ commit, state }, { app }) {
-    // TrimB3Id
-    const search = location.search
-    if (search.indexOf('b3id') > -1) {
-      history.replaceState('', '', window.location.href.replace(/(&b3id=\w{8})|(b3id=\w{8}&)|(\?b3id=\w{8}$)/, ''))
-    }
-
     try {
       const responseData = await vueAxios().get('/status?' + (new Date()).getTime())
       if (responseData) {

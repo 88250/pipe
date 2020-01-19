@@ -10,7 +10,6 @@ import {
   LazyLoadCSSImage,
   LazyLoadImage,
   ParseMarkdown,
-  ParseHljs,
 } from './common'
 
 /**
@@ -165,7 +164,7 @@ export const ShowEditor = (reply, id, commentId) => {
         }
         LazyLoadImage()
         LazyLoadCSSImage()
-        ParseHljs()
+        ParseMarkdown()
       },
     },
     counter: 2048,
@@ -252,7 +251,6 @@ export const InitComment = () => {
             })
             LazyLoadImage()
             LazyLoadCSSImage()
-            ParseHljs()
             ParseMarkdown()
           } else {
             alert(result.msg)
@@ -383,8 +381,6 @@ ${$it.data('label2')}`).click(function () {
           LazyLoadCSSImage()
           LazyLoadImage()
           ParseMarkdown()
-          ParseHljs()
-
           vditor.setValue('')
         } else {
           alert(result.msg)
