@@ -56,6 +56,12 @@ func showArchiveArticlesAction(c *gin.Context) {
 	locale := getLocale(c)
 	session := util.GetSession(c)
 	date := strings.SplitAfter(c.Request.URL.Path, util.PathArchives+"/")[1]
+	if !strings.Contains(date, "/") {
+		notFound(c)
+
+		return
+	}
+
 	year := strings.Split(date, "/")[0]
 	month := strings.Split(date, "/")[1]
 	archiveModel := service.Archive.GetArchive(year, month, blogID)
