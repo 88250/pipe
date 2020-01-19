@@ -57,9 +57,9 @@
             </a>
 
             {{if $.Commentable}}
-            <a href="{{.URL}}#pipeComments" aria-label="{{$.I18n.Comment}}"
+            <a href="{{.URL}}#b3logPipeComments" aria-label="{{$.I18n.Comment}}"
                class="pipe-tooltipped pipe-tooltipped--n">
-                {{.CommentCount}}
+                <span data-uvstatcmt="{{.ID}}">{{.CommentCount}}</span>
                 <svg>
                     <use xlink:href="#icon-comment"></use>
                 </svg>

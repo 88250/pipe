@@ -34,9 +34,9 @@
                     <time class="ft__nowrap">{{.Article.CreatedAt}}</time>
                     •
                     <span class="ft__nowrap"><span data-uvstaturl="{{.Article.URL}}">{{.Article.ViewCount}}</span> {{$.I18n.View}}</span>
-                    {{if and .Commentable (gt .Article.CommentCount 0)}}
+                    {{if .Commentable}}
                     •
-                    <a href="{{.Article.URL}}#pipeComments" class="ft__nowrap ft__gray">{{.Article.CommentCount}}
+                    <a href="{{.Article.URL}}#b3logPipeComments" class="ft__nowrap ft__gray"><span data-uvstatcmt="{{.Article.ID}}">{{.Article.CommentCount}}</span>
                         {{$.I18n.Comment}}</a>
                     {{end}}
                 </div>
@@ -102,7 +102,12 @@
     </article>
 </div>
 <div class="wrapper content">
+
+    <div id="b3logPipeComments"></div>
+    {{if .Commentable}}
+    <div id="vcomment" data-name="{{.Article.Author.Name}}" data-postId="{{.Article.ID}}"></div>
     {{template "comment/comments" .}}
+    {{end}}
 
     {{if or .PreviousArticle .NextArticle}}
     <div class="fn-bottom"></div>
@@ -194,13 +199,9 @@
                         {{$item.CreatedAt}}
                        {{if $.Commentable}}
                        <a href="{{$item.URL}}#comments" class="fn__right ft__fade" target="_blank">
-                           {{if ne 0 $item.CommentCount}}
-                           {{$item.CommentCount}}
-                           {{$.I18n.Comment}}
-                           {{else}}
+                            <span data-uvstatcmt="{{$item.ID}}">{{$item.CommentCount}}</span>
                            {{$.I18n.Comment}}
                            <svg><use xlink:href="#comment"></use></svg>
-                           {{end}}
                        </a>
                        {{end}}
                    </span>

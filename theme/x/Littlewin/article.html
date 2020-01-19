@@ -66,8 +66,8 @@
             <div class="module module--space module--bottom post__meta">
                 本文由 <a rel="nofollow" href="{{.Article.Author.URL}}">{{.Article.Author.Name}}</a> 于 {{.Article.CreatedAt}}
                 发布，当前已被围观 
-                <a href="{{.Article.URL}}"><span data-uvstaturl="{{.Article.URL}}">{{.Article.ViewCount}}</span></a> 次{{if gt .Article.CommentCount 0}}{{if $.Commentable}}，评论
-                <a href="{{.Article.URL}}#pipeComments">{{.Article.CommentCount}}</a> 次{{end}}{{end}}
+                <a href="{{.Article.URL}}"><span data-uvstaturl="{{.Article.URL}}">{{.Article.ViewCount}}</span></a> 次{{if $.Commentable}}，评论
+                <a href="{{.Article.URL}}#b3logPipeComments" data-uvstatcmt="{{.Article.ID}}">{{.Article.CommentCount}}</a> 次{{end}}
                 <br>
 
                 并被添加

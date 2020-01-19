@@ -40,9 +40,9 @@
                                 <time class="ft__nowrap">{{.CreatedAt}}</time>
                                 •
                                 <span class="ft__nowrap"><span data-uvstaturl="{{.URL}}">{{.ViewCount}}</span> {{$.I18n.View}}</span>
-                                {{if and $.Commentable (gt .CommentCount 0)}}
+                                {{if $.Commentable}}
                                 •
-                                <a href="{{.URL}}#pipeComments" class="fn-nowrap ft__gray">{{.CommentCount}} {{$.I18n.Comment}}</a>
+                                <a href="{{.URL}}#b3logPipeComments" class="fn-nowrap ft__gray"><span data-uvstatcmt="{{.ID}}">{{.CommentCount}}</span> {{$.I18n.Comment}}</a>
                                 {{end}}
                             </span>
                         </div>

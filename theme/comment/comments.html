@@ -1,6 +1,5 @@
 {{define "comment/comments"}}
-{{if .Commentable}}
-<div id="pipeCommentsWrap">
+<div id="pipeCommentsWrap" class="fn__none">
 {{if gt (len .Comments) 0}}
 <div id="pipeComments" class="fn__clear"
      data-title="{{.I18n.Comment}}{{.I18n.Colon}}{{.Article.Title}}"
@@ -49,5 +48,4 @@
 </div>
 {{end}}
 </div>
-{{end}}
 {{end}}

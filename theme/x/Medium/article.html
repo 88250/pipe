@@ -31,7 +31,7 @@
                     <time>{{.Article.CreatedAt}}</time>
                     {{if .Commentable}}
                     •
-                    <a class="small" href="{{.URL}}#pipeComments">{{.Article.CommentCount}} {{$.I18n.Comment}}</a>
+                    <a class="small" href="{{.URL}}#b3logPipeComments"><span data-uvstatcmt="{{.Article.ID}}">{{.Article.CommentCount}}</span> {{$.I18n.Comment}}</a>
                     {{end}}
                 </div>
             </div>
@@ -62,14 +62,14 @@
             <div class="fn__right">
                 {{if $.Commentable}}
                 <span id="articleCommentBtn"
-                      class="{{if gt .Article.CommentCount 0}}pipe-tooltipped pipe-tooltipped--n{{end}} article__edit ft-green"
+                      class="pipe-tooltipped pipe-tooltipped--n article__edit ft-green"
                       aria-label="{{$.I18n.Comment}}"
                       data-title="{{$.I18n.Comment}}{{$.I18n.Colon}}{{.Article.Title}}"
                       data-id="{{.Article.ID}}">
                     <svg>
                         <use xlink:href="#icon-comment"></use>
                     </svg>
-                    {{if gt .Article.CommentCount 0}}{{.Article.CommentCount}}{{else}}{{$.I18n.Comment}}{{end}} &nbsp; &nbsp;
+                    <span data-uvstatcmt="{{.Article.ID}}">{{.Article.CommentCount}}</span>{{$.I18n.Comment}} &nbsp; &nbsp;
                 </span>
                 {{end}}
 
@@ -118,7 +118,7 @@
                     <time>{{.Article.CreatedAt}}</time>
                     {{if $.Commentable}}
                     •
-                    <a class="small" href="{{.URL}}#pipeComments">{{.Article.CommentCount}} {{$.I18n.Comment}}</a>
+                    <a class="small" href="{{.URL}}#b3logPipeComments"><span data-uvstatcmt="{{.Article.ID}}">{{.Article.CommentCount}}</span> {{$.I18n.Comment}}</a>
                     {{end}}
                 </div>
             </div>
@@ -131,14 +131,14 @@
             <a href="{{.URL}}" class="post__view"><span data-uvstaturl="{{.URL}}">{{.Article.ViewCount}}</span> {{$.I18n.View}}</a>
             <div class="fn__right">
                 {{if $.Commentable}}
-                <span id="articleCommentBottomBtn" class="{{if gt .Article.CommentCount 0}}pipe-tooltipped pipe-tooltipped--n{{end}} article__edit ft-green"
+                <span id="articleCommentBottomBtn" class="pipe-tooltipped pipe-tooltipped--n article__edit ft-green"
                       aria-label="{{$.I18n.Comment}}"
                       data-title="{{$.I18n.Comment}}{{$.I18n.Colon}}{{.Article.Title}}"
                       data-id="{{.Article.ID}}">
                     <svg>
                         <use xlink:href="#icon-comment"></use>
                     </svg>
-                    {{if gt .Article.CommentCount 0}}{{.Article.CommentCount}}{{else}}{{$.I18n.Comment}}{{end}} &nbsp; &nbsp;
+                    <span data-uvstatcmt="{{.Article.ID}}">{{.Article.CommentCount}}</span>{{$.I18n.Comment}} &nbsp; &nbsp;
                 </span>
                 {{end}}
 
@@ -220,9 +220,7 @@
                                     •
                                     <a href="{{$item.URL}}" class="ft__gray"><span data-uvstaturl="{{$item.URL}}">{{$item.ViewCount}}</span> {{$.I18n.View}}</a>{{if $.Commentable}} •
                                     <a href="{{$item.URL}}#comments" class="ft__gray">
-                                        {{if gt $item.CommentCount 0}}
-                                        {{$item.CommentCount}}
-                                        {{end}}
+                                        <span data-uvstatcmt="{{$item.ID}}">{{$item.CommentCount}}</span>
                                         {{$.I18n.Comment}}
                                     </a>
                                     {{end}}
@@ -256,7 +254,7 @@
           aria-label="{{$.I18n.Comment}}"
           data-title="{{$.I18n.Comment}}{{$.I18n.Colon}}{{.Article.Title}}"
           data-id="{{.Article.ID}}">
-        {{if gt .Article.CommentCount 0}}{{.Article.CommentCount}}{{end}}
+        <span data-uvstatcmt="{{.Article.ID}}">{{.Article.CommentCount}}</span>
         <svg>
             <use xlink:href="#icon-comment"></use>
         </svg>

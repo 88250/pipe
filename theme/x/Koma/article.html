@@ -73,10 +73,10 @@
                     </svg>
                 </a>
 
-                {{if and $.Commentable (gt .Article.CommentCount 0)}}
-                <a href="{{.Article.URL}}#pipeComments" aria-label="{{$.I18n.Comment}}"
+                {{if $.Commentable}}
+                <a href="{{.Article.URL}}#b3logPipeComments" aria-label="{{$.I18n.Comment}}"
                    class="pipe-tooltipped pipe-tooltipped--n">
-                    {{.Article.CommentCount}}
+                     <span data-uvstatcmt="{{.Article.ID}}">{{.Article.CommentCount}}</span>
                     <svg>
                         <use xlink:href="#icon-comment"></use>
                     </svg>
@@ -143,10 +143,10 @@
                            data-src="{{$item.Author.AvatarURL}}"
                            href="{{$item.Author.URL}}" target="_blank"></a>
                         <span class="fn__left ft__fade">{{$item.CreatedAt}} &nbsp; &nbsp;</span>
-                        {{if and $.Commentable (ne 0 $item.CommentCount)}}
+                        {{if $.Commentable}}
                         <a href="{{$item.URL}}#comments"
                            class="ft__fade" target="_blank">
-                            {{$item.CommentCount}}
+                            <span data-uvstatcmt="{{$item.ID}}">{{$item.CommentCount}}</span>
                             {{$.I18n.Comment}}
                         </a>
                         {{end}}

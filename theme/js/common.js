@@ -2,7 +2,7 @@
  * @fileoverview common tool for every theme
  *
  * @author <a href="http://vanessa.b3log.org">Liyuan Li</a>
- * @version 0.8.0.0, Nov 19, 2019
+ * @version 0.9.0.0, Jan 19, 2020
  */
 
 import $ from 'jquery'
@@ -271,10 +271,10 @@ export const initPjax = (cb) => {
     cache: true,
     success: () => {
       ParseMarkdown()
+      LazyLoadImage()
     },
   })
   LazyLoadCSSImage()
-  LazyLoadImage()
   addCopyright()
   showStat()
   // if ('serviceWorker' in navigator && 'caches' in window && 'fetch' in window && config.RuntimeMode === 'prod') {

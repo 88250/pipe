@@ -26,16 +26,16 @@
                     <span data-uvstaturl="{{.URL}}">{{.ViewCount}}</span> {{$.I18n.View}}
                 </a>
             </div>
-            {{if and $.Commentable (gt .CommentCount 0)}}
+            {{if $.Commentable}}
             <div>
-                <a href="{{$item.URL}}#pipeComments">
-                    {{$item.CommentCount}} {{$.I18n.Comment}}
+                <a href="{{$item.URL}}#b3logPipeComments">
+                    <span data-uvstatcmt="{{.ID}}">{{.CommentCount}}</span> {{$.I18n.Comment}}
                 </a>
             </div>
             {{end}}
             {{if .Editable}}
             <div>
-                <a href="{{$.Conf.Server}}/admin/articles/post?id={{$item.ID}}">
+                <a href="{{$.Conf.Server}}/admin/articles/post?id={{.ID}}">
                     {{$.I18n.Edit}}
                 </a>
             </div>

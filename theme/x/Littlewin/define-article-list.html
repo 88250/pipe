@@ -48,19 +48,17 @@
                 {{end}}
             </div>
 
-            {{if gt .ViewCount 0}}
             <svg>
                 <use xlink:href="#iconView"></use>
             </svg>
-            <a href="{{.URL}}#pipeComments"><span data-uvstaturl="{{.URL}}">{{.ViewCount}}</span></a>
-            {{end}}
+            <a href="{{.URL}}#b3logPipeComments"><span data-uvstaturl="{{.URL}}">{{.ViewCount}}</span></a>
 
-            {{if and $.Commentable (gt .CommentCount 0)}}
+            {{if $.Commentable}}
             <span>&nbsp; &nbsp;</span>
             <svg>
                 <use xlink:href="#iconComment"></use>
             </svg>
-            <a href="{{.URL}}#pipeComments">{{.CommentCount}}</a>
+            <a href="{{.URL}}#b3logPipeComments" data-uvstatcmt="{{.ID}}">{{.CommentCount}}</a>
             {{end}}
 
             {{if .Editable}}

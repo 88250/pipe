@@ -33,11 +33,10 @@
                     </a>
                     {{end}}
                     ,  <span data-uvstaturl="{{.Article.URL}}">{{.Article.ViewCount}}</span> {{$.I18n.View}}
-                    `{{$.Commentable}}`
                     {{if $.Commentable}}
                     ,
-                    <a href="{{.Article.URL}}#pipeComments">
-                        {{.Article.CommentCount}} {{$.I18n.Comment}}
+                    <a href="{{.Article.URL}}#b3logPipeComments">
+                        <span data-uvstatcmt="{{.Article.ID}}">{{.Article.CommentCount}}</span> {{$.I18n.Comment}}
                     </a>
                     {{end}}
                     {{if .Article.Editable}} ,
@@ -89,8 +88,13 @@
         </div>
         {{end}}
 
-        <div class="comment">
+        <div class="comment" id="b3logPipeComments">
+            {{if .Commentable}}
+            <div id="vcomment" style="padding: 15px"
+                 data-name="{{.Article.Author.Name}}"
+                 data-postId="{{.Article.ID}}"></div>
             {{template "comment/comments" .}}
+            {{end}}
         </div>
 
         <div class="fn__flex post__about">

@@ -2,16 +2,44 @@
  * @fileoverview article tool for every theme
  *
  * @author <a href="http://vanessa.b3log.org">Liyuan Li</a>
- * @version 0.5.0.3, Dec 29, 2019
+ * @version 0.6.0.0, Jan 19, 2020
  */
 
 import $ from 'jquery'
+import Vcomment from 'vcmt'
 import {
   LazyLoadCSSImage,
   LazyLoadImage,
   ParseMarkdown,
 } from './common'
 
+/**
+ * 第三方评论
+ */
+export const InitVcomment = () => {
+  const $vcomment = $('#vcomment')
+  if ($vcomment.length === 0) {
+    return
+  }
+  const vcomment = new Vcomment({
+    id: 'vcomment',
+    postId: $vcomment.data('postid'),
+    url: 'https://hacpai.com',
+    userName: $vcomment.data('name'),
+    currentPage: 1,
+    vditor: {
+      lineNumber: false,
+      hljsEnable: false,
+      hljsStyle: 'github',
+    },
+    error () {
+      $vcomment.remove()
+      $('#pipeCommentsWrap').show()
+    },
+  })
+
+  vcomment.render()
+}
 /**
  * @description 初始化目录
  * @param {string} tocId 目录 id

@@ -42,13 +42,13 @@
                         <svg><use xlink:href="#icon-view"></use></svg>
                         <span data-uvstaturl="{{.Article.URL}}">{{.Article.ViewCount}}</span> {{$.I18n.View}}
                     </span>
-                    {{if and .Commentable (gt .Article.CommentCount 0)}}
+                    {{if .Commentable}}
                     &nbsp; | &nbsp;
-                    <a href="{{.Article.URL}}#pipeComments" class="fn-nowrap">
+                    <a href="{{.Article.URL}}#b3logPipeComments" class="fn-nowrap">
                         <svg>
                             <use xlink:href="#icon-cmts"></use>
                         </svg>
-                        {{.Article.CommentCount}} {{$.I18n.Comment}}
+                        <span data-uvstatcmt="{{.Article.ID}}">{{.Article.CommentCount}}</span> {{$.I18n.Comment}}
                     </a>
                     {{end}}
                 </div>

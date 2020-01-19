@@ -34,9 +34,9 @@
                     <time>{{.Article.CreatedAt}}</time> &nbsp;
                     | &nbsp;
                     <a href="{{.URL}}"><span data-uvstaturl="{{.Article.URL}}">{{.Article.ViewCount}}</span></a> {{$.I18n.View}}
-                    {{if and $.Commentable (gt .Article.CommentCount 0)}}
+                    {{if $.Commentable}}
                     &nbsp; | &nbsp;
-                    <a href="{{.URL}}#pipeComments">{{.Article.CommentCount}}</a> {{$.I18n.Comment}}
+                    <a href="{{.URL}}#b3logPipeComments" data-uvstatcmt="{{.Article.ID}}">{{.Article.CommentCount}}</a> {{$.I18n.Comment}}
                     {{end}}
                 </div>
             </header>
@@ -139,13 +139,9 @@
                     <a href="{{$item.Author.URL}}" class="ft__gray" target="_blank">{{$item.Author.Name}}</a>
                     {{if $.Commentable}}
                     <a href="{{$item.URL}}#comments" class="ft__fade fn__right" target="_blank">
-                           {{if ne 0 $item.CommentCount}}
-                           {{$item.CommentCount}}
-                           {{$.I18n.Comment}}
-                           {{else}}
+                           <span data-uvstatcmt="{{$item.ID}}">{{$item.CommentCount}}</span>
                            {{$.I18n.Comment}}
                            <svg><use xlink:href="#icon-comment"></use></svg>
-                           {{end}}
                     </a>
                     {{end}}
                 </div>

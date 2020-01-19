@@ -27,9 +27,9 @@
             <time>{{.CreatedAt}}</time> &nbsp;
             |  &nbsp;
             <a href="{{.URL}}"><span data-uvstaturl="{{.URL}}">{{.ViewCount}}</span></a> {{$.I18n.View}}
-            {{if and $.Commentable (gt .CommentCount 0)}}
+            {{if $.Commentable}}
             &nbsp; |  &nbsp;
-            <a href="{{.URL}}#pipeComments">{{.CommentCount}}</a> {{$.I18n.Comment}}
+            <a href="{{.URL}}#b3logPipeComments" data-uvstatcmt="{{.ID}}">{{.CommentCount}}</a> {{$.I18n.Comment}}
             {{end}}
         </div>
     </header>

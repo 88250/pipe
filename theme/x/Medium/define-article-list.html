@@ -58,8 +58,8 @@
                         <time>{{$item.CreatedAt}}</time>
                         {{if $.Commentable}}
                         •
-                        <a href="{{$item.URL}}#pipeComments" class="ft__gray">
-                            {{if gt $item.CommentCount 0}}{{$item.CommentCount}}{{end}}
+                        <a href="{{$item.URL}}#b3logPipeComments" class="ft__gray">
+                            <span data-uvstatcmt="{{.ID}}">{{.CommentCount}}</span>
                             {{$.I18n.Comment}}</a>
                         {{end}}
                     </div>

@@ -2,7 +2,7 @@
  * @fileoverview util and every page should be used.
  *
  * @author <a href="http://vanessa.b3log.org">Liyuan Li</a>
- * @version 1.0.0.0, May 28, 2019
+ * @version 1.1.0.0, Jan 19, 2020
  */
 
 import $ from 'jquery'
@@ -12,7 +12,7 @@ import {
   PreviewImg,
   initPjax,
 } from '../../../js/common'
-import { InitComment, InitToc } from '../../../js/article'
+import { InitComment, InitToc, InitVcomment } from '../../../js/article'
 const Common = {
   /**
    * @description 页面初始化
@@ -122,6 +122,7 @@ if (!window.increase) {
   window.addLevelToTag = Common.addLevelToTag
   Icon()
   Common.init()
+  InitVcomment()
   if ($('#pipeComments').length === 1) {
     Article.init()
   }
