@@ -73,13 +73,15 @@ func (srv *statisticService) GetStatistics(blogID uint, statisticNames ...string
 }
 
 func (srv *statisticService) IncViewCount(blogID uint64) error {
-	tx := db.Begin()
-	if err := srv.IncViewCountWithoutTx(tx, blogID); nil != err {
-		tx.Rollback()
+	// 浏览计数插件化 https://github.com/88250/pipe/issues/11
 
-		return err
-	}
-	tx.Commit()
+	//tx := db.Begin()
+	//if err := srv.IncViewCountWithoutTx(tx, blogID); nil != err {
+	//	tx.Rollback()
+	//
+	//	return err
+	//}
+	//tx.Commit()
 
 	return nil
 }

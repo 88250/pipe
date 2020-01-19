@@ -525,13 +525,15 @@ func (srv *articleService) UpdateArticle(article *model.Article) (err error) {
 }
 
 func (srv *articleService) IncArticleViewCount(article *model.Article) error {
-	srv.mutex.Lock()
-	defer srv.mutex.Unlock()
+	// 浏览计数插件化 https://github.com/88250/pipe/issues/11
 
-	article.ViewCount = article.ViewCount + 1
-	if err := db.Model(&model.Article{}).Where("`id` = ?", article.ID).Select("view_count").Updates(article).Error; nil != err {
-		return err
-	}
+	//srv.mutex.Lock()
+	//defer srv.mutex.Unlock()
+	//
+	//article.ViewCount = article.ViewCount + 1
+	//if err := db.Model(&model.Article{}).Where("`id` = ?", article.ID).Select("view_count").Updates(article).Error; nil != err {
+	//	return err
+	//}
 
 	return nil
 }
