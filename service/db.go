@@ -62,9 +62,9 @@ func ConnectDB() {
 		logger.Fatal("adds index failed: " + err.Error())
 	}
 
-	db.DB().SetMaxIdleConns(10)
-	db.DB().SetMaxOpenConns(50)
-	db.DB().SetConnMaxLifetime(5 * time.Minute)
+	db.DB().SetMaxIdleConns(5)
+	db.DB().SetMaxOpenConns(10)
+	db.DB().SetConnMaxLifetime(30 * time.Second)
 	db.LogMode(model.Conf.ShowSQL)
 }
 
