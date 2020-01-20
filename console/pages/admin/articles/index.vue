@@ -120,7 +120,7 @@
 </template>
 
 <script>
-  import Uvstat from '../../../../theme/node_modules/uvstat'
+  import Uvstat from 'uvstat'
 
   export default {
     data () {
