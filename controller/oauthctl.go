@@ -32,6 +32,9 @@ var states = map[string]string{}
 // redirectLoginAction redirects to HacPai auth page.
 func redirectLoginAction(c *gin.Context) {
 	referer := c.Request.URL.Query().Get("referer")
+	if "" == referer {
+		referer = model.Conf.Server
+	}
 	u, err := url.Parse(referer)
 	if nil != err {
 		referer = model.Conf.Server
