@@ -124,6 +124,13 @@ func showAuthorArticlesAction(c *gin.Context) {
 	dataModel["Articles"] = articles
 	dataModel["Pagination"] = pagination
 	userBlog := service.User.GetUserBlog(author.ID, blogID)
+	if nil == userBlog {
+		logger.Errorf("user [authorName=%s, blogID=%d]'s blog is nil", authorName, blogID)
+		notFound(c)
+
+		return
+	}
+
 	dataModel["Author"] = &model.ThemeAuthor{
 		Name:         author.Name,
 		ArticleCount: userBlog.UserArticleCount,
