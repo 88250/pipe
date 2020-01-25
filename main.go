@@ -58,6 +58,8 @@ func init() {
 	} else {
 		gin.SetMode(gin.ReleaseMode)
 	}
+	// TODO: 开启 debug 诊断问题
+	gin.SetMode(gin.DebugMode)
 	gin.DefaultWriter = io.MultiWriter(os.Stdout)
 }
 

@@ -3,8 +3,8 @@ module github.com/88250/pipe
 go 1.12
 
 require (
-	github.com/88250/gulu v0.0.0-20191221090949-7ec528e17061
-	github.com/88250/lute v0.0.0-20200120034128-9d91fc58a24e
+	github.com/88250/gulu v1.0.0
+	github.com/88250/lute v1.1.0
 	github.com/PuerkitoBio/goquery v1.5.0
 	github.com/andybalholm/cascadia v1.1.0 // indirect
 	github.com/araddon/dateparse v0.0.0-20190622164848-0fb0a474d195
@@ -28,6 +28,7 @@ require (
 	github.com/json-iterator/go v1.1.9 // indirect
 	github.com/leodido/go-urn v1.2.0 // indirect
 	github.com/lib/pq v1.3.0 // indirect
+	github.com/mattn/go-isatty v0.0.12 // indirect
 	github.com/mattn/go-sqlite3 v2.0.2+incompatible // indirect
 	github.com/microcosm-cc/bluemonday v1.0.2
 	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
@@ -40,8 +41,8 @@ require (
 	github.com/vinta/pangu v3.0.0+incompatible
 	golang.org/x/crypto v0.0.0-20200117160349-530e935923ad // indirect
 	golang.org/x/net v0.0.0-20200114155413-6afb5195e5aa // indirect
-	golang.org/x/sys v0.0.0-20200117145432-59e60aa80a0c // indirect
+	golang.org/x/sys v0.0.0-20200122134326-e047566fdf82 // indirect
 	gopkg.in/go-playground/validator.v9 v9.31.0 // indirect
-	gopkg.in/yaml.v2 v2.2.7
+	gopkg.in/yaml.v2 v2.2.8
 	moul.io/http2curl v1.0.0 // indirect
 )
