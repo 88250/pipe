@@ -21,6 +21,7 @@ import (
 	"io/ioutil"
 	"math/rand"
 	"net/http"
+	_ "net/http/pprof"
 	"os"
 	"os/signal"
 	"path/filepath"
@@ -45,7 +46,7 @@ var logger *gulu.Logger
 func init() {
 	rand.Seed(time.Now().UTC().UnixNano())
 
-	gulu.Log.SetLevel("warn")
+	gulu.Log.SetLevel("debug")
 	logger = gulu.Log.NewLogger(os.Stdout)
 
 	model.LoadConf()
@@ -74,6 +75,8 @@ func main() {
 		Addr:    "0.0.0.0:" + model.Conf.Port,
 		Handler: router,
 	}
+
+	go http.ListenAndServe("0.0.0.0:8154", nil)
 
 	handleSignal(server)
 
