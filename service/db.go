@@ -23,8 +23,8 @@ import (
 	"github.com/88250/gulu"
 	"github.com/88250/pipe/model"
 	"github.com/jinzhu/gorm"
-	_ "github.com/jinzhu/gorm/dialects/mysql"  // mysql
-	_ "github.com/jinzhu/gorm/dialects/sqlite" // sqlite
+	_ "github.com/jinzhu/gorm/dialects/mysql"
+	_ "github.com/jinzhu/gorm/dialects/sqlite"
 )
 
 // Logger
@@ -62,7 +62,7 @@ func ConnectDB() {
 		logger.Fatal("adds index failed: " + err.Error())
 	}
 
-	db.DB().SetMaxIdleConns(5)
+	db.DB().SetMaxIdleConns(10)
 	db.DB().SetMaxOpenConns(10)
 	db.DB().SetConnMaxLifetime(30 * time.Second)
 	db.LogMode(model.Conf.ShowSQL)
