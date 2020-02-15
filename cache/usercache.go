@@ -17,13 +17,15 @@
 package cache
 
 import (
+	"time"
+
 	"github.com/88250/pipe/model"
 	"github.com/bluele/gcache"
 )
 
 // User cache.
 var User = &userCache{
-	idHolder: gcache.New(1024 * 10).LRU().Build(),
+	idHolder: gcache.New(1024 * 10).LRU().Expiration(30 * time.Minute).Build(),
 }
 
 type userCache struct {

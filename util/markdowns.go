@@ -20,16 +20,17 @@ import (
 	"crypto/md5"
 	"regexp"
 	"strings"
+	"time"
 	"unicode"
 	"unicode/utf8"
 
-	"github.com/PuerkitoBio/goquery"
 	"github.com/88250/lute"
+	"github.com/PuerkitoBio/goquery"
 	"github.com/bluele/gcache"
 	"github.com/microcosm-cc/bluemonday"
 )
 
-var markdownCache = gcache.New(1024).LRU().Build()
+var markdownCache = gcache.New(1024).LRU().Expiration(30 * time.Minute).Build()
 
 // MarkdownResult represents markdown result.
 type MarkdownResult struct {

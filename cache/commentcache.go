@@ -17,13 +17,15 @@
 package cache
 
 import (
+	"time"
+
 	"github.com/88250/pipe/model"
 	"github.com/bluele/gcache"
 )
 
 // Comment service.
 var Comment = &commentCache{
-	idHolder: gcache.New(1024 * 10 * 10).LRU().Build(),
+	idHolder: gcache.New(1024 * 10 * 10).LRU().Expiration(30 * time.Minute).Build(),
 }
 
 type commentCache struct {

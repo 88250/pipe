@@ -19,6 +19,7 @@ package cache
 
 import (
 	"os"
+	"time"
 
 	"github.com/88250/gulu"
 	"github.com/88250/pipe/model"
@@ -30,7 +31,7 @@ var logger = gulu.Log.NewLogger(os.Stdout)
 
 // Article cache.
 var Article = &articleCache{
-	idHolder: gcache.New(1024 * 10).LRU().Build(),
+	idHolder: gcache.New(1024 * 10).LRU().Expiration(30 * time.Minute).Build(),
 }
 
 type articleCache struct {
