@@ -1,18 +1,12 @@
 // Pipe - A small and beautiful blogging platform written in golang.
-// Copyright (C) 2017-present, b3log.org
+// Copyright (c) 2017-present, b3log.org
 //
-// This program is free software: you can redistribute it and/or modify
-// it under the terms of the GNU General Public License as published by
-// the Free Software Foundation, either version 3 of the License, or
-// (at your option) any later version.
-//
-// This program is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
-//
-// You should have received a copy of the GNU General Public License
-// along with this program.  If not, see <http://www.gnu.org/licenses/>.
+// Pipe is licensed under Mulan PSL v2.
+// You can use this software according to the terms and conditions of the Mulan PSL v2.
+// You may obtain a copy of Mulan PSL v2 at:
+//         http://license.coscl.org.cn/MulanPSL2
+// THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT, MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+// See the Mulan PSL v2 for more details.
 
 package service
 
@@ -23,8 +17,8 @@ import (
 	"github.com/88250/gulu"
 	"github.com/88250/pipe/model"
 	"github.com/jinzhu/gorm"
-	_ "github.com/jinzhu/gorm/dialects/mysql"  // mysql
-	_ "github.com/jinzhu/gorm/dialects/sqlite" // sqlite
+	_ "github.com/jinzhu/gorm/dialects/mysql"
+	_ "github.com/jinzhu/gorm/dialects/sqlite"
 )
 
 // Logger
@@ -62,7 +56,7 @@ func ConnectDB() {
 		logger.Fatal("adds index failed: " + err.Error())
 	}
 
-	db.DB().SetMaxIdleConns(5)
+	db.DB().SetMaxIdleConns(10)
 	db.DB().SetMaxOpenConns(10)
 	db.DB().SetConnMaxLifetime(30 * time.Second)
 	db.LogMode(model.Conf.ShowSQL)
