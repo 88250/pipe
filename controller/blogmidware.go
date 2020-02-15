@@ -1,18 +1,12 @@
 // Pipe - A small and beautiful blogging platform written in golang.
-// Copyright (C) 2017-present, b3log.org
+// Copyright (c) 2017-present, b3log.org
 //
-// This program is free software: you can redistribute it and/or modify
-// it under the terms of the GNU General Public License as published by
-// the Free Software Foundation, either version 3 of the License, or
-// (at your option) any later version.
-//
-// This program is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
-//
-// You should have received a copy of the GNU General Public License
-// along with this program.  If not, see <http://www.gnu.org/licenses/>.
+// Pipe is licensed under Mulan PSL v2.
+// You can use this software according to the terms and conditions of the Mulan PSL v2.
+// You may obtain a copy of Mulan PSL v2 at:
+//         http://license.coscl.org.cn/MulanPSL2
+// THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT, MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+// See the Mulan PSL v2 for more details.
 
 package controller
 
@@ -163,7 +157,7 @@ func fillCommon(c *gin.Context) {
 	(*dataModel)["UserCount"] = len(users)
 	(*dataModel)["BlogAdmin"] = service.User.GetBlogAdmin(blogID)
 	(*dataModel)["Navigations"] = service.Navigation.GetNavigations(blogID)
-	(*dataModel)["Commentable"] , _ = strconv.ParseBool(settingMap[model.SettingNameBasicCommentable].(string))
+	(*dataModel)["Commentable"], _ = strconv.ParseBool(settingMap[model.SettingNameBasicCommentable].(string))
 
 	fillMostUseCategories(&settingMap, dataModel, blogID)
 	fillMostUseTags(&settingMap, dataModel, blogID)
@@ -242,7 +236,7 @@ func fillMostViewArticles(c *gin.Context, settingMap *map[string]interface{}, da
 func fillRecentComments(c *gin.Context, settingMap *map[string]interface{}, dataModel *DataModel, blogID uint64) {
 	commentable := (*dataModel)["Commentable"].(bool)
 	if !commentable {
-		(*dataModel)["RecentComments"] =  []*model.ThemeComment{}
+		(*dataModel)["RecentComments"] = []*model.ThemeComment{}
 		return
 	}
 
