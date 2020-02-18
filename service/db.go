@@ -11,6 +11,7 @@
 package service
 
 import (
+	"database/sql"
 	"os"
 	"time"
 
@@ -67,6 +68,11 @@ func DisconnectDB() {
 	if err := db.Close(); nil != err {
 		logger.Errorf("Disconnect from database failed: " + err.Error())
 	}
+}
+
+// DBStat returns database statistics.
+func DBStat() sql.DBStats {
+	return db.DB().Stats()
 }
 
 // Database returns the underlying database name.

@@ -30,6 +30,15 @@ import (
 type DataModel map[string]interface{}
 
 func fillUser(c *gin.Context) {
+	dbStat := service.DBStat()
+	if dbStat.InUse >= dbStat.MaxOpenConnections {
+		logger.Warnf("no enough DB connections to handle this request [dbStat=%+v]", dbStat)
+		c.Status(http.StatusServiceUnavailable)
+		c.Abort()
+
+		return
+	}
+
 	inited := service.Init.Inited()
 	if !inited && util.PathInit != c.Request.URL.Path {
 		c.Redirect(http.StatusSeeOther, model.Conf.Server+util.PathInit)
