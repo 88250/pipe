@@ -75,6 +75,7 @@ func Markdown(mdText string) *MarkdownResult {
 		AllowAttrs("width", "height", "data", "type").OnElements("object").
 		AllowAttrs("name", "value").OnElements("param").
 		AllowAttrs("src", "type", "width", "height", "wmode", "allowNetworking").OnElements("embed").
+		AllowElements("kbd").
 		Sanitize(contentHTML)
 
 	text := doc.Text()
