@@ -288,7 +288,7 @@ func fillNextArticle(c *gin.Context, article *model.Article, dataModel *DataMode
 
 func toc(article *model.ThemeArticle) string {
 	doc, _ := goquery.NewDocumentFromReader(strings.NewReader(string(article.Content)))
-	elements := doc.Find("h1, h2, h3, h4, h5")
+	elements := doc.Find("body>h1, body>h2, body>h3, body>h4, body>h5, body>h6")
 	if nil == elements || 3 > elements.Length() {
 		return ""
 	}
