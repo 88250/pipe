@@ -149,7 +149,7 @@
         commentable: true,
         useThumbs: false,
         topped: false,
-        syncToCommunity: true,
+        syncToCommunity: false,
         thumbs: ['', '', '', '', '', ''],
         edited: false,
       }
