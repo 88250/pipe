@@ -4,7 +4,7 @@ go 1.12
 
 require (
 	github.com/88250/gulu v1.1.0
-	github.com/88250/lute v1.1.9
+	github.com/88250/lute v1.2.3
 	github.com/PuerkitoBio/goquery v1.5.1
 	github.com/araddon/dateparse v0.0.0-20190622164848-0fb0a474d195
 	github.com/beevik/etree v1.1.0 // indirect
@@ -12,8 +12,8 @@ require (
 	github.com/clbanning/mxj v1.8.4 // indirect
 	github.com/denisenkom/go-mssqldb v0.0.0-20200206145737-bbfc9a55622e // indirect
 	github.com/dustin/go-humanize v1.0.0
-	github.com/elazarl/goproxy v0.0.0-20200220113713-29f9e0ba54ea // indirect
-	github.com/elazarl/goproxy/ext v0.0.0-20200220113713-29f9e0ba54ea // indirect
+	github.com/elazarl/goproxy v0.0.0-20200310082302-296d8939dc5a // indirect
+	github.com/elazarl/goproxy/ext v0.0.0-20200310082302-296d8939dc5a // indirect
 	github.com/fatih/structs v1.1.0
 	github.com/gin-contrib/sessions v0.0.3
 	github.com/gin-gonic/gin v1.5.0
@@ -40,9 +40,9 @@ require (
 	github.com/smartystreets/goconvey v1.6.4 // indirect
 	github.com/stretchr/testify v1.5.1 // indirect
 	github.com/vinta/pangu v3.0.0+incompatible
-	golang.org/x/crypto v0.0.0-20200221231518-2aa609cf4a9d // indirect
-	golang.org/x/net v0.0.0-20200226121028-0de0cce0169b // indirect
-	golang.org/x/sys v0.0.0-20200223170610-d5e6a3e2c0ae // indirect
+	golang.org/x/crypto v0.0.0-20200302210943-78000ba7a073 // indirect
+	golang.org/x/net v0.0.0-20200301022130-244492dfa37a // indirect
+	golang.org/x/sys v0.0.0-20200302150141-5c8b2ff67527 // indirect
 	gopkg.in/check.v1 v1.0.0-20200227125254-8fa46927fb4f // indirect
 	gopkg.in/go-playground/validator.v9 v9.31.0 // indirect
 	gopkg.in/yaml.v2 v2.2.8
