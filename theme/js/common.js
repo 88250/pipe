@@ -268,7 +268,7 @@ export const initPjax = (cb) => {
 (() => {
   $.ajax({
     method: 'GET',
-    url: 'https://cdn.jsdelivr.net/npm/vditor@2.2.19/dist/index.min.js',
+    url: 'https://cdn.jsdelivr.net/npm/vditor@3.0.0/dist/index.min.js',
     dataType: 'script',
     cache: true,
     success: () => {
