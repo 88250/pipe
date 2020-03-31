@@ -39,7 +39,6 @@ const (
 	PathChangelogs     = "/changelogs"
 	PathRobots         = "/robots.txt"
 	PathAPIsSymArticle = "/apis/symphony/article"
-	PathAPIsSymComment = "/apis/symphony/comment"
 	PathPlatInfo       = "/blog/info"
 	PathManifest       = "/manifest.json"
 )
@@ -47,8 +46,7 @@ const (
 var reservedPaths = []string{
 	PathSearch, PathOpensearch, PathBlogs, PathConsoleDist, PathAdmin, PathAPI, PathFavicon, PathTheme,
 	PathActivities, PathArchives, PathAuthors, PathCategories, PathTags, PathComments, PathAtom, PathRSS,
-	PathSitemap, PathChangelogs, PathRobots, PathAPIsSymArticle,
-	PathAPIsSymComment, PathPlatInfo,
+	PathSitemap, PathChangelogs, PathRobots, PathAPIsSymArticle, PathPlatInfo,
 }
 
 // IsReservedPath checks the specified path is a reserved path or not.
