@@ -47,7 +47,7 @@ func Markdown(mdText string) *MarkdownResult {
 	}
 
 	luteEngine := lute.New()
-	unsafe, err := luteEngine.MarkdownStr("", mdText)
+	unsafe := luteEngine.MarkdownStr("", mdText)
 	if nil != err {
 		return &MarkdownResult{
 			ContentHTML:  err.Error(),
