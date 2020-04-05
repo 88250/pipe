@@ -62,7 +62,7 @@ type Configuration struct {
 	SQLite                string // SQLite database file path
 	MySQL                 string // MySQL connection URL
 	Port                  string // listen port
-	AxiosBaseURL          string // axio base URL
+	AxiosBaseURL          string // axios base URL
 	MockServer            string // mock server
 }
 

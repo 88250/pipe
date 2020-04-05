@@ -25,5 +25,4 @@ func Start() {
 	refreshRecommendArticlesPeriodically()
 	refreshBlacklistIPsPeriodically()
 	pushArticlesPeriodically()
-	pushCommentsPeriodically()
 }

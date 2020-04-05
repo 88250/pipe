@@ -246,10 +246,6 @@ func routePath(c *gin.Context) {
 		showManifestAction(c)
 
 		return
-	case util.PathAPIsSymComment:
-		addSymCommentAction(c)
-
-		return
 	case util.PathAPIsSymArticle:
 		addSymArticleAction(c)
 
