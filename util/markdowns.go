@@ -47,15 +47,7 @@ func Markdown(mdText string) *MarkdownResult {
 	}
 
 	luteEngine := lute.New()
-	unsafe := luteEngine.MarkdownStr("", mdText)
-	if nil != err {
-		return &MarkdownResult{
-			ContentHTML:  err.Error(),
-			AbstractText: err.Error(),
-			ThumbURL:     "",
-		}
-	}
-	contentHTML := unsafe
+	contentHTML := luteEngine.MarkdownStr("", mdText)
 	doc, _ := goquery.NewDocumentFromReader(strings.NewReader(contentHTML))
 	doc.Find("img").Each(func(i int, ele *goquery.Selection) {
 		src, _ := ele.Attr("src")
