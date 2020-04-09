@@ -1,6 +1,6 @@
 {
   "name": "pipe",
-  "version": "1.9.1",
+  "version": "2.0.0",
   "description": "Pipe theme",
   "homepage": "https://github.com/88250/pipe",
   "repository": {
@@ -12,11 +12,16 @@
   },
   "license": "GPLv3",
   "private": true,
-  "author": "Vanessa <v@b3log.org> (http://vanessa.b3log.org)",
+  "author": {
+    "name": "B3log 开源社区",
+    "email": "os@b3log.org",
+    "url": "https://b3log.org"
+  },
   "maintainers": [
     {
-      "name": "Vanessa",
-      "email": "v@b3log.org"
+      "name": "Liyuan Li",
+      "email": "v@b3log.org",
+      "url": "http://vanessa.b3log.org"
     }
   ],
   "scripts": {

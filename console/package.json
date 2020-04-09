@@ -1,7 +1,18 @@
 {
   "name": "pipe-admin",
-  "version": "1.9.1",
-  "author": "Liyuan Li <v@b3log.org>",
+  "version": "2.0.0",
+  "author": {
+    "name": "B3log 开源社区",
+    "email": "os@b3log.org",
+    "url": "https://b3log.org"
+  },
+  "maintainers": [
+    {
+      "name": "Liyuan Li",
+      "email": "v@b3log.org",
+      "url": "http://vanessa.b3log.org"
+    }
+  ],
   "private": true,
   "config": {
     "nuxt": {
