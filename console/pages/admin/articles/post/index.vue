@@ -224,7 +224,10 @@
               replace('/\\s/g', ''),
           },
           height: data.height,
-          counter: 102400,
+          counter: {
+            enable: true,
+            max: 102400
+          },
           resize: {
             enable: data.resize,
           },
