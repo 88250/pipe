@@ -1,5 +1,5 @@
 <p align = "center">
-<img alt="Pipe" src="https://user-images.githubusercontent.com/873584/52321153-3d6d6900-2a0e-11e9-9ea6-57974a302dbf.png">
+<img alt="Pipe" src="https://static.b3log.org/images/brand/pipe-128.png">
 <br><br>
 小而美的博客平台，为未来而构建
 <br><br>
@@ -27,58 +27,56 @@
 
 ## 💡 简介
 
-[Pipe](https://github.com/88250/pipe) 是一款小而美的开源博客平台，专为程序员设计。Pipe 有着非常活跃的[社区](https://hacpai.com)，可将文章作为帖子推送到社区，来自社区的回帖将作为博客评论进行联动（具体细节请浏览 [B3log 构思 - 分布式社区网络](https://hacpai.com/article/1546941897596)）。
+[Pipe](https://github.com/88250/pipe) is a small and beautiful open source blog platform designed for programmers. Pipe has a very active [community](https://hacpai.com), which can push articles as posts to the community, and replies from the community will be linked as blog comments (for details, please visit [B3log Ideas - Distributed Community Network](https://hacpai.com/article/1546941897596)).
 
-> 这是一种全新的网络社区体验，让热爱记录和分享的你不再感到孤单！
+> This is a brand new online community experience, so that you who love recording and sharing no longer feel lonely!
 
-欢迎到 [Pipe 官方讨论区](https://hacpai.com/tag/pipe)了解更多。同时也欢迎关注 B3log 开源社区微信公众号 `B3log开源`：
+Welcome to [Pipe Official Discussion Forum](https://hacpai.com/tag/pipe) to learn more.
 
-![b3logos.png](https://img.hacpai.com/file/2019/10/image-d3c00d78.png)
+## 🗃 Showcases
 
-## 🗃 案例
+* http://vanessa.b3log.org
+* http://blog.bhusk.com
+* https://www.zorkelvll.cn
+* http://o0o.pub
+* http://blog.gitor.org
 
-* [Vanessa](http://vanessa.b3log.org)
-* [黑壳博客](http://blog.bhusk.com)
-* [zorke 的博客](https://www.zorkelvll.cn)
-* [Akkuman 的博客](http://o0o.pub)
-* [一个码农](http://blog.gitor.org)
+## ✨ Features
 
-## ✨ 功能
-
-* 多用户博客平台
-* [Markdown 编辑器](https://github.com/Vanessa219/vditor)支持三种编辑模式：所见即所得 / 即时渲染 / 分屏预览
-* 聚合分类 / 标签
-* 自定义导航
-* 多主题 / 多语言
+* Multi-user blog platform
+* [Markdown editor](https://github.com/Vanessa219/vditor) supports three editing modes: WYSIWYG/Instant Rendering/Split View
+* Tag aggregation classification
+* Custom navigation links
+* Multiple themes / multiple languages
 * Atom / RSS / Sitemap
-* 文章搜索
-* Hexo/Jekyll 导入 / 导出
-* 可配置动静分离
-* 支持 SQLite / MySQL
+* Article search
+* Hexo/Jekyll import / export
+* CDN static resource separation
+* Support SQLite / MySQL
 
-## 🎨 界面
+## 🎨 Screenshots
 
-### 开始使用
+### Start
 
-![start](https://user-images.githubusercontent.com/873584/56882188-78bf8700-6a95-11e9-9aab-841340d809ea.png)
+![start.png](https://img.hacpai.com/file/2020/04/start-3064240e.png)
 
-### 管理后台
+### Console
 
-![console](https://user-images.githubusercontent.com/873584/56882183-7826f080-6a95-11e9-92ab-447c8f05c1ac.png)
+![console.png](https://img.hacpai.com/file/2020/04/console-047922de.png)
 
-### 编辑文章
+### Post
 
-![post](https://user-images.githubusercontent.com/873584/56882187-78bf8700-6a95-11e9-9147-822df8a32ffc.png)
+![post.png](https://img.hacpai.com/file/2020/04/post-f52cbd5c.png)
 
-### 主题选择
+### Theme
 
-![theme](https://user-images.githubusercontent.com/873584/56882189-78bf8700-6a95-11e9-8b63-ab1f3a8b9a21.png)
+![theme.png](https://img.hacpai.com/file/2020/04/theme-d2799005.png)
 
-### 主题 Gina
+### Theme Gina
 
-![gina](https://user-images.githubusercontent.com/873584/56882185-7826f080-6a95-11e9-9809-79a6eaaf784c.png)
+![gina.png](https://img.hacpai.com/file/2020/04/gina-d7fe2313.png)
 
-## 🛠️ 安装
+## 🛠️ Setup
 
 ### 本地试用
 
@@ -163,20 +161,20 @@ server {
 * [讨论区](https://hacpai.com/tag/pipe)
 * [报告问题](https://github.com/88250/pipe/issues/new/choose)
 
-## 📄 授权
+## 📄 License
 
-Pipe 使用 [木兰宽松许可证, 第2版](http://license.coscl.org.cn/MulanPSL2) 开源协议。
+Pipe uses the [Mulan Permissive Software License，Version 2](http://license.coscl.org.cn/MulanPSL2) open source license.
 
-## 🙏 鸣谢
+## 🙏 Acknowledgement
 
-* [jQuery](https://github.com/jquery/jquery)：JavaScript 工具库，用于主题页面
-* [Vue.js](https://github.com/vuejs/vue)：渐进式 JavaScript 框架
-* [Nuxt.js](https://github.com/nuxt/nuxt.js)：Vue.js 框架
-* [Vuetify](https://github.com/vanessa219/vuetify)：Vue.js 的 Material 组件框架
-* [Vditor](https://github.com/Vanessa219/vditor)： 浏览器端的 Markdown 编辑器
-* [Gin](https://github.com/gin-gonic/gin)：又快又好用的 golang HTTP Web 框架
-* [GORM](https://github.com/jinzhu/gorm)：极好的 golang ORM 库
-* [SQLite](https://www.sqlite.org)：使用广泛的嵌入式 SQL 引擎
-* [GCache](https://github.com/bluele/gcache)：golang 缓存库
-* [Gulu](https://github.com/88250/gulu)：Go 语言常用工具库，这个轱辘还算圆
-* [Lute](https://github.com/88250/lute)：一款结构化的 Markdown 引擎，支持 Go 和 JavaScript
+* [jQuery](https://github.com/jquery/jquery): A JavaScript tool library for theme pages
+* [Vue.js](https://github.com/vuejs/vue): A progressive, incrementally-adoptable JavaScript framework
+* [Nuxt.js](https://github.com/nuxt/nuxt.js): The Vue.js Framework
+* [Vuetify](https://github.com/vanessa219/vuetify): Material Component Framework for Vue
+* [Vditor](https://github.com/Vanessa219/vditor): An In-browser Markdown editor
+* [Gin](https://github.com/gin-gonic/gin): A HTTP web framework written in Go
+* [GORM](https://github.com/jinzhu/gorm): The fantastic ORM library for Golang
+* [SQLite](https://www.sqlite.org): The most used database engine in the world
+* [GCache](https://github.com/bluele/gcache): Cache library for golang
+* [Gulu](https://github.com/88250/gulu)：Go commons utilities
+* [Lute](https://github.com/88250/lute): A structured Markdown engine that supports Go and JavaScript
