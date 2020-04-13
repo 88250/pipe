@@ -58,7 +58,7 @@ Welcome to [Pipe Official Discussion Forum](https://hacpai.com/tag/pipe) to lear
 
 ### Start
 
-![start.png](https://img.hacpai.com/file/2020/04/start-3064240e.png)
+![start.png](https://img.hacpai.com/file/2020/04/start-7fb7b415.png)
 
 ### Console
 
