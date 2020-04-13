@@ -1,7 +1,7 @@
 <p align = "center">
 <img alt="Pipe" src="https://static.b3log.org/images/brand/pipe-128.png">
 <br><br>
-小而美的博客平台，为未来而构建
+Small and beautiful blogging platform, built for the future
 <br><br>
 <a title="Build Status" target="_blank" href="https://travis-ci.org/88250/pipe"><img src="https://img.shields.io/travis/88250/pipe.svg?style=flat-square"></a>
 <a title="Go Report Card" target="_blank" href="https://goreportcard.com/report/github.com/88250/pipe"><img src="https://goreportcard.com/badge/github.com/88250/pipe?style=flat-square"></a>
@@ -25,7 +25,7 @@
 <a title="Author GitHub Followers" target="_blank" href="https://github.com/88250"><img src="https://img.shields.io/github/followers/88250.svg?label=Followers&style=social"></a>
 </p>
 
-## 💡 简介
+## 💡 Introduction
 
 [Pipe](https://github.com/88250/pipe) is a small and beautiful open source blog platform designed for programmers. Pipe has a very active [community](https://hacpai.com), which can push articles as posts to the community, and replies from the community will be linked as blog comments (for details, please visit [B3log Ideas - Distributed Community Network](https://hacpai.com/article/1546941897596)).
 
@@ -78,54 +78,47 @@ Welcome to [Pipe Official Discussion Forum](https://hacpai.com/tag/pipe) to lear
 
 ## 🛠️ Setup
 
-### 本地试用
+Pipe only supports deployment via Docker. If you need to build from source, please refer to [here](https://hacpai.com/article/1533965022328).
 
-* [下载](https://github.com/88250/pipe/releases)最新的发布包解压，进入解压目录运行 pipe/pipe.exe
-* 从源码构建可参考[这里](https://hacpai.com/article/1533965022328)
+### Docker deploy
 
-**请注意**：我们不建议通过发布包或者源码构建部署，因为这样的部署方式在将来有新版本发布时升级会比较麻烦。
-这两种方式请仅用于本地试用，线上生产环境建议通过 Docker 部署。
-
-### Docker 部署
-
-获取最新镜像：
+Get the latest image: 
 
 ```shell
 docker pull b3log/pipe
 ```
 
-* 使用 MySQL
-  先手动建库（库名 `pipe` ，字符集使用 `utf8mb4` ，排序规则 `utf8mb4_general_ci` ），然后启动容器：
+* Use MySQL
+  First create database schema manually (schema name `pipe`, character set use` utf8mb4`, sorting rule `utf8mb4_general_ci`), and then start the container:
 
   ```shell
   docker run --detach --name pipe --network=host \
       b3log/pipe --mysql="root:123456@(127.0.0.1:3306)/pipe?charset=utf8mb4&parseTime=True&loc=Local&timeout=1s" --runtime_mode=prod --port=5897 --server=http://localhost:5897
   ```
 
-
-  为了简单，使用了主机网络模式来连接主机上的 MySQL。
-* 使用 SQLite
+  For simplicity, the host network mode is used to connect to MySQL on the host.
+* Use SQLite
 
   ```shell
   docker run --detach --name pipe --volume ~/pipe.db:/opt/pipe/pipe.db --publish 5897:5897 \
       b3log/pipe --sqlite="/opt/pipe/pipe.db" --runtime_mode=prod --port=5897 --server=http://localhost:5897
   ```
 
-启动参数说明：
+Start command line arguments description:
 
-* `--port` ：进程监听端口
-* `--server` ：访问时的链接
+* `--port`: process listen port
+* `--server`: the URL for the final visiting
 
-完整启动参数的说明可以使用 `-h` 来查看。
+The description of the complete startup arguments can be viewed using `-h`.
 
-### Docker 升级
+### Docker upgrade
 
-1. 拉取最新镜像
-2. 重启容器
+1. Pull the latest image
+2. Restart the container
 
-可参考[这里](https://github.com/88250/pipe/blob/master/docker-restart.sh)编写一个重启脚本，并通过 crontab 每日凌晨运行来实现自动更新。
+You can refer to [here](https://github.com/88250/pipe/blob/master/docker-restart.sh) to write a restart script and run it through crontab every morning to achieve automatic update.
 
-### NGINX 反代
+### NGINX reverse proxy
 
 ```
 upstream pipe {
@@ -134,7 +127,7 @@ upstream pipe {
 
 server {
     listen 80;
-    server_name pipe.b3log.org; # 配置为你自己的域名
+    server_name pipe.b3log.org; # blog domain
 
     location / {
         proxy_pass http://pipe$request_uri;
@@ -145,25 +138,23 @@ server {
 }
 ```
 
-另外，可以参考 https://hacpai.com/article/1517474627971 进行配置。
+In addition, you can refer to https://hacpai.com/article/1517474627971 for configuration.
 
-## 📜 文档
+## 📜 Documentation
 
-* [《提问的智慧》精读注解版](https://hacpai.com/article/1536377163156)
-* [用户指南](https://hacpai.com/article/1513761942333)
-* [开发指南](https://hacpai.com/article/1533965022328)
-* [主题开发指南](https://hacpai.com/article/1512550354920)
-* [贡献指南](https://github.com/88250/pipe/blob/master/CONTRIBUTING.md)
-* [Postman 测试集](https://www.getpostman.com/collections/900ddef64ad0e60479a6)
+* [Pipe User Guide](https://hacpai.com/article/1513761942333)
+* [Pipe Developer Guide](https://hacpai.com/article/1533965022328)
+* [Pipe Theme Development Guide](https://hacpai.com/article/1512550354920)
+* [Pipe Postman Test Collection](https://www.getpostman.com/collections/900ddef64ad0e60479a6)
 
-## 🏘️ 社区
+## 🏘️ Community
 
-* [讨论区](https://hacpai.com/tag/pipe)
-* [报告问题](https://github.com/88250/pipe/issues/new/choose)
+* [Forum](https://hacpai.com/tag/pipe)
+* [Issues](https://github.com/88250/pipe/issues/new/choose)
 
 ## 📄 License
 
-Pipe uses the [Mulan Permissive Software License，Version 2](http://license.coscl.org.cn/MulanPSL2) open source license.
+Pipe uses the [Mulan Permissive Software License, Version 2](http://license.coscl.org.cn/MulanPSL2) open source license.
 
 ## 🙏 Acknowledgement
 
@@ -176,5 +167,5 @@ Pipe uses the [Mulan Permissive Software License，Version 2](http://license.cos
 * [GORM](https://github.com/jinzhu/gorm): The fantastic ORM library for Golang
 * [SQLite](https://www.sqlite.org): The most used database engine in the world
 * [GCache](https://github.com/bluele/gcache): Cache library for golang
-* [Gulu](https://github.com/88250/gulu)：Go commons utilities
+* [Gulu](https://github.com/88250/gulu): Go commons utilities
 * [Lute](https://github.com/88250/lute): A structured Markdown engine that supports Go and JavaScript
