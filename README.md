@@ -25,6 +25,10 @@ Small and beautiful blogging platform, built for the future
 <a title="Author GitHub Followers" target="_blank" href="https://github.com/88250"><img src="https://img.shields.io/github/followers/88250.svg?label=Followers&style=social"></a>
 </p>
 
+<p align="center">
+<a href="https://hacpai.com/article/1513761942333">中文</a>
+</p>
+
 ## 💡 Introduction
 
 [Pipe](https://github.com/88250/pipe) is a small and beautiful open source blog platform designed for programmers. Pipe has a very active [community](https://hacpai.com), which can push articles as posts to the community, and replies from the community will be linked as blog comments (for details, please visit [B3log Ideas - Distributed Community Network](https://hacpai.com/article/1546941897596)).
