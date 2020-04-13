@@ -120,7 +120,7 @@ You can refer to [here](https://github.com/88250/pipe/blob/master/docker-restart
 
 ### NGINX reverse proxy
 
-```
+```nginx
 upstream pipe {
     server localhost:5897;
 }
