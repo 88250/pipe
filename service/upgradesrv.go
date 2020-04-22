@@ -68,7 +68,7 @@ func perform191_200() {
 	logger.Infof("upgrading from version [" + fromVer + "] to version [" + model.Version + "]....")
 
 	var verSettings []model.Setting
-	if err := db.Model(&model.Setting{}).Where(" name = ?", model.SettingNameSystemVer).Find(&verSettings).Error; nil != err {
+	if err := db.Model(&model.Setting{}).Where("name = ?", model.SettingNameSystemVer).Find(&verSettings).Error; nil != err {
 		logger.Fatalf("load settings failed: %s", err)
 	}
 
@@ -91,7 +91,7 @@ func perform190_191() {
 	logger.Infof("upgrading from version [" + fromVer + "] to version [" + model.Version + "]....")
 
 	var verSettings []model.Setting
-	if err := db.Model(&model.Setting{}).Where(" name = ?", model.SettingNameSystemVer).Find(&verSettings).Error; nil != err {
+	if err := db.Model(&model.Setting{}).Where("name = ?", model.SettingNameSystemVer).Find(&verSettings).Error; nil != err {
 		logger.Fatalf("load settings failed: %s", err)
 	}
 
@@ -114,7 +114,7 @@ func perform189_190() {
 	logger.Infof("upgrading from version [" + fromVer + "] to version [" + model.Version + "]....")
 
 	var verSettings []model.Setting
-	if err := db.Model(&model.Setting{}).Where(" name = ?", model.SettingNameSystemVer).Find(&verSettings).Error; nil != err {
+	if err := db.Model(&model.Setting{}).Where("name = ?", model.SettingNameSystemVer).Find(&verSettings).Error; nil != err {
 		logger.Fatalf("load settings failed: %s", err)
 	}
 
@@ -136,7 +136,7 @@ func perform188_189() {
 	logger.Infof("upgrading from version [1.8.8] to version [1.8.9]....")
 
 	var verSettings []model.Setting
-	if err := db.Model(&model.Setting{}).Where(" name = ?", model.SettingNameSystemVer).Find(&verSettings).Error; nil != err {
+	if err := db.Model(&model.Setting{}).Where("name = ?", model.SettingNameSystemVer).Find(&verSettings).Error; nil != err {
 		logger.Fatalf("load settings failed: %s", err)
 	}
 
@@ -158,7 +158,7 @@ func perform187_188() {
 	logger.Infof("upgrading from version [1.8.7] to version [1.8.8]....")
 
 	var verSettings []model.Setting
-	if err := db.Model(&model.Setting{}).Where(" name = ?", model.SettingNameSystemVer).Find(&verSettings).Error; nil != err {
+	if err := db.Model(&model.Setting{}).Where("name = ?", model.SettingNameSystemVer).Find(&verSettings).Error; nil != err {
 		logger.Fatalf("load settings failed: %s", err)
 	}
 
@@ -212,7 +212,7 @@ func perform186_187() {
 	logger.Infof("upgrading from version [1.8.6] to version [1.8.7]....")
 
 	var verSettings []model.Setting
-	if err := db.Model(&model.Setting{}).Where(" name = ?", model.SettingNameSystemVer).Find(&verSettings).Error; nil != err {
+	if err := db.Model(&model.Setting{}).Where("name = ?", model.SettingNameSystemVer).Find(&verSettings).Error; nil != err {
 		logger.Fatalf("load settings failed: %s", err)
 	}
 

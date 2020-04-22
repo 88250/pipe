@@ -151,7 +151,7 @@ func (srv *initService) InitPlatform(platformAdmin *model.User) error {
 	blogID := uint64(1)
 
 	saCount := 0
-	db.Model(&model.Correlation{}).Where(" id1  = ? AND  type  = ? AND  int1  = ? AND  blog_id  = ?",
+	db.Model(&model.Correlation{}).Where("id1 = ? AND type = ? AND int1 = ? AND blog_id = ?",
 		blogID, model.CorrelationBlogUser, model.UserRoleBlogAdmin, blogID).
 		Count(&saCount)
 	if 0 < saCount {
