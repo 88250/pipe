@@ -61,6 +61,7 @@ type Configuration struct {
 	RuntimeMode           string // runtime mode (dev/prod)
 	SQLite                string // SQLite database file path
 	MySQL                 string // MySQL connection URL
+	Postgres              string // PostgreSQL connection URL
 	Port                  string // listen port
 	AxiosBaseURL          string // axios base URL
 	MockServer            string // mock server
@@ -80,6 +81,7 @@ func LoadConf() {
 	confRuntimeMode := flag.String("runtime_mode", "", "this will override Conf.RuntimeMode if specified")
 	confSQLite := flag.String("sqlite", "", "this will override Conf.SQLite if specified")
 	confMySQL := flag.String("mysql", "", "this will override Conf.MySQL if specified")
+	confPostgres := flag.String("postgres", "", "this will override Conf.Postgres if specified")
 	confPort := flag.String("port", "", "this will override Conf.Port if specified")
 	s2m := flag.Bool("s2m", false, "dumps SQLite data to MySQL SQL script file")
 
@@ -154,10 +156,18 @@ func LoadConf() {
 	Conf.SQLite = strings.Replace(Conf.SQLite, "${home}", home, 1)
 	if "" != *confSQLite {
 		Conf.SQLite = *confSQLite
+		Conf.MySQL = ""
+		Conf.Postgres = ""
 	}
 	if "" != *confMySQL {
 		Conf.MySQL = *confMySQL
 		Conf.SQLite = ""
+		Conf.Postgres = ""
+	}
+	if "" != *confPostgres {
+		Conf.MySQL = ""
+		Conf.SQLite = ""
+		Conf.Postgres = *confPostgres
 	}
 
 	if "" != *confPort {
