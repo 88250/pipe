@@ -43,7 +43,7 @@ func (srv *tagService) ConsoleGetTags(keyword string, page int, blogID uint64) (
 		whereArgs = append(whereArgs, "%"+keyword+"%")
 	}
 
-	if err := db.Model(&model.Tag{}).Order(" id  DESC").
+	if err := db.Model(&model.Tag{}).Order("id DESC").
 		Where(where, whereArgs...).
 		Count(&count).Offset(offset).Limit(adminConsoleTagListPageSize).Find(&ret).Error; nil != err {
 		logger.Errorf("get tags failed: " + err.Error())
@@ -55,7 +55,7 @@ func (srv *tagService) ConsoleGetTags(keyword string, page int, blogID uint64) (
 }
 
 func (srv *tagService) GetTags(size int, blogID uint64) (ret []*model.Tag) {
-	if err := db.Where(" blog_id  = ?", blogID).Order(" article_count  DESC,  id  DESC").Limit(size).Find(&ret).Error; nil != err {
+	if err := db.Where(" blog_id  = ?", blogID).Order("article_count DESC, id DESC").Limit(size).Find(&ret).Error; nil != err {
 		logger.Errorf("get tags failed: " + err.Error())
 	}
 

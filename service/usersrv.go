@@ -56,7 +56,7 @@ func (srv *userService) GetBlogAdmin(blogID uint64) *model.User {
 
 func (srv *userService) GetPlatformAdmin() *model.User {
 	rel := &model.Correlation{ID1: 1}
-	if err := db.Where(rel).Order("id2 asc").First(rel).Error; nil != err {
+	if err := db.Where(rel).Order("id2 ASC").First(rel).Error; nil != err {
 		logger.Errorf("can't get platform admin: " + err.Error())
 
 		return nil
@@ -258,7 +258,7 @@ func (srv *userService) AddUserToBlog(userID, blogID uint64) error {
 
 func (srv *userService) GetTopBlogs(size int) (ret []*UserBlog) {
 	var users []*model.User
-	if err := db.Model(&model.User{}).Order(" total_article_count  DESC,  id  DESC").Limit(size).
+	if err := db.Model(&model.User{}).Order("total_article_count DESC, id DESC").Limit(size).
 		Find(&users).Error; nil != err {
 		return
 	}

@@ -172,7 +172,7 @@ func (srv *categoryService) GetCategoriesByTag(tagTitle string, blogID uint64) (
 func (srv *categoryService) ConsoleGetCategories(page int, blogID uint64) (ret []*model.Category, pagination *util.Pagination) {
 	offset := (page - 1) * adminConsoleCategoryListPageSize
 	count := 0
-	if err := db.Model(&model.Category{}).Order(" number  ASC,  id  DESC").
+	if err := db.Model(&model.Category{}).Order("number ASC, id DESC").
 		Where(" blog_id  = ?", blogID).
 		Count(&count).Offset(offset).Limit(adminConsoleCategoryListPageSize).Find(&ret).Error; nil != err {
 		logger.Errorf("get categories failed: " + err.Error())
@@ -184,7 +184,7 @@ func (srv *categoryService) ConsoleGetCategories(page int, blogID uint64) (ret [
 }
 
 func (srv *categoryService) GetCategories(size int, blogID uint64) (ret []*model.Category) {
-	if err := db.Where(" blog_id  = ?", blogID).Order(" number  asc").Limit(size).Find(&ret).Error; nil != err {
+	if err := db.Where("blog_id  = ?", blogID).Order("number asc").Limit(size).Find(&ret).Error; nil != err {
 		logger.Errorf("get categories failed: " + err.Error())
 	}
 
