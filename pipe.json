@@ -1,14 +1,15 @@
 {
     "Server": "http://localhost:5897",
     "StaticServer": "",
-    "StaticResourceVersion": "1586922155608",
+    "StaticResourceVersion": "1587142306721",
     "RuntimeMode": "dev",
     "LogLevel": "debug",
     "ShowSQL": false,
     "SessionSecret": "",
     "SessionMaxAge": 86400,
     "SQLite": "${home}/pipe.db",
-    "MySQL": "user:password@(localhost:3306)/pipe?charset=utf8mb4&parseTime=True&loc=Local&timeout=1s&readTimeout=16s&writeTimeout=16s",
+    "MySQL": "user:password@(localhost:3306)/pipe?charset=utf8mb4&parseTime=True&loc=Local&timeout=1s&readTimeout=16s&writeTimeout=16s",    
+    "Postgres": "postgres://user:password@localhost:5432/pipe?search_path=pipe&sslmode=disable",
     "Port": "5897",
     "AxiosBaseURL": "/api",
     "MockServer": "http://localhost:8888"

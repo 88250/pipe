@@ -2,7 +2,7 @@
  * @fileoverview article tool for every theme
  *
  * @author <a href="http://vanessa.b3log.org">Liyuan Li</a>
- * @version 0.6.0.0, Jan 19, 2020
+ * @version 0.7.0.0, Apr 16, 2020
  */
 
 import $ from 'jquery'
@@ -147,6 +147,8 @@ export const ShowEditor = (reply, id, commentId) => {
     "code",
     "inline-code",
     "table",
+    "insert-before",
+    "insert-after",
     "|",
     "undo",
     "redo",
@@ -157,6 +159,7 @@ export const ShowEditor = (reply, id, commentId) => {
     "format",
     "|",
     "fullscreen",
+    "devtools",
     "info",
     "help",
   ]
@@ -164,9 +167,9 @@ export const ShowEditor = (reply, id, commentId) => {
   if ($(window).width() < 768) {
     toolbar = [
       "emoji",
-      "bold",
       "link",
-      "list",
+      "upload",
+      "insert-after",
       "edit-mode",
       "preview",
       "fullscreen",
