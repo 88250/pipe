@@ -19,6 +19,7 @@ import (
 	"github.com/88250/pipe/model"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
+	_ "github.com/jinzhu/gorm/dialects/postgres"
 	_ "github.com/jinzhu/gorm/dialects/sqlite"
 )
 
@@ -26,17 +27,23 @@ import (
 var logger = gulu.Log.NewLogger(os.Stdout)
 
 var db *gorm.DB
-var useSQLite bool
+var useSQLite, useMySQL, usePostgres bool
 
 // ConnectDB connects to the database.
 func ConnectDB() {
 	var err error
 	useSQLite = false
+	useMySQL = false
+	usePostgres = false
 	if "" != model.Conf.SQLite {
 		db, err = gorm.Open("sqlite3", model.Conf.SQLite)
 		useSQLite = true
 	} else if "" != model.Conf.MySQL {
 		db, err = gorm.Open("mysql", model.Conf.MySQL)
+		useMySQL = true
+	} else if "" != model.Conf.Postgres {
+		db, err = gorm.Open("postgres", model.Conf.Postgres)
+		usePostgres = true
 	} else {
 		logger.Fatal("please specify database")
 	}
@@ -45,8 +52,10 @@ func ConnectDB() {
 	}
 	if useSQLite {
 		logger.Debug("used [SQLite] as underlying database")
-	} else {
+	} else if useMySQL {
 		logger.Debug("used [MySQL] as underlying database")
+	} else {
+		logger.Debug("used [Postgres] as underlying database")
 	}
 
 	if err = db.AutoMigrate(model.Models...).Error; nil != err {

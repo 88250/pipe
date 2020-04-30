@@ -34,8 +34,8 @@ const (
 )
 
 func (srv *userService) GetUserByGitHubId(githubId string) *model.User {
-	ret := &model.User{}
-	if err := db.Where("`github_id` = ?", githubId).First(ret).Error; nil != err {
+	ret := &model.User{GithubId: githubId}
+	if err := db.Where(ret).First(ret).Error; nil != err {
 		return nil
 	}
 
@@ -43,8 +43,8 @@ func (srv *userService) GetUserByGitHubId(githubId string) *model.User {
 }
 
 func (srv *userService) GetBlogAdmin(blogID uint64) *model.User {
-	rel := &model.Correlation{}
-	if err := db.Where("`id1` = ? AND `type` = ? AND `blog_id` = ?",
+	rel := &model.Correlation{ID1: blogID, Type: model.UserRoleBlogAdmin, BlogID: blogID}
+	if err := db.Where(rel,
 		blogID, model.UserRoleBlogAdmin, blogID).First(rel).Error; nil != err {
 		logger.Errorf("can't get blog admin: " + err.Error())
 
@@ -55,8 +55,8 @@ func (srv *userService) GetBlogAdmin(blogID uint64) *model.User {
 }
 
 func (srv *userService) GetPlatformAdmin() *model.User {
-	rel := &model.Correlation{}
-	if err := db.Where("`id1` = ?", 1).Order("`id2` asc").First(rel).Error; nil != err {
+	rel := &model.Correlation{ID1: 1}
+	if err := db.Where(rel).Order("id2 ASC").First(rel).Error; nil != err {
 		logger.Errorf("can't get platform admin: " + err.Error())
 
 		return nil
@@ -98,8 +98,8 @@ func (srv *userService) UpdateUser(user *model.User) error {
 }
 
 func (srv *userService) GetUserByName(name string) *model.User {
-	ret := &model.User{}
-	if err := db.Where("`name` = ?", name).First(ret).Error; nil != err {
+	ret := &model.User{Name: name}
+	if err := db.Where(ret).First(ret).Error; nil != err {
 		return nil
 	}
 
@@ -136,15 +136,16 @@ func (srv *userService) GetBlogUsers(page int, blogID uint64) (ret []*model.User
 	var correlations []*model.Correlation
 	offset := (page - 1) * adminConsoleUserListPageSize
 	count := 0
-	if err := db.Model(&model.Correlation{}).
-		Where("`id1` = ? AND `type` = ? AND `blog_id` = ?", blogID, model.CorrelationBlogUser, blogID).
+	rel := &model.Correlation{ID1: blogID, Type: model.CorrelationBlogUser, BlogID: blogID}
+	if err := db.Model(rel).
+		Where(rel, blogID, model.CorrelationBlogUser, blogID).
 		Count(&count).Offset(offset).Limit(adminConsoleUserListPageSize).Find(&correlations).Error; nil != err {
 		logger.Errorf("get users failed: " + err.Error())
 	}
 
 	for _, rel := range correlations {
 		user := &model.User{}
-		if err := db.Where("`id` = ?", rel.ID2).Find(user).Error; nil != err {
+		if err := db.Where(rel.ID2).Find(user).Error; nil != err {
 			logger.Errorf("get user failed: " + err.Error())
 
 			continue
@@ -159,8 +160,8 @@ func (srv *userService) GetBlogUsers(page int, blogID uint64) (ret []*model.User
 }
 
 func (srv *userService) GetOwnBlog(userID uint64) *UserBlog {
-	rel := &model.Correlation{}
-	if err := db.Where("`id2` = ? AND `type` = ? AND `int1` = ?",
+	rel := &model.Correlation{ID2: userID, Type: model.CorrelationBlogUser, Int1: model.UserRoleBlogAdmin}
+	if err := db.Where(rel,
 		userID, model.CorrelationBlogUser, model.UserRoleBlogAdmin).First(rel).Error; nil != err {
 		return nil
 	}
@@ -178,10 +179,9 @@ func (srv *userService) GetOwnBlog(userID uint64) *UserBlog {
 	}
 }
 
-func (srv *userService) GetRole(userID, blogID uint) int {
-	rel := &model.Correlation{}
-	if err := db.Where("`id1` = ? AND `id2` = ? AND `type` = ?",
-		blogID, userID, model.CorrelationBlogUser).First(rel).Error; nil != err {
+func (srv *userService) GetRole(userID, blogID uint64) int {
+	rel := &model.Correlation{ID1: blogID, ID2: userID, Type: model.CorrelationBlogUser}
+	if err := db.Where(rel).First(rel).Error; nil != err {
 		return model.UserRoleNoLogin
 	}
 
@@ -190,7 +190,7 @@ func (srv *userService) GetRole(userID, blogID uint) int {
 
 func (srv *userService) GetUserBlogs(userID uint64) (ret []*UserBlog) {
 	var correlations []*model.Correlation
-	if err := db.Where("`id2` = ? AND `type` = ?", userID, model.CorrelationBlogUser).
+	if err := db.Where(&model.Correlation{ID2: userID, Type: model.CorrelationBlogUser}).
 		Find(&correlations).Error; nil != err {
 		return
 	}
@@ -214,8 +214,8 @@ func (srv *userService) GetUserBlogs(userID uint64) (ret []*UserBlog) {
 }
 
 func (srv *userService) GetUserBlog(userID, blogID uint64) *UserBlog {
-	rel := &model.Correlation{}
-	if err := db.Where("`id1` = ? AND `id2` = ? AND `type` = ? AND `blog_id` = ?", blogID, userID, model.CorrelationBlogUser, blogID).
+	rel := &model.Correlation{ID1: blogID, ID2: userID, Type: model.CorrelationBlogUser, BlogID: blogID}
+	if err := db.Where(rel).
 		First(&rel).Error; nil != err {
 		return nil
 	}
@@ -258,7 +258,7 @@ func (srv *userService) AddUserToBlog(userID, blogID uint64) error {
 
 func (srv *userService) GetTopBlogs(size int) (ret []*UserBlog) {
 	var users []*model.User
-	if err := db.Model(&model.User{}).Order("`total_article_count` DESC, `id` DESC").Limit(size).
+	if err := db.Model(&model.User{}).Order("total_article_count DESC, id DESC").Limit(size).
 		Find(&users).Error; nil != err {
 		return
 	}

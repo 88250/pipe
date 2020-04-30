@@ -36,14 +36,14 @@ func (srv *tagService) ConsoleGetTags(keyword string, page int, blogID uint64) (
 	offset := (page - 1) * adminConsoleTagListPageSize
 	count := 0
 
-	where := "`blog_id` = ?"
+	where := " blog_id  = ?"
 	whereArgs := []interface{}{blogID}
 	if "" != keyword {
-		where += " AND `title` LIKE ?"
+		where += " AND  title  LIKE ?"
 		whereArgs = append(whereArgs, "%"+keyword+"%")
 	}
 
-	if err := db.Model(&model.Tag{}).Order("`id` DESC").
+	if err := db.Model(&model.Tag{}).Order("id DESC").
 		Where(where, whereArgs...).
 		Count(&count).Offset(offset).Limit(adminConsoleTagListPageSize).Find(&ret).Error; nil != err {
 		logger.Errorf("get tags failed: " + err.Error())
@@ -55,7 +55,7 @@ func (srv *tagService) ConsoleGetTags(keyword string, page int, blogID uint64) (
 }
 
 func (srv *tagService) GetTags(size int, blogID uint64) (ret []*model.Tag) {
-	if err := db.Where("`blog_id` = ?", blogID).Order("`article_count` DESC, `id` DESC").Limit(size).Find(&ret).Error; nil != err {
+	if err := db.Where("blog_id = ?", blogID).Order("article_count DESC, id DESC").Limit(size).Find(&ret).Error; nil != err {
 		logger.Errorf("get tags failed: " + err.Error())
 	}
 
@@ -64,7 +64,7 @@ func (srv *tagService) GetTags(size int, blogID uint64) (ret []*model.Tag) {
 
 func (srv *tagService) GetTagByTitle(title string, blogID uint64) *model.Tag {
 	ret := &model.Tag{}
-	if err := db.Where("`title` = ? AND `blog_id` = ?", title, blogID).First(ret).Error; nil != err {
+	if err := db.Where("title = ? AND blog_id = ?", title, blogID).First(ret).Error; nil != err {
 		return nil
 	}
 
@@ -73,7 +73,7 @@ func (srv *tagService) GetTagByTitle(title string, blogID uint64) *model.Tag {
 
 func (srv *tagService) RemoveTag(id, blogID uint64) (err error) {
 	tag := &model.Tag{}
-	if err := db.Where("`id` = ? AND `blog_id` = ?", id, blogID).Find(tag).Error; nil != err {
+	if err := db.Where("id = ? AND blog_id = ?", id, blogID).Find(tag).Error; nil != err {
 		return err
 	}
 

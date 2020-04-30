@@ -29,7 +29,7 @@ type archiveService struct {
 
 func (srv *archiveService) GetArchives(blogID uint64) []*model.Archive {
 	var ret []*model.Archive
-	if err := db.Where("`blog_id` = ? AND `article_count` > 0", blogID).Order("`year` DESC, `month` DESC").Find(&ret).Error; nil != err {
+	if err := db.Where("blog_id = ? AND article_count > 0", blogID).Order("year DESC, month DESC").Find(&ret).Error; nil != err {
 		logger.Error("get archives failed: " + err.Error())
 	}
 
@@ -43,7 +43,7 @@ func (srv *archiveService) UnArchiveArticleWithoutTx(tx *gorm.DB, article *model
 	year := article.CreatedAt.Format("2006")
 	month := article.CreatedAt.Format("01")
 	archive := &model.Archive{Year: year, Month: month, BlogID: article.BlogID}
-	if err := tx.Where("`year` = ? AND `month` = ? AND `blog_id` = ?",
+	if err := tx.Where(" year  = ? AND  month  = ? AND  blog_id  = ?",
 		year, month, article.BlogID).First(archive).Error; nil != err {
 		return err
 	}
@@ -55,9 +55,9 @@ func (srv *archiveService) UnArchiveArticleWithoutTx(tx *gorm.DB, article *model
 	if err := tx.Save(archive).Error; nil != err {
 		return err
 	}
-	if err := tx.Where("`id1` = ? AND `id2` = ? AND `type` = ? AND `blog_id` = ?",
-		article.ID, archive.ID, model.CorrelationArticleArchive, article.BlogID).
-		Delete(&model.Correlation{}).Error; nil != err {
+
+	rel := &model.Correlation{ID1: article.ID, ID2: archive.ID, Type: model.CorrelationArticleArchive, BlogID: article.BlogID}
+	if err := tx.Where(rel).Delete(rel).Error; nil != err {
 		return err
 	}
 
@@ -72,8 +72,7 @@ func (srv *archiveService) ArchiveArticleWithoutTx(tx *gorm.DB, article *model.A
 	month := article.CreatedAt.Format("01")
 
 	archive := &model.Archive{Year: year, Month: month, BlogID: article.BlogID}
-	if err := tx.Where("`year` = ? AND `month` = ? AND `blog_id` = ?",
-		year, month, article.BlogID).First(archive).Error; nil != err {
+	if err := tx.Where(archive).First(archive).Error; nil != err {
 		if gorm.ErrRecordNotFound != err {
 			return err
 		}
@@ -97,9 +96,8 @@ func (srv *archiveService) ArchiveArticleWithoutTx(tx *gorm.DB, article *model.A
 }
 
 func (srv *archiveService) GetArchive(year, month string, blogID uint64) *model.Archive {
-	ret := &model.Archive{}
-	if err := db.Where("`year` = ? AND `month` = ? AND `blog_id` = ?",
-		year, month, blogID).First(ret).Error; nil != err {
+	ret := &model.Archive{Year: year, Month: month, BlogID: blogID}
+	if err := db.Where(ret).First(ret).Error; nil != err {
 		return nil
 	}
 

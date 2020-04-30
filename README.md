@@ -56,7 +56,7 @@ Welcome to [Pipe Official Discussion Forum](https://hacpai.com/tag/pipe) to lear
 * Article search
 * Hexo/Jekyll import / export
 * CDN static resource separation
-* Support SQLite / MySQL
+* Support SQLite / MySQL / PostgreSQL
 
 ## 🎨 Screenshots
 

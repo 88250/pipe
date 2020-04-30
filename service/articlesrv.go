@@ -44,9 +44,9 @@ const (
 )
 
 func (srv *articleService) GetPlatMostViewArticles(size int) (ret []*model.Article) {
-	if err := db.Model(&model.Article{}).Select("`id`, `created_at`, `author_id`, `title`, `path`, `view_count`, `comment_count`, `blog_id`").
-		Where("`status` = ?", model.ArticleStatusOK).
-		Order("`view_count` DESC, `created_at` DESC").Limit(size).Find(&ret).Error; nil != err {
+	if err := db.Model(&model.Article{}).Select("id, created_at, author_id, title, path, view_count, comment_count, blog_id").
+		Where("status = ?", model.ArticleStatusOK).
+		Order("view_count DESC, created_at DESC").Limit(size).Find(&ret).Error; nil != err {
 		logger.Errorf("get platform most view articles failed: " + err.Error())
 	}
 
@@ -54,7 +54,7 @@ func (srv *articleService) GetPlatMostViewArticles(size int) (ret []*model.Artic
 }
 
 func (srv *articleService) GetUnpushedArticles() (ret []*model.Article) {
-	if err := db.Where("`pushed_at` <= ?", model.ZeroPushTime).Find(&ret).Error; nil != err {
+	if err := db.Where("pushed_at <= ?", model.ZeroPushTime).Find(&ret).Error; nil != err {
 		return
 	}
 
@@ -67,7 +67,7 @@ func (srv *articleService) GetArchiveArticles(archiveID uint64, page int, blogID
 	count := 0
 
 	var rels []*model.Correlation
-	if err := db.Where("`id2` = ? AND `type` = ? AND `blog_id` = ?", archiveID, model.CorrelationArticleArchive, blogID).
+	if err := db.Where(&model.Correlation{ID2: archiveID, Type: model.CorrelationArticleArchive, BlogID: blogID}).
 		Find(&rels).Error; nil != err {
 		return
 	}
@@ -78,8 +78,8 @@ func (srv *articleService) GetArchiveArticles(archiveID uint64, page int, blogID
 	}
 
 	if err := db.Model(&model.Article{}).
-		Where("`id` IN (?) AND `status` = ? AND `blog_id` = ?", articleIDs, model.ArticleStatusOK, blogID).
-		Order("`topped` DESC, `created_at` DESC").Count(&count).
+		Where("id IN (?) AND status = ? AND blog_id = ?", articleIDs, model.ArticleStatusOK, blogID).
+		Order("topped DESC, created_at DESC").Count(&count).
 		Offset(offset).Limit(pageSize).
 		Find(&ret).Error; nil != err {
 		logger.Errorf("get archive articles failed: " + err.Error())
@@ -92,7 +92,7 @@ func (srv *articleService) GetArchiveArticles(archiveID uint64, page int, blogID
 
 func (srv *articleService) GetPreviousArticle(id uint64, blogID uint64) *model.Article {
 	ret := &model.Article{}
-	if err := db.Where("`id` < ? AND `blog_id` = ?", id, blogID).Order("`created_at` DESC").Limit(1).Find(ret).Error; nil != err {
+	if err := db.Where("id < ? AND blog_id = ?", id, blogID).Order("created_at DESC").Limit(1).Find(ret).Error; nil != err {
 		return nil
 	}
 
@@ -101,7 +101,7 @@ func (srv *articleService) GetPreviousArticle(id uint64, blogID uint64) *model.A
 
 func (srv *articleService) GetNextArticle(id uint64, blogID uint64) *model.Article {
 	ret := &model.Article{}
-	if err := db.Where("`id` > ? AND `blog_id` = ?", id, blogID).Limit(1).Find(ret).Error; nil != err {
+	if err := db.Where("id > ? AND blog_id = ?", id, blogID).Limit(1).Find(ret).Error; nil != err {
 		return nil
 	}
 
@@ -115,8 +115,8 @@ func (srv *articleService) GetArticleByPath(path string, blogID uint64) *model.A
 	}
 	path, _ = url.PathUnescape(path)
 
-	ret := &model.Article{}
-	if err := db.Where("`path` = ? AND `blog_id` = ?", path, blogID).Find(ret).Error; nil != err {
+	ret := &model.Article{Path: path, BlogID: blogID}
+	if err := db.Where(ret).Find(ret).Error; nil != err {
 		return nil
 	}
 
@@ -162,9 +162,8 @@ func (srv *articleService) AddArticle(article *model.Article) (err error) {
 	if err = tx.Model(author).Updates(author).Error; nil != err {
 		return
 	}
-	blogUserRel := &model.Correlation{}
-	if err = tx.Where("`id1` = ? AND `id2` = ? AND `type` = ? AND `blog_id` = ?",
-		article.BlogID, author.ID, model.CorrelationBlogUser, article.BlogID).First(blogUserRel).Error; nil != err {
+	blogUserRel := &model.Correlation{ID1: article.BlogID, ID2: author.ID, Type: model.CorrelationBlogUser, BlogID: article.BlogID}
+	if err = tx.Where(blogUserRel).First(blogUserRel).Error; nil != err {
 		return
 	}
 	blogUserRel.Int2 += 1
@@ -182,16 +181,16 @@ func (srv *articleService) ConsoleGetArticles(keyword string, page int, blogID u
 	offset := (page - 1) * adminConsoleArticleListPageSize
 	count := 0
 
-	where := "`status` = ? AND `blog_id` = ?"
+	where := " status  = ? AND  blog_id  = ?"
 	whereArgs := []interface{}{model.ArticleStatusOK, blogID}
 	if "" != keyword {
-		where += " AND `title` LIKE ?"
+		where += " AND  title  LIKE ?"
 		whereArgs = append(whereArgs, "%"+keyword+"%")
 	}
 
-	if err := db.Model(&model.Article{}).Select("`id`, `created_at`, `author_id`, `title`, `tags`, `path`, `topped`, `view_count`, `comment_count`").
+	if err := db.Model(&model.Article{}).Select("id, created_at, author_id, title, tags, path, topped, view_count, comment_count").
 		Where(where, whereArgs...).
-		Order("`topped` DESC, `created_at` DESC").Count(&count).
+		Order("topped DESC, created_at DESC").Count(&count).
 		Offset(offset).Limit(adminConsoleArticleListPageSize).Find(&ret).Error; nil != err {
 		logger.Errorf("get articles failed: " + err.Error())
 	}
@@ -206,16 +205,16 @@ func (srv *articleService) GetArticles(keyword string, page int, blogID uint64) 
 	offset := (page - 1) * pageSize
 	count := 0
 
-	where := "`status` = ? AND `blog_id` = ?"
+	where := " status  = ? AND  blog_id  = ?"
 	whereArgs := []interface{}{model.ArticleStatusOK, blogID}
 	if "" != keyword {
-		where += " AND `title` LIKE ?"
+		where += " AND  title  LIKE ?"
 		whereArgs = append(whereArgs, "%"+keyword+"%")
 	}
 
-	if err := db.Model(&model.Article{}).Select("`id`, `created_at`, `author_id`, `title`, `abstract`, `content`, `tags`, `path`, `topped`, `view_count`, `comment_count`").
+	if err := db.Model(&model.Article{}).Select("id, created_at, author_id, title, abstract, content, tags, path, topped, view_count, comment_count").
 		Where(where, whereArgs...).
-		Order("`topped` DESC, `created_at` DESC").Count(&count).
+		Order("topped DESC, created_at DESC").Count(&count).
 		Offset(offset).Limit(pageSize).
 		Find(&ret).Error; nil != err {
 		logger.Errorf("get articles failed: " + err.Error())
@@ -231,7 +230,7 @@ func (srv *articleService) GetCategoryArticles(categoryID uint64, page int, blog
 	offset := (page - 1) * pageSize
 
 	var rels []*model.Correlation
-	if err := db.Model(&model.Correlation{}).Where("`id1` = ? AND `type` = ? AND `blog_id` = ?", categoryID, model.CorrelationCategoryTag, blogID).
+	if err := db.Model(&model.Correlation{}).Where("id1 = ? AND type = ? AND blog_id = ?", categoryID, model.CorrelationCategoryTag, blogID).
 		Find(&rels).Error; nil != err {
 		return
 	}
@@ -243,8 +242,8 @@ func (srv *articleService) GetCategoryArticles(categoryID uint64, page int, blog
 
 	count := 0
 	rels = []*model.Correlation{}
-	if err := db.Model(&model.Correlation{}).Where("`id2` IN (?) AND `type` = ? AND `blog_id` = ?", tagIDs, model.CorrelationArticleTag, blogID).
-		Order("`id` DESC").Count(&count).Offset(offset).Limit(pageSize).
+	if err := db.Model(&model.Correlation{}).Where("id2 IN (?) AND type = ? AND blog_id = ?", tagIDs, model.CorrelationArticleTag, blogID).
+		Order("id DESC").Count(&count).Offset(offset).Limit(pageSize).
 		Find(&rels).Error; nil != err {
 		return
 	}
@@ -256,7 +255,7 @@ func (srv *articleService) GetCategoryArticles(categoryID uint64, page int, blog
 		articleIDs = append(articleIDs, articleTagRel.ID1)
 	}
 
-	if err := db.Where("`id` IN (?) AND `blog_id` = ?", articleIDs, blogID).Find(&ret).Error; nil != err {
+	if err := db.Where("id IN (?) AND blog_id = ?", articleIDs, blogID).Find(&ret).Error; nil != err {
 		return
 	}
 
@@ -269,7 +268,7 @@ func (srv *articleService) GetTagArticles(tagID uint64, page int, blogID uint64)
 	count := 0
 
 	var rels []*model.Correlation
-	if err := db.Where("`id2` = ? AND `type` = ? AND `blog_id` = ?", tagID, model.CorrelationArticleTag, blogID).
+	if err := db.Where("id2 = ? AND type = ? AND blog_id = ?", tagID, model.CorrelationArticleTag, blogID).
 		Find(&rels).Error; nil != err {
 		return
 	}
@@ -280,8 +279,8 @@ func (srv *articleService) GetTagArticles(tagID uint64, page int, blogID uint64)
 	}
 
 	if err := db.Model(&model.Article{}).
-		Where("`id` IN (?) AND `status` = ? AND `blog_id` = ?", articleIDs, model.ArticleStatusOK, blogID).
-		Order("`topped` DESC, `created_at` DESC").Count(&count).Offset(offset).Limit(pageSize).
+		Where("id IN (?) AND status = ? AND blog_id = ?", articleIDs, model.ArticleStatusOK, blogID).
+		Order("topped  DESC, created_at DESC").Count(&count).Offset(offset).Limit(pageSize).
 		Find(&ret).Error; nil != err {
 		logger.Errorf("get tag articles failed: " + err.Error())
 	}
@@ -297,8 +296,8 @@ func (srv *articleService) GetAuthorArticles(authorID uint64, page int, blogID u
 	count := 0
 
 	if err := db.Model(&model.Article{}).
-		Where("`author_id` = ? AND `status` = ? AND `blog_id` = ?", authorID, model.ArticleStatusOK, blogID).
-		Order("`topped` DESC, `created_at` DESC").Count(&count).
+		Where("author_id = ? AND status = ? AND blog_id = ?", authorID, model.ArticleStatusOK, blogID).
+		Order("topped DESC, created_at DESC").Count(&count).
 		Offset(offset).Limit(pageSize).
 		Find(&ret).Error; nil != err {
 		logger.Errorf("get author articles failed: " + err.Error())
@@ -310,9 +309,9 @@ func (srv *articleService) GetAuthorArticles(authorID uint64, page int, blogID u
 }
 
 func (srv *articleService) GetMostViewArticles(size int, blogID uint64) (ret []*model.Article) {
-	if err := db.Model(&model.Article{}).Select("`id`, `created_at`, `author_id`, `title`, `path`").
-		Where("`status` = ? AND `blog_id` = ?", model.ArticleStatusOK, blogID).
-		Order("`view_count` DESC, `created_at` DESC").Limit(size).Find(&ret).Error; nil != err {
+	if err := db.Model(&model.Article{}).Select(" id ,  created_at ,  author_id ,  title ,  path ").
+		Where("status = ? AND blog_id = ?", model.ArticleStatusOK, blogID).
+		Order("view_count DESC, created_at DESC").Limit(size).Find(&ret).Error; nil != err {
 		logger.Errorf("get most view articles failed: " + err.Error())
 	}
 
@@ -320,9 +319,9 @@ func (srv *articleService) GetMostViewArticles(size int, blogID uint64) (ret []*
 }
 
 func (srv *articleService) GetMostCommentArticles(size int, blogID uint64) (ret []*model.Article) {
-	if err := db.Model(&model.Article{}).Select("`id`, `created_at`, `author_id`, `title`, `path`").
-		Where("`status` = ? AND `blog_id` = ?", model.ArticleStatusOK, blogID).
-		Order("`comment_count` DESC, `id` DESC").Limit(size).Find(&ret).Error; nil != err {
+	if err := db.Model(&model.Article{}).Select(" id ,  created_at ,  author_id ,  title ,  path ").
+		Where("status = ? AND blog_id = ?", model.ArticleStatusOK, blogID).
+		Order("comment_count DESC, id DESC").Limit(size).Find(&ret).Error; nil != err {
 		logger.Errorf("get most comment articles failed: " + err.Error())
 	}
 
@@ -398,7 +397,7 @@ func (srv *articleService) RemoveArticle(id, blogID uint64) (err error) {
 			tx.Rollback()
 		}
 	}()
-	if err = tx.Where("`id` = ? AND `blog_id` = ?", id, blogID).Find(article).Error; nil != err {
+	if err = tx.Where("id = ? AND blog_id = ?", id, blogID).Find(article).Error; nil != err {
 		return
 	}
 	author := &model.User{}
@@ -410,7 +409,7 @@ func (srv *articleService) RemoveArticle(id, blogID uint64) (err error) {
 		return
 	}
 	blogUserRel := &model.Correlation{}
-	if err = tx.Where("`id1` = ? AND `id2` = ? AND `type` = ? AND `blog_id` = ?",
+	if err = tx.Where("id1 = ? AND id2 = ? AND type = ? AND blog_id = ?",
 		article.BlogID, author.ID, model.CorrelationBlogUser, article.BlogID).First(blogUserRel).Error; nil != err {
 		return
 	}
@@ -431,11 +430,11 @@ func (srv *articleService) RemoveArticle(id, blogID uint64) (err error) {
 		return
 	}
 	var comments []*model.Comment
-	if err = tx.Model(&model.Comment{}).Where("`article_id` = ? AND `blog_id` = ?", id, article.BlogID).Find(&comments).Error; nil != err {
+	if err = tx.Model(&model.Comment{}).Where("article_id = ? AND blog_id = ?", id, article.BlogID).Find(&comments).Error; nil != err {
 		return
 	}
 	if 0 < len(comments) {
-		if err = tx.Where("`article_id` = ? AND `blog_id` = ?", id, article.BlogID).Delete(&model.Comment{}).Error; nil != err {
+		if err = tx.Where("article_id = ? AND blog_id = ?", id, article.BlogID).Delete(&model.Comment{}).Error; nil != err {
 			return
 		}
 		for range comments {
@@ -462,7 +461,7 @@ func (srv *articleService) UpdateArticle(article *model.Article) (err error) {
 	defer srv.mutex.Unlock()
 
 	oldArticle := &model.Article{}
-	if err = db.Model(&model.Article{}).Where("`id` = ? AND `blog_id` = ?", article.ID, article.BlogID).
+	if err = db.Model(&model.Article{}).Where("id = ? AND blog_id = ?", article.ID, article.BlogID).
 		Find(oldArticle).Error; nil != err {
 		return
 	}
@@ -525,7 +524,7 @@ func (srv *articleService) IncArticleViewCount(article *model.Article) error {
 	//defer srv.mutex.Unlock()
 	//
 	//article.ViewCount = article.ViewCount + 1
-	//if err := db.Model(&model.Article{}).Where("`id` = ?", article.ID).Select("view_count").Updates(article).Error; nil != err {
+	//if err := db.Model(&model.Article{}).Where(" id  = ?", article.ID).Select("view_count").Updates(article).Error; nil != err {
 	//	return err
 	//}
 
@@ -538,7 +537,7 @@ func normalizeArticle(article *model.Article) error {
 		return errors.New("title can not be empty")
 	}
 	count := 0
-	if err := db.Model(&model.Article{}).Where("`title` = ?", title).Count(&count).Error; nil != err {
+	if err := db.Model(&model.Article{}).Where("title = ?", title).Count(&count).Error; nil != err {
 		return err
 	}
 	if 0 < count {
@@ -601,13 +600,13 @@ func normalizeTagStr(tagStr string) string {
 
 func removeTagArticleRels(tx *gorm.DB, article *model.Article) error {
 	var rels []*model.Correlation
-	if err := tx.Where("`id1` = ? AND `type` = ? AND `blog_id` = ?",
+	if err := tx.Where("id1 = ? AND type = ? AND blog_id = ?",
 		article.ID, model.CorrelationArticleTag, article.BlogID).Find(&rels).Error; nil != err {
 		return err
 	}
 	for _, rel := range rels {
 		tag := &model.Tag{}
-		if err := tx.Where("`id` = ? AND `blog_id` = ?", rel.ID2, article.BlogID).First(tag).Error; nil != err {
+		if err := tx.Where("id = ? AND blog_id = ?", rel.ID2, article.BlogID).First(tag).Error; nil != err {
 			continue
 		}
 		tag.ArticleCount = tag.ArticleCount - 1
@@ -616,7 +615,7 @@ func removeTagArticleRels(tx *gorm.DB, article *model.Article) error {
 		}
 	}
 
-	if err := tx.Where("`id1` = ? AND `type` = ? AND `blog_id` = ?", article.ID, model.CorrelationArticleTag, article.BlogID).
+	if err := tx.Where("id1 = ? AND type = ? AND blog_id = ?", article.ID, model.CorrelationArticleTag, article.BlogID).
 		Delete(&model.Correlation{}).Error; nil != err {
 		return err
 	}
@@ -628,7 +627,7 @@ func tagArticle(tx *gorm.DB, article *model.Article) error {
 	tags := strings.Split(article.Tags, ",")
 	for _, tagTitle := range tags {
 		tag := &model.Tag{BlogID: article.BlogID}
-		tx.Where("`title` = ? AND `blog_id` = ?", tagTitle, article.BlogID).First(tag)
+		tx.Where("title = ? AND blog_id = ?", tagTitle, article.BlogID).First(tag)
 		if "" == tag.Title {
 			tag.Title = tagTitle
 			tag.ArticleCount = 1
@@ -678,7 +677,7 @@ func normalizeArticlePath(article *model.Article) error {
 	}
 
 	count := 0
-	if db.Model(&model.Article{}).Where("`path` = ? AND `id` != ? AND `blog_id` = ?", path, article.ID, article.BlogID).Count(&count); 0 < count {
+	if db.Model(&model.Article{}).Where("path = ? AND id != ? AND blog_id = ?", path, article.ID, article.BlogID).Count(&count); 0 < count {
 		return errors.New("path [" + path + "] is reduplicated")
 	}
 

@@ -33,7 +33,7 @@ func (srv *settingService) GetSetting(category, name string, blogID uint64) *mod
 	}
 
 	ret = &model.Setting{}
-	if err := db.Where("`category` = ? AND `name` = ? AND `blog_id` = ?", category, name, blogID).Find(ret).Error; nil != err {
+	if err := db.Where("category = ? AND name = ? AND blog_id = ?", category, name, blogID).Find(ret).Error; nil != err {
 		return nil
 	}
 
@@ -45,7 +45,7 @@ func (srv *settingService) GetSetting(category, name string, blogID uint64) *mod
 func (srv *settingService) GetCategorySettings(category string, blogID uint64) []*model.Setting {
 	var ret []*model.Setting
 
-	if err := db.Where("`category` = ? AND `blog_id` = ?", category, blogID).Find(&ret).Error; nil != err {
+	if err := db.Where("category = ? AND blog_id = ?", category, blogID).Find(&ret).Error; nil != err {
 		return nil
 	}
 
@@ -55,7 +55,7 @@ func (srv *settingService) GetCategorySettings(category string, blogID uint64) [
 func (srv *settingService) GetAllSettings(blogID uint64) []*model.Setting {
 	var ret []*model.Setting
 
-	if err := db.Where("`category` != ? AND `blog_id` = ?", model.SettingCategoryStatistic, blogID).Find(&ret).Error; nil != err {
+	if err := db.Where("category != ? AND blog_id = ?", model.SettingCategoryStatistic, blogID).Find(&ret).Error; nil != err {
 		return nil
 	}
 
@@ -65,7 +65,7 @@ func (srv *settingService) GetAllSettings(blogID uint64) []*model.Setting {
 func (srv *settingService) GetSettings(category string, names []string, blogID uint64) map[string]*model.Setting {
 	ret := map[string]*model.Setting{}
 	var settings []*model.Setting
-	if err := db.Where("`category` = ? AND `name` IN (?) AND `blog_id` = ?", category, names, blogID).Find(&settings).Error; nil != err {
+	if err := db.Where("category = ? AND name IN (?) AND blog_id = ?", category, names, blogID).Find(&settings).Error; nil != err {
 		return nil
 	}
 
@@ -99,7 +99,7 @@ func (srv *settingService) UpdateSettings(category string, settings []*model.Set
 
 	tx := db.Begin()
 	for _, setting := range settings {
-		if err := tx.Model(&model.Setting{}).Where("`category` = ? AND `name` = ? AND `blog_id` = ?",
+		if err := tx.Model(&model.Setting{}).Where("category = ? AND name = ? AND blog_id = ?",
 			category, setting.Name, blogID).Select("value").Updates(map[string]interface{}{"value": setting.Value}).Error; nil != err {
 			tx.Rollback()
 

@@ -26,7 +26,7 @@ type exportService struct {
 
 func (srv *exportService) ExportMarkdowns(blogID uint64) (ret []*MarkdownFile) {
 	var articles []*model.Article
-	if err := db.Where("`blog_id` = ?", blogID).Find(&articles).Error; nil != err {
+	if err := db.Where("blog_id = ?", blogID).Find(&articles).Error; nil != err {
 		logger.Errorf("export markdowns failed: " + err.Error())
 
 		return
