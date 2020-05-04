@@ -175,8 +175,6 @@ export const ShowEditor = (reply, id, commentId) => {
       'emoji',
       'link',
       'edit-mode',
-      'code-theme',
-      'content-theme',
       {
         name: 'more',
         toolbar: [
