@@ -195,6 +195,7 @@
     methods: {
       _initEditor (data) {
         return new Vditor(data.id, {
+          outline: data.outline || false,
           typewriterMode: true,
           tab: '\t',
           cache: {
@@ -424,6 +425,7 @@
       const id = this.$route.query.id
 
       this.contentEditor = this._initEditor({
+        outline: true,
         id: 'contentEditor',
         mode: 'both',
         height: 480,
