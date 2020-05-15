@@ -51,6 +51,9 @@ func Markdown(mdText string) *MarkdownResult {
 	doc, _ := goquery.NewDocumentFromReader(strings.NewReader(contentHTML))
 	doc.Find("img").Each(func(i int, ele *goquery.Selection) {
 		src, _ := ele.Attr("src")
+		if Uploaded(src) && !strings.Contains(src, ".gif") && !strings.Contains(src, "imageView") {
+			src += "?imageView2/2/w/1280/format/jpg/interlace/1/q/100"
+		}
 		ele.SetAttr("data-src", src)
 		ele.RemoveAttr("src")
 	})
