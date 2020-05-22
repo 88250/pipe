@@ -42,7 +42,7 @@ func RandImage() string {
 	delta := max - min
 	sec := rand.Int63n(delta) + min
 
-	return CommunityFileURL + "/bing/" + time.Unix(sec, 0).Format("20060102.jpg")
+	return CommunityFileURL + "/bing/" + time.Unix(sec, 0).Format("20060102") + ".jpg"
 }
 
 // RandImages returns random image URLs.
