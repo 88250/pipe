@@ -38,7 +38,7 @@ func redirectLoginAction(c *gin.Context) {
 	loginAuthURL := "https://hacpai.com/login?goto=" + referer + "/api/login/callback"
 	state := gulu.Rand.String(16)
 	states[state] = referer
-	path := loginAuthURL + "?state=" + state
+	path := loginAuthURL + "&state=" + state + "&v=" + model.Version
 	c.Redirect(http.StatusSeeOther, path)
 }
 
@@ -47,55 +47,43 @@ func loginCallbackAction(c *gin.Context) {
 	referer := states[state]
 	if "" == referer {
 		c.Status(http.StatusBadRequest)
-
 		return
 	}
 	delete(states, state)
 
-	githubId := c.Query("userId")
-	userName := c.Query("userName")
-	avatar := c.Query("avatar")
-	user := service.User.GetUserByGitHubId(githubId)
+	accessToken := c.Query("access_token")
+	userInfo := util.HacPaiUserInfo(accessToken)
+
+	userId := userInfo["userId"].(string)
+	userName := userInfo["userName"].(string)
+	avatar := userInfo["avatar"].(string)
+	user := service.User.GetUserByGitHubId(userId)
 	if nil == user {
 		if !service.Init.Inited() {
 			user = &model.User{
 				Name:      userName,
 				AvatarURL: avatar,
 				B3Key:     userName,
-				GithubId:  githubId,
+				GithubId:  userId,
 			}
 
 			if err := service.Init.InitPlatform(user); nil != err {
-				logger.Errorf("init platform via github login failed: " + err.Error())
+				logger.Errorf("init platform via community login failed: " + err.Error())
 				c.Status(http.StatusInternalServerError)
-
 				return
 			}
 		} else {
-			user = service.User.GetUserByName(userName)
-			if nil == user {
-				user = &model.User{
-					Name:      userName,
-					AvatarURL: avatar,
-					B3Key:     userName,
-					GithubId:  githubId,
-				}
+			user = &model.User{
+				Name:      userName,
+				AvatarURL: avatar,
+				B3Key:     userName,
+				GithubId:  userId,
+			}
 
-				if err := service.Init.InitBlog(user); nil != err {
-					logger.Errorf("init blog via github login failed: " + err.Error())
-					c.Status(http.StatusInternalServerError)
-
-					return
-				}
-			} else {
-				user.GithubId = githubId
-				user.AvatarURL = avatar
-				if err := service.User.UpdateUser(user); nil != err {
-					logger.Errorf("update user failed: " + err.Error())
-					c.Status(http.StatusInternalServerError)
-
-					return
-				}
+			if err := service.Init.InitBlog(user); nil != err {
+				logger.Errorf("init blog via community login failed: " + err.Error())
+				c.Status(http.StatusInternalServerError)
+				return
 			}
 		}
 	} else {
@@ -104,7 +92,6 @@ func loginCallbackAction(c *gin.Context) {
 		if err := service.User.UpdateUser(user); nil != err {
 			logger.Errorf("update user failed: " + err.Error())
 			c.Status(http.StatusInternalServerError)
-
 			return
 		}
 	}
@@ -113,7 +100,6 @@ func loginCallbackAction(c *gin.Context) {
 	if nil == ownBlog {
 		logger.Warnf("can not get user by name [" + userName + "]")
 		c.Status(http.StatusNotFound)
-
 		return
 	}
 
