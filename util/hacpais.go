@@ -83,7 +83,7 @@ func HacPaiUserInfo(accessToken string) (ret map[string]interface{}) {
 		Post(HacPaiURL+"/user/ak").SendString("access_token="+accessToken).Timeout(7*time.Second).
 		Set("User-Agent", "Pipe; +https://github.com/88250/pipe").EndStruct(&result)
 	if nil != errors || http.StatusOK != response.StatusCode {
-		logger.Errorf("get github user info failed: %+v, %s", errors, data)
+		logger.Errorf("get community user info failed: %+v, %s", errors, data)
 		return nil
 	}
 	if 0 != result["code"].(float64) {
