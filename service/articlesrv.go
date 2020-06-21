@@ -341,6 +341,8 @@ func (srv *articleService) ConsolePushArticle(article *model.Article) {
 	}
 
 	blogTitleSetting := Setting.GetSetting(model.SettingCategoryBasic, model.SettingNameBasicBlogTitle, article.BlogID)
+	blogSubTitleSetting := Setting.GetSetting(model.SettingCategoryBasic, model.SettingNameBasicBlogSubtitle, article.BlogID)
+	blogFaviconSetting := Setting.GetSetting(model.SettingCategoryBasic, model.SettingNameBasicFaviconURL, article.BlogID)
 	blogURLSetting := Setting.GetSetting(model.SettingCategoryBasic, model.SettingNameBasicBlogURL, article.BlogID)
 	requestJSON := map[string]interface{}{
 		"article": map[string]interface{}{
@@ -352,6 +354,8 @@ func (srv *articleService) ConsolePushArticle(article *model.Article) {
 		},
 		"client": map[string]interface{}{
 			"title":     blogTitleSetting.Value,
+			"subTitle":  blogSubTitleSetting.Value,
+			"favicon":   blogFaviconSetting.Value,
 			"host":      blogURLSetting.Value,
 			"name":      "Pipe",
 			"ver":       model.Version,
