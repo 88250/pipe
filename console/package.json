@@ -34,7 +34,7 @@
     "particles.js": "^2.0.0",
     "sha512crypt-node": "^0.1.0",
     "uvstat": "^1.0.7",
-    "vditor": "3.3.2",
+    "vditor": "3.3.8",
     "vue-axios": "^2.1.4",
     "vue-i18n": "^8.11.2",
     "vuetify": "git+https://github.com/Vanessa219/vuetify.git#v1.2.12"
