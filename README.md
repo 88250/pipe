@@ -99,7 +99,7 @@ docker pull b3log/pipe
 
   ```shell
   docker run --detach --name pipe --network=host \
-      b3log/pipe --mysql="root:123456@(127.0.0.1:3306)/pipe?charset=utf8mb4∥seTime=True&loc=Local&timeout=1s" --runtime_mode=prod --port=5897 --server=http://localhost:5897
+      b3log/pipe --mysql="root:123456@(127.0.0.1:3306)/pipe?charset=utf8mb4&parseTime=True&loc=Local&timeout=1s" --runtime_mode=prod --port=5897 --server=http://localhost:5897
   ```
 
 
