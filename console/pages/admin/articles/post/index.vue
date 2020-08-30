@@ -113,391 +113,401 @@
 </template>
 
 <script>
-  import { required, maxSize } from '~/plugins/validate'
-  import { LazyLoadImage } from '~/plugins/utils'
-  import Vditor from 'vditor'
+import { required, maxSize } from '~/plugins/validate'
+import { LazyLoadImage } from '~/plugins/utils'
+import Vditor from 'vditor'
 
-  export default {
-    data () {
-      return {
-        tokenURL: {
-          URL: '',
-          token: '',
+export default {
+  data () {
+    return {
+      tokenURL: {
+        URL: '',
+        token: '',
+      },
+      error: false,
+      errorMsg: '',
+      content: '',
+      originalContent: '',
+      title: '',
+      titleRules: [
+        (v) => required.call(this, v),
+        (v) => maxSize.call(this, v, 128),
+      ],
+      linkRules: [
+        (v) => maxSize.call(this, v, 255),
+      ],
+      timeRules: [
+        (v) => (v.length === 0 ||
+          /^(((20[0-3][0-9]-(0[13578]|1[02])-(0[1-9]|[12][0-9]|3[01]))|(20[0-3][0-9]-(0[2469]|11)-(0[1-9]|[12][0-9]|30))) (20|21|22|23|[0-1][0-9]):[0-5][0-9]:[0-5][0-9])$/.test(
+            v)) || this.$t('createdTime', this.$store.state.locale) + '[YYYY-MM-DD HH:mm:ss]',
+      ],
+      url: '',
+      time: '',
+      abstractEditor: '',
+      contentEditor: '',
+      tags: [],
+      commentable: true,
+      useThumbs: false,
+      topped: false,
+      syncToCommunity: false,
+      thumbs: ['', '', '', '', '', ''],
+      edited: false,
+    }
+  },
+  head () {
+    return {
+      title: `${this.$t(this.$route.query.id ? 'editArticle' : 'postArticle',
+        this.$store.state.locale)} - ${this.$store.state.blogTitle}`,
+    }
+  },
+  watch: {
+    '$route.query.id': function (newValue, oldValue) {
+      if (typeof newValue === 'undefined' && oldValue) {
+        this._setDefaultLocalStorage()
+        this.abstractEditor.enableCache()
+        this.contentEditor.enableCache()
+      } else {
+        this.abstractEditor.disabledCache()
+        this.contentEditor.disabledCache()
+      }
+    },
+  },
+  beforeRouteUpdate (to, from, next) {
+    if (from.query.id && from.path === '/admin/articles/post' &&
+      (this.edited || this.originalContent !== this.contentEditor.getValue())) {
+      if (confirm(this.$t('isGoTo', this.$store.state.locale))) {
+        next()
+      }
+    } else {
+      next()
+    }
+  },
+  beforeRouteLeave (to, from, next) {
+    if (from.query.id && from.path === '/admin/articles/post' &&
+      (this.edited || this.originalContent !== this.contentEditor.getValue())) {
+      if (confirm(this.$t('isGoTo', this.$store.state.locale))) {
+        next()
+      }
+    } else {
+      next()
+    }
+  },
+  methods: {
+    _initEditor (data) {
+      return new Vditor(data.id, {
+        outline: data.outline || false,
+        typewriterMode: true,
+        tab: '\t',
+        cache: {
+          enable: this.$route.query.id ? false : true,
         },
-        error: false,
-        errorMsg: '',
-        content: '',
-        originalContent: '',
-        title: '',
-        titleRules: [
-          (v) => required.call(this, v),
-          (v) => maxSize.call(this, v, 128),
-        ],
-        linkRules: [
-          (v) => maxSize.call(this, v, 255),
-        ],
-        timeRules: [
-          (v) => (v.length === 0 ||
-            /^(((20[0-3][0-9]-(0[13578]|1[02])-(0[1-9]|[12][0-9]|3[01]))|(20[0-3][0-9]-(0[2469]|11)-(0[1-9]|[12][0-9]|30))) (20|21|22|23|[0-1][0-9]):[0-5][0-9]:[0-5][0-9])$/.test(
-              v)) || this.$t('createdTime', this.$store.state.locale) + '[YYYY-MM-DD HH:mm:ss]',
-        ],
-        url: '',
-        time: '',
-        abstractEditor: '',
-        contentEditor: '',
-        tags: [],
-        commentable: true,
-        useThumbs: false,
-        topped: false,
-        syncToCommunity: false,
-        thumbs: ['', '', '', '', '', ''],
-        edited: false,
-      }
-    },
-    head () {
-      return {
-        title: `${this.$t(this.$route.query.id ? 'editArticle' : 'postArticle',
-          this.$store.state.locale)} - ${this.$store.state.blogTitle}`,
-      }
-    },
-    watch: {
-      '$route.query.id': function (newValue, oldValue) {
-        if (typeof newValue === 'undefined' && oldValue) {
-          this._setDefaultLocalStorage()
-          this.abstractEditor.enableCache()
-          this.contentEditor.enableCache()
-        } else {
-          this.abstractEditor.disabledCache()
-          this.contentEditor.disabledCache()
-        }
-      },
-    },
-    beforeRouteUpdate (to, from, next) {
-      if (from.query.id && from.path === '/admin/articles/post' &&
-        (this.edited || this.originalContent !== this.contentEditor.getValue())) {
-        if (confirm(this.$t('isGoTo', this.$store.state.locale))) {
-          next()
-        }
-      } else {
-        next()
-      }
-    },
-    beforeRouteLeave (to, from, next) {
-      if (from.query.id && from.path === '/admin/articles/post' &&
-        (this.edited || this.originalContent !== this.contentEditor.getValue())) {
-        if (confirm(this.$t('isGoTo', this.$store.state.locale))) {
-          next()
-        }
-      } else {
-        next()
-      }
-    },
-    methods: {
-      _initEditor (data) {
-        return new Vditor(data.id, {
-          outline: data.outline || false,
-          typewriterMode: true,
-          tab: '\t',
-          cache: {
-            enable: this.$route.query.id ? false : true,
-          },
-          preview: {
-            delay: 500,
-            mode: data.mode,
-            url: `${process.env.Server}/api/console/markdown`,
-            parse: (element) => {
-              if (element.style.display === 'none') {
-                return
-              }
-              LazyLoadImage()
-              Vditor.highlightRender({
-                style: 'github',
-                enable: false,
-              }, document)
-            },
-          },
-          upload: {
-            max: 10 * 1024 * 1024,
-            url: this.tokenURL.URL,
-            token: this.tokenURL.token,
-            filename: name => name.replace(/[^(a-zA-Z0-9\u4e00-\u9fa5\.)]/g, '').
-              replace(/[\?\\/:|<>\*\[\]\(\)\$%\{\}@~]/g, '').
-              replace('/\\s/g', ''),
-          },
-          height: data.height,
-          counter: {
-            enable: true,
-            max: 102400
-          },
-          resize: {
-            enable: data.resize,
-          },
-          lang: this.$store.state.locale,
-          placeholder: data.placeholder,
-        })
-      },
-      setLocalstorage (type) {
-        if (type !== 'content') {
-          this.$set(this, 'edited', true)
-        }
-
-        if (this.$route.query.id) {
-          return
-        }
-
-        if (typeof arguments[0] === 'object') {
-          localStorage.setItem('article-tags', arguments[0])
-          return
-        }
-        switch (type) {
-          case 'title':
-            localStorage.setItem('article-title', this.title)
-            break
-          case 'url':
-            localStorage.setItem('article-url', this.url)
-            break
-          case 'time':
-            localStorage.setItem('article-time', this.time)
-            break
-          case 'commentable':
-            localStorage.setItem('article-commentable', this.commentable)
-            break
-          case 'useThumbs':
-            localStorage.setItem('article-useThumbs', this.useThumbs)
-            break
-          case 'syncToCommunity':
-            localStorage.setItem('article-syncToCommunity', this.syncToCommunity)
-            break
-          case 'topped':
-            localStorage.setItem('article-topped', this.topped)
-            break
-          default:
-            break
-        }
-      },
-      async getThumbs () {
-        const responseData = await this.axios.get('console/thumbs?n=5&w=768&h=432')
-        if (responseData) {
-          this.$set(this, 'thumbs', responseData)
-        }
-      },
-      async edit (id) {
-        if (!this.$refs.form.validate()) {
-          return
-        }
-        if (this.contentEditor.getValue().length > 102400) {
-          this.contentEditor.focus()
-          return
-        }
-        if (this.abstractEditor.getValue().length > 102400) {
-          this.abstractEditor.focus()
-          return
-        }
-
-        let content = this.contentEditor.getValue()
-        if (this.useThumbs) {
-          document.querySelectorAll('.carousel__item').forEach((item, index) => {
-            if (item.style.display !== 'none') {
-              content = `![](${this.thumbs[index].replace('imageView2/1/w/768/h/180/interlace/1/q/100',
-                'imageView2/1/w/960/h/540/interlace/1/q/100')})\n\n` + content
+        preview: {
+          delay: 500,
+          mode: data.mode,
+          url: `${process.env.Server}/api/console/markdown`,
+          parse: (element) => {
+            if (element.style.display === 'none') {
+              return
             }
-          })
-        }
-        const responseData = await this.axios[id ? 'put' : 'post'](`/console/articles${id ? '/' + id : ''}`, {
-          title: this.title,
-          content: content,
-          path: this.url,
-          tags: this.tags.toString(),
-          commentable: this.commentable,
-          topped: this.topped,
-          abstract: this.abstractEditor.getValue(),
-          syncToCommunity: this.syncToCommunity,
-          time: this.time === '' ? '' : this.time.replace(' ', 'T') + '+08:00',
+            LazyLoadImage()
+            Vditor.highlightRender({
+              style: 'github',
+              enable: false,
+            }, document)
+          },
+        },
+        upload: {
+          max: 10 * 1024 * 1024,
+          url: this.tokenURL.URL,
+          token: this.tokenURL.token,
+          filename: name => name.replace(/[^(a-zA-Z0-9\u4e00-\u9fa5\.)]/g, '').
+            replace(/[\?\\/:|<>\*\[\]\(\)\$%\{\}@~]/g, '').
+            replace('/\\s/g', ''),
+        },
+        height: data.height,
+        counter: {
+          enable: true,
+          max: 102400,
+        },
+        resize: {
+          enable: data.resize,
+        },
+        lang: this.$store.state.locale,
+        placeholder: data.placeholder,
+        after: data.after
+      })
+    },
+    setLocalstorage (type) {
+      if (type !== 'content') {
+        this.$set(this, 'edited', true)
+      }
+
+      if (this.$route.query.id) {
+        return
+      }
+
+      if (typeof arguments[0] === 'object') {
+        localStorage.setItem('article-tags', arguments[0])
+        return
+      }
+      switch (type) {
+        case 'title':
+          localStorage.setItem('article-title', this.title)
+          break
+        case 'url':
+          localStorage.setItem('article-url', this.url)
+          break
+        case 'time':
+          localStorage.setItem('article-time', this.time)
+          break
+        case 'commentable':
+          localStorage.setItem('article-commentable', this.commentable)
+          break
+        case 'useThumbs':
+          localStorage.setItem('article-useThumbs', this.useThumbs)
+          break
+        case 'syncToCommunity':
+          localStorage.setItem('article-syncToCommunity', this.syncToCommunity)
+          break
+        case 'topped':
+          localStorage.setItem('article-topped', this.topped)
+          break
+        default:
+          break
+      }
+    },
+    async getThumbs () {
+      const responseData = await this.axios.get('console/thumbs?n=5&w=768&h=432')
+      if (responseData) {
+        this.$set(this, 'thumbs', responseData)
+      }
+    },
+    async edit (id) {
+      if (!this.$refs.form.validate()) {
+        return
+      }
+      if (this.contentEditor.getValue().length > 102400) {
+        this.contentEditor.focus()
+        return
+      }
+      if (this.abstractEditor.getValue().length > 102400) {
+        this.abstractEditor.focus()
+        return
+      }
+
+      let content = this.contentEditor.getValue()
+      if (this.useThumbs) {
+        document.querySelectorAll('.carousel__item').forEach((item, index) => {
+          if (item.style.display !== 'none') {
+            content = `![](${this.thumbs[index].replace('imageView2/1/w/768/h/180/interlace/1/q/100',
+              'imageView2/1/w/960/h/540/interlace/1/q/100')})\n\n` + content
+          }
         })
-        if (responseData.code === 0) {
-          if (!id) {
-            localStorage.removeItem('article-title')
-            localStorage.removeItem('article-tags')
-            localStorage.removeItem('article-url')
-            localStorage.removeItem('article-time')
-            localStorage.removeItem('article-commentable')
-            localStorage.removeItem('article-useThumbs')
-            localStorage.removeItem('article-syncToCommunity')
-            localStorage.removeItem('article-topped')
-            this.contentEditor.setValue('')
-            this.abstractEditor.setValue('')
-          }
-          this.$set(this, 'error', false)
-          this.$set(this, 'errorMsg', '')
-          if (id) {
-            this.$set(this, 'edited', false)
-            this.$set(this, 'originalContent', this.contentEditor.getValue())
-          }
-          this.$router.push('/admin/articles')
-        } else {
-          this.$set(this, 'error', true)
-          this.$set(this, 'errorMsg', responseData.msg)
-        }
-      },
-      async remove () {
-        if (!confirm(this.$t('confirmDelete', this.$store.state.locale))) {
-          return
-        }
-        const responseData = await this.axios.delete(`/console/articles/${this.$route.query.id}`)
-        if (responseData === null) {
-          this.$store.commit('setSnackBar', {
-            snackBar: true,
-            snackMsg: this.$t('deleteSuccess', this.$store.state.locale),
-            snackModify: 'success',
-          })
-          this.$router.push('/admin/articles')
+      }
+      const responseData = await this.axios[id ? 'put' : 'post'](`/console/articles${id ? '/' + id : ''}`, {
+        title: this.title,
+        content: content,
+        path: this.url,
+        tags: this.tags.toString(),
+        commentable: this.commentable,
+        topped: this.topped,
+        abstract: this.abstractEditor.getValue(),
+        syncToCommunity: this.syncToCommunity,
+        time: this.time === '' ? '' : this.time.replace(' ', 'T') + '+08:00',
+      })
+      if (responseData.code === 0) {
+        if (!id) {
+          localStorage.removeItem('article-title')
+          localStorage.removeItem('article-tags')
+          localStorage.removeItem('article-url')
+          localStorage.removeItem('article-time')
+          localStorage.removeItem('article-commentable')
+          localStorage.removeItem('article-useThumbs')
+          localStorage.removeItem('article-syncToCommunity')
+          localStorage.removeItem('article-topped')
           this.contentEditor.setValue('')
           this.abstractEditor.setValue('')
         }
+        this.$set(this, 'error', false)
+        this.$set(this, 'errorMsg', '')
+        if (id) {
+          this.$set(this, 'edited', false)
+          this.$set(this, 'originalContent', this.contentEditor.getValue())
+        }
+        this.$router.push('/admin/articles')
+      } else {
+        this.$set(this, 'error', true)
+        this.$set(this, 'errorMsg', responseData.msg)
+      }
+    },
+    async remove () {
+      if (!confirm(this.$t('confirmDelete', this.$store.state.locale))) {
+        return
+      }
+      const responseData = await this.axios.delete(`/console/articles/${this.$route.query.id}`)
+      if (responseData === null) {
+        this.$store.commit('setSnackBar', {
+          snackBar: true,
+          snackMsg: this.$t('deleteSuccess', this.$store.state.locale),
+          snackModify: 'success',
+        })
+        this.$router.push('/admin/articles')
+        this.contentEditor.setValue('')
+        this.abstractEditor.setValue('')
+      }
+    },
+    _setDefaultLocalStorage () {
+      if (localStorage.getItem('article-title')) {
+        this.title = localStorage.getItem('article-title')
+        this.$set(this, 'title', localStorage.getItem('article-title'))
+      } else {
+        this.$set(this, 'title', '')
+      }
+      if (localStorage.getItem('vditorcontentEditor')) {
+        this.$set(this, 'originalContent', localStorage.getItem('vditorcontentEditor'))
+        this.contentEditor.setValue(localStorage.getItem('vditorcontentEditor'))
+      } else {
+        this.$set(this, 'originalContent', '')
+        this.contentEditor.setValue('')
+      }
+      if (localStorage.getItem('vditorabstractEditor')) {
+        this.abstractEditor.setValue(localStorage.getItem('vditorabstractEditor'))
+      } else {
+        this.abstractEditor.setValue('')
+      }
+      if (localStorage.getItem('article-tags')) {
+        this.$set(this, 'tags', localStorage.getItem('article-tags').split(','))
+      } else {
+        this.$set(this, 'tags', [])
+      }
+      if (localStorage.getItem('article-url')) {
+        this.$set(this, 'url', localStorage.getItem('article-url'))
+      } else {
+        this.$set(this, 'url', '')
+      }
+      if (localStorage.getItem('article-time')) {
+        this.$set(this, 'time', localStorage.getItem('article-time'))
+      } else {
+        this.$set(this, 'time', '')
+      }
+      if (localStorage.getItem('article-commentable')) {
+        this.$set(this, 'commentable', localStorage.getItem('article-commentable') === 'true')
+      } else {
+        this.$set(this, 'commentable', true)
+      }
+      if (localStorage.getItem('article-useThumbs')) {
+        this.$set(this, 'useThumbs', localStorage.getItem('article-useThumbs') === 'true')
+      } else {
+        this.$set(this, 'useThumbs', false)
+      }
+      if (localStorage.getItem('article-syncToCommunity')) {
+        this.$set(this, 'syncToCommunity', localStorage.getItem('article-syncToCommunity') === 'true')
+      } else {
+        this.$set(this, 'syncToCommunity', true)
+      }
+      if (localStorage.getItem('article-topped')) {
+        this.$set(this, 'topped', localStorage.getItem('article-topped') === 'true')
+      } else {
+        this.$set(this, 'topped', false)
+      }
+      setTimeout(() => {
+        document.querySelector('.input-group__input input').focus()
+      }, 100)
+    },
+  },
+  async mounted () {
+    const responseData = await this.axios.get('console/upload/token')
+    if (responseData) {
+      this.$set(this, 'tokenURL', {
+        token: responseData.uploadToken || '',
+        URL: responseData.uploadURL || '',
+      })
+    }
+    const id = this.$route.query.id
+    let responsePostData
+    if (id) {
+      responsePostData = await this.axios.get(`/console/articles/${id}`)
+      if (responsePostData) {
+        this.$set(this, 'title', responsePostData.title)
+        this.$set(this, 'originalContent', responsePostData.content)
+        this.$set(this, 'url', responsePostData.path)
+        this.$set(this, 'time', responsePostData.time.replace('T', ' ').substr(0, 19))
+        this.$set(this, 'tags', responsePostData.tags.split(','))
+        this.$set(this, 'commentable', responsePostData.commentable)
+        this.$set(this, 'topped', responsePostData.topped)
+      }
+    }
+
+    this.contentEditor = this._initEditor({
+      outline: true,
+      id: 'contentEditor',
+      mode: 'both',
+      height: 480,
+      placeholder: this.$t('inputContent', this.$store.state.locale),
+      resize: false,
+      after: () => {
+        if (id) {
+          this.contentEditor.setValue(responsePostData.content)
+        }
       },
-      _setDefaultLocalStorage () {
-        if (localStorage.getItem('article-title')) {
-          this.title = localStorage.getItem('article-title')
-          this.$set(this, 'title', localStorage.getItem('article-title'))
+    })
+
+    this.abstractEditor = this._initEditor({
+      id: 'abstractEditor',
+      height: 160,
+      mode: 'editor',
+      placeholder: this.$t('inputAbstract', this.$store.state.locale),
+      resize: true,
+      after: () => {
+        if (!id) {
+          // set storage
+          this._setDefaultLocalStorage()
         } else {
-          this.$set(this, 'title', '')
-        }
-        if (localStorage.getItem('vditorcontentEditor')) {
-          this.$set(this, 'originalContent', localStorage.getItem('vditorcontentEditor'))
-          this.contentEditor.setValue(localStorage.getItem('vditorcontentEditor'))
-        } else {
-          this.$set(this, 'originalContent', '')
-          this.contentEditor.setValue('')
-        }
-        if (localStorage.getItem('vditorabstractEditor')) {
-          this.abstractEditor.setValue(localStorage.getItem('vditorabstractEditor'))
-        } else {
-          this.abstractEditor.setValue('')
-        }
-        if (localStorage.getItem('article-tags')) {
-          this.$set(this, 'tags', localStorage.getItem('article-tags').split(','))
-        } else {
-          this.$set(this, 'tags', [])
-        }
-        if (localStorage.getItem('article-url')) {
-          this.$set(this, 'url', localStorage.getItem('article-url'))
-        } else {
-          this.$set(this, 'url', '')
-        }
-        if (localStorage.getItem('article-time')) {
-          this.$set(this, 'time', localStorage.getItem('article-time'))
-        } else {
-          this.$set(this, 'time', '')
-        }
-        if (localStorage.getItem('article-commentable')) {
-          this.$set(this, 'commentable', localStorage.getItem('article-commentable') === 'true')
-        } else {
-          this.$set(this, 'commentable', true)
-        }
-        if (localStorage.getItem('article-useThumbs')) {
-          this.$set(this, 'useThumbs', localStorage.getItem('article-useThumbs') === 'true')
-        } else {
-          this.$set(this, 'useThumbs', false)
-        }
-        if (localStorage.getItem('article-syncToCommunity')) {
-          this.$set(this, 'syncToCommunity', localStorage.getItem('article-syncToCommunity') === 'true')
-        } else {
-          this.$set(this, 'syncToCommunity', true)
-        }
-        if (localStorage.getItem('article-topped')) {
-          this.$set(this, 'topped', localStorage.getItem('article-topped') === 'true')
-        } else {
-          this.$set(this, 'topped', false)
+          this.abstractEditor.setValue(responsePostData.abstract)
         }
         setTimeout(() => {
           document.querySelector('.input-group__input input').focus()
         }, 100)
       },
-    },
-    async mounted () {
-      const responseData = await this.axios.get('console/upload/token')
-      if (responseData) {
-        this.$set(this, 'tokenURL', {
-          token: responseData.uploadToken || '',
-          URL: responseData.uploadURL || '',
-        })
-      }
-      const id = this.$route.query.id
+    })
 
-      this.contentEditor = this._initEditor({
-        outline: true,
-        id: 'contentEditor',
-        mode: 'both',
-        height: 480,
-        placeholder: this.$t('inputContent', this.$store.state.locale),
-        resize: false,
-      })
-
-      this.abstractEditor = this._initEditor({
-        id: 'abstractEditor',
-        height: 160,
-        mode: 'editor',
-        placeholder: this.$t('inputAbstract', this.$store.state.locale),
-        resize: true,
-        after: () => {
-          if (!id)
-            // set storage
-            this._setDefaultLocalStorage()
-          setTimeout(() => {
-            document.querySelector('.input-group__input input').focus()
-          }, 100)
-        },
-      })
-
-      window.onbeforeunload = (event) => {
-        if ((this.edited || this.originalContent !== this.contentEditor.getValue()) && id) {
-          if (event) {
-            event.returnValue = this.$t('isGoTo', this.$store.state.locale)
-          }
-          return this.$t('isGoTo', this.$store.state.locale)
+    window.onbeforeunload = (event) => {
+      if ((this.edited || this.originalContent !== this.contentEditor.getValue()) && id) {
+        if (event) {
+          event.returnValue = this.$t('isGoTo', this.$store.state.locale)
         }
+        return this.$t('isGoTo', this.$store.state.locale)
       }
+    }
 
-      if (id) {
-        const responseData = await this.axios.get(`/console/articles/${id}`)
-        if (responseData) {
-          this.$set(this, 'title', responseData.title)
-          this.$set(this, 'originalContent', responseData.content)
-          this.$set(this, 'url', responseData.path)
-          this.$set(this, 'time', responseData.time.replace('T', ' ').substr(0, 19))
-          this.$set(this, 'tags', responseData.tags.split(','))
-          this.$set(this, 'commentable', responseData.commentable)
-          this.$set(this, 'topped', responseData.topped)
-          this.abstractEditor.setValue(responseData.abstract)
-          this.contentEditor.setValue(responseData.content)
-        }
-      }
+    // get tags
+    this.$store.dispatch('getTags')
 
-      // get tags
-      this.$store.dispatch('getTags')
-
-      this.getThumbs()
-    },
-  }
+    this.getThumbs()
+  },
+}
 </script>
 <style lang="sass">
-  .article-post__carousel
-    margin: 0 auto
-    width: 768px
-    position: relative
-    .carousel
-      height: 432px
-    &-refresh
-      position: absolute
-      right: 15px
-      bottom: 15px
-      cursor: pointer
-      z-index: 10
-      svg
-        color: #fff
-        height: 20px
-        width: 20px
+.article-post__carousel
+  margin: 0 auto
+  width: 768px
+  position: relative
 
-    .vditor-reset img
-    cursor: auto
+  .carousel
+    height: 432px
+
+  &-refresh
+    position: absolute
+    right: 15px
+    bottom: 15px
+    cursor: pointer
+    z-index: 10
+
+    svg
+      color: #fff
+      height: 20px
+      width: 20px
+
+  .vditor-reset img
+  cursor: auto
 </style>
