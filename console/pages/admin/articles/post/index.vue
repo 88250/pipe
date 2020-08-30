@@ -509,5 +509,5 @@ export default {
       width: 20px
 
   .vditor-reset img
-  cursor: auto
+    cursor: auto
 </style>
