@@ -112,7 +112,7 @@ func addCommentAction(c *gin.Context) {
 
 	dataModel := getDataModel(c)
 
-	commentAuthorURL := util.HacPaiURL + "/member/" + session.UName
+	commentAuthorURL := util.CommunityURL + "/member/" + session.UName
 	blogURLSetting := service.Setting.GetSetting(model.SettingCategoryBasic, model.SettingNameBasicBlogURL, session.BID)
 	if nil != blogURLSetting {
 		commentAuthorURL = blogURLSetting.Value + util.PathAuthors + "/" + session.UName

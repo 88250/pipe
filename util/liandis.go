@@ -27,11 +27,11 @@ import (
 // Logger
 var logger = gulu.Log.NewLogger(os.Stdout)
 
-// HacPaiURL is the URL of HacPai community.
-const HacPaiURL = "https://hacpai.com"
+// CommunityURL is the URL of LianDi community.
+const CommunityURL = "https://hacpai.com"
 
-// HacPaiAPI is a reverse proxy for https://hacpai.com.
-func HacPaiAPI() gin.HandlerFunc {
+// CommunityAPI is a reverse proxy for https://ld246.com.
+func CommunityAPI() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		proxy := httputil.NewSingleHostReverseProxy(&url.URL{
 			Scheme: "https",
@@ -80,7 +80,7 @@ func dialTLS(network, addr string) (net.Conn, error) {
 func HacPaiUserInfo(accessToken string) (ret map[string]interface{}) {
 	result := map[string]interface{}{}
 	response, data, errors := gorequest.New().TLSClientConfig(&tls.Config{InsecureSkipVerify: true}).
-		Post(HacPaiURL+"/user/ak").SendString("access_token="+accessToken).Timeout(7*time.Second).
+		Post(CommunityURL+"/user/ak").SendString("access_token="+accessToken).Timeout(7*time.Second).
 		Set("User-Agent", "Pipe; +https://github.com/88250/pipe").EndStruct(&result)
 	if nil != errors || http.StatusOK != response.StatusCode {
 		logger.Errorf("get community user info failed: %+v, %s", errors, data)

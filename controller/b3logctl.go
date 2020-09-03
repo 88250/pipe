@@ -21,7 +21,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// addSymArticleAction adds an article come from Sym. Sees https://hacpai.com/article/1457158841475 for more details.
+// addSymArticleAction adds an article come from Sym. Sees https://ld246.com/article/1457158841475 for more details.
 func addSymArticleAction(c *gin.Context) {
 	result := gulu.Ret.NewResult()
 	defer c.JSON(http.StatusOK, result)

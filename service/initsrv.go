@@ -203,12 +203,12 @@ func initBlogAdmin(tx *gorm.DB, admin *model.User, blogID uint64) error {
 func helloWorld(tx *gorm.DB, admin *model.User, blogID uint64) error {
 	content := `![Hello](` + util.ImageSize(util.RandImage(), 768, 432) + `)
 
-Pipe 博客平台已经初始化完毕，可在管理后台 - 设置 - 基础设置中调整更多细节。如果需要导入已有博客文章，请参考文档 [Hexo/Jekyll/Markdown 文件导入](https://hacpai.com/article/1498490209748)。
+Pipe 博客平台已经初始化完毕，可在管理后台 - 设置 - 基础设置中调整更多细节。如果需要导入已有博客文章，请参考文档 [Hexo/Jekyll/Markdown 文件导入](https://ld246.com/article/1498490209748)。
 
 另外，出于安全考虑请尽快完成如下操作：
 
-1. 登录[社区](https://hacpai.com)
-2. 在社区[个人设置 - B3](https://hacpai.com/settings/b3) 中更新 B3 Key
+1. 登录[社区](https://ld246.com)
+2. 在社区[个人设置 - B3](https://ld246.com/settings/b3) 中更新 B3 Key
 3. 在 Pipe 管理后台 - 设置 - 账号中也进行同样的 B3 Key 更新
 
 最后，如果你觉得 Pipe 很赞，请到[项目主页](https://github.com/88250/pipe)给颗星鼓励一下 :heart:`
