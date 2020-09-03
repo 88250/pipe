@@ -64,23 +64,23 @@
 
 ### 开始使用
 
-![start.png](https://img.hacpai.com/file/2020/04/start-7fb7b415.png)
+![start.png](https://b3logfile.com/file/2020/04/start-7fb7b415.png)
 
 ### 管理后台
 
-![console.png](https://img.hacpai.com/file/2020/04/console-047922de.png)
+![console.png](https://b3logfile.com/file/2020/04/console-047922de.png)
 
 ### 编辑文章
 
-![post.png](https://img.hacpai.com/file/2020/04/post-f52cbd5c.png)
+![post.png](https://b3logfile.com/file/2020/04/post-f52cbd5c.png)
 
 ### 主题选择
 
-![theme.png](https://img.hacpai.com/file/2020/04/theme-d2799005.png)
+![theme.png](https://b3logfile.com/file/2020/04/theme-d2799005.png)
 
 ### 主题 Gina
 
-![gina.png](https://img.hacpai.com/file/2020/04/gina-d7fe2313.png)
+![gina.png](https://b3logfile.com/file/2020/04/gina-d7fe2313.png)
 
 ## 🛠️ 安装
 

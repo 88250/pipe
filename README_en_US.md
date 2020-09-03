@@ -62,23 +62,23 @@ Welcome to [Pipe Official Discussion Forum](https://ld246.com/tag/pipe) to learn
 
 ### Start
 
-![start.png](https://img.hacpai.com/file/2020/04/start-7fb7b415.png)
+![start.png](https://b3logfile.com/file/2020/04/start-7fb7b415.png)
 
 ### Console
 
-![console.png](https://img.hacpai.com/file/2020/04/console-047922de.png)
+![console.png](https://b3logfile.com/file/2020/04/console-047922de.png)
 
 ### Post
 
-![post.png](https://img.hacpai.com/file/2020/04/post-f52cbd5c.png)
+![post.png](https://b3logfile.com/file/2020/04/post-f52cbd5c.png)
 
 ### Theme
 
-![theme.png](https://img.hacpai.com/file/2020/04/theme-d2799005.png)
+![theme.png](https://b3logfile.com/file/2020/04/theme-d2799005.png)
 
 ### Theme Gina
 
-![gina.png](https://img.hacpai.com/file/2020/04/gina-d7fe2313.png)
+![gina.png](https://b3logfile.com/file/2020/04/gina-d7fe2313.png)
 
 ## 🛠️ Setup
 
