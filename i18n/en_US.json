@@ -39,7 +39,7 @@
   "starIsMotivation": "Your praise is our greatest motivation",
   "login": "Login",
   "register": "Rgister",
-  "hacpai": "HacPai",
+  "hacpai": "LianDi",
   "reportIssue": "Report issue",
   "title": "Title",
   "required": "Can not be empty",
@@ -169,9 +169,9 @@
   "community": "Community",
   "3rdStatistic": "The Third Statistic",
   "baiduStatistic": "Baidu Statistic ID",
-  "about3": "If you are interested in open source, want to contribute, welcome to<a href='https://hacpai.com/article/1463025124998' target='_blank'>join us</a>!",
-  "about4": "<a href='https://hacpai.com/tag/pipe' target='_blank'>Pipe</a> is an open source（<a href='http://www.gnu.org/licenses/gpl-3.0.html' target='_blank'>GPLv3</a>）blogging platform，maintained by <a href='https://github.com/b3log' target='_blank'>B3log Open Source</a>.",
-  "index2": "Get started after logging HacPai community account",
+  "about3": "If you are interested in open source, want to contribute, welcome to<a href='https://ld246.com/article/1463025124998' target='_blank'>join us</a>!",
+  "about4": "<a href='https://ld246.com/tag/pipe' target='_blank'>Pipe</a> is an open source（<a href='http://www.gnu.org/licenses/gpl-3.0.html' target='_blank'>GPLv3</a>）blogging platform，maintained by <a href='https://github.com/b3log' target='_blank'>B3log Open Source</a>.",
+  "index2": "Get started after logging LianDi community account",
   "index3": "If you think <a target = '_ blank' href = 'https: / /github.com/b3log/pipe'>Pipe </a> Not bad, please give us a thumbs up",
   "password": "Password"
 }

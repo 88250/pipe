@@ -6,7 +6,7 @@
           <div class="fn__flex-1">
             {{ $t('import', $store.state.locale) }}
           </div>
-          <a href="https://hacpai.com/article/1498490209748" target="_blank"><v-icon>question</v-icon></a>
+          <a href="https://ld246.com/article/1498490209748" target="_blank"><v-icon>question</v-icon></a>
           <label class="btn btn--small btn--info other__upload">
             {{ $t('staticBlog', $store.state.locale) }}
             <input @change="importMD" type="file"/>

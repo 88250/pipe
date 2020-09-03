@@ -6,7 +6,7 @@
   "background_color": "#fff",
   "orientation": "portrait",
   "theme_color": "#eef5f9",
-  "description": "小而美的博客平台，为未来而构建。通过黑客派账号登录即可使用",
+  "description": "小而美的博客平台，为未来而构建。通过链滴账号登录即可使用",
   "icons": [
     {
       "src": "/theme/images/logo@48.png",

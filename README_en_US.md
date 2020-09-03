@@ -31,11 +31,11 @@ Small and beautiful blogging platform, built for the future
 
 ## 💡 Introduction
 
-[Pipe](https://github.com/88250/pipe) is a small and beautiful open source blog platform designed for programmers. Pipe has a very active [community](https://hacpai.com), which can push articles as posts to the community, and replies from the community will be linked as blog comments (for details, please visit [B3log Ideas - Distributed Community Network](https://hacpai.com/article/1546941897596)).
+[Pipe](https://github.com/88250/pipe) is a small and beautiful open source blog platform designed for programmers. Pipe has a very active [community](https://ld246.com), which can push articles as posts to the community, and replies from the community will be linked as blog comments (for details, please visit [B3log Ideas - Distributed Community Network](https://ld246.com/article/1546941897596)).
 
 > This is a brand new online community experience, so that you who love recording and sharing no longer feel lonely!
 
-Welcome to [Pipe Official Discussion Forum](https://hacpai.com/tag/pipe) to learn more.
+Welcome to [Pipe Official Discussion Forum](https://ld246.com/tag/pipe) to learn more.
 
 ## 🗃 Showcases
 
@@ -82,7 +82,7 @@ Welcome to [Pipe Official Discussion Forum](https://hacpai.com/tag/pipe) to lear
 
 ## 🛠️ Setup
 
-Pipe only supports deployment via Docker. If you need to build from source, please refer to [here](https://hacpai.com/article/1533965022328).
+Pipe only supports deployment via Docker. If you need to build from source, please refer to [here](https://ld246.com/article/1533965022328).
 
 ### Docker deploy
 
@@ -142,18 +142,18 @@ server {
 }
 ```
 
-In addition, you can refer to https://hacpai.com/article/1517474627971 for configuration.
+In addition, you can refer to https://ld246.com/article/1517474627971 for configuration.
 
 ## 📜 Documentation
 
-* [Pipe User Guide](https://hacpai.com/article/1513761942333)
-* [Pipe Developer Guide](https://hacpai.com/article/1533965022328)
-* [Pipe Theme Development Guide](https://hacpai.com/article/1512550354920)
+* [Pipe User Guide](https://ld246.com/article/1513761942333)
+* [Pipe Developer Guide](https://ld246.com/article/1533965022328)
+* [Pipe Theme Development Guide](https://ld246.com/article/1512550354920)
 * [Pipe Postman Test Collection](https://www.getpostman.com/collections/900ddef64ad0e60479a6)
 
 ## 🏘️ Community
 
-* [Forum](https://hacpai.com/tag/pipe)
+* [Forum](https://ld246.com/tag/pipe)
 * [Issues](https://github.com/88250/pipe/issues/new/choose)
 
 ## 📄 License

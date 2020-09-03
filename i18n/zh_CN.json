@@ -39,7 +39,7 @@
   "starIsMotivation": "你的点赞是我们最大的动力",
   "login": "登录",
   "register": "注册",
-  "hacpai": "黑客派",
+  "hacpai": "链滴",
   "reportIssue": "报告问题",
   "title": "标题",
   "required": "不能为空",
@@ -169,9 +169,9 @@
   "community": "社区",
   "3rdStatistic": "第三方统计",
   "baiduStatistic": "百度统计 ID",
-  "about3": "如果你对开源感兴趣，想贡献自己的一份力量，欢迎<a href='https://hacpai.com/article/1463025124998' target='_blank'>加入我们</a>！",
-  "about4": "<a href='https://hacpai.com/tag/pipe' target='_blank'>Pipe</a> 是一款开源（<a href='http://www.gnu.org/licenses/gpl-3.0.html' target='_blank'>GPLv3</a>）的博客平台，由 <a href='https://github.com/88250' target='_blank'>B3log 开源</a>组织维护。",
-  "index2": "登录黑客派社区账号后即可开始使用",
+  "about3": "如果你对开源感兴趣，想贡献自己的一份力量，欢迎<a href='https://ld246.com/article/1463025124998' target='_blank'>加入我们</a>！",
+  "about4": "<a href='https://ld246.com/tag/pipe' target='_blank'>Pipe</a> 是一款开源（<a href='http://www.gnu.org/licenses/gpl-3.0.html' target='_blank'>GPLv3</a>）的博客平台，由 <a href='https://github.com/88250' target='_blank'>B3log 开源</a>组织维护。",
+  "index2": "登录链滴社区账号后即可开始使用",
   "index3": "如果你觉得 <a target='_blank' href='https://github.com/88250/pipe'>Pipe</a> 还不错，请为我们点赞",
   "password": "密码"
 }

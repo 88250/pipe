@@ -22,7 +22,7 @@
       <div class="fn__clear">
         <a
           class="fn__right"
-          href="https://hacpai.com/settings/b3"
+          href="https://ld246.com/settings/b3"
           target="_blank">
           {{ $t('check', $store.state.locale) }}/{{ $t('setting', $store.state.locale) }} B3log Key
         </a>

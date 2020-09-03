@@ -31,11 +31,11 @@
 
 ## 💡 简介
 
-[Pipe](https://github.com/88250/pipe) 是一款小而美的开源博客平台，专为程序员设计。Pipe 有着非常活跃的[社区](https://hacpai.com)，可将文章作为帖子推送到社区，来自社区的回帖将作为博客评论进行联动（具体细节请浏览 [B3log 构思 - 分布式社区网络](https://hacpai.com/article/1546941897596)）。
+[Pipe](https://github.com/88250/pipe) 是一款小而美的开源博客平台，专为程序员设计。Pipe 有着非常活跃的[社区](https://ld246.com)，可将文章作为帖子推送到社区，来自社区的回帖将作为博客评论进行联动（具体细节请浏览 [B3log 构思 - 分布式社区网络](https://ld246.com/article/1546941897596)）。
 
 > 这是一种全新的网络社区体验，让热爱记录和分享的你不再感到孤单！
 
-欢迎到 [Pipe 官方讨论区](https://hacpai.com/tag/pipe)了解更多。同时也欢迎关注 B3log 开源社区微信公众号 `B3log开源`：
+欢迎到 [Pipe 官方讨论区](https://ld246.com/tag/pipe)了解更多。同时也欢迎关注 B3log 开源社区微信公众号 `B3log开源`：
 
 ![b3logos.jpg](https://b3logfile.com/file/2020/08/b3logos-032af045.jpg)
 
@@ -84,7 +84,7 @@
 
 ## 🛠️ 安装
 
-Pipe 仅支持通过 Docker 进行部署，如果你需要从源码构建可参考[这里](https://hacpai.com/article/1533965022328)。
+Pipe 仅支持通过 Docker 进行部署，如果你需要从源码构建可参考[这里](https://ld246.com/article/1533965022328)。
 
 ### Docker 部署
 
@@ -145,19 +145,19 @@ server {
 }
 ```
 
-另外，可以参考 https://hacpai.com/article/1517474627971 进行配置。
+另外，可以参考 https://ld246.com/article/1517474627971 进行配置。
 
 ## 📜 文档
 
-* [《提问的智慧》精读注解版](https://hacpai.com/article/1536377163156)
-* [Pipe 用户指南](https://hacpai.com/article/1513761942333)
-* [Pipe 开发指南](https://hacpai.com/article/1533965022328)
-* [Pipe 主题开发指南](https://hacpai.com/article/1512550354920)
+* [《提问的智慧》精读注解版](https://ld246.com/article/1536377163156)
+* [Pipe 用户指南](https://ld246.com/article/1513761942333)
+* [Pipe 开发指南](https://ld246.com/article/1533965022328)
+* [Pipe 主题开发指南](https://ld246.com/article/1512550354920)
 * [Pipe Postman 测试集](https://www.getpostman.com/collections/900ddef64ad0e60479a6)
 
 ## 🏘️ 社区
 
-* [讨论区](https://hacpai.com/tag/pipe)
+* [讨论区](https://ld246.com/tag/pipe)
 * [报告问题](https://github.com/88250/pipe/issues/new/choose)
 
 ## 📄 授权
@@ -221,9 +221,9 @@ Pipe 支持导入 Hexo/Jekyll 的 Markdown 文件，将需要导入的 Markdown 
 
 同样地，Pipe 也支持 Markdown 导出，格式为 Hexo。
 
-### 黑客派
+### 链滴
 
-在 Pipe 上发布文章时可选择是否自动推送到黑客派上，这样能让更多人看到你创作的内容，更容易引起大家的关注和互动。
+在 Pipe 上发布文章时可选择是否自动推送到链滴上，这样能让更多人看到你创作的内容，更容易引起大家的关注和互动。
 
 ## 运维
 
@@ -246,5 +246,5 @@ Pipe 没有单独的友链管理功能。可以通过发一篇文章，然后在
 ## 结语
 
 * 如果你在使用 Pipe 的过程中碰到问题或者有需求要提，欢迎跟帖，我们会在第一时间回复 😄
-* 如果你想自己开发 Pipe，请参考 https://hacpai.com/article/1533965022328
-* 如果你想自己开发 Pipe 主题，请参考 https://hacpai.com/article/1512550354920
+* 如果你想自己开发 Pipe，请参考 https://ld246.com/article/1533965022328
+* 如果你想自己开发 Pipe 主题，请参考 https://ld246.com/article/1512550354920

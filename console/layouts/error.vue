@@ -7,7 +7,7 @@
         <div class="fn__right">
           <a href="/">{{ $t('index', $store.state.locale)}}</a>
           |
-          <a href="https://hacpai.com">{{ $t('hacpai', $store.state.locale)}}</a>
+          <a href="https://ld246.com">{{ $t('hacpai', $store.state.locale)}}</a>
         </div>
       </div>
     </div>
@@ -17,7 +17,7 @@
         <div class="error__description">{{error.statusCode}}</div>
         <div class="fn__right">
           <a href="https://github.com/88250/pipe/issues/new">{{ $t('reportIssue', $store.state.locale)}}</a> |
-          <a href="https://hacpai.com">{{ $t('hacpai', $store.state.locale)}}</a>
+          <a href="https://ld246.com">{{ $t('hacpai', $store.state.locale)}}</a>
         </div>
       </div>
     </div>

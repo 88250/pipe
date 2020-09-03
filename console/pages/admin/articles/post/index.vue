@@ -76,7 +76,7 @@
             @click="syncToCommunity = !syncToCommunity"/><span
           class="checkbox__icon"></span>
           {{ $t('syncToCommunity', $store.state.locale) }}
-          (<a href="https://hacpai.com/article/1546941897596" target="_blank">?</a>)
+          (<a href="https://ld246.com/article/1546941897596" target="_blank">?</a>)
         </label>
       </v-form>
       <div class="alert alert--danger" v-show="error">

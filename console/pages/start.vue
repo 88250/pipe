@@ -6,7 +6,7 @@
       </div>
       <v-btn class="btn--small btn--info" @click="loginGitHub">{{ $t('index2', $store.state.locale) }}</v-btn>
       <span>&nbsp;&nbsp;</span>
-      <a href="https://hacpai.com/article/1576294445994" target="_blank"><v-icon>question</v-icon></a>
+      <a href="https://ld246.com/article/1576294445994" target="_blank"><v-icon>question</v-icon></a>
       <div class="start__space"></div>
       <div class="start__space"></div>
       <div class="start__space"></div>
