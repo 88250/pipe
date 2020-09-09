@@ -74,7 +74,7 @@ func MarkdownAction(c *gin.Context) {
 }
 
 var uploadTokenCheckTime, uploadTokenTime int64
-var uploadToken, uploadURL = "", "https://hacpai.com/upload/client"
+var uploadToken, uploadURL = "", "https://ld246.com/upload/client"
 
 // UploadTokenAction gets a upload token.
 func UploadTokenAction(c *gin.Context) {

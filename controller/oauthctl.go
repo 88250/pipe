@@ -35,7 +35,7 @@ func redirectLoginAction(c *gin.Context) {
 	} else {
 		referer = u.Scheme + "://" + u.Host
 	}
-	loginAuthURL := "https://hacpai.com/login?goto=" + referer + "/api/login/callback"
+	loginAuthURL := "https://ld246.com/login?goto=" + referer + "/api/login/callback"
 	state := gulu.Rand.String(16)
 	states[state] = referer
 	path := loginAuthURL + "&state=" + state + "&v=" + model.Version

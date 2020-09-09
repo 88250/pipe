@@ -36,7 +36,7 @@ func refreshBlacklistIPs() {
 
 	result := map[string]interface{}{}
 	request := gorequest.New().TLSClientConfig(&tls.Config{InsecureSkipVerify: true})
-	_, _, errs := request.Get("https://hacpai.com/apis/blacklist/ip").
+	_, _, errs := request.Get("https://ld246.com/apis/blacklist/ip").
 		Set("User-Agent", model.UserAgent).Timeout(3 * time.Second).EndStruct(&result)
 	if nil != errs {
 		logger.Errorf("refresh blacklist IPs failed: %s", errs)

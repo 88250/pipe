@@ -28,14 +28,14 @@ import (
 var logger = gulu.Log.NewLogger(os.Stdout)
 
 // CommunityURL is the URL of LianDi community.
-const CommunityURL = "https://hacpai.com"
+const CommunityURL = "https://ld246.com"
 
 // CommunityAPI is a reverse proxy for https://ld246.com.
 func CommunityAPI() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		proxy := httputil.NewSingleHostReverseProxy(&url.URL{
 			Scheme: "https",
-			Host:   "hacpai.com",
+			Host:   "ld246.com",
 		})
 
 		proxy.Transport = &http.Transport{DialTLS: dialTLS}
