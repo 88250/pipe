@@ -1,3 +1,24 @@
+## v2.1.0 / 2020-09-10
+
+### 引入特性
+
+* [支持类似 Typora 的即时渲染模式（保留 Markdown 标记符）](https://github.com/88250/pipe/issues/22)
+
+### 改进功能
+
+* [社区图床更换新域名](https://github.com/88250/pipe/issues/9)
+* [支持 PostgreSQL 数据库](https://github.com/88250/pipe/issues/31)
+* [社区端域名变更](https://github.com/88250/pipe/issues/44)
+
+### 文档相关
+
+* [Add README in English](https://github.com/88250/pipe/issues/30)
+
+### 修复缺陷
+
+* [修复登录验证安全漏洞](https://github.com/88250/pipe/issues/37)
+* [编辑文章报错](https://github.com/88250/pipe/issues/43)
+
 ## v2.0.0 / 2020-04-09
 
 ### 引入特性
