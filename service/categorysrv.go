@@ -59,7 +59,8 @@ AND b3_pipe_correlations.id2 IN (
 	AND b3_pipe_correlations.type = 0
 	AND b3_pipe_correlations.blog_id = ?
 )`
-	if rows, err := db.DB().Query(sql, blogID, categoryID, blogID); nil != err {
+	rows, err := db.DB().Query(sql, blogID, categoryID, blogID)
+	if nil != err {
 		logger.Errorf("get category article count failed: " + err.Error())
 	} else {
 		rows.Next()
@@ -67,7 +68,7 @@ AND b3_pipe_correlations.id2 IN (
 			logger.Errorf("get category article count failed: " + err.Error())
 		}
 	}
-
+	rows.Close()
 	return
 }
 
