@@ -4,7 +4,7 @@ go 1.12
 
 require (
 	github.com/88250/gulu v1.1.2
-	github.com/88250/lute v1.6.7-0.20201123095407-ba1f0facb9a0
+	github.com/88250/lute v1.6.7-0.20201123142332-2ef3327bdb55
 	github.com/PuerkitoBio/goquery v1.6.0
 	github.com/alecthomas/repr v0.0.0-20200925101113-8eaab51b74bf // indirect
 	github.com/andybalholm/cascadia v1.2.0 // indirect
