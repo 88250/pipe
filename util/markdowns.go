@@ -59,7 +59,10 @@ func Markdown(mdText string) *MarkdownResult {
 	})
 
 	contentHTML, _ = doc.Find("body").Html()
-	contentHTML = bluemonday.UGCPolicy().AllowAttrs("class").Matching(regexp.MustCompile("^language-[a-zA-Z0-9]+$")).OnElements("code").
+	contentHTML = bluemonday.UGCPolicy().
+		AllowAttrs("class").Matching(regexp.MustCompile("^language-[a-zA-Z0-9]+$")).OnElements("code").
+		AllowAttrs("class").Matching(regexp.MustCompile("^language-[a-zA-Z0-9]+$")).OnElements("div").
+		AllowAttrs("data-code").OnElements("div").
 		AllowAttrs("data-src").OnElements("img").
 		AllowAttrs("class", "target", "id", "style", "align").Globally().
 		AllowAttrs("src", "width", "height", "border", "marginwidth", "marginheight").OnElements("iframe").
