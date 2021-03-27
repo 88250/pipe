@@ -195,7 +195,7 @@ export default {
   methods: {
     _initEditor (data) {
       return new Vditor(data.id, {
-        outline: data.outline || false,
+        outline: data.outline || { enable: false },
         typewriterMode: true,
         tab: '\t',
         cache: {
@@ -439,7 +439,7 @@ export default {
     }
 
     this.contentEditor = this._initEditor({
-      outline: true,
+      outline: { enable: true, position: "left"  },
       id: 'contentEditor',
       mode: 'both',
       height: 480,
