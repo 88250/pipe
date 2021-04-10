@@ -41,11 +41,7 @@
 
 ## 🗃 案例
 
-* [Vanessa](http://vanessa.b3log.org)
-* [黑壳博客](http://blog.bhusk.com)
-* [zorke 的博客](https://www.zorkelvll.cn)
-* [Akkuman 的博客](http://o0o.pub)
-* [一个码农](http://blog.gitor.org)
+* [Vanessa](https://vanessa.b3log.org)
 
 ## ✨ 功能
 

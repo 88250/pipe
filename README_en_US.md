@@ -39,11 +39,7 @@ Welcome to [Pipe Official Discussion Forum](https://ld246.com/tag/pipe) to learn
 
 ## 🗃 Showcases
 
-* http://vanessa.b3log.org
-* http://blog.bhusk.com
-* https://www.zorkelvll.cn
-* http://o0o.pub
-* http://blog.gitor.org
+* [Vanessa](https://vanessa.b3log.org)
 
 ## ✨ Features
 
