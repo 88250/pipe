@@ -372,7 +372,7 @@ func initBasicSettings(tx *gorm.DB, blogAdmin *model.User, blogID uint64) error 
 	if err := tx.Create(&model.Setting{
 		Category: model.SettingCategoryBasic,
 		Name:     model.SettingNameBasicLogoURL,
-		Value:    util.CommunityFileURL + "/pipe192.png",
+		Value:    util.CommunityFileURL + "/pipe-128.png",
 		BlogID:   blogID}).Error; nil != err {
 		return err
 	}
