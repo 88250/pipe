@@ -35,6 +35,7 @@ func refreshBlacklistIPs() {
 	defer gulu.Panic.Recover(nil)
 
 	result := map[string]interface{}{}
+	BlacklistIPs = map[string]bool{}
 	request := gorequest.New().TLSClientConfig(&tls.Config{InsecureSkipVerify: true})
 	_, _, errs := request.Get("https://ld246.com/apis/blacklist/ip").
 		Set("User-Agent", model.UserAgent).Timeout(3 * time.Second).EndStruct(&result)
@@ -43,7 +44,6 @@ func refreshBlacklistIPs() {
 		return
 	}
 
-	BlacklistIPs = map[string]bool{}
 	dataIPs := result["data"].([]interface{})
 	for _, dataIP := range dataIPs {
 		BlacklistIPs[dataIP.(string)] = false
