@@ -358,7 +358,7 @@ func (srv *articleService) ConsolePushArticle(article *model.Article) {
 			"favicon":   blogFaviconSetting.Value,
 			"host":      blogURLSetting.Value,
 			"name":      "Pipe",
-			"ver":       model.Version,
+			"ver":       util.Version,
 			"userName":  b3Name,
 			"userB3Key": b3Key,
 		},
@@ -366,7 +366,7 @@ func (srv *articleService) ConsolePushArticle(article *model.Article) {
 	result := gulu.Ret.NewResult()
 	_, _, errs := gorequest.New().TLSClientConfig(&tls.Config{InsecureSkipVerify: true}).
 		Post("https://rhythm.b3log.org/api/article").SendMap(requestJSON).
-		Set("user-agent", model.UserAgent).Timeout(30*time.Second).
+		Set("user-agent", util.UserAgent).Timeout(30*time.Second).
 		Retry(3, 5*time.Second).EndStruct(result)
 	if nil != errs {
 		logger.Debugf("push an article to Rhy failed: " + errs[0].Error())

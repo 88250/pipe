@@ -81,7 +81,7 @@ func HacPaiUserInfo(accessToken string) (ret map[string]interface{}) {
 	result := map[string]interface{}{}
 	response, data, errors := gorequest.New().TLSClientConfig(&tls.Config{InsecureSkipVerify: true}).
 		Post(CommunityURL+"/user/ak").SendString("access_token="+accessToken).Timeout(7*time.Second).
-		Set("User-Agent", "Pipe; +https://github.com/88250/pipe").EndStruct(&result)
+		Set("User-Agent", UserAgent).EndStruct(&result)
 	if nil != errors || http.StatusOK != response.StatusCode {
 		logger.Errorf("get community user info failed: %+v, %s", errors, data)
 		return nil

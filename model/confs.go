@@ -8,7 +8,7 @@
 // THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT, MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
 // See the Mulan PSL v2 for more details.
 
-// Package util defines variety of utilities.
+// Package model defines variety of utilities.
 package model
 
 import (
@@ -22,20 +22,15 @@ import (
 	"time"
 
 	"github.com/88250/gulu"
+	"github.com/88250/pipe/util"
 	"github.com/jinzhu/gorm"
 )
 
 // Logger
 var logger = gulu.Log.NewLogger(os.Stdout)
 
-// Version of Pipe.
-const Version = "2.1.0"
-
 // Conf of Pipe.
 var Conf *Configuration
-
-// UserAgent represents HTTP client user agent.
-var UserAgent = "Pipe/" + Version + "; +https://github.com/88250/pipe"
 
 // Models represents all models..
 var Models = []interface{}{
@@ -88,7 +83,7 @@ func LoadConf() {
 	flag.Parse()
 
 	if *version {
-		fmt.Println(Version)
+		fmt.Println(util.Version)
 
 		os.Exit(0)
 	}

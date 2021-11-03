@@ -17,7 +17,6 @@ import (
 	"time"
 
 	"github.com/88250/gulu"
-	"github.com/88250/pipe/model"
 	"github.com/88250/pipe/service"
 	"github.com/88250/pipe/util"
 	"github.com/gin-gonic/gin"
@@ -78,8 +77,8 @@ func CheckVersionAction(c *gin.Context) {
 
 	rhyResult := map[string]interface{}{}
 	request := gorequest.New().TLSClientConfig(&tls.Config{InsecureSkipVerify: true})
-	_, _, errs := request.Get("https://rhythm.b3log.org/version/pipe/latest/"+model.Version).
-		Set("User-Agent", model.UserAgent).Timeout(30*time.Second).
+	_, _, errs := request.Get("https://rhythm.b3log.org/version/pipe/latest/"+util.Version).
+		Set("User-Agent", util.UserAgent).Timeout(30*time.Second).
 		Retry(3, 5*time.Second).EndStruct(&rhyResult)
 	if nil != errs {
 		result.Code = util.CodeErr

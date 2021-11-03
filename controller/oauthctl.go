@@ -38,7 +38,7 @@ func redirectLoginAction(c *gin.Context) {
 	loginAuthURL := "https://ld246.com/login?goto=" + referer + "/api/login/callback"
 	state := gulu.Rand.String(16)
 	states[state] = referer
-	path := loginAuthURL + "&state=" + state + "&v=" + model.Version
+	path := loginAuthURL + "&state=" + state + "&v=" + util.Version
 	c.Redirect(http.StatusSeeOther, path)
 }
 

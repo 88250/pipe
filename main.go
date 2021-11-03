@@ -30,6 +30,7 @@ import (
 	"github.com/88250/pipe/model"
 	"github.com/88250/pipe/service"
 	"github.com/88250/pipe/theme"
+	"github.com/88250/pipe/util"
 	"github.com/gin-gonic/gin"
 )
 
@@ -72,7 +73,7 @@ func main() {
 
 	handleSignal(server)
 
-	logger.Infof("Pipe (v%s) is running [%s]", model.Version, model.Conf.Server)
+	logger.Infof("Pipe (v%s) is running [%s]", util.Version, model.Conf.Server)
 	if err := server.ListenAndServe(); nil != err {
 		logger.Fatalf("listen and serve failed: " + err.Error())
 	}

@@ -113,7 +113,7 @@ func UploadTokenAction(c *gin.Context) {
 	requestResult := gulu.Ret.NewResult()
 	_, _, errs := gorequest.New().TLSClientConfig(&tls.Config{InsecureSkipVerify: true}).
 		Post(util.CommunityURL+"/apis/upload/token").
-		SendStruct(requestJSON).Set("user-agent", model.UserAgent).Timeout(10 * time.Second).EndStruct(requestResult)
+		SendStruct(requestJSON).Set("user-agent", util.UserAgent).Timeout(10 * time.Second).EndStruct(requestResult)
 	uploadTokenCheckTime = now
 	if nil != errs {
 		result.Code = util.CodeErr

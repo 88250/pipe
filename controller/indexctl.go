@@ -11,12 +11,13 @@
 package controller
 
 import (
-	"github.com/88250/pipe/util"
 	"io/ioutil"
 	"net/http"
 	"path/filepath"
 	"strings"
 	"text/template"
+
+	"github.com/88250/pipe/util"
 
 	"github.com/88250/gulu"
 	"github.com/88250/pipe/model"
@@ -79,7 +80,7 @@ func blogInfo(c *gin.Context) (ret *gulu.Result) {
 	platformAdmin := service.User.GetPlatformAdmin()
 
 	ret.Data = map[string]interface{}{
-		"version":         model.Version,
+		"version":         util.Version,
 		"servePath":       model.Conf.Server,
 		"staticServePath": model.Conf.StaticServer,
 		"runtimeMode":     model.Conf.RuntimeMode,
