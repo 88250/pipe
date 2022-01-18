@@ -3,9 +3,9 @@
 <br><br>
 小而美的博客平台，为未来而构建
 <br><br>
-<a title="Build Status" target="_blank" href="https://travis-ci.org/88250/pipe"><img src="https://img.shields.io/travis/88250/pipe.svg?style=flat-square"></a>
+<a title="Build Status" target="_blank" href="https://github.com/88250/pipe/actions/workflows/gotest.yml"><img src="https://img.shields.io/github/workflow/status/88250/pipe/Go%20Test?style=flat-square"></a>
 <a title="Go Report Card" target="_blank" href="https://goreportcard.com/report/github.com/88250/pipe"><img src="https://goreportcard.com/badge/github.com/88250/pipe?style=flat-square"></a>
-<a title="Coverage Status" target="_blank" href="https://coveralls.io/repos/github/88250/pipe/badge.svg?branch=master"><img src="https://img.shields.io/coveralls/github/88250/pipe.svg?style=flat-square&color=CC9933"></a>
+<a title="Coverage Status" target="_blank" href="https://coveralls.io/github/88250/pipe"><img src="https://img.shields.io/coveralls/github/88250/pipe.svg?style=flat-square&color=CC9933"></a>
 <a title="Code Size" target="_blank" href="https://github.com/88250/pipe"><img src="https://img.shields.io/github/languages/code-size/88250/pipe.svg?style=flat-square"></a>
 <a title="GPLv3" target="_blank" href="https://github.com/88250/pipe/blob/master/LICENSE"><img src="https://img.shields.io/badge/license-GPLv3-orange.svg?style=flat-square"></a>
 <br>
