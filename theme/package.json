@@ -38,7 +38,8 @@
     "gulp-clean-css": "^4.3.0",
     "gulp-concat": "^2.6.1",
     "gulp-rename": "^1.4.0",
-    "gulp-sass": "^4.1.0",
+    "gulp-sass": "^5.1.0",
+    "node-sass": "^6.0.1",
     "gulp-uglify": "^3.0.2",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^2.0.0"

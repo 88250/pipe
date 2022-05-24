@@ -6,7 +6,7 @@
  */
 
 const gulp = require('gulp')
-const sass = require('gulp-sass')
+const sass = require('gulp-sass')(require('sass'))
 const rename = require('gulp-rename')
 var uglify = require('gulp-uglify')
 const fs = require('fs')
