@@ -103,6 +103,10 @@ docker pull b3log/pipe
   docker run --detach --name pipe --volume ~/pipe.db:/opt/pipe/pipe.db --publish 5897:5897 \
       b3log/pipe --sqlite="/opt/pipe/pipe.db" --runtime_mode=prod --port=5897 --server=http://localhost:5897
   ```
+  NOTE：You should confirm the sqlite db file has existed. If the sqlite db file is not existed, the --volume option of docker run command will recognize the host path as a directory, and create it. That may cause pipe to fail to create the sqlite db file. Make sure the new sqlite db file existed, you can use the touch command simply, just like:
+  ```shell
+  $ touch ~/pipe.db
+  ```
 
 Start command line arguments description:
 

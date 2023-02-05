@@ -106,6 +106,10 @@ docker pull b3log/pipe
   docker run --detach --name pipe --volume ~/pipe.db:/opt/pipe/pipe.db --publish 5897:5897 \
       b3log/pipe --sqlite="/opt/pipe/pipe.db" --runtime_mode=prod --port=5897 --server=http://localhost:5897
   ```
+  注意：需先确保SQLite数据库文件已存在。如果数据库文件不存在时，docker run --volume参数默认将宿主路径识别为目录，并自动创建这个目录，这可能导致pipe创建sqlite数据库文件失败。新建数据库文件可以简单用touch命令，如：
+  ```shell
+  $ touch ~/pipe.db
+  ```
 
 启动参数说明：
 
