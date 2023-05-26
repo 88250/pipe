@@ -4,6 +4,7 @@
 小而美的博客平台，为未来而构建
 <br><br>
 <a title="Build Status" target="_blank" href="https://github.com/88250/pipe/actions/workflows/gotest.yml"><img src="https://img.shields.io/github/actions/workflow/status/88250/pipe/gotest.yml?style=flat-square"></a>
+<a title="Docker Image CI" target="_blank" href="https://github.com/88250/pipe/actions"><img src="https://img.shields.io/github/actions/workflow/status/88250/pipe/dockerimage.yml?label=Actions&logo=github&style=flat-square"></a>
 <a title="Go Report Card" target="_blank" href="https://goreportcard.com/report/github.com/88250/pipe"><img src="https://goreportcard.com/badge/github.com/88250/pipe?style=flat-square"></a>
 <a title="Coverage Status" target="_blank" href="https://coveralls.io/github/88250/pipe"><img src="https://img.shields.io/coveralls/github/88250/pipe.svg?style=flat-square&color=CC9933"></a>
 <a title="Code Size" target="_blank" href="https://github.com/88250/pipe"><img src="https://img.shields.io/github/languages/code-size/88250/pipe.svg?style=flat-square"></a>
@@ -11,8 +12,8 @@
 <br>
 <a title="Releases" target="_blank" href="https://github.com/88250/pipe/releases"><img src="https://img.shields.io/github/release/88250/pipe.svg?style=flat-square"></a>
 <a title="Release Date" target="_blank" href="https://github.com/88250/pipe/releases"><img src="https://img.shields.io/github/release-date/88250/pipe.svg?style=flat-square&color=99CCFF"></a>
-<a title="Docker Image CI" target="_blank" href="https://github.com/88250/pipe/actions"><img src="https://img.shields.io/github/actions/workflow/status/88250/pipe/dockerimage.yml?label=Actions&logo=github&style=flat-square"></a>
 <a title="Docker Pulls" target="_blank" href="https://hub.docker.com/r/b3log/pipe"><img src="https://img.shields.io/docker/pulls/b3log/pipe.svg?style=flat-square&color=blueviolet"></a>
+<a title="Docker Image Size" target="_blank" href="https://hub.docker.com/r/b3log/pipe"><img src="https://img.shields.io/docker/image-size/b3log/pipe.svg?style=flat-square&color=ff96b4"></a>
 <br>
 <a title="GitHub Commits" target="_blank" href="https://github.com/88250/pipe/commits/master"><img src="https://img.shields.io/github/commit-activity/m/88250/pipe.svg?style=flat-square"></a>
 <a title="Last Commit" target="_blank" href="https://github.com/88250/pipe/commits/master"><img src="https://img.shields.io/github/last-commit/88250/pipe.svg?style=flat-square&color=FF9900"></a>
