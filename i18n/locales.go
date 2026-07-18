@@ -54,7 +54,7 @@ func Load() {
 func load(localeStr string) {
 	bytes, err := ioutil.ReadFile("i18n/" + localeStr + ".json")
 	if nil != err {
-		logger.Fatal("reads i18n configurations fialed: " + err.Error())
+		logger.Fatal("reads i18n configurations failed: " + err.Error())
 	}
 
 	l := locale{Name: localeStr}
