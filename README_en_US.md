@@ -6,7 +6,6 @@ Small and beautiful blogging platform, built for the future
 <a title="Build Status" target="_blank" href="https://github.com/88250/pipe/actions/workflows/gotest.yml"><img src="https://img.shields.io/github/actions/workflow/status/88250/pipe/gotest.yml?style=flat-square"></a>
 <a title="Docker Image CI" target="_blank" href="https://github.com/88250/pipe/actions"><img src="https://img.shields.io/github/actions/workflow/status/88250/pipe/dockerimage.yml?label=Actions&logo=github&style=flat-square"></a>
 <a title="Go Report Card" target="_blank" href="https://goreportcard.com/report/github.com/88250/pipe"><img src="https://goreportcard.com/badge/github.com/88250/pipe?style=flat-square"></a>
-<a title="Coverage Status" target="_blank" href="https://coveralls.io/github/88250/pipe"><img src="https://img.shields.io/coveralls/github/88250/pipe.svg?style=flat-square&color=CC9933"></a>
 <a title="Code Size" target="_blank" href="https://github.com/88250/pipe"><img src="https://img.shields.io/github/languages/code-size/88250/pipe.svg?style=flat-square"></a>
 <a title="GPLv3" target="_blank" href="https://github.com/88250/pipe/blob/master/LICENSE"><img src="https://img.shields.io/badge/license-GPLv3-orange.svg?style=flat-square"></a>
 <br>
