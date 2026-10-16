@@ -68,7 +68,7 @@ func loginCallbackAction(c *gin.Context) {
 			}
 
 			if err := service.Init.InitPlatform(user); nil != err {
-				logger.Errorf("init platform via community login failed: " + err.Error())
+				logger.Error("init platform via community login failed: " + err.Error())
 				c.Status(http.StatusInternalServerError)
 				return
 			}
@@ -81,7 +81,7 @@ func loginCallbackAction(c *gin.Context) {
 			}
 
 			if err := service.Init.InitBlog(user); nil != err {
-				logger.Errorf("init blog via community login failed: " + err.Error())
+				logger.Error("init blog via community login failed: " + err.Error())
 				c.Status(http.StatusInternalServerError)
 				return
 			}
@@ -90,7 +90,7 @@ func loginCallbackAction(c *gin.Context) {
 		user.Name = userName
 		user.AvatarURL = avatar
 		if err := service.User.UpdateUser(user); nil != err {
-			logger.Errorf("update user failed: " + err.Error())
+			logger.Error("update user failed: " + err.Error())
 			c.Status(http.StatusInternalServerError)
 			return
 		}
@@ -98,7 +98,7 @@ func loginCallbackAction(c *gin.Context) {
 
 	ownBlog := service.User.GetOwnBlog(user.ID)
 	if nil == ownBlog {
-		logger.Warnf("can not get user by name [" + userName + "]")
+		logger.Warn("can not get user by name [" + userName + "]")
 		c.Status(http.StatusNotFound)
 		return
 	}
@@ -113,7 +113,7 @@ func loginCallbackAction(c *gin.Context) {
 		BURL:    ownBlog.URL,
 	}
 	if err := session.Save(c); nil != err {
-		logger.Errorf("saves session failed: " + err.Error())
+		logger.Error("saves session failed: " + err.Error())
 		c.Status(http.StatusInternalServerError)
 	}
 

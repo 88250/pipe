@@ -55,7 +55,7 @@ func TestConsoleAddNavigation(t *testing.T) {
 	}
 
 	if err := Navigation.AddNavigation(navigation); nil != err {
-		t.Errorf("add navigation failed: " + err.Error())
+		t.Error("add navigation failed: " + err.Error())
 
 		return
 	}
@@ -82,7 +82,7 @@ func TestConsoleUpdateNavigation(t *testing.T) {
 
 	navigation.Title = "更新后的导航标题"
 	if err := Navigation.UpdateNavigation(navigation); nil != err {
-		t.Errorf("update navigation failed: " + err.Error())
+		t.Error("update navigation failed: " + err.Error())
 
 		return
 	}

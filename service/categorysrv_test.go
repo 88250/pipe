@@ -29,7 +29,7 @@ func TestAddCategory(t *testing.T) {
 	}
 
 	if err := Category.AddCategory(category); nil != err {
-		t.Errorf("add category failed: " + err.Error())
+		t.Error("add category failed: " + err.Error())
 
 		return
 	}
@@ -59,6 +59,6 @@ func TestGetGetCategories(t *testing.T) {
 
 func TestRemoveCategory(t *testing.T) {
 	if err := Category.RemoveCategory(1, 1); nil != err {
-		t.Errorf("remove category failed: " + err.Error())
+		t.Error("remove category failed: " + err.Error())
 	}
 }

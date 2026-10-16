@@ -75,20 +75,20 @@ func main() {
 
 	logger.Infof("Pipe (v%s) is running [%s]", util.Version, model.Conf.Server)
 	if err := server.ListenAndServe(); nil != err {
-		logger.Fatalf("listen and serve failed: " + err.Error())
+		logger.Fatal("listen and serve failed: " + err.Error())
 	}
 }
 
 // handleSignal handles system signal for graceful shutdown.
 func handleSignal(server *http.Server) {
-	c := make(chan os.Signal)
+	c := make(chan os.Signal, 1)
 	signal.Notify(c, syscall.SIGINT, syscall.SIGQUIT, syscall.SIGTERM)
 
 	go func() {
 		s := <-c
 		logger.Infof("got signal [%s], exiting pipe now", s)
 		if err := server.Close(); nil != err {
-			logger.Errorf("server close failed: " + err.Error())
+			logger.Error("server close failed: " + err.Error())
 		}
 
 		service.DisconnectDB()

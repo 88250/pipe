@@ -28,7 +28,7 @@ import (
 func showIndexAction(c *gin.Context) {
 	t, err := template.ParseFiles("console/dist/index.html")
 	if nil != err {
-		logger.Errorf("load index page failed: " + err.Error())
+		logger.Error("load index page failed: " + err.Error())
 		c.String(http.StatusNotFound, "load index page failed")
 
 		return
@@ -40,7 +40,7 @@ func showIndexAction(c *gin.Context) {
 func showChangelogsAction(c *gin.Context) {
 	data, err := ioutil.ReadFile("changelogs.md")
 	if nil != err {
-		logger.Errorf("load changelogs.md failed: " + err.Error())
+		logger.Error("load changelogs.md failed: " + err.Error())
 		c.String(http.StatusNotFound, "load changelogs failed")
 
 		return
@@ -53,7 +53,7 @@ func showChangelogsAction(c *gin.Context) {
 func showStartPageAction(c *gin.Context) {
 	t, err := template.ParseFiles("console/dist/start/index.html")
 	if nil != err {
-		logger.Errorf("load start page failed: " + err.Error())
+		logger.Error("load start page failed: " + err.Error())
 		c.String(http.StatusNotFound, "load start page failed")
 
 		return

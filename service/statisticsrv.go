@@ -31,7 +31,7 @@ func (srv *statisticService) GetAllStatistics(blogID uint64) []*model.Setting {
 	var ret []*model.Setting
 
 	if err := db.Where("category = ? AND blog_id = ?", model.SettingCategoryStatistic, blogID).Find(&ret).Error; nil != err {
-		logger.Errorf("get all statistics failed: " + err.Error())
+		logger.Error("get all statistics failed: " + err.Error())
 
 		return nil
 	}
@@ -42,7 +42,7 @@ func (srv *statisticService) GetAllStatistics(blogID uint64) []*model.Setting {
 func (srv *statisticService) GetStatistic(statisticName string, blogID uint) *model.Setting {
 	ret := &model.Setting{}
 	if err := db.Where("name = ? AND category = ? AND blog_id = ?", statisticName, model.SettingCategoryStatistic, blogID).Find(ret).Error; nil != err {
-		logger.Errorf("get statistic failed: " + err.Error())
+		logger.Error("get statistic failed: " + err.Error())
 
 		return nil
 	}
@@ -54,7 +54,7 @@ func (srv *statisticService) GetStatistics(blogID uint, statisticNames ...string
 	ret := map[string]*model.Setting{}
 	var settings []*model.Setting
 	if err := db.Where("name IN (?) AND category = ? AND blog_id = ?", statisticNames, model.SettingCategoryStatistic, blogID).Find(&settings).Error; nil != err {
-		logger.Errorf("get statistics failed: " + err.Error())
+		logger.Error("get statistics failed: " + err.Error())
 
 		return nil
 	}

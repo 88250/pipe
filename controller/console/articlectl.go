@@ -124,7 +124,7 @@ func UploadTokenAction(c *gin.Context) {
 	if util.CodeOk != requestResult.Code {
 		result.Code = util.CodeErr
 		result.Msg = requestResult.Msg
-		logger.Errorf(requestResult.Msg)
+		logger.Error(requestResult.Msg)
 
 		return
 	}
@@ -304,7 +304,7 @@ func RemoveArticlesAction(c *gin.Context) {
 	ids := arg["ids"].([]interface{})
 	for _, id := range ids {
 		if err := service.Article.RemoveArticle(uint64(id.(float64)), blogID); nil != err {
-			logger.Errorf("remove article failed: " + err.Error())
+			logger.Error("remove article failed: " + err.Error())
 		}
 	}
 }

@@ -17,11 +17,11 @@ import (
 func sqlite2MySQL(sqliteDataFilePath, mysqlConn string) {
 	sqlite, err := gorm.Open("sqlite3", Conf.SQLite)
 	if nil != err {
-		logger.Fatalf("opens SQLite database failed: " + err.Error())
+		logger.Fatal("opens SQLite database failed: " + err.Error())
 	}
 	mysql, err := gorm.Open("mysql", Conf.MySQL)
 	if nil != err {
-		logger.Fatalf("opens MySQL database failed: " + err.Error())
+		logger.Fatal("opens MySQL database failed: " + err.Error())
 	}
 	if err = mysql.AutoMigrate(Models...).Error; nil != err {
 		logger.Fatal("auto migrate tables failed: " + err.Error())
@@ -40,11 +40,11 @@ func sqlite2MySQL(sqliteDataFilePath, mysqlConn string) {
 
 func importArchives(sqlite, mysql *gorm.DB, models []*Archive) {
 	if err := sqlite.Find(&models).Error; nil != err {
-		logger.Fatalf("queries data failed: " + err.Error())
+		logger.Fatal("queries data failed: " + err.Error())
 	}
 	for _, model := range models {
 		if err := mysql.Save(model).Error; nil != err {
-			logger.Fatalf("saves data failed: " + err.Error())
+			logger.Fatal("saves data failed: " + err.Error())
 		}
 	}
 	logger.Infof("imported [%d] archives", len(models))
@@ -52,7 +52,7 @@ func importArchives(sqlite, mysql *gorm.DB, models []*Archive) {
 
 func importArticles(sqlite, mysql *gorm.DB, models []*Article) {
 	if err := sqlite.Find(&models).Error; nil != err {
-		logger.Fatalf("queries data failed: " + err.Error())
+		logger.Fatal("queries data failed: " + err.Error())
 	}
 	for _, model := range models {
 		if model.PushedAt.Before(ZeroPushTime) {
@@ -67,11 +67,11 @@ func importArticles(sqlite, mysql *gorm.DB, models []*Article) {
 
 func importCategories(sqlite, mysql *gorm.DB, models []*Category) {
 	if err := sqlite.Find(&models).Error; nil != err {
-		logger.Fatalf("queries data failed: " + err.Error())
+		logger.Fatal("queries data failed: " + err.Error())
 	}
 	for _, model := range models {
 		if err := mysql.Save(model).Error; nil != err {
-			logger.Fatalf("saves data failed: " + err.Error())
+			logger.Fatal("saves data failed: " + err.Error())
 		}
 	}
 	logger.Infof("imported [%d] categories", len(models))
@@ -79,11 +79,11 @@ func importCategories(sqlite, mysql *gorm.DB, models []*Category) {
 
 func importComments(sqlite, mysql *gorm.DB, models []*Comment) {
 	if err := sqlite.Find(&models).Error; nil != err {
-		logger.Fatalf("queries data failed: " + err.Error())
+		logger.Fatal("queries data failed: " + err.Error())
 	}
 	for _, model := range models {
 		if err := mysql.Save(model).Error; nil != err {
-			logger.Fatalf("saves data failed: " + err.Error())
+			logger.Fatal("saves data failed: " + err.Error())
 		}
 	}
 	logger.Infof("imported [%d] comments", len(models))
@@ -91,11 +91,11 @@ func importComments(sqlite, mysql *gorm.DB, models []*Comment) {
 
 func importCorrelations(sqlite, mysql *gorm.DB, models []*Correlation) {
 	if err := sqlite.Find(&models).Error; nil != err {
-		logger.Fatalf("queries data failed: " + err.Error())
+		logger.Fatal("queries data failed: " + err.Error())
 	}
 	for _, model := range models {
 		if err := mysql.Save(model).Error; nil != err {
-			logger.Fatalf("saves data failed: " + err.Error())
+			logger.Fatal("saves data failed: " + err.Error())
 		}
 	}
 	logger.Infof("imported [%d] correlations", len(models))
@@ -103,11 +103,11 @@ func importCorrelations(sqlite, mysql *gorm.DB, models []*Correlation) {
 
 func importNavigations(sqlite, mysql *gorm.DB, models []*Navigation) {
 	if err := sqlite.Find(&models).Error; nil != err {
-		logger.Fatalf("queries data failed: " + err.Error())
+		logger.Fatal("queries data failed: " + err.Error())
 	}
 	for _, model := range models {
 		if err := mysql.Save(model).Error; nil != err {
-			logger.Fatalf("saves data failed: " + err.Error())
+			logger.Fatal("saves data failed: " + err.Error())
 		}
 	}
 	logger.Infof("imported [%d] navigations", len(models))
@@ -115,11 +115,11 @@ func importNavigations(sqlite, mysql *gorm.DB, models []*Navigation) {
 
 func importSettings(sqlite, mysql *gorm.DB, models []*Setting) {
 	if err := sqlite.Find(&models).Error; nil != err {
-		logger.Fatalf("queries data failed: " + err.Error())
+		logger.Fatal("queries data failed: " + err.Error())
 	}
 	for _, model := range models {
 		if err := mysql.Save(model).Error; nil != err {
-			logger.Fatalf("saves data failed: " + err.Error())
+			logger.Fatal("saves data failed: " + err.Error())
 		}
 	}
 	logger.Infof("imported [%d] settings", len(models))
@@ -127,11 +127,11 @@ func importSettings(sqlite, mysql *gorm.DB, models []*Setting) {
 
 func importTags(sqlite, mysql *gorm.DB, models []*Tag) {
 	if err := sqlite.Find(&models).Error; nil != err {
-		logger.Fatalf("queries data failed: " + err.Error())
+		logger.Fatal("queries data failed: " + err.Error())
 	}
 	for _, model := range models {
 		if err := mysql.Save(model).Error; nil != err {
-			logger.Fatalf("saves data failed: " + err.Error())
+			logger.Fatal("saves data failed: " + err.Error())
 		}
 	}
 	logger.Infof("imported [%d] tags", len(models))
@@ -139,11 +139,11 @@ func importTags(sqlite, mysql *gorm.DB, models []*Tag) {
 
 func importUsers(sqlite, mysql *gorm.DB, models []*User) {
 	if err := sqlite.Find(&models).Error; nil != err {
-		logger.Fatalf("queries data failed: " + err.Error())
+		logger.Fatal("queries data failed: " + err.Error())
 	}
 	for _, model := range models {
 		if err := mysql.Save(model).Error; nil != err {
-			logger.Fatalf("saves data failed: " + err.Error())
+			logger.Fatal("saves data failed: " + err.Error())
 		}
 	}
 	logger.Infof("imported [%d] users", len(models))

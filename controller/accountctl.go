@@ -30,6 +30,6 @@ func logoutAction(c *gin.Context) {
 	})
 	session.Clear()
 	if err := session.Save(); nil != err {
-		logger.Errorf("saves session failed: " + err.Error())
+		logger.Error("saves session failed: " + err.Error())
 	}
 }

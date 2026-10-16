@@ -34,7 +34,7 @@ func GenArticlesAction(c *gin.Context) {
 			BlogID:   session.BID,
 		}
 		if err := service.Article.AddArticle(article); nil != err {
-			logger.Errorf("generate article failed: " + err.Error())
+			logger.Error("generate article failed: " + err.Error())
 		}
 	}
 

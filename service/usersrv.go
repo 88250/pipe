@@ -46,7 +46,7 @@ func (srv *userService) GetBlogAdmin(blogID uint64) *model.User {
 	rel := &model.Correlation{ID1: blogID, Type: model.UserRoleBlogAdmin, BlogID: blogID}
 	if err := db.Where(rel,
 		blogID, model.UserRoleBlogAdmin, blogID).First(rel).Error; nil != err {
-		logger.Errorf("can't get blog admin: " + err.Error())
+		logger.Error("can't get blog admin: " + err.Error())
 
 		return nil
 	}
@@ -57,7 +57,7 @@ func (srv *userService) GetBlogAdmin(blogID uint64) *model.User {
 func (srv *userService) GetPlatformAdmin() *model.User {
 	rel := &model.Correlation{ID1: 1}
 	if err := db.Where(rel).Order("id2 ASC").First(rel).Error; nil != err {
-		logger.Errorf("can't get platform admin: " + err.Error())
+		logger.Error("can't get platform admin: " + err.Error())
 
 		return nil
 	}
@@ -140,13 +140,13 @@ func (srv *userService) GetBlogUsers(page int, blogID uint64) (ret []*model.User
 	if err := db.Model(rel).
 		Where(rel, blogID, model.CorrelationBlogUser, blogID).
 		Count(&count).Offset(offset).Limit(adminConsoleUserListPageSize).Find(&correlations).Error; nil != err {
-		logger.Errorf("get users failed: " + err.Error())
+		logger.Error("get users failed: " + err.Error())
 	}
 
 	for _, rel := range correlations {
 		user := &model.User{}
 		if err := db.Where(rel.ID2).Find(user).Error; nil != err {
-			logger.Errorf("get user failed: " + err.Error())
+			logger.Error("get user failed: " + err.Error())
 
 			continue
 		}

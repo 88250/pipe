@@ -67,7 +67,7 @@ func (srv *initService) Status() (platformStatus *PlatformStatus, err error) {
 		}
 
 		msg := "checks platform init status failed: " + err.Error()
-		logger.Errorf(msg)
+		logger.Error(msg)
 
 		return platformStatus, errors.New(msg)
 	}

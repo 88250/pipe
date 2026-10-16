@@ -41,7 +41,7 @@ func ExportMarkdownAction(c *gin.Context) {
 	zipFilePath := filepath.Join(tempDir, session.UName+"-export-md.zip")
 	zipFile, err := gulu.Zip.Create(zipFilePath)
 	if nil != err {
-		logger.Errorf("create zip file [" + zipFilePath + "] failed: " + err.Error())
+		logger.Error("create zip file [" + zipFilePath + "] failed: " + err.Error())
 		result.Code = util.CodeErr
 		result.Msg = "create zip file failed"
 
@@ -56,7 +56,7 @@ func ExportMarkdownAction(c *gin.Context) {
 		zipFile.Close()
 		file, err := os.Open(zipFilePath)
 		if nil != err {
-			logger.Errorf("open zip file [" + zipFilePath + " failed: " + err.Error())
+			logger.Error("open zip file [" + zipFilePath + " failed: " + err.Error())
 			result.Code = util.CodeErr
 			result.Msg = "open zip file failed"
 
@@ -71,14 +71,14 @@ func ExportMarkdownAction(c *gin.Context) {
 
 	zipPath := filepath.Join(tempDir, session.UName+"-export-md")
 	if err = os.RemoveAll(zipPath); nil != err {
-		logger.Errorf("remove temp dir [" + zipPath + "] failed: " + err.Error())
+		logger.Error("remove temp dir [" + zipPath + "] failed: " + err.Error())
 		result.Code = util.CodeErr
 		result.Msg = "remove temp dir failed"
 
 		return
 	}
 	if err = os.Mkdir(zipPath, 0755); nil != err {
-		logger.Errorf("make temp dir [" + zipPath + "] failed: " + err.Error())
+		logger.Error("make temp dir [" + zipPath + "] failed: " + err.Error())
 		result.Code = util.CodeErr
 		result.Msg = "make temp dir failed"
 
@@ -87,13 +87,13 @@ func ExportMarkdownAction(c *gin.Context) {
 	for _, mdFile := range mdFiles {
 		filename := filepath.Join(zipPath, mdFile.Name+".md")
 		if err := ioutil.WriteFile(filename, []byte(mdFile.Content), 0644); nil != err {
-			logger.Errorf("write file [" + filename + "] failed: " + err.Error())
+			logger.Error("write file [" + filename + "] failed: " + err.Error())
 		}
 	}
 
 	zipFile.AddDirectory(session.UName+"-export-md", zipPath)
 	if err := zipFile.Close(); nil != err {
-		logger.Errorf("zip failed: " + err.Error())
+		logger.Error("zip failed: " + err.Error())
 		result.Code = util.CodeErr
 		result.Msg = "zip failed"
 
@@ -101,7 +101,7 @@ func ExportMarkdownAction(c *gin.Context) {
 	}
 	file, err := os.Open(zipFilePath)
 	if nil != err {
-		logger.Errorf("open zip file [" + zipFilePath + " failed: " + err.Error())
+		logger.Error("open zip file [" + zipFilePath + " failed: " + err.Error())
 		result.Code = util.CodeErr
 		result.Msg = "open zip file failed"
 

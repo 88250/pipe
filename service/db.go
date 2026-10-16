@@ -48,7 +48,7 @@ func ConnectDB() {
 		logger.Fatal("please specify database")
 	}
 	if nil != err {
-		logger.Fatalf("opens database failed: " + err.Error())
+		logger.Fatal("opens database failed: " + err.Error())
 	}
 	if useSQLite {
 		logger.Debug("used [SQLite] as underlying database")
@@ -75,7 +75,7 @@ func ConnectDB() {
 // DisconnectDB disconnects from the database.
 func DisconnectDB() {
 	if err := db.Close(); nil != err {
-		logger.Errorf("Disconnect from database failed: " + err.Error())
+		logger.Error("Disconnect from database failed: " + err.Error())
 	}
 }
 

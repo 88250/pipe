@@ -116,7 +116,7 @@ func RemoveCommentsAction(c *gin.Context) {
 	ids := arg["ids"].([]interface{})
 	for _, id := range ids {
 		if err := service.Comment.RemoveComment(uint64(id.(float64)), blogID); nil != err {
-			logger.Errorf("remove comment failed: " + err.Error())
+			logger.Error("remove comment failed: " + err.Error())
 		}
 	}
 }

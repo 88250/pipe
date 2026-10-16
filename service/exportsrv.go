@@ -27,7 +27,7 @@ type exportService struct {
 func (srv *exportService) ExportMarkdowns(blogID uint64) (ret []*MarkdownFile) {
 	var articles []*model.Article
 	if err := db.Where("blog_id = ?", blogID).Find(&articles).Error; nil != err {
-		logger.Errorf("export markdowns failed: " + err.Error())
+		logger.Error("export markdowns failed: " + err.Error())
 
 		return
 	}
@@ -51,7 +51,7 @@ func (srv *exportService) ExportMarkdowns(blogID uint64) (ret []*MarkdownFile) {
 		}
 		frontData, err := yaml.Marshal(front)
 		if nil != err {
-			logger.Errorf("marshal front matter failed: " + err.Error())
+			logger.Error("marshal front matter failed: " + err.Error())
 
 			continue
 		}

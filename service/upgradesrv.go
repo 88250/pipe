@@ -69,7 +69,7 @@ func (srv *upgradeService) Perform() {
 
 func perform200_210() {
 	fromVer := "2.0.0"
-	logger.Infof("upgrading from version [" + fromVer + "] to version [" + util.Version + "]....")
+	logger.Info("upgrading from version [" + fromVer + "] to version [" + util.Version + "]....")
 
 	var verSettings []model.Setting
 	if err := db.Model(&model.Setting{}).Where("name = ?", model.SettingNameSystemVer).Find(&verSettings).Error; nil != err {
@@ -87,12 +87,12 @@ func perform200_210() {
 	}
 	tx.Commit()
 
-	logger.Infof("upgraded from version [" + fromVer + "] to version [" + util.Version + "] successfully")
+	logger.Info("upgraded from version [" + fromVer + "] to version [" + util.Version + "] successfully")
 }
 
 func perform191_200() {
 	fromVer := "1.9.1"
-	logger.Infof("upgrading from version [" + fromVer + "] to version [" + util.Version + "]....")
+	logger.Info("upgrading from version [" + fromVer + "] to version [" + util.Version + "]....")
 
 	var verSettings []model.Setting
 	if err := db.Model(&model.Setting{}).Where("name = ?", model.SettingNameSystemVer).Find(&verSettings).Error; nil != err {
@@ -110,12 +110,12 @@ func perform191_200() {
 	}
 	tx.Commit()
 
-	logger.Infof("upgraded from version [" + fromVer + "] to version [" + util.Version + "] successfully")
+	logger.Info("upgraded from version [" + fromVer + "] to version [" + util.Version + "] successfully")
 }
 
 func perform190_191() {
 	fromVer := "1.9.0"
-	logger.Infof("upgrading from version [" + fromVer + "] to version [" + util.Version + "]....")
+	logger.Info("upgrading from version [" + fromVer + "] to version [" + util.Version + "]....")
 
 	var verSettings []model.Setting
 	if err := db.Model(&model.Setting{}).Where("name = ?", model.SettingNameSystemVer).Find(&verSettings).Error; nil != err {
@@ -133,12 +133,12 @@ func perform190_191() {
 	}
 	tx.Commit()
 
-	logger.Infof("upgraded from version [" + fromVer + "] to version [" + util.Version + "] successfully")
+	logger.Info("upgraded from version [" + fromVer + "] to version [" + util.Version + "] successfully")
 }
 
 func perform189_190() {
 	fromVer := "1.8.9"
-	logger.Infof("upgrading from version [" + fromVer + "] to version [" + util.Version + "]....")
+	logger.Info("upgrading from version [" + fromVer + "] to version [" + util.Version + "]....")
 
 	var verSettings []model.Setting
 	if err := db.Model(&model.Setting{}).Where("name = ?", model.SettingNameSystemVer).Find(&verSettings).Error; nil != err {
@@ -156,7 +156,7 @@ func perform189_190() {
 	}
 	tx.Commit()
 
-	logger.Infof("upgraded from version [" + fromVer + "] to version [" + util.Version + "] successfully")
+	logger.Info("upgraded from version [" + fromVer + "] to version [" + util.Version + "] successfully")
 }
 
 func perform188_189() {

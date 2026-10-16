@@ -301,7 +301,7 @@ func routePath(c *gin.Context) {
 		return
 	}
 
-	logger.Tracef("can't handle path [" + path + "]")
+	logger.Trace("can't handle path [" + path + "]")
 	notFound(c)
 }
 

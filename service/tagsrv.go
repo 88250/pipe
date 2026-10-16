@@ -46,7 +46,7 @@ func (srv *tagService) ConsoleGetTags(keyword string, page int, blogID uint64) (
 	if err := db.Model(&model.Tag{}).Order("id DESC").
 		Where(where, whereArgs...).
 		Count(&count).Offset(offset).Limit(adminConsoleTagListPageSize).Find(&ret).Error; nil != err {
-		logger.Errorf("get tags failed: " + err.Error())
+		logger.Error("get tags failed: " + err.Error())
 	}
 
 	pagination = util.NewPagination(page, adminConsoleTagListPageSize, adminConsoleTagListWindowSize, count)
@@ -56,7 +56,7 @@ func (srv *tagService) ConsoleGetTags(keyword string, page int, blogID uint64) (
 
 func (srv *tagService) GetTags(size int, blogID uint64) (ret []*model.Tag) {
 	if err := db.Where("blog_id = ?", blogID).Order("article_count DESC, id DESC").Limit(size).Find(&ret).Error; nil != err {
-		logger.Errorf("get tags failed: " + err.Error())
+		logger.Error("get tags failed: " + err.Error())
 	}
 
 	return
@@ -88,7 +88,7 @@ func (srv *tagService) RemoveTag(id, blogID uint64) (err error) {
 	}
 
 	if err = db.Delete(&tag).Error; nil != err {
-		logger.Errorf("delete tag [" + tagTitle + "] failed: " + err.Error())
+		logger.Error("delete tag [" + tagTitle + "] failed: " + err.Error())
 
 		return
 	}

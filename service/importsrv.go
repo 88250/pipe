@@ -72,7 +72,7 @@ func (srv *importService) ImportMarkdowns(mdFiles []*MarkdownFile, authorID, blo
 		if err := Article.AddArticle(article); nil != err {
 			failCnt++
 			fails = append(fails, article.Title)
-			logger.Errorf("import article [" + article.Title + "] failed: " + err.Error())
+			logger.Error("import article [" + article.Title + "] failed: " + err.Error())
 
 			continue
 		}

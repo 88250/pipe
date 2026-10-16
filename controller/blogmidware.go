@@ -362,7 +362,7 @@ func getLocale(c *gin.Context) string {
 func notFound(c *gin.Context) {
 	t, err := template.ParseFiles("console/dist/start/index.html")
 	if nil != err {
-		logger.Errorf("load 404 page failed: " + err.Error())
+		logger.Error("load 404 page failed: " + err.Error())
 		c.String(http.StatusNotFound, "load 404 page failed")
 
 		return

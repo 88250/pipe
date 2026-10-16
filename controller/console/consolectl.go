@@ -31,7 +31,7 @@ func ShowAdminPagesAction(c *gin.Context) {
 
 	t, err := template.ParseFiles(filepath.Join("console/dist/admin" + c.Param("path") + "/index.html"))
 	if nil != err {
-		logger.Errorf("load console page [" + c.Param("path") + "] failed: " + err.Error())
+		logger.Error("load console page [" + c.Param("path") + "] failed: " + err.Error())
 		c.String(http.StatusNotFound, "load console page failed")
 
 		return

@@ -72,7 +72,7 @@ func TestUpdateSettings(t *testing.T) {
 		basics = append(basics, setting)
 	}
 	if err := Setting.UpdateSettings(model.SettingCategoryBasic, basics, 1); nil != err {
-		t.Errorf("updates settings failed: " + err.Error())
+		t.Error("updates settings failed: " + err.Error())
 
 		return
 	}

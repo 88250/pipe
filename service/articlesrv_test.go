@@ -119,7 +119,7 @@ func TestConsoleGetArticle(t *testing.T) {
 		return
 	}
 	if lastArticleID != article.ID {
-		t.Errorf("id is not [" + strconv.Itoa(int(lastArticleID)) + "]")
+		t.Error("id is not [" + strconv.Itoa(int(lastArticleID)) + "]")
 	}
 }
 
@@ -128,7 +128,7 @@ func TestUpdateArticle(t *testing.T) {
 	article := Article.ConsoleGetArticle(lastArticleID)
 	article.Title = updatedTitle
 	if err := Article.UpdateArticle(article); nil != err {
-		t.Errorf("update article failed: " + err.Error())
+		t.Error("update article failed: " + err.Error())
 
 		return
 	}
@@ -143,7 +143,7 @@ func TestIncArticleViewCount(t *testing.T) {
 	article := Article.ConsoleGetArticle(lastArticleID)
 	oldCnt := article.ViewCount
 	if err := Article.IncArticleViewCount(article); nil != err {
-		t.Errorf("inc article view count failed: " + err.Error())
+		t.Error("inc article view count failed: " + err.Error())
 
 		return
 	}
@@ -174,7 +174,7 @@ func TestTagArticle(t *testing.T) {
 	tx := db.Begin()
 	if err := tagArticle(tx, article); nil != err {
 		tx.Rollback()
-		t.Errorf("tag article failed: " + err.Error())
+		t.Error("tag article failed: " + err.Error())
 
 		return
 	}
@@ -221,6 +221,6 @@ func TestNormalizeArticlePath(t *testing.T) {
 		return
 	}
 	if len("/articles/2017/11/02/1") != len(article.Path) {
-		t.Errorf(article.Path)
+		t.Error(article.Path)
 	}
 }

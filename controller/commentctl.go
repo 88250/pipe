@@ -156,7 +156,7 @@ func addCommentAction(c *gin.Context) {
 
 	htmlBuilder := bytes.Buffer{}
 	if err := t.ExecuteTemplate(&htmlBuilder, "comment/comment", dataModel); nil != err {
-		logger.Errorf("execute comment template failed: " + err.Error())
+		logger.Error("execute comment template failed: " + err.Error())
 
 		return
 	}

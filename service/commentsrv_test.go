@@ -58,7 +58,7 @@ func TestRemoveComment(t *testing.T) {
 		BlogID:    1,
 	}
 	if err := Comment.AddComment(comment); nil != err {
-		t.Errorf("add comment failed: " + err.Error())
+		t.Error("add comment failed: " + err.Error())
 
 		return
 	}

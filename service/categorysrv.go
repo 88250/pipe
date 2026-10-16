@@ -61,11 +61,11 @@ AND b3_pipe_correlations.id2 IN (
 )`
 	rows, err := db.DB().Query(sql, blogID, categoryID, blogID)
 	if nil != err {
-		logger.Errorf("get category article count failed: " + err.Error())
+		logger.Error("get category article count failed: " + err.Error())
 	} else {
 		rows.Next()
 		if err = rows.Scan(&ret); nil != err {
-			logger.Errorf("get category article count failed: " + err.Error())
+			logger.Error("get category article count failed: " + err.Error())
 		}
 	}
 	rows.Close()
@@ -164,7 +164,7 @@ func (srv *categoryService) AddCategory(category *model.Category) error {
 
 func (srv *categoryService) GetCategoriesByTag(tagTitle string, blogID uint64) (ret []*model.Category) {
 	if err := db.Where("blog_id = ? AND tags LIKE ?", blogID, tagTitle).Find(&ret).Error; nil != err {
-		logger.Errorf("get categories failed: " + err.Error())
+		logger.Error("get categories failed: " + err.Error())
 	}
 
 	return
@@ -176,7 +176,7 @@ func (srv *categoryService) ConsoleGetCategories(page int, blogID uint64) (ret [
 	if err := db.Model(&model.Category{}).Order("number ASC, id DESC").
 		Where("blog_id = ?", blogID).
 		Count(&count).Offset(offset).Limit(adminConsoleCategoryListPageSize).Find(&ret).Error; nil != err {
-		logger.Errorf("get categories failed: " + err.Error())
+		logger.Error("get categories failed: " + err.Error())
 	}
 
 	pagination = util.NewPagination(page, adminConsoleCategoryListPageSize, adminConsoleCategoryListWindowSize, count)
@@ -186,7 +186,7 @@ func (srv *categoryService) ConsoleGetCategories(page int, blogID uint64) (ret [
 
 func (srv *categoryService) GetCategories(size int, blogID uint64) (ret []*model.Category) {
 	if err := db.Where("blog_id = ?", blogID).Order("number asc").Limit(size).Find(&ret).Error; nil != err {
-		logger.Errorf("get categories failed: " + err.Error())
+		logger.Error("get categories failed: " + err.Error())
 	}
 
 	return

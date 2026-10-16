@@ -39,7 +39,7 @@ func ImportMarkdownAction(c *gin.Context) {
 	form, err := c.MultipartForm()
 	if nil != err {
 		msg := "parse upload file header failed"
-		logger.Errorf(msg + ": " + err.Error())
+		logger.Error(msg + ": " + err.Error())
 		result.Code = util.CodeErr
 		result.Msg = msg
 
@@ -50,7 +50,7 @@ func ImportMarkdownAction(c *gin.Context) {
 	f, err := file.Open()
 	if nil != err {
 		msg := "open upload file failed"
-		logger.Errorf(msg + ": " + err.Error())
+		logger.Error(msg + ": " + err.Error())
 		result.Code = util.CodeErr
 		result.Msg = msg
 
@@ -63,7 +63,7 @@ func ImportMarkdownAction(c *gin.Context) {
 	zipFilePath := filepath.Join(tempDir, session.UName+"-import-md.zip")
 	zipFile, err := os.Create(zipFilePath)
 	if nil != err {
-		logger.Errorf("create temp file [" + zipFilePath + "] failed: " + err.Error())
+		logger.Error("create temp file [" + zipFilePath + "] failed: " + err.Error())
 		result.Code = util.CodeErr
 		result.Msg = "create temp file failed"
 
@@ -71,7 +71,7 @@ func ImportMarkdownAction(c *gin.Context) {
 	}
 	_, err = io.Copy(zipFile, f)
 	if nil != err {
-		logger.Errorf("write temp file [" + zipFilePath + "] failed: " + err.Error())
+		logger.Error("write temp file [" + zipFilePath + "] failed: " + err.Error())
 		result.Code = util.CodeErr
 		result.Msg = "write temp file failed"
 
@@ -81,21 +81,21 @@ func ImportMarkdownAction(c *gin.Context) {
 
 	unzipPath := filepath.Join(tempDir, session.UName+"-import-md")
 	if err = os.RemoveAll(unzipPath); nil != err {
-		logger.Errorf("remove temp dir [" + unzipPath + "] failed: " + err.Error())
+		logger.Error("remove temp dir [" + unzipPath + "] failed: " + err.Error())
 		result.Code = util.CodeErr
 		result.Msg = "remove temp dir failed"
 
 		return
 	}
 	if err = os.Mkdir(unzipPath, 0755); nil != err {
-		logger.Errorf("make temp dir [" + unzipPath + "] failed: " + err.Error())
+		logger.Error("make temp dir [" + unzipPath + "] failed: " + err.Error())
 		result.Code = util.CodeErr
 		result.Msg = "make temp dir failed"
 
 		return
 	}
 	if err = gulu.Zip.Unzip(zipFilePath, unzipPath); nil != err {
-		logger.Errorf("unzip [" + zipFilePath + "] to [" + unzipPath + "] failed: " + err.Error())
+		logger.Error("unzip [" + zipFilePath + "] to [" + unzipPath + "] failed: " + err.Error())
 		result.Code = util.CodeErr
 		result.Msg = "unzip failed"
 
@@ -113,7 +113,7 @@ func ImportMarkdownAction(c *gin.Context) {
 		return err
 	})
 	if nil != err {
-		logger.Errorf("read dir [" + unzipPath + "] failed: " + err.Error())
+		logger.Error("read dir [" + unzipPath + "] failed: " + err.Error())
 		result.Code = util.CodeErr
 		result.Msg = "read dir failed"
 
@@ -129,7 +129,7 @@ func ImportMarkdownAction(c *gin.Context) {
 	for _, filePath := range filePaths {
 		data, err := ioutil.ReadFile(filePath)
 		if nil != err {
-			logger.Errorf("read file [" + filePath + "] failed")
+			logger.Error("read file [" + filePath + "] failed")
 
 			continue
 		}

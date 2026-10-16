@@ -101,7 +101,7 @@ func (srv *navigationService) ConsoleGetNavigations(page int, blogID uint64) (re
 	if err := db.Model(&model.Navigation{}).Order("number ASC, id DESC").
 		Where("blog_id = ?", blogID).
 		Count(&count).Offset(offset).Limit(adminConsoleNavigationListPageSize).Find(&ret).Error; nil != err {
-		logger.Errorf("get navigations failed: " + err.Error())
+		logger.Error("get navigations failed: " + err.Error())
 	}
 
 	pagination = util.NewPagination(page, adminConsoleNavigationListPageSize, adminConsoleNavigationListWindowSize, count)
@@ -112,7 +112,7 @@ func (srv *navigationService) ConsoleGetNavigations(page int, blogID uint64) (re
 func (srv *navigationService) GetNavigations(blogID uint64) (ret []*model.Navigation) {
 	if err := db.Model(&model.Navigation{}).Order("number ASC, id DESC").
 		Where("blog_id = ?", blogID).Find(&ret).Error; nil != err {
-		logger.Errorf("get navigations failed: " + err.Error())
+		logger.Error("get navigations failed: " + err.Error())
 	}
 
 	return
