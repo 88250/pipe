@@ -13,12 +13,28 @@ package util
 import (
 	"strings"
 	"testing"
+	"time"
 )
 
 func TestRandImage(t *testing.T) {
-	url := RandImage()
-	if !strings.Contains(url, CommunityFileURL) {
-		t.Errorf(url)
+	originalLocal := time.Local
+	defer func() { time.Local = originalLocal }()
+	for _, offset := range []int{0, -12 * 60 * 60, 14 * 60 * 60} {
+		time.Local = time.FixedZone("test", offset)
+		for i := 0; i < 10000; i++ {
+			url := RandImage()
+			prefix := CommunityFileURL + "/bing/"
+			if !strings.HasPrefix(url, prefix) || !strings.HasSuffix(url, ".jpg") {
+				t.Fatalf("unexpected image URL: %s", url)
+			}
+			date := strings.TrimSuffix(strings.TrimPrefix(url, prefix), ".jpg")
+			if _, err := time.Parse("20060102", date); err != nil {
+				t.Fatalf("invalid image date in %s: %v", url, err)
+			}
+			if date < "20171104" || date > "20231220" {
+				t.Fatalf("image date outside archive (offset %d): %s", offset, url)
+			}
+		}
 	}
 }
 
