@@ -38,11 +38,12 @@ func Uploaded(url string) bool {
 // https://github.com/88250/bing
 func RandImage() string {
 	min := time.Date(2017, 11, 04, 0, 0, 0, 0, time.UTC).Unix()
-	max := time.Now().Unix()
+	// Bing 归档包含 20231220，随机范围的上界不包含在内。
+	max := time.Date(2023, 12, 21, 0, 0, 0, 0, time.UTC).Unix()
 	delta := max - min
 	sec := rand.Int63n(delta) + min
 
-	return CommunityFileURL + "/bing/" + time.Unix(sec, 0).Format("20060102") + ".jpg"
+	return CommunityFileURL + "/bing/" + time.Unix(sec, 0).UTC().Format("20060102") + ".jpg"
 }
 
 // RandImages returns random image URLs.
